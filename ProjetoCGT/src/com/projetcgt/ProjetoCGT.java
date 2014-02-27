@@ -19,7 +19,7 @@ public class ProjetoCGT implements ApplicationListener {
 	@Override
 	public void create() {		
 		float w = Gdx.graphics.getWidth(); //Vai 
-		float h = Gdx.graphics.getHeight();
+		float h = Gdx.graphics.getHeight(); // vai2
 		
 		camera = new OrthographicCamera(1, h/w);
 		batch = new SpriteBatch();
