@@ -1,6 +1,6 @@
 package com.projetcgt.client;
 
-import com.projetcgt.ProjetoCGT;
+import com.projetocgt.ProjetoCGT;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;

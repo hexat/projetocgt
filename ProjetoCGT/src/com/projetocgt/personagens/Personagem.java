@@ -4,25 +4,82 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Personagem {
+	
 	public enum State {
 		IDLE, WALKING, JUMPING, DYING
 	}
+	
+	
 
-	static final float SPEED = 2f;				//Velocidade do personagem
-	static final float JUMP_VELOCITY = 1f;		//Velocidade do pulo do personagem
-	static final float SIZE = 0.5f; 			//Metade de uma unidade
+	public static final float SPEED = 4f;				//Velocidade do personagem
+	public static final float JUMP_VELOCITY = 1f;		//Velocidade do pulo do personagem
+	public static final float SIZE = 0.5f; 			//Metade de uma unidade
 
-	Vector2 	position = new Vector2();		//Vetor que informa a posição do personagem
-	Vector2 	acceleration = new Vector2();	//Vetor que informa a aceleração do personagem
-	Vector2 	velocity = new Vector2();		//Vetor que informa a velocidade do personagem
-	Rectangle 	bounds = new Rectangle();		// Área que será desenhado o personagem
-	State 		state = State.IDLE;				//
-	boolean 	facingLeft = true;				//
+	private Vector2 	position = new Vector2();		//Vetor que informa a posição do personagem
+	private Vector2 	acceleration = new Vector2();	//Vetor que informa a aceleração do personagem
+	private Vector2 	velocity = new Vector2();		//Vetor que informa a velocidade do personagem
+	private Rectangle 	bounds = new Rectangle();		// Área que será desenhado o personagem
+	private State 		state = State.IDLE;				//
+	private boolean 	facingLeft = true;				//
 	
 	//Construtor padrão que recebe uma posição inicial 
 	public Personagem(Vector2 position) {
 		this.position = position;		//Posição inicial 
 		this.bounds.height = SIZE;		//Altura do personagem (Altura da área onde o personagem será desenhado)
 		this.bounds.width = SIZE;		//Largura do personagem (Largura da área onde o personagem será desenhado)
+	}
+	
+
+	public void setState(State newState) {
+		this.state = newState;
+	}
+
+	public void update(float delta) {
+		position.add(velocity.cpy().scl(delta));
+	}
+
+	public Vector2 getPosition() {
+		return position;
+	}
+
+	public void setPosition(Vector2 position) {
+		this.position = position;
+	}
+
+	public Rectangle getBounds() {
+		return bounds;
+	}
+
+	public void setBounds(Rectangle bounds) {
+		this.bounds = bounds;
+	}
+
+	public Vector2 getAcceleration() {
+		return acceleration;
+	}
+
+	public void setAcceleration(Vector2 acceleration) {
+		this.acceleration = acceleration;
+	}
+
+	public Vector2 getVelocity() {
+		return velocity;
+	}
+
+	public void setVelocity(Vector2 velocity) {
+		this.velocity = velocity;
+	}
+
+	public State getState() {
+		return state;
+	}
+
+
+	public boolean isFacingLeft() {
+		return facingLeft;
+	}
+
+	public void setFacingLeft(boolean facingLeft) {
+		this.facingLeft = facingLeft;
 	}
 }

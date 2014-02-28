@@ -1,16 +1,10 @@
 package com.projetcgt;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.projetocgt.StarAssault;
 
 public class Main {
 	public static void main(String[] args) {
-		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "ProjetoCGT";
-		cfg.useGL20 = false;
-		cfg.width = 480;
-		cfg.height = 320;
-		
-		new LwjglApplication(new ProjetoCGT(), cfg);
+		 new LwjglApplication(new StarAssault(), "Star Assault", 480, 320, true);
 	}
 }
