@@ -1,4 +1,4 @@
-package com.projetcgt;
+package com.projetocgt;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
