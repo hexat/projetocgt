@@ -63,22 +63,35 @@ public class WorldRenderer {
 		currentFont = new BitmapFont();
 	}
 
-	public void render(Vector2 vector2) {
-		
+	public void render() {
+
 		spriteBatch.begin();
 		drawBlocks();
 		drawBob();
-		printTexto(vector2);
+		printTexto();
 		spriteBatch.end();
 		if (debug)
 			drawDebug();
 	}
 	
-	//Mostra um valor na tela. 
-		public void printTexto(Vector2 vector2 ){
-			currentFont.draw(spriteBatch, (int) vector2.x+ "", 40, 60);
-			currentFont.draw(spriteBatch, (int) vector2.y+ "", 60, 60);
-			currentFont.draw(spriteBatch,"Posição do Personagem", 80, 60);
+	//Mostra um valor na tela.
+	//Retorna o vetor que ela esta mostrando
+		public Vector2 printTexto(){
+
+			Personagem bob = world.getPersonagem();
+			Vector2 vector2 = bob.getPosition();
+			float pos = (int)(vector2.x+bob.getBounds().getWidth());
+			
+			if (bob.isFacingLeft()) {
+				currentFont.draw(spriteBatch,  "( "+vector2.x, 40, 60);
+				
+			} else {
+				currentFont.draw(spriteBatch,  "( "+(vector2.x+bob.getBounds().getWidth()), 40, 60);
+			}
+			currentFont.draw(spriteBatch,  vector2.y+ " )", 130, 60);
+			currentFont.draw(spriteBatch,"Posição do Personagem", 160, 60);
+			
+			return vector2;
 		}
 	
 	private void drawBlocks() {

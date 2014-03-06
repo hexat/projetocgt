@@ -11,7 +11,7 @@ public class Personagem {
 	
 	
 
-	public static final float SPEED = 4f;				//Velocidade do personagem
+	public static final float SPEED = 0.5f;				//Velocidade do personagem
 	public static final float JUMP_VELOCITY = 1f;		//Velocidade do pulo do personagem
 	public static final float SIZE = 0.5f; 			//Metade de uma unidade
 

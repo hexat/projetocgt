@@ -26,7 +26,7 @@ public class GameScreen implements Screen, InputProcessor{
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		controller.update(delta);
-		renderer.render(controller.posicaoBob(vetorPosi));
+		renderer.render();
 		
 		
 	}
@@ -43,7 +43,7 @@ public class GameScreen implements Screen, InputProcessor{
 	@Override
 	public void show() {
 		world = new World();
-		renderer = new WorldRenderer(world, false);
+		renderer = new WorldRenderer(world, true);
 		controller = new WorldController(world);
 		Gdx.input.setInputProcessor(this);
 		

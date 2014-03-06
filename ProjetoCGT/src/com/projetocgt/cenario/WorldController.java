@@ -66,7 +66,7 @@ public class WorldController {
 		}
 		
 		//Retorna aposição do personagem em forma de Vetor2
-		public Vector2 posicaoBob(Vector2 vetor){
+		public Vector2 posicaoBob(){
 			return bob.getPosition();
 		}
 		
@@ -78,17 +78,29 @@ public class WorldController {
 
 		/** Change Bob's state and parameters based on input controls **/
 		private void processInput() {
+			
 			if (keys.get(Keys.LEFT)) {
 				// left is pressed
-				bob.setFacingLeft(true);
-				bob.setState(State.WALKING);
-				bob.getVelocity().x = -Personagem.SPEED;
+				if(bob.getPosition().x < 6){
+					bob.getVelocity().x = 0.0f;
+				} else {
+					bob.setFacingLeft(true);
+					bob.setState(State.WALKING);
+					bob.getVelocity().x = -Personagem.SPEED;
+					
+				}
 			}
 			if (keys.get(Keys.RIGHT)) {
 				// left is pressed
-				bob.setFacingLeft(false);
-				bob.setState(State.WALKING);
-				bob.getVelocity().x = Personagem.SPEED;
+				//
+				if(bob.getPosition().x+bob.getBounds().getWidth() > 8){
+					bob.getVelocity().x = 0.0f;
+				} else {
+					bob.setFacingLeft(false);
+					bob.setState(State.WALKING);
+					bob.getVelocity().x = Personagem.SPEED;
+					
+				}
 			}
 			// need to check if both or none direction are pressed, then Bob is idle
 			if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT)) ||
