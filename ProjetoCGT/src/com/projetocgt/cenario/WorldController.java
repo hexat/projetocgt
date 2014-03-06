@@ -12,7 +12,7 @@ public class WorldController {
 
 		//Possiveis movimentos do personagem
 		enum Keys {
-			LEFT, RIGHT, JUMP, FIRE
+			LEFT, RIGHT, JUMP, FIRE,UP,DOWN
 		};
 
 		private World world;
@@ -22,6 +22,10 @@ public class WorldController {
 		static {
 			keys.put(Keys.LEFT, false);
 			keys.put(Keys.RIGHT, false);
+			
+			keys.put(Keys.UP, false);
+			keys.put(Keys.DOWN, false);
+			
 			keys.put(Keys.JUMP, false);
 			keys.put(Keys.FIRE, false);
 		};
@@ -39,8 +43,16 @@ public class WorldController {
 
 		public void rightPressed() {
 			keys.get(keys.put(Keys.RIGHT, true));
+		} 
+		
+		public void upPressed() {
+			keys.get(keys.put(Keys.UP, true));
 		}
-
+		
+		public void downPressed() {
+			keys.get(keys.put(Keys.DOWN, true));
+		}
+		
 		public void jumpPressed() {
 			keys.get(keys.put(Keys.JUMP, true));
 		}
@@ -48,7 +60,8 @@ public class WorldController {
 		public void firePressed() {
 			keys.get(keys.put(Keys.FIRE, false));
 		}
-
+		
+		//
 		public void leftReleased() {
 			keys.get(keys.put(Keys.LEFT, false));
 		}
@@ -56,7 +69,17 @@ public class WorldController {
 		public void rightReleased() {
 			keys.get(keys.put(Keys.RIGHT, false));
 		}
+		
+		
+		public void upReleased() {
+			keys.get(keys.put(Keys.UP, false));
+		}
 
+		public void downReleased() {
+			keys.get(keys.put(Keys.DOWN, false));
+		}
+
+		
 		public void jumpReleased() {
 			keys.get(keys.put(Keys.JUMP, false));
 		}
@@ -78,6 +101,21 @@ public class WorldController {
 
 		/** Change Bob's state and parameters based on input controls **/
 		private void processInput() {
+			
+			if (keys.get(Keys.UP)) {
+				// left is pressed
+				
+				bob.setFacingLeft(false);
+				bob.setState(State.WALKING);
+				bob.getVelocity().y = Personagem.SPEED;
+			}
+			
+			if (keys.get(Keys.DOWN)) {
+				// left is pressed
+				bob.setFacingLeft(true);
+				bob.setState(State.WALKING);
+				bob.getVelocity().y = -Personagem.SPEED;
+			}
 			
 			if (keys.get(Keys.LEFT)) {
 				// left is pressed
@@ -102,6 +140,7 @@ public class WorldController {
 					
 				}
 			}
+			
 			// need to check if both or none direction are pressed, then Bob is idle
 			if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT)) ||
 					(!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) {
@@ -111,6 +150,16 @@ public class WorldController {
 				// horizontal speed is 0
 				bob.getVelocity().x = 0;
 			}
+			// need to check if both or none direction are pressed, then Bob is idle
+			if ((keys.get(Keys.UP) && keys.get(Keys.DOWN)) ||
+					(!keys.get(Keys.UP) && !(keys.get(Keys.DOWN)))) {
+				bob.setState(State.IDLE);
+				// acceleration is 0 on the y
+				bob.getAcceleration().y = 0;
+				//Vertival speed is 0
+				bob.getVelocity().y = 0;
+			}
+
 		}
 	}
 

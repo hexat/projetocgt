@@ -9,12 +9,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.cenario.World;
 import com.projetocgt.cenario.WorldController;
 import com.projetocgt.cenario.WorldRenderer;
+import com.projetocgt.personagens.Personagem;
 
 public class GameScreen implements Screen, InputProcessor{
 	
 	private World world;
 	private WorldRenderer renderer;
 	private WorldController	controller;
+	private Personagem bob;
+	
 	//Vetor que sera utilizado para armazenar a posição do bob. 
 	private Vector2 vetorPosi;
 	private int width, height;
@@ -75,30 +78,32 @@ public class GameScreen implements Screen, InputProcessor{
 	
 
 	// InputProcessor methods
-
+	
+	//Funciona na descida do botão
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == Keys.LEFT)
 			controller.leftPressed();
 		if (keycode == Keys.RIGHT)
 			controller.rightPressed();
-		if (keycode == Keys.Z)
-			controller.jumpPressed();
-		if (keycode == Keys.X)
-			controller.firePressed();
+		if (keycode == Keys.UP)
+			controller.upPressed();
+		if (keycode == Keys.DOWN)
+			controller.downPressed();
 		return true;
 	}
 
+	//Funciona na subida do botão 
 	@Override
 	public boolean keyUp(int keycode) {
 		if (keycode == Keys.LEFT)
 			controller.leftReleased();
 		if (keycode == Keys.RIGHT)
 			controller.rightReleased();
-		if (keycode == Keys.Z)
-			controller.jumpReleased();
-		if (keycode == Keys.X)
-			controller.fireReleased();
+		if (keycode == Keys.UP)
+			controller.upReleased();
+		if (keycode == Keys.DOWN)
+			controller.downReleased();
 		return true;
 	}
 
@@ -110,11 +115,17 @@ public class GameScreen implements Screen, InputProcessor{
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
+		
+		//bob.getPosition().x=(float)Gdx.input.getX();
+		//bob.getPosition().y=(float)Gdx.input.getY();
+		//controller.downPressed();
 		if (x < width / 2 && y > height / 2) {
 			controller.leftPressed();
+			controller.upPressed();
 		}
 		if (x > width / 2 && y > height / 2) {
 			controller.rightPressed();
+			controller.upPressed();
 		}
 		return true;
 	}
@@ -123,10 +134,32 @@ public class GameScreen implements Screen, InputProcessor{
 	public boolean touchUp(int x, int y, int pointer, int button) {
 		if (x < width / 2 && y > height / 2) {
 			controller.leftReleased();
+			controller.downPressed();
 		}
 		if (x > width / 2 && y > height / 2) {
 			controller.rightReleased();
+			controller.downPressed();
 		}
+		return true;
+	}
+	
+	public boolean touchRight(int x, int y, int pointer, int button) {
+		//if (x < width / 2 && y > height / 2) {
+			//controller.upPressed();
+		//}
+		//if (x > width / 2 && y > height / 2) {
+			//controller.downPressed();
+		//}
+		return true;
+	}
+
+	public boolean touchLeft(int x, int y, int pointer, int button) {
+		/*if (x < width / 2 && y > height / 2) {
+			controller.upReleased();
+		}
+		if (x > width / 2 && y > height / 2) {
+			controller.downReleased();
+		}*/
 		return true;
 	}
 
