@@ -12,12 +12,15 @@ import com.projetocgt.cenario.WorldController;
 import com.projetocgt.cenario.WorldRenderer;
 import com.projetocgt.personagens.Personagem;
 
+import core.petri.ElementosCPN;
+
 public class GameScreen implements Screen, InputProcessor{
 	
 	private World world;
 	private WorldRenderer renderer;
 	private WorldController	controller;
 	private Personagem bob;
+	private ElementosCPN elementosCPN;
 	
 	//Vetor que sera utilizado para armazenar a posicao do bob. 
 	private Vector2 vetorPosi;
@@ -28,6 +31,12 @@ public class GameScreen implements Screen, InputProcessor{
 	private int posX,posY;
 	public int getPosX(){return this.posX;}
 	public int getPosY(){return this.posY;}
+	
+	public GameScreen() {
+		super();
+		elementosCPN = new ElementosCPN(Gdx.files.internal("data/game.xml").file());
+	}
+	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
