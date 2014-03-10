@@ -18,7 +18,7 @@ public class GameScreen implements Screen, InputProcessor{
 	private WorldController	controller;
 	private Personagem bob;
 	
-	//Vetor que sera utilizado para armazenar a posição do bob. 
+	//Vetor que sera utilizado para armazenar a posicao do bob. 
 	private Vector2 vetorPosi;
 	private int width, height;
 	
@@ -79,7 +79,7 @@ public class GameScreen implements Screen, InputProcessor{
 
 	// InputProcessor methods
 	
-	//Funciona na descida do botão
+	//Funciona na descida do botao
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == Keys.LEFT)
@@ -93,7 +93,7 @@ public class GameScreen implements Screen, InputProcessor{
 		return true;
 	}
 
-	//Funciona na subida do botão 
+	//Funciona na subida do botï¿½o 
 	@Override
 	public boolean keyUp(int keycode) {
 		if (keycode == Keys.LEFT)

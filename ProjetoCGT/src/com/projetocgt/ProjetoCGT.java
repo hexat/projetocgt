@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import core.petri.ElementosCPN;
+
 public class ProjetoCGT implements ApplicationListener {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
