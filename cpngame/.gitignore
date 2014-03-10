@@ -1,0 +1,6 @@
+*.class
+
+# Package Files #
+\bin\java.policy.applet
+*.war
+*.ear
