@@ -29,7 +29,11 @@ public class Personagem {
 		this.bounds.width = SIZE;		//Largura do personagem (Largura da área onde o personagem será desenhado)
 	}
 	
-
+	public Personagem() {
+		this.bounds.height = SIZE;		//Altura do personagem (Altura da área onde o personagem será desenhado)
+		this.bounds.width = SIZE;		//Largura do personagem (Largura da área onde o personagem será desenhado)
+	}
+	
 	public void setState(State newState) {
 		this.state = newState;
 	}
@@ -45,7 +49,7 @@ public class Personagem {
 	public void setPosition(Vector2 position) {
 		this.position = position;
 	}
-
+	
 	public Rectangle getBounds() {
 		return bounds;
 	}
