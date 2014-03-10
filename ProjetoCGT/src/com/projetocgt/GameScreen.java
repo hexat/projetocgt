@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.cenario.World;
 import com.projetocgt.cenario.WorldController;
@@ -20,9 +21,13 @@ public class GameScreen implements Screen, InputProcessor{
 	
 	//Vetor que sera utilizado para armazenar a posição do bob. 
 	private Vector2 vetorPosi;
+	private Vector2 vetor;
 	private int width, height;
+	private Vector2 pos;
 	
-	
+	private int posX,posY;
+	public int getPosX(){return this.posX;}
+	public int getPosY(){return this.posY;}
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
@@ -30,8 +35,6 @@ public class GameScreen implements Screen, InputProcessor{
 
 		controller.update(delta);
 		renderer.render();
-		
-		
 	}
 
 	@Override
@@ -48,6 +51,7 @@ public class GameScreen implements Screen, InputProcessor{
 		world = new World();
 		renderer = new WorldRenderer(world, true);
 		controller = new WorldController(world);
+		bob=new Personagem();
 		Gdx.input.setInputProcessor(this);
 		
 	}
@@ -115,17 +119,12 @@ public class GameScreen implements Screen, InputProcessor{
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		
-		//bob.getPosition().x=(float)Gdx.input.getX();
-		//bob.getPosition().y=(float)Gdx.input.getY();
-		//controller.downPressed();
 		if (x < width / 2 && y > height / 2) {
-			controller.leftPressed();
-			controller.upPressed();
+			controller.leftReleased();
+			
 		}
 		if (x > width / 2 && y > height / 2) {
-			controller.rightPressed();
-			controller.upPressed();
+			controller.rightReleased();
 		}
 		return true;
 	}
@@ -134,38 +133,23 @@ public class GameScreen implements Screen, InputProcessor{
 	public boolean touchUp(int x, int y, int pointer, int button) {
 		if (x < width / 2 && y > height / 2) {
 			controller.leftReleased();
-			controller.downPressed();
 		}
 		if (x > width / 2 && y > height / 2) {
 			controller.rightReleased();
-			controller.downPressed();
 		}
 		return true;
 	}
 	
-	public boolean touchRight(int x, int y, int pointer, int button) {
-		//if (x < width / 2 && y > height / 2) {
-			//controller.upPressed();
-		//}
-		//if (x > width / 2 && y > height / 2) {
-			//controller.downPressed();
-		//}
-		return true;
-	}
-
-	public boolean touchLeft(int x, int y, int pointer, int button) {
-		/*if (x < width / 2 && y > height / 2) {
-			controller.upReleased();
-		}
-		if (x > width / 2 && y > height / 2) {
-			controller.downReleased();
-		}*/
-		return true;
-	}
-
 	@Override
 	public boolean touchDragged(int x, int y, int pointer) {
-		// TODO Auto-generated method stub
+		//bob.getVelocity().x=Personagem.SPEED;
+		if (x < width / 2 && y > height / 2) {
+			controller.leftPressed();
+			//bob.setPosition2(getPosX());
+		}
+		if (x > width / 2 && y > height / 2) {
+			controller.rightPressed();	
+		}
 		return false;
 	}
 

@@ -36,7 +36,6 @@ public class WorldController {
 		}
 
 		// ** Key presses and touches **************** //
-
 		public void leftPressed() {
 			keys.get(keys.put(Keys.LEFT, true));
 		}
@@ -104,23 +103,32 @@ public class WorldController {
 			
 			if (keys.get(Keys.UP)) {
 				// left is pressed
-				
+				if(bob.getPosition().y+bob.getBounds().height > 7){
+					bob.getVelocity().y = 0.0f;
+				}
+				else{
 				bob.setFacingLeft(false);
 				bob.setState(State.WALKING);
 				bob.getVelocity().y = Personagem.SPEED;
+				}
 			}
 			
 			if (keys.get(Keys.DOWN)) {
 				// left is pressed
+				if(bob.getPosition().y < 0.0f){
+					bob.getVelocity().y = 0.0f;
+				}
+				else{
 				bob.setFacingLeft(true);
 				bob.setState(State.WALKING);
 				bob.getVelocity().y = -Personagem.SPEED;
+				}
 			}
 			
 			if (keys.get(Keys.LEFT)) {
 				// left is pressed
-				if(bob.getPosition().x < 6){
-					bob.getVelocity().x = 0.0f;
+				if(bob.getPosition().x < 0.0f){
+					 bob.getVelocity().x = 0.0f;
 				} else {
 					bob.setFacingLeft(true);
 					bob.setState(State.WALKING);
@@ -130,8 +138,8 @@ public class WorldController {
 			}
 			if (keys.get(Keys.RIGHT)) {
 				// left is pressed
-				//
-				if(bob.getPosition().x+bob.getBounds().getWidth() > 8){
+				
+				if(bob.getPosition().x+bob.getBounds().getWidth() > 10){
 					bob.getVelocity().x = 0.0f;
 				} else {
 					bob.setFacingLeft(false);
@@ -141,7 +149,8 @@ public class WorldController {
 				}
 			}
 			
-			// need to check if both or none direction are pressed, then Bob is idle
+			//Verifica se ambos ou nenhum dos sentidos são presionados
+			//
 			if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT)) ||
 					(!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) {
 				bob.setState(State.IDLE);
@@ -150,7 +159,7 @@ public class WorldController {
 				// horizontal speed is 0
 				bob.getVelocity().x = 0;
 			}
-			// need to check if both or none direction are pressed, then Bob is idle
+			//Verifica se ambos ou nenhum dos sentidos são presionados
 			if ((keys.get(Keys.UP) && keys.get(Keys.DOWN)) ||
 					(!keys.get(Keys.UP) && !(keys.get(Keys.DOWN)))) {
 				bob.setState(State.IDLE);

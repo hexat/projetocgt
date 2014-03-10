@@ -10,12 +10,14 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.projetocgt.GameScreen;
 import com.projetocgt.personagens.Personagem;
 
 public class WorldRenderer {
 	
 	private World world;			//Declara a variável do tipo World que será passada de parametro no renderer 
 	private OrthographicCamera cam;	//Declara a variável da camera
+	private GameScreen pos;
 	
 	// Inicializa uma constante relacionado a quantidade de blocos na horizontal que será visto pela camera
 	private static final float CAMERA_WIDTH = 10f;
@@ -69,6 +71,7 @@ public class WorldRenderer {
 		drawBlocks();
 		drawBob();
 		printTexto();
+		//print(pos.getPosX(),pos.getPosY(), 140, 70);
 		spriteBatch.end();
 		if (debug)
 			drawDebug();
@@ -82,16 +85,31 @@ public class WorldRenderer {
 			Vector2 vector2 = bob.getPosition();
 			float pos = (int)(vector2.x+bob.getBounds().getWidth());
 			
+			//Verifica se o personagem esta olhando para a esquerda
+			//Se ele estiver olhando para a esquerda printo e valor normal 
+			//Caso contrario ele esta olhando para a direita, logo somo a base dela com a sua posição
 			if (bob.isFacingLeft()) {
-				currentFont.draw(spriteBatch,  "( "+vector2.x, 40, 60);
-				
-			} else {
-				currentFont.draw(spriteBatch,  "( "+(vector2.x+bob.getBounds().getWidth()), 40, 60);
-			}
-			currentFont.draw(spriteBatch,  vector2.y+ " )", 130, 60);
-			currentFont.draw(spriteBatch,"Posição do Personagem", 160, 60);
+				//Valor normal, sem somar ser somado a base
+				currentFont.draw(spriteBatch,  "( "+vector2.x, 40, 60);} 
+			else {
+				//Valor  somado com a base
+				currentFont.draw(spriteBatch,  "( "+(vector2.x+bob.getBounds().getWidth()), 40, 60);}
 			
+			//Verifica se o personagem esta olhando para a baixo
+			//Se ele estiver olhando para a baixo printo e valor normal 
+			//Caso contrario ele esta olhando para a cima, logo somo a altura dela com a sua posição na vertical
+			if (bob.isFacingLeft()) {
+				//Valor normal, sem somar ser somado a altura
+				currentFont.draw(spriteBatch,  vector2.y+ " )", 130, 60);}
+			else {
+				//Valor  somado com a altura
+				currentFont.draw(spriteBatch,  vector2.y+bob.getBounds().height+ " )", 130, 60);}
+			currentFont.draw(spriteBatch," Posição do Personagem", 200, 60);
 			return vector2;
+		}
+		public void print(int x,int y,int posX,int posY){
+			currentFont.draw(spriteBatch,  "( "+x, posX, posY);
+			currentFont.draw(spriteBatch,  y+ " )", posX, posY);
 		}
 	
 	private void drawBlocks() {
