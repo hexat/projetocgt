@@ -1,5 +1,7 @@
 package com.projetocgt;
 
+import java.io.File;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -34,7 +36,8 @@ public class GameScreen implements Screen, InputProcessor{
 	
 	public GameScreen() {
 		super();
-		elementosCPN = new ElementosCPN(Gdx.files.internal("data/game.xml").file());
+
+		elementosCPN = new ElementosCPN(Gdx.files.internal("data/game.cpn").read());
 	}
 	
 	@Override

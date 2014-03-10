@@ -2,6 +2,7 @@ package core.petri;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 
@@ -30,7 +31,7 @@ public class CpnXmlReader {
 	Transition transition;
 
 	// construtor que seta o caminho do XML
-	public CpnXmlReader(File xml) throws Exception {
+	public CpnXmlReader(InputStream xml) throws Exception {
 		dbf = DocumentBuilderFactory.newInstance();
 
 		db = dbf.newDocumentBuilder();

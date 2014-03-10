@@ -11,7 +11,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -96,7 +99,14 @@ public class AnimationClass extends Applet implements Runnable, KeyListener {
 		}
 
 		emTransicao = false;
-		eCPN = new ElementosCPN(new File("res/cpn/GameTesteBombeiro.cpn")); // /////referenciar aqui
+		InputStream is = null;
+		try {
+			is = new FileInputStream("res/cpn/GameTesteBombeiro.cpn");
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		eCPN = new ElementosCPN(is); // /////referenciar aqui
 		places = eCPN.getPlaces();
 		imagePlace = new Image[places.size()];
 		rectPlace = new Rectangle[places.size()];

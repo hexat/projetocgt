@@ -1,6 +1,7 @@
 package core.petri;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import core.helper.Lista;
@@ -332,7 +333,7 @@ public class ElementosCPN {
 		return matrizToPlace;
 	}
 
-	public ElementosCPN(File xml) {
+	public ElementosCPN(InputStream xml) {
 		try {
 
 			// informe o caminho correto do seu arquivo xm cpn tools
