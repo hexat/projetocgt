@@ -29,13 +29,16 @@ public class WorldController {
 			keys.put(Keys.JUMP, false);
 			keys.put(Keys.FIRE, false);
 		};
-
+		
+		//Este construtor recebe o mundo como parametro
 		public WorldController(World world) {
 			this.world = world;
+			//Posição inicial do personagem
 			this.bob = world.getPersonagem();
 		}
 
 		// ** Key presses and touches **************** //
+		//Funciona na descida do botao
 		public void leftPressed() {
 			keys.get(keys.put(Keys.LEFT, true));
 		}
@@ -60,7 +63,7 @@ public class WorldController {
 			keys.get(keys.put(Keys.FIRE, false));
 		}
 		
-		//
+		//Funciona na subida do botao
 		public void leftReleased() {
 			keys.get(keys.put(Keys.LEFT, false));
 		}
@@ -93,20 +96,34 @@ public class WorldController {
 		}
 		
 		/** The main update method **/
+		//O método update e chamado a cada ciclo do loop principal.
 		public void update(float delta) {
+			//Processa a entrada de algum parametro
 			processInput();
+			//Atualizações do Personagem. Personagem tem um método de atualização dedicado.
 			bob.update(delta);
 		}
-
+		//Função que verifica se o personagem pode andar sobre esse bloco
+		public boolean verifica(float x){
+			//Base
+			//Altura
+			//Verifica se o personagem pode andar
+			if(bob.getPosition().x+bob.getBounds().getWidth() > x){
+				return true;
+			} else {
+				return false;
+			}
+		}
 		/** Change Bob's state and parameters based on input controls **/
 		private void processInput() {
 			
 			if (keys.get(Keys.UP)) {
-				// left is pressed
+				//Verifica se o personagem pode andar
 				if(bob.getPosition().y+bob.getBounds().height > 7){
 					bob.getVelocity().y = 0.0f;
 				}
 				else{
+				//O personagem esta olhando para a cima
 				bob.setFacingLeft(false);
 				bob.setState(State.WALKING);
 				bob.getVelocity().y = Personagem.SPEED;
@@ -114,11 +131,12 @@ public class WorldController {
 			}
 			
 			if (keys.get(Keys.DOWN)) {
-				// left is pressed
+				//Verifica se o personagem pode andar
 				if(bob.getPosition().y < 0.0f){
 					bob.getVelocity().y = 0.0f;
 				}
 				else{
+				//O personagem esta olhando para a baixo
 				bob.setFacingLeft(true);
 				bob.setState(State.WALKING);
 				bob.getVelocity().y = -Personagem.SPEED;
@@ -126,10 +144,11 @@ public class WorldController {
 			}
 			
 			if (keys.get(Keys.LEFT)) {
-				// left is pressed
+				//Verifica se o personagem pode andar 
 				if(bob.getPosition().x < 0.0f){
 					 bob.getVelocity().x = 0.0f;
 				} else {
+					//O personagem esta olhando para a esquerda
 					bob.setFacingLeft(true);
 					bob.setState(State.WALKING);
 					bob.getVelocity().x = -Personagem.SPEED;
@@ -137,16 +156,17 @@ public class WorldController {
 				}
 			}
 			if (keys.get(Keys.RIGHT)) {
-				// left is pressed
-				
-				if(bob.getPosition().x+bob.getBounds().getWidth() > 10){
-					bob.getVelocity().x = 0.0f;
-				} else {
-					bob.setFacingLeft(false);
-					bob.setState(State.WALKING);
-					bob.getVelocity().x = Personagem.SPEED;
-					
-				}
+				//if(verifica(8)==false){
+					//Verifica se o personagem pode andar
+					if(bob.getPosition().x+bob.getBounds().getWidth() > 10){
+						bob.getVelocity().x = 0.0f;
+					} else {
+						//O personagem esta olhando para a direita
+						bob.setFacingLeft(false);
+						bob.setState(State.WALKING);
+						bob.getVelocity().x = Personagem.SPEED;
+					}
+				//}
 			}
 			
 			//Verifica se ambos ou nenhum dos sentidos são presionados
