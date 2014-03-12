@@ -111,7 +111,8 @@ public class WorldRenderer {
 			//Analisa a posiçao inicial com a posiçao atual
 			//Verifica se o personagem entrou no bloco
 			if( (int)vector2.x != (int)posiI.x ){
-				currentFont.draw(spriteBatch," Entrou no bloco", 40, 40);
+				System.out.println("Entrou no bloco");
+				//Recebe uma nova posiçao inicial
 				posiI.x=vector2.x;
 			}
 			
@@ -123,7 +124,8 @@ public class WorldRenderer {
 			//Analisa a posiçao inicial com a posiçao atual
 			//Verifica se o personagem entrou no bloco
 			if((int)(vector2.x+bob.getBounds().getWidth())!=(int)posiI.x){
-				currentFont.draw(spriteBatch," Entrou no bloco", 40, 40);
+				System.out.println("Entrou no bloco");
+				//Recebe uma nova posiçao inicial
 				posiI.x=vector2.x+bob.getBounds().getWidth();
 			}
 		}	
@@ -138,7 +140,8 @@ public class WorldRenderer {
 				//Analisa a posiçao inicial com a posiçao atual
 				//Verifica se o personagem entrou no bloco
 				if((int)vector2.y!=(int)posiI.y){
-					currentFont.draw(spriteBatch," Entrou no bloco", 40, 40);
+					System.out.println("Entrou no bloco");
+					//Recebe uma nova posiçao inicial
 					posiI.y=vector2.y;
 				}
 				
@@ -149,7 +152,8 @@ public class WorldRenderer {
 				//Analisa a posiçao inicial com a posiçao atual
 				//Verifica se o personagem entrou no bloco
 				if((int)(vector2.y+bob.getBounds().getHeight())!=(int)posiI.y){
-					currentFont.draw(spriteBatch," Entrou no bloco", 40, 40);
+					System.out.println("Entrou no bloco");
+					//Recebe uma nova posiçao inicial
 					posiI.y=vector2.y+bob.getBounds().getHeight();
 				}
 			}
