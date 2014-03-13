@@ -19,6 +19,8 @@ public class ElementosCPN {
 	private Place matrizPre[][];
 	private Place matrizPost[][];
 	private Lista matrizToPlace[][];
+	private int numMaxPlaceX;
+	private int numMaxPlaceY;
 
 	// private int placeToPlace[][];
 
@@ -130,6 +132,24 @@ public class ElementosCPN {
 		return res;
 	}
 
+	public int getNumMaxPlaceX() {
+		return numMaxPlaceX;
+	}
+
+	public int getNumMaxPlaceY() {
+		return numMaxPlaceY;
+	}
+	
+	public Place getPlaceByPos(int x, int y) {
+		for (Place p : places) {
+			if (p.getRelativeLeft() == x && p.getRelativeTop() == y) {
+				return p;
+			}
+		}
+		return null;
+		
+	}
+
 	public boolean dispararTransicao(Lista lista) {
 		
 		boolean achei = false;
@@ -233,6 +253,7 @@ public class ElementosCPN {
 			vet[i] = currentPlace.getX();
 		}
 		ordCrescente(vet);
+		numMaxPlaceX = vet.length;
 		return vet;
 	}
 
@@ -244,6 +265,7 @@ public class ElementosCPN {
 			vet[i] = currentPlace.getY();
 		}
 		ordDecrescente(vet);
+		numMaxPlaceY = vet.length;
 		return vet;
 	}
 
@@ -496,41 +518,7 @@ public class ElementosCPN {
 		}
 
 	}
-
-	/*public static void main(String[] args) {
-		ElementosCPN elementosCPN = new ElementosCPN();
-
-		elementosCPN.showPlaces();
-		elementosCPN.showTransitions();
-		elementosCPN.showArcs();
-		elementosCPN.showMatrizPre();
-		elementosCPN.showMatrizPost();
-		elementosCPN.showMatrizC();
-		elementosCPN.showRelativeTopLeft();
-
-		// System.out.println(elementosCPN.transicoesHabilitadas());
-		//
-		// Scanner s = new Scanner(System.in);
-		//
-		// int res = elementosCPN.indexTransition(s.next());
-		// while (res != -1) {
-		// elementosCPN.dispararTransicao(res);
-		// elementosCPN.showPlaces();
-		// System.out.println(elementosCPN.transicoesHabilitadas());
-		// res = elementosCPN.indexTransition(s.next());
-		// }
-
-	}*/
 	
-	public String toLadder() {
-		String res = "";
-		
-		for (int i = 0; i < getPlaces().size(); i++) {
-			res += "%MW";
-		}
-		
-		return res;
-	}
 }
 
 /*

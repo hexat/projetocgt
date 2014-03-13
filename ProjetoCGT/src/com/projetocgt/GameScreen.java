@@ -59,8 +59,7 @@ public class GameScreen implements Screen, InputProcessor{
 
 	@Override
 	public void show() {
-		//Inicializando os objetos
-		world = new World();
+		world = new World(elementosCPN);
 		renderer = new WorldRenderer(world, true);
 		controller = new WorldController(world);
 		bob=new Personagem();
