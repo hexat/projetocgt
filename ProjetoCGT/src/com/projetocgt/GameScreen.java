@@ -34,7 +34,6 @@ public class GameScreen implements Screen, InputProcessor{
 		super();
 		//
 		elementosCPN = new ElementosCPN(Gdx.files.internal("data/game.cpn").read());
-		//elementosCPN.
 	}
 	
 	@Override
@@ -111,7 +110,7 @@ public class GameScreen implements Screen, InputProcessor{
 		return true;
 	}
 
-	//Funciona na subida do bot�o 
+	//Funciona na subida do bot���o 
 	@Override
 	public boolean keyUp(int keycode) {
 		if (keycode == Keys.LEFT)
