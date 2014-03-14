@@ -133,11 +133,25 @@ public class ElementosCPN {
 	}
 
 	public int getNumMaxPlaceX() {
-		return numMaxPlaceX;
+		ArrayList<Integer> s = new ArrayList<Integer>();
+		for (Place p : places) {
+			if (!s.contains(p.getRelativeLeft())) {
+				s.add(p.getRelativeLeft());
+				
+			}
+		}
+		return s.size();
 	}
 
 	public int getNumMaxPlaceY() {
-		return numMaxPlaceY;
+		ArrayList<Integer> s = new ArrayList<Integer>();
+		for (Place p : places) {
+			if (!s.contains(p.getRelativeTop())) {
+				s.add(p.getRelativeTop());
+				
+			}
+		}
+		return s.size();
 	}
 	
 	public Place getPlaceByPos(int x, int y) {
