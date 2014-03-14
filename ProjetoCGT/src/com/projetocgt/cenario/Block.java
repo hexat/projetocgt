@@ -3,15 +3,18 @@ package com.projetocgt.cenario;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class Block {
-	static final float SIZE = 1f;
+import core.petri.entity.Place;
 
-	private Vector2 	position = new Vector2();	//Posiçao inicial do bloco(Retangulo)
-	private Rectangle 	bounds = new Rectangle();	//Área que sera construida cada bloco do cenario		
+public class Block {
+	static final float SIZE = 0.5f;
+	private Place place;
+	private Vector2 	position = new Vector2();	//Posicao inicial do bloco(Retangulo)
+	private Rectangle 	bounds = new Rectangle();	//Area que sera construida cada bloco do cenario		
 	
-	//Construtor padrão que recebe uma posição inicial como parametro
-	public Block(Vector2 pos) {
-		this.position = pos;				//posição inicial
+	//Construtor padrao que recebe uma posicao inicial como parametro
+	public Block(Vector2 pos, Place place) {
+		this.place = place;
+		this.position = pos;				//posicao inicial
 		this.bounds.width = SIZE;			//Largura do bloco 
 		this.bounds.height = SIZE;			//Altura do bloco
 	}
@@ -27,7 +30,9 @@ public class Block {
 	public Rectangle getBounds() {
 		return bounds;
 	}
-
+	public Place getPlace() {
+		return place;
+	}
 	public void setBounds(Rectangle bounds) {
 		this.bounds = bounds;
 	}

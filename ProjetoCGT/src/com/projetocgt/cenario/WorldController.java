@@ -17,7 +17,7 @@ public class WorldController {
 
 		private World world;
 		private Personagem 	bob;
-
+		private WorldRenderer worldRender;
 		static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
 		static {
 			keys.put(Keys.LEFT, false);
@@ -117,7 +117,7 @@ public class WorldController {
 			
 			if (keys.get(Keys.UP)) {
 				//Verifica se o personagem pode andar
-				if(bob.getPosition().y+bob.getBounds().height > (7.0f-0.01f)){
+				if(bob.getPosition().y+bob.getBounds().height > (world.getHeight()-0.01f)){
 					bob.getVelocity().y = 0.0f;
 				}
 				else{
@@ -156,7 +156,7 @@ public class WorldController {
 			if (keys.get(Keys.RIGHT)) {
 				//if(verifica(8)==false){
 					//Verifica se o personagem pode andar
-					if(bob.getPosition().x+bob.getBounds().getWidth() > (10.0f-0.01f)){
+					if(bob.getPosition().x+bob.getBounds().getWidth() > (world.getWidth()-0.01f)){
 						bob.getVelocity().x = 0.0f;
 					} else {
 						//O personagem esta olhando para a direita

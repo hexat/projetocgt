@@ -15,14 +15,14 @@ import com.projetocgt.personagens.Personagem;
 
 public class WorldRenderer {
 	
-	private World world;			//Declara a variável do tipo World que será passada de parametro no renderer 
-	private OrthographicCamera cam;	//Declara a variável da camera
+	private World world;			//Declara a variavel do tipo World que serï¿½ passada de parametro no renderer 
+	private OrthographicCamera cam;	//Declara a variavel da camera
 	private GameScreen pos;
 	private Personagem bob;
-	// Inicializa uma constante relacionado a quantidade de blocos na horizontal que será visto pela camera
-	private static final float CAMERA_WIDTH = 10f;
-	// Inicializa uma constante relacionado a quantidade de blocos na vertical que será visto pela camera
-	private static final float CAMERA_HEIGHT = 7f;
+	// Inicializa uma constante relacionado a quantidade de blocos na horizontal que sera visto pela camera
+	private float CAMERA_WIDTH;
+	// Inicializa uma constante relacionado a quantidade de blocos na vertical que sera visto pela camera
+	private float CAMERA_HEIGHT;
 
 	/** for debug rendering **/
 	ShapeRenderer debugRenderer = new ShapeRenderer();
@@ -32,7 +32,7 @@ public class WorldRenderer {
 	private Texture blockTexture;
 
 	private SpriteBatch spriteBatch;	// 
-	private boolean debug = false; 		// Variável que irá ativar o debug
+	private boolean debug = false; 		// Variavel que ira ativar o debug
 	private int width;					//
 	private int height;					//
 	private float ppuX;					// Pixels per unit on the X axis
@@ -45,33 +45,43 @@ public class WorldRenderer {
 	private Vector2 posiI;
 	boolean flag=true;
 	
+	public float getCAMERA_HEIGHT(){
+		return this.CAMERA_HEIGHT;
+	}
+	
+	public float getCAMERA_WIDTH(){
+		return this.CAMERA_HEIGHT;
+	}
+	
 	public void setSize (int w, int h) {
 		this.width = w;
 		this.height = h;
 		ppuX = (float)width / CAMERA_WIDTH;
 		ppuY = (float)height / CAMERA_HEIGHT;
 	}
-
+	
 	public WorldRenderer(World world, boolean debug) {
 		this.world = world;
-		//Inicializa a variável de câmera passando os parametros de quantos blocos ela vai ver na horizontal e vertical
+		CAMERA_HEIGHT = world.getHeight();
+		CAMERA_WIDTH = world.getWidth();
+		//Inicializa a variavel de camera passando os parametros de quantos blocos ela vai ver na horizontal e vertical
 		this.cam = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);
-		this.cam.position.set(CAMERA_WIDTH / 2f, CAMERA_HEIGHT / 2f, 0); //Faz um set da posição da camera no mundo do jogo
+		this.cam.position.set(CAMERA_WIDTH / 2f, CAMERA_HEIGHT / 2f, 0); //Faz um set da posiï¿½ï¿½o da camera no mundo do jogo
 		this.cam.update();												 //Atualiza a tela			
 		this.debug = debug;												 
 		spriteBatch = new SpriteBatch();
 		
 		
 		
-		Texture.setEnforcePotImages(false);//desabilita a opção de potencia de dois.
+		Texture.setEnforcePotImages(false);//desabilita a opï¿½ï¿½o de potencia de dois.
 		loadTextures();
 	}
 	
 	private void loadTextures() {
-		 //Carrega as texturas que serão paresentadas na cena
+		 //Carrega as texturas que serao paresentadas na cena
 		bobTexture = new  Texture(Gdx.files.internal("data/Bob.png"));
 		blockTexture = new Texture(Gdx.files.internal("data/piscina.png"));
-		//Texto utilizado para printar a posição do personagem na tela
+		//Texto utilizado para printar a posiï¿½ï¿½o do personagem na tela
 		currentFont = new BitmapFont();
 	}
 
@@ -82,7 +92,7 @@ public class WorldRenderer {
 		drawBlocks();
 		//Dsenha o personagem
 		drawPersonagem();
-		//Desenha o texto com a posição do personagem
+		//Desenha o texto com a posicao do personagem
 		printTexto();
 		spriteBatch.end();
 		if (debug)
@@ -102,17 +112,17 @@ public class WorldRenderer {
 			
 		//Verifica se o personagem esta olhando para a esquerda
 		//Se ele estiver olhando para a esquerda printo e valor normal 
-		//Caso contrario ele esta olhando para a direita, logo somo a base dela com a sua posição
+		//Caso contrario ele esta olhando para a direita, logo somo a base dela com a sua posiï¿½ï¿½o
 		if (bob.isFacingLeft()) {
 			//Valor normal, sem somar ser somado a base
 			currentFont.draw(spriteBatch,  "( "+(int)vector2.x, 40, 60);
 			//currentFont.draw(spriteBatch,  "( "+posiI.x, 40, 90);
 			
-			//Analisa a posiçao inicial com a posiçao atual
+			//Analisa a posiï¿½ao inicial com a posiï¿½ao atual
 			//Verifica se o personagem entrou no bloco
 			if( (int)vector2.x != (int)posiI.x ){
 				System.out.println("Entrou no bloco");
-				//Recebe uma nova posiçao inicial
+				//Recebe uma nova posiï¿½ao inicial
 				posiI.x=vector2.x;
 			}
 			
@@ -121,23 +131,22 @@ public class WorldRenderer {
 			currentFont.draw(spriteBatch,  "( "+((int)(vector2.x+bob.getBounds().getWidth())), 40, 60);
 			//currentFont.draw(spriteBatch,  "( "+ (posiI.x + bob.getBounds().getWidth()), 40, 90);
 			
-			//Analisa a posiçao inicial com a posiçao atual
+			//Analisa a posiï¿½ao inicial com a posiï¿½ao atual
 			//Verifica se o personagem entrou no bloco
 			if((int)(vector2.x+bob.getBounds().getWidth())!=(int)posiI.x){
 				System.out.println("Entrou no bloco");
-				//Recebe uma nova posiçao inicial
+				//Recebe uma nova posiï¿½ao inicial
 				posiI.x=vector2.x+bob.getBounds().getWidth();
 			}
 		}	
 			
 		//Verifica se o personagem esta olhando para a baixo
 			//Se ele estiver olhando para a baixo printo e valor normal 
-			//Caso contrario ele esta olhando para a cima, logo somo a altura dela com a sua posição na vertical
+			//Caso contrario ele esta olhando para a cima, logo somo a altura dela com a sua posiï¿½ï¿½o na vertical
 			if (bob.isFacingLeft()) {
 				//Valor normal, sem somar ser somado a altura
 				currentFont.draw(spriteBatch,  (int)vector2.y+ " )", 130, 60);
-				
-				//Analisa a posiçao inicial com a posicao atual
+				//Analisa a posiï¿½ao inicial com a posicao atua
 				//Verifica se o personagem entrou no bloco
 				if((int)vector2.y!=(int)posiI.y){
 					System.out.println("Entrou no bloco");
@@ -148,8 +157,7 @@ public class WorldRenderer {
 			}else {
 				//Valor  somado com a altura
 				currentFont.draw(spriteBatch,  (int)(vector2.y+bob.getBounds().getHeight())+ " )", 130, 60);
-				
-				//Analisa a posiçao inicial com a posicao atual
+				//Analisa a posicao inicial com a posicao atual
 				//Verifica se o personagem entrou no bloco
 				if((int)(vector2.y+bob.getBounds().getHeight())!=(int)posiI.y){
 					System.out.println("Entrou no bloco");
@@ -157,14 +165,19 @@ public class WorldRenderer {
 					posiI.y=vector2.y+bob.getBounds().getHeight();
 				}
 			}
-			currentFont.draw(spriteBatch," Posição do Personagem", 200, 60);
+			currentFont.draw(spriteBatch," Posiï¿½ï¿½o do Personagem", 200, 60);
 			return vector2;
 		}
 		
 	private void drawBlocks() {
-		for (Object b : world.getBlocks()) {
-			Block block = (Block) b;
-			spriteBatch.draw(blockTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
+		for (Block block : world.getBlocks()) {
+
+			if (block.getPlace() != null) {
+			spriteBatch.draw(new Texture(Gdx.files.internal("data/t/"+block.getPlace().getText()+".png")), block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
+			} else {
+				spriteBatch.draw(new Texture(Gdx.files.internal("data/t/casa1.png")), block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
+			}
+			//spriteBatch.draw(blockTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
 		}
 	}
 

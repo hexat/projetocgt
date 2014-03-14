@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.projetocgt.ProjetoCGT;
 import com.projetocgt.StarAssault;
 
 public class MainActivity extends AndroidApplication {
@@ -15,7 +14,10 @@ public class MainActivity extends AndroidApplication {
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         //Configurações da OpenGL
         cfg.useGL20 = false;
-        
+        //cfg.useAccelerometer = false;
+        //cfg.useCompass = false;
+        //cfg.useWakelock = true;
+        //cfg.useGL20 = true;
         initialize(new StarAssault(), cfg);
     }
 }
