@@ -6,15 +6,15 @@ import com.badlogic.gdx.math.Vector2;
 import core.petri.entity.Place;
 
 public class Block {
-	static final float SIZE = 1f;
+	static final float SIZE = 0.5f;
 	private Place place;
-	private Vector2 	position = new Vector2();	//Posi�ao inicial do bloco(Retangulo)
-	private Rectangle 	bounds = new Rectangle();	//�rea que sera construida cada bloco do cenario		
+	private Vector2 	position = new Vector2();	//Posicao inicial do bloco(Retangulo)
+	private Rectangle 	bounds = new Rectangle();	//Area que sera construida cada bloco do cenario		
 	
-	//Construtor padr�o que recebe uma posi��o inicial como parametro
+	//Construtor padrao que recebe uma posicao inicial como parametro
 	public Block(Vector2 pos, Place place) {
 		this.place = place;
-		this.position = pos;				//posi��o inicial
+		this.position = pos;				//posicao inicial
 		this.bounds.width = SIZE;			//Largura do bloco 
 		this.bounds.height = SIZE;			//Altura do bloco
 	}

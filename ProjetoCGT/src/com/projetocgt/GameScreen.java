@@ -132,12 +132,13 @@ public class GameScreen implements Screen, InputProcessor{
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
+		
 		if (x < width / 2 && y > height / 2) {
-			controller.leftReleased();
+			//controller.leftReleased();
 			
 		}
 		if (x > width / 2 && y > height / 2) {
-			controller.rightReleased();
+			//controller.rightReleased();
 		}
 		return true;
 	}
@@ -145,30 +146,33 @@ public class GameScreen implements Screen, InputProcessor{
 	@Override
 	public boolean touchUp(int x, int y, int pointer, int button) {
 		if (x < width / 2 && y > height / 2) {
-			controller.leftReleased();
+			//controller.leftReleased();
 		}
 		if (x > width / 2 && y > height / 2) {
-			controller.rightReleased();
+			//controller.rightReleased();
 		}
 		return true;
 	}
 	
 	@Override
 	public boolean touchDragged(int x, int y, int pointer) {
-		//bob.getVelocity().x=Personagem.SPEED;
+		float a=x/(width/10);
+		float b=y/(height/7);
+		controller.movimeto(a, b);
+		
 		if (x < width / 2 && y > height / 2) {
-			controller.leftPressed();
+			//controller.leftPressed();
 			//bob.setPosition2(getPosX());
 		}
 		if (x > width / 2 && y > height / 2) {
-			controller.rightPressed();	
+			//controller.rightPressed();	
 		}
 		return false;
 	}
 
 	@Override
 	public boolean mouseMoved(int x, int y) {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
