@@ -32,7 +32,7 @@ public class WorldRenderer {
 	private Texture blockTexture;
 
 	private SpriteBatch spriteBatch;	// 
-	private boolean debug = false; 		// Vari�vel que ir� ativar o debug
+	private boolean debug = false; 		// Variavel que ira ativar o debug
 	private int width;					//
 	private int height;					//
 	private float ppuX;					// Pixels per unit on the X axis
@@ -194,7 +194,7 @@ public class WorldRenderer {
 					debugRenderer.setColor(new Color(1, 0, 0, 1));
 					debugRenderer.rect(x1, y1, rect.width, rect.height);
 				}
-				// Recebe a posi��o e o tamanho do personagem e o desenha na tela
+				// Recebe a posicao e o tamanho do personagem e o desenha na tela
 				Personagem bob = world.getPersonagem();
 				Rectangle rect = bob.getBounds();
 				float x1 = bob.getPosition().x + rect.x;
