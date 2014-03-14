@@ -137,11 +137,11 @@ public class WorldRenderer {
 				//Valor normal, sem somar ser somado a altura
 				currentFont.draw(spriteBatch,  (int)vector2.y+ " )", 130, 60);
 				
-				//Analisa a posiçao inicial com a posiçao atual
+				//Analisa a posiçao inicial com a posicao atual
 				//Verifica se o personagem entrou no bloco
 				if((int)vector2.y!=(int)posiI.y){
 					System.out.println("Entrou no bloco");
-					//Recebe uma nova posiçao inicial
+					//Recebe uma nova posicao inicial
 					posiI.y=vector2.y;
 				}
 				
@@ -149,11 +149,11 @@ public class WorldRenderer {
 				//Valor  somado com a altura
 				currentFont.draw(spriteBatch,  (int)(vector2.y+bob.getBounds().getHeight())+ " )", 130, 60);
 				
-				//Analisa a posiçao inicial com a posiçao atual
+				//Analisa a posiçao inicial com a posicao atual
 				//Verifica se o personagem entrou no bloco
 				if((int)(vector2.y+bob.getBounds().getHeight())!=(int)posiI.y){
 					System.out.println("Entrou no bloco");
-					//Recebe uma nova posiçao inicial
+					//Recebe uma nova posicao inicial
 					posiI.y=vector2.y+bob.getBounds().getHeight();
 				}
 			}
@@ -187,7 +187,7 @@ public class WorldRenderer {
 					debugRenderer.setColor(new Color(1, 0, 0, 1));
 					debugRenderer.rect(x1, y1, rect.width, rect.height);
 				}
-				// Recebe a posição e o tamanho do personagem e o desenha na tela
+				// Recebe a posicao e o tamanho do personagem e o desenha na tela
 				Personagem bob = world.getPersonagem();
 				Rectangle rect = bob.getBounds();
 				float x1 = bob.getPosition().x + rect.x;

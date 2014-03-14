@@ -103,17 +103,15 @@ public class WorldController {
 			//Atualizações do Personagem. Personagem tem um método de atualização dedicado.
 			bob.update(delta);
 		}
-		//Função que verifica se o personagem pode andar sobre esse bloco
-		public boolean verifica(float x){
-			//Base
-			//Altura
-			//Verifica se o personagem pode andar
-			if(bob.getPosition().x+bob.getBounds().getWidth() > x){
-				return true;
-			} else {
-				return false;
-			}
+		
+		public void movimeto(float x,float y){
+			float posX = x/10;
+			float posY = y/100;
+			Vector2 vetor =  new Vector2(x,y);
+			bob.getPosition().x=x;
+			bob.getPosition().y=y;
 		}
+		
 		/** Change Bob's state and parameters based on input controls **/
 		private void processInput() {
 			
