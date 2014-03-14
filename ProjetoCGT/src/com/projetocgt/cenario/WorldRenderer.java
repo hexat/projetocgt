@@ -73,7 +73,7 @@ public class WorldRenderer {
 		
 		
 		
-		Texture.setEnforcePotImages(false);//desabilita a op��o de potencia de dois.
+		Texture.setEnforcePotImages(false);//desabilita a opcao de potencia de dois.
 		loadTextures();
 	}
 	
@@ -165,7 +165,7 @@ public class WorldRenderer {
 					posiI.y=vector2.y+bob.getBounds().getHeight();
 				}
 			}
-			currentFont.draw(spriteBatch," Posi��o do Personagem", 200, 60);
+			currentFont.draw(spriteBatch," Posicao do Personagem", 200, 60);
 			return vector2;
 		}
 		
@@ -173,11 +173,11 @@ public class WorldRenderer {
 		for (Block block : world.getBlocks()) {
 
 			if (block.getPlace() != null) {
-			spriteBatch.draw(new Texture(Gdx.files.internal("data/t/"+block.getPlace().getText()+".png")), block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
+				spriteBatch.draw(block.getTexture(), block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
 			} else {
-				spriteBatch.draw(new Texture(Gdx.files.internal("data/t/casa1.png")), block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
+				spriteBatch.draw(blockTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
 			}
-			//spriteBatch.draw(blockTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
+//			spriteBatch.draw(blockTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
 		}
 	}
 
