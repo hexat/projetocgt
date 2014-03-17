@@ -103,11 +103,46 @@ public class WorldController {
 	}
 
 	public void movimeto(float x, float y) {
-		float posX = x / 10;
-		float posY = y / 100;
-		Vector2 vetor = new Vector2(x, y);
+		bob.setState(State.WALKING);
+		if (bob.getPosition().x < x) {
+			bob.setFacingLeft(true);
+		} else {
+			bob.setFacingLeft(false);
+		}
+		
+		// verifica se o bob esta fora do screen
+		if (x + bob.getBounds().getWidth() > world.getNumBlocosH()) {
+			x = world.getNumBlocosH() - bob.getBounds().getWidth();
+		}
+		if (y + bob.getBounds().getHeight() > world.getNumBlocosV()) {
+			y = world.getNumBlocosV() - bob.getBounds().getHeight();
+		}
+		if (x < 0) {
+			x = 0;
+		}
+		if (y < 0) {
+			y = 0;
+		}
+		// fim da verificacao
 		bob.getPosition().x = x;
 		bob.getPosition().y = y;
+	}
+
+	public boolean onScreen() {
+
+		return !(bob.getPosition().y + bob.getBounds().height > (world.getNumBlocosV() - 0.01f)) ||
+		(bob.getPosition().y < 0.0f) ||
+		(bob.getPosition().x < 0.0f) || 
+		bob.getPosition().x + bob.getBounds().getWidth() > (world.getNumBlocosH() - 0.01f);
+				
+	}
+	public boolean onScreen(float x, float y) {
+
+		return !(y + bob.getBounds().height > (world.getNumBlocosV())) ||
+		(y < 0.0f) ||
+		(x < 0.0f) || 
+		x + bob.getBounds().getWidth() > (world.getNumBlocosH());
+				
 	}
 
 	/** Change Bob's state and parameters based on input controls **/
@@ -116,7 +151,7 @@ public class WorldController {
 		if (keys.get(Keys.UP)) {
 			// Verifica se o personagem pode andar
 			if (bob.getPosition().y + bob.getBounds().height > (world
-					.getHeight() - 0.01f)) {
+					.getNumBlocosV() - 0.01f)) {
 				bob.getVelocity().y = 0.0f;
 			} else {
 				// O personagem esta olhando para a cima
@@ -154,7 +189,7 @@ public class WorldController {
 			// if(verifica(8)==false){
 			// Verifica se o personagem pode andar
 			if (bob.getPosition().x + bob.getBounds().getWidth() > (world
-					.getWidth() - 0.01f)) {
+					.getNumBlocosH() - 0.01f)) {
 				bob.getVelocity().x = 0.0f;
 			} else {
 				// O personagem esta olhando para a direita

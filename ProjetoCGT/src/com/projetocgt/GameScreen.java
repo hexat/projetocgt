@@ -18,7 +18,6 @@ public class GameScreen implements Screen, InputProcessor{
 	private World world;
 	private WorldRenderer renderer;
 	private WorldController	controller;
-	private Personagem bob;
 	private ElementosCPN elementosCPN;
 	
 	//Vetor que sera utilizado para armazenar a posicao do bob. 
@@ -26,10 +25,11 @@ public class GameScreen implements Screen, InputProcessor{
 	private Vector2 vetor;
 	private int width, height;
 	private Vector2 pos;
+	private boolean flagTouchInBob; // flag para verificar se foi tocado no bob
 	
 	public GameScreen() {
 		super();
-
+		flagTouchInBob = false;
 		Texture.setEnforcePotImages(false);//desabilita a opcao de potencia de dois.
 		elementosCPN = new ElementosCPN(Gdx.files.internal("data/game.cpn").read());
 	}
@@ -57,11 +57,9 @@ public class GameScreen implements Screen, InputProcessor{
 
 	@Override
 	public void show() {
-		System.out.println("Teste");
 		world = new World(elementosCPN);
 		renderer = new WorldRenderer(world, true);
 		controller = new WorldController(world);
-		bob=new Personagem();
 		//Habilitando GDX para captura processos de entrada 
 		Gdx.input.setInputProcessor(this);
 		
@@ -130,42 +128,34 @@ public class GameScreen implements Screen, InputProcessor{
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-	System.out.println("down");
-		if (x < width / 2 && y > height / 2) {
-			//controller.leftReleased();
-			
+		Personagem bob = world.getPersonagem();
+		float newPosX = x / (width / world.getNumBlocosH()); 
+		float newPosY = world.getNumBlocosV() - y / (height / world.getNumBlocosV());
+		if (newPosX >= bob.getPosition().x &&
+				newPosX <= bob.getPosition().x + bob.getBounds().getWidth() &&
+				newPosY >= bob.getPosition().y && 
+				newPosY <= bob.getPosition().y + bob.getBounds().getHeight()) {
+			flagTouchInBob = true;
 		}
-		if (x > width / 2 && y > height / 2) {
-			//controller.rightReleased();
-		}
+
 		return true;
 	}
 
 	@Override
 	public boolean touchUp(int x, int y, int pointer, int button) {
-		System.out.println("up");
-		if (x < width / 2 && y > height / 2) {
-			//controller.leftReleased();
-		}
-		if (x > width / 2 && y > height / 2) {
-			//controller.rightReleased();
-		}
+		flagTouchInBob = false;
 		return true;
 	}
 	
 	@Override
 	public boolean touchDragged(int x, int y, int pointer) {
-		System.out.println("dragged");
-		float a=x/(width/10);
-		float b=y/(height/7);
-		controller.movimeto(a, b);
-		
-		if (x < width / 2 && y > height / 2) {
-			//controller.leftPressed();
-			//bob.setPosition2(getPosX());
-		}
-		if (x > width / 2 && y > height / 2) {
-			//controller.rightPressed();	
+
+		if (flagTouchInBob) {
+			Personagem bob = world.getPersonagem();
+	
+			float newPosX = x / (width / world.getNumBlocosH()) - bob.getBounds().width/2; 
+			float newPosY = world.getNumBlocosV() - y / (height / world.getNumBlocosV()) - bob.getBounds().height/2;
+			controller.movimeto(newPosX, newPosY);
 		}
 		return false;
 	}

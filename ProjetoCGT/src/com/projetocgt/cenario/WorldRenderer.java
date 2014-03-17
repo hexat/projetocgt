@@ -62,11 +62,11 @@ public class WorldRenderer {
 	
 	public WorldRenderer(World world, boolean debug) {
 		this.world = world;
-		CAMERA_HEIGHT = world.getHeight();
-		CAMERA_WIDTH = world.getWidth();
+		CAMERA_HEIGHT = world.getNumBlocosV();
+		CAMERA_WIDTH = world.getNumBlocosH();
 		//Inicializa a variavel de camera passando os parametros de quantos blocos ela vai ver na horizontal e vertical
 		this.cam = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);
-		this.cam.position.set(CAMERA_WIDTH / 2f, CAMERA_HEIGHT / 2f, 0); //Faz um set da posi��o da camera no mundo do jogo
+		this.cam.position.set(CAMERA_WIDTH / 2f, CAMERA_HEIGHT / 2f, 0); //Faz um set da posicao da camera no mundo do jogo
 		this.cam.update();												 //Atualiza a tela			
 		this.debug = debug;												 
 		spriteBatch = new SpriteBatch();
@@ -116,11 +116,11 @@ public class WorldRenderer {
 			currentFont.draw(spriteBatch,  "( "+(int)vector2.x, 40, 60);
 			//currentFont.draw(spriteBatch,  "( "+posiI.x, 40, 90);
 			
-			//Analisa a posi�ao inicial com a posi�ao atual
+			//Analisa a posicao inicial com a posicao atual
 			//Verifica se o personagem entrou no bloco
 			if( (int)vector2.x != (int)posiI.x ){
 				System.out.println("Entrou no bloco");
-				//Recebe uma nova posi�ao inicial
+				//Recebe uma nova posicao inicial
 				posiI.x=vector2.x;
 			}
 			
@@ -129,11 +129,11 @@ public class WorldRenderer {
 			currentFont.draw(spriteBatch,  "( "+((int)(vector2.x+bob.getBounds().getWidth())), 40, 60);
 			//currentFont.draw(spriteBatch,  "( "+ (posiI.x + bob.getBounds().getWidth()), 40, 90);
 			
-			//Analisa a posi�ao inicial com a posi�ao atual
+			//Analisa a posicao inicial com a posicao atual
 			//Verifica se o personagem entrou no bloco
 			if((int)(vector2.x+bob.getBounds().getWidth())!=(int)posiI.x){
 				System.out.println("Entrou no bloco");
-				//Recebe uma nova posi�ao inicial
+				//Recebe uma nova posicao inicial
 				posiI.x=vector2.x+bob.getBounds().getWidth();
 			}
 		}	
@@ -144,7 +144,7 @@ public class WorldRenderer {
 			if (bob.isFacingLeft()) {
 				//Valor normal, sem somar ser somado a altura
 				currentFont.draw(spriteBatch,  (int)vector2.y+ " )", 130, 60);
-				//Analisa a posi�ao inicial com a posicao atua
+				//Analisa a posicao inicial com a posicao atua
 				//Verifica se o personagem entrou no bloco
 				if((int)vector2.y!=(int)posiI.y){
 					System.out.println("Entrou no bloco");

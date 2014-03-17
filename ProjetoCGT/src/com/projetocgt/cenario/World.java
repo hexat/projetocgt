@@ -10,8 +10,8 @@ public class World {
 	Array<Block> blocks = new Array<Block>();
 	/** Our player controlled hero **/
 	Personagem personagem;
-	private float width;
-	private float height;
+	private float numBlocosH;
+	private float numBlocosV;
 	private ElementosCPN cpn;
 	// Getters -----------
 	public Array<Block> getBlocks() {
@@ -24,17 +24,17 @@ public class World {
 
 	public World(ElementosCPN cpn) {
 		this.cpn = cpn;
-		this.width = cpn.getNumMaxPlaceX();
-		this.height = cpn.getNumMaxPlaceY();
+		this.numBlocosH = cpn.getNumMaxPlaceX();
+		this.numBlocosV = cpn.getNumMaxPlaceY();
 
 		createDemoWorld();
 	}
 
-	public float getWidth() {
-		return width;
+	public float getNumBlocosH() {
+		return numBlocosH;
 	}
-	public float getHeight() {
-		return height;
+	public float getNumBlocosV() {
+		return numBlocosV;
 	}
 
 	private void createDemoWorld() {
@@ -43,8 +43,8 @@ public class World {
 		//Constroe o cenario,preenche uma matriz.
 		//"i" colunas.
 		//"j" linhas.
-		for (int i = 0; i < width; i++) {
-			for(int j = 0;j< height;j++){
+		for (int i = 0; i < numBlocosH; i++) {
+			for(int j = 0;j< numBlocosV;j++){
 				blocks.add(new Block(new Vector2(i, j), cpn.getPlaceByPos(i, i)));
 			} 			 			
 		}
