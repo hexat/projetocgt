@@ -32,7 +32,7 @@ public class WorldController {
 	// Este construtor recebe o mundo como parametro
 	public WorldController(World world) {
 		this.world = world;
-		// Posi��o inicial do personagem
+		// Posicao inicial do personagem
 		this.bob = world.getPersonagem();
 	}
 
