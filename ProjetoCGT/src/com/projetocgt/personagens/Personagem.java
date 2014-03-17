@@ -15,23 +15,23 @@ public class Personagem {
 	public static final float JUMP_VELOCITY = 1f;		//Velocidade do pulo do personagem
 	public static final float SIZE = 0.5f; 			//Metade de uma unidade
 
-	private Vector2 	position = new Vector2();		//Vetor que informa a posição do personagem
-	private Vector2 	acceleration = new Vector2();	//Vetor que informa a aceleração do personagem
+	private Vector2 	position = new Vector2();		//Vetor que informa a posiï¿½ï¿½o do personagem
+	private Vector2 	acceleration = new Vector2();	//Vetor que informa a aceleraï¿½ï¿½o do personagem
 	private Vector2 	velocity = new Vector2();		//Vetor que informa a velocidade do personagem
-	private Rectangle 	bounds = new Rectangle();		// Área que será desenhado o personagem
+	private Rectangle 	bounds = new Rectangle();		// ï¿½rea que serï¿½ desenhado o personagem
 	private State 		state = State.IDLE;				//
 	private boolean 	facingLeft = true;				//
 	
-	//Construtor padrão que recebe uma posição inicial 
+	//Construtor padrï¿½o que recebe uma posiï¿½ï¿½o inicial 
 	public Personagem(Vector2 position) {
-		this.position = position;		//Posição inicial 
-		this.bounds.height = SIZE;		//Altura do personagem (Altura da área onde o personagem será desenhado)
-		this.bounds.width = SIZE;		//Largura do personagem (Largura da área onde o personagem será desenhado)
+		this.position = position;		//Posiï¿½ï¿½o inicial 
+		this.bounds.height = SIZE;		//Altura do personagem (Altura da ï¿½rea onde o personagem serï¿½ desenhado)
+		this.bounds.width = SIZE;		//Largura do personagem (Largura da ï¿½rea onde o personagem serï¿½ desenhado)
 	}
 	
 	public Personagem() {
-		this.bounds.height = SIZE;		//Altura do personagem (Altura da área onde o personagem será desenhado)
-		this.bounds.width = SIZE;		//Largura do personagem (Largura da área onde o personagem será desenhado)
+		this.bounds.height = SIZE;		//Altura do personagem (Altura da ï¿½rea onde o personagem serï¿½ desenhado)
+		this.bounds.width = SIZE;		//Largura do personagem (Largura da ï¿½rea onde o personagem serï¿½ desenhado)
 	}
 	
 	public void setState(State newState) {

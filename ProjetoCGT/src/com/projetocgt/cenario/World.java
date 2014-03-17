@@ -2,9 +2,8 @@ package com.projetocgt.cenario;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.projetocgt.core.petri.ElementosCPN;
 import com.projetocgt.personagens.Personagem;
-
-import core.petri.ElementosCPN;
 
 public class World {
 	/** The blocks making up the world **/
@@ -25,14 +24,9 @@ public class World {
 
 	public World(ElementosCPN cpn) {
 		this.cpn = cpn;
-		//this.width = cpn.getNumMaxPlaceX();
-		//this.height = cpn.getNumMaxPlaceY();
-
-		this.width = 9.0f;
-		this.height = 7.0f;
+		this.width = cpn.getNumMaxPlaceX();
+		this.height = cpn.getNumMaxPlaceY();
 		
-		System.out.println(cpn.getNumMaxPlaceX());
-		System.out.println(cpn.getNumMaxPlaceY());
 		createDemoWorld();
 	}
 

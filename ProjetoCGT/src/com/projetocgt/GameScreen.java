@@ -1,20 +1,17 @@
 package com.projetocgt;
 
-import java.io.File;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.math.Vector;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.cenario.World;
 import com.projetocgt.cenario.WorldController;
 import com.projetocgt.cenario.WorldRenderer;
+import com.projetocgt.core.petri.ElementosCPN;
 import com.projetocgt.personagens.Personagem;
-
-import core.petri.ElementosCPN;
 
 public class GameScreen implements Screen, InputProcessor{
 	
@@ -32,7 +29,8 @@ public class GameScreen implements Screen, InputProcessor{
 	
 	public GameScreen() {
 		super();
-		//
+
+		Texture.setEnforcePotImages(false);//desabilita a opcao de potencia de dois.
 		elementosCPN = new ElementosCPN(Gdx.files.internal("data/game.cpn").read());
 	}
 	
@@ -110,7 +108,7 @@ public class GameScreen implements Screen, InputProcessor{
 		return true;
 	}
 
-	//Funciona na subida do bot���o 
+	//Funciona na subida do botao 
 	@Override
 	public boolean keyUp(int keycode) {
 		if (keycode == Keys.LEFT)
@@ -132,7 +130,7 @@ public class GameScreen implements Screen, InputProcessor{
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		
+	System.out.println("down");
 		if (x < width / 2 && y > height / 2) {
 			//controller.leftReleased();
 			
@@ -145,6 +143,7 @@ public class GameScreen implements Screen, InputProcessor{
 
 	@Override
 	public boolean touchUp(int x, int y, int pointer, int button) {
+		System.out.println("up");
 		if (x < width / 2 && y > height / 2) {
 			//controller.leftReleased();
 		}
@@ -156,6 +155,7 @@ public class GameScreen implements Screen, InputProcessor{
 	
 	@Override
 	public boolean touchDragged(int x, int y, int pointer) {
+		System.out.println("dragged");
 		float a=x/(width/10);
 		float b=y/(height/7);
 		controller.movimeto(a, b);
