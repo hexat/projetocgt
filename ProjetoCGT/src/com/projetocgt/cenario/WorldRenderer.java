@@ -52,21 +52,22 @@ public class WorldRenderer {
 	public float getCAMERA_WIDTH(){
 		return this.CAMERA_HEIGHT;
 	}
-	
+	//Sera chamado cada vez que a tela é redimensionada e calcula as unidades em pixels.
 	public void setSize (int w, int h) {
 		this.width = w;
 		this.height = h;
-		ppuX = (float)width / CAMERA_WIDTH;
-		ppuY = (float)height / CAMERA_HEIGHT;
+		ppuX = (float)(width) / CAMERA_WIDTH;
+		ppuY = (float)(height) / CAMERA_HEIGHT;
 	}
 	
 	public WorldRenderer(World world, boolean debug) {
 		this.world = world;
 		CAMERA_HEIGHT = world.getHeight();
 		CAMERA_WIDTH = world.getWidth();
+		
 		//Inicializa a variavel de camera passando os parametros de quantos blocos ela vai ver na horizontal e vertical
 		this.cam = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);
-		this.cam.position.set(CAMERA_WIDTH / 2f, CAMERA_HEIGHT / 2f, 0); //Faz um set da posi��o da camera no mundo do jogo
+		this.cam.position.set(CAMERA_WIDTH / 2f, CAMERA_HEIGHT / 2f, 0); //Faz um set da posicao da camera no mundo do jogo
 		this.cam.update();												 //Atualiza a tela			
 		this.debug = debug;												 
 		spriteBatch = new SpriteBatch();
@@ -80,8 +81,8 @@ public class WorldRenderer {
 	private void loadTextures() {
 		 //Carrega as texturas que serao paresentadas na cena
 		bobTexture = new  Texture(Gdx.files.internal("data/Bob.png"));
-		blockTexture = new Texture(Gdx.files.internal("data/piscina.png"));
-		//Texto utilizado para printar a posi��o do personagem na tela
+		blockTexture =  new Texture(Gdx.files.internal("data/t/casa1.png"));
+		//Texto utilizado para printar a posicao do personagem na tela
 		currentFont = new BitmapFont();
 	}
 
@@ -129,13 +130,11 @@ public class WorldRenderer {
 		} else {
 			//Valor  somado com a base
 			currentFont.draw(spriteBatch,  "( "+((int)(vector2.x+bob.getBounds().getWidth())), 40, 60);
-			//currentFont.draw(spriteBatch,  "( "+ (posiI.x + bob.getBounds().getWidth()), 40, 90);
-			
-			//Analisa a posi�ao inicial com a posi�ao atual
+			//Analisa a posicao inicial com a posicao atual
 			//Verifica se o personagem entrou no bloco
 			if((int)(vector2.x+bob.getBounds().getWidth())!=(int)posiI.x){
 				System.out.println("Entrou no bloco");
-				//Recebe uma nova posi�ao inicial
+				//Recebe uma nova posicao inicial
 				posiI.x=vector2.x+bob.getBounds().getWidth();
 			}
 		}	
@@ -165,24 +164,28 @@ public class WorldRenderer {
 					posiI.y=vector2.y+bob.getBounds().getHeight();
 				}
 			}
-			currentFont.draw(spriteBatch," Posi��o do Personagem", 200, 60);
+			currentFont.draw(spriteBatch," Posicao do Personagem", 200, 60);
 			return vector2;
 		}
 		
 	private void drawBlocks() {
 		for (Block block : world.getBlocks()) {
 
-			if (block.getPlace() != null) {
+			/*if (block.getPlace() != null) {
 			spriteBatch.draw(new Texture(Gdx.files.internal("data/t/"+block.getPlace().getText()+".png")), block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
 			} else {
 				spriteBatch.draw(new Texture(Gdx.files.internal("data/t/casa1.png")), block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
-			}
-			//spriteBatch.draw(blockTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
+			}*/
+			spriteBatch.draw(blockTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
 		}
 	}
 
 	private void drawPersonagem() {
 		Personagem bob = world.getPersonagem();
+		
+		//A textura que ela vai desenhar "bobTexture" Posicao inicial
+		//Posicao inicial "bob.getPosition().x * ppuX, bob.getPosition().y * ppuY"
+		// Tamanho do desenho "Personagem.SIZE * ppuX, Personagem.SIZE * ppuY"
 		spriteBatch.draw(bobTexture, bob.getPosition().x * ppuX, bob.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
 	}
 	

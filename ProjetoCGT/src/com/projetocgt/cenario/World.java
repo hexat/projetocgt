@@ -25,9 +25,12 @@ public class World {
 
 	public World(ElementosCPN cpn) {
 		this.cpn = cpn;
-		this.width = cpn.getNumMaxPlaceX();
-		this.height = cpn.getNumMaxPlaceY();
+		//this.width = cpn.getNumMaxPlaceX();
+		//this.height = cpn.getNumMaxPlaceY();
 
+		this.width = 9.0f;
+		this.height = 7.0f;
+		
 		System.out.println(cpn.getNumMaxPlaceX());
 		System.out.println(cpn.getNumMaxPlaceY());
 		createDemoWorld();

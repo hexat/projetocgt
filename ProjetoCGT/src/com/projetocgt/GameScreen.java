@@ -45,7 +45,7 @@ public class GameScreen implements Screen, InputProcessor{
 		//
 		renderer.render();
 	}
-
+	
 	@Override
 	public void resize(int width, int height) {
 		renderer.setSize(width, height);
@@ -61,7 +61,7 @@ public class GameScreen implements Screen, InputProcessor{
 	public void show() {
 		System.out.println("Teste");
 		world = new World(elementosCPN);
-		renderer = new WorldRenderer(world, true);
+		renderer = new WorldRenderer(world, false);
 		controller = new WorldController(world);
 		bob=new Personagem();
 		//Habilitando GDX para captura processos de entrada 

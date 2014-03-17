@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import core.petri.entity.Place;
 
 public class Block {
-	static final float SIZE = 0.5f;
+	static final float SIZE = 1f;
 	private Place place;
 	private Vector2 	position = new Vector2();	//Posicao inicial do bloco(Retangulo)
 	private Rectangle 	bounds = new Rectangle();	//Area que sera construida cada bloco do cenario		
