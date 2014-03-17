@@ -103,8 +103,9 @@ public class WorldController {
 	}
 
 	public void movimeto(float x, float y) {
-		float posX = x / 10;
-		float posY = y / 100;
+		float posX = x / 1000;
+		float posY = y / 1000;
+		
 		Vector2 vetor = new Vector2(x, y);
 		bob.getPosition().x = x;
 		bob.getPosition().y = y;

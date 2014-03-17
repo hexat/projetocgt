@@ -156,8 +156,8 @@ public class GameScreen implements Screen, InputProcessor{
 	@Override
 	public boolean touchDragged(int x, int y, int pointer) {
 		System.out.println("dragged");
-		float a=x/(width/10);
-		float b=y/(height/7);
+		float a=x/(width/world.getHeight());
+		float b=y/(height/world.getWidth());
 		controller.movimeto(a, b);
 		
 		if (x < width / 2 && y > height / 2) {
