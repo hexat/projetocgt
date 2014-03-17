@@ -24,9 +24,9 @@ public class World {
 
 	public World(ElementosCPN cpn) {
 		this.cpn = cpn;
+
 		this.numBlocosH = cpn.getNumMaxPlaceX();
 		this.numBlocosV = cpn.getNumMaxPlaceY();
-
 		createDemoWorld();
 	}
 

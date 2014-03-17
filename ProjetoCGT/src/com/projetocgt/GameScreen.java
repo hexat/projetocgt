@@ -43,7 +43,7 @@ public class GameScreen implements Screen, InputProcessor{
 		//
 		renderer.render();
 	}
-
+	
 	@Override
 	public void resize(int width, int height) {
 		renderer.setSize(width, height);
@@ -58,7 +58,7 @@ public class GameScreen implements Screen, InputProcessor{
 	@Override
 	public void show() {
 		world = new World(elementosCPN);
-		renderer = new WorldRenderer(world, true);
+		renderer = new WorldRenderer(world, false);
 		controller = new WorldController(world);
 		//Habilitando GDX para captura processos de entrada 
 		Gdx.input.setInputProcessor(this);
@@ -149,7 +149,6 @@ public class GameScreen implements Screen, InputProcessor{
 	
 	@Override
 	public boolean touchDragged(int x, int y, int pointer) {
-
 		if (flagTouchInBob) {
 			Personagem bob = world.getPersonagem();
 	

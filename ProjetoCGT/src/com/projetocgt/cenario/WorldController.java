@@ -124,6 +124,7 @@ public class WorldController {
 			y = 0;
 		}
 		// fim da verificacao
+
 		bob.getPosition().x = x;
 		bob.getPosition().y = y;
 	}
