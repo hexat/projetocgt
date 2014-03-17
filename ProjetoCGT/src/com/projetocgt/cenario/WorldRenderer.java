@@ -72,8 +72,6 @@ public class WorldRenderer {
 		spriteBatch = new SpriteBatch();
 		
 		
-		
-		Texture.setEnforcePotImages(false);//desabilita a opcao de potencia de dois.
 		loadTextures();
 	}
 	
@@ -171,13 +169,9 @@ public class WorldRenderer {
 		
 	private void drawBlocks() {
 		for (Block block : world.getBlocks()) {
-
-			if (block.getPlace() != null) {
+			// desenhando a textura do bloco
+			// a textura do bloco e' setada no construtor
 				spriteBatch.draw(block.getTexture(), block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
-			} else {
-				spriteBatch.draw(blockTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
-			}
-//			spriteBatch.draw(blockTexture, block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
 		}
 	}
 

@@ -12,7 +12,7 @@ public class MainActivity extends AndroidApplication {
         super.onCreate(savedInstanceState);
         
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
-        //Configurações da OpenGL
+        //Configuracoes da OpenGL
         cfg.useGL20 = false;
         //cfg.useAccelerometer = false;
         //cfg.useCompass = false;

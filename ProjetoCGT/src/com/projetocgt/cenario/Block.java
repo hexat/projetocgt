@@ -4,8 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-
-import core.petri.entity.Place;
+import com.projetocgt.core.petri.entity.Place;
 
 public class Block {
 	static final float SIZE = 1f;
@@ -19,6 +18,8 @@ public class Block {
 		this.position = pos;				//posicao inicial
 		this.bounds.width = SIZE;			//Largura do bloco 
 		this.bounds.height = SIZE;			//Altura do bloco
+		//Construindo textura apartir do nome do lugar na Rede Petri
+		//As texturas devem estar na pasta data/t.
 		textura = new Texture(Gdx.files.internal("data/t/"+place.getText()+".png"));
 	}
 

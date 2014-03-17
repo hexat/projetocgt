@@ -1,6 +1,5 @@
-package core.petri;
+package com.projetocgt.core.petri;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -16,9 +15,9 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import core.petri.entity.Arc;
-import core.petri.entity.Place;
-import core.petri.entity.Transition;
+import com.projetocgt.core.petri.entity.Arc;
+import com.projetocgt.core.petri.entity.Place;
+import com.projetocgt.core.petri.entity.Transition;
 
 public class CpnXmlReader {
 	private DocumentBuilderFactory dbf;
@@ -36,7 +35,7 @@ public class CpnXmlReader {
 
 		db = dbf.newDocumentBuilder();
 
-		// Funcionar sem internet: desabilitar verificação de pacotes
+		// Funcionar sem internet: desabilitar verifica����o de pacotes
 		db.setEntityResolver(new EntityResolver() {
 			public InputSource resolveEntity(String publicId, String systemId)
 					throws SAXException, IOException {
@@ -74,10 +73,10 @@ public class CpnXmlReader {
 			Element tagPosattr = (Element) nlPosattr.item(0);
 
 			// ler: <text tool="CPN Tools" version="3.2.2">MyVar</text>
-			// variável: MyVar
+			// vari��vel: MyVar
 			// dentro do marcador: <type id="ID1412319741">
 			// se tiver dentro do marcador: <initmark id="ID1412319742">
-			// - vai resultar na marcação inicial (token inicial)
+			// - vai resultar na marca����o inicial (token inicial)
 			NodeList tipoNoPNML_pai = tagPlace.getElementsByTagName("type"); // /mudei
 																				// aqui
 			// if ()
@@ -96,7 +95,7 @@ public class CpnXmlReader {
 
 			// System.out.println("id: "+id+" || x: "+x+" || y: "+y);
 
-			// // pega os dados do initmark que � filho do place atual
+			// // pega os dados do initmark que ��� filho do place atual
 			for (int j = 0; j < nlInitmark.getLength(); j++) {
 				Element tagInitmark = (Element) nlInitmark.item(j);
 				if (tagInitmark != null)
@@ -142,14 +141,14 @@ public class CpnXmlReader {
 			// cria uma nova instancia do Place com os dados do xml
 			transition = new Transition(id, text);
 
-			// adiciona o place na cole��o (vector) de places
+			// adiciona o place na cole������o (vector) de places
 			transitions.add(transition);
 		}
 
 		return transitions;
 	}
 
-	// retorna as transições que levam a outras pages (redes) - indicativo de
+	// retorna as transi����es que levam a outras pages (redes) - indicativo de
 	// Hierarquia
 	public ArrayList<Transition> lerTransitionsHierarquicas() throws Exception {
 
@@ -218,18 +217,18 @@ public class CpnXmlReader {
 		for (int i = 0; i < nl.getLength(); i++) {
 			Element tagArc = (Element) nl.item(i);
 
-			// transend s� tem um elemento por isso nl.item(0)
+			// transend s��� tem um elemento por isso nl.item(0)
 			NodeList nlTransend = tagArc.getElementsByTagName("transend");
 			Element tagTransend = (Element) nlTransend.item(0);
 
-			// placeend s� tem um elemento por isso nl.item(0)
+			// placeend s��� tem um elemento por isso nl.item(0)
 			NodeList nlPlaceend = tagArc.getElementsByTagName("placeend");
 			Element tagPlaceend = (Element) nlPlaceend.item(0);
 
 			NodeList nlAnnot = tagArc.getElementsByTagName("annot");
 			String text = "";
 
-			// // pega os dados do text do annot filho que � filho do arc atual
+			// // pega os dados do text do annot filho que ��� filho do arc atual
 			for (int j = 0; j < nlAnnot.getLength(); j++) {
 				Element tagText = (Element) nlAnnot.item(j);
 				text = getChildTagValue(tagText, "text");
@@ -252,16 +251,16 @@ public class CpnXmlReader {
 			// cria uma nova instancia do Place com os dados do xml
 			arc = new Arc(id, orientation, transend, placeend, text);
 
-			// adiciona o place na colecao (vector) de places
+			// adiciona o place na cole������o (vector) de places
 			arcs.add(arc);
 		}
 
 		return arcs;
 	}
 
-	// este m�todo l� e retorna o conte�do (texto) de uma tag (elemento)
-	// filho da tag informada como par�metro. A tag filho a ser pesquisada
-	// � a tag informada pelo nome (string)
+	// este m���todo l��� e retorna o conte���do (texto) de uma tag (elemento)
+	// filho da tag informada como par���metro. A tag filho a ser pesquisada
+	// ��� a tag informada pelo nome (string)
 	private String getChildTagValue(Element elem, String tagName)
 			throws Exception {
 		NodeList children = elem.getElementsByTagName(tagName);

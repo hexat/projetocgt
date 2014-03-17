@@ -3,4 +3,6 @@ encoding//src/com/projetocgt/GameScreen.java=UTF-8
 encoding//src/com/projetocgt/cenario/Block.java=UTF-8
 encoding//src/com/projetocgt/cenario/WorldController.java=UTF-8
 encoding//src/com/projetocgt/cenario/WorldRenderer.java=UTF-8
+encoding//src/com/projetocgt/core/petri/CpnXmlReader.java=UTF-8
+encoding//src/com/projetocgt/core/petri/ElementosCPN.java=UTF-8
 encoding//src/com/projetocgt/personagens/Personagem.java=UTF-8
