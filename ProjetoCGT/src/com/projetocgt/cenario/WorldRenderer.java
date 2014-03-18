@@ -1,6 +1,7 @@
 package com.projetocgt.cenario;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -30,7 +31,7 @@ public class WorldRenderer {
 	/** Textures **/
 	private Texture bobTexture;
 	private Texture blockTexture;
-
+	
 	private SpriteBatch spriteBatch;	// 
 	private boolean debug = false; 		// Variavel que ira ativar o debug
 	private int width;					//
@@ -78,7 +79,8 @@ public class WorldRenderer {
 	}
 	
 	private void loadTextures() {
-		 //Carrega as texturas que serao paresentadas na cena
+		
+		//Carrega as texturas que serao paresentadas na cena
 		bobTexture = new  Texture(Gdx.files.internal("data/Bob.png"));
 		blockTexture =  new Texture(Gdx.files.internal("data/t/casa1.png"));
 		//Texto utilizado para printar a posicao do personagem na tela
@@ -86,7 +88,6 @@ public class WorldRenderer {
 	}
 
 	public void render() {
-
 		spriteBatch.begin();
 		//Desenha os blocos
 		drawBlocks();
