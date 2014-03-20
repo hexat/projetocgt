@@ -17,6 +17,15 @@ public class World {
 	public Array<Block> getBlocks() {
 		return blocks;
 	}
+	
+	public Block getBlock(int x, int y) {
+		for (Block b : blocks) {
+			if (((int)b.getPosition().x) == x && ((int) b.getPosition().y) == y) {
+				return b;
+			}
+		}
+		return null;
+	}
 	public Personagem getPersonagem() {
 		return personagem;
 	}
@@ -28,6 +37,10 @@ public class World {
 		this.numBlocosH = cpn.getNumMaxPlaceX();
 		this.numBlocosV = cpn.getNumMaxPlaceY();
 		createDemoWorld();
+	}
+	
+	public ElementosCPN getElementosCPN() {
+		return cpn;
 	}
 
 	public float getNumBlocosH() {
@@ -44,8 +57,8 @@ public class World {
 		//"i" colunas.
 		//"j" linhas.
 		for (int i = 0; i < numBlocosH; i++) {
-			for(int j = 0;j< numBlocosV;j++){
-				blocks.add(new Block(new Vector2(i, j), cpn.getPlaceByPos(i, i)));
+			for(int j = 0;j < numBlocosV;j++){
+				blocks.add(new Block(new Vector2(i, j), cpn.getPlaceByPos(i, j)));
 			} 			 			
 		}
 	}

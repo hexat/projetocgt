@@ -1,6 +1,9 @@
 package com.projetocgt.cenario;
 
 import com.badlogic.gdx.math.Vector2;
+import com.projetocgt.core.petri.CpnXmlReader;
+import com.projetocgt.core.petri.ElementosCPN;
+import com.projetocgt.core.petri.entity.Place;
 import com.projetocgt.personagens.Personagem;
 import com.projetocgt.personagens.Personagem.State;
 
@@ -16,7 +19,7 @@ public class WorldController {
 
 	private World world;
 	private Personagem bob;
-	private WorldRenderer worldRender;
+
 	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
 	static {
 		keys.put(Keys.LEFT, false);
@@ -103,30 +106,32 @@ public class WorldController {
 	}
 
 	public void movimeto(float x, float y) {
-		bob.setState(State.WALKING);
-		if (bob.getPosition().x < x) {
-			bob.setFacingLeft(true);
-		} else {
-			bob.setFacingLeft(false);
+		if (permitido(x, y)) {
+			bob.setState(State.WALKING);
+			if (bob.getPosition().x < x) {
+				bob.setFacingLeft(true);
+			} else {
+				bob.setFacingLeft(false);
+			}
+			
+			// verifica se o bob esta fora do screen
+			if (x + bob.getBounds().getWidth() > world.getNumBlocosH()) {
+				x = world.getNumBlocosH() - bob.getBounds().getWidth();
+			}
+			if (y + bob.getBounds().getHeight() > world.getNumBlocosV()) {
+				y = world.getNumBlocosV() - bob.getBounds().getHeight();
+			}
+			if (x < 0) {
+				x = 0;
+			}
+			if (y < 0) {
+				y = 0;
+			}
+			// fim da verificacao
+			
+			bob.getPosition().x = x;
+			bob.getPosition().y = y;			
 		}
-		
-		// verifica se o bob esta fora do screen
-		if (x + bob.getBounds().getWidth() > world.getNumBlocosH()) {
-			x = world.getNumBlocosH() - bob.getBounds().getWidth();
-		}
-		if (y + bob.getBounds().getHeight() > world.getNumBlocosV()) {
-			y = world.getNumBlocosV() - bob.getBounds().getHeight();
-		}
-		if (x < 0) {
-			x = 0;
-		}
-		if (y < 0) {
-			y = 0;
-		}
-		// fim da verificacao
-
-		bob.getPosition().x = x;
-		bob.getPosition().y = y;
 	}
 
 	public boolean onScreen() {
@@ -221,5 +226,38 @@ public class WorldController {
 			bob.getVelocity().y = 0;
 		}
 
+	}
+	
+
+	/**
+	 * Verifica se o sprite pode ou nao passar para outro block(lugar).
+	 * @param otherX nova posicao X
+	 * @param otherY nova posicao Y
+	 * @return true se e' permitido passar. false caso contrario
+	 */
+	public boolean permitido(float otherX, float otherY) {
+		bob = world.getPersonagem();
+		int bobPositionX = (int)bob.getPosition().x;
+		int bobPositionY = (int)bob.getPosition().y;
+		boolean res = true;
+
+		Place placeA = null, placeB = null;
+		if ((int)otherX < bobPositionX) {
+			placeA = world.getBlock(bobPositionX, bobPositionY).getPlace();
+			placeB = world.getBlock((int)otherX, (int)otherY).getPlace();
+		} else if ((int)(otherX+bob.getBounds().getWidth()) > (int)(bob.getPosition().x+bob.getBounds().getWidth())) {
+			placeA = world.getBlock(bobPositionX, bobPositionY).getPlace();
+			placeB = world.getBlock((int)(otherX+bob.getBounds().getWidth()), bobPositionY).getPlace();
+		} else if ((int)otherY < bobPositionY) {
+			placeA = world.getBlock(bobPositionX, bobPositionY).getPlace();
+			placeB = world.getBlock((int)otherY, bobPositionY).getPlace();
+		} else if ((int)(otherY+bob.getBounds().getHeight()) > (int)(bob.getPosition().y+bob.getBounds().getHeight())) {
+			placeA = world.getBlock(bobPositionX, bobPositionY).getPlace();
+			placeB = world.getBlock(bobPositionX, (int)(otherY+bob.getBounds().getHeight())).getPlace();
+		}
+		if (placeA != null && placeB != null) {
+			res = world.getElementosCPN().dispararTransicao(placeA, placeB);
+		}
+		return res;
 	}
 }

@@ -1,6 +1,8 @@
+
 package com.projetocgt.core.petri;
 
 import java.io.InputStream;
+
 import java.util.ArrayList;
 
 import com.projetocgt.core.helper.Lista;
@@ -9,6 +11,10 @@ import com.projetocgt.core.petri.entity.Arc;
 import com.projetocgt.core.petri.entity.Place;
 import com.projetocgt.core.petri.entity.Transition;
 
+/**
+ * 
+ * @author luanjames
+ */
 public class ElementosCPN {
 
 	ArrayList<Place> places;
@@ -163,6 +169,25 @@ public class ElementosCPN {
 		
 	}
 
+	public boolean dispararTransicao(Place a, Place b) {
+		int posA = -1;
+		int posB = -1;
+		for (int i = 0; i < places.size(); i++) {
+			if (places.get(i).equals(a)) {
+				posA = i;
+			}
+			if (places.get(i).equals(b)) {
+				posB = i;
+			}
+		}
+
+		if (matrizToPlace[posA][posB] != null) {
+			return dispararTransicao(matrizToPlace[posA][posB]);
+		} else {
+			return false;
+		}
+	}
+	
 	public boolean dispararTransicao(Lista lista) {
 		
 		boolean achei = false;
@@ -183,8 +208,6 @@ public class ElementosCPN {
 			for (int i = 0; i < places.size(); i++) {
 				if (matrizPre[i][index] != null) {
 					lugares.add(matrizPre[i][index]);
-					// System.out.println(matrizPre[i][index].hashCode());
-					// System.out.println(lugares.get(lugares.size()-1).hashCode());
 				}
 			}
 	
@@ -217,8 +240,6 @@ public class ElementosCPN {
 			for (int i = 0; i < places.size(); i++) {
 				if (matrizPost[i][index] != null) {
 					lugares.add(matrizPost[i][index]);
-					// System.out.println(matrizPre[i][index].hashCode());
-					// System.out.println(lugares.get(lugares.size()-1).hashCode());
 				}
 			}
 			for (int i = 0; i < lugares.size(); i++) {
