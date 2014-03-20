@@ -139,34 +139,9 @@ public class WorldRenderer {
 				posiI.x=vector2.x+bob.getBounds().getWidth();
 			}
 		}	
-			
-		//Verifica se o personagem esta olhando para a baixo
-			//Se ele estiver olhando para a baixo printo e valor normal 
-			//Caso contrario ele esta olhando para a cima, logo somo a altura dela com a sua posi��o na vertical
-			if (bob.isFacingLeft()) {
-				//Valor normal, sem somar ser somado a altura
-				currentFont.draw(spriteBatch,  (int)vector2.y+ " )", 130, 60);
-				//Analisa a posicao inicial com a posicao atua
-				//Verifica se o personagem entrou no bloco
-				if((int)vector2.y!=(int)posiI.y){
-					System.out.println("Entrou no bloco");
-					//Recebe uma nova posicao inicial
-					posiI.y=vector2.y;
-				}
-				
-			}else {
-				//Valor  somado com a altura
-				currentFont.draw(spriteBatch,  (int)(vector2.y+bob.getBounds().getHeight())+ " )", 130, 60);
-				//Analisa a posicao inicial com a posicao atual
-				//Verifica se o personagem entrou no bloco
-				if((int)(vector2.y+bob.getBounds().getHeight())!=(int)posiI.y){
-					System.out.println("Entrou no bloco");
-					//Recebe uma nova posicao inicial
-					posiI.y=vector2.y+bob.getBounds().getHeight();
-				}
-			}
-			currentFont.draw(spriteBatch," Posicao do Personagem", 200, 60);
-			return vector2;
+		
+		currentFont.draw(spriteBatch," Posicao do Personagem", 200, 60);
+		return vector2;
 		}
 		
 	private void drawBlocks() {
