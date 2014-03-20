@@ -57,8 +57,8 @@ public class World {
 		//"i" colunas.
 		//"j" linhas.
 		for (int i = 0; i < numBlocosH; i++) {
-			for(int j = 0;j< numBlocosV;j++){
-				blocks.add(new Block(new Vector2(i, j), cpn.getPlaceByPos(i, i)));
+			for(int j = 0;j < numBlocosV;j++){
+				blocks.add(new Block(new Vector2(i, j), cpn.getPlaceByPos(i, j)));
 			} 			 			
 		}
 	}

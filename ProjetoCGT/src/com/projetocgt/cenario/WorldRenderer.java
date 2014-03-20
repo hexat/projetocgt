@@ -88,7 +88,7 @@ public class WorldRenderer {
 		//Dsenha o personagem
 		drawPersonagem();
 		//Desenha o texto com a posicao do personagem
-		printTexto();
+//		printTexto();
 		spriteBatch.end();
 		if (debug)
 			drawDebug();
