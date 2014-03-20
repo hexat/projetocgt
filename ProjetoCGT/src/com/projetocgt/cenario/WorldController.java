@@ -268,36 +268,6 @@ public class WorldController {
 				}//Recebe uma nova posicao inicial
 			}
 		}	
-			
-		//Verifica se o personagem esta olhando para a baixo
-			//Se ele estiver olhando para a baixo printo e valor normal 
-			//Caso contrario ele esta olhando para a cima, logo somo a altura dela com a sua posi��o na vertical
-			if (bob.isFacingLeft()) {
-				//Analisa a posicao inicial com a posicao atua
-				//Verifica se o personagem entrou no bloco
-				if((int)vector2.y!=(int)posAuxBob.y){
-					Place a = world.getBlock((int)(vector2.x+bob.getBounds().getWidth()), (int)vector2.y).getPlace();
-					Place b = world.getBlock((int)posAuxBob.x, (int)posAuxBob.x).getPlace();
-					if (world.getElementosCPN().dispararTransicao(a, b)) {
-						posAuxBob.x=vector2.x+bob.getBounds().getWidth();
-						return true;
-					} else {
-//						posAuxBob.x=vector2.x+bob.getBounds().getWidth();
-						return false;
-					}//Recebe uma nova posicao inicial
-					//Recebe uma nova posicao inicial
-					posAuxBob.y=vector2.y;
-				}
-				
-			}else {
-				//Analisa a posicao inicial com a posicao atual
-				//Verifica se o personagem entrou no bloco
-				if((int)(vector2.y+bob.getBounds().getHeight())!=(int)posAuxBob.y){
-					System.out.println("Entrou no bloco");
-					//Recebe uma nova posicao inicial
-					posAuxBob.y=vector2.y+bob.getBounds().getHeight();
-				}
-			}
-			return res;
+		return res;
 	}
 }

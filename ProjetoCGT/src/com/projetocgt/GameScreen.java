@@ -1,9 +1,11 @@
 package com.projetocgt;
 
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
@@ -26,12 +28,16 @@ public class GameScreen implements Screen, InputProcessor{
 	private int width, height;
 	private Vector2 pos;
 	private boolean flagTouchInBob; // flag para verificar se foi tocado no bob
+	private Music music;
+	private Audio audio;
 	
 	public GameScreen() {
 		super();
 		flagTouchInBob = false;
 		Texture.setEnforcePotImages(false);//desabilita a opcao de potencia de dois.
 		elementosCPN = new ElementosCPN(Gdx.files.internal("data/game.cpn").read());
+		//Carrega os audios
+		music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/temabombeiro.wav"));
 	}
 	
 	@Override
@@ -57,8 +63,11 @@ public class GameScreen implements Screen, InputProcessor{
 
 	@Override
 	public void show() {
+		
+		music.play();
+		music.setLooping(true);
 		world = new World(elementosCPN);
-		renderer = new WorldRenderer(world, false);
+		renderer = new WorldRenderer(world, true);
 		controller = new WorldController(world);
 		//Habilitando GDX para captura processos de entrada 
 		Gdx.input.setInputProcessor(this);

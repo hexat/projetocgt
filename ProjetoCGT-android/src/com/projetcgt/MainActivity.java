@@ -13,11 +13,11 @@ public class MainActivity extends AndroidApplication {
         
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         //Configuracoes da OpenGL
-        cfg.useGL20 = false;
+        //cfg.useGL20 = false;
         //cfg.useAccelerometer = false;
         //cfg.useCompass = false;
         //cfg.useWakelock = true;
-        //cfg.useGL20 = true;
+        cfg.useGL20 = true;
         initialize(new StarAssault(), cfg);
     }
 }
