@@ -10,14 +10,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.projetocgt.GameScreen;
 import com.projetocgt.personagens.Personagem;
 
 public class WorldRenderer {
 	
-	private World world;			//Declara a variavel do tipo World que ser� passada de parametro no renderer 
+	private World world;			//Declara a variavel do tipo World que sera passada de parametro no renderer 
 	private OrthographicCamera cam;	//Declara a variavel da camera
-	private GameScreen pos;
 	private Personagem bob;
 	// Inicializa uma constante relacionado a quantidade de blocos na horizontal que sera visto pela camera
 	private float CAMERA_WIDTH;
@@ -29,7 +27,6 @@ public class WorldRenderer {
 	
 	/** Textures **/
 	private Texture bobTexture;
-	private Texture blockTexture;
 
 	private SpriteBatch spriteBatch;	// 
 	private boolean debug = false; 		// Variavel que ira ativar o debug
@@ -38,10 +35,8 @@ public class WorldRenderer {
 	private float ppuX;					// Pixels per unit on the X axis
 	private float ppuY;					// Pixels per unit on the Y axis
 	
-	private Vector2 posI;
 	
 	private BitmapFont currentFont;
-	private Vector2 vectorEstado;
 	private Vector2 posiI;
 	boolean flag=true;
 	
@@ -80,7 +75,6 @@ public class WorldRenderer {
 	private void loadTextures() {
 		 //Carrega as texturas que serao paresentadas na cena
 		bobTexture = new  Texture(Gdx.files.internal("data/Bob.png"));
-		blockTexture =  new Texture(Gdx.files.internal("data/t/casa1.png"));
 		//Texto utilizado para printar a posicao do personagem na tela
 		currentFont = new BitmapFont();
 	}
@@ -116,7 +110,6 @@ public class WorldRenderer {
 		if (bob.isFacingLeft()) {
 			//Valor normal, sem somar ser somado a base
 			currentFont.draw(spriteBatch,  "( "+(int)vector2.x, 40, 60);
-			//currentFont.draw(spriteBatch,  "( "+posiI.x, 40, 90);
 			
 			//Analisa a posicao inicial com a posicao atual
 			//Verifica se o personagem entrou no bloco

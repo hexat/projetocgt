@@ -1,6 +1,7 @@
 package com.projetocgt.cenario;
 
 import com.badlogic.gdx.math.Vector2;
+import com.projetocgt.core.petri.entity.Place;
 import com.projetocgt.personagens.Personagem;
 import com.projetocgt.personagens.Personagem.State;
 
@@ -16,7 +17,8 @@ public class WorldController {
 
 	private World world;
 	private Personagem bob;
-	private WorldRenderer worldRender;
+	private boolean flagCanWalk;
+	private Vector2 posAuxBob;
 	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
 	static {
 		keys.put(Keys.LEFT, false);
@@ -221,5 +223,81 @@ public class WorldController {
 			bob.getVelocity().y = 0;
 		}
 
+	}
+	
+	public boolean permitido() {
+		bob = world.getPersonagem();
+		Vector2 vector2 = bob.getPosition();
+		boolean res = true;
+		
+		if(flagCanWalk==true){
+			posAuxBob = new Vector2(bob.getPosition());
+			flagCanWalk=false;
+		}
+			
+		//Verifica se o personagem esta olhando para a esquerda
+		//Se ele estiver olhando para a esquerda printo e valor normal 
+		//Caso contrario ele esta olhando para a direita, logo somo a base dela com a sua posi��o
+		if (bob.isFacingLeft()) {
+			//Analisa a posicao inicial com a posicao atual
+			//Verifica se o personagem entrou no bloco
+			if( (int)vector2.x != (int)posAuxBob.x ){
+				Place a = world.getBlock((int)vector2.x, (int)vector2.y).getPlace();
+				Place b = world.getBlock((int)posAuxBob.x, (int)posAuxBob.x).getPlace();
+				if (world.getElementosCPN().dispararTransicao(a, b)) {
+					posAuxBob.x=vector2.x;
+					return true;
+				} else {
+					vector2.x = posAuxBob.x;
+					return false;
+				}
+				//Recebe uma nova posicao inicial
+			}
+		} else {
+			//Analisa a posicao inicial com a posicao atual
+			//Verifica se o personagem entrou no bloco
+			if((int)(vector2.x+bob.getBounds().getWidth())!=(int)posAuxBob.x){
+				Place a = world.getBlock((int)(vector2.x+bob.getBounds().getWidth()), (int)vector2.y).getPlace();
+				Place b = world.getBlock((int)posAuxBob.x, (int)posAuxBob.x).getPlace();
+				if (world.getElementosCPN().dispararTransicao(a, b)) {
+					posAuxBob.x=vector2.x+bob.getBounds().getWidth();
+					return true;
+				} else {
+//					posAuxBob.x=vector2.x+bob.getBounds().getWidth();
+					return false;
+				}//Recebe uma nova posicao inicial
+			}
+		}	
+			
+		//Verifica se o personagem esta olhando para a baixo
+			//Se ele estiver olhando para a baixo printo e valor normal 
+			//Caso contrario ele esta olhando para a cima, logo somo a altura dela com a sua posi��o na vertical
+			if (bob.isFacingLeft()) {
+				//Analisa a posicao inicial com a posicao atua
+				//Verifica se o personagem entrou no bloco
+				if((int)vector2.y!=(int)posAuxBob.y){
+					Place a = world.getBlock((int)(vector2.x+bob.getBounds().getWidth()), (int)vector2.y).getPlace();
+					Place b = world.getBlock((int)posAuxBob.x, (int)posAuxBob.x).getPlace();
+					if (world.getElementosCPN().dispararTransicao(a, b)) {
+						posAuxBob.x=vector2.x+bob.getBounds().getWidth();
+						return true;
+					} else {
+//						posAuxBob.x=vector2.x+bob.getBounds().getWidth();
+						return false;
+					}//Recebe uma nova posicao inicial
+					//Recebe uma nova posicao inicial
+					posAuxBob.y=vector2.y;
+				}
+				
+			}else {
+				//Analisa a posicao inicial com a posicao atual
+				//Verifica se o personagem entrou no bloco
+				if((int)(vector2.y+bob.getBounds().getHeight())!=(int)posAuxBob.y){
+					System.out.println("Entrou no bloco");
+					//Recebe uma nova posicao inicial
+					posAuxBob.y=vector2.y+bob.getBounds().getHeight();
+				}
+			}
+			return res;
 	}
 }

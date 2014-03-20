@@ -163,6 +163,20 @@ public class ElementosCPN {
 		
 	}
 
+	public boolean dispararTransicao(Place a, Place b) {
+		int posA = -1;
+		int posB = -1;
+		for (int i = 0; i < places.size(); i++) {
+			if (places.get(i).equals(a)) {
+				posA = i;
+			}
+			if (places.get(i).equals(b)) {
+				posB = i;
+			}
+		}
+		return dispararTransicao(matrizToPlace[posA][posB]);
+	}
+	
 	public boolean dispararTransicao(Lista lista) {
 		
 		boolean achei = false;
@@ -183,8 +197,6 @@ public class ElementosCPN {
 			for (int i = 0; i < places.size(); i++) {
 				if (matrizPre[i][index] != null) {
 					lugares.add(matrizPre[i][index]);
-					// System.out.println(matrizPre[i][index].hashCode());
-					// System.out.println(lugares.get(lugares.size()-1).hashCode());
 				}
 			}
 	
