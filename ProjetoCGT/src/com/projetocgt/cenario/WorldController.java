@@ -1,25 +1,28 @@
 package com.projetocgt.cenario;
 
-import com.badlogic.gdx.math.Vector2;
-import com.projetocgt.core.petri.CpnXmlReader;
-import com.projetocgt.core.petri.ElementosCPN;
-import com.projetocgt.core.petri.entity.Place;
-import com.projetocgt.personagens.Personagem;
-import com.projetocgt.personagens.Personagem.State;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.math.Vector2;
+import com.projetocgt.core.petri.entity.Place;
+import com.projetocgt.personagens.Personagem;
+import com.projetocgt.personagens.Personagem.State;
+/**
+ * Controla os movimentos do mundo e dos personagens
+ * @author roberto.bruno007@gmail.com
+ *
+ */
 public class WorldController {
 
-	// Possiveis movimentos do personagem
+	//Possiveis movimentos do personagem
 	enum Keys {
 		LEFT, RIGHT, JUMP, FIRE, UP, DOWN
 	};
 
 	private World world;
 	private Personagem bob;
-
+	private Personagem opositor;
+	
 	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
 	static {
 		keys.put(Keys.LEFT, false);
@@ -37,6 +40,7 @@ public class WorldController {
 		this.world = world;
 		// Posicao inicial do personagem
 		this.bob = world.getPersonagem();
+		this.opositor = world.getOpositor();
 	}
 
 	// ** Key presses and touches **************** //
@@ -103,10 +107,11 @@ public class WorldController {
 		// Atualizaes do Personagem. Personagem tem um metodo de atualizacoo
 		// dedicado.
 		bob.update(delta);
+		opositor.update(delta);
 	}
 
 	public void movimeto(float x, float y) {
-		if (permitido(x, y)) {
+		//if (permitido(x, y)) {
 			bob.setState(State.WALKING);
 			if (bob.getPosition().x < x) {
 				bob.setFacingLeft(true);
@@ -131,7 +136,7 @@ public class WorldController {
 			
 			bob.getPosition().x = x;
 			bob.getPosition().y = y;			
-		}
+		//}
 	}
 
 	public boolean onScreen() {
@@ -153,7 +158,15 @@ public class WorldController {
 
 	/** Change Bob's state and parameters based on input controls **/
 	private void processInput() {
-
+		
+		//Controler do carro
+		if 	(opositor.getPosition().y + opositor.getBounds().height > 0.0f) {
+			opositor.getVelocity().y = -Personagem.SPEED;
+		}
+		else
+			opositor.getPosition().y =3.5f;
+		
+		
 		if (keys.get(Keys.UP)) {
 			// Verifica se o personagem pode andar
 			if (bob.getPosition().y + bob.getBounds().height > (world
@@ -188,7 +201,6 @@ public class WorldController {
 				bob.setFacingLeft(true);
 				bob.setState(State.WALKING);
 				bob.getVelocity().x = -Personagem.SPEED;
-
 			}
 		}
 		if (keys.get(Keys.RIGHT)) {

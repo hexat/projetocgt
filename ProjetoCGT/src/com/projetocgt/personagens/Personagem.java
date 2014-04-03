@@ -1,6 +1,8 @@
 package com.projetocgt.personagens;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.projetocgt.cenario.Vector2Complemento;
 /**
  * Classe utilizada para representar o cliente
  * @autor Bruno Roberto
@@ -13,23 +15,26 @@ public class Personagem {
 	
 	
 
-	public static final float SPEED = 2f;				//Velocidade do personagem
+	public static final float SPEED = 0.5f;				//Velocidade do personagem
 	public static final float JUMP_VELOCITY = 1f;		//Velocidade do pulo do personagem
-	public static final float SIZE = 0.5f; 			//Metade de uma unidade
+	public static final float SIZE = 0.3f; 			//Metade de uma unidade
 
 	private Vector2 	position = new Vector2();		//Vetor que informa a posi��o do personagem
-	private Vector2 	acceleration = new Vector2();	//Vetor que informa a acelera��o do personagem
+	private Vector2 	acceleration = new Vector2();	//Vetor que informa a aceleracao do personagem
 	private Vector2 	velocity = new Vector2();		//Vetor que informa a velocidade do personagem
 	private Rectangle 	bounds = new Rectangle();		// Area que sera' desenhado o personagem
 	private State 		state = State.IDLE;				//
 	private boolean 	facingLeft = true;				//
-	
+	static public final float FLOAT_ROUNDING_ERROR = 0.000001f; // 32 bits
 	/**
 	 * Construtor padrao que recebe uma posicao inicial 
 	 * @param position
 	 */
 	public Personagem(Vector2 position) {
 		this.position = position;		//Posicao inicial 
+		
+		//this.bounds.x=position.x;
+		//this.bounds.y=position.y;
 		this.bounds.height = SIZE;		//Altura do personagem (Altura da �rea onde o personagem ser� desenhado)
 		this.bounds.width = SIZE;		//Largura do personagem (Largura da �rea onde o personagem ser� desenhado)
 	}
@@ -78,6 +83,7 @@ public class Personagem {
 
 	public Vector2 getAcceleration() {
 		return acceleration;
+		
 	}
 
 	public void setAcceleration(Vector2 acceleration) {
