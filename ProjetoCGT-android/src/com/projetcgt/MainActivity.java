@@ -17,7 +17,6 @@ public class MainActivity extends AndroidApplication {
         //cfg.useAccelerometer = false;
         //cfg.useCompass = false;
         //cfg.useWakelock = true;
-        cfg.useGL20 = true;
         initialize(new StarAssault(), cfg);
     }
 }

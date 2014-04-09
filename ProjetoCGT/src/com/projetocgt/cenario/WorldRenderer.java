@@ -6,20 +6,20 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.personagens.Personagem;
-import com.projetocgt.personagens.Personagem.State;
 import com.projetocgt.personagens.SpritePersonagem;
 
 public class WorldRenderer   {
 	
 	private World world;			//Declara a variavel do tipo World que sera passada de parametro no renderer 
 	private OrthographicCamera cam;	//Declara a variavel da camera
-	private Personagem bob;
+	private Personagem personagem;
+	private Personagem opositor;
+	private Personagem opositor2;
 	// Inicializa uma constante relacionado a quantidade de blocos na horizontal que sera visto pela camera
 	private float CAMERA_WIDTH;
 	// Inicializa uma constante relacionado a quantidade de blocos na vertical que sera visto pela camera
@@ -92,6 +92,9 @@ public class WorldRenderer   {
 	
 	private void loadTextures() {
 		
+		personagem = world.getPersonagem();
+		opositor = world.getOpositor();
+		opositor2 = world.getOpositor2();
 		//Carrega as texturas que serao paresentadas na cena
 		
 		//bobTexture = new  Texture(Gdx.files.internal("data/Bob.png"));
@@ -156,18 +159,18 @@ public class WorldRenderer   {
 	//Mostra um valor na tela.
 	//Retorna o vetor que ela esta mostrando
 	public Vector2 printTexto(){
-		bob = world.getPersonagem();
-		Vector2 vector2 = bob.getPosition();
+		
+		Vector2 vector2 = personagem.getPosition();
 		
 		if(flag==true){
-			posiI = new Vector2(bob.getPosition());
+			posiI = new Vector2(personagem.getPosition());
 			flag=false;
 		}
 			
 		//Verifica se o personagem esta olhando para a esquerda
 		//Se ele estiver olhando para a esquerda printo e valor normal 
 		//Caso contrario ele esta olhando para a direita, logo somo a base dela com a sua posi��o
-		if (bob.isFacingLeft()) {
+		if (personagem.isFacingLeft()) {
 			//Valor normal, sem somar ser somado a base
 			currentFont.draw(spriteBatch,  "( "+(int)vector2.x, 40, 60);
 			
@@ -181,14 +184,14 @@ public class WorldRenderer   {
 			
 		} else {
 			//Valor  somado com a base
-			currentFont.draw(spriteBatch,  "( "+((int)(vector2.x+bob.getBounds().getWidth())), 40, 60);
+			currentFont.draw(spriteBatch,  "( "+((int)(vector2.x+personagem.getBounds().getWidth())), 40, 60);
 
 			//Analisa a posicao inicial com a posicao atual
 			//Verifica se o personagem entrou no bloco
-			if((int)(vector2.x+bob.getBounds().getWidth())!=(int)posiI.x){
+			if((int)(vector2.x+personagem.getBounds().getWidth())!=(int)posiI.x){
 				System.out.println("Entrou no bloco");
 				//Recebe uma nova posicao inicial
-				posiI.x=vector2.x+bob.getBounds().getWidth();
+				posiI.x=vector2.x+personagem.getBounds().getWidth();
 			}
 		}	
 		
@@ -211,22 +214,23 @@ public class WorldRenderer   {
 		// Tamanho do desenho "Personagem.SIZE * ppuX, Personagem.SIZE * ppuY"
 		//spriteBatch.draw(bobTexture, bob.getPosition().x * ppuX, bob.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
 		
-		spriteBatch.draw(spriteBob.Cenario(world.getPersonagem()), posFogo.x * ppuX, posFogo.y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
+		spriteBatch.draw(spriteBob.Cenario(personagem), posFogo.x * ppuX, posFogo.y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
 		
-		spriteBatch.draw(spriteBob.AniCreCorrendo(world.getPersonagem()), world.getPersonagem().getPosition().x * ppuX, world.getPersonagem().getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
+		spriteBatch.draw(spriteBob.AniCreCorrendo(world.getPersonagem()), personagem.getPosition().x * ppuX, personagem.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
 		
-		rectP= new Rectangle(world.getPersonagem().getPosition().x* ppuX , world.getPersonagem().getPosition().y* ppuY, spriteBob.AniCreCorrendo(world.getPersonagem()).getRegionWidth(),spriteBob.AniCreCorrendo(world.getPersonagem()).getRegionHeight());
+
+		rectP= new Rectangle(personagem.getPosition().x* ppuX , personagem.getPosition().y* ppuY, personagem.getBounds().width* ppuX,personagem.getBounds().height* ppuY);
 		
-		Personagem opositor = world.getOpositor();
 		spriteBatch.draw(opositorTexture, opositor.getPosition().x * ppuX, opositor.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
-		rectO =  new Rectangle(opositor.getPosition().x* ppuX , opositor.getPosition().y* ppuY , opositorTexture.getWidth(), opositorTexture.getHeight());
+		rectO =  new Rectangle(opositor.getPosition().x* ppuX , opositor.getPosition().y* ppuY , opositor.getBounds().width* ppuX, opositor.getBounds().height* ppuY);
 		
-		Personagem opositor2 = world.getOpositor2();
 		spriteBatch.draw(opositorTexture, opositor2.getPosition().x * ppuX, opositor2.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
-		rectO2 =  new Rectangle(opositor2.getPosition().x* ppuX , opositor2.getPosition().y* ppuY , opositorTexture.getWidth(), opositorTexture.getHeight());
+		rectO2 =  new Rectangle(opositor2.getPosition().x* ppuX , opositor2.getPosition().y* ppuY , opositor2.getBounds().width* ppuX, opositor2.getBounds().height* ppuY);
+		
 		
 		//Colidiu
 		if(rectO.overlaps(rectP)){
+			//if(rectO.getCenter(vector))
 			System.out.println("Colidiu com o carro ");
 			//Gdx.app.exit();
 		}
@@ -237,16 +241,6 @@ public class WorldRenderer   {
 			//Gdx.app.exit();
 		}
 	}
-	
-	
-	
-	public void Colisao(){
-		
-	}
-	public void Tocou(){
-		
-	}
-	
 	private void drawDebug()
 	{
 		// render blocks
@@ -267,7 +261,7 @@ public class WorldRenderer   {
 				float x1 = bob.getPosition().x + rectB.x;
 				float y1 = bob.getPosition().y + rectB.y;
 				debugRenderer.setColor(new Color(0, 1, 0, 1));
-				debugRenderer.rect(x1, y1, rectB.width, rectB.height);
+				debugRenderer.rect(x1, y1, rectB.getWidth(), rectB.getHeight());
 				
 				Personagem opositor = world.getOpositor();
 				Rectangle recta = opositor.getBounds();
@@ -275,7 +269,7 @@ public class WorldRenderer   {
 				float y2 = opositor.getPosition().y + recta.y;
 				
 				debugRenderer.setColor(new Color(0, 1, 0, 1));
-				debugRenderer.rect(x2, y2, recta.width, recta.height);
+				debugRenderer.rect(x2, y2, recta.getWidth(), recta.getHeight());
 				
 				debugRenderer.end();
 	}

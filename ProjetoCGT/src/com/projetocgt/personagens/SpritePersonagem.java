@@ -16,15 +16,12 @@ public class SpritePersonagem {
 	private static final float RUNNING_FRAME_DURATION = 0.08f;// controla o tempo que um quadro na / ciclo andando corrida será exibido
 	
 	private TextureRegion bobFrame;
-	private Animation walkRightAnimation;        
-	
 	private static final int    FRAME_COLS = 3;     // 
     private static final int    FRAME_ROWS = 12;     // 
     private int linhaDoSpriteUp = 5;     //
     private int linhaDoSpriteDown = 7;     //
     private int linhaDoSpriteLeft = 8;     //
     private int linhaDoSpriteRight = 6;     //
-    private Animation           walkAnimation;      //
     private Texture             walkSheet;      //
     private TextureRegion[]     walkFramesUp;
     private TextureRegion[]     walkFramesDown;
@@ -38,8 +35,6 @@ public class SpritePersonagem {
     float stateTime;
 
 	private TextureRegion[] walkFramesCenario;
-
-	private int linhaDoSpriteCenario;
 
 	private Animation walkAnimationFogo;   
 	

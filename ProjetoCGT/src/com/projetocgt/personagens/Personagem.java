@@ -1,9 +1,6 @@
 package com.projetocgt.personagens;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
-import com.projetocgt.cenario.Vector2Complemento;
 /**
  * Classe utilizada para representar o cliente
  * @autor Bruno Roberto
@@ -52,7 +49,7 @@ public class Personagem {
 	public void setState(State newState) {
 		this.state = newState;
 	}
-	/*Nós simplesmente adicionar a distância percorrida no delta segundos para a posição actual de Bob. 
+	/*Adicionar a distância percorrida no delta segundos para a posição actual de Bob. 
 	 * Usamos velocity.tmp () porque a tmp () cria um novo objeto com o mesmo valor de velocidade e multiplicarmos o 
 	 * valor desse objeto com o delta tempo decorrido. Em Java, temos de ter cuidado
 	 *  em como estamos usando referências como velocidade e posição são ambos objetos Vector2. Mais informações sobre 
