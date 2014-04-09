@@ -6,13 +6,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.personagens.Personagem;
+import com.projetocgt.personagens.Personagem.State;
+import com.projetocgt.personagens.SpritePersonagem;
 
-public class WorldRenderer {
+public class WorldRenderer   {
 	
 	private World world;			//Declara a variavel do tipo World que sera passada de parametro no renderer 
 	private OrthographicCamera cam;	//Declara a variavel da camera
@@ -21,34 +24,37 @@ public class WorldRenderer {
 	private float CAMERA_WIDTH;
 	// Inicializa uma constante relacionado a quantidade de blocos na vertical que sera visto pela camera
 	private float CAMERA_HEIGHT;
-
+	
+		
 	/** for debug rendering **/
 	ShapeRenderer debugRenderer = new ShapeRenderer();
 	
-	/** Textures **/
-	private Texture bobTexture;
 	private Texture opositorTexture;
 	private Texture texturaSetaBaixo;
 	private Texture setaDireita;
 	private Texture setaEsquerda;
 	private Texture setaCima;
+	
+	
+	
 	private Joystick joystick;
+	private  Vector2 posFogo;
 	private  Rectangle rectP;
 	private  Rectangle rectO;
+	private  Rectangle rectO2;
 	private SpriteBatch spriteBatch;	// 
 	private boolean debug = false; 		// Variavel que ira ativar o debug
 	private int width;					//
 	private int height;					//
 	private float ppuX;					// Pixels per unit on the X axis
 	private float ppuY;					// Pixels per unit on the Y axis
-	
+	SpritePersonagem spriteBob = new SpritePersonagem();
 	float posI;
 	float posF;
 	
 	private BitmapFont currentFont;
 	private Vector2 posiI;
 	boolean flag=true;
-	private boolean res;
 	
 	public float getCAMERA_HEIGHT(){
 		return this.CAMERA_HEIGHT;
@@ -88,7 +94,12 @@ public class WorldRenderer {
 		
 		//Carrega as texturas que serao paresentadas na cena
 		
-		bobTexture = new  Texture(Gdx.files.internal("data/Bob.png"));
+		//bobTexture = new  Texture(Gdx.files.internal("data/Bob.png"));
+		spriteBob.AniRL2("data/sprites/sprites_bomb.png");
+		//
+		spriteBob.AnimaCenario("data/sprites/sprite_fogo.png", 2, 3);
+		posFogo = new Vector2(2,2);
+		
 		//Textura do opositor
 		opositorTexture = new  Texture(Gdx.files.internal("data/Carros/carro.png"));
 		//Texto utilizado para printar a posicao do personagem na tela
@@ -115,7 +126,7 @@ public class WorldRenderer {
 		
 	}
 
-	public void render() {
+	public void render( ) {
 		
 		spriteBatch.begin();
 		//Desenha os blocos
@@ -189,27 +200,45 @@ public class WorldRenderer {
 		for (Block block : world.getBlocks()) {
 				spriteBatch.draw(block.getTexture(), block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
 		}
+		
 	}
 
 	private void drawPersonagem() {
-		Personagem bob = world.getPersonagem();
+		//Personagem bob = world.getPersonagem();
 		
 		//A textura que ela vai desenhar "bobTexture" Posicao inicial
 		//Posicao inicial "bob.getPosition().x * ppuX, bob.getPosition().y * ppuY"
 		// Tamanho do desenho "Personagem.SIZE * ppuX, Personagem.SIZE * ppuY"
-		spriteBatch.draw(bobTexture, bob.getPosition().x * ppuX, bob.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
-		rectP= new Rectangle(bob.getPosition().x* ppuX , bob.getPosition().y* ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
+		//spriteBatch.draw(bobTexture, bob.getPosition().x * ppuX, bob.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
+		
+		spriteBatch.draw(spriteBob.Cenario(world.getPersonagem()), posFogo.x * ppuX, posFogo.y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
+		
+		spriteBatch.draw(spriteBob.AniCreCorrendo(world.getPersonagem()), world.getPersonagem().getPosition().x * ppuX, world.getPersonagem().getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
+		
+		rectP= new Rectangle(world.getPersonagem().getPosition().x* ppuX , world.getPersonagem().getPosition().y* ppuY, spriteBob.AniCreCorrendo(world.getPersonagem()).getRegionWidth(),spriteBob.AniCreCorrendo(world.getPersonagem()).getRegionHeight());
 		
 		Personagem opositor = world.getOpositor();
 		spriteBatch.draw(opositorTexture, opositor.getPosition().x * ppuX, opositor.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
-		rectO =  new Rectangle(opositor.getPosition().x* ppuX , opositor.getPosition().y* ppuY , Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
+		rectO =  new Rectangle(opositor.getPosition().x* ppuX , opositor.getPosition().y* ppuY , opositorTexture.getWidth(), opositorTexture.getHeight());
 		
-		boolean res = rectO.overlaps(rectP); 
-		if(res){
+		Personagem opositor2 = world.getOpositor2();
+		spriteBatch.draw(opositorTexture, opositor2.getPosition().x * ppuX, opositor2.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
+		rectO2 =  new Rectangle(opositor2.getPosition().x* ppuX , opositor2.getPosition().y* ppuY , opositorTexture.getWidth(), opositorTexture.getHeight());
+		
+		//Colidiu
+		if(rectO.overlaps(rectP)){
+			System.out.println("Colidiu com o carro ");
+			//Gdx.app.exit();
+		}
+		
+		//Colidiu
+		if(rectO2.overlaps(rectP)){
 			System.out.println("Colidiu com o carro ");
 			//Gdx.app.exit();
 		}
 	}
+	
+	
 	
 	public void Colisao(){
 		
@@ -250,4 +279,5 @@ public class WorldRenderer {
 				
 				debugRenderer.end();
 	}
+
 }

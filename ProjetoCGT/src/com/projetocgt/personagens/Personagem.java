@@ -1,6 +1,7 @@
 package com.projetocgt.personagens;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.cenario.Vector2Complemento;
 /**
@@ -10,14 +11,14 @@ import com.projetocgt.cenario.Vector2Complemento;
 public class Personagem {
 	
 	public enum State {
-		IDLE, WALKING, JUMPING, DYING
+		IDLE, WALKING, JUMPING, DYING, LOOKUP, LOOKDOWN, LOOKLEFT, LOOKRIGHT 
 	}
 	
 	
-
+	private float stateTime = 0;
 	public static final float SPEED = 0.5f;				//Velocidade do personagem
 	public static final float JUMP_VELOCITY = 1f;		//Velocidade do pulo do personagem
-	public static final float SIZE = 0.3f; 			//Metade de uma unidade
+	public static final float SIZE = 0.5f; 			//Metade de uma unidade
 
 	private Vector2 	position = new Vector2();		//Vetor que informa a posi��o do personagem
 	private Vector2 	acceleration = new Vector2();	//Vetor que informa a aceleracao do personagem
@@ -31,8 +32,8 @@ public class Personagem {
 	 * @param position
 	 */
 	public Personagem(Vector2 position) {
-		this.position = position;		//Posicao inicial 
-		
+		this.position = position;		//Posicao inicial
+
 		//this.bounds.x=position.x;
 		//this.bounds.y=position.y;
 		this.bounds.height = SIZE;		//Altura do personagem (Altura da �rea onde o personagem ser� desenhado)
@@ -62,6 +63,7 @@ public class Personagem {
 	 * @param delta
 	 */
 	public void update(float delta) {
+		setStateTime(getStateTime() + delta);
 		position.add(velocity.cpy().scl(delta));
 	}
 
@@ -99,7 +101,7 @@ public class Personagem {
 	}
 
 	public State getState() {
-		return state;
+		return this.state;
 	}
 
 	/**
@@ -113,4 +115,13 @@ public class Personagem {
 	public void setFacingLeft(boolean facingLeft) {
 		this.facingLeft = facingLeft;
 	}
+
+	public float getStateTime() {
+		return stateTime;
+	}
+
+	public void setStateTime(float stateTime) {
+		this.stateTime = stateTime;
+	}
+
 }

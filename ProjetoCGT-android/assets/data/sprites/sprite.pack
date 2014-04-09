@@ -1,0 +1,33 @@
+
+sprite.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bob-01
+  rotate: false
+  xy: 0, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+bob-02
+  rotate: false
+  xy: 129, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+bob-03
+  rotate: false
+  xy: 258, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+bob-04
+  rotate: false
+  xy: 387, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1

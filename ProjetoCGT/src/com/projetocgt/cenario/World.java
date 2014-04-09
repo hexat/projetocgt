@@ -11,6 +11,8 @@ public class World {
 	/** Our player controlled hero **/
 	private Personagem personagem;
 	private Personagem opositor;
+	private Personagem opositor2;
+	
 	private Joystick setaBaixo;
 	private Joystick setaDireita;
 	private Joystick setaCima;
@@ -82,7 +84,8 @@ public class World {
 		personagem = new Personagem(new Vector2(0, 0));
 		//Posicao inicial do opositor
 		//a posicao do y aumenta na subida 
-		opositor = new Personagem(new Vector2(0.85f,2.5f));
+		opositor = new Personagem(new Vector2(this.numBlocosH-2.15f,this.numBlocosV-0.5f));
+		setOpositor2(new Personagem(new Vector2(this.numBlocosH-1.1f,this.numBlocosV - 0.1f)));
 		
 		setaBaixo = new Joystick(new Vector2(2, 2));
 		setaDireita = new Joystick(new Vector2(1, 1));
@@ -97,6 +100,14 @@ public class World {
 				blocks.add(new Block(new Vector2(i, j), cpn.getPlaceByPos(i, j)));
 			} 			 			
 		}
+	}
+
+	public Personagem getOpositor2() {
+		return opositor2;
+	}
+
+	public void setOpositor2(Personagem opositor2) {
+		this.opositor2 = opositor2;
 	}
 
 	

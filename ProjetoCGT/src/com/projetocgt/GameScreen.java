@@ -1,16 +1,12 @@
 package com.projetocgt;
 
-import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.GL10;
+//import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.projetocgt.cenario.Joystick;
 import com.projetocgt.cenario.World;
@@ -18,8 +14,9 @@ import com.projetocgt.cenario.WorldController;
 import com.projetocgt.cenario.WorldRenderer;
 import com.projetocgt.core.petri.ElementosCPN;
 import com.projetocgt.personagens.Personagem;
+import com.projetocgt.personagens.SpritePersonagem;
 
-public class GameScreen extends Table implements Screen, InputProcessor{
+public class GameScreen extends Table implements Screen, InputProcessor {
 	
 	private World world;
 	private WorldRenderer renderer;
@@ -30,37 +27,24 @@ public class GameScreen extends Table implements Screen, InputProcessor{
 	private Joystick setaDireita;
 	private Joystick setaCima;
 	private Joystick setaEsquerda;
-	private Button buttonDireita;
-	private Texture setaD;
-	
-	private Controle joystick;
-	
-	//Vetor que sera utilizado para armazenar a posicao do bob. 
-	private Vector2 vetorPosi;
-	private Vector2 vetor;
 	private int width, height;
-	private Vector2 pos;
 	private boolean flagTouchInBob; // flag para verificar se foi tocado no bob
 	private Music music;
-	private Audio audio;
-	
-	
 	public GameScreen() {
 		super();
 		flagTouchInBob = false;
-		Texture.setEnforcePotImages(false);//desabilita a opcao de potencia de dois.
+//		Texture.setEnforcePotImages(false);//desabilita a opcao de potencia de dois.
 		
 		elementosCPN = new ElementosCPN(Gdx.files.internal("data/game.cpn").read());
 		//Carrega os audios
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/temabombeiro.wav"));
-		//
-		setaD = new Texture(Gdx.files.internal("data/Joystick/setaDireita.png"));
+		new Texture(Gdx.files.internal("data/Joystick/setaDireita.png"));
 		}
 	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+//		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		//
 		controller.update(delta);
 		//
@@ -68,6 +52,7 @@ public class GameScreen extends Table implements Screen, InputProcessor{
 		//
 		//joystick.InicializaStage(delta);
 		//joystick.Acao();
+		
 	}
 	
 
@@ -254,5 +239,6 @@ public class GameScreen extends Table implements Screen, InputProcessor{
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
+	SpritePersonagem anima = new SpritePersonagem();
 }
