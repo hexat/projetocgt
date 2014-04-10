@@ -2,7 +2,8 @@ package com.projetocgt.personagens;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 /**
- * Classe utilizada para representar o cliente
+ * Classe utilizada para representar os Personagens do jogo
+ * cada personagem sofre uma acao.
  * @autor Bruno Roberto
  */
 public class Personagem {
@@ -24,23 +25,21 @@ public class Personagem {
 	private State 		state = State.IDLE;				//
 	private boolean 	facingLeft = true;				//
 	static public final float FLOAT_ROUNDING_ERROR = 0.000001f; // 32 bits
+	private int life;
+	private boolean opositor;
 	/**
-	 * Construtor padrao que recebe uma posicao inicial 
-	 * @param position
+	 * Construtor padrao que recebe uma posicao inicial, um life e verifica se o personagem e'
+	 * um opositor ou não
+	 * @param position,life,opositor
 	 */
-	public Personagem(Vector2 position) {
+	public Personagem(Vector2 position, int life,boolean opositor) {
+		this.opositor=opositor;
+		this.life=life;	
 		this.position = position;		//Posicao inicial
-
-		//this.bounds.x=position.x;
-		//this.bounds.y=position.y;
 		this.bounds.height = SIZE;		//Altura do personagem (Altura da �rea onde o personagem ser� desenhado)
 		this.bounds.width = SIZE;		//Largura do personagem (Largura da �rea onde o personagem ser� desenhado)
 	}
 	
-	public Personagem() {
-		this.bounds.height = SIZE;		//Altura do personagem (Altura da �rea onde o personagem ser� desenhado)
-		this.bounds.width = SIZE;		//Largura do personagem (Largura da �rea onde o personagem ser� desenhado)
-	}
 	/**
 	 * Adiciona o estado atual do Personagem
 	 * @param newState 
@@ -121,4 +120,38 @@ public class Personagem {
 		this.stateTime = stateTime;
 	}
 
+	public int getLife() {
+		return life;
+	}
+
+	public void setLife(int life) {
+		this.life = life;
+	}
+
+	public boolean isOpositor() {
+		return opositor;
+	}
+
+	public void setOpositor(boolean opositor) {
+		this.opositor = opositor;
+	}
+	/**
+	 * Executa uma sobre o personagem 
+	 * a acao sera' de atropelamento
+	 */
+	public void acaoAtropelamento(Personagem opositor,float var){
+
+		Vector2 vectorOpo = opositor.getPosition();
+		Vector2 vector = this.position;
+		if(vector.x > vectorOpo.x+(opositor.getBounds().getWidth()/2)){
+			//Sofre uma variacao
+			vector.x = vector.x+var;
+			vector.y = vector.y+var;
+		}else{
+			vector.x = vector.x-var;
+			vector.y = vector.y-var;
+		}
+		this.setPosition(vector);
+		
+	}
 }

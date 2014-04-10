@@ -9,7 +9,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.projetocgt.cenario.Joystick;
-import com.projetocgt.cenario.World;
+import com.projetocgt.cenario.MyWorld;
 import com.projetocgt.cenario.WorldController;
 import com.projetocgt.cenario.WorldRenderer;
 import com.projetocgt.core.petri.ElementosCPN;
@@ -18,7 +18,7 @@ import com.projetocgt.personagens.SpritePersonagem;
 
 public class GameScreen extends Table implements Screen, InputProcessor {
 	
-	private World world;
+	private MyWorld world;
 	private WorldRenderer renderer;
 	private WorldController	controller;
 	private ElementosCPN elementosCPN;
@@ -75,7 +75,7 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 		music.play();
 		music.setLooping(true);
 		
-		world = new World(elementosCPN);
+		world = new MyWorld(elementosCPN);
 		renderer = new WorldRenderer(world, true);
 		controller = new WorldController(world);
 		//

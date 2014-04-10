@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.projetocgt.core.petri.ElementosCPN;
 import com.projetocgt.personagens.Personagem;
 
-public class World {
+public class MyWorld {
 	/** The blocks making up the world **/
 	Array<Block> blocks = new Array<Block>();
 	/** Our player controlled hero **/
@@ -24,7 +24,7 @@ public class World {
 	public Array<Block> getBlocks() {
 		return blocks;
 	}
-	
+
 	public Block getBlock(int x, int y) {
 		for (Block b : blocks) {
 			if (((int)b.getPosition().x) == x && ((int) b.getPosition().y) == y) {
@@ -33,6 +33,7 @@ public class World {
 		}
 		return null;
 	}
+
 	public Personagem getPersonagem() {
 		return personagem;
 	}
@@ -56,9 +57,8 @@ public class World {
 	public Joystick getJoystickEsquerda() {
 		return this.setaEsquerda;
 	}
-	// --------------------
 
-	public World(ElementosCPN cpn) {
+	public MyWorld(ElementosCPN cpn) {
 		this.cpn = cpn;
 
 		//this.numBlocosH = cpn.getNumMaxPlaceX();
@@ -75,17 +75,18 @@ public class World {
 	public float getNumBlocosH() {
 		return numBlocosH;
 	}
+	
 	public float getNumBlocosV() {
 		return numBlocosV;
 	}
 
 	private void createDemoWorld() {
 		//Posicao inicial do personagem 
-		personagem = new Personagem(new Vector2(0, 0));
+		personagem = new Personagem(new Vector2(0, 0),3,false);
 		//Posicao inicial do opositor
 		//a posicao do y aumenta na subida 
-		opositor = new Personagem(new Vector2(this.numBlocosH-2.15f,this.numBlocosV-0.5f));
-		setOpositor2(new Personagem(new Vector2(this.numBlocosH-1.1f,this.numBlocosV - 0.1f)));
+		opositor = new Personagem(new Vector2(this.numBlocosH-2.15f,this.numBlocosV-0.5f),3,true);
+		setOpositor2(new Personagem(new Vector2(this.numBlocosH-1.1f,this.numBlocosV - 0.1f),3,true));
 		
 		setaBaixo = new Joystick(new Vector2(2, 2));
 		setaDireita = new Joystick(new Vector2(1, 1));

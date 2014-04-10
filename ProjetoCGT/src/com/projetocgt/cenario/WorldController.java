@@ -19,7 +19,7 @@ public class WorldController {
 		LEFT, RIGHT, JUMP, FIRE, UP, DOWN
 	};
 
-	private World world;
+	private MyWorld world;
 	private Personagem bob;
 	private Personagem opositor;
 	private Personagem opositor2;
@@ -37,7 +37,7 @@ public class WorldController {
 	};
 
 	// Este construtor recebe o mundo como parametro
-	public WorldController(World world) {
+	public WorldController(MyWorld world) {
 		this.world = world;
 		// Posicao inicial do personagem
 		this.bob = world.getPersonagem();
@@ -152,7 +152,8 @@ public class WorldController {
 		bob.getPosition().x + bob.getBounds().getWidth() > (world.getNumBlocosH() - 0.01f);
 				
 	}
-	public boolean onScreen(float x, float y) {
+	
+public boolean onScreen(float x, float y) {
 
 		return !(y + bob.getBounds().height > (world.getNumBlocosV())) ||
 		(y < 0.0f) ||

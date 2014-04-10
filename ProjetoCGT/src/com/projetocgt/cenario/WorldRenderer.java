@@ -10,12 +10,16 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.World;
 import com.projetocgt.personagens.Personagem;
 import com.projetocgt.personagens.SpritePersonagem;
 
 public class WorldRenderer   {
 	
-	private World world;			//Declara a variavel do tipo World que sera passada de parametro no renderer 
+	private MyWorld world;			//Declara a variavel do tipo World que sera passada de parametro no renderer 
 	private OrthographicCamera cam;	//Declara a variavel da camera
 	private Personagem personagem;
 	private Personagem opositor;
@@ -39,9 +43,7 @@ public class WorldRenderer   {
 	
 	private Joystick joystick;
 	private  Vector2 posFogo;
-	private  Rectangle rectP;
-	private  Rectangle rectO;
-	private  Rectangle rectO2;
+	
 	private SpriteBatch spriteBatch;	// 
 	private boolean debug = false; 		// Variavel que ira ativar o debug
 	private int width;					//
@@ -56,6 +58,9 @@ public class WorldRenderer   {
 	private Vector2 posiI;
 	boolean flag=true;
 	
+	private World mundo;
+	private BodyDef bodyPer; 	
+	
 	public float getCAMERA_HEIGHT(){
 		return this.CAMERA_HEIGHT;
 	}
@@ -63,7 +68,6 @@ public class WorldRenderer   {
 	public float getCAMERA_WIDTH(){
 		return this.CAMERA_HEIGHT;
 	}
-	
 	
 	//Sera chamado cada vez que a tela é redimensionada e calcula as unidades em pixels.
 	public void setSize (int w, int h) {
@@ -73,7 +77,7 @@ public class WorldRenderer   {
 		ppuY = (float)(height) / CAMERA_HEIGHT;
 	}
 	
-	public WorldRenderer(World world, boolean debug) {
+	public WorldRenderer(MyWorld world, boolean debug) {
 		this.world = world;
 
 		CAMERA_HEIGHT = world.getNumBlocosV();
@@ -91,6 +95,11 @@ public class WorldRenderer   {
 	}
 	
 	private void loadTextures() {
+		
+		//mundo = new World(posFogo, debug);
+		//mundo.createBody(bodyPer);
+		//bodyPer = new BodyDef();
+		//bodyPer.type = BodyType.DynamicBody;
 		
 		personagem = world.getPersonagem();
 		opositor = world.getOpositor();
@@ -128,7 +137,8 @@ public class WorldRenderer   {
 		world.getJoystickCima().getPosition().y=world.getNumBlocosV()-2.4f;
 		
 	}
-
+	
+	//Sera chamado a todo instante na cena
 	public void render( ) {
 		
 		spriteBatch.begin();
@@ -140,6 +150,8 @@ public class WorldRenderer   {
 		//printTexto();
 		//Desenha o joystick
 		drawJoystick();
+		//Verifica colisao
+		colisaoOpositor(personagem,opositor,true);
 		spriteBatch.end();
 		if (debug)
 			drawDebug();
@@ -217,30 +229,15 @@ public class WorldRenderer   {
 		spriteBatch.draw(spriteBob.Cenario(personagem), posFogo.x * ppuX, posFogo.y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
 		
 		spriteBatch.draw(spriteBob.AniCreCorrendo(world.getPersonagem()), personagem.getPosition().x * ppuX, personagem.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
-		
-
-		rectP= new Rectangle(personagem.getPosition().x* ppuX , personagem.getPosition().y* ppuY, personagem.getBounds().width* ppuX,personagem.getBounds().height* ppuY);
+		//bodyPer.position.set(personagem.getPosition().x * ppuX, personagem.getPosition().y * ppuY);
 		
 		spriteBatch.draw(opositorTexture, opositor.getPosition().x * ppuX, opositor.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
-		rectO =  new Rectangle(opositor.getPosition().x* ppuX , opositor.getPosition().y* ppuY , opositor.getBounds().width* ppuX, opositor.getBounds().height* ppuY);
 		
-		spriteBatch.draw(opositorTexture, opositor2.getPosition().x * ppuX, opositor2.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
-		rectO2 =  new Rectangle(opositor2.getPosition().x* ppuX , opositor2.getPosition().y* ppuY , opositor2.getBounds().width* ppuX, opositor2.getBounds().height* ppuY);
+		//spriteBatch.draw(opositorTexture, opositor2.getPosition().x * ppuX, opositor2.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
+	
 		
-		
-		//Colidiu
-		if(rectO.overlaps(rectP)){
-			//if(rectO.getCenter(vector))
-			System.out.println("Colidiu com o carro ");
-			//Gdx.app.exit();
-		}
-		
-		//Colidiu
-		if(rectO2.overlaps(rectP)){
-			System.out.println("Colidiu com o carro ");
-			//Gdx.app.exit();
-		}
 	}
+	
 	private void drawDebug()
 	{
 		// render blocks
@@ -273,5 +270,32 @@ public class WorldRenderer   {
 				
 				debugRenderer.end();
 	}
+	
+	/***
+	 * Verifica se o persanagem colidiu com algumn opositor
+	 * @param Personagem personagem, Personagem opositor, boolean dano
+	 */
+	private void colisaoOpositor(Personagem personagem,Personagem opositor,boolean dano){
 
+		BoundingBox box = new BoundingBox();
+		//
+		Rectangle rectPer = rectPer= new Rectangle(personagem.getPosition().x* ppuX , personagem.getPosition().y* ppuY, personagem.getBounds().width* ppuX, personagem.getBounds().height* ppuY);
+		//
+		Rectangle rectOpo =  new Rectangle(opositor.getPosition().x* ppuX , opositor.getPosition().y* ppuY , opositor.getBounds().width* ppuX, opositor.getBounds().height* ppuY);
+		//
+		if(rectOpo.overlaps(rectPer)){
+			
+			personagem.acaoAtropelamento(opositor,0.05f);
+			//Se a opcao dano for habilitado
+			if(dano){
+				int live=personagem.getLife();
+				live--;
+				personagem.setLife(live);
+				System.out.println(personagem.getLife());
+				if(live==0){
+					System.out.println("Game over");
+				}
+			}	
+		}		
+	}
 }
