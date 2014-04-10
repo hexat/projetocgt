@@ -106,7 +106,7 @@ public class WorldController {
 	}
 
 	public void movimeto(float x, float y) {
-		if (permitido(x, y)) {
+//		if (permitido(x, y)) {
 			bob.setState(State.WALKING);
 			if (bob.getPosition().x < x) {
 				bob.setFacingLeft(true);
@@ -131,7 +131,7 @@ public class WorldController {
 			
 			bob.getPosition().x = x;
 			bob.getPosition().y = y;			
-		}
+//		}
 	}
 
 	public boolean onScreen() {
