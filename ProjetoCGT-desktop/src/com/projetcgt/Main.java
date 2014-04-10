@@ -1,10 +1,17 @@
 package com.projetcgt;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.projetocgt.StarAssault;
 
 public class Main {
 	public static void main(String[] args) {
-		 new LwjglApplication(new StarAssault(), "Star Assault", 900, 600, true);
+		
+		LwjglApplicationConfiguration cgf = new LwjglApplicationConfiguration();
+		cgf.vSyncEnabled = true;
+		cgf.useGL20 = true;
+		cgf.width = 900;
+		cgf.height = 600;
+		new LwjglApplication(new StarAssault(),cgf);
 	}
 }

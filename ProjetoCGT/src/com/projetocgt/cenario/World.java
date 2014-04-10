@@ -9,7 +9,14 @@ public class World {
 	/** The blocks making up the world **/
 	Array<Block> blocks = new Array<Block>();
 	/** Our player controlled hero **/
-	Personagem personagem;
+	private Personagem personagem;
+	private Personagem opositor;
+	private Personagem opositor2;
+	
+	private Joystick setaBaixo;
+	private Joystick setaDireita;
+	private Joystick setaCima;
+	private Joystick setaEsquerda;
 	private float numBlocosH;
 	private float numBlocosV;
 	private ElementosCPN cpn;
@@ -29,13 +36,35 @@ public class World {
 	public Personagem getPersonagem() {
 		return personagem;
 	}
+	
+	public Personagem getOpositor() {
+		return this.opositor;
+	}
+	
+	public Joystick getJoystickBaixo() {
+		return this.setaBaixo;
+	}
+	
+	public Joystick getJoystickDireita() {
+		return this.setaDireita;
+	}
+	
+	public Joystick getJoystickCima() {
+		return this.setaCima;
+	}
+	
+	public Joystick getJoystickEsquerda() {
+		return this.setaEsquerda;
+	}
 	// --------------------
 
 	public World(ElementosCPN cpn) {
 		this.cpn = cpn;
 
-		this.numBlocosH = cpn.getNumMaxPlaceX();
-		this.numBlocosV = cpn.getNumMaxPlaceY();
+		//this.numBlocosH = cpn.getNumMaxPlaceX();
+		//this.numBlocosV = cpn.getNumMaxPlaceY();
+		this.numBlocosH = 3;
+		this.numBlocosV = 3;
 		createDemoWorld();
 	}
 	
@@ -53,6 +82,16 @@ public class World {
 	private void createDemoWorld() {
 		//Posicao inicial do personagem 
 		personagem = new Personagem(new Vector2(0, 0));
+		//Posicao inicial do opositor
+		//a posicao do y aumenta na subida 
+		opositor = new Personagem(new Vector2(this.numBlocosH-2.15f,this.numBlocosV-0.5f));
+		setOpositor2(new Personagem(new Vector2(this.numBlocosH-1.1f,this.numBlocosV - 0.1f)));
+		
+		setaBaixo = new Joystick(new Vector2(2, 2));
+		setaDireita = new Joystick(new Vector2(1, 1));
+		setaCima = new Joystick(new Vector2(2, 2));
+		setaEsquerda = new Joystick(new Vector2(0, 0));
+		
 		//Constroe o cenario,preenche uma matriz.
 		//"i" colunas.
 		//"j" linhas.
@@ -62,4 +101,14 @@ public class World {
 			} 			 			
 		}
 	}
+
+	public Personagem getOpositor2() {
+		return opositor2;
+	}
+
+	public void setOpositor2(Personagem opositor2) {
+		this.opositor2 = opositor2;
+	}
+
+	
 }

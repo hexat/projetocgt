@@ -1,19 +1,21 @@
 package com.projetocgt.cenario;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.personagens.Personagem;
+import com.projetocgt.personagens.Personagem.State;
+import com.projetocgt.personagens.SpritePersonagem;
 
-public class WorldRenderer {
+public class WorldRenderer   {
 	
 	private World world;			//Declara a variavel do tipo World que sera passada de parametro no renderer 
 	private OrthographicCamera cam;	//Declara a variavel da camera
@@ -22,20 +24,33 @@ public class WorldRenderer {
 	private float CAMERA_WIDTH;
 	// Inicializa uma constante relacionado a quantidade de blocos na vertical que sera visto pela camera
 	private float CAMERA_HEIGHT;
-
+	
+		
 	/** for debug rendering **/
 	ShapeRenderer debugRenderer = new ShapeRenderer();
 	
-	/** Textures **/
-	private Texture bobTexture;
-
+	private Texture opositorTexture;
+	private Texture texturaSetaBaixo;
+	private Texture setaDireita;
+	private Texture setaEsquerda;
+	private Texture setaCima;
+	
+	
+	
+	private Joystick joystick;
+	private  Vector2 posFogo;
+	private  Rectangle rectP;
+	private  Rectangle rectO;
+	private  Rectangle rectO2;
 	private SpriteBatch spriteBatch;	// 
 	private boolean debug = false; 		// Variavel que ira ativar o debug
 	private int width;					//
 	private int height;					//
 	private float ppuX;					// Pixels per unit on the X axis
 	private float ppuY;					// Pixels per unit on the Y axis
-	
+	SpritePersonagem spriteBob = new SpritePersonagem();
+	float posI;
+	float posF;
 	
 	private BitmapFont currentFont;
 	private Vector2 posiI;
@@ -48,6 +63,8 @@ public class WorldRenderer {
 	public float getCAMERA_WIDTH(){
 		return this.CAMERA_HEIGHT;
 	}
+	
+	
 	//Sera chamado cada vez que a tela é redimensionada e calcula as unidades em pixels.
 	public void setSize (int w, int h) {
 		this.width = w;
@@ -76,24 +93,66 @@ public class WorldRenderer {
 	private void loadTextures() {
 		
 		//Carrega as texturas que serao paresentadas na cena
-		bobTexture = new  Texture(Gdx.files.internal("data/Bob.png"));
+		
+		//bobTexture = new  Texture(Gdx.files.internal("data/Bob.png"));
+		spriteBob.AniRL2("data/sprites/sprites_bomb.png");
+		//
+		spriteBob.AnimaCenario("data/sprites/sprite_fogo.png", 2, 3);
+		posFogo = new Vector2(2,2);
+		
+		//Textura do opositor
+		opositorTexture = new  Texture(Gdx.files.internal("data/Carros/carro.png"));
 		//Texto utilizado para printar a posicao do personagem na tela
 		currentFont = new BitmapFont();
+		
+		//Carrega Joystick
+		setaDireita = new  Texture(Gdx.files.internal("data/Joystick/setaDireita.png"));
+		texturaSetaBaixo = new  Texture(Gdx.files.internal("data/Joystick/setaBaixo.png"));
+		setaCima = new  Texture(Gdx.files.internal("data/Joystick/setaCima.png"));
+		setaEsquerda = new  Texture(Gdx.files.internal("data/Joystick/setaEsquerda.png"));
+		
+		//setaBaixo.setTextura(texturaSetaBaixo);
+		world.getJoystickBaixo().getPosition().x= ((world.getNumBlocosH()-2.5f));
+		world.getJoystickBaixo().getPosition().y= ((world.getNumBlocosV()-3.0f));
+		
+		world.getJoystickDireita().getPosition().x=world.getNumBlocosH()-2.0f;
+		world.getJoystickDireita().getPosition().y=world.getNumBlocosV()-2.7f;
+		
+		world.getJoystickEsquerda().getPosition().x=world.getNumBlocosH()-3.0f;
+		world.getJoystickEsquerda().getPosition().y=world.getNumBlocosV()-2.7f;
+		
+		world.getJoystickCima().getPosition().x=world.getNumBlocosH()-2.5f;
+		world.getJoystickCima().getPosition().y=world.getNumBlocosV()-2.4f;
+		
 	}
 
-	public void render() {
+	public void render( ) {
+		
 		spriteBatch.begin();
 		//Desenha os blocos
 		drawBlocks();
 		//Dsenha o personagem
 		drawPersonagem();
 		//Desenha o texto com a posicao do personagem
-//		printTexto();
+		//printTexto();
+		//Desenha o joystick
+		drawJoystick();
 		spriteBatch.end();
 		if (debug)
 			drawDebug();
 	}
 	
+	private void drawJoystick() {
+		spriteBatch.draw(texturaSetaBaixo,((world.getNumBlocosH()-2.5f)* ppuX), ((world.getNumBlocosV()-3.0f)*ppuY), joystick.SIZE * ppuX, joystick.SIZE * ppuY);
+		spriteBatch.draw(setaDireita, (float) ((world.getNumBlocosH()-2.0f) * ppuX), (float)(world.getNumBlocosV()-2.7f) * ppuY, joystick.SIZE * ppuX, joystick.SIZE * ppuY);
+		
+		spriteBatch.draw(setaEsquerda, (float) ((world.getNumBlocosH()-3.0f) * ppuX), (float)(world.getNumBlocosV()-2.7) * ppuY, joystick.SIZE * ppuX, joystick.SIZE * ppuY);
+		spriteBatch.draw(setaCima, (float) ((world.getNumBlocosH()-2.5f) * ppuX), (float)(world.getNumBlocosV()-2.4) * ppuY, joystick.SIZE * ppuX, joystick.SIZE * ppuY);
+		
+		//world.getJoystickBaixo().getPosition().x= (world.getNumBlocosH()-3f) * ppuX;
+		//world.getJoystickBaixo().getPosition().y= (world.getNumBlocosV()-3)*ppuY;
+	}
+
 	//Mostra um valor na tela.
 	//Retorna o vetor que ela esta mostrando
 	public Vector2 printTexto(){
@@ -132,49 +191,60 @@ public class WorldRenderer {
 				posiI.x=vector2.x+bob.getBounds().getWidth();
 			}
 		}	
-			
-		//Verifica se o personagem esta olhando para a baixo
-			//Se ele estiver olhando para a baixo printo e valor normal 
-			//Caso contrario ele esta olhando para a cima, logo somo a altura dela com a sua posi��o na vertical
-			if (bob.isFacingLeft()) {
-				//Valor normal, sem somar ser somado a altura
-				currentFont.draw(spriteBatch,  (int)vector2.y+ " )", 130, 60);
-				//Analisa a posicao inicial com a posicao atua
-				//Verifica se o personagem entrou no bloco
-				if((int)vector2.y!=(int)posiI.y){
-					System.out.println("Entrou no bloco");
-					//Recebe uma nova posicao inicial
-					posiI.y=vector2.y;
-				}
-				
-			}else {
-				//Valor  somado com a altura
-				currentFont.draw(spriteBatch,  (int)(vector2.y+bob.getBounds().getHeight())+ " )", 130, 60);
-				//Analisa a posicao inicial com a posicao atual
-				//Verifica se o personagem entrou no bloco
-				if((int)(vector2.y+bob.getBounds().getHeight())!=(int)posiI.y){
-					System.out.println("Entrou no bloco");
-					//Recebe uma nova posicao inicial
-					posiI.y=vector2.y+bob.getBounds().getHeight();
-				}
-			}
-			currentFont.draw(spriteBatch," Posicao do Personagem", 200, 60);
-			return vector2;
+		
+		currentFont.draw(spriteBatch," Posicao do Personagem", 200, 60);
+		return vector2;
 		}
 		
 	private void drawBlocks() {
 		for (Block block : world.getBlocks()) {
 				spriteBatch.draw(block.getTexture(), block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
 		}
+		
 	}
 
 	private void drawPersonagem() {
-		Personagem bob = world.getPersonagem();
+		//Personagem bob = world.getPersonagem();
 		
 		//A textura que ela vai desenhar "bobTexture" Posicao inicial
 		//Posicao inicial "bob.getPosition().x * ppuX, bob.getPosition().y * ppuY"
 		// Tamanho do desenho "Personagem.SIZE * ppuX, Personagem.SIZE * ppuY"
-		spriteBatch.draw(bobTexture, bob.getPosition().x * ppuX, bob.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
+		//spriteBatch.draw(bobTexture, bob.getPosition().x * ppuX, bob.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
+		
+		spriteBatch.draw(spriteBob.Cenario(world.getPersonagem()), posFogo.x * ppuX, posFogo.y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
+		
+		spriteBatch.draw(spriteBob.AniCreCorrendo(world.getPersonagem()), world.getPersonagem().getPosition().x * ppuX, world.getPersonagem().getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
+		
+		rectP= new Rectangle(world.getPersonagem().getPosition().x* ppuX , world.getPersonagem().getPosition().y* ppuY, spriteBob.AniCreCorrendo(world.getPersonagem()).getRegionWidth(),spriteBob.AniCreCorrendo(world.getPersonagem()).getRegionHeight());
+		
+		Personagem opositor = world.getOpositor();
+		spriteBatch.draw(opositorTexture, opositor.getPosition().x * ppuX, opositor.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
+		rectO =  new Rectangle(opositor.getPosition().x* ppuX , opositor.getPosition().y* ppuY , opositorTexture.getWidth(), opositorTexture.getHeight());
+		
+		Personagem opositor2 = world.getOpositor2();
+		spriteBatch.draw(opositorTexture, opositor2.getPosition().x * ppuX, opositor2.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
+		rectO2 =  new Rectangle(opositor2.getPosition().x* ppuX , opositor2.getPosition().y* ppuY , opositorTexture.getWidth(), opositorTexture.getHeight());
+		
+		//Colidiu
+		if(rectO.overlaps(rectP)){
+			System.out.println("Colidiu com o carro ");
+			//Gdx.app.exit();
+		}
+		
+		//Colidiu
+		if(rectO2.overlaps(rectP)){
+			System.out.println("Colidiu com o carro ");
+			//Gdx.app.exit();
+		}
+	}
+	
+	
+	
+	public void Colisao(){
+		
+	}
+	public void Tocou(){
+		
 	}
 	
 	private void drawDebug()
@@ -193,11 +263,21 @@ public class WorldRenderer {
 				}
 				// Recebe a posicao e o tamanho do personagem e o desenha na tela
 				Personagem bob = world.getPersonagem();
-				Rectangle rect = bob.getBounds();
-				float x1 = bob.getPosition().x + rect.x;
-				float y1 = bob.getPosition().y + rect.y;
+				Rectangle rectB = bob.getBounds();
+				float x1 = bob.getPosition().x + rectB.x;
+				float y1 = bob.getPosition().y + rectB.y;
 				debugRenderer.setColor(new Color(0, 1, 0, 1));
-				debugRenderer.rect(x1, y1, rect.width, rect.height);
+				debugRenderer.rect(x1, y1, rectB.width, rectB.height);
+				
+				Personagem opositor = world.getOpositor();
+				Rectangle recta = opositor.getBounds();
+				float x2 = opositor.getPosition().x + recta.x;
+				float y2 = opositor.getPosition().y + recta.y;
+				
+				debugRenderer.setColor(new Color(0, 1, 0, 1));
+				debugRenderer.rect(x2, y2, recta.width, recta.height);
+				
 				debugRenderer.end();
 	}
+
 }

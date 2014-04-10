@@ -1,25 +1,29 @@
 package com.projetocgt.cenario;
 
-import com.badlogic.gdx.math.Vector2;
-import com.projetocgt.core.petri.CpnXmlReader;
-import com.projetocgt.core.petri.ElementosCPN;
-import com.projetocgt.core.petri.entity.Place;
-import com.projetocgt.personagens.Personagem;
-import com.projetocgt.personagens.Personagem.State;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.math.Vector2;
+import com.projetocgt.core.petri.entity.Place;
+import com.projetocgt.personagens.Personagem;
+import com.projetocgt.personagens.Personagem.State;
+/**
+ * Controla os movimentos do mundo e dos personagens
+ * @author roberto.bruno007@gmail.com
+ *
+ */
 public class WorldController {
 
-	// Possiveis movimentos do personagem
+	//Possiveis movimentos do personagem
 	enum Keys {
 		LEFT, RIGHT, JUMP, FIRE, UP, DOWN
 	};
 
 	private World world;
 	private Personagem bob;
-
+	private Personagem opositor;
+	private Personagem opositor2;
+	
 	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
 	static {
 		keys.put(Keys.LEFT, false);
@@ -37,6 +41,8 @@ public class WorldController {
 		this.world = world;
 		// Posicao inicial do personagem
 		this.bob = world.getPersonagem();
+		this.opositor = world.getOpositor();
+		this.opositor2 = world.getOpositor2();
 	}
 
 	// ** Key presses and touches **************** //
@@ -68,14 +74,16 @@ public class WorldController {
 	// Funciona na subida do botao
 	public void leftReleased() {
 		keys.get(keys.put(Keys.LEFT, false));
+		//bob.setState(State.IDLE);
 	}
 
 	public void rightReleased() {
 		keys.get(keys.put(Keys.RIGHT, false));
+		//bob.setState(State.IDLE);
 	}
 
 	public void upReleased() {
-		keys.get(keys.put(Keys.UP, false));
+		keys.get(keys.put(Keys.UP, false));	
 	}
 
 	public void downReleased() {
@@ -103,8 +111,10 @@ public class WorldController {
 		// Atualizaes do Personagem. Personagem tem um metodo de atualizacoo
 		// dedicado.
 		bob.update(delta);
+		opositor.update(delta);
+		opositor2.update(delta);
 	}
-
+	
 	public void movimeto(float x, float y) {
 //		if (permitido(x, y)) {
 			bob.setState(State.WALKING);
@@ -153,16 +163,26 @@ public class WorldController {
 
 	/** Change Bob's state and parameters based on input controls **/
 	private void processInput() {
-
+		
+		//Controler do carro
+		if 	(opositor.getPosition().y + opositor.getBounds().height > 0.0f) {
+			opositor.getVelocity().y = -Personagem.SPEED;
+			opositor2.getVelocity().y = -Personagem.SPEED;
+		}
+		else{
+			opositor.getPosition().y = world.getNumBlocosV() + 0.5f;
+			opositor2.getPosition().y = world.getNumBlocosV() + 0.2f;
+		}
+		
+		
 		if (keys.get(Keys.UP)) {
 			// Verifica se o personagem pode andar
-			if (bob.getPosition().y + bob.getBounds().height > (world
-					.getNumBlocosV() - 0.01f)) {
+			if (bob.getPosition().y + bob.getBounds().height > (world.getNumBlocosV() - 0.01f)) {
 				bob.getVelocity().y = 0.0f;
 			} else {
 				// O personagem esta olhando para a cima
 				bob.setFacingLeft(false);
-				bob.setState(State.WALKING);
+				bob.setState(State.LOOKUP);
 				bob.getVelocity().y = Personagem.SPEED;
 			}
 		}
@@ -174,7 +194,7 @@ public class WorldController {
 			} else {
 				// O personagem esta olhando para a baixo
 				bob.setFacingLeft(true);
-				bob.setState(State.WALKING);
+				bob.setState(State.LOOKDOWN);
 				bob.getVelocity().y = -Personagem.SPEED;
 			}
 		}
@@ -186,9 +206,8 @@ public class WorldController {
 			} else {
 				// O personagem esta olhando para a esquerda
 				bob.setFacingLeft(true);
-				bob.setState(State.WALKING);
+				bob.setState(State.LOOKLEFT);
 				bob.getVelocity().x = -Personagem.SPEED;
-
 			}
 		}
 		if (keys.get(Keys.RIGHT)) {
@@ -200,7 +219,7 @@ public class WorldController {
 			} else {
 				// O personagem esta olhando para a direita
 				bob.setFacingLeft(false);
-				bob.setState(State.WALKING);
+				bob.setState(State.LOOKRIGHT);
 				bob.getVelocity().x = Personagem.SPEED;
 			}
 			// }
@@ -210,7 +229,7 @@ public class WorldController {
 		//
 		if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT))
 				|| (!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) {
-			bob.setState(State.IDLE);
+			//bob.setState(State.IDLE);
 			// acceleration is 0 on the x
 			bob.getAcceleration().x = 0;
 			// horizontal speed is 0
@@ -219,7 +238,7 @@ public class WorldController {
 		// Verifica se ambos ou nenhum dos sentidos sao presionados
 		if ((keys.get(Keys.UP) && keys.get(Keys.DOWN))
 				|| (!keys.get(Keys.UP) && !(keys.get(Keys.DOWN)))) {
-			bob.setState(State.IDLE);
+			//bob.setState(State.IDLE);
 			// acceleration is 0 on the y
 			bob.getAcceleration().y = 0;
 			// Vertival speed is 0
