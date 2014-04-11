@@ -12,7 +12,7 @@ public class MyWorld {
 	private Personagem personagem;
 	private Personagem opositor;
 	private Personagem opositor2;
-	
+	private Personagem agua;
 	private Joystick setaBaixo;
 	private Joystick setaDireita;
 	private Joystick setaCima;
@@ -65,7 +65,7 @@ public class MyWorld {
 		//this.numBlocosV = cpn.getNumMaxPlaceY();
 		this.numBlocosH = 3;
 		this.numBlocosV = 3;
-		createDemoWorld();
+		createWorld();
 	}
 	
 	public ElementosCPN getElementosCPN() {
@@ -80,19 +80,20 @@ public class MyWorld {
 		return numBlocosV;
 	}
 
-	private void createDemoWorld() {
+	private void createWorld() {
 		//Posicao inicial do personagem 
-		personagem = new Personagem(new Vector2(0, 0),3,false);
+		personagem = new Personagem(new Vector2(0, 0),3,false,0);
 		//Posicao inicial do opositor
 		//a posicao do y aumenta na subida 
-		opositor = new Personagem(new Vector2(this.numBlocosH-2.15f,this.numBlocosV-0.5f),3,true);
-		setOpositor2(new Personagem(new Vector2(this.numBlocosH-1.1f,this.numBlocosV - 0.1f),3,true));
-		
+		opositor = new Personagem(new Vector2(this.numBlocosH-2.15f,this.numBlocosV-0.5f),3,true,0);
+		setOpositor2(new Personagem(new Vector2(this.numBlocosH-1.1f,this.numBlocosV - 0.1f),3,true,0));
+		//Cria os Joysticks
 		setaBaixo = new Joystick(new Vector2(2, 2));
 		setaDireita = new Joystick(new Vector2(1, 1));
 		setaCima = new Joystick(new Vector2(2, 2));
 		setaEsquerda = new Joystick(new Vector2(0, 0));
-		
+		//Constroe o cenario com agua
+		agua = new Personagem(new Vector2(0, 2), 0,false, 0); 
 		//Constroe o cenario,preenche uma matriz.
 		//"i" colunas.
 		//"j" linhas.
@@ -106,9 +107,17 @@ public class MyWorld {
 	public Personagem getOpositor2() {
 		return opositor2;
 	}
-
+	
 	public void setOpositor2(Personagem opositor2) {
 		this.opositor2 = opositor2;
+	}
+
+	public Personagem getAgua() {
+		return agua;
+	}
+
+	public void setAgua(Personagem agua) {
+		this.agua = agua;
 	}
 
 	

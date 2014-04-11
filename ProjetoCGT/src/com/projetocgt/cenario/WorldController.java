@@ -163,19 +163,19 @@ public boolean onScreen(float x, float y) {
 	}
 
 	/** Change Bob's state and parameters based on input controls **/
-	private void processInput() {
-		
+	public void movimento(){
 		//Controler do carro
-		if 	(opositor.getPosition().y + opositor.getBounds().height > 0.0f) {
+		if(opositor.getPosition().y + opositor.getBounds().height > 0.0f) {
 			opositor.getVelocity().y = -Personagem.SPEED;
 			opositor2.getVelocity().y = -Personagem.SPEED;
-		}
-		else{
+		}else{
 			opositor.getPosition().y = world.getNumBlocosV() + 0.5f;
 			opositor2.getPosition().y = world.getNumBlocosV() + 0.2f;
 		}
-		
-		
+	}
+	
+	private void processInput() {
+		movimento();
 		if (keys.get(Keys.UP)) {
 			// Verifica se o personagem pode andar
 			if (bob.getPosition().y + bob.getBounds().height > (world.getNumBlocosV() - 0.01f)) {

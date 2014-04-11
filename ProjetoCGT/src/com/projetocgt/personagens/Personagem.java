@@ -26,13 +26,15 @@ public class Personagem {
 	private boolean 	facingLeft = true;				//
 	static public final float FLOAT_ROUNDING_ERROR = 0.000001f; // 32 bits
 	private int life;
-	private boolean opositor;
+	private boolean opositor;							//Utilizada para verificar se o personagem e' um opositor
+	private int  bonus; 									//Utilizada para verificar o numero de bonus.
 	/**
 	 * Construtor padrao que recebe uma posicao inicial, um life e verifica se o personagem e'
 	 * um opositor ou não
-	 * @param position,life,opositor
+	 * @param position,life,opositor,bonus
 	 */
-	public Personagem(Vector2 position, int life,boolean opositor) {
+	public Personagem(Vector2 position, int life,boolean opositor,int bonus ) {
+		this.bonus=bonus;				//Numero de bonus inicial do personagem
 		this.opositor=opositor;
 		this.life=life;	
 		this.position = position;		//Posicao inicial
@@ -135,6 +137,14 @@ public class Personagem {
 	public void setOpositor(boolean opositor) {
 		this.opositor = opositor;
 	}
+	
+	public int getBonus() {
+		return bonus;
+	}
+
+	public void setBonus(int bonus) {
+		this.bonus = bonus;
+	}
 	/**
 	 * Executa uma sobre o personagem 
 	 * a acao sera' de atropelamento
@@ -154,4 +164,6 @@ public class Personagem {
 		this.setPosition(vector);
 		
 	}
+
+	
 }

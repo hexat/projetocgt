@@ -38,7 +38,7 @@ public class WorldRenderer   {
 	private Texture setaDireita;
 	private Texture setaEsquerda;
 	private Texture setaCima;
-	
+	private Texture texturaAgua;
 	
 	
 	private Joystick joystick;
@@ -110,7 +110,7 @@ public class WorldRenderer   {
 		spriteBob.AniRL2("data/sprites/sprites_bomb.png");
 		//
 		spriteBob.AnimaCenario("data/sprites/sprite_fogo.png", 2, 3);
-		posFogo = new Vector2(2,2);
+		posFogo = new Vector2(2,1);
 		
 		//Textura do opositor
 		opositorTexture = new  Texture(Gdx.files.internal("data/Carros/carro.png"));
@@ -122,7 +122,8 @@ public class WorldRenderer   {
 		texturaSetaBaixo = new  Texture(Gdx.files.internal("data/Joystick/setaBaixo.png"));
 		setaCima = new  Texture(Gdx.files.internal("data/Joystick/setaCima.png"));
 		setaEsquerda = new  Texture(Gdx.files.internal("data/Joystick/setaEsquerda.png"));
-		
+		//Carrega a textura da agua
+		texturaAgua =  new Texture("data/piscina.png");
 		//setaBaixo.setTextura(texturaSetaBaixo);
 		world.getJoystickBaixo().getPosition().x= ((world.getNumBlocosH()-2.5f));
 		world.getJoystickBaixo().getPosition().y= ((world.getNumBlocosV()-3.0f));
@@ -135,6 +136,7 @@ public class WorldRenderer   {
 		
 		world.getJoystickCima().getPosition().x=world.getNumBlocosH()-2.5f;
 		world.getJoystickCima().getPosition().y=world.getNumBlocosV()-2.4f;
+		
 		
 	}
 	
@@ -215,7 +217,7 @@ public class WorldRenderer   {
 		for (Block block : world.getBlocks()) {
 				spriteBatch.draw(block.getTexture(), block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
 		}
-		
+		spriteBatch.draw(texturaAgua,world.getAgua().getPosition().x*ppuX,world.getAgua().getPosition().y*ppuY,Block.SIZE * ppuX, Block.SIZE * ppuY);
 	}
 
 	private void drawPersonagem() {
@@ -270,22 +272,33 @@ public class WorldRenderer   {
 				
 				debugRenderer.end();
 	}
-	
+
 	/***
 	 * Verifica se o persanagem colidiu com algumn opositor
 	 * @param Personagem personagem, Personagem opositor, boolean dano
 	 */
 	private void colisaoOpositor(Personagem personagem,Personagem opositor,boolean dano){
 
-		BoundingBox box = new BoundingBox();
+		//BoundingBox box = new BoundingBox();
 		//
 		Rectangle rectPer = rectPer= new Rectangle(personagem.getPosition().x* ppuX , personagem.getPosition().y* ppuY, personagem.getBounds().width* ppuX, personagem.getBounds().height* ppuY);
 		//
 		Rectangle rectOpo =  new Rectangle(opositor.getPosition().x* ppuX , opositor.getPosition().y* ppuY , opositor.getBounds().width* ppuX, opositor.getBounds().height* ppuY);
+		
+		//Cria a colisao da agua
+		Rectangle rectAgua =  new Rectangle(world.getAgua().getPosition().x* ppuX , world.getAgua().getPosition().y* ppuY , world.getAgua().getBounds().width* ppuX, world.getAgua().getBounds().height* ppuY);
 		//
+		if(rectAgua.overlaps(rectPer)){
+			personagem.setBonus(1);
+			spriteBob.setLinhaDoSpriteUp(5);
+			spriteBob.setLinhaDoSpriteDown(7);
+			spriteBob.setLinhaDoSpriteLeft(8);
+			spriteBob.setLinhaDoSpriteRight(6);
+		}
+			
 		if(rectOpo.overlaps(rectPer)){
 			
-			personagem.acaoAtropelamento(opositor,0.05f);
+			personagem.acaoAtropelamento(opositor,0.2f);
 			//Se a opcao dano for habilitado
 			if(dano){
 				int live=personagem.getLife();

@@ -18,10 +18,10 @@ public class SpritePersonagem {
 	private TextureRegion bobFrame;
 	private static final int    FRAME_COLS = 3;     // 
     private static final int    FRAME_ROWS = 12;     // 
-    private int linhaDoSpriteUp = 5;     //
-    private int linhaDoSpriteDown = 7;     //
-    private int linhaDoSpriteLeft = 8;     //
-    private int linhaDoSpriteRight = 6;     //
+    private int linhaDoSpriteUp = 2;     //
+    private int linhaDoSpriteDown = 1;     //
+    private int linhaDoSpriteLeft = 4;     //
+    private int linhaDoSpriteRight = 3;     //
     private Texture             walkSheet;      //
     private TextureRegion[]     walkFramesUp;
     private TextureRegion[]     walkFramesDown;
@@ -102,4 +102,30 @@ public class SpritePersonagem {
 	public  TextureRegion Cenario(Personagem personagem){
 		return walkAnimationFogo.getKeyFrame(personagem.getStateTime(), true);
 	}
+	public int getLinhaDoSpriteUp() {
+		return linhaDoSpriteUp;
+	}
+	public void setLinhaDoSpriteUp(int linhaDoSpriteUp) {
+		this.linhaDoSpriteUp = linhaDoSpriteUp;
+	}
+	public int getLinhaDoSpriteDown() {
+		return linhaDoSpriteDown;
+	}
+	public void setLinhaDoSpriteDown(int linhaDoSpriteDown) {
+		this.linhaDoSpriteDown = linhaDoSpriteDown;
+	}
+	public int getLinhaDoSpriteLeft() {
+		return linhaDoSpriteLeft;
+	}
+	public void setLinhaDoSpriteLeft(int linhaDoSpriteLeft) {
+		this.linhaDoSpriteLeft = linhaDoSpriteLeft;
+	}
+	public int getLinhaDoSpriteRight() {
+		return linhaDoSpriteRight;
+	}
+	public void setLinhaDoSpriteRight(int linhaDoSpriteRight) {
+		this.linhaDoSpriteRight = linhaDoSpriteRight;
+	}
+	
+	
 }
