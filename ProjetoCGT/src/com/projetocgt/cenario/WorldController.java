@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.core.petri.entity.Place;
 import com.projetocgt.personagens.Personagem;
 import com.projetocgt.personagens.Personagem.State;
+import com.projetocgt.personagens.SpritePersonagem;
 /**
  * Controla os movimentos do mundo e dos personagens
  * @author roberto.bruno007@gmail.com
@@ -23,7 +24,7 @@ public class WorldController {
 	private Personagem bob;
 	private Personagem opositor;
 	private Personagem opositor2;
-	
+	private SpritePersonagem spriteAnimacao;
 	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
 	static {
 		keys.put(Keys.LEFT, false);
@@ -43,59 +44,87 @@ public class WorldController {
 		this.bob = world.getPersonagem();
 		this.opositor = world.getOpositor();
 		this.opositor2 = world.getOpositor2();
+		this.spriteAnimacao = world.getSprite();
+	}
+
+	private SpritePersonagem SpritePersonagem() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	// ** Key presses and touches **************** //
 	// Funciona na descida do botao
 	public void leftPressed() {
 		keys.get(keys.put(Keys.LEFT, true));
+		//Habilita o loop da animacao
+		spriteAnimacao.setLoop(true);
 	}
 
 	public void rightPressed() {
 		keys.get(keys.put(Keys.RIGHT, true));
+		//Habilita o loop da animacao
+		spriteAnimacao.setLoop(true);
 	}
 
 	public void upPressed() {
 		keys.get(keys.put(Keys.UP, true));
+		//Habilita o loop da animacao
+		spriteAnimacao.setLoop(true);
 	}
 
 	public void downPressed() {
 		keys.get(keys.put(Keys.DOWN, true));
+		//Habilita o loop da animacao
+		spriteAnimacao.setLoop(true);
 	}
 
 	public void jumpPressed() {
 		keys.get(keys.put(Keys.JUMP, true));
+		//Habilita o loop da animacao
+		spriteAnimacao.setLoop(true);
 	}
 
 	public void firePressed() {
 		keys.get(keys.put(Keys.FIRE, false));
+		//Habilita o loop da animacao
+		spriteAnimacao.setLoop(true);
 	}
 
 	// Funciona na subida do botao
 	public void leftReleased() {
 		keys.get(keys.put(Keys.LEFT, false));
-		//bob.setState(State.IDLE);
+		//Desabilita o loop da animacao
+		spriteAnimacao.setLoop(false);
 	}
 
 	public void rightReleased() {
 		keys.get(keys.put(Keys.RIGHT, false));
-		//bob.setState(State.IDLE);
+		//Desabilita o loop da animacao
+		spriteAnimacao.setLoop(false);
 	}
 
 	public void upReleased() {
 		keys.get(keys.put(Keys.UP, false));	
+		//Desabilita o loop da animacao
+		spriteAnimacao.setLoop(false);
 	}
 
 	public void downReleased() {
 		keys.get(keys.put(Keys.DOWN, false));
+		//Desabilita o loop da animacao
+		spriteAnimacao.setLoop(false);
 	}
 
 	public void jumpReleased() {
 		keys.get(keys.put(Keys.JUMP, false));
+		//Desabilita o loop da animacao
+		spriteAnimacao.setLoop(false);
 	}
 
 	public void fireReleased() {
 		keys.get(keys.put(Keys.FIRE, false));
+		//Desabilita o loop da animacao
+		spriteAnimacao.setLoop(false);
 	}
 
 	// Retorna aposicao do personagem em forma de Vetor2
@@ -116,8 +145,8 @@ public class WorldController {
 	}
 	
 	public void movimeto(float x, float y) {
-		//if (permitido(x, y)) {
-			//bob.setState(State.WALKING);
+//		if (permitido(x, y)) {
+			bob.setState(State.WALKING);
 			if (bob.getPosition().x < x) {
 				bob.setFacingLeft(true);
 			} else {
@@ -141,7 +170,7 @@ public class WorldController {
 			
 			bob.getPosition().x = x;
 			bob.getPosition().y = y;			
-		//}
+//		}
 	}
 
 	public boolean onScreen() {
@@ -280,4 +309,5 @@ public boolean onScreen(float x, float y) {
 		}
 		return res;
 	}
+
 }

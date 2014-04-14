@@ -24,6 +24,7 @@ public class WorldRenderer   {
 	private Personagem personagem;
 	private Personagem opositor;
 	private Personagem opositor2;
+	private Personagem fogo;
 	// Inicializa uma constante relacionado a quantidade de blocos na horizontal que sera visto pela camera
 	private float CAMERA_WIDTH;
 	// Inicializa uma constante relacionado a quantidade de blocos na vertical que sera visto pela camera
@@ -42,7 +43,7 @@ public class WorldRenderer   {
 	
 	
 	private Joystick joystick;
-	private  Vector2 posFogo;
+	//private  Vector2 posFogo;
 	
 	private SpriteBatch spriteBatch;	// 
 	private boolean debug = false; 		// Variavel que ira ativar o debug
@@ -104,13 +105,15 @@ public class WorldRenderer   {
 		personagem = world.getPersonagem();
 		opositor = world.getOpositor();
 		opositor2 = world.getOpositor2();
+		spriteBob = world.getSprite();
+		fogo = world.getOpositorFogo();
 		//Carrega as texturas que serao paresentadas na cena
 		
 		//bobTexture = new  Texture(Gdx.files.internal("data/Bob.png"));
-		spriteBob.AniRL2("data/sprites/sprites_bomb.png");
-		//
-		spriteBob.AnimaCenario("data/sprites/sprite_fogo.png", 2, 3);
-		posFogo = new Vector2(2,1);
+		spriteBob.loadSpiteAniBonus("data/sprites/sprites_bomb.png");
+		
+		//Carrega o sprite do fogo do cenario
+		spriteBob.loadingSpriteCenario("data/sprites/sprite_fogo.png", 2, 3);
 		
 		//Textura do opositor
 		opositorTexture = new  Texture(Gdx.files.internal("data/Carros/carro.png"));
@@ -228,9 +231,11 @@ public class WorldRenderer   {
 		// Tamanho do desenho "Personagem.SIZE * ppuX, Personagem.SIZE * ppuY"
 		//spriteBatch.draw(bobTexture, bob.getPosition().x * ppuX, bob.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
 		
-		spriteBatch.draw(spriteBob.Cenario(personagem), posFogo.x * ppuX, posFogo.y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
+		//Verifica se o life do fogo ainda esta ativo
+		if(fogo.getLife()!=0)
+			spriteBatch.draw(spriteBob.Cenario(personagem), fogo.getPosition().x * ppuX, fogo.getPosition().y * ppuY, fogo.SIZE * ppuX, fogo.SIZE * ppuY);
 		
-		spriteBatch.draw(spriteBob.AniCreCorrendo(world.getPersonagem()), personagem.getPosition().x * ppuX, personagem.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
+		spriteBatch.draw(spriteBob.aniNormal(world.getPersonagem()), personagem.getPosition().x * ppuX, personagem.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
 		//bodyPer.position.set(personagem.getPosition().x * ppuX, personagem.getPosition().y * ppuY);
 		
 		spriteBatch.draw(opositorTexture, opositor.getPosition().x * ppuX, opositor.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
@@ -277,8 +282,10 @@ public class WorldRenderer   {
 	 * Verifica se o persanagem colidiu com algumn opositor
 	 * @param Personagem personagem, Personagem opositor, boolean dano
 	 */
+	private boolean bonus=false;
 	private void colisaoOpositor(Personagem personagem,Personagem opositor,boolean dano){
-
+		boolean flag = false;
+		boolean flagFogo=false;
 		//BoundingBox box = new BoundingBox();
 		//
 		Rectangle rectPer = rectPer= new Rectangle(personagem.getPosition().x* ppuX , personagem.getPosition().y* ppuY, personagem.getBounds().width* ppuX, personagem.getBounds().height* ppuY);
@@ -287,13 +294,45 @@ public class WorldRenderer   {
 		
 		//Cria a colisao da agua
 		Rectangle rectAgua =  new Rectangle(world.getAgua().getPosition().x* ppuX , world.getAgua().getPosition().y* ppuY , world.getAgua().getBounds().width* ppuX, world.getAgua().getBounds().height* ppuY);
-		//
+		
+		//Cria colisao no fogo
+		Rectangle rectFogo =  new Rectangle(fogo.getPosition().x * ppuX, fogo.getPosition().y * ppuY, fogo.SIZE * ppuX, fogo.SIZE * ppuY);
+		
+		//colidiu cmo o fogo
+		if(rectFogo.overlaps(rectPer)){
+			personagem.setBonus(0);
+			//Colidiu com o fogo
+			flagFogo = true;
+			
+			//Evita o personagem ficar carregando varias imagens
+			//So ira carregar as imagens quando o personagem estiver sem bonus
+			if(flagFogo && bonus){
+			fogo.tiraUmDoLife();
+			//Muda de animacao
+			spriteBob.setLinhaDoSpriteUp(2);
+			spriteBob.setLinhaDoSpriteDown(1);
+			spriteBob.setLinhaDoSpriteLeft(4);
+			spriteBob.setLinhaDoSpriteRight(3);
+			//Carrega as imagens para o personagem com fogo
+			spriteBob.loadSpiteAniBonus("data/sprites/sprites_bomb.png");
+			flagFogo = false;
+			}
+			bonus=false;
+		}
+		//Colidiu com a agua
 		if(rectAgua.overlaps(rectPer)){
 			personagem.setBonus(1);
+			flag = true;
+			if(flag  && !bonus){
 			spriteBob.setLinhaDoSpriteUp(5);
 			spriteBob.setLinhaDoSpriteDown(7);
 			spriteBob.setLinhaDoSpriteLeft(8);
 			spriteBob.setLinhaDoSpriteRight(6);
+			//Carrega as imagens para o personagem com agua
+			spriteBob.loadSpiteAniBonus("data/sprites/sprites_bomb.png");
+			flag = false;
+			}
+			bonus=true;
 		}
 			
 		if(rectOpo.overlaps(rectPer)){

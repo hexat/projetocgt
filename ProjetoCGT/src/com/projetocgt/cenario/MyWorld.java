@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.projetocgt.core.petri.ElementosCPN;
 import com.projetocgt.personagens.Personagem;
+import com.projetocgt.personagens.SpritePersonagem;
 
 public class MyWorld {
 	/** The blocks making up the world **/
@@ -13,6 +14,8 @@ public class MyWorld {
 	private Personagem opositor;
 	private Personagem opositor2;
 	private Personagem agua;
+	private Personagem opositorFogo;
+	private SpritePersonagem sprite;
 	private Joystick setaBaixo;
 	private Joystick setaDireita;
 	private Joystick setaCima;
@@ -92,6 +95,10 @@ public class MyWorld {
 		setaDireita = new Joystick(new Vector2(1, 1));
 		setaCima = new Joystick(new Vector2(2, 2));
 		setaEsquerda = new Joystick(new Vector2(0, 0));
+		//
+		opositorFogo = new Personagem(new Vector2(2,1), 3, true, 0);
+		//Adiniona uma aniamcao 
+		sprite = new SpritePersonagem();
 		//Constroe o cenario com agua
 		agua = new Personagem(new Vector2(0, 2), 0,false, 0); 
 		//Constroe o cenario,preenche uma matriz.
@@ -118,6 +125,22 @@ public class MyWorld {
 
 	public void setAgua(Personagem agua) {
 		this.agua = agua;
+	}
+
+	public SpritePersonagem getSprite() {
+		return sprite;
+	}
+
+	public void setSprite(SpritePersonagem sprite) {
+		this.sprite = sprite;
+	}
+
+	public Personagem getOpositorFogo() {
+		return opositorFogo;
+	}
+
+	public void setOpositorFogo(Personagem opositorFogo) {
+		this.opositorFogo = opositorFogo;
 	}
 
 	

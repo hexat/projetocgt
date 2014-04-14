@@ -22,37 +22,42 @@ public class SpritePersonagem {
     private int linhaDoSpriteDown = 1;     //
     private int linhaDoSpriteLeft = 4;     //
     private int linhaDoSpriteRight = 3;     //
-    private Texture             walkSheet;      //
-    private TextureRegion[]     walkFramesUp;
-    private TextureRegion[]     walkFramesDown;
-    private TextureRegion[]     walkFramesLeft;
-    private TextureRegion[]     walkFramesRight;
+    private Texture walkSheet;      //
+    private TextureRegion[] walkFramesUp;
+    private TextureRegion[] walkFramesDown;
+    private TextureRegion[] walkFramesLeft;
+    private TextureRegion[] walkFramesRight;
+    private TextureRegion[] walkFramesStandBy;
     private Animation walkAnimationUp; 
     private Animation walkAnimationDown;
     private Animation walkAnimationLeft;
     private Animation walkAnimationRight; 
-
+    private boolean loop;
     float stateTime;
 
 	private TextureRegion[] walkFramesCenario;
 
-	private Animation walkAnimationFogo;   
+	private Animation walkAnimationFogo;
+
+	private Animation walkAnimationStandBy;   
 	
 	public SpritePersonagem(){
 		
 	}
+	
 	/***
 	 * 
 	 * @param caminho
 	 * 				Informa qual o caminho do arquivo
 	 */
-	public void AniRL2(String caminho){
+	public void loadSpiteAniBonus(String caminho){
 		walkSheet = new Texture(Gdx.files.internal(caminho)); 
         TextureRegion[][] tmp = TextureRegion.split(walkSheet, walkSheet.getWidth()/FRAME_COLS, walkSheet.getHeight()/FRAME_ROWS);              // #10
         walkFramesUp = new TextureRegion[FRAME_COLS];
         walkFramesDown = new TextureRegion[FRAME_COLS];
         walkFramesLeft = new TextureRegion[FRAME_COLS];
         walkFramesRight = new TextureRegion[FRAME_COLS];
+        //walkFramesUp = new TextureRegion[];
         
         for (int i = 0; i < 1; i++) {
             for (int j = 0; j < FRAME_COLS; j++) {
@@ -62,31 +67,44 @@ public class SpritePersonagem {
             	walkFramesRight[j] = tmp[linhaDoSpriteRight-1][j];
             }
         }
+        //Animacao do personagem para cima
         walkAnimationUp = new Animation(RUNNING_FRAME_DURATION, walkFramesUp);
+        //Animacao do personagem para baixo
         walkAnimationDown = new Animation(RUNNING_FRAME_DURATION, walkFramesDown);
+        //Animacao do personagem para esquerda
         walkAnimationLeft = new Animation(RUNNING_FRAME_DURATION, walkFramesLeft);
+        //Animacao do personagem para direita
         walkAnimationRight = new Animation(RUNNING_FRAME_DURATION, walkFramesRight);
 	}
-	
-	public  TextureRegion AniCreCorrendo(Personagem personagem){
+	/***
+	 * 
+	 * @param personagem O personagem que a funcao ira fazer a animacao
+	 * @return bobFrama o freme do personagem
+	 */
+	public  TextureRegion aniNormal(Personagem personagem){
+		
+		//animacao inicial do personagem
 		bobFrame = walkAnimationDown.getKeyFrame(personagem.getStateTime(), false);
 		//Verifica se o personagem esta olhando para cima e faz a aniamcao
 		if(personagem.getState().equals(State.LOOKUP))
-			return walkAnimationUp.getKeyFrame(personagem.getStateTime(), true);
-		
+			return walkAnimationUp.getKeyFrame(personagem.getStateTime(), loop);
+		//Verifica se o personagem esta olhando para baixo e faz a aniamcao
 		if(personagem.getState().equals(State.LOOKDOWN))
-			return walkAnimationDown.getKeyFrame(personagem.getStateTime(), true);
-		
+			return walkAnimationDown.getKeyFrame(personagem.getStateTime(), loop);
+		//Verifica se o personagem esta olhando para esquerda e faz a aniamcao
 		if(personagem.getState().equals(State.LOOKLEFT))
-			return walkAnimationLeft.getKeyFrame(personagem.getStateTime(), true);
-		
+			return walkAnimationLeft.getKeyFrame(personagem.getStateTime(), loop);
+		//Verifica se o personagem esta olhando para direita e faz a aniamcao
 		if(personagem.getState().equals(State.LOOKRIGHT))
-			return walkAnimationRight.getKeyFrame(personagem.getStateTime(), true);
+			return walkAnimationRight.getKeyFrame(personagem.getStateTime(), loop);
 		
 		return bobFrame;
 	}
 	
-	public void AnimaCenario(String caminho,int FRAME_COLS, int FRAME_ROWS){
+	/***
+	 * Carrega o sprie sheet do personagem
+	 */
+	public void loadingSpriteCenario(String caminho,int FRAME_COLS, int FRAME_ROWS){
 		walkSheet = new Texture(Gdx.files.internal(caminho)); 
         TextureRegion[][] tmp = TextureRegion.split(walkSheet, walkSheet.getWidth()/FRAME_COLS, walkSheet.getHeight()/FRAME_ROWS);              // #10
         walkFramesCenario = new TextureRegion[FRAME_COLS*FRAME_ROWS];
@@ -102,6 +120,10 @@ public class SpritePersonagem {
 	public  TextureRegion Cenario(Personagem personagem){
 		return walkAnimationFogo.getKeyFrame(personagem.getStateTime(), true);
 	}
+	
+	public void stopAni(){
+	}
+	
 	public int getLinhaDoSpriteUp() {
 		return linhaDoSpriteUp;
 	}
@@ -125,6 +147,14 @@ public class SpritePersonagem {
 	}
 	public void setLinhaDoSpriteRight(int linhaDoSpriteRight) {
 		this.linhaDoSpriteRight = linhaDoSpriteRight;
+	}
+
+	public boolean isLoop() {
+		return loop;
+	}
+
+	public void setLoop(boolean loop) {
+		this.loop = loop;
 	}
 	
 	

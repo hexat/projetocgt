@@ -28,9 +28,10 @@ public class Personagem {
 	private int life;
 	private boolean opositor;							//Utilizada para verificar se o personagem e' um opositor
 	private int  bonus; 									//Utilizada para verificar o numero de bonus.
+	
 	/**
 	 * Construtor padrao que recebe uma posicao inicial, um life e verifica se o personagem e'
-	 * um opositor ou não
+	 * um opositor ou não.
 	 * @param position,life,opositor,bonus
 	 */
 	public Personagem(Vector2 position, int life,boolean opositor,int bonus ) {
@@ -144,6 +145,14 @@ public class Personagem {
 
 	public void setBonus(int bonus) {
 		this.bonus = bonus;
+	}
+	
+	/***
+	 * 
+	 * @return retornao valor do bonus menos um
+	 */
+	public int tiraUmDoLife(){
+		return this.life--;
 	}
 	/**
 	 * Executa uma sobre o personagem 
