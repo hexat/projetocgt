@@ -7,8 +7,18 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 //import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.projetocgt.cenario.Joystick;
+import com.projetocgt.cenario.Menu;
 import com.projetocgt.cenario.MyWorld;
 import com.projetocgt.cenario.WorldController;
 import com.projetocgt.cenario.WorldRenderer;
@@ -19,6 +29,8 @@ import com.projetocgt.personagens.SpritePersonagem;
 public class GameScreen extends Table implements Screen, InputProcessor {
 	
 	private MyWorld world;
+	private World world2;
+	private Box2DDebugRenderer debugoRender;
 	private WorldRenderer renderer;
 	private WorldController	controller;
 	private ElementosCPN elementosCPN;
@@ -30,12 +42,14 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 	private int width, height;
 	private boolean flagTouchInBob; // flag para verificar se foi tocado no bob
 	private Music music;
+	private SpriteBatch batch;	//Utilizada para desenhar o menu 
+	private Menu spriteMenu;
+	
 	public GameScreen() {
 		super();
 		flagTouchInBob = false;
-//		Texture.setEnforcePotImages(false);//desabilita a opcao de potencia de dois.
-		
 		elementosCPN = new ElementosCPN(Gdx.files.internal("data/game.cpn").read());
+		
 		//Carrega os audios
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/temabombeiro.wav"));
 		new Texture(Gdx.files.internal("data/Joystick/setaDireita.png"));
@@ -44,15 +58,8 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
-//		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		//
 		controller.update(delta);
-		//
 		renderer.render();
-		//
-		//joystick.InicializaStage(delta);
-		//joystick.Acao();
-		
 	}
 	
 
@@ -62,37 +69,42 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 		//Atribui a "this.width" a largura da tela 
 		this.width = width;
 		//Atribui a "this.width" a altura da tela
-		this.height = height;
-
-		
+		this.height = height;	
 	}
 
 	@Override
 	public void show() {
-		//
-		
-		
+		//Habilita a musica 
 		music.play();
 		music.setLooping(true);
+		
+		//criando um mundo com fisica
+		/*world2 = new World(new Vector2(0, -9.8f),true);
+		debugoRender = new Box2DDebugRenderer();
+		//Definicoes do body
+		BodyDef balDef = new BodyDef();
+		balDef.type= BodyType.StaticBody;
+		balDef.position.set(0, 0);
+		//Circulo
+		CircleShape shape = new CircleShape();
+		shape.setRadius(1f);
+		//Fixe def
+		//FixtureDef fixTureDef = new FixtureDef();
+		world2.createBody(balDef);
+		shape.dispose();*/
 		
 		world = new MyWorld(elementosCPN);
 		renderer = new WorldRenderer(world, true);
 		controller = new WorldController(world);
-		//
 		personagem = world.getPersonagem();
-		///
-		
+		//Joystick
 		setaDireita = world.getJoystickDireita();
 		setaBaixo = world.getJoystickBaixo();
 		setaEsquerda = world.getJoystickEsquerda();
 		setaCima = world.getJoystickCima();
-		//configurando os meus controles
+		
 		//Habilitando GDX para captura processos de entrada 
 		Gdx.input.setInputProcessor(this);
-		//joystick =  new Controle();
-		//joystick.Inicializa(controller);
-		
-		
 	}
 
 	@Override
@@ -116,7 +128,6 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
 	}
 	
 
@@ -219,8 +230,6 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 	@Override
 	public boolean touchDragged(int x, int y, int pointer) {
 		if (flagTouchInBob) {
-			//Personagem bob = world.getPersonagem();
-	
 			float newPosX = x / (width / world.getNumBlocosH()) - personagem.getBounds().width/2; 
 			float newPosY = world.getNumBlocosV() - y / (height / world.getNumBlocosV()) - personagem.getBounds().height/2;
 			controller.movimeto(newPosX, newPosY);
@@ -239,6 +248,4 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	SpritePersonagem anima = new SpritePersonagem();
 }

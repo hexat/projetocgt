@@ -1,5 +1,7 @@
 package com.projetocgt.cenario;
 
+import java.awt.geom.RectangularShape;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,7 +13,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.World;
 import com.projetocgt.personagens.Personagem;
@@ -29,7 +35,7 @@ public class WorldRenderer   {
 	private float CAMERA_WIDTH;
 	// Inicializa uma constante relacionado a quantidade de blocos na vertical que sera visto pela camera
 	private float CAMERA_HEIGHT;
-	
+	private boolean bonus=false;
 		
 	/** for debug rendering **/
 	ShapeRenderer debugRenderer = new ShapeRenderer();
@@ -54,13 +60,6 @@ public class WorldRenderer   {
 	SpritePersonagem spriteBob = new SpritePersonagem();
 	float posI;
 	float posF;
-	
-	private BitmapFont currentFont;
-	private Vector2 posiI;
-	boolean flag=true;
-	
-	private World mundo;
-	private BodyDef bodyPer; 	
 	
 	public float getCAMERA_HEIGHT(){
 		return this.CAMERA_HEIGHT;
@@ -90,18 +89,10 @@ public class WorldRenderer   {
 		this.cam.update();												 //Atualiza a tela			
 		this.debug = debug;												 
 		spriteBatch = new SpriteBatch();
-		
-		
 		loadTextures();
 	}
 	
 	private void loadTextures() {
-		
-		//mundo = new World(posFogo, debug);
-		//mundo.createBody(bodyPer);
-		//bodyPer = new BodyDef();
-		//bodyPer.type = BodyType.DynamicBody;
-		
 		personagem = world.getPersonagem();
 		opositor = world.getOpositor();
 		opositor2 = world.getOpositor2();
@@ -117,17 +108,16 @@ public class WorldRenderer   {
 		
 		//Textura do opositor
 		opositorTexture = new  Texture(Gdx.files.internal("data/Carros/carro.png"));
-		//Texto utilizado para printar a posicao do personagem na tela
-		currentFont = new BitmapFont();
 		
 		//Carrega Joystick
 		setaDireita = new  Texture(Gdx.files.internal("data/Joystick/setaDireita.png"));
 		texturaSetaBaixo = new  Texture(Gdx.files.internal("data/Joystick/setaBaixo.png"));
 		setaCima = new  Texture(Gdx.files.internal("data/Joystick/setaCima.png"));
 		setaEsquerda = new  Texture(Gdx.files.internal("data/Joystick/setaEsquerda.png"));
+		
 		//Carrega a textura da agua
 		texturaAgua =  new Texture("data/piscina.png");
-		//setaBaixo.setTextura(texturaSetaBaixo);
+		
 		world.getJoystickBaixo().getPosition().x= ((world.getNumBlocosH()-2.5f));
 		world.getJoystickBaixo().getPosition().y= ((world.getNumBlocosV()-3.0f));
 		
@@ -145,8 +135,8 @@ public class WorldRenderer   {
 	
 	//Sera chamado a todo instante na cena
 	public void render( ) {
-		
 		spriteBatch.begin();
+		//debugoRender2.render(world2, cam.combined);
 		//Desenha os blocos
 		drawBlocks();
 		//Dsenha o personagem
@@ -154,7 +144,7 @@ public class WorldRenderer   {
 		//Desenha o texto com a posicao do personagem
 		//printTexto();
 		//Desenha o joystick
-		drawJoystick();
+		//drawJoystick();
 		//Verifica colisao
 		colisaoOpositor(personagem,opositor,true);
 		spriteBatch.end();
@@ -168,85 +158,31 @@ public class WorldRenderer   {
 		
 		spriteBatch.draw(setaEsquerda, (float) ((world.getNumBlocosH()-3.0f) * ppuX), (float)(world.getNumBlocosV()-2.7) * ppuY, joystick.SIZE * ppuX, joystick.SIZE * ppuY);
 		spriteBatch.draw(setaCima, (float) ((world.getNumBlocosH()-2.5f) * ppuX), (float)(world.getNumBlocosV()-2.4) * ppuY, joystick.SIZE * ppuX, joystick.SIZE * ppuY);
-		
-		//world.getJoystickBaixo().getPosition().x= (world.getNumBlocosH()-3f) * ppuX;
-		//world.getJoystickBaixo().getPosition().y= (world.getNumBlocosV()-3)*ppuY;
 	}
 
-	//Mostra um valor na tela.
-	//Retorna o vetor que ela esta mostrando
-	public Vector2 printTexto(){
-		
-		Vector2 vector2 = personagem.getPosition();
-		
-		if(flag==true){
-			posiI = new Vector2(personagem.getPosition());
-			flag=false;
-		}
-			
-		//Verifica se o personagem esta olhando para a esquerda
-		//Se ele estiver olhando para a esquerda printo e valor normal 
-		//Caso contrario ele esta olhando para a direita, logo somo a base dela com a sua posi��o
-		if (personagem.isFacingLeft()) {
-			//Valor normal, sem somar ser somado a base
-			currentFont.draw(spriteBatch,  "( "+(int)vector2.x, 40, 60);
-			
-			//Analisa a posicao inicial com a posicao atual
-			//Verifica se o personagem entrou no bloco
-			if( (int)vector2.x != (int)posiI.x ){
-				System.out.println("Entrou no bloco");
-				//Recebe uma nova posicao inicial
-				posiI.x=vector2.x;
-			}
-			
-		} else {
-			//Valor  somado com a base
-			currentFont.draw(spriteBatch,  "( "+((int)(vector2.x+personagem.getBounds().getWidth())), 40, 60);
-
-			//Analisa a posicao inicial com a posicao atual
-			//Verifica se o personagem entrou no bloco
-			if((int)(vector2.x+personagem.getBounds().getWidth())!=(int)posiI.x){
-				System.out.println("Entrou no bloco");
-				//Recebe uma nova posicao inicial
-				posiI.x=vector2.x+personagem.getBounds().getWidth();
-			}
-		}	
-		
-		currentFont.draw(spriteBatch," Posicao do Personagem", 200, 60);
-		return vector2;
-		}
-		
 	private void drawBlocks() {
 		for (Block block : world.getBlocks()) {
 				spriteBatch.draw(block.getTexture(), block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
 		}
-		spriteBatch.draw(texturaAgua,world.getAgua().getPosition().x*ppuX,world.getAgua().getPosition().y*ppuY,Block.SIZE * ppuX, Block.SIZE * ppuY);
+		spriteBatch.draw(texturaAgua,world.getAgua().getPosition().x*ppuX,world.getAgua().getPosition().y*ppuY,world.getAgua().getBounds().width * ppuX, world.getAgua().getBounds().height * ppuY);
 	}
 
 	private void drawPersonagem() {
-		//Personagem bob = world.getPersonagem();
-		
 		//A textura que ela vai desenhar "bobTexture" Posicao inicial
 		//Posicao inicial "bob.getPosition().x * ppuX, bob.getPosition().y * ppuY"
 		// Tamanho do desenho "Personagem.SIZE * ppuX, Personagem.SIZE * ppuY"
-		//spriteBatch.draw(bobTexture, bob.getPosition().x * ppuX, bob.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
 		
 		//Verifica se o life do fogo ainda esta ativo
-		if(fogo.getLife()!=0)
-			spriteBatch.draw(spriteBob.Cenario(personagem), fogo.getPosition().x * ppuX, fogo.getPosition().y * ppuY, fogo.SIZE * ppuX, fogo.SIZE * ppuY);
-		
-		spriteBatch.draw(spriteBob.aniNormal(world.getPersonagem()), personagem.getPosition().x * ppuX, personagem.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
-		//bodyPer.position.set(personagem.getPosition().x * ppuX, personagem.getPosition().y * ppuY);
-		
-		spriteBatch.draw(opositorTexture, opositor.getPosition().x * ppuX, opositor.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
-		
-		//spriteBatch.draw(opositorTexture, opositor2.getPosition().x * ppuX, opositor2.getPosition().y * ppuY, Personagem.SIZE * ppuX, Personagem.SIZE * ppuY);
-	
-		
+		if(fogo.getLife() >= 0)
+			spriteBatch.draw(spriteBob.Cenario(personagem), fogo.getPosition().x * ppuX, fogo.getPosition().y * ppuY, fogo.getBounds().width * ppuX, fogo.getBounds().height* ppuY);
+		spriteBatch.draw(spriteBob.aniNormal(world.getPersonagem()), personagem.getPosition().x * ppuX, personagem.getPosition().y * ppuY, personagem.getBounds().width * ppuX, personagem.getBounds().height * ppuY);
+		spriteBatch.draw(opositorTexture, opositor.getPosition().x * ppuX, opositor.getPosition().y * ppuY, opositor.getBounds().width * ppuX, opositor.getBounds().height * ppuY);
 	}
 	
-	private void drawDebug()
-	{
+	private Rectangle recta;
+	private Rectangle rectB;
+	
+	private void drawDebug(){
 		// render blocks
 				debugRenderer.setProjectionMatrix(cam.combined);
 				debugRenderer.begin(ShapeType.Line);
@@ -260,15 +196,15 @@ public class WorldRenderer   {
 					debugRenderer.rect(x1, y1, rect.width, rect.height);
 				}
 				// Recebe a posicao e o tamanho do personagem e o desenha na tela
-				Personagem bob = world.getPersonagem();
-				Rectangle rectB = bob.getBounds();
-				float x1 = bob.getPosition().x + rectB.x;
-				float y1 = bob.getPosition().y + rectB.y;
+				//Personagem bob = world.getPersonagem();
+				rectB = personagem.getBounds();
+				float x1 = personagem.getPosition().x + rectB.x;
+				float y1 = personagem.getPosition().y + rectB.y;
 				debugRenderer.setColor(new Color(0, 1, 0, 1));
-				debugRenderer.rect(x1, y1, rectB.getWidth(), rectB.getHeight());
+				debugRenderer.rect(x1+0.08f, y1+0.08f, rectB.getWidth()/2, rectB.getHeight()/2);
 				
-				Personagem opositor = world.getOpositor();
-				Rectangle recta = opositor.getBounds();
+				//Personagem opositor = world.getOpositor();
+				recta = opositor.getBounds();
 				float x2 = opositor.getPosition().x + recta.x;
 				float y2 = opositor.getPosition().y + recta.y;
 				
@@ -282,13 +218,11 @@ public class WorldRenderer   {
 	 * Verifica se o persanagem colidiu com algumn opositor
 	 * @param Personagem personagem, Personagem opositor, boolean dano
 	 */
-	private boolean bonus=false;
 	private void colisaoOpositor(Personagem personagem,Personagem opositor,boolean dano){
 		boolean flag = false;
 		boolean flagFogo=false;
-		//BoundingBox box = new BoundingBox();
 		//
-		Rectangle rectPer = rectPer= new Rectangle(personagem.getPosition().x* ppuX , personagem.getPosition().y* ppuY, personagem.getBounds().width* ppuX, personagem.getBounds().height* ppuY);
+		Rectangle rectPer = rectPer= new Rectangle((personagem.getPosition().x+0.09f)* ppuX , (personagem.getPosition().y+0.09f)* ppuY, personagem.getBounds().width/2* ppuX, personagem.getBounds().height/2* ppuY);
 		//
 		Rectangle rectOpo =  new Rectangle(opositor.getPosition().x* ppuX , opositor.getPosition().y* ppuY , opositor.getBounds().width* ppuX, opositor.getBounds().height* ppuY);
 		
@@ -296,14 +230,15 @@ public class WorldRenderer   {
 		Rectangle rectAgua =  new Rectangle(world.getAgua().getPosition().x* ppuX , world.getAgua().getPosition().y* ppuY , world.getAgua().getBounds().width* ppuX, world.getAgua().getBounds().height* ppuY);
 		
 		//Cria colisao no fogo
-		Rectangle rectFogo =  new Rectangle(fogo.getPosition().x * ppuX, fogo.getPosition().y * ppuY, fogo.SIZE * ppuX, fogo.SIZE * ppuY);
-		
+		Rectangle rectFogo =  new Rectangle(fogo.getPosition().x * ppuX, fogo.getPosition().y * ppuY, fogo.getBounds().width * ppuX, fogo.getBounds().height * ppuY);
+		//rectFogo.merge(rectPer);
 		//colidiu cmo o fogo
-		if(rectFogo.overlaps(rectPer)){
+		//Verifca se o life do fogo esta ativo
+		if(rectFogo.overlaps(rectPer) && fogo.getLife()>=0){
+			personagem.setColidiu(true);
 			personagem.setBonus(0);
 			//Colidiu com o fogo
 			flagFogo = true;
-			
 			//Evita o personagem ficar carregando varias imagens
 			//So ira carregar as imagens quando o personagem estiver sem bonus
 			if(flagFogo && bonus){
@@ -319,8 +254,12 @@ public class WorldRenderer   {
 			}
 			bonus=false;
 		}
+		else
+			personagem.setColidiu(false);
+		
 		//Colidiu com a agua
 		if(rectAgua.overlaps(rectPer)){
+			personagem.setColidiu(true);
 			personagem.setBonus(1);
 			flag = true;
 			if(flag  && !bonus){
@@ -335,16 +274,13 @@ public class WorldRenderer   {
 			bonus=true;
 		}
 			
+		//Colidiu com o carro
 		if(rectOpo.overlaps(rectPer)){
-			
 			personagem.acaoAtropelamento(opositor,0.2f);
 			//Se a opcao dano for habilitado
 			if(dano){
-				int live=personagem.getLife();
-				live--;
-				personagem.setLife(live);
-				System.out.println(personagem.getLife());
-				if(live==0){
+				personagem.tiraUmDoLife();
+				if(personagem.getLife()==0){
 					System.out.println("Game over");
 				}
 			}	

@@ -14,10 +14,10 @@ public class Personagem {
 	
 	
 	private float stateTime = 0;
-	public static final float SPEED = 0.5f;				//Velocidade do personagem
+	public static final float SPEED = 0.3f;				//Velocidade do personagem
 	public static final float JUMP_VELOCITY = 1f;		//Velocidade do pulo do personagem
-	public static final float SIZE = 0.5f; 			//Metade de uma unidade
-
+	private float size; 			//Metade de uma unidade
+	private boolean colidiu;
 	private Vector2 	position = new Vector2();		//Vetor que informa a posi��o do personagem
 	private Vector2 	acceleration = new Vector2();	//Vetor que informa a aceleracao do personagem
 	private Vector2 	velocity = new Vector2();		//Vetor que informa a velocidade do personagem
@@ -34,13 +34,13 @@ public class Personagem {
 	 * um opositor ou não.
 	 * @param position,life,opositor,bonus
 	 */
-	public Personagem(Vector2 position, int life,boolean opositor,int bonus ) {
+	public Personagem(Vector2 position, int life,boolean opositor,int bonus,float size ) {
 		this.bonus=bonus;				//Numero de bonus inicial do personagem
 		this.opositor=opositor;
 		this.life=life;	
 		this.position = position;		//Posicao inicial
-		this.bounds.height = SIZE;		//Altura do personagem (Altura da �rea onde o personagem ser� desenhado)
-		this.bounds.width = SIZE;		//Largura do personagem (Largura da �rea onde o personagem ser� desenhado)
+		this.bounds.height = size;		//Altura do personagem (Altura da �rea onde o personagem ser� desenhado)
+		this.bounds.width =  size;		//Largura do personagem (Largura da �rea onde o personagem ser� desenhado)
 	}
 	
 	/**
@@ -64,6 +64,7 @@ public class Personagem {
 	public void update(float delta) {
 		setStateTime(getStateTime() + delta);
 		position.add(velocity.cpy().scl(delta));
+
 	}
 
 	public Vector2 getPosition() {
@@ -172,6 +173,38 @@ public class Personagem {
 		}
 		this.setPosition(vector);
 		
+	}
+	
+	public void pare(){
+		this.getVelocity().x = 0.0f;
+	}
+	
+	/**
+	 * @return the colidiu
+	 */
+	public boolean isColidiu() {
+		return colidiu;
+	}
+
+	/**
+	 * @param colidiu the colidiu to set
+	 */
+	public void setColidiu(boolean colidiu) {
+		this.colidiu = colidiu;
+	}
+
+	/**
+	 * @return the size
+	 */
+	public float getSize() {
+		return size;
+	}
+
+	/**
+	 * @param size the size to set
+	 */
+	public void setSize(float size) {
+		this.size = size;
 	}
 
 	

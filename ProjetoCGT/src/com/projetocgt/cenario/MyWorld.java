@@ -1,6 +1,8 @@
 package com.projetocgt.cenario;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.projetocgt.core.petri.ElementosCPN;
 import com.projetocgt.personagens.Personagem;
@@ -23,6 +25,9 @@ public class MyWorld {
 	private float numBlocosH;
 	private float numBlocosV;
 	private ElementosCPN cpn;
+	
+	private World world; //
+	private Box2DDebugRenderer debugoRender;
 	// Getters -----------
 	public Array<Block> getBlocks() {
 		return blocks;
@@ -85,22 +90,22 @@ public class MyWorld {
 
 	private void createWorld() {
 		//Posicao inicial do personagem 
-		personagem = new Personagem(new Vector2(0, 0),3,false,0);
+		personagem = new Personagem(new Vector2(0, 0),3,false,0, 0.3f);
 		//Posicao inicial do opositor
 		//a posicao do y aumenta na subida 
-		opositor = new Personagem(new Vector2(this.numBlocosH-2.15f,this.numBlocosV-0.5f),3,true,0);
-		setOpositor2(new Personagem(new Vector2(this.numBlocosH-1.1f,this.numBlocosV - 0.1f),3,true,0));
+		opositor = new Personagem(new Vector2(this.numBlocosH-2.15f,this.numBlocosV-0.5f),3,true,0, 0.5f);
+		setOpositor2(new Personagem(new Vector2(this.numBlocosH-1.1f,this.numBlocosV - 0.1f),3,true,0, 0.5f));
 		//Cria os Joysticks
 		setaBaixo = new Joystick(new Vector2(2, 2));
 		setaDireita = new Joystick(new Vector2(1, 1));
 		setaCima = new Joystick(new Vector2(2, 2));
 		setaEsquerda = new Joystick(new Vector2(0, 0));
 		//
-		opositorFogo = new Personagem(new Vector2(2,1), 3, true, 0);
+		opositorFogo = new Personagem(new Vector2(2,1), 3, true, 0, 0.5f);
 		//Adiniona uma aniamcao 
 		sprite = new SpritePersonagem();
 		//Constroe o cenario com agua
-		agua = new Personagem(new Vector2(0, 2), 0,false, 0); 
+		agua = new Personagem(new Vector2(2f, 2f), 0,false, 0, 0.3f); 
 		//Constroe o cenario,preenche uma matriz.
 		//"i" colunas.
 		//"j" linhas.
