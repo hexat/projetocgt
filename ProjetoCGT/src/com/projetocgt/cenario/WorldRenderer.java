@@ -114,14 +114,10 @@ public class WorldRenderer   {
 	
 
 	private void drawBlocks() {
-		/*for (Block block : world.getBlocks()) {
-				spriteBatch.draw(block.getTexture(), block.getPosition().x * ppuX, block.getPosition().y * ppuY, Block.SIZE * ppuX, Block.SIZE * ppuY);
-		}*/
 		spriteBatch.draw(world.getBackGround(),0,0);
 		for(int i =0;i<world.getListaPersonagens().size;i++){
 			spriteBatch.draw(world.listaPersonagens.get(i).getTexturePersonagem(), world.listaPersonagens.get(i).getPosition().x * ppuX, world.listaPersonagens.get(i).getPosition().y * ppuY, world.listaPersonagens.get(i).getBounds().width * ppuX, world.listaPersonagens.get(i).getBounds().height * ppuY);
 		}
-		
 	}
 
 	/**
@@ -133,9 +129,8 @@ public class WorldRenderer   {
 	private void drawPersonagem() {
 		if(fogo.getLife() >= 0)
 			spriteBatch.draw(spriteBob.Cenario(personagem), fogo.getPosition().x , fogo.getPosition().y, fogo.getBounds().width, fogo.getBounds().height);
-		
 		spriteBatch.draw(spriteBob.aniNormal(world.getPersonagem()), personagem.getPosition().x * ppuX, personagem.getPosition().y * ppuY, personagem.getBounds().width * ppuX, personagem.getBounds().height * ppuY);
-		spriteBatch.draw(opositorTexture, opositor.getPosition().x * ppuX, opositor.getPosition().y * ppuY, opositor.getBounds().width * ppuX, opositor.getBounds().height * ppuY);
+		//spriteBatch.draw(opositorTexture, opositor.getPosition().x * ppuX, opositor.getPosition().y * ppuY, opositor.getBounds().width * ppuX, opositor.getBounds().height * ppuY);
 	}
 	
 	/***

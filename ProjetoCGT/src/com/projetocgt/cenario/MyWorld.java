@@ -1,21 +1,26 @@
 package com.projetocgt.cenario;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.projetocgt.Projectile;
 import com.projetocgt.personagens.Personagem;
 import com.projetocgt.personagens.SpritePersonagem;
 
 public class MyWorld {
 	/** The blocks making up the world **/
 	Array<Personagem> listaPersonagens = new Array<Personagem>();
+	ArrayList<Projectile> listaDeProjectili = new ArrayList<Projectile>();
 	/** Our player controlled hero **/
 	private Personagem personagem;
 	private Personagem opositor;
 	private Personagem agua;
 	private Personagem opositorFogo;
 	private Personagem casa;
+	private Projectile projetilAgua;
 	private Texture backGround;
 	private SpritePersonagem sprite;
 	private float numBlocosH;
@@ -71,6 +76,11 @@ public class MyWorld {
 		casa = new Personagem(new Vector2(450f, 400f), 0,false, 0, 300, 240f,25f,40f);
 		casa.setTexturePersonagem(new Texture("data/Cenario/casa_sprite_sheet.png"));
 		listaPersonagens.add(casa);
+		
+		//
+		projetilAgua= new Projectile(new Vector2(400f, 400f),100);
+		projetilAgua.setTextura(new Texture("data/Sprites/SpriteSheet_agua.png"));
+		listaDeProjectili.add(projetilAgua);
 	}
 
 	public Personagem getAgua() {
@@ -130,6 +140,20 @@ public class MyWorld {
 	 */
 	public void setBackGround(Texture backGround) {
 		this.backGround = backGround;
+	}
+
+	/**
+	 * @return the listaDeProjectili
+	 */
+	public ArrayList<Projectile> getListaDeProjectili() {
+		return listaDeProjectili;
+	}
+
+	/**
+	 * @param listaDeProjectili the listaDeProjectili to set
+	 */
+	public void setListaDeProjectili(ArrayList<Projectile> listaDeProjectili) {
+		this.listaDeProjectili = listaDeProjectili;
 	}
 	
 }
