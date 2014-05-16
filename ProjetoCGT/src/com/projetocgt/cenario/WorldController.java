@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.math.Vector2;
-import com.projetocgt.core.petri.entity.Place;
 import com.projetocgt.personagens.Personagem;
 import com.projetocgt.personagens.Personagem.State;
 import com.projetocgt.personagens.SpritePersonagem;

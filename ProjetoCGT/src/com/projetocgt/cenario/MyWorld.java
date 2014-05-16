@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.projetocgt.core.petri.ElementosCPN;
 import com.projetocgt.personagens.Personagem;
 import com.projetocgt.personagens.SpritePersonagem;
 
@@ -19,10 +18,6 @@ public class MyWorld {
 	private Personagem casa;
 	private Texture backGround;
 	private SpritePersonagem sprite;
-	private Joystick setaBaixo;
-	private Joystick setaDireita;
-	private Joystick setaCima;
-	private Joystick setaEsquerda;
 	private float numBlocosH;
 	private float numBlocosV;
 	
@@ -32,22 +27,6 @@ public class MyWorld {
 	
 	public Personagem getOpositor() {
 		return this.opositor;
-	}
-	
-	public Joystick getJoystickBaixo() {
-		return this.setaBaixo;
-	}
-	
-	public Joystick getJoystickDireita() {
-		return this.setaDireita;
-	}
-	
-	public Joystick getJoystickCima() {
-		return this.setaCima;
-	}
-	
-	public Joystick getJoystickEsquerda() {
-		return this.setaEsquerda;
 	}
 
 	public MyWorld() {
@@ -76,12 +55,6 @@ public class MyWorld {
 		opositor.setTexturePersonagem(new  Texture(Gdx.files.internal("data/Carros/carro.png")));
 		listaPersonagens.add(opositor);
 		
-		//Cria os Joysticks
-		setaBaixo = new Joystick(new Vector2(2, 2));
-		setaDireita = new Joystick(new Vector2(1, 1));
-		setaCima = new Joystick(new Vector2(2, 2));
-		setaEsquerda = new Joystick(new Vector2(0, 0));
-		
 		opositorFogo = new Personagem(new Vector2(400,100), 3, true, 0, 150,150f,0,0);
 		//opositorFogo.setTexturePersonagem();
 		//listaPersonagens.add(opositorFogo);
@@ -98,10 +71,6 @@ public class MyWorld {
 		casa = new Personagem(new Vector2(450f, 400f), 0,false, 0, 300, 240f,25f,40f);
 		casa.setTexturePersonagem(new Texture("data/Cenario/casa_sprite_sheet.png"));
 		listaPersonagens.add(casa);
-		
-		//Constroe o cenario,preenche uma matriz.
-		//"i" colunas.
-		//"j" linhas.
 	}
 
 	public Personagem getAgua() {

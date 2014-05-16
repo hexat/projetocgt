@@ -7,11 +7,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.projetocgt.cenario.Joystick;
 import com.projetocgt.cenario.MyWorld;
 import com.projetocgt.cenario.WorldController;
 import com.projetocgt.cenario.WorldRenderer;
-import com.projetocgt.core.petri.ElementosCPN;
 import com.projetocgt.personagens.Personagem;
 
 public class GameScreen extends Table implements Screen, InputProcessor {
@@ -19,12 +17,7 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 	private MyWorld world;
 	private WorldRenderer renderer;
 	private WorldController	controller;
-	private ElementosCPN elementosCPN;
 	private Personagem personagem;
-	private Joystick setaBaixo;
-	private Joystick setaDireita;
-	private Joystick setaCima;
-	private Joystick setaEsquerda;
 	private int width, height;
 	private boolean flagTouchInBob; // flag para verificar se foi tocado no bob
 	private Music music;
@@ -32,7 +25,6 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 	public GameScreen() {
 		super();
 		flagTouchInBob = false;
-		elementosCPN = new ElementosCPN(Gdx.files.internal("data/game.cpn").read());
 		
 		//Carrega os audios
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/temabombeiro.wav"));
@@ -67,13 +59,7 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 		renderer = new WorldRenderer(world, true);
 		controller = new WorldController(world, renderer);
 		personagem = world.getPersonagem();
-		
-		//Joystick
-		setaDireita = world.getJoystickDireita();
-		setaBaixo = world.getJoystickBaixo();
-		setaEsquerda = world.getJoystickEsquerda();
-		setaCima = world.getJoystickCima();
-		
+
 		//Habilitando GDX para captura processos de entrada 
 		Gdx.input.setInputProcessor(this);
 	}
@@ -143,61 +129,12 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		//Personagem bob = world.getPersonagem();
-		float newPosX = x / (width / world.getNumBlocosH()); 
-		float newPosY = world.getNumBlocosV() - y / (height / world.getNumBlocosV());
-		//Verifica se tocou no personagem
-		if (newPosX >= personagem.getPosition().x &&
-				newPosX <= personagem.getPosition().x + personagem.getBounds().getWidth() &&
-				newPosY >= personagem.getPosition().y && 
-				newPosY <= personagem.getPosition().y + personagem.getBounds().getHeight()) {
-			flagTouchInBob = true;
-		}
-		
-		if (newPosX >= setaBaixo.getPosition().x &&
-				newPosX <= setaBaixo.getPosition().x +  setaBaixo.getBounds().getWidth()&&
-				newPosY >= setaBaixo.getPosition().y && 
-				newPosY <= setaBaixo.getPosition().y + setaBaixo.getBounds().getHeight()) {
-				controller.downPressed();
-			//flagTouchInBob = true;
-			}
-		//verifica se tocou na seta   para direita
-		if (newPosX >= setaDireita.getPosition().x &&
-			newPosX <= setaDireita.getPosition().x +  setaDireita.getBounds().getWidth()&&
-			newPosY >= setaDireita.getPosition().y && 
-			newPosY <= setaDireita.getPosition().y + setaDireita.getBounds().getHeight()) {
-			controller.rightPressed();
-		//flagTouchInBob = true;
-		}
-		
-		//verifica se tocou na seta   para esquerda
-		if (newPosX >= setaEsquerda.getPosition().x &&
-			newPosX <= setaEsquerda.getPosition().x +  setaEsquerda.getBounds().getWidth()&&
-			newPosY >= setaEsquerda.getPosition().y && 
-			newPosY <= setaEsquerda.getPosition().y + setaEsquerda.getBounds().getHeight()) {
-			controller.leftPressed();
-			//flagTouchInBob = true;
-		}
-		
-		//verifica se tocou na seta   para direita
-		if (newPosX >= setaCima.getPosition().x &&
-			newPosX <= setaCima.getPosition().x +  setaCima.getBounds().getWidth()&&
-			newPosY >= setaCima.getPosition().y && 
-			newPosY <= setaCima.getPosition().y + setaCima.getBounds().getHeight()) {
-			controller.upPressed();
-			//flagTouchInBob = true;
-		}
 		
 		return true;
 	}
 
 	@Override
 	public boolean touchUp(int x, int y, int pointer, int button) {
-		controller.leftReleased();
-		controller.rightReleased();
-		controller.upReleased();
-		controller.downReleased();
-		//joystick.Acao(controller);
 		flagTouchInBob = false;
 		return true;
 	}
