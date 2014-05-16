@@ -60,7 +60,7 @@ public class MyWorld {
 		opositor.setTexturePersonagem(new  Texture(Gdx.files.internal("data/Carros/carro.png")));
 		listaPersonagens.add(opositor);
 		
-		opositorFogo = new Personagem(new Vector2(400,100), 3, true, 0, 150,150f,0,0);
+		opositorFogo = new Personagem(new Vector2(400,100), 3, true, 0, 100,100f,0,0);
 		//opositorFogo.setTexturePersonagem();
 		//listaPersonagens.add(opositorFogo);
 		
