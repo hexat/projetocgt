@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.personagens.Personagem;
 import com.projetocgt.personagens.SpritePersonagem;
@@ -29,13 +28,6 @@ public class WorldRenderer   {
 	ShapeRenderer debugRenderer = new ShapeRenderer();
 	
 	private Texture opositorTexture;
-	private Texture texturaSetaBaixo;
-	private Texture setaDireita;
-	private Texture setaEsquerda;
-	private Texture setaCima;
-	
-	private Joystick joystick;
-	
 	private SpriteBatch spriteBatch;	// 
 	private boolean debug = false; 		// Variavel que ira ativar o debug
 	private int width;					//
@@ -93,26 +85,6 @@ public class WorldRenderer   {
 		
 		//Textura do opositor
 		opositorTexture = new  Texture(Gdx.files.internal("data/Carros/carro.png"));
-		
-		//Carrega Joystick
-		setaDireita = new  Texture(Gdx.files.internal("data/Joystick/setaDireita.png"));
-		texturaSetaBaixo = new  Texture(Gdx.files.internal("data/Joystick/setaBaixo.png"));
-		setaCima = new  Texture(Gdx.files.internal("data/Joystick/setaCima.png"));
-		setaEsquerda = new  Texture(Gdx.files.internal("data/Joystick/setaEsquerda.png"));
-		
-		world.getJoystickBaixo().getPosition().x= ((world.getNumBlocosH()-2.5f));
-		world.getJoystickBaixo().getPosition().y= ((world.getNumBlocosV()-3.0f));
-		
-		world.getJoystickDireita().getPosition().x=world.getNumBlocosH()-2.0f;
-		world.getJoystickDireita().getPosition().y=world.getNumBlocosV()-2.7f;
-		
-		world.getJoystickEsquerda().getPosition().x=world.getNumBlocosH()-3.0f;
-		world.getJoystickEsquerda().getPosition().y=world.getNumBlocosV()-2.7f;
-		
-		world.getJoystickCima().getPosition().x=world.getNumBlocosH()-2.5f;
-		world.getJoystickCima().getPosition().y=world.getNumBlocosV()-2.4f;
-		
-		
 	}
 	
 	//Sera chamado a todo instante na cena
@@ -126,7 +98,6 @@ public class WorldRenderer   {
 			drawPersonagem();
 			//Desenha o texto com a posicao do personagem
 			//Desenha o joystick
-			//drawJoystick();
 		//Verifica colisao
 		colisaoOpositor(personagem,opositor,true);
 		spriteBatch.end();
@@ -140,13 +111,7 @@ public class WorldRenderer   {
 			world.listaPersonagens.get(i).getTexturePersonagem().dispose();
 		}
 	}
-	private void drawJoystick() {
-		spriteBatch.draw(texturaSetaBaixo,((world.getNumBlocosH()-2.5f)* ppuX), ((world.getNumBlocosV()-3.0f)*ppuY), joystick.SIZE * ppuX, joystick.SIZE * ppuY);
-		spriteBatch.draw(setaDireita, (float) ((world.getNumBlocosH()-2.0f) * ppuX), (float)(world.getNumBlocosV()-2.7f) * ppuY, joystick.SIZE * ppuX, joystick.SIZE * ppuY);
-		
-		spriteBatch.draw(setaEsquerda, (float) ((world.getNumBlocosH()-3.0f) * ppuX), (float)(world.getNumBlocosV()-2.7) * ppuY, joystick.SIZE * ppuX, joystick.SIZE * ppuY);
-		spriteBatch.draw(setaCima, (float) ((world.getNumBlocosH()-2.5f) * ppuX), (float)(world.getNumBlocosV()-2.4) * ppuY, joystick.SIZE * ppuX, joystick.SIZE * ppuY);
-	}
+	
 
 	private void drawBlocks() {
 		/*for (Block block : world.getBlocks()) {
