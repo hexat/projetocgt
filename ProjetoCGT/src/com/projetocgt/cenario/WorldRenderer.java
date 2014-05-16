@@ -89,7 +89,7 @@ public class WorldRenderer   {
 		spriteBob.loadSpiteAniBonus("data/SpriteBob/SpriteSheet_bombeiro.png");
 		
 		//Carrega o sprite do fogo do cenario
-		spriteBob.loadingSpriteFogo("data/sprites/sprite_car_char_fumaca_agua_fogo_.png", 8, 5);
+		spriteBob.loadingSpriteFogo("data/Sprites/SpriteSheet_fogo.png", 2, 2);
 		
 		//Textura do opositor
 		opositorTexture = new  Texture(Gdx.files.internal("data/Carros/carro.png"));
