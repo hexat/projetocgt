@@ -178,15 +178,7 @@ public class WorldRenderer   {
 		// render blocks	
 		debugRenderer.setProjectionMatrix(cam.combined);
 		debugRenderer.begin(ShapeType.Line);
-		//Percorre um Array de blocos e os desenha na tela
-		for (Object b : world.getBlocks()) {
-			Block block = (Block) b;
-			Rectangle rect = block.getBounds();
-			float x1 = block.getPosition().x + rect.x;
-			float y1 = block.getPosition().y + rect.y;
-			debugRenderer.setColor(new Color(1, 0, 0, 1));
-			debugRenderer.rect(x1, y1, rect.width, rect.height);
-		}
+
 		// Recebe a posicao e o tamanho do personagem e o desenha na tela
 		//Personagem bob = world.getPersonagem();
 		debugRenderer.setColor(new Color(0, 1, 0, 1));
