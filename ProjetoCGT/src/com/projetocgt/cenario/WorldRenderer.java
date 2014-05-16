@@ -131,9 +131,9 @@ public class WorldRenderer   {
 		//Verifica se o life do fogo ainda esta ativo
 		if(fogo.getLife() >= 0)
 			spriteBatch.draw(spriteBob.Cenario(personagem), fogo.getPosition().x , fogo.getPosition().y, fogo.getBounds().width, fogo.getBounds().height);
+		
 		spriteBatch.draw(spriteBob.aniNormal(world.getPersonagem()), personagem.getPosition().x * ppuX, personagem.getPosition().y * ppuY, personagem.getBounds().width * ppuX, personagem.getBounds().height * ppuY);
 		spriteBatch.draw(opositorTexture, opositor.getPosition().x * ppuX, opositor.getPosition().y * ppuY, opositor.getBounds().width * ppuX, opositor.getBounds().height * ppuY);
-		
 	}
 	
 	/***
