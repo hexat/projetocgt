@@ -2,15 +2,20 @@ package com.projetocgt.personagens;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.projetocgt.personagens.Personagem.DirectionPolicy;
 /**
  * Classe utilizada para representar os Personagens do jogo
  * cada personagem sofre uma acao.
  * @autor Bruno Roberto
  */
 public class Personagem {
-	
+
 	public enum State {
 		IDLE, WALKING, JUMPING, DYING, LOOKUP, LOOKDOWN, LOOKLEFT, LOOKRIGHT 
+	}
+
+	public enum DirectionPolicy {
+		FOUR_DIRECTION 
 	}
 	
 	
@@ -18,7 +23,6 @@ public class Personagem {
 	public static final float SPEED = 180f;				//Velocidade do personagem
 	public static final float JUMP_VELOCITY = 1f;		//Velocidade do pulo do personagem
 	private float size; 			//Metade de uma unidade
-	private boolean colidiu;
 	private Vector2 	position = new Vector2();		//Vetor que informa a posicao do personagem
 	private Vector2 	acceleration = new Vector2();	//Vetor que informa a aceleracao do personagem
 	private Vector2 	velocity = new Vector2();		//Vetor que informa a velocidade do personagem
@@ -32,6 +36,11 @@ public class Personagem {
 	private Rectangle rectPer;
 	private Texture texturePersonagem;
 	float posXColider, posYColider; 
+	
+	
+	private SpriteSheet spriteSheet;
+	private DirectionPolicy directionPolicy;
+	
 	/**
 	 * Construtor padrao que recebe uma posicao inicial, um life e verifica se o personagem e'
 	 * um opositor ou não.
@@ -47,6 +56,8 @@ public class Personagem {
 		this.posXColider=posXColider;
 		this.posYColider=posYColider;
 		this.rectPer = new Rectangle(position.x+this.posXColider,position.y+this.posYColider,colider,colider);
+		
+		this.directionPolicy = DirectionPolicy.FOUR_DIRECTION;
 	}
 	
 	/**
@@ -172,20 +183,6 @@ public class Personagem {
 	}
 	
 	/**
-	 * @return the colidiu
-	 */
-	public boolean isColidiu() {
-		return colidiu;
-	}
-
-	/**
-	 * @param colidiu the colidiu to set
-	 */
-	public void setColidiu(boolean colidiu) {
-		this.colidiu = colidiu;
-	}
-
-	/**
 	 * @return the size
 	 */
 	public float getSize() {
@@ -227,5 +224,16 @@ public class Personagem {
 		this.texturePersonagem = texturePersonagem;
 	}
 
+	public void setSprite(SpriteSheet spriteSheet) {
+		this.spriteSheet = spriteSheet;
+	}
+
+	public SpriteSheet getSprite() {
+		return spriteSheet;
+	}
+
+	public DirectionPolicy getDirectionPolicy() {
+		return directionPolicy;
+	}
 	
 }

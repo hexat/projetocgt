@@ -11,8 +11,11 @@ import com.projetocgt.cenario.MyWorld;
 import com.projetocgt.cenario.WorldController;
 import com.projetocgt.cenario.WorldRenderer;
 import com.projetocgt.personagens.Personagem;
+import com.projetocgt.personagens.Personagem.DirectionPolicy;
 
 public class GameScreen extends Table implements Screen, InputProcessor {
+	
+	private static final boolean DEBUG = true;
 	
 	private MyWorld world;
 	private WorldRenderer renderer;
@@ -56,7 +59,7 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 		music.setLooping(true);
 		
 		world = new MyWorld();
-		renderer = new WorldRenderer(world, false);
+		renderer = new WorldRenderer(world, DEBUG);
 		controller = new WorldController(world, renderer);
 		personagem = world.getPersonagem();
 
@@ -110,6 +113,7 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 	//Funciona na subida do botao 
 	@Override
 	public boolean keyUp(int keycode) {
+		
 		if (keycode == Keys.LEFT)
 			controller.leftReleased();
 		if (keycode == Keys.RIGHT)

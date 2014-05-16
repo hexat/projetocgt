@@ -9,15 +9,19 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.personagens.Personagem;
-import com.projetocgt.personagens.SpritePersonagem;
+import com.projetocgt.personagens.SpriteSheet;
 
+/**
+ * Class utilizada para renderizar imagens do jogo na tela.Isso inclui Actor, Opposites, Bonus...
+ * Inicializa a camera. O metodo render desenha da tela as imagens.
+ * @author Bruno
+ *
+ */
 public class WorldRenderer   {
 	
 	private MyWorld world;			//Declara a variavel do tipo World que sera passada de parametro no renderer 
-	private OrthographicCamera cam;	//Declara a variavel da camera
+	private OrthographicCamera camera;	//Declara a variavel da camera
 	private Personagem personagem;
-	private Personagem opositor;
-	private Personagem fogo;
 	// Inicializa uma constante relacionado a quantidade de blocos na horizontal que sera visto pela camera
 	private float CAMERA_WIDTH;
 	// Inicializa uma constante relacionado a quantidade de blocos na vertical que sera visto pela camera
@@ -34,9 +38,8 @@ public class WorldRenderer   {
 	private int height;					//
 	private float ppuX;					// Pixels per unit on the X axis
 	private float ppuY;					// Pixels per unit on the Y axis
-	SpritePersonagem spriteBob = new SpritePersonagem();
+	SpriteSheet spriteBob = new SpriteSheet();
 	private Vector2 pos=new Vector2();
-	private boolean col=false;
 	
 	
 	public float getCAMERA_HEIGHT(){
@@ -63,8 +66,8 @@ public class WorldRenderer   {
 		this.width=Gdx.graphics.getWidth();
 		this.height=Gdx.graphics.getHeight();
 		//Inicializa a variavel de camera passando os parametros de quantos blocos ela vai ver na horizontal e vertical
-		this.cam = new OrthographicCamera(width, height);
-		this.cam.position.set(width/2, height/2 , 0); //Faz um set da posicao da camera no mundo do jogo		
+		this.camera = new OrthographicCamera(width, height);
+		this.camera.position.set(width/2, height/2 , 0); //Faz um set da posicao da camera no mundo do jogo		
 		this.debug = debug;												 
 		spriteBatch = new SpriteBatch();
 		loadTextures();
@@ -72,9 +75,7 @@ public class WorldRenderer   {
 	
 	private void loadTextures() {
 		personagem = world.getPersonagem();
-		opositor = world.getOpositor();
-		spriteBob = world.getSprite();
-		fogo = world.getOpositorFogo();
+		spriteBob = world.getPersonagem().getSprite();
 		//Carrega as texturas que serao paresentadas na cena
 		
 		//bobTexture = new  Texture(Gdx.files.internal("data/Bob.png"));
@@ -86,20 +87,21 @@ public class WorldRenderer   {
 		//Textura do opositor
 		opositorTexture = new  Texture(Gdx.files.internal("data/Carros/carro.png"));
 	}
-	
-	//Sera chamado a todo instante na cena
+
+	/**
+	 * Esta funcao e' chamada no metodo render da class GameScreen.
+	 * Responsavel por desenhar todos os objetos na tela.
+	 */
 	public void render( ) {
-		this.cam.update(); 			//Atualiza a tela
+		this.camera.update(); 			//Atualiza a tela
 		spriteBatch.begin();
-			spriteBatch.setProjectionMatrix(cam.combined);
-			//Desenha os blocos
-			drawBlocks();
-			//Dsenha o personagem
-			drawPersonagem();
-			//Desenha o texto com a posicao do personagem
-			//Desenha o joystick
-		//Verifica colisao
-		colisaoOpositor(personagem,opositor,true);
+		
+		spriteBatch.setProjectionMatrix(camera.combined); // movimentacao da camera
+		
+		drawGameObjects();
+		
+		drawCGTActor();
+		
 		spriteBatch.end();
 		if (debug)
 			drawDebug();
@@ -111,10 +113,9 @@ public class WorldRenderer   {
 			world.listaPersonagens.get(i).getTexturePersonagem().dispose();
 		}
 	}
-	
 
-	private void drawBlocks() {
-		spriteBatch.draw(world.getBackGround(),0,0);
+	private void drawGameObjects() {
+		spriteBatch.draw(world.getBackGround(), 0, 0);
 		for(int i =0;i<world.getListaPersonagens().size;i++){
 			spriteBatch.draw(world.listaPersonagens.get(i).getTexturePersonagem(), world.listaPersonagens.get(i).getPosition().x * ppuX, world.listaPersonagens.get(i).getPosition().y * ppuY, world.listaPersonagens.get(i).getBounds().width * ppuX, world.listaPersonagens.get(i).getBounds().height * ppuY);
 		}
@@ -126,11 +127,8 @@ public class WorldRenderer   {
 	 * Tamanho do desenho "Personagem.SIZE * ppuX, Personagem.SIZE * ppuY"
 	 * Verifica se o life do fogo ainda esta ativo
 	 */
-	private void drawPersonagem() {
-		if(fogo.getLife() >= 0)
-			spriteBatch.draw(spriteBob.Cenario(personagem), fogo.getPosition().x , fogo.getPosition().y, fogo.getBounds().width, fogo.getBounds().height);
+	private void drawCGTActor() {
 		spriteBatch.draw(spriteBob.aniNormal(world.getPersonagem()), personagem.getPosition().x * ppuX, personagem.getPosition().y * ppuY, personagem.getBounds().width * ppuX, personagem.getBounds().height * ppuY);
-		//spriteBatch.draw(opositorTexture, opositor.getPosition().x * ppuX, opositor.getPosition().y * ppuY, opositor.getBounds().width * ppuX, opositor.getBounds().height * ppuY);
 	}
 	
 	/***
@@ -138,7 +136,7 @@ public class WorldRenderer   {
 	 */
 	private void drawDebug(){
 		// render blocks	
-		debugRenderer.setProjectionMatrix(cam.combined);
+		debugRenderer.setProjectionMatrix(camera.combined);
 		debugRenderer.begin(ShapeType.Line);
 
 		// Recebe a posicao e o tamanho do personagem e o desenha na tela
@@ -153,76 +151,31 @@ public class WorldRenderer   {
 		}
 		debugRenderer.end();
 	}
-	
-	
-	/***
-	 * Verifica se o persanagem colidiu com algumn opositor
-	 * @param Personagem personagem, Personagem opositor, boolean dano
+
+	/**
+	 * @return the cam
 	 */
-	private void colisaoOpositor(Personagem personagem,Personagem opositor,boolean dano){
-		boolean flag = false;
-		boolean flagFogo=false;
-		personagem.setColidiu(false);
-		
+	public OrthographicCamera getCam() {
+		return camera;
+	}
+
+	/**
+	 * @param cam the cam to set
+	 */
+	public void setCam(OrthographicCamera cam) {
+		this.camera = cam;
+	}
+
+	/**
+	 * @return the col
+	 */
+	public boolean isColision() {
+		boolean col = false;
 		for(int i=0; i < world.getListaPersonagens().size; i++){
 			if(world.getListaPersonagens().get(i).getRectPer().overlaps(personagem.getRectPer()))
 				col=true;
 		}
-		
-		//colidiu cmo o fogo
-		//Verifca se o life do fogo esta ativo
-		if(fogo.getRectPer().overlaps(personagem.getRectPer()) && fogo.getLife()>=0){
-			personagem.setColidiu(true);
-			personagem.setBonus(0);
-			//Colidiu com o fogo
-			//col=true;
-			flagFogo = true;
-			//Evita o personagem ficar carregando varias imagens
-			//So ira carregar as imagens quando o personagem estiver sem bonus
-			if(flagFogo && bonus){
-			fogo.tiraUmDoLife();
-			//Muda de animacao
-			spriteBob.setLinhaDoSpriteUp(3);
-			spriteBob.setLinhaDoSpriteDown(2);
-			spriteBob.setLinhaDoSpriteLeft(1);
-			spriteBob.setLinhaDoSpriteRight(1);
-			//Carrega as imagens para o personagem com fogo
-			spriteBob.loadSpiteAniBonus("data/SpriteBob/SpriteSheet_bombeiro.png");
-			flagFogo = false;
-			}
-			bonus=false;
-		}
-		
-		//Colidiu com a agua
-		if(world.getAgua().getRectPer().overlaps(personagem.getRectPer())){
-			personagem.setColidiu(true);
-			personagem.setBonus(1);
-			flag = true;
-			//col=true;
-			if(flag  && !bonus){
-			spriteBob.setLinhaDoSpriteUp(5);
-			spriteBob.setLinhaDoSpriteDown(7);
-			spriteBob.setLinhaDoSpriteLeft(8);
-			spriteBob.setLinhaDoSpriteRight(6);
-			//Carrega as imagens para o personagem com agua
-			spriteBob.loadSpiteAniBonus("data/sprites/sprites_bomb.png");
-			flag = false;
-			}
-			bonus=true;
-		}
-		//Colidiu com o carro
-		if(opositor.getRectPer().overlaps(personagem.getRectPer())){
-			personagem.setColidiu(true);
-			//col=true;
-			//Se a opcao dano for habilitado
-			if(dano){
-				personagem.tiraUmDoLife();
-				if(personagem.getLife()==0){
-					System.out.println("Game over");
-				}
-			}	
-		}
-		
+
 		if(!col){
 			pos.x = personagem.getPosition().x;
 			pos.y = personagem.getPosition().y;
@@ -230,35 +183,9 @@ public class WorldRenderer   {
 			personagem.getVelocity().x=0;
 			personagem.getVelocity().y=0;
 			personagem.setPosition(pos);
-			col=false;
+			col = false;
 		}
-	}
-
-	/**
-	 * @return the cam
-	 */
-	public OrthographicCamera getCam() {
-		return cam;
-	}
-
-	/**
-	 * @param cam the cam to set
-	 */
-	public void setCam(OrthographicCamera cam) {
-		this.cam = cam;
-	}
-
-	/**
-	 * @return the col
-	 */
-	public boolean isCol() {
+		
 		return col;
-	}
-
-	/**
-	 * @param col the col to set
-	 */
-	public void setCol(boolean col) {
-		this.col = col;
 	}
 }
