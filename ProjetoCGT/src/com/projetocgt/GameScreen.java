@@ -67,6 +67,7 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 		renderer = new WorldRenderer(world, true);
 		controller = new WorldController(world, renderer);
 		personagem = world.getPersonagem();
+		
 		//Joystick
 		setaDireita = world.getJoystickDireita();
 		setaBaixo = world.getJoystickBaixo();
