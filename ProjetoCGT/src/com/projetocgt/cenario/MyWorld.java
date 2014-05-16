@@ -10,7 +10,6 @@ import com.projetocgt.personagens.SpritePersonagem;
 
 public class MyWorld {
 	/** The blocks making up the world **/
-	Array<Block> blocks = new Array<Block>();
 	Array<Personagem> listaPersonagens = new Array<Personagem>();
 	/** Our player controlled hero **/
 	private Personagem personagem;
@@ -26,21 +25,7 @@ public class MyWorld {
 	private Joystick setaEsquerda;
 	private float numBlocosH;
 	private float numBlocosV;
-	private ElementosCPN cpn;
 	
-	public Array<Block> getBlocks() {
-		return blocks;
-	}
-
-	public Block getBlock(int x, int y) {
-		for (Block b : blocks) {
-			if (((int)b.getPosition().x) == x && ((int) b.getPosition().y) == y) {
-				return b;
-			}
-		}
-		return null;
-	}
-
 	public Personagem getPersonagem() {
 		return personagem;
 	}
@@ -65,9 +50,7 @@ public class MyWorld {
 		return this.setaEsquerda;
 	}
 
-	public MyWorld(ElementosCPN cpn) {
-		this.cpn = cpn;
-
+	public MyWorld() {
 		//this.numBlocosH = cpn.getNumMaxPlaceX();
 		//this.numBlocosV = cpn.getNumMaxPlaceY();
 		this.numBlocosH = 3;
@@ -75,10 +58,6 @@ public class MyWorld {
 		createWorld();
 	}
 	
-	public ElementosCPN getElementosCPN() {
-		return cpn;
-	}
-
 	public float getNumBlocosH() {
 		return numBlocosH;
 	}
@@ -123,13 +102,6 @@ public class MyWorld {
 		//Constroe o cenario,preenche uma matriz.
 		//"i" colunas.
 		//"j" linhas.
-		for (int i = 0; i < numBlocosH; i++) {
-			for(int j = 0;j < numBlocosV;j++){
-				blocks.add(new Block(new Vector2(i, j), cpn.getPlaceByPos(i, j)));
-			} 			 			
-		}
-		
-		
 	}
 
 	public Personagem getAgua() {

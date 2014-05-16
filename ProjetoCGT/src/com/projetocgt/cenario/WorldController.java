@@ -286,38 +286,5 @@ public boolean onScreen(float x, float y) {
 			bob.getVelocity().y = 0;
 		}
 	}
-	
-
-	/**
-	 * Verifica se o sprite pode ou nao passar para outro block(lugar).
-	 * @param otherX nova posicao X
-	 * @param otherY nova posicao Y
-	 * @return true se e' permitido passar. false caso contrario
-	 */
-	public boolean permitido(float otherX, float otherY) {
-		bob = world.getPersonagem();
-		int bobPositionX = (int)bob.getPosition().x;
-		int bobPositionY = (int)bob.getPosition().y;
-		boolean res = true;
-
-		Place placeA = null, placeB = null;
-		if ((int)otherX < bobPositionX) {
-			placeA = world.getBlock(bobPositionX, bobPositionY).getPlace();
-			placeB = world.getBlock((int)otherX, (int)otherY).getPlace();
-		} else if ((int)(otherX+bob.getBounds().getWidth()) > (int)(bob.getPosition().x+bob.getBounds().getWidth())) {
-			placeA = world.getBlock(bobPositionX, bobPositionY).getPlace();
-			placeB = world.getBlock((int)(otherX+bob.getBounds().getWidth()), bobPositionY).getPlace();
-		} else if ((int)otherY < bobPositionY) {
-			placeA = world.getBlock(bobPositionX, bobPositionY).getPlace();
-			placeB = world.getBlock((int)otherY, bobPositionY).getPlace();
-		} else if ((int)(otherY+bob.getBounds().getHeight()) > (int)(bob.getPosition().y+bob.getBounds().getHeight())) {
-			placeA = world.getBlock(bobPositionX, bobPositionY).getPlace();
-			placeB = world.getBlock(bobPositionX, (int)(otherY+bob.getBounds().getHeight())).getPlace();
-		}
-		if (placeA != null && placeB != null) {
-			res = world.getElementosCPN().dispararTransicao(placeA, placeB);
-		}
-		return res;
-	}
 
 }

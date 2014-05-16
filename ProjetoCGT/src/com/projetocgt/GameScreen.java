@@ -63,9 +63,9 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 		music.play();
 		music.setLooping(true);
 		
-		world = new MyWorld(elementosCPN);
+		world = new MyWorld();
 		renderer = new WorldRenderer(world, true);
-		controller = new WorldController(world,renderer);
+		controller = new WorldController(world, renderer);
 		personagem = world.getPersonagem();
 		//Joystick
 		setaDireita = world.getJoystickDireita();
