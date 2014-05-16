@@ -124,11 +124,13 @@ public class WorldRenderer   {
 		
 	}
 
+	/**
+	 * A textura que ela vai desenhar "bobTexture" Posicao inicial
+	 * Posicao inicial "bob.getPosition().x * ppuX, bob.getPosition().y * ppuY"
+	 * Tamanho do desenho "Personagem.SIZE * ppuX, Personagem.SIZE * ppuY"
+	 * Verifica se o life do fogo ainda esta ativo
+	 */
 	private void drawPersonagem() {
-		//A textura que ela vai desenhar "bobTexture" Posicao inicial
-		//Posicao inicial "bob.getPosition().x * ppuX, bob.getPosition().y * ppuY"
-		// Tamanho do desenho "Personagem.SIZE * ppuX, Personagem.SIZE * ppuY"
-		//Verifica se o life do fogo ainda esta ativo
 		if(fogo.getLife() >= 0)
 			spriteBatch.draw(spriteBob.Cenario(personagem), fogo.getPosition().x , fogo.getPosition().y, fogo.getBounds().width, fogo.getBounds().height);
 		

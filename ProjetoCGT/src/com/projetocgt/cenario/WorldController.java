@@ -46,12 +46,6 @@ public class WorldController {
 		this.spriteAnimacao = world.getSprite();
 	}
 
-	@SuppressWarnings("unused")
-	private SpritePersonagem SpritePersonagem() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	// ** Key presses and touches **************** //
 	// Funciona na descida do botao
 	public void leftPressed() {
@@ -146,35 +140,6 @@ public class WorldController {
 		opositor.update(delta);
 		//opositor2.update(delta);
 	}
-	
-	public void movimeto(float x, float y) {
-//		if (permitido(x, y)) {
-			bob.setState(State.WALKING);
-			if (bob.getPosition().x < x) {
-				bob.setFacingLeft(true);
-			} else {
-				bob.setFacingLeft(false);
-			}
-			
-			// verifica se o bob esta fora do screen
-			if (x + bob.getBounds().getWidth() > world.getNumBlocosH()) {
-				x = world.getNumBlocosH() - bob.getBounds().getWidth();
-			}
-			if (y + bob.getBounds().getHeight() > world.getNumBlocosV()) {
-				y = world.getNumBlocosV() - bob.getBounds().getHeight();
-			}
-			if (x < 0) {
-				x = 0;
-			}
-			if (y < 0) {
-				y = 0;
-			}
-			// fim da verificacao
-			
-			bob.getPosition().x = x;
-			bob.getPosition().y = y;			
-//		}
-	}
 
 	public boolean onScreen() {
 
@@ -193,17 +158,7 @@ public boolean onScreen(float x, float y) {
 		x + bob.getBounds().getWidth() > (world.getNumBlocosH());
 				
 	}
-	
-	//
-	public void movimento(){
-		//Controler do carro
-		if(opositor.getPosition().y + opositor.getBounds().height > 0.0f) {
-			opositor.getVelocity().y = -Personagem.SPEED;
-		}else{
-			opositor.getPosition().y = world.getNumBlocosV() + 0.5f;
-		}
-	}
-	
+
 	private void processInput() {
 		//movimento();
 		if (keys.get(Keys.UP)) {

@@ -56,7 +56,7 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 		music.setLooping(true);
 		
 		world = new MyWorld();
-		renderer = new WorldRenderer(world, true);
+		renderer = new WorldRenderer(world, false);
 		controller = new WorldController(world, renderer);
 		personagem = world.getPersonagem();
 
@@ -141,11 +141,6 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 	
 	@Override
 	public boolean touchDragged(int x, int y, int pointer) {
-		if (flagTouchInBob) {
-			float newPosX = x / (width / world.getNumBlocosH()) - personagem.getBounds().width/2; 
-			float newPosY = world.getNumBlocosV() - y / (height / world.getNumBlocosV()) - personagem.getBounds().height/2;
-			controller.movimeto(newPosX, newPosY);
-		}
 		return false;
 	}
 
