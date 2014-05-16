@@ -1,4 +1,5 @@
 package com.projetocgt.personagens;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 /**
@@ -14,11 +15,11 @@ public class Personagem {
 	
 	
 	private float stateTime = 0;
-	public static final float SPEED = 0.3f;				//Velocidade do personagem
+	public static final float SPEED = 180f;				//Velocidade do personagem
 	public static final float JUMP_VELOCITY = 1f;		//Velocidade do pulo do personagem
 	private float size; 			//Metade de uma unidade
 	private boolean colidiu;
-	private Vector2 	position = new Vector2();		//Vetor que informa a posi��o do personagem
+	private Vector2 	position = new Vector2();		//Vetor que informa a posicao do personagem
 	private Vector2 	acceleration = new Vector2();	//Vetor que informa a aceleracao do personagem
 	private Vector2 	velocity = new Vector2();		//Vetor que informa a velocidade do personagem
 	private Rectangle 	bounds = new Rectangle();		// Area que sera' desenhado o personagem
@@ -28,19 +29,24 @@ public class Personagem {
 	private int life;
 	private boolean opositor;							//Utilizada para verificar se o personagem e' um opositor
 	private int  bonus; 									//Utilizada para verificar o numero de bonus.
-	
+	private Rectangle rectPer;
+	private Texture texturePersonagem;
+	float posXColider, posYColider; 
 	/**
 	 * Construtor padrao que recebe uma posicao inicial, um life e verifica se o personagem e'
 	 * um opositor ou não.
-	 * @param position,life,opositor,bonus
+	 * @param position,life,opositor,bonus,size, colider
 	 */
-	public Personagem(Vector2 position, int life,boolean opositor,int bonus,float size ) {
+	public Personagem(Vector2 position, int life,boolean opositor,int bonus,float size,float colider,float posXColider,float posYColider ) {
 		this.bonus=bonus;				//Numero de bonus inicial do personagem
 		this.opositor=opositor;
 		this.life=life;	
 		this.position = position;		//Posicao inicial
-		this.bounds.height = size;		//Altura do personagem (Altura da �rea onde o personagem ser� desenhado)
-		this.bounds.width =  size;		//Largura do personagem (Largura da �rea onde o personagem ser� desenhado)
+		this.bounds.height = size;		//Altura do personagem (Altura da area onde o personagem sera desenhado)
+		this.bounds.width =  size;		//Largura do personagem (Largura da area onde o personagem sera desenhado)
+		this.posXColider=posXColider;
+		this.posYColider=posYColider;
+		this.rectPer = new Rectangle(position.x+this.posXColider,position.y+this.posYColider,colider,colider);
 	}
 	
 	/**
@@ -64,15 +70,20 @@ public class Personagem {
 	public void update(float delta) {
 		setStateTime(getStateTime() + delta);
 		position.add(velocity.cpy().scl(delta));
-
+		rectPer.x=this.position.x+posXColider;
+		rectPer.y=this.position.y+posYColider;
 	}
 
 	public Vector2 getPosition() {
 		return position;
 	}
-
-	public void setPosition(Vector2 position) {
-		this.position = position;
+	/***
+	 * 
+	 * @param p
+	 */
+	public void setPosition(Vector2 p) {
+		this.position.x = p.x;
+		this.position.y = p.y;
 	}
 	
 	public Rectangle getBounds() {
@@ -155,25 +166,6 @@ public class Personagem {
 	public int tiraUmDoLife(){
 		return this.life--;
 	}
-	/**
-	 * Executa uma sobre o personagem 
-	 * a acao sera' de atropelamento
-	 */
-	public void acaoAtropelamento(Personagem opositor,float var){
-
-		Vector2 vectorOpo = opositor.getPosition();
-		Vector2 vector = this.position;
-		if(vector.x > vectorOpo.x+(opositor.getBounds().getWidth()/2)){
-			//Sofre uma variacao
-			vector.x = vector.x+var;
-			vector.y = vector.y+var;
-		}else{
-			vector.x = vector.x-var;
-			vector.y = vector.y-var;
-		}
-		this.setPosition(vector);
-		
-	}
 	
 	public void pare(){
 		this.getVelocity().x = 0.0f;
@@ -205,6 +197,34 @@ public class Personagem {
 	 */
 	public void setSize(float size) {
 		this.size = size;
+	}
+
+	/**
+	 * @return the rectPer
+	 */
+	public Rectangle getRectPer() {
+		return rectPer;
+	}
+
+	/**
+	 * @param rectPer the rectPer to set
+	 */
+	public void setRectPer(Rectangle rectPer) {
+		this.rectPer = rectPer;
+	}
+
+	/**
+	 * @return the texturePersonagem
+	 */
+	public Texture getTexturePersonagem() {
+		return texturePersonagem;
+	}
+
+	/**
+	 * @param texturePersonagem the texturePersonagem to set
+	 */
+	public void setTexturePersonagem(Texture texturePersonagem) {
+		this.texturePersonagem = texturePersonagem;
 	}
 
 	

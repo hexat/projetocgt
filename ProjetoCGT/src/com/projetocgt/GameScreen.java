@@ -5,32 +5,18 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-//import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.projetocgt.cenario.Joystick;
-import com.projetocgt.cenario.Menu;
 import com.projetocgt.cenario.MyWorld;
 import com.projetocgt.cenario.WorldController;
 import com.projetocgt.cenario.WorldRenderer;
 import com.projetocgt.core.petri.ElementosCPN;
 import com.projetocgt.personagens.Personagem;
-import com.projetocgt.personagens.SpritePersonagem;
 
 public class GameScreen extends Table implements Screen, InputProcessor {
 	
 	private MyWorld world;
-	private World world2;
-	private Box2DDebugRenderer debugoRender;
 	private WorldRenderer renderer;
 	private WorldController	controller;
 	private ElementosCPN elementosCPN;
@@ -42,8 +28,6 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 	private int width, height;
 	private boolean flagTouchInBob; // flag para verificar se foi tocado no bob
 	private Music music;
-	private SpriteBatch batch;	//Utilizada para desenhar o menu 
-	private Menu spriteMenu;
 	
 	public GameScreen() {
 		super();
@@ -60,6 +44,7 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 		controller.update(delta);
 		renderer.render();
+		//renderer.getCam().position.x-=0.005f;
 	}
 	
 
@@ -78,24 +63,9 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 		music.play();
 		music.setLooping(true);
 		
-		//criando um mundo com fisica
-		/*world2 = new World(new Vector2(0, -9.8f),true);
-		debugoRender = new Box2DDebugRenderer();
-		//Definicoes do body
-		BodyDef balDef = new BodyDef();
-		balDef.type= BodyType.StaticBody;
-		balDef.position.set(0, 0);
-		//Circulo
-		CircleShape shape = new CircleShape();
-		shape.setRadius(1f);
-		//Fixe def
-		//FixtureDef fixTureDef = new FixtureDef();
-		world2.createBody(balDef);
-		shape.dispose();*/
-		
 		world = new MyWorld(elementosCPN);
 		renderer = new WorldRenderer(world, true);
-		controller = new WorldController(world);
+		controller = new WorldController(world,renderer);
 		personagem = world.getPersonagem();
 		//Joystick
 		setaDireita = world.getJoystickDireita();
@@ -127,7 +97,7 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
+		//renderer.dispose();
 	}
 	
 
@@ -135,14 +105,18 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 	//Funciona na descida do botao
 	@Override
 	public boolean keyDown(int keycode) {
-		if (keycode == Keys.LEFT)
+		if (keycode == Keys.LEFT){
 			controller.leftPressed();
-		if (keycode == Keys.RIGHT)
+		}
+		if (keycode == Keys.RIGHT){
 			controller.rightPressed();
-		if (keycode == Keys.UP)
+		}
+		if (keycode == Keys.UP){
 			controller.upPressed();
-		if (keycode == Keys.DOWN)
+		}
+		if (keycode == Keys.DOWN){
 			controller.downPressed();
+		}
 		return true;
 	}
 

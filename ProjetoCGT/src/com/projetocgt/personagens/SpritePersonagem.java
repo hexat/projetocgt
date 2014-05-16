@@ -17,11 +17,11 @@ public class SpritePersonagem {
 	
 	private TextureRegion bobFrame;
 	private static final int    FRAME_COLS = 3;     // 
-    private static final int    FRAME_ROWS = 12;     // 
-    private int linhaDoSpriteUp = 2;     //
-    private int linhaDoSpriteDown = 1;     //
-    private int linhaDoSpriteLeft = 4;     //
-    private int linhaDoSpriteRight = 3;     //
+    private static final int    FRAME_ROWS = 5;     // 
+    private int linhaDoSpriteUp = 3;     //
+    private int linhaDoSpriteDown = 2;     //
+    private int linhaDoSpriteLeft = 1;     //
+    private int linhaDoSpriteRight = 1;     //
     private Texture walkSheet;      //
     private TextureRegion[] walkFramesUp;
     private TextureRegion[] walkFramesDown;
@@ -52,21 +52,24 @@ public class SpritePersonagem {
 	 */
 	public void loadSpiteAniBonus(String caminho){
 		walkSheet = new Texture(Gdx.files.internal(caminho)); 
-        TextureRegion[][] tmp = TextureRegion.split(walkSheet, walkSheet.getWidth()/FRAME_COLS, walkSheet.getHeight()/FRAME_ROWS);              // #10
+        TextureRegion[][] tmp = TextureRegion.split(walkSheet, walkSheet.getWidth()/FRAME_COLS, walkSheet.getHeight()/FRAME_ROWS);
+        TextureRegion[][] tmpLeft = TextureRegion.split(walkSheet, walkSheet.getWidth()/FRAME_COLS, walkSheet.getHeight()/FRAME_ROWS);
+        
         walkFramesUp = new TextureRegion[FRAME_COLS];
         walkFramesDown = new TextureRegion[FRAME_COLS];
         walkFramesLeft = new TextureRegion[FRAME_COLS];
         walkFramesRight = new TextureRegion[FRAME_COLS];
-        //walkFramesUp = new TextureRegion[];
         
         for (int i = 0; i < 1; i++) {
             for (int j = 0; j < FRAME_COLS; j++) {
             	walkFramesUp[j] = tmp[linhaDoSpriteUp-1][j];
             	walkFramesDown[j] = tmp[linhaDoSpriteDown-1][j];
-            	walkFramesLeft[j] = tmp[linhaDoSpriteLeft-1][j];
+            	walkFramesLeft[j] = tmpLeft[linhaDoSpriteLeft-1][j];
+            	walkFramesLeft[j].flip(true, false);
             	walkFramesRight[j] = tmp[linhaDoSpriteRight-1][j];
             }
         }
+        
         //Animacao do personagem para cima
         walkAnimationUp = new Animation(RUNNING_FRAME_DURATION, walkFramesUp);
         //Animacao do personagem para baixo
@@ -104,7 +107,7 @@ public class SpritePersonagem {
 	/***
 	 * Carrega o sprie sheet do personagem
 	 */
-	public void loadingSpriteCenario(String caminho,int FRAME_COLS, int FRAME_ROWS){
+	public void loadingSpriteFogo(String caminho, int FRAME_ROWS, int FRAME_COLS){
 		walkSheet = new Texture(Gdx.files.internal(caminho)); 
         TextureRegion[][] tmp = TextureRegion.split(walkSheet, walkSheet.getWidth()/FRAME_COLS, walkSheet.getHeight()/FRAME_ROWS);              // #10
         walkFramesCenario = new TextureRegion[FRAME_COLS*FRAME_ROWS];

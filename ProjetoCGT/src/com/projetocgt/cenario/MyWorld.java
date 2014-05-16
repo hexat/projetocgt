@@ -1,8 +1,8 @@
 package com.projetocgt.cenario;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.projetocgt.core.petri.ElementosCPN;
 import com.projetocgt.personagens.Personagem;
@@ -11,12 +11,14 @@ import com.projetocgt.personagens.SpritePersonagem;
 public class MyWorld {
 	/** The blocks making up the world **/
 	Array<Block> blocks = new Array<Block>();
+	Array<Personagem> listaPersonagens = new Array<Personagem>();
 	/** Our player controlled hero **/
 	private Personagem personagem;
 	private Personagem opositor;
-	private Personagem opositor2;
 	private Personagem agua;
 	private Personagem opositorFogo;
+	private Personagem casa;
+	private Texture backGround;
 	private SpritePersonagem sprite;
 	private Joystick setaBaixo;
 	private Joystick setaDireita;
@@ -26,9 +28,6 @@ public class MyWorld {
 	private float numBlocosV;
 	private ElementosCPN cpn;
 	
-	private World world; //
-	private Box2DDebugRenderer debugoRender;
-	// Getters -----------
 	public Array<Block> getBlocks() {
 		return blocks;
 	}
@@ -87,25 +86,40 @@ public class MyWorld {
 	public float getNumBlocosV() {
 		return numBlocosV;
 	}
-
+	/***
+	 * Recebe os paramentros do jogos
+	 */
 	private void createWorld() {
-		//Posicao inicial do personagem 
-		personagem = new Personagem(new Vector2(0, 0),3,false,0, 0.3f);
-		//Posicao inicial do opositor
-		//a posicao do y aumenta na subida 
-		opositor = new Personagem(new Vector2(this.numBlocosH-2.15f,this.numBlocosV-0.5f),3,true,0, 0.5f);
-		setOpositor2(new Personagem(new Vector2(this.numBlocosH-1.1f,this.numBlocosV - 0.1f),3,true,0, 0.5f));
+		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
+		personagem = new Personagem(new Vector2(400, 400),3,false,0, 100f,50f,25f,25f);
+		
+		opositor = new Personagem(new Vector2(185f, 105f),3,true,0, 0.3f,0.3f,0,0);
+		opositor.setTexturePersonagem(new  Texture(Gdx.files.internal("data/Carros/carro.png")));
+		listaPersonagens.add(opositor);
+		
 		//Cria os Joysticks
 		setaBaixo = new Joystick(new Vector2(2, 2));
 		setaDireita = new Joystick(new Vector2(1, 1));
 		setaCima = new Joystick(new Vector2(2, 2));
 		setaEsquerda = new Joystick(new Vector2(0, 0));
-		//
-		opositorFogo = new Personagem(new Vector2(2,1), 3, true, 0, 0.5f);
+		
+		opositorFogo = new Personagem(new Vector2(400,100), 3, true, 0, 150,150f,0,0);
+		//opositorFogo.setTexturePersonagem();
+		//listaPersonagens.add(opositorFogo);
+		
 		//Adiniona uma aniamcao 
 		sprite = new SpritePersonagem();
+		
 		//Constroe o cenario com agua
-		agua = new Personagem(new Vector2(2f, 2f), 0,false, 0, 0.3f); 
+		agua = new Personagem(new Vector2(225f, 225f), 0,false, 0, 150,150f,0,0); 
+		agua.setTexturePersonagem(new Texture("data/piscina.png"));
+		listaPersonagens.add(agua);
+		
+		//Constroe a casa
+		casa = new Personagem(new Vector2(450f, 400f), 0,false, 0, 300, 240f,25f,40f);
+		casa.setTexturePersonagem(new Texture("data/Cenario/casa_sprite_sheet.png"));
+		listaPersonagens.add(casa);
+		
 		//Constroe o cenario,preenche uma matriz.
 		//"i" colunas.
 		//"j" linhas.
@@ -114,14 +128,8 @@ public class MyWorld {
 				blocks.add(new Block(new Vector2(i, j), cpn.getPlaceByPos(i, j)));
 			} 			 			
 		}
-	}
-
-	public Personagem getOpositor2() {
-		return opositor2;
-	}
-	
-	public void setOpositor2(Personagem opositor2) {
-		this.opositor2 = opositor2;
+		
+		
 	}
 
 	public Personagem getAgua() {
@@ -148,5 +156,39 @@ public class MyWorld {
 		this.opositorFogo = opositorFogo;
 	}
 
+	/**
+	 * @return the rigido
+	 */
+	public Array<Personagem> getListaPersonagens() {
+		return listaPersonagens;
+	}
+
+	/**
+	 * @return the casa
+	 */
+	public Personagem getCasa() {
+		return casa;
+	}
+
+	/**
+	 * @param casa the casa to set
+	 */
+	public void setCasa(Personagem casa) {
+		this.casa = casa;
+	}
+
+	/**
+	 * @return the backGround
+	 */
+	public Texture getBackGround() {
+		return backGround;
+	}
+
+	/**
+	 * @param backGround the backGround to set
+	 */
+	public void setBackGround(Texture backGround) {
+		this.backGround = backGround;
+	}
 	
 }

@@ -22,10 +22,9 @@ public class WorldController {
 
 	private MyWorld world;
 	private Personagem bob;
-	private Vector2 oldPosBob;
 	private Personagem opositor;
-	private Personagem opositor2;
 	private SpritePersonagem spriteAnimacao;
+	private WorldRenderer renderer;
 	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
 	static {
 		keys.put(Keys.LEFT, false);
@@ -39,13 +38,12 @@ public class WorldController {
 	};
 
 	// Este construtor recebe o mundo como parametro
-	public WorldController(MyWorld world) {
+	public WorldController(MyWorld world,WorldRenderer render) {
 		this.world = world;
+		this.renderer = render;
 		// Posicao inicial do personagem
 		this.bob = world.getPersonagem();
-		this.oldPosBob = bob.getPosition();
 		this.opositor = world.getOpositor();
-		this.opositor2 = world.getOpositor2();
 		this.spriteAnimacao = world.getSprite();
 	}
 
@@ -61,12 +59,16 @@ public class WorldController {
 		keys.get(keys.put(Keys.LEFT, true));
 		//Habilita o loop da animacao
 		spriteAnimacao.setLoop(true);
+		//renderer.getCam().position.x-=30;
+		//renderer.getCam().translate(-30f,0,0);
 	}
 
 	public void rightPressed() {
 		keys.get(keys.put(Keys.RIGHT, true));
 		//Habilita o loop da animacao
 		spriteAnimacao.setLoop(true);
+		//renderer.getCam().position.x+=30;
+		//renderer.getCam().translate(30f,0,0);
 	}
 
 	public void upPressed() {
@@ -84,7 +86,6 @@ public class WorldController {
 	public void jumpPressed() {
 		keys.get(keys.put(Keys.JUMP, true));
 		//Habilita o loop da animacao
-		spriteAnimacao.setLoop(true);
 	}
 
 	public void firePressed() {
@@ -139,7 +140,7 @@ public class WorldController {
 	// O metodo update e chamado a cada ciclo do loop principal.
 	public void update(float delta) {
 		// Processa a entrada de algum parametro
-		processInput(delta);
+		processInput();
 		// Atualizaes do Personagem. Personagem tem um metodo de atualizacoo
 		// dedicado.
 		bob.update(delta);
@@ -193,95 +194,85 @@ public boolean onScreen(float x, float y) {
 		x + bob.getBounds().getWidth() > (world.getNumBlocosH());
 				
 	}
-
+	
 	//
 	public void movimento(){
 		//Controler do carro
 		if(opositor.getPosition().y + opositor.getBounds().height > 0.0f) {
 			opositor.getVelocity().y = -Personagem.SPEED;
-			opositor2.getVelocity().y = -Personagem.SPEED;
 		}else{
 			opositor.getPosition().y = world.getNumBlocosV() + 0.5f;
-			opositor2.getPosition().y = world.getNumBlocosV() + 0.2f;
 		}
 	}
 	
-	private boolean flagUp;
-	private boolean flagDown;
-	private boolean flagLeft;
-	private boolean flagRight;
-	private void processInput(float delta) {
-		movimento();
-		//bob.getPosition().add(bob.getVelocity().cpy().scl(delta));
-		//bob.getPosition().x = bob.getPosition().x + bob.getVelocity().x * delta;
-		//bob.getPosition().y = bob.getPosition().y + bob.getVelocity().y * delta;
-		oldPosBob = bob.getPosition();
+	private void processInput() {
+		//movimento();
 		if (keys.get(Keys.UP)) {
 			// Verifica se o personagem pode andar
-			if (bob.getPosition().y + bob.getBounds().height > (world.getNumBlocosV() - 0.01f) || bob.isColidiu()) {
+			if (renderer.isCol()) {
 				bob.getVelocity().y = 0.0f;
+				bob.setState(State.LOOKUP);
 			} else {
 				// O personagem esta olhando para a cima
-				bob.setColidiu(false);
+				if(bob.getVelocity().y!=0)
+					renderer.getCam().position.y+=3;
 				bob.setState(State.LOOKUP);
 				bob.getVelocity().y = Personagem.SPEED;
 			}
+			
 		}
 
 		if (keys.get(Keys.DOWN)) {
 			// Verifica se o personagem pode andar
-			if (bob.getPosition().y < 0.0f ) {
+			if (renderer.isCol() ) {
 				bob.getVelocity().y = 0.0f;
-				this.flagDown=false;
-				
+				bob.setState(State.LOOKDOWN);
 			} else {
-				// O personagem esta olhando para a baixo	
-				//bob.setFacingLeft(true);
+				if(bob.getVelocity().y!=0)
+					renderer.getCam().position.y-=3;
+				// O personagem esta olhando para a baixo
 				bob.setState(State.LOOKDOWN);
 				bob.getVelocity().y = -Personagem.SPEED;
 			}
+			
 		}
 
 		if (keys.get(Keys.LEFT)) {
 			// Verifica se o personagem pode andar
-			if (bob.getPosition().x < 0.0f) {
+			if (renderer.isCol()) {
 				bob.getVelocity().x = 0.0f;
-				this.flagLeft=false;
+				bob.setState(State.LOOKLEFT);
 			} else {
 				// O personagem esta olhando para a esquerda
 				//bob.setColidiu(true);
-				bob.setFacingLeft(true);
+				//bob.setFacingLeft(true);
+				if(bob.getVelocity().x!=0)
+					renderer.getCam().position.x-=3;
 				bob.setState(State.LOOKLEFT);
 				bob.getVelocity().x = -Personagem.SPEED;
-			}
-			if (bob.isColidiu()) {
-				
-			}
-			
+			}		
 		}
 		if (keys.get(Keys.RIGHT)) {
 			// Verifica se o personagem pode andar
-			if (bob.getPosition().x + bob.getBounds().getWidth() > (world.getNumBlocosH() - 0.01f)) {
+			if (renderer.isCol()) {
 				bob.getVelocity().x = 0.0f;
-				this.flagRight=false;
+				bob.setState(State.LOOKRIGHT);
 			} else {
 				// O personagem esta olhando para a direita
 				//bob.setColidiu(true);
-				bob.setFacingLeft(false);
+				//bob.setFacingLeft(false);
+				if(bob.getVelocity().x!=0)
+					renderer.getCam().position.x+=3;
 				bob.setState(State.LOOKRIGHT);
 				bob.getVelocity().x = Personagem.SPEED;
-			}
-			if (bob.isColidiu()) {
-				
-			}
-			
+			}	
 		}
 		// Verifica se ambos ou nenhum dos sentidos sao presionados
 		if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT))
 				|| (!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) {
 			//bob.setState(State.IDLE);
 			// acceleration is 0 on the x
-			//bob.getAcceleration().x = 0;
+			bob.getAcceleration().x = 0;
 			// horizontal speed is 0
 			bob.getVelocity().x = 0;
 		}
