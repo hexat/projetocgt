@@ -29,8 +29,6 @@ public class WorldRenderer   {
 		
 	/** for debug rendering **/
 	ShapeRenderer debugRenderer = new ShapeRenderer();
-	
-	private Texture opositorTexture;
 	private SpriteBatch spriteBatch;	 
 	private boolean debug = false; 		// Variavel que ira ativar o debug
 	private int width;					
@@ -55,9 +53,6 @@ public class WorldRenderer   {
 	
 	public WorldRenderer(MyWorld world, boolean debug) {
 		this.world = world;
-
-		CAMERA_HEIGHT = world.getNumBlocosV();
-		CAMERA_WIDTH = world.getNumBlocosH();
 		this.width=Gdx.graphics.getWidth();
 		this.height=Gdx.graphics.getHeight();
 		//Inicializa a variavel de camera passando os parametros de quantos blocos ela vai ver na horizontal e vertical
@@ -78,9 +73,6 @@ public class WorldRenderer   {
 		
 		//Carrega o sprite do fogo do cenario
 		spriteBob.loadingSpriteFogo("data/Sprites/SpriteSheet_fogo.png", 2, 2);
-		
-		//Textura do opositor
-		opositorTexture = new  Texture(Gdx.files.internal("data/Carros/carro.png"));
 	}
 
 	/**
@@ -102,17 +94,17 @@ public class WorldRenderer   {
 			drawDebug();
 	}
 	public void dispose(){
-		opositorTexture.dispose();
+		world.getBackGround().dispose();
 		spriteBatch.dispose();
-		for(int i =0;i<world.getListaPersonagens().size();i++){
-			world.listaActor.get(i).getTexturePersonagem().dispose();
+		for(int i =0;i<world.getListaActor().size();i++){
+			//world.listaActor.get(i).getTexturePersonagem().dispose();
 		}
 	}
 
 	private void drawGameObjects() {
 		spriteBatch.draw(world.getBackGround(), 0, 0);
-		for(int i =0;i<world.getListaPersonagens().size();i++){
-			spriteBatch.draw(world.listaActor.get(i).getTexturePersonagem(), world.listaActor.get(i).getPosition().x, world.listaActor.get(i).getPosition().y, world.listaActor.get(i).getBounds().width, world.listaActor.get(i).getBounds().height);
+		for(int i =0;i<world.getListaDeOpposite().size();i++){
+			spriteBatch.draw(world.listaDeOpposite.get(i).getTexture(), world.listaDeOpposite.get(i).getPosition().x, world.listaDeOpposite.get(i).getPosition().y, world.listaDeOpposite.get(i).getBounds().width, world.listaDeOpposite.get(i).getBounds().height);
 		}
 	}
 
@@ -123,7 +115,7 @@ public class WorldRenderer   {
 	 * Verifica se o life do fogo ainda esta ativo
 	 */
 	private void drawCGTActor() {
-		spriteBatch.draw(spriteBob.aniNormal(world.getPersonagem()), personagem.getPosition().x, personagem.getPosition().y, personagem.getBounds().width, personagem.getBounds().height);
+		spriteBatch.draw(spriteBob.aniNormal(personagem), personagem.getPosition().x, personagem.getPosition().y, personagem.getBounds().width, personagem.getBounds().height);
 	}
 	
 	/***
@@ -140,9 +132,13 @@ public class WorldRenderer   {
 		debugRenderer.rect(personagem.getRectPer().x, personagem.getRectPer().y, personagem.getRectPer().getWidth(), personagem.getRectPer().getHeight());
 			
 		
-		for(int i=0;i<world.getListaPersonagens().size();i++){				
+		for(int i=0;i<world.getListaDeOpposite().size();i++){				
 			debugRenderer.setColor(new Color(0, 1, 0, 1));
-			debugRenderer.rect(world.getListaPersonagens().get(i).getRectPer().x, world.getListaPersonagens().get(i).getRectPer().y, world.getListaPersonagens().get(i).getRectPer().getWidth(), world.getListaPersonagens().get(i).getRectPer().getHeight());
+			debugRenderer.rect(world.getListaDeOpposite().get(i).getRectPer().x, world.getListaDeOpposite().get(i).getRectPer().y, world.getListaDeOpposite().get(i).getRectPer().getWidth(), world.getListaDeOpposite().get(i).getRectPer().getHeight());
+		}
+		for(int i=0;i<world.getListaActor().size();i++){				
+			debugRenderer.setColor(new Color(0, 1, 0, 1));
+			debugRenderer.rect(world.getListaActor().get(i).getRectPer().x, world.getListaActor().get(i).getRectPer().y, world.getListaActor().get(i).getRectPer().getWidth(), world.getListaActor().get(i).getRectPer().getHeight());
 		}
 		debugRenderer.end();
 	}
@@ -166,8 +162,8 @@ public class WorldRenderer   {
 	 */
 	public boolean isColision() {
 		boolean col = false;
-		for(int i=0; i < world.getListaPersonagens().size(); i++){
-			if(world.getListaPersonagens().get(i).getRectPer().overlaps(personagem.getRectPer()))
+		for(int i=0; i < world.getListaDeOpposite().size(); i++){
+			if(world.getListaDeOpposite().get(i).getRectPer().overlaps(personagem.getRectPer()))
 				col=true;
 		}
 

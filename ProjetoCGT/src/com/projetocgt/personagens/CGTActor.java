@@ -1,5 +1,4 @@
 package com.projetocgt.personagens;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 /**
@@ -31,10 +30,7 @@ public class CGTActor {
 	private int life;
 	private int  bonus; 									//Utilizada para verificar o numero de bonus.
 	private Rectangle rectPer;
-	private Texture texturePersonagem;
 	float posXColider, posYColider; 
-	
-	
 	private SpriteSheet spriteSheet;
 	private DirectionPolicy directionPolicy;
 	
@@ -198,19 +194,6 @@ public class CGTActor {
 		this.rectPer = rectPer;
 	}
 
-	/**
-	 * @return the texturePersonagem
-	 */
-	public Texture getTexturePersonagem() {
-		return texturePersonagem;
-	}
-
-	/**
-	 * @param texturePersonagem the texturePersonagem to set
-	 */
-	public void setTexturePersonagem(Texture texturePersonagem) {
-		this.texturePersonagem = texturePersonagem;
-	}
 
 	public void setSprite(SpriteSheet spriteSheet) {
 		this.spriteSheet = spriteSheet;

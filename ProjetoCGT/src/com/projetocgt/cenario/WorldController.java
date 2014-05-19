@@ -143,10 +143,6 @@ public class WorldController {
 		actorAnimation.setLoop(false);
 	}
 
-	// Retorna aposicao do personagem em forma de Vetor2
-	public Vector2 posicaoBob() {
-		return bob.getPosition();
-	}
 
 	/** The main update method **/
 	// O metodo update e chamado a cada ciclo do loop principal.
@@ -155,10 +151,9 @@ public class WorldController {
 		processInput();
 		// Atualizaes do Personagem. Personagem tem um metodo de atualizacoo
 		// dedicado.
-
 		bob.update(delta);
-		for (CGTActor p : world.getListaPersonagens()) {
-			p.update(delta);
+		for (int i=0; i<world.getListaDeOpposite().size(); i++) {
+			world.getListaDeOpposite().get(i).update(delta);
 		}
 	}
 	
