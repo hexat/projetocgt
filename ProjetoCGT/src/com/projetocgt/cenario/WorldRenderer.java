@@ -105,14 +105,14 @@ public class WorldRenderer   {
 		opositorTexture.dispose();
 		spriteBatch.dispose();
 		for(int i =0;i<world.getListaPersonagens().size();i++){
-			world.listaPersonagens.get(i).getTexturePersonagem().dispose();
+			world.listaActor.get(i).getTexturePersonagem().dispose();
 		}
 	}
 
 	private void drawGameObjects() {
 		spriteBatch.draw(world.getBackGround(), 0, 0);
 		for(int i =0;i<world.getListaPersonagens().size();i++){
-			spriteBatch.draw(world.listaPersonagens.get(i).getTexturePersonagem(), world.listaPersonagens.get(i).getPosition().x, world.listaPersonagens.get(i).getPosition().y, world.listaPersonagens.get(i).getBounds().width, world.listaPersonagens.get(i).getBounds().height);
+			spriteBatch.draw(world.listaActor.get(i).getTexturePersonagem(), world.listaActor.get(i).getPosition().x, world.listaActor.get(i).getPosition().y, world.listaActor.get(i).getBounds().width, world.listaActor.get(i).getBounds().height);
 		}
 	}
 

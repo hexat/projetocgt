@@ -5,16 +5,14 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
-import com.projetocgt.Projectile;
 import com.projetocgt.personagens.CGTActor;
+import com.projetocgt.personagens.CGTProjectile;
 import com.projetocgt.personagens.SpriteSheet;
 
 public class MyWorld {
-	/** The blocks making up the world **/
-	ArrayList<CGTActor> listaPersonagens = new ArrayList<CGTActor>();
-	ArrayList<Projectile> listaDeProjectili = new ArrayList<Projectile>();
-	/** Our player controlled hero **/
+	
+	ArrayList<CGTActor> listaActor = new ArrayList<CGTActor>();
+	ArrayList<CGTProjectile> listaDeProjectile = new ArrayList<CGTProjectile>();
 	private CGTActor personagem;
 	private Texture backGround;
 	private float numBlocosH;
@@ -25,10 +23,6 @@ public class MyWorld {
 	}
 	
 	public MyWorld() {
-		//this.numBlocosH = cpn.getNumMaxPlaceX();
-		//this.numBlocosV = cpn.getNumMaxPlaceY();
-		this.numBlocosH = 3;
-		this.numBlocosV = 3;
 		createWorld();
 	}
 	
@@ -51,7 +45,7 @@ public class MyWorld {
 		
 		CGTActor opositor = new CGTActor(new Vector2(185f, 105f),3,0, 0.3f,0.3f,0,0);
 		opositor.setTexturePersonagem(new  Texture(Gdx.files.internal("data/Carros/carro.png")));
-		listaPersonagens.add(opositor);
+		listaActor.add(opositor);
 		
 		CGTActor opositorFogo = new CGTActor(new Vector2(400,100), 3, 0, 150,150f,0,0);
 		//opositorFogo.setTexturePersonagem();
@@ -62,17 +56,17 @@ public class MyWorld {
 		//Constroe o cenario com agua
 		CGTActor agua = new CGTActor(new Vector2(225f, 225f), 0, 0, 150, 150f, 0, 0); 
 		agua.setTexturePersonagem(new Texture("data/piscina.png"));
-		listaPersonagens.add(agua);
+		listaActor.add(agua);
 		
 		//Constroe a casa
 		CGTActor casa = new CGTActor(new Vector2(450f, 400f), 0, 0, 300, 240f,25f,40f);
 		casa.setTexturePersonagem(new Texture("data/Cenario/casa_sprite_sheet.png"));
-		listaPersonagens.add(casa);
+		listaActor.add(casa);
 		
 		//
-		Projectile projetilAgua = new Projectile(new Vector2(400f, 400f),100);
+		CGTProjectile projetilAgua = new CGTProjectile(new Vector2(400f, 400f),100);
 		projetilAgua.setTextura(new Texture("data/Sprites/SpriteSheet_agua.png"));
-		listaDeProjectili.add(projetilAgua);
+		listaDeProjectile.add(projetilAgua);
 	}
 
 	
@@ -80,7 +74,7 @@ public class MyWorld {
 	 * @return the rigido
 	 */
 	public ArrayList<CGTActor> getListaPersonagens() {
-		return listaPersonagens;
+		return listaActor;
 	}	
 	
 	/**
@@ -100,15 +94,15 @@ public class MyWorld {
 	/**
 	 * @return the listaDeProjectili
 	 */
-	public ArrayList<Projectile> getListaDeProjectili() {
-		return listaDeProjectili;
+	public ArrayList<CGTProjectile> getListaDeProjectili() {
+		return listaDeProjectile;
 	}
 
 	/**
 	 * @param listaDeProjectili the listaDeProjectili to set
 	 */
-	public void setListaDeProjectili(ArrayList<Projectile> listaDeProjectili) {
-		this.listaDeProjectili = listaDeProjectili;
+	public void setListaDeProjectili(ArrayList<CGTProjectile> listaDeProjectili) {
+		this.listaDeProjectile = listaDeProjectili;
 	}
 	
 }
