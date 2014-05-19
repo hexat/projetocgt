@@ -6,4 +6,5 @@ encoding//src/com/projetocgt/cenario/WorldController.java=UTF-8
 encoding//src/com/projetocgt/cenario/WorldRenderer.java=UTF-8
 encoding//src/com/projetocgt/core/petri/CpnXmlReader.java=UTF-8
 encoding//src/com/projetocgt/core/petri/ElementosCPN.java=UTF-8
-encoding//src/com/projetocgt/personagens/Personagem.java=UTF-8
+encoding//src/com/projetocgt/personagens/CGTActor.java=UTF-8
+encoding//src/com/projetocgt/personagens/SpriteSheet.java=UTF-8

@@ -10,21 +10,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.projetocgt.cenario.MyWorld;
 import com.projetocgt.cenario.WorldController;
 import com.projetocgt.cenario.WorldRenderer;
-import com.projetocgt.personagens.Personagem;
 
 public class GameScreen extends Table implements Screen, InputProcessor {
+	
+	private static final boolean DEBUG = true;
 	
 	private MyWorld world;
 	private WorldRenderer renderer;
 	private WorldController	controller;
-	private Personagem personagem;
-	private int width, height;
-	private boolean flagTouchInBob; // flag para verificar se foi tocado no bob
+	
 	private Music music;
 	
 	public GameScreen() {
 		super();
-		flagTouchInBob = false;
 		
 		//Carrega os audios
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/temabombeiro.wav"));
@@ -43,10 +41,6 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 	@Override
 	public void resize(int width, int height) {
 		renderer.setSize(width, height);
-		//Atribui a "this.width" a largura da tela 
-		this.width = width;
-		//Atribui a "this.width" a altura da tela
-		this.height = height;	
 	}
 
 	@Override
@@ -56,9 +50,9 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 		music.setLooping(true);
 		
 		world = new MyWorld();
-		renderer = new WorldRenderer(world, true);
+		renderer = new WorldRenderer(world, DEBUG);
 		controller = new WorldController(world, renderer);
-		personagem = world.getPersonagem();
+
 		//Habilitando GDX para captura processos de entrada 
 		Gdx.input.setInputProcessor(this);
 	}
@@ -109,6 +103,7 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 	//Funciona na subida do botao 
 	@Override
 	public boolean keyUp(int keycode) {
+		
 		if (keycode == Keys.LEFT)
 			controller.leftReleased();
 		if (keycode == Keys.RIGHT)
@@ -134,17 +129,11 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchUp(int x, int y, int pointer, int button) {
-		flagTouchInBob = false;
 		return true;
 	}
 	
 	@Override
 	public boolean touchDragged(int x, int y, int pointer) {
-		if (flagTouchInBob) {
-			float newPosX = x / (width / world.getNumBlocosH()) - personagem.getBounds().width/2; 
-			float newPosY = world.getNumBlocosV() - y / (height / world.getNumBlocosV()) - personagem.getBounds().height/2;
-			controller.movimeto(newPosX, newPosY);
-		}
 		return false;
 	}
 
