@@ -9,13 +9,17 @@ import com.projetocgt.personagens.CGTActor;
 import com.projetocgt.personagens.CGTOpposite;
 import com.projetocgt.personagens.CGTProjectile;
 import com.projetocgt.personagens.SpriteSheet;
-
+/**
+ * Responsavel por construir o jogo
+ * @author Bruno Roberto
+ *
+ */
 public class MyWorld {
 	
 	ArrayList<CGTActor> listaActor = new ArrayList<CGTActor>();
 	ArrayList<CGTProjectile> listaDeProjectile = new ArrayList<CGTProjectile>();
 	ArrayList<CGTOpposite>listaDeOpposite= new ArrayList<CGTOpposite>();
-	private CGTActor personagem;
+	private CGTActor personagemActor;
 	private Texture backGround;
 	
 	public MyWorld() {
@@ -27,20 +31,18 @@ public class MyWorld {
 	private void createWorld() {
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
 		
-		personagem = new CGTActor(new Vector2(400, 400),3,0, 100f,50f,25f,25f);
-		personagem.setSpeed(180);
-		personagem.setSprite(new SpriteSheet());
+		personagemActor = new CGTActor(new Vector2(400, 400),3,0, 100f,50f,25f,25f);
+		personagemActor.setSpeed(180);
+		personagemActor.setSprite(new SpriteSheet());
 		//listaActor.add(personagem);
 		
 		//CGTOpposite opositor = new CGTOpposite(new Vector2(500,500));
 		//opositor.setTexture(new  Texture(Gdx.files.internal("data/Carros/carro.png")));
 		//listaDeOpposite.add(opositor);
 		
-		CGTOpposite opositorFogo = new CGTOpposite(new Vector2(500,500),100,100,0,0);
-		opositorFogo.setTexture(new Texture("data/piscina.png"));
-		listaDeOpposite.add(opositorFogo);
-		
-		//Adiniona uma aniamcao 
+		CGTOpposite opositorCasa = new CGTOpposite(new Vector2(500,500),100,100,0,0);
+		opositorCasa.setTexture(new Texture("data/Cenario/casa_sprite_sheet.png"));
+		listaDeOpposite.add(opositorCasa);
 		
 		//Constroe o cenario com agua
 		CGTOpposite agua = new CGTOpposite(new Vector2(650,650),100,100,0,0); 
@@ -58,14 +60,6 @@ public class MyWorld {
 		listaDeProjectile.add(projetilAgua);*/
 	}
 
-	
-	/**
-	 * @return the rigido
-	 */
-	public ArrayList<CGTActor> getListaActor() {
-		return listaActor;
-	}	
-	
 	/**
 	 * @return the backGround
 	 */
@@ -111,6 +105,12 @@ public class MyWorld {
 	 * @return the personagem
 	 */
 	public CGTActor getPersonagem() {
-		return personagem;
+		return personagemActor;
+	}
+	/**
+	 * @return the listaActor
+	 */
+	public ArrayList<CGTActor> getListaActor() {
+		return listaActor;
 	}
 }
