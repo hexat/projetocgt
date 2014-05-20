@@ -36,17 +36,11 @@ public class MyWorld {
 		personagemActor = new CGTActor(new Vector2(400, 400),3,0, 100f,50f,25f,25f);
 		personagemActor.setSpeed(180);
 		personagemActor.setSprite(new SpriteSheet());
-		//listaActor.add(personagem);
-		
-		//CGTOpposite opositor = new CGTOpposite(new Vector2(500,500));
-		//opositor.setTexture(new  Texture(Gdx.files.internal("data/Carros/carro.png")));
-		//listaDeOpposite.add(opositor);
 		
 		CGTOpposite opositorCasa = new CGTOpposite(new Vector2(500,500), 100, 100, 0, 0);
 		opositorCasa.setTexture(new Texture("data/Cenario/casa_sprite_sheet.png"));
 		listaDeOpposite.add(opositorCasa);
 		
-		//Constroe o cenario com agua
 		CGTBonus hidrate = new CGTBonus(new Vector2(650,650),100, 100, 0, 0);
 		hidrate.setTexture(new Texture("data/piscina.png"));
 		listaDeBonus.add(hidrate);
