@@ -5,13 +5,11 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.projetocgt.cenario.MyWorld;
 import com.projetocgt.cenario.WorldController;
 import com.projetocgt.cenario.WorldRenderer;
 
-public class GameScreen extends Table implements Screen, InputProcessor {
+public class GameScreen implements Screen, InputProcessor {
 	
 	private static final boolean DEBUG = true;
 	
@@ -76,7 +74,7 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 
 	@Override
 	public void dispose() {
-		//renderer.dispose();
+		renderer.dispose();
 	}
 	
 

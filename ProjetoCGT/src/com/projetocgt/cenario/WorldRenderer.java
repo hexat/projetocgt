@@ -80,8 +80,8 @@ public class WorldRenderer   {
 	 */
 	public void render( ) {
 		this.camera.update(); 			//Atualiza a tela
-		spriteBatch.begin();
 		spriteBatch.setProjectionMatrix(camera.combined); // movimentacao da camera
+		spriteBatch.begin();
 		drawGameObjects();
 		drawCGTActor();
 		spriteBatch.end();
@@ -91,13 +91,19 @@ public class WorldRenderer   {
 	public void dispose(){
 		world.getBackGround().dispose();
 		spriteBatch.dispose();
-		for(int i =0;i<world.getListaActor().size();i++){
-			//world.listaActor.get(i).getTexturePersonagem().dispose();
+		for(int i =0;i<world.getListaDeOpposite().size();i++){
+			world.getListaDeOpposite().get(i).getTexture().dispose();
+		}
+		for(int i =0;i<world.getListaDeBonus().size();i++){
+			world.getListaDeBonus().get(i).getTexture().dispose();
+		}
+		for(int i =0;i<world.getListaDeProjectili().size();i++){
+			world.getListaDeProjectili().get(i).getTexture().dispose();
 		}
 	}
 
 	private void drawGameObjects() {
-		spriteBatch.draw(world.getBackGround(), 0, 0);
+		//spriteBatch.draw(world.getBackGround(), 0, 0);
 		//Desenha todos os Opposite
 		for(int i =0;i<world.getListaDeOpposite().size();i++){
 			spriteBatch.draw(world.listaDeOpposite.get(i).getTexture(), world.listaDeOpposite.get(i).getPosition().x, world.listaDeOpposite.get(i).getPosition().y, world.listaDeOpposite.get(i).getBounds().width, world.listaDeOpposite.get(i).getBounds().height);
