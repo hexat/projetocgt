@@ -68,10 +68,10 @@ public class WorldRenderer   {
 		//Carrega as texturas que serao paresentadas na cena
 		
 		//bobTexture = new  Texture(Gdx.files.internal("data/Bob.png"));
-		spriteBob.loadSpiteAniBonus("data/SpriteBob/SpriteSheet_bombeiro.png");
+		spriteBob.loadSpiteAniBonus("data/SpriteCGTActor/SpriteSheet_bombeiro.png");
 		
 		//Carrega o sprite do fogo do cenario
-		spriteBob.loadingSpriteFogo("data/Sprites/SpriteSheet_fogo.png", 2, 2);
+		//spriteBob.loadingSpriteFogo("data/Sprites/SpriteSheet_fogo.png", 2, 2);
 	}
 
 	/**

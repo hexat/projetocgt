@@ -26,7 +26,6 @@ public class GameScreen extends Table implements Screen, InputProcessor {
 		
 		//Carrega os audios
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/temabombeiro.wav"));
-		new Texture(Gdx.files.internal("data/Joystick/setaDireita.png"));
 		}
 	
 	@Override

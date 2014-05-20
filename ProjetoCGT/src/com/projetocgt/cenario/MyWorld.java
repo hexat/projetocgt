@@ -42,11 +42,11 @@ public class MyWorld {
 		listaDeOpposite.add(opositorCasa);
 		
 		CGTBonus hidrate = new CGTBonus(new Vector2(650,650),100, 100, 0, 0);
-		hidrate.setTexture(new Texture("data/piscina.png"));
+		hidrate.setTexture(new Texture("data/Cenario/piscina.png"));
 		listaDeBonus.add(hidrate);
 		
 		CGTProjectile projetilAgua = new CGTProjectile(new Vector2(800f, 800f), 100, 100, 0, 0);
-		projetilAgua.setTexture(new Texture("data/Sprites/SpriteSheet_agua.png"));
+		projetilAgua.setTexture(new Texture("data/CGTProjectile/SpriteSheet_agua.png"));
 		listaDeProjectile.add(projetilAgua);
 	}
 
