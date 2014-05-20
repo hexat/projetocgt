@@ -3,7 +3,6 @@ package com.projetocgt.cenario;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -82,13 +81,9 @@ public class WorldRenderer   {
 	public void render( ) {
 		this.camera.update(); 			//Atualiza a tela
 		spriteBatch.begin();
-		
 		spriteBatch.setProjectionMatrix(camera.combined); // movimentacao da camera
-		
 		drawGameObjects();
-		
 		drawCGTActor();
-		
 		spriteBatch.end();
 		if (debug)
 			drawDebug();
@@ -103,18 +98,25 @@ public class WorldRenderer   {
 
 	private void drawGameObjects() {
 		spriteBatch.draw(world.getBackGround(), 0, 0);
+		//Desenha todos os Opposite
 		for(int i =0;i<world.getListaDeOpposite().size();i++){
 			spriteBatch.draw(world.listaDeOpposite.get(i).getTexture(), world.listaDeOpposite.get(i).getPosition().x, world.listaDeOpposite.get(i).getPosition().y, world.listaDeOpposite.get(i).getBounds().width, world.listaDeOpposite.get(i).getBounds().height);
 		}
+		//Desenha todos os Bonus
+		for(int i =0;i<world.getListaDeBonus().size();i++){
+			spriteBatch.draw(world.getListaDeBonus().get(i).getTexture(), world.getListaDeBonus().get(i).getPosition().x, world.getListaDeBonus().get(i).getPosition().y, world.getListaDeBonus().get(i).getBounds().width, world.getListaDeBonus().get(i).getBounds().height);
+		}
+		//Desenha todos os Projectile
+		for(int i =0;i<world.getListaDeProjectili().size();i++){
+			spriteBatch.draw(world.getListaDeProjectili().get(i).getTexture(), world.getListaDeProjectili().get(i).getPosition().x, world.getListaDeProjectili().get(i).getPosition().y, world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
+		}
 	}
 
-	/**
-	 * A textura que ela vai desenhar "bobTexture" Posicao inicial
-	 * Posicao inicial "bob.getPosition().x , bob.getPosition().y "
-	 * Tamanho do desenho "Personagem.SIZE , Personagem.SIZE "
-	 * Verifica se o life do fogo ainda esta ativo
+	/***
+	 * Desenha o Actor na cena
 	 */
 	private void drawCGTActor() {
+		//Desenha o Actor na cena
 		spriteBatch.draw(spriteBob.aniNormal(personagem), personagem.getPosition().x, personagem.getPosition().y, personagem.getBounds().width, personagem.getBounds().height);
 	}
 	
@@ -131,14 +133,24 @@ public class WorldRenderer   {
 		debugRenderer.setColor(new Color(0, 1, 0, 1));
 		debugRenderer.rect(personagem.getRectPer().x, personagem.getRectPer().y, personagem.getRectPer().getWidth(), personagem.getRectPer().getHeight());
 			
-		
+		//Carrega o debug para todos os Opposite
 		for(int i=0;i<world.getListaDeOpposite().size();i++){				
 			debugRenderer.setColor(new Color(0, 1, 0, 1));
-			debugRenderer.rect(world.getListaDeOpposite().get(i).getRectPer().x, world.getListaDeOpposite().get(i).getRectPer().y, world.getListaDeOpposite().get(i).getRectPer().getWidth(), world.getListaDeOpposite().get(i).getRectPer().getHeight());
+			debugRenderer.rect(world.getListaDeOpposite().get(i).getRectangle().x, world.getListaDeOpposite().get(i).getRectangle().y, world.getListaDeOpposite().get(i).getRectangle().getWidth(), world.getListaDeOpposite().get(i).getRectangle().getHeight());
 		}
+		//Carrega o debug para todos os Actor
 		for(int i=0;i<world.getListaActor().size();i++){				
 			debugRenderer.setColor(new Color(0, 1, 0, 1));
 			debugRenderer.rect(world.getListaActor().get(i).getRectPer().x, world.getListaActor().get(i).getRectPer().y, world.getListaActor().get(i).getRectPer().getWidth(), world.getListaActor().get(i).getRectPer().getHeight());
+		}
+		//Carrega o debug para todos os Bonus
+		for(int i=0;i<world.getListaDeBonus().size();i++){				
+			debugRenderer.setColor(new Color(0, 1, 0, 1));
+			debugRenderer.rect(world.getListaDeBonus().get(i).getRectangle().x, world.getListaDeBonus().get(i).getRectangle().y, world.getListaDeBonus().get(i).getRectangle().getWidth(), world.getListaDeBonus().get(i).getRectangle().getHeight());
+		}
+		//Carrega o debug para todos os Projectile
+		for(int i =0;i<world.getListaDeProjectili().size();i++){
+			debugRenderer.rect(world.getListaDeProjectili().get(i).getRectangle().x, world.getListaDeProjectili().get(i).getRectangle().y, world.getListaDeProjectili().get(i).getRectangle().getWidth(), world.getListaDeProjectili().get(i).getRectangle().getHeight());
 		}
 		debugRenderer.end();
 	}
@@ -161,22 +173,34 @@ public class WorldRenderer   {
 	 * @return the col
 	 */
 	public boolean isColision() {
-		boolean col = false;
+		boolean colisao = false;
+		//Verifica se colidiu com algum Opposite
 		for(int i=0; i < world.getListaDeOpposite().size(); i++){
-			if(world.getListaDeOpposite().get(i).getRectPer().overlaps(personagem.getRectPer()))
-				col=true;
+			if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectPer()))
+				colisao=true;
 		}
-
-		if(!col){
+		
+		//Verifica se colidiu com algum Bonus
+		for(int i=0; i < world.getListaDeBonus().size(); i++){
+			if(world.getListaDeBonus().get(i).getRectangle().overlaps(personagem.getRectPer()))
+				colisao=true;
+		}
+		//Verifica se colidiu com algum Projectile
+		for(int i=0; i < world.getListaDeProjectili().size(); i++){
+			if(world.getListaDeProjectili().get(i).getRectangle().overlaps(personagem.getRectPer()))
+				colisao=true;
+		}
+		
+		if(!colisao){
 			pos.x = personagem.getPosition().x;
 			pos.y = personagem.getPosition().y;
 		}else{
 			personagem.getVelocity().x=0;
 			personagem.getVelocity().y=0;
 			personagem.setPosition(pos);
-			col = false;
+			colisao = false;
 		}
 		
-		return col;
+		return colisao;
 	}
 }

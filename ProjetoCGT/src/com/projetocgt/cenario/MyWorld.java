@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.personagens.CGTActor;
+import com.projetocgt.personagens.CGTBonus;
 import com.projetocgt.personagens.CGTOpposite;
 import com.projetocgt.personagens.CGTProjectile;
 import com.projetocgt.personagens.SpriteSheet;
@@ -19,6 +20,7 @@ public class MyWorld {
 	ArrayList<CGTActor> listaActor = new ArrayList<CGTActor>();
 	ArrayList<CGTProjectile> listaDeProjectile = new ArrayList<CGTProjectile>();
 	ArrayList<CGTOpposite>listaDeOpposite= new ArrayList<CGTOpposite>();
+	ArrayList<CGTBonus> listaDeBonus=new ArrayList<CGTBonus>();
 	private CGTActor personagemActor;
 	private Texture backGround;
 	
@@ -40,24 +42,18 @@ public class MyWorld {
 		//opositor.setTexture(new  Texture(Gdx.files.internal("data/Carros/carro.png")));
 		//listaDeOpposite.add(opositor);
 		
-		CGTOpposite opositorCasa = new CGTOpposite(new Vector2(500,500),100,100,0,0);
+		CGTOpposite opositorCasa = new CGTOpposite(new Vector2(500,500), 100, 100, 0, 0);
 		opositorCasa.setTexture(new Texture("data/Cenario/casa_sprite_sheet.png"));
 		listaDeOpposite.add(opositorCasa);
 		
 		//Constroe o cenario com agua
-		CGTOpposite agua = new CGTOpposite(new Vector2(650,650),100,100,0,0); 
-		agua.setTexture(new Texture("data/piscina.png"));
-		listaDeOpposite.add(agua);
+		CGTBonus hidrate = new CGTBonus(new Vector2(650,650),100, 100, 0, 0);
+		hidrate.setTexture(new Texture("data/piscina.png"));
+		listaDeBonus.add(hidrate);
 		
-		//Constroe a casa
-		//CGTActor casa = new CGTActor(new Vector2(450f, 400f), 0, 0, 300, 240f,25f,40f);
-		//casa.setTexturePersonagem(new Texture("data/Cenario/casa_sprite_sheet.png"));
-		//listaActor.add(casa);
-		
-		//
-		/*CGTProjectile projetilAgua = new CGTProjectile(new Vector2(400f, 400f),100);
-		projetilAgua.setTextura(new Texture("data/Sprites/SpriteSheet_agua.png"));
-		listaDeProjectile.add(projetilAgua);*/
+		CGTProjectile projetilAgua = new CGTProjectile(new Vector2(800f, 800f), 100, 100, 0, 0);
+		projetilAgua.setTexture(new Texture("data/Sprites/SpriteSheet_agua.png"));
+		listaDeProjectile.add(projetilAgua);
 	}
 
 	/**
@@ -112,5 +108,17 @@ public class MyWorld {
 	 */
 	public ArrayList<CGTActor> getListaActor() {
 		return listaActor;
+	}
+	/**
+	 * @return the listaDeBonus
+	 */
+	public ArrayList<CGTBonus> getListaDeBonus() {
+		return listaDeBonus;
+	}
+	/**
+	 * @param listaDeBonus the listaDeBonus to set
+	 */
+	public void setListaDeBonus(ArrayList<CGTBonus> listaDeBonus) {
+		this.listaDeBonus = listaDeBonus;
 	}
 }

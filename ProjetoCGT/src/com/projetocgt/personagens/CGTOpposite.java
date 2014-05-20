@@ -14,17 +14,21 @@ public class CGTOpposite {
 	private Texture texture;
 	private Vector2 position;
 	private Rectangle bounds = new Rectangle();		// Area que sera' desenhado o personagem
-	float posXColider, posYColider; 
+	private float posXColider, posYColider; 
 	private Rectangle rectangle;
 	//private ArrayList behaviors;
-	public CGTOpposite(Vector2 position,float size,float colider,float posXColider,float posYColider ){
+	public CGTOpposite(Vector2 position, float size, float colider, float posXColider, float posYColider ){
 		this.setPosition(position);		//Posicao inicial
 		this.bounds.height=size;
 		this.bounds.width=size;
 		this.posXColider=posXColider;
 		this.posYColider=posYColider;
-		this.setRectPer(new Rectangle(position.x+this.posXColider,position.y+this.posYColider,colider,colider));
+		this.setRectangle(new Rectangle(position.x+this.posXColider,position.y+this.posYColider,colider,colider));
 	}
+	/**
+	 * Utilizada para ficar atualizando a posicao do personagem
+	 * @param delta
+	 */
 	public void update(float delta) {
 		rectangle.x=this.position.x+posXColider;
 		rectangle.y=this.position.y+posYColider;
@@ -124,18 +128,6 @@ public class CGTOpposite {
 	 */
 	public void setBounds(Rectangle bounds) {
 		this.bounds = bounds;
-	}
-	/**
-	 * @return the rectPer
-	 */
-	public Rectangle getRectPer() {
-		return rectangle;
-	}
-	/**
-	 * @param rectPer the rectPer to set
-	 */
-	public void setRectPer(Rectangle rectPer) {
-		this.rectangle = rectPer;
 	}
 	/**
 	 * @return the rectangle

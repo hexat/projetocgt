@@ -2,8 +2,6 @@ package com.projetocgt.cenario;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.personagens.CGTActor;
 import com.projetocgt.personagens.CGTActor.DirectionPolicy;
 import com.projetocgt.personagens.CGTActor.State;
@@ -144,16 +142,22 @@ public class WorldController {
 	}
 
 
-	/** The main update method **/
-	// O metodo update e chamado a cada ciclo do loop principal.
+	/***
+	 * O metodo update e chamado a cada ciclo do loop principal.
+	 * @param delta
+	 */
 	public void update(float delta) {
 		// Processa a entrada de algum parametro
 		processInput();
-		// Atualizaes do Personagem. Personagem tem um metodo de atualizacoo
-		// dedicado.
 		bob.update(delta);
 		for (int i=0; i<world.getListaDeOpposite().size(); i++) {
 			world.getListaDeOpposite().get(i).update(delta);
+		}
+		for (int i=0; i<world.getListaDeBonus().size(); i++) {
+			world.getListaDeBonus().get(i).update(delta);
+		}
+		for (int i=0; i<world.getListaDeProjectili().size(); i++) {
+			world.getListaDeProjectili().get(i).update(delta);
 		}
 	}
 	
