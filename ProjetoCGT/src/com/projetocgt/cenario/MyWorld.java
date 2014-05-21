@@ -19,8 +19,8 @@ public class MyWorld {
 	
 	ArrayList<CGTActor> listaActor = new ArrayList<CGTActor>();
 	ArrayList<CGTProjectile> listaDeProjectile = new ArrayList<CGTProjectile>();
-	ArrayList<CGTOpposite>listaDeOpposite= new ArrayList<CGTOpposite>();
-	ArrayList<CGTBonus> listaDeBonus=new ArrayList<CGTBonus>();
+	ArrayList<CGTOpposite> listaDeOpposite = new ArrayList<CGTOpposite>();
+	ArrayList<CGTBonus> listaDeBonus = new ArrayList<CGTBonus>();
 	private CGTActor personagemActor;
 	private SpriteSheet spriteSheetActor = new SpriteSheet();
 	private SpriteSheet spriteSheetOppositeFogo = new SpriteSheet();
@@ -31,7 +31,7 @@ public class MyWorld {
 	public MyWorld() {
 		createWorld();
 	}
-	/***
+	/**
 	 * Recebe os paramentros do jogos
 	 */
 	private void createWorld() {
@@ -53,7 +53,6 @@ public class MyWorld {
 		//Indica que a minha animacao e' um por um
 		spriteSheetOppositeCasa.loadingSpriteSheet("data/Cenario/casa_sprite_sheet.png", 1, 1);
 		listaDeOpposite.add(opositorCasa);
-		
 		
 		//Instancia o opposite fogo
 		CGTOpposite opositorFogo = new CGTOpposite(new Vector2(450,850), 100, 100, 0, 0);

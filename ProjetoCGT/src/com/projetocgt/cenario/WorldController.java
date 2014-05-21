@@ -53,8 +53,6 @@ public class WorldController {
 		keys.get(keys.put(Keys.LEFT, true));
 		//Habilita o loop da animacao
 		actorAnimation.setLoop(true);
-		//renderer.getCam().position.x-=30;
-		//renderer.getCam().translate(-30f,0,0);
 	}
 
 	public void rightPressed() {
@@ -64,8 +62,6 @@ public class WorldController {
 		keys.get(keys.put(Keys.RIGHT, true));
 		//Habilita o loop da animacao
 		actorAnimation.setLoop(true);
-		//renderer.getCam().position.x+=30;
-		//renderer.getCam().translate(30f,0,0);
 	}
 
 	public void upPressed() {
@@ -171,7 +167,7 @@ public class WorldController {
 			} else {
 				// O personagem esta olhando para a cima
 				if(bob.getVelocity().y!=0)
-					renderer.getCam().position.y+=3;
+					renderer.getCam().position.y+=bob.getSpeed()/60;
 				bob.setState(State.LOOKUP);
 				bob.getVelocity().y = bob.getSpeed();
 			}
@@ -185,7 +181,7 @@ public class WorldController {
 				bob.setState(State.LOOKDOWN);
 			} else {
 				if (bob.getVelocity().y!=0) {
-					renderer.getCam().position.y-=3;
+					renderer.getCam().position.y-=bob.getSpeed()/60;
 				}
 				
 				// O personagem esta olhando para a baixo
@@ -202,7 +198,7 @@ public class WorldController {
 				bob.setState(State.LOOKLEFT);
 			} else {
 				if (bob.getVelocity().x != 0) {
-					renderer.getCam().position.x-=3;
+					renderer.getCam().position.x-=bob.getSpeed()/60;
 				}
 				bob.setState(State.LOOKLEFT);
 				bob.getVelocity().x = -bob.getSpeed();;
@@ -215,7 +211,7 @@ public class WorldController {
 				bob.setState(State.LOOKRIGHT);
 			} else {
 				if (bob.getVelocity().x!=0) {
-					renderer.getCam().position.x+=3;
+					renderer.getCam().position.x+=bob.getSpeed()/60;
 				}
 				bob.setState(State.LOOKRIGHT);
 				bob.getVelocity().x = bob.getSpeed();;

@@ -58,20 +58,16 @@ public class WorldRenderer   {
 		this.camera.position.set(width/2, height/2 , 0); 		
 		this.debug = debug;												 
 		spriteBatch = new SpriteBatch();
-		loadSpriteSheet();
-	}
-	
-	private void loadSpriteSheet() {
 		personagem = world.getPersonagem();
 	}
-
+	
 	/**
 	 * Esta funcao e' chamada no metodo render da class GameScreen.
 	 * Responsavel por desenhar todos os objetos na tela.
 	 */
 	public void render( ) {
 		this.camera.update(); 			//Atualiza a tela
-		spriteBatch.setProjectionMatrix(camera.combined); // movimentacao da camera
+		spriteBatch.setProjectionMatrix(camera.combined); //Possibilita a camera acompanhar o personagem
 		spriteBatch.begin();
 		drawGameObjects();
 		drawCGTActor();
@@ -79,6 +75,9 @@ public class WorldRenderer   {
 		if (debug)
 			drawDebug();
 	}
+	/**
+	 * Utilizado para limpar o desenho da tela
+	 */
 	public void dispose(){
 		world.getBackGround().dispose();
 		spriteBatch.dispose();
@@ -97,6 +96,7 @@ public class WorldRenderer   {
 		spriteBatch.draw(world.getBackGround(), 0, 0);
 		//Desenha todos os Opposite
 		for(int i =0;i<world.getListaDeOpposite().size();i++){
+			//spriteBatch.draw(world.getListaDeOpposite().get(i).getTexture(), world.listaDeOpposite.get(i).getPosition().x, world.listaDeOpposite.get(i).getPosition().y, world.listaDeOpposite.get(i).getBounds().width, world.listaDeOpposite.get(i).getBounds().height);
 			spriteBatch.draw(world.getListaDeOpposite().get(i).getSpriteSheet().CGTAnimation(personagem), world.listaDeOpposite.get(i).getPosition().x, world.listaDeOpposite.get(i).getPosition().y, world.listaDeOpposite.get(i).getBounds().width, world.listaDeOpposite.get(i).getBounds().height);
 		}
 		//Desenha todos os Bonus
@@ -128,8 +128,6 @@ public class WorldRenderer   {
 		debugRenderer.setProjectionMatrix(camera.combined);
 		debugRenderer.begin(ShapeType.Line);
 
-		// Recebe a posicao e o tamanho do personagem e o desenha na tela
-		//Personagem bob = world.getPersonagem();
 		debugRenderer.setColor(new Color(0, 1, 0, 1));
 		debugRenderer.rect(personagem.getRectPer().x, personagem.getRectPer().y, personagem.getRectPer().getWidth(), personagem.getRectPer().getHeight());
 			
@@ -170,7 +168,8 @@ public class WorldRenderer   {
 	}
 
 	/**
-	 * @return the col
+	 * Utilizado para verificar se o CGTACtor colidiu com algum Bloqueante
+	 * @return the colisao
 	 */
 	public boolean isColision() {
 		boolean colisao = false;
