@@ -195,11 +195,11 @@ public class CGTActor {
 	}
 
 
-	public void setSprite(SpriteSheet spriteSheet) {
+	public void setSpriteSheet(SpriteSheet spriteSheet) {
 		this.spriteSheet = spriteSheet;
 	}
 
-	public SpriteSheet getSprite() {
+	public SpriteSheet getSpriteSheet() {
 		return spriteSheet;
 	}
 

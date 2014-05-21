@@ -41,7 +41,7 @@ public class WorldController {
 		this.renderer = render;
 		// Posicao inicial do personagem
 		this.bob = world.getPersonagem();
-		this.actorAnimation = world.getPersonagem().getSprite();
+		this.actorAnimation = world.getPersonagem().getSpriteSheet();
 	}
 
 	// ** Key presses and touches **************** //

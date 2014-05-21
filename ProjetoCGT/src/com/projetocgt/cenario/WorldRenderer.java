@@ -54,24 +54,15 @@ public class WorldRenderer   {
 		this.world = world;
 		this.width=Gdx.graphics.getWidth();
 		this.height=Gdx.graphics.getHeight();
-		//Inicializa a variavel de camera passando os parametros de quantos blocos ela vai ver na horizontal e vertical
 		this.camera = new OrthographicCamera(width, height);
-		this.camera.position.set(width/2, height/2 , 0); //Faz um set da posicao da camera no mundo do jogo		
+		this.camera.position.set(width/2, height/2 , 0); 		
 		this.debug = debug;												 
 		spriteBatch = new SpriteBatch();
-		loadTextures();
+		loadSpriteSheet();
 	}
 	
-	private void loadTextures() {
+	private void loadSpriteSheet() {
 		personagem = world.getPersonagem();
-		spriteBob = world.getPersonagem().getSprite();
-		//Carrega as texturas que serao paresentadas na cena
-		
-		//bobTexture = new  Texture(Gdx.files.internal("data/Bob.png"));
-		spriteBob.loadSpiteAniBonus("data/SpriteCGTActor/SpriteSheet_bombeiro.png");
-		
-		//Carrega o sprite do fogo do cenario
-		//spriteBob.loadingSpriteFogo("data/Sprites/SpriteSheet_fogo.png", 2, 2);
 	}
 
 	/**
@@ -103,10 +94,10 @@ public class WorldRenderer   {
 	}
 
 	private void drawGameObjects() {
-		//spriteBatch.draw(world.getBackGround(), 0, 0);
+		spriteBatch.draw(world.getBackGround(), 0, 0);
 		//Desenha todos os Opposite
 		for(int i =0;i<world.getListaDeOpposite().size();i++){
-			spriteBatch.draw(world.listaDeOpposite.get(i).getTexture(), world.listaDeOpposite.get(i).getPosition().x, world.listaDeOpposite.get(i).getPosition().y, world.listaDeOpposite.get(i).getBounds().width, world.listaDeOpposite.get(i).getBounds().height);
+			spriteBatch.draw(world.listaDeOpposite.get(i).getSpriteSheet().CGTAnimation(personagem), world.listaDeOpposite.get(i).getPosition().x, world.listaDeOpposite.get(i).getPosition().y, world.listaDeOpposite.get(i).getBounds().width, world.listaDeOpposite.get(i).getBounds().height);
 		}
 		//Desenha todos os Bonus
 		for(int i =0;i<world.getListaDeBonus().size();i++){
@@ -123,11 +114,12 @@ public class WorldRenderer   {
 	 */
 	private void drawCGTActor() {
 		//Desenha o Actor na cena
-		spriteBatch.draw(spriteBob.aniNormal(personagem), personagem.getPosition().x, personagem.getPosition().y, personagem.getBounds().width, personagem.getBounds().height);
+		//spriteBatch.draw(spriteBob.CGTActorAnimation(personagem), personagem.getPosition().x, personagem.getPosition().y, personagem.getBounds().width, personagem.getBounds().height);
+		spriteBatch.draw(personagem.getSpriteSheet().CGTActorAnimation(personagem), personagem.getPosition().x, personagem.getPosition().y, personagem.getBounds().width, personagem.getBounds().height);
 	}
 	
 	/***
-	 * Funcao utilizada para fazer o debug
+	 * Metodo utilizada para fazer o debug
 	 */
 	private void drawDebug(){
 		// render blocks	
@@ -182,7 +174,7 @@ public class WorldRenderer   {
 		boolean colisao = false;
 		//Verifica se colidiu com algum Opposite
 		for(int i=0; i < world.getListaDeOpposite().size(); i++){
-			if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectPer()))
+			if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeOpposite().get(i).isBlock())
 				colisao=true;
 		}
 		

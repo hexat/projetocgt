@@ -14,21 +14,15 @@ import com.projetocgt.personagens.CGTActor.State;
 public class SpriteSheet {
 
 	// Animation
-	private static final float RUNNING_FRAME_DURATION = 0.08f;// controla o
-																// tempo que um
-																// quadro na /
-																// ciclo andando
-																// corrida sera
-																// exibido
-
+	private static final float RUNNING_FRAME_DURATION = 0.08f;
 	private TextureRegion bobFrame;
-	private static final int FRAME_COLS = 3; //
-	private static final int FRAME_ROWS = 5; //
-	private int linhaDoSpriteUp = 3; //
-	private int linhaDoSpriteDown = 2; //
-	private int linhaDoSpriteLeft = 1; //
-	private int linhaDoSpriteRight = 1; //
-	private Texture walkSheet; //
+	private int FRAME_COLS = 3; 
+	private int FRAME_ROWS = 5; 
+	private int linhaDoSpriteUp = 3; 
+	private int linhaDoSpriteDown = 2; 
+	private int linhaDoSpriteLeft = 1; 
+	private int linhaDoSpriteRight = 1; 
+	private Texture walkSheet;
 	private TextureRegion[] walkFramesUp;
 	private TextureRegion[] walkFramesDown;
 	private TextureRegion[] walkFramesLeft;
@@ -41,9 +35,9 @@ public class SpriteSheet {
 	private boolean loop;
 	float stateTime;
 
-	private TextureRegion[] walkFramesCenario;
+	private TextureRegion[] walkCGTFrames;
 
-	private Animation walkAnimationFogo;
+	private Animation walkCGTAnimation;
 
 	private Animation walkAnimationStandBy;
 
@@ -52,11 +46,11 @@ public class SpriteSheet {
 	}
 
 	/***
-	 * 
+	 * Utilizada para carregar o sprite sheet 
 	 * @param caminho
 	 *            Informa qual o caminho do arquivo
 	 */
-	public void loadSpiteAniBonus(String caminho) {
+	public void loadSpiteCGTACtor(String caminho) {
 		walkSheet = new Texture(Gdx.files.internal(caminho));
 		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
 				walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()
@@ -99,51 +93,51 @@ public class SpriteSheet {
 	 *            O personagem que a funcao ira fazer a animacao
 	 * @return bobFrama o freme do personagem
 	 */
-	public TextureRegion aniNormal(CGTActor personagem) {
+	public TextureRegion CGTActorAnimation(CGTActor personagem) {
 
 		// animacao inicial do personagem
-		bobFrame = walkAnimationDown.getKeyFrame(personagem.getStateTime(),
-				false);
+		bobFrame = walkAnimationDown.getKeyFrame(personagem.getStateTime(),false);
 		// Verifica se o personagem esta olhando para cima e faz a aniamcao
 		if (personagem.getState().equals(State.LOOKUP))
 			return walkAnimationUp.getKeyFrame(personagem.getStateTime(), loop);
 		// Verifica se o personagem esta olhando para baixo e faz a aniamcao
 		if (personagem.getState().equals(State.LOOKDOWN))
-			return walkAnimationDown.getKeyFrame(personagem.getStateTime(),
-					loop);
+			return walkAnimationDown.getKeyFrame(personagem.getStateTime(),loop);
 		// Verifica se o personagem esta olhando para esquerda e faz a aniamcao
 		if (personagem.getState().equals(State.LOOKLEFT))
-			return walkAnimationLeft.getKeyFrame(personagem.getStateTime(),
-					loop);
+			return walkAnimationLeft.getKeyFrame(personagem.getStateTime(),loop);
 		// Verifica se o personagem esta olhando para direita e faz a aniamcao
 		if (personagem.getState().equals(State.LOOKRIGHT))
-			return walkAnimationRight.getKeyFrame(personagem.getStateTime(),
-					loop);
-
+			return walkAnimationRight.getKeyFrame(personagem.getStateTime(),loop);
 		return bobFrame;
 	}
-
-	/***
+	/**
 	 * Carrega o sprie sheet do personagem
+	 * @param caminho
+	 * 				Informa o caminho do arquivo
+	 * @param FRAME_ROWS
+	 * 				Informa o numero de linhas do SpriteSheet
+	 * @param FRAME_COLS
+	 * 				Informa o numero de colunas do SpriteSheet
 	 */
-	public void loadingSpriteFogo(String caminho, int FRAME_ROWS, int FRAME_COLS) {
+	public void loadingSpriteSheet(String caminho, int FRAME_ROWS, int FRAME_COLS) {
 		walkSheet = new Texture(Gdx.files.internal(caminho));
 		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
 				walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()
 						/ FRAME_ROWS); // #10
-		walkFramesCenario = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+		walkCGTFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index = 0;
 		for (int i = 0; i < FRAME_ROWS; i++) {
 			for (int j = 0; j < FRAME_COLS; j++) {
-				walkFramesCenario[index++] = tmp[i][j];
+				walkCGTFrames[index++] = tmp[i][j];
 			}
 		}
-		walkAnimationFogo = new Animation(RUNNING_FRAME_DURATION,
-				walkFramesCenario);
+		walkCGTAnimation = new Animation(RUNNING_FRAME_DURATION,
+				walkCGTFrames);
 	}
 
-	public TextureRegion Cenario(CGTActor personagem) {
-		return walkAnimationFogo.getKeyFrame(personagem.getStateTime(), true);
+	public TextureRegion CGTAnimation(CGTActor personagem) {
+		return walkCGTAnimation.getKeyFrame(personagem.getStateTime(), true);
 	}
 
 	public void stopAni() {

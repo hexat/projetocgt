@@ -22,6 +22,9 @@ public class MyWorld {
 	ArrayList<CGTOpposite>listaDeOpposite= new ArrayList<CGTOpposite>();
 	ArrayList<CGTBonus> listaDeBonus=new ArrayList<CGTBonus>();
 	private CGTActor personagemActor;
+	private SpriteSheet spriteSheetActor = new SpriteSheet();
+	private SpriteSheet spriteSheetOppositeFogo = new SpriteSheet();
+	private SpriteSheet spriteSheetOppositeCasa = new SpriteSheet();
 	private Texture backGround;
 	
 	public MyWorld() {
@@ -31,15 +34,33 @@ public class MyWorld {
 	 * Recebe os paramentros do jogos
 	 */
 	private void createWorld() {
+		
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
 		
 		personagemActor = new CGTActor(new Vector2(330, 400),3,0, 100f,50f,25f,25f);
 		personagemActor.setSpeed(180);
-		personagemActor.setSprite(new SpriteSheet());
+		personagemActor.setSpriteSheet(spriteSheetActor);
+		spriteSheetActor.loadSpiteCGTACtor("data/SpriteCGTActor/SpriteSheet_bombeiro.png");
 		
+		/* Esse opposite nao tem animacao, seria melhor adicionar uma textura do que uma animacao 
+		 * um por um.
+		 */
 		CGTOpposite opositorCasa = new CGTOpposite(new Vector2(450,400), 300, 230, 35, 50);
-		opositorCasa.setTexture(new Texture("data/Cenario/casa_sprite_sheet.png"));
+		//opositorCasa.setTexture(new Texture("data/Cenario/casa_sprite_sheet.png"));
+		opositorCasa.setBlock(true);
+		opositorCasa.setSpriteSheet(spriteSheetOppositeCasa);
+		//Indica que a minha animacao e' um por um
+		spriteSheetOppositeCasa.loadingSpriteSheet("data/Cenario/casa_sprite_sheet.png", 1, 1);
 		listaDeOpposite.add(opositorCasa);
+		
+		
+		//Instancia o opposite fogo
+		CGTOpposite opositorFogo = new CGTOpposite(new Vector2(450,850), 100, 100, 0, 0);
+		opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
+		opositorFogo.setBlock(false);
+		opositorFogo.setSpriteSheet(spriteSheetOppositeFogo);
+		spriteSheetOppositeFogo.loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
+		listaDeOpposite.add(opositorFogo);
 		
 		CGTBonus hidrate = new CGTBonus(new Vector2(800,800),100, 100, 0, 0);
 		hidrate.setTexture(new Texture("data/Cenario/piscina.png"));
