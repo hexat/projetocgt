@@ -15,6 +15,7 @@ public class CGTBonus {
 	private float posXColider, posYColider;
 	private Rectangle rectangle;
 	private Texture texture;
+	private SpriteSheet spriteSheet;
 	//private ArrayList<BonusPolicy> policys;
 	
 	public CGTBonus(Vector2 position, float size, float colider, float posXColider, float posYColider) {
@@ -116,5 +117,17 @@ public class CGTBonus {
 	 */
 	public void setBounds(Rectangle bounds) {
 		this.bounds = bounds;
+	}
+	/**
+	 * @return the spriteSheet
+	 */
+	public SpriteSheet getSpriteSheet() {
+		return spriteSheet;
+	}
+	/**
+	 * @param spriteSheet the spriteSheet to set
+	 */
+	public void setSpriteSheet(SpriteSheet spriteSheet) {
+		this.spriteSheet = spriteSheet;
 	}
 }

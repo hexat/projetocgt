@@ -97,15 +97,17 @@ public class WorldRenderer   {
 		spriteBatch.draw(world.getBackGround(), 0, 0);
 		//Desenha todos os Opposite
 		for(int i =0;i<world.getListaDeOpposite().size();i++){
-			spriteBatch.draw(world.listaDeOpposite.get(i).getSpriteSheet().CGTAnimation(personagem), world.listaDeOpposite.get(i).getPosition().x, world.listaDeOpposite.get(i).getPosition().y, world.listaDeOpposite.get(i).getBounds().width, world.listaDeOpposite.get(i).getBounds().height);
+			spriteBatch.draw(world.getListaDeOpposite().get(i).getSpriteSheet().CGTAnimation(personagem), world.listaDeOpposite.get(i).getPosition().x, world.listaDeOpposite.get(i).getPosition().y, world.listaDeOpposite.get(i).getBounds().width, world.listaDeOpposite.get(i).getBounds().height);
 		}
 		//Desenha todos os Bonus
 		for(int i =0;i<world.getListaDeBonus().size();i++){
 			spriteBatch.draw(world.getListaDeBonus().get(i).getTexture(), world.getListaDeBonus().get(i).getPosition().x, world.getListaDeBonus().get(i).getPosition().y, world.getListaDeBonus().get(i).getBounds().width, world.getListaDeBonus().get(i).getBounds().height);
+			//spriteBatch.draw(world.listaDeBonus.get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeBonus().get(i).getPosition().x, world.getListaDeBonus().get(i).getPosition().y, world.getListaDeBonus().get(i).getBounds().width, world.getListaDeBonus().get(i).getBounds().height);
 		}
 		//Desenha todos os Projectile
 		for(int i =0;i<world.getListaDeProjectili().size();i++){
-			spriteBatch.draw(world.getListaDeProjectili().get(i).getTexture(), world.getListaDeProjectili().get(i).getPosition().x, world.getListaDeProjectili().get(i).getPosition().y, world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
+			//spriteBatch.draw(world.getListaDeProjectili().get(i).getTexture(), world.getListaDeProjectili().get(i).getPosition().x, world.getListaDeProjectili().get(i).getPosition().y, world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
+			spriteBatch.draw(world.getListaDeProjectili().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeProjectili().get(i).getPosition().x, world.getListaDeProjectili().get(i).getPosition().y, world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
 		}
 	}
 

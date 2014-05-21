@@ -25,6 +25,7 @@ public class MyWorld {
 	private SpriteSheet spriteSheetActor = new SpriteSheet();
 	private SpriteSheet spriteSheetOppositeFogo = new SpriteSheet();
 	private SpriteSheet spriteSheetOppositeCasa = new SpriteSheet();
+	private SpriteSheet spriteSheetProjectileAgua = new SpriteSheet();
 	private Texture backGround;
 	
 	public MyWorld() {
@@ -62,12 +63,15 @@ public class MyWorld {
 		spriteSheetOppositeFogo.loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
 		listaDeOpposite.add(opositorFogo);
 		
-		CGTBonus hidrate = new CGTBonus(new Vector2(800,800),100, 100, 0, 0);
-		hidrate.setTexture(new Texture("data/Cenario/piscina.png"));
+		CGTBonus hidrate = new CGTBonus(new Vector2(800,800),50, 50, 0, 0);
+		hidrate.setTexture(new Texture("data/CGTBonus/SpriteSheet_tubo.png"));
 		listaDeBonus.add(hidrate);
 		
 		CGTProjectile projetilAgua = new CGTProjectile(new Vector2(900f, 900f), 100, 100, 0, 0);
-		projetilAgua.setTexture(new Texture("data/CGTProjectile/SpriteSheet_agua.png"));
+		//projetilAgua.setTexture(new Texture("data/CGTProjectile/SpriteSheet_agua.png"));
+		projetilAgua.setSpriteSheet(spriteSheetProjectileAgua);
+		//Indica que a minha animacao e' um por um
+		spriteSheetProjectileAgua.loadingSpriteSheet("data/CGTProjectile/SpriteSheet_agua.png", 2, 2);
 		listaDeProjectile.add(projetilAgua);
 	}
 

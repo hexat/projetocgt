@@ -19,6 +19,7 @@ public class CGTProjectile {
 	private float posXColider, posYColider;
 	private Rectangle bounds= new Rectangle();
 	private Rectangle rectangle;
+	private SpriteSheet spriteSheet;
 	/***
 	 * Recebe uma posicao inicial
 	 * @param position
@@ -158,5 +159,17 @@ public class CGTProjectile {
 	 */
 	public void setBounds(Rectangle bounds) {
 		this.bounds = bounds;
+	}
+	/**
+	 * @return the spriteSheet
+	 */
+	public SpriteSheet getSpriteSheet() {
+		return spriteSheet;
+	}
+	/**
+	 * @param spriteSheet the spriteSheet to set
+	 */
+	public void setSpriteSheet(SpriteSheet spriteSheet) {
+		this.spriteSheet = spriteSheet;
 	}
 }
