@@ -162,7 +162,7 @@ public class WorldController {
 		if (keys.get(Keys.UP)) {
 			// Verifica se o personagem pode andar
 			if (renderer.isColision()) {
-				bob.getVelocity().y = 0.0f;
+				//bob.setPosition(renderer.getPosAnterior());
 				bob.setState(State.LOOKUP);
 			} else {
 				// O personagem esta olhando para a cima
@@ -177,7 +177,7 @@ public class WorldController {
 		if (keys.get(Keys.DOWN)) {
 			// Verifica se o personagem pode andar
 			if (renderer.isColision() ) {
-				bob.getVelocity().y = 0.0f;
+				//bob.setPosition(renderer.getPosAnterior());
 				bob.setState(State.LOOKDOWN);
 			} else {
 				if (bob.getVelocity().y!=0) {
@@ -194,7 +194,7 @@ public class WorldController {
 		if (keys.get(Keys.LEFT)) {
 			// Verifica se o personagem pode andar
 			if (renderer.isColision()) {
-				bob.getVelocity().x = 0.0f;
+				//bob.setPosition(renderer.getPosAnterior());
 				bob.setState(State.LOOKLEFT);
 			} else {
 				if (bob.getVelocity().x != 0) {
@@ -207,7 +207,7 @@ public class WorldController {
 		if (keys.get(Keys.RIGHT)) {
 			// Verifica se o personagem pode andar
 			if (renderer.isColision()) {
-				bob.getVelocity().x = 0.0f;
+				//bob.setPosition(renderer.getPosAnterior());
 				bob.setState(State.LOOKRIGHT);
 			} else {
 				if (bob.getVelocity().x!=0) {

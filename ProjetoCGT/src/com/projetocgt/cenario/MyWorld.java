@@ -38,7 +38,7 @@ public class MyWorld {
 		
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
 		
-		personagemActor = new CGTActor(new Vector2(330, 400),3,0, 100f,50f,25f,25f);
+		personagemActor = new CGTActor(new Vector2(330, 400),3,0, 100f,80f,10f,10f);
 		personagemActor.setSpeed(180);
 		personagemActor.setSpriteSheet(spriteSheetActor);
 		spriteSheetActor.loadSpiteCGTACtor("data/SpriteCGTActor/SpriteSheet_bombeiro.png");

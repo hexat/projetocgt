@@ -33,7 +33,7 @@ public class WorldRenderer   {
 	private int width;					
 	private int height;					
 	SpriteSheet spriteBob = new SpriteSheet();
-	private Vector2 pos=new Vector2();
+	private Vector2 posAnterior=new Vector2();
 	
 	
 	public float getCAMERA_HEIGHT(){
@@ -66,6 +66,7 @@ public class WorldRenderer   {
 	 * Responsavel por desenhar todos os objetos na tela.
 	 */
 	public void render( ) {
+		isColision();
 		this.camera.update(); 			//Atualiza a tela
 		spriteBatch.setProjectionMatrix(camera.combined); //Possibilita a camera acompanhar o personagem
 		spriteBatch.begin();
@@ -152,7 +153,42 @@ public class WorldRenderer   {
 		}
 		debugRenderer.end();
 	}
-
+	/**
+	 * Utilizado para verificar se o CGTACtor colidiu com algum Bloqueante
+	 * @return the colisao
+	 */
+	public boolean isColision() {
+		boolean colisao = false;
+		
+		//Verifica se colidiu com algum Opposite
+		for(int i=0; i < world.getListaDeOpposite().size(); i++){
+			if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeOpposite().get(i).isBlock())
+				colisao=true;
+		}
+		
+		//Verifica se colidiu com algum Bonus
+		for(int i=0; i < world.getListaDeBonus().size(); i++){
+			if(world.getListaDeBonus().get(i).getRectangle().overlaps(personagem.getRectPer()))
+				colisao=true;
+		}
+		
+		//Verifica se colidiu com algum Projectile
+		for(int i=0; i < world.getListaDeProjectili().size(); i++){
+			if(world.getListaDeProjectili().get(i).getRectangle().overlaps(personagem.getRectPer()))
+				colisao=true;
+		}
+		
+		if(!colisao){
+			posAnterior.x = personagem.getPosition().x;
+			posAnterior.y = personagem.getPosition().y;
+		}else{
+			personagem.getVelocity().x=0;
+			personagem.getVelocity().y=0;
+			personagem.setPosition(posAnterior);
+			colisao = false;
+		}
+		return colisao;
+	}
 	/**
 	 * @return the cam
 	 */
@@ -168,38 +204,9 @@ public class WorldRenderer   {
 	}
 
 	/**
-	 * Utilizado para verificar se o CGTACtor colidiu com algum Bloqueante
-	 * @return the colisao
+	 * @return the posAnterior
 	 */
-	public boolean isColision() {
-		boolean colisao = false;
-		//Verifica se colidiu com algum Opposite
-		for(int i=0; i < world.getListaDeOpposite().size(); i++){
-			if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeOpposite().get(i).isBlock())
-				colisao=true;
-		}
-		
-		//Verifica se colidiu com algum Bonus
-		for(int i=0; i < world.getListaDeBonus().size(); i++){
-			if(world.getListaDeBonus().get(i).getRectangle().overlaps(personagem.getRectPer()))
-				colisao=true;
-		}
-		//Verifica se colidiu com algum Projectile
-		for(int i=0; i < world.getListaDeProjectili().size(); i++){
-			if(world.getListaDeProjectili().get(i).getRectangle().overlaps(personagem.getRectPer()))
-				colisao=true;
-		}
-		
-		if(!colisao){
-			pos.x = personagem.getPosition().x;
-			pos.y = personagem.getPosition().y;
-		}else{
-			personagem.getVelocity().x=0;
-			personagem.getVelocity().y=0;
-			personagem.setPosition(pos);
-			colisao = false;
-		}
-		
-		return colisao;
+	public Vector2 getPosAnterior() {
+		return posAnterior;
 	}
 }
