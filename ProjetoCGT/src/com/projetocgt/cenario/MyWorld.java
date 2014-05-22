@@ -40,6 +40,7 @@ public class MyWorld {
 		
 		personagemActor = new CGTActor(new Vector2(330, 400), 100f, 100f, 80f, 10f, 10f);
 		personagemActor.setSpeed(180);
+		personagemActor.setLife(3);
 		personagemActor.setSpriteSheet(spriteSheetActor);
 		spriteSheetActor.setLinhaDoSpriteUp(3);
 		spriteSheetActor.setLinhaDoSpriteDown(2);
@@ -61,7 +62,8 @@ public class MyWorld {
 		//Instancia o opposite fogo
 		CGTOpposite opositorFogo = new CGTOpposite(new Vector2(450,850), 100, 50, 100, 0, 0);
 		//opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
-		opositorFogo.setBlock(false);
+		opositorFogo.setBlock(true);
+		opositorFogo.setDamage(1);
 		opositorFogo.setSpriteSheet(spriteSheetOppositeFogo);
 		spriteSheetOppositeFogo.loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
 		listaDeOpposite.add(opositorFogo);
@@ -70,11 +72,13 @@ public class MyWorld {
 		hidrate.setTexture(new Texture("data/CGTBonus/SpriteSheet_tubo.png"));
 		listaDeBonus.add(hidrate);
 		
-		CGTProjectile projetilAgua = new CGTProjectile(new Vector2(900f, 900f), 100, 100, 100, 0, 0);
+		CGTProjectile projetilAgua = new CGTProjectile(new Vector2(900f, 900f), 30, 30, 30, 0, 0);
 		//projetilAgua.setTexture(new Texture("data/CGTProjectile/SpriteSheet_agua.png"));
 		projetilAgua.setSpriteSheet(spriteSheetProjectileAgua);
 		//Indica que a minha animacao e' um por um
+		projetilAgua.setActionFire("A");
 		spriteSheetProjectileAgua.loadingSpriteSheet("data/CGTProjectile/SpriteSheet_agua.png", 2, 2);
+		
 		listaDeProjectile.add(projetilAgua);
 	}
 

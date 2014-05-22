@@ -95,9 +95,14 @@ public class WorldController {
 	}
 
 	public void firePressed() {
-		keys.get(keys.put(Keys.FIRE, false));
-		//Habilita o loop da animacao
-		actorAnimation.setLoop(true);
+		keys.get(keys.put(Keys.FIRE, true));
+		for(int i=0;i<world.getListaDeProjectili().size();i++){
+			if(world.getListaDeProjectili().get(i).getActionFire() == "A"){
+				world.getListaDeProjectili().get(i).setPosition(bob.getPosition());
+				world.getListaDeProjectili().get(i).setFlagAtivar(true);
+			}
+		}
+		
 	}
 
 	// Funciona na subida do botao
@@ -134,7 +139,9 @@ public class WorldController {
 	public void fireReleased() {
 		keys.get(keys.put(Keys.FIRE, false));
 		//Desabilita o loop da animacao
-		actorAnimation.setLoop(false);
+		for(int i=0;i<world.getListaDeProjectili().size();i++){
+			world.getListaDeProjectili().get(i).setFlagAtivar(false);
+		}
 	}
 
 

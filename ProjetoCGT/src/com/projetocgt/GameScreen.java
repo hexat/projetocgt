@@ -94,6 +94,9 @@ public class GameScreen implements Screen, InputProcessor {
 		if (keycode == Keys.DOWN){
 			controller.downPressed();
 		}
+		if (keycode == Keys.A){
+			controller.firePressed();
+		}
 		return true;
 	}
 
@@ -109,6 +112,8 @@ public class GameScreen implements Screen, InputProcessor {
 			controller.upReleased();
 		if (keycode == Keys.DOWN)
 			controller.downReleased();
+		if (keycode == Keys.A)
+			controller.fireReleased();
 		return true;
 	}
 

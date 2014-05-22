@@ -5,12 +5,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class CGTProjectile {
-	//private ActionFire action;
+	private boolean flagAtivar;
+	private String actionFire;
 	private int numFiresForOneInput;
 	private int damage;
 	private int interval;
 	private int ammo;
-	//private Position positionRetativeToGameObject;
+	private Vector2 positionRetativeToGameObject;
 	private int velocityInitial;
 	private float angle;
 	//private LabelID labelID;
@@ -171,5 +172,42 @@ public class CGTProjectile {
 	 */
 	public void setSpriteSheet(SpriteSheet spriteSheet) {
 		this.spriteSheet = spriteSheet;
+	}
+	/**
+	 * @return the positionRetativeToGameObject
+	 */
+	public Vector2 getPositionRetativeToGameObject() {
+		return positionRetativeToGameObject;
+	}
+	/**
+	 * @param positionRetativeToGameObject the positionRetativeToGameObject to set
+	 */
+	public void setPositionRetativeToGameObject(
+			Vector2 positionRetativeToGameObject) {
+		this.positionRetativeToGameObject = positionRetativeToGameObject;
+	}
+	/**
+	 * @return the actionFire
+	 */
+	public String getActionFire() {
+		return actionFire;
+	}
+	/**
+	 * @param actionFire the actionFire to set
+	 */
+	public void setActionFire(String actionFire) {
+		this.actionFire = actionFire;
+	}
+	/**
+	 * @return the flagAtivar
+	 */
+	public boolean isFlagAtivar() {
+		return flagAtivar;
+	}
+	/**
+	 * @param flagAtivar the flagAtivar to set
+	 */
+	public void setFlagAtivar(boolean flagAtivar) {
+		this.flagAtivar = flagAtivar;
 	}
 }

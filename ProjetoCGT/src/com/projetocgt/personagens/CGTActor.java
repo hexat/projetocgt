@@ -6,17 +6,14 @@ import com.badlogic.gdx.math.Vector2;
  * cada personagem sofre uma acao.
  * @autor Bruno Roberto
  */
-public class CGTActor {
+public class CGTActor extends CGTGameObject{
 
 	public enum State {
 		IDLE, WALKING, JUMPING, DYING, LOOKUP, LOOKDOWN, LOOKLEFT, LOOKRIGHT 
 	}
-
 	public enum DirectionPolicy {
 		FOUR_DIRECTION 
 	}
-	
-	
 	private float stateTime = 0;
 	private float speed = 0f;				//Velocidade do personagem
 	private Vector2 position = new Vector2();		//Vetor que informa a posicao do personagem
@@ -25,7 +22,7 @@ public class CGTActor {
 	private State state = State.IDLE;				//
 	private boolean facingLeft = true;				
 	private Rectangle rectPer;
-	float posXColider, posYColider; 
+	private float posXColider, posYColider; 
 	private SpriteSheet spriteSheet;
 	private DirectionPolicy directionPolicy;
 	private int jumpDefault;

@@ -53,7 +53,7 @@ public class WorldRenderer   {
 	 * Responsavel por desenhar todos os objetos na tela.
 	 */
 	public void render( ) {
-		isColision();
+		//isColision();
 		this.camera.update(); 			//Atualiza a tela
 		spriteBatch.setProjectionMatrix(camera.combined); //Possibilita a camera acompanhar o personagem
 		spriteBatch.begin();
@@ -95,7 +95,9 @@ public class WorldRenderer   {
 		//Desenha todos os Projectile
 		for(int i =0;i<world.getListaDeProjectili().size();i++){
 			//spriteBatch.draw(world.getListaDeProjectili().get(i).getTexture(), world.getListaDeProjectili().get(i).getPosition().x, world.getListaDeProjectili().get(i).getPosition().y, world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
-			spriteBatch.draw(world.getListaDeProjectili().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeProjectili().get(i).getPosition().x, world.getListaDeProjectili().get(i).getPosition().y, world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
+			if(world.getListaDeProjectili().get(i).isFlagAtivar())
+				//TODO aqui sera as variacoes do projectile
+				spriteBatch.draw(world.getListaDeProjectili().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeProjectili().get(i).getPosition().x, world.getListaDeProjectili().get(i).getPosition().y, world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
 		}
 	}
 
@@ -136,9 +138,18 @@ public class WorldRenderer   {
 		}
 		//Carrega o debug para todos os Projectile
 		for(int i =0;i<world.getListaDeProjectili().size();i++){
-			debugRenderer.rect(world.getListaDeProjectili().get(i).getRectangle().x, world.getListaDeProjectili().get(i).getRectangle().y, world.getListaDeProjectili().get(i).getRectangle().getWidth(), world.getListaDeProjectili().get(i).getRectangle().getHeight());
+			if(world.getListaDeProjectili().get(i).isFlagAtivar())
+				debugRenderer.rect(world.getListaDeProjectili().get(i).getRectangle().x, world.getListaDeProjectili().get(i).getRectangle().y, world.getListaDeProjectili().get(i).getRectangle().getWidth(), world.getListaDeProjectili().get(i).getRectangle().getHeight());
 		}
 		debugRenderer.end();
+	}
+	void damageCGTActor(CGTActor personagem){
+		for(int i=0; i < world.getListaDeOpposite().size(); i++){
+			if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectPer())){
+				personagem.setLife(personagem.getLife()-world.getListaDeOpposite().get(i).getDamage());
+				System.out.println(personagem.getLife());
+			}		
+		}
 	}
 	/**
 	 * Utilizado para verificar se o CGTACtor colidiu com algum Bloqueante
@@ -146,11 +157,12 @@ public class WorldRenderer   {
 	 */
 	public boolean isColision() {
 		boolean colisao = false;
-		
+		damageCGTActor(personagem);
 		//Verifica se colidiu com algum Opposite
 		for(int i=0; i < world.getListaDeOpposite().size(); i++){
 			if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeOpposite().get(i).isBlock())
 				colisao=true;
+			
 		}
 		
 		//Verifica se colidiu com algum Bonus
@@ -160,10 +172,10 @@ public class WorldRenderer   {
 		}
 		
 		//Verifica se colidiu com algum Projectile
-		for(int i=0; i < world.getListaDeProjectili().size(); i++){
+		/*for(int i=0; i < world.getListaDeProjectili().size(); i++){
 			if(world.getListaDeProjectili().get(i).getRectangle().overlaps(personagem.getRectPer()))
 				colisao=true;
-		}
+		}*/
 		
 		if(!colisao){
 			posAnterior.x = personagem.getPosition().x;
