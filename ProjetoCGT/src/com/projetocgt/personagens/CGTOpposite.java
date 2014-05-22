@@ -1,6 +1,5 @@
 package com.projetocgt.personagens;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -11,7 +10,6 @@ public class CGTOpposite {
 	private int damage;
 	private CGTProjectile fire;
 	private SpriteSheet spriteSheet;
-	private Texture texture;
 	private Vector2 position;
 	private Rectangle bounds = new Rectangle();		// Area que sera' desenhado o personagem
 	private float posXColider, posYColider; 
@@ -92,18 +90,6 @@ public class CGTOpposite {
 	 */
 	public void setSpriteSheet(SpriteSheet spriteSheet) {
 		this.spriteSheet = spriteSheet;
-	}
-	/**
-	 * @return the textura
-	 */
-	public Texture getTexture() {
-		return texture;
-	}
-	/**
-	 * @param textura the textura to set
-	 */
-	public void setTexture(Texture textura) {
-		this.texture = textura;
 	}
 	/**
 	 * @return the position

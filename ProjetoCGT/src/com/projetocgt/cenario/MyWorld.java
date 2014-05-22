@@ -60,7 +60,7 @@ public class MyWorld {
 		
 		//Instancia o opposite fogo
 		CGTOpposite opositorFogo = new CGTOpposite(new Vector2(450,850), 100, 50, 100, 0, 0);
-		opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
+		//opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
 		opositorFogo.setBlock(false);
 		opositorFogo.setSpriteSheet(spriteSheetOppositeFogo);
 		spriteSheetOppositeFogo.loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);

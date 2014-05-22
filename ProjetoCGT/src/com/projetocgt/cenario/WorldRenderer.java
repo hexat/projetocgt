@@ -69,9 +69,9 @@ public class WorldRenderer   {
 	public void dispose(){
 		world.getBackGround().dispose();
 		spriteBatch.dispose();
-		for(int i =0;i<world.getListaDeOpposite().size();i++){
+		/*for(int i =0;i<world.getListaDeOpposite().size();i++){
 			world.getListaDeOpposite().get(i).getTexture().dispose();
-		}
+		}*/
 		for(int i =0;i<world.getListaDeBonus().size();i++){
 			world.getListaDeBonus().get(i).getTexture().dispose();
 		}
