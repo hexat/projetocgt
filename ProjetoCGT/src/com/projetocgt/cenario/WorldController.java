@@ -222,7 +222,6 @@ public class WorldController {
 				|| (!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) {
 			//bob.setState(State.IDLE);
 			// acceleration is 0 on the x
-			bob.getAcceleration().x = 0;
 			// horizontal speed is 0
 			bob.getVelocity().x = 0;
 		}

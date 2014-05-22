@@ -38,15 +38,19 @@ public class MyWorld {
 		
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
 		
-		personagemActor = new CGTActor(new Vector2(330, 400),3,0, 100f,80f,10f,10f);
+		personagemActor = new CGTActor(new Vector2(330, 400), 100f, 100f, 80f, 10f, 10f);
 		personagemActor.setSpeed(180);
 		personagemActor.setSpriteSheet(spriteSheetActor);
-		spriteSheetActor.loadSpiteCGTACtor("data/SpriteCGTActor/SpriteSheet_bombeiro.png");
+		spriteSheetActor.setLinhaDoSpriteUp(3);
+		spriteSheetActor.setLinhaDoSpriteDown(2);
+		spriteSheetActor.setLinhaDoSpriteLeft(1);
+		spriteSheetActor.setLinhaDoSpriteRight(1);
+		spriteSheetActor.loadSpiteCGTACtor("data/SpriteCGTActor/SpriteSheet_bombeiro.png",5,3);
 		
 		/* Esse opposite nao tem animacao, seria melhor adicionar uma textura do que uma animacao 
 		 * um por um.
 		 */
-		CGTOpposite opositorCasa = new CGTOpposite(new Vector2(450,400), 300, 230, 35, 50);
+		CGTOpposite opositorCasa = new CGTOpposite(new Vector2(450,400), 300, 200, 230, 35, 50);
 		//opositorCasa.setTexture(new Texture("data/Cenario/casa_sprite_sheet.png"));
 		opositorCasa.setBlock(true);
 		opositorCasa.setSpriteSheet(spriteSheetOppositeCasa);
@@ -55,18 +59,18 @@ public class MyWorld {
 		listaDeOpposite.add(opositorCasa);
 		
 		//Instancia o opposite fogo
-		CGTOpposite opositorFogo = new CGTOpposite(new Vector2(450,850), 100, 100, 0, 0);
+		CGTOpposite opositorFogo = new CGTOpposite(new Vector2(450,850), 100, 50, 100, 0, 0);
 		opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
 		opositorFogo.setBlock(false);
 		opositorFogo.setSpriteSheet(spriteSheetOppositeFogo);
 		spriteSheetOppositeFogo.loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
 		listaDeOpposite.add(opositorFogo);
 		
-		CGTBonus hidrate = new CGTBonus(new Vector2(800,800),50, 50, 0, 0);
+		CGTBonus hidrate = new CGTBonus(new Vector2(800,800),50, 50, 50, 0, 0);
 		hidrate.setTexture(new Texture("data/CGTBonus/SpriteSheet_tubo.png"));
 		listaDeBonus.add(hidrate);
 		
-		CGTProjectile projetilAgua = new CGTProjectile(new Vector2(900f, 900f), 100, 100, 0, 0);
+		CGTProjectile projetilAgua = new CGTProjectile(new Vector2(900f, 900f), 100, 100, 100, 0, 0);
 		//projetilAgua.setTexture(new Texture("data/CGTProjectile/SpriteSheet_agua.png"));
 		projetilAgua.setSpriteSheet(spriteSheetProjectileAgua);
 		//Indica que a minha animacao e' um por um

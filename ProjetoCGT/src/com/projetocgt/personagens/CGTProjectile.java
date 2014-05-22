@@ -24,10 +24,10 @@ public class CGTProjectile {
 	 * Recebe uma posicao inicial
 	 * @param position
 	 */
-	public CGTProjectile(Vector2 position,float size, float colider, float posXColider, float posYColider){
+	public CGTProjectile(Vector2 position, float width, float height, float colider, float posXColider, float posYColider){
 		this.setPosition(position);		//Posicao inicial
-		this.bounds.height=size;
-		this.bounds.width=size;
+		this.bounds.height=width;
+		this.bounds.width=height;
 		this.posXColider=posXColider;
 		this.posYColider=posYColider;
 		this.setRectangle(new Rectangle(position.x+this.posXColider,position.y+this.posYColider,colider,colider));

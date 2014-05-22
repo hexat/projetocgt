@@ -16,12 +16,10 @@ public class SpriteSheet {
 	// Animation
 	private static final float RUNNING_FRAME_DURATION = 0.08f;
 	private TextureRegion bobFrame;
-	private int FRAME_COLS = 3; 
-	private int FRAME_ROWS = 5; 
-	private int linhaDoSpriteUp = 3; 
-	private int linhaDoSpriteDown = 2; 
-	private int linhaDoSpriteLeft = 1; 
-	private int linhaDoSpriteRight = 1; 
+	private int linhaDoSpriteUp; 
+	private int linhaDoSpriteDown; 
+	private int linhaDoSpriteLeft; 
+	private int linhaDoSpriteRight; 
 	private Texture walkSheet;
 	private TextureRegion[] walkFramesUp;
 	private TextureRegion[] walkFramesDown;
@@ -49,8 +47,10 @@ public class SpriteSheet {
 	 * Utilizada para carregar o sprite sheet 
 	 * @param caminho
 	 *            Informa qual o caminho do arquivo
+	 *        FRAME_COLS
+	 *        		Informa o numero de colunas do Sprite Sheet  
 	 */
-	public void loadSpiteCGTACtor(String caminho) {
+	public void loadSpiteCGTACtor(String caminho, int FRAME_ROWS, int FRAME_COLS) {
 		walkSheet = new Texture(Gdx.files.internal(caminho));
 		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
 				walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()

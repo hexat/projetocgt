@@ -17,10 +17,10 @@ public class CGTOpposite {
 	private float posXColider, posYColider; 
 	private Rectangle rectangle;
 	//private ArrayList behaviors;
-	public CGTOpposite(Vector2 position, float size, float colider, float posXColider, float posYColider ){
+	public CGTOpposite(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ){
 		this.setPosition(position);		//Posicao inicial
-		this.bounds.height=size;
-		this.bounds.width=size;
+		this.bounds.height=height;
+		this.bounds.width=width;
 		this.posXColider=posXColider;
 		this.posYColider=posYColider;
 		this.setRectangle(new Rectangle(position.x+this.posXColider,position.y+this.posYColider,colider,colider));

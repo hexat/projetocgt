@@ -21,10 +21,6 @@ public class WorldRenderer   {
 	private MyWorld world;			//Declara a variavel do tipo World que sera passada de parametro no renderer 
 	private OrthographicCamera camera;	//Declara a variavel da camera
 	private CGTActor personagem;
-	// Inicializa uma constante relacionado a quantidade de blocos na horizontal que sera visto pela camera
-	private float CAMERA_WIDTH;
-	// Inicializa uma constante relacionado a quantidade de blocos na vertical que sera visto pela camera
-	private float CAMERA_HEIGHT;
 		
 	/** for debug rendering **/
 	ShapeRenderer debugRenderer = new ShapeRenderer();
@@ -34,15 +30,6 @@ public class WorldRenderer   {
 	private int height;					
 	SpriteSheet spriteBob = new SpriteSheet();
 	private Vector2 posAnterior=new Vector2();
-	
-	
-	public float getCAMERA_HEIGHT(){
-		return this.CAMERA_HEIGHT;
-	}
-	
-	public float getCAMERA_WIDTH(){
-		return this.CAMERA_HEIGHT;
-	}
 	
 	//Sera chamado cada vez que a tela é redimensionada e calcula as unidades em pixels.
 	public void setSize (int w, int h) {

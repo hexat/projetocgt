@@ -19,32 +19,26 @@ public class CGTActor {
 	
 	private float stateTime = 0;
 	private float speed = 0f;				//Velocidade do personagem
-	private float VelocityJump = 1f;		//Velocidade do pulo do personagem
-	private float size; 			//Metade de uma unidade
 	private Vector2 position = new Vector2();		//Vetor que informa a posicao do personagem
-	private Vector2 acceleration = new Vector2();	//Vetor que informa a aceleracao do personagem
 	private Vector2 velocity = new Vector2();		//Vetor que informa a velocidade do personagem
 	private Rectangle bounds = new Rectangle();		// Area que sera' desenhado o personagem
 	private State state = State.IDLE;				//
 	private boolean facingLeft = true;				
-	private int life;
-	private int  bonus; 									//Utilizada para verificar o numero de bonus.
 	private Rectangle rectPer;
 	float posXColider, posYColider; 
 	private SpriteSheet spriteSheet;
 	private DirectionPolicy directionPolicy;
-	
+	private int jumpDefault;
+	private int fireDefault;
 	/**
 	 * Construtor padrao que recebe uma posicao inicial, um life e verifica se o personagem e'
 	 * um opositor ou não.
 	 * @param position,life,opositor,bonus,size, colider
 	 */
-	public CGTActor(Vector2 position, int life,int bonus,float size,float colider,float posXColider,float posYColider ) {
-		this.bonus=bonus;				//Numero de bonus inicial do personagem
-		this.life=life;	
+	public CGTActor(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ) {
 		this.position = position;		//Posicao inicial
-		this.bounds.height = size;		//Altura do personagem (Altura da area onde o personagem sera desenhado)
-		this.bounds.width =  size;		//Largura do personagem (Largura da area onde o personagem sera desenhado)
+		this.bounds.height = width;		//Altura do personagem (Altura da area onde o personagem sera desenhado)
+		this.bounds.width =  height;		//Largura do personagem (Largura da area onde o personagem sera desenhado)
 		this.posXColider=posXColider;
 		this.posYColider=posYColider;
 		this.rectPer = new Rectangle(position.x+this.posXColider,position.y+this.posYColider,colider,colider);
@@ -97,15 +91,6 @@ public class CGTActor {
 		this.bounds = bounds;
 	}
 
-	public Vector2 getAcceleration() {
-		return acceleration;
-		
-	}
-
-	public void setAcceleration(Vector2 acceleration) {
-		this.acceleration = acceleration;
-	}
-
 	public Vector2 getVelocity() {
 		return velocity;
 	}
@@ -137,47 +122,9 @@ public class CGTActor {
 	public void setStateTime(float stateTime) {
 		this.stateTime = stateTime;
 	}
-
-	public int getLife() {
-		return life;
-	}
-
-	public void setLife(int life) {
-		this.life = life;
-	}
-	
-	public int getBonus() {
-		return bonus;
-	}
-
-	public void setBonus(int bonus) {
-		this.bonus = bonus;
-	}
-	
-	/***
-	 * 
-	 * @return retornao valor do bonus menos um
-	 */
-	public int tiraUmDoLife(){
-		return this.life--;
-	}
 	
 	public void pare(){
 		this.getVelocity().x = 0.0f;
-	}
-	
-	/**
-	 * @return the size
-	 */
-	public float getSize() {
-		return size;
-	}
-
-	/**
-	 * @param size the size to set
-	 */
-	public void setSize(float size) {
-		this.size = size;
 	}
 
 	/**
@@ -222,17 +169,30 @@ public class CGTActor {
 	}
 
 	/**
-	 * @return the jUMP_VELOCITY
+	 * @return the jumpDefault
 	 */
-	public float getJUMP_VELOCITY() {
-		return VelocityJump;
+	public int getJumpDefault() {
+		return jumpDefault;
 	}
 
 	/**
-	 * @param jUMP_VELOCITY the jUMP_VELOCITY to set
+	 * @param jumpDefault the jumpDefault to set
 	 */
-	public void setJUMP_VELOCITY(float jUMP_VELOCITY) {
-		VelocityJump = jUMP_VELOCITY;
+	public void setJumpDefault(int jumpDefault) {
+		this.jumpDefault = jumpDefault;
 	}
-	
+
+	/**
+	 * @return the fireDefault
+	 */
+	public int getFireDefault() {
+		return fireDefault;
+	}
+
+	/**
+	 * @param fireDefault the fireDefault to set
+	 */
+	public void setFireDefault(int fireDefault) {
+		this.fireDefault = fireDefault;
+	}
 }
