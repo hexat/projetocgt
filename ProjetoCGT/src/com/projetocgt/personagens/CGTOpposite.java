@@ -14,7 +14,16 @@ public class CGTOpposite {
 	private Rectangle bounds = new Rectangle();		// Area que sera' desenhado o personagem
 	private float posXColider, posYColider; 
 	private Rectangle rectangle;
-	//private ArrayList behaviors;
+
+	/**
+	 * 
+	 * @param position posicao na tela
+	 * @param width largura do objecto
+	 * @param height altura do objecto
+	 * @param colider 
+	 * @param posXColider
+	 * @param posYColider
+	 */
 	public CGTOpposite(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ){
 		this.setPosition(position);		//Posicao inicial
 		this.bounds.height=height;

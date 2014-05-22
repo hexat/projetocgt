@@ -28,7 +28,6 @@ public class WorldRenderer   {
 	private boolean debug = false; 		// Variavel que ira ativar o debug
 	private int width;					
 	private int height;					
-	SpriteSheet spriteBob = new SpriteSheet();
 	private Vector2 posAnterior=new Vector2();
 	
 	//Sera chamado cada vez que a tela é redimensionada e calcula as unidades em pixels.
@@ -53,7 +52,7 @@ public class WorldRenderer   {
 	 * Responsavel por desenhar todos os objetos na tela.
 	 */
 	public void render( ) {
-		//isColision();
+		//isColision(); // ATENCAO
 		this.camera.update(); 			//Atualiza a tela
 		spriteBatch.setProjectionMatrix(camera.combined); //Possibilita a camera acompanhar o personagem
 		spriteBatch.begin();
