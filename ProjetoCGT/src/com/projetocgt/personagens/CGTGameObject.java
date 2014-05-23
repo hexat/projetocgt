@@ -1,11 +1,13 @@
 package com.projetocgt.personagens;
 
+import com.badlogic.gdx.math.Vector2;
+
 public abstract class CGTGameObject {
 	private SpriteSheet sprite;
 	//private Sound sound;
 	//private Sound soundDie;
 	//private Sound soundDamage;
-	//private Position position;
+	private Vector2 position;
 	private int life;
 	private SpriteSheet spriteSheet;
 	/**
@@ -43,5 +45,17 @@ public abstract class CGTGameObject {
 	 */
 	public void setSpriteSheet(SpriteSheet spriteSheet) {
 		this.spriteSheet = spriteSheet;
+	}
+	/**
+	 * @return the position
+	 */
+	public Vector2 getPosition() {
+		return position;
+	}
+	/**
+	 * @param position the position to set
+	 */
+	public void setPosition(Vector2 position) {
+		this.position = position;
 	}
 }

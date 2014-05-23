@@ -3,7 +3,7 @@ package com.projetocgt.personagens;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class CGTOpposite {
+public class CGTOpposite extends CGTGameObject{
 	//private AIPolicy move;
 	private boolean block;
 	private boolean destroyable;

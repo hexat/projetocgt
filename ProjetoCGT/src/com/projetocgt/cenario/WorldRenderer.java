@@ -67,9 +67,9 @@ public class WorldRenderer   {
 	 */
 	public void dispose(){
 		world.getBackGround().dispose();
-		spriteBatch.dispose();
 		/*for(int i =0;i<world.getListaDeOpposite().size();i++){
-			world.getListaDeOpposite().get(i).getTexture().dispose();
+			//world.getListaDeOpposite().get(i).getTexture().dispose();
+			//world.getListaDeProjectili().get(i).getSpriteSheet().CGTAnimation(personagem);
 		}*/
 		for(int i =0;i<world.getListaDeBonus().size();i++){
 			world.getListaDeBonus().get(i).getTexture().dispose();
@@ -77,14 +77,18 @@ public class WorldRenderer   {
 		for(int i =0;i<world.getListaDeProjectili().size();i++){
 			world.getListaDeProjectili().get(i).getTexture().dispose();
 		}
+		spriteBatch.dispose();
 	}
-
+	/***
+	 * Desenha os obejtos na cena, backGroud, CGTOpposite, CGTBonus e
+	 * CGTProjectle
+	 */
 	private void drawGameObjects() {
 		spriteBatch.draw(world.getBackGround(), 0, 0);
 		//Desenha todos os Opposite
 		for(int i =0;i<world.getListaDeOpposite().size();i++){
-			//spriteBatch.draw(world.getListaDeOpposite().get(i).getTexture(), world.listaDeOpposite.get(i).getPosition().x, world.listaDeOpposite.get(i).getPosition().y, world.listaDeOpposite.get(i).getBounds().width, world.listaDeOpposite.get(i).getBounds().height);
-			spriteBatch.draw(world.getListaDeOpposite().get(i).getSpriteSheet().CGTAnimation(personagem), world.listaDeOpposite.get(i).getPosition().x, world.listaDeOpposite.get(i).getPosition().y, world.listaDeOpposite.get(i).getBounds().width, world.listaDeOpposite.get(i).getBounds().height);
+			if(world.getListaDeOpposite().get(i).getLife()>=0)
+				spriteBatch.draw(world.getListaDeOpposite().get(i).getSpriteSheet().CGTAnimation(personagem), world.listaDeOpposite.get(i).getPosition().x, world.listaDeOpposite.get(i).getPosition().y, world.listaDeOpposite.get(i).getBounds().width, world.listaDeOpposite.get(i).getBounds().height);
 		}
 		//Desenha todos os Bonus
 		for(int i =0;i<world.getListaDeBonus().size();i++){
@@ -94,9 +98,14 @@ public class WorldRenderer   {
 		//Desenha todos os Projectile
 		for(int i =0;i<world.getListaDeProjectili().size();i++){
 			//spriteBatch.draw(world.getListaDeProjectili().get(i).getTexture(), world.getListaDeProjectili().get(i).getPosition().x, world.getListaDeProjectili().get(i).getPosition().y, world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
-			if(world.getListaDeProjectili().get(i).isFlagAtivar())
+			if(world.getListaDeProjectili().get(i).isFlagAtivar()){
 				//TODO aqui sera as variacoes do projectile
 				spriteBatch.draw(world.getListaDeProjectili().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeProjectili().get(i).getPosition().x, world.getListaDeProjectili().get(i).getPosition().y, world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
+				for(int j=0; j < world.getListaDeOpposite().size(); j++){
+					if(world.getListaDeOpposite().get(j).getRectangle().overlaps(world.getListaDeProjectili().get(i).getRectangle()))
+						world.getListaDeOpposite().get(j).setLife(world.getListaDeOpposite().get(j).getLife()-1);
+				}
+			}
 		}
 	}
 
@@ -122,8 +131,10 @@ public class WorldRenderer   {
 			
 		//Carrega o debug para todos os Opposite
 		for(int i=0;i<world.getListaDeOpposite().size();i++){				
+			if(world.getListaDeOpposite().get(i).getLife()>=0){
 			debugRenderer.setColor(new Color(0, 1, 0, 1));
 			debugRenderer.rect(world.getListaDeOpposite().get(i).getRectangle().x, world.getListaDeOpposite().get(i).getRectangle().y, world.getListaDeOpposite().get(i).getRectangle().getWidth(), world.getListaDeOpposite().get(i).getRectangle().getHeight());
+			}
 		}
 		//Carrega o debug para todos os Actor
 		for(int i=0;i<world.getListaActor().size();i++){				
@@ -147,6 +158,8 @@ public class WorldRenderer   {
 			if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectPer())){
 				personagem.setLife(personagem.getLife()-world.getListaDeOpposite().get(i).getDamage());
 				System.out.println(personagem.getLife());
+				if(personagem.getLife()<0)
+					System.out.println("Game Over");
 			}		
 		}
 	}
@@ -175,7 +188,7 @@ public class WorldRenderer   {
 			if(world.getListaDeProjectili().get(i).getRectangle().overlaps(personagem.getRectPer()))
 				colisao=true;
 		}*/
-		
+				
 		if(!colisao){
 			posAnterior.x = personagem.getPosition().x;
 			posAnterior.y = personagem.getPosition().y;
