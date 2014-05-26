@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.math.MathUtils;
 import com.projetocgt.cenario.MyWorld;
 import com.projetocgt.cenario.WorldController;
 import com.projetocgt.cenario.WorldRenderer;
@@ -16,11 +17,10 @@ public class GameScreen implements Screen, InputProcessor {
 	private MyWorld world;
 	private WorldRenderer renderer;
 	private WorldController	controller;
-	
+	private float acelerometroX;
 	private Music music;
-	
 	public GameScreen() {
-		super();
+		//super();
 		
 		//Carrega os audios
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/temabombeiro.wav"));
@@ -28,10 +28,20 @@ public class GameScreen implements Screen, InputProcessor {
 	
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
+		
+		acelerometroX=+Gdx.input.getAccelerometerX();
+		if(MathUtils.clamp(acelerometroX, acelerometroX+1, acelerometroX+1) >=1.5f)
+			controller.downPressed();
+		if(MathUtils.clamp(acelerometroX, acelerometroX, acelerometroX) <= 0.5f)
+			controller.downReleased();
+		
+		if(MathUtils.clamp(acelerometroX, (acelerometroX-1), (acelerometroX-1)) <=-1.5f)
+			controller.upPressed();
+		if(MathUtils.clamp(acelerometroX, acelerometroX, acelerometroX) >= -0.5f)
+			controller.upReleased();
+		
 		controller.update(delta);
 		renderer.render();
-		//renderer.getCam().position.x-=0.005f;
 	}
 	
 
@@ -49,7 +59,6 @@ public class GameScreen implements Screen, InputProcessor {
 		world = new MyWorld();
 		renderer = new WorldRenderer(world, DEBUG);
 		controller = new WorldController(world, renderer);
-
 		//Habilitando GDX para captura processos de entrada 
 		Gdx.input.setInputProcessor(this);
 	}
@@ -125,12 +134,15 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		
+		//TODO Verificar se a politica se toque foi habilitada
+		controller.firePressed();
 		return true;
 	}
 
 	@Override
 	public boolean touchUp(int x, int y, int pointer, int button) {
+		//TODO Verificar se a politica se toque foi habilitada
+		controller.fireReleased();
 		return true;
 	}
 	

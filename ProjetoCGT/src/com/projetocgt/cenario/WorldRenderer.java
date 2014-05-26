@@ -54,8 +54,8 @@ public class WorldRenderer   {
 	public void render( ) {
 		//isColision(); // ATENCAO
 		this.camera.update(); 			//Atualiza a tela
-		spriteBatch.setProjectionMatrix(camera.combined); //Possibilita a camera acompanhar o personagem
 		spriteBatch.begin();
+		spriteBatch.setProjectionMatrix(camera.combined); //Possibilita a camera acompanhar o personagem
 		drawGameObjects();
 		drawCGTActor();
 		spriteBatch.end();
@@ -102,8 +102,10 @@ public class WorldRenderer   {
 				//TODO aqui sera as variacoes do projectile
 				spriteBatch.draw(world.getListaDeProjectili().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeProjectili().get(i).getPosition().x, world.getListaDeProjectili().get(i).getPosition().y, world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
 				for(int j=0; j < world.getListaDeOpposite().size(); j++){
-					if(world.getListaDeOpposite().get(j).getRectangle().overlaps(world.getListaDeProjectili().get(i).getRectangle()))
+					if(world.getListaDeOpposite().get(j).getRectangle().overlaps(world.getListaDeProjectili().get(i).getRectangle())){
 						world.getListaDeOpposite().get(j).setLife(world.getListaDeOpposite().get(j).getLife()-1);
+						world.getListaDeOpposite().get(j).setBlock(false);
+					}
 				}
 			}
 		}

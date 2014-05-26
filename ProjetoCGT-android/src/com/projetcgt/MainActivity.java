@@ -11,12 +11,12 @@ public class MainActivity extends AndroidApplication {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
+        AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         //Configuracoes da OpenGL
         //cfg.useGL20 = false;
-        //cfg.useAccelerometer = false;
+        //config.useAccelerometer = true;
         //cfg.useCompass = false;
         //cfg.useWakelock = true;
-        initialize(new StarAssault(), cfg);
+        initialize(new StarAssault(), config);
     }
 }

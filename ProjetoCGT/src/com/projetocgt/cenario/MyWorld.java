@@ -53,11 +53,12 @@ public class MyWorld {
 				CGTOpposite opositorCasa = new CGTOpposite(new Vector2(450*(i+1)+i*20,400*(j+1)+j*90), 300, 300, 300, 0, 0);
 				//opositorCasa.setTexture(new Texture("data/Cenario/casa_sprite_sheet.png"));
 				opositorCasa.setBlock(true);
+				opositorCasa.setDestroyable(false);
 				opositorCasa.setLife(0);
 				opositorCasa.setSpriteSheet(new SpriteSheet());
 				//Indica que a minha animacao e' um por um
 				opositorCasa.getSpriteSheet().loadingSpriteSheet("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png", 1, 1);
-				listaDeOpposite.add(opositorCasa);
+				listaDeOpposite.add(opositorCasa);				
 			}
 		}
 		//Instancia o opposite fogo

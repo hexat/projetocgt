@@ -44,7 +44,6 @@ public class WorldController {
 		this.actorAnimation = world.getPersonagem().getSpriteSheet();
 	}
 
-	// ** Key presses and touches **************** //
 	// Funciona na descida do botao
 	public void leftPressed() {
 		if (bob.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
