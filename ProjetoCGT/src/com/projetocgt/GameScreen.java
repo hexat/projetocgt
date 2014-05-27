@@ -17,10 +17,12 @@ public class GameScreen implements Screen, InputProcessor {
 	private MyWorld world;
 	private WorldRenderer renderer;
 	private WorldController	controller;
-	private float acelerometroX;
+	private float acelerometroX=0;
 	private Music music;
+
+	private float acelerometroY;
 	public GameScreen() {
-		//super();
+		super();
 		
 		//Carrega os audios
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/temabombeiro.wav"));
@@ -28,17 +30,39 @@ public class GameScreen implements Screen, InputProcessor {
 	
 	@Override
 	public void render(float delta) {
+		acelerometroX=Gdx.input.getAccelerometerX();
 		
-		acelerometroX=+Gdx.input.getAccelerometerX();
-		if(MathUtils.clamp(acelerometroX, acelerometroX+1, acelerometroX+1) >=1.5f)
+		MathUtils.clamp(acelerometroX, acelerometroX-0.5f, acelerometroX+0.5f);
+		if( acelerometroX >=1.5f)
 			controller.downPressed();
-		if(MathUtils.clamp(acelerometroX, acelerometroX, acelerometroX) <= 0.5f)
-			controller.downReleased();
+		else{
+			if(acelerometroX+0.1 > 0)
+				controller.downReleased();
+		}
 		
-		if(MathUtils.clamp(acelerometroX, (acelerometroX-1), (acelerometroX-1)) <=-1.5f)
+		if(acelerometroX <=-1.5f)
 			controller.upPressed();
-		if(MathUtils.clamp(acelerometroX, acelerometroX, acelerometroX) >= -0.5f)
-			controller.upReleased();
+		else{
+			if(acelerometroX-0.1 < 0)
+				controller.upReleased();
+		}
+		
+		acelerometroY=Gdx.input.getAccelerometerY();
+		
+		MathUtils.clamp(acelerometroY, acelerometroY-0.5f, acelerometroY+0.5f);
+		if( acelerometroY >=1.5f)
+			controller.rightPressed();
+		else{
+			if(acelerometroY+0.1 > 0)
+				controller.rightReleased();
+		}
+		
+		if(acelerometroY <=-1.5f)
+			controller.leftPressed();
+		else{
+			if(acelerometroY-0.1 < 0)
+				controller.leftReleased();
+		}
 		
 		controller.update(delta);
 		renderer.render();
@@ -47,7 +71,6 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public void resize(int width, int height) {
-		renderer.setSize(width, height);
 	}
 
 	@Override
@@ -59,7 +82,6 @@ public class GameScreen implements Screen, InputProcessor {
 		world = new MyWorld();
 		renderer = new WorldRenderer(world, DEBUG);
 		controller = new WorldController(world, renderer);
-		//Habilitando GDX para captura processos de entrada 
 		Gdx.input.setInputProcessor(this);
 	}
 

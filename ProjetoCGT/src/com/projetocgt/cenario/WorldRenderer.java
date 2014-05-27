@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.personagens.CGTActor;
-import com.projetocgt.personagens.SpriteSheet;
 
 /**
  * Class utilizada para renderizar imagens do jogo na tela.Isso inclui Actor, Opposites, Bonus...
@@ -24,17 +23,11 @@ public class WorldRenderer   {
 		
 	/** for debug rendering **/
 	ShapeRenderer debugRenderer = new ShapeRenderer();
-	private SpriteBatch spriteBatch;	 
-	private boolean debug = false; 		// Variavel que ira ativar o debug
+	private SpriteBatch spriteBatch;
+	private boolean flagDebug = false; 		
 	private int width;					
 	private int height;					
 	private Vector2 posAnterior=new Vector2();
-	
-	//Sera chamado cada vez que a tela é redimensionada e calcula as unidades em pixels.
-	public void setSize (int w, int h) {
-		//this.width = w;
-		//this.height = h;
-	}
 	
 	public WorldRenderer(MyWorld world, boolean debug) {
 		this.world = world;
@@ -42,11 +35,11 @@ public class WorldRenderer   {
 		this.height=Gdx.graphics.getHeight();
 		this.camera = new OrthographicCamera(width, height);
 		this.camera.position.set(width/2, height/2 , 0); 		
-		this.debug = debug;												 
+		this.flagDebug = debug;												 
 		spriteBatch = new SpriteBatch();
 		personagem = world.getPersonagem();
 	}
-	
+	void creat(){}
 	/**
 	 * Esta funcao e' chamada no metodo render da class GameScreen.
 	 * Responsavel por desenhar todos os objetos na tela.
@@ -54,12 +47,12 @@ public class WorldRenderer   {
 	public void render( ) {
 		//isColision(); // ATENCAO
 		this.camera.update(); 			//Atualiza a tela
-		spriteBatch.begin();
 		spriteBatch.setProjectionMatrix(camera.combined); //Possibilita a camera acompanhar o personagem
+		spriteBatch.begin();
 		drawGameObjects();
 		drawCGTActor();
 		spriteBatch.end();
-		if (debug)
+		if (flagDebug)
 			drawDebug();
 	}
 	/**
@@ -104,7 +97,11 @@ public class WorldRenderer   {
 				for(int j=0; j < world.getListaDeOpposite().size(); j++){
 					if(world.getListaDeOpposite().get(j).getRectangle().overlaps(world.getListaDeProjectili().get(i).getRectangle())){
 						world.getListaDeOpposite().get(j).setLife(world.getListaDeOpposite().get(j).getLife()-1);
-						world.getListaDeOpposite().get(j).setBlock(false);
+						//world.getListaDeOpposite().get(j).setBlock(false);
+						if(world.getListaDeOpposite().get(j).getLife()==0)//Se o life for zero remove da cena
+							world.getListaDeOpposite().remove(j);
+						if(world.getListaDeOpposite().size()==0)//Verifica se tem algum inimigo na cena
+							System.out.println("Ganhou");	
 					}
 				}
 			}
@@ -185,11 +182,6 @@ public class WorldRenderer   {
 				colisao=true;
 		}
 		
-		//Verifica se colidiu com algum Projectile
-		/*for(int i=0; i < world.getListaDeProjectili().size(); i++){
-			if(world.getListaDeProjectili().get(i).getRectangle().overlaps(personagem.getRectPer()))
-				colisao=true;
-		}*/
 				
 		if(!colisao){
 			posAnterior.x = personagem.getPosition().x;
