@@ -31,7 +31,6 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public void render(float delta) {
 		acelerometroX=Gdx.input.getAccelerometerX();
-		
 		MathUtils.clamp(acelerometroX, acelerometroX-0.5f, acelerometroX+0.5f);
 		if( acelerometroX >=1.5f)
 			controller.downPressed();
@@ -48,7 +47,6 @@ public class GameScreen implements Screen, InputProcessor {
 		}
 		
 		acelerometroY=Gdx.input.getAccelerometerY();
-		
 		MathUtils.clamp(acelerometroY, acelerometroY-0.5f, acelerometroY+0.5f);
 		if( acelerometroY >=1.5f)
 			controller.rightPressed();
@@ -108,8 +106,6 @@ public class GameScreen implements Screen, InputProcessor {
 		renderer.dispose();
 	}
 	
-
-	// InputProcessor methods
 	//Funciona na descida do botao
 	@Override
 	public boolean keyDown(int keycode) {

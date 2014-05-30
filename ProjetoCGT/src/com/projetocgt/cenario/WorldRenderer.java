@@ -90,10 +90,16 @@ public class WorldRenderer   {
 		}
 		//Desenha todos os Projectile
 		for(int i =0;i<world.getListaDeProjectili().size();i++){
-			//spriteBatch.draw(world.getListaDeProjectili().get(i).getTexture(), world.getListaDeProjectili().get(i).getPosition().x, world.getListaDeProjectili().get(i).getPosition().y, world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
+			//Verifica se tem alguem ativo
 			if(world.getListaDeProjectili().get(i).isFlagAtivar()){
 				//TODO aqui sera as variacoes do projectile
-				spriteBatch.draw(world.getListaDeProjectili().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeProjectili().get(i).getPosition().x, world.getListaDeProjectili().get(i).getPosition().y, world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
+				//verifica se dos ativos qual a posicao que sera' desenhado
+				for(int w =0; w<world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().size(); w++){
+					//if(personagem.getState()==world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getState())
+						spriteBatch.draw(world.getListaDeProjectili().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeProjectili().get(i).getPosition().x, world.getListaDeProjectili().get(i).getPosition().y, world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
+				}
+				
+				
 				for(int j=0; j < world.getListaDeOpposite().size(); j++){
 					if(world.getListaDeOpposite().get(j).getRectangle().overlaps(world.getListaDeProjectili().get(i).getRectangle())){
 						world.getListaDeOpposite().get(j).setLife(world.getListaDeOpposite().get(j).getLife()-1);
@@ -195,14 +201,14 @@ public class WorldRenderer   {
 		return colisao;
 	}
 	/**
-	 * @return the cam
+	 * @return the camera
 	 */
 	public OrthographicCamera getCam() {
 		return camera;
 	}
 
 	/**
-	 * @param cam the cam to set
+	 * @param camera the cam to set
 	 */
 	public void setCam(OrthographicCamera cam) {
 		this.camera = cam;

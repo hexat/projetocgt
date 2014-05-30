@@ -1,9 +1,6 @@
 package com.projetocgt;
 
 import com.badlogic.gdx.Game;
-
-
-
 public class StarAssault extends Game {
 
 	@Override

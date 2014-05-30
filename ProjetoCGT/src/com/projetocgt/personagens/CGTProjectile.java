@@ -1,8 +1,11 @@
 package com.projetocgt.personagens;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.progetocgt.util.ProjectileOrientation;
 
 public class CGTProjectile {
 	private boolean flagAtivar;
@@ -21,12 +24,13 @@ public class CGTProjectile {
 	private Rectangle bounds= new Rectangle();
 	private Rectangle rectangle;
 	private SpriteSheet spriteSheet;
+	ArrayList<ProjectileOrientation> listaDeProjectileOrientation = new ArrayList<ProjectileOrientation>();
 	/***
 	 * Recebe uma posicao inicial
 	 * @param position
 	 */
-	public CGTProjectile(Vector2 position, float width, float height, float colider, float posXColider, float posYColider){
-		this.setPosition(position);		//Posicao inicial
+	public CGTProjectile(Vector2 position ,float width, float height, float colider, float posXColider, float posYColider){
+		setPosition(position);
 		this.bounds.height=width;
 		this.bounds.width=height;
 		this.posXColider=posXColider;
@@ -210,4 +214,18 @@ public class CGTProjectile {
 	public void setFlagAtivar(boolean flagAtivar) {
 		this.flagAtivar = flagAtivar;
 	}
+	/**
+	 * @return the listaDeProjectileOrientation
+	 */
+	public ArrayList<ProjectileOrientation> getListaDeProjectileOrientation() {
+		return listaDeProjectileOrientation;
+	}
+	/**
+	 * @param listaDeProjectileOrientation the listaDeProjectileOrientation to set
+	 */
+	public void setListaDeProjectileOrientation(
+			ArrayList<ProjectileOrientation> listaDeProjectileOrientation) {
+		this.listaDeProjectileOrientation = listaDeProjectileOrientation;
+	}
+	
 }

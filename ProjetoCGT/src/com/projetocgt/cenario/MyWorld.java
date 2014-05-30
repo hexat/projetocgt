@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.progetocgt.policy.StatePolicy;
+import com.progetocgt.util.ProjectileOrientation;
 import com.projetocgt.personagens.CGTActor;
 import com.projetocgt.personagens.CGTBonus;
 import com.projetocgt.personagens.CGTOpposite;
@@ -81,6 +83,16 @@ public class MyWorld {
 		//Indica que a minha animacao e' um por um
 		projetilAgua.setActionFire("A");
 		projetilAgua.getSpriteSheet().loadingSpriteSheet("data/CGTProjectile/SpriteSheet_agua.png", 2, 2);
+		
+		ProjectileOrientation direcao = new ProjectileOrientation();
+		direcao.setPosition(new Vector2(900f, 900f));
+		direcao.setSpriteLine(2);
+		direcao.setSpriteNumberOfColumns(2);
+		direcao.setSpriteVelocity(2);
+		direcao.setState(StatePolicy.LOOKRIGHT);
+		projetilAgua.getListaDeProjectileOrientation().add(direcao);
+		
+		
 		
 		listaDeProjectile.add(projetilAgua);
 	}
