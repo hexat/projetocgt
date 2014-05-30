@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.projetocgt.personagens.CGTActor.State;
+import com.progetocgt.policy.StatePolicy;
 
 /**
  * Classe responsavel pelos sprites do personagem
@@ -98,16 +98,16 @@ public class SpriteSheet {
 		// animacao inicial do personagem
 		bobFrame = walkAnimationDown.getKeyFrame(personagem.getStateTime(),false);
 		// Verifica se o personagem esta olhando para cima e faz a aniamcao
-		if (personagem.getState().equals(State.LOOKUP))
+		if (personagem.getState().equals(StatePolicy.LOOKUP))
 			return walkAnimationUp.getKeyFrame(personagem.getStateTime(), loop);
 		// Verifica se o personagem esta olhando para baixo e faz a aniamcao
-		if (personagem.getState().equals(State.LOOKDOWN))
+		if (personagem.getState().equals(StatePolicy.LOOKDOWN))
 			return walkAnimationDown.getKeyFrame(personagem.getStateTime(),loop);
 		// Verifica se o personagem esta olhando para esquerda e faz a aniamcao
-		if (personagem.getState().equals(State.LOOKLEFT))
+		if (personagem.getState().equals(StatePolicy.LOOKLEFT))
 			return walkAnimationLeft.getKeyFrame(personagem.getStateTime(),loop);
 		// Verifica se o personagem esta olhando para direita e faz a aniamcao
-		if (personagem.getState().equals(State.LOOKRIGHT))
+		if (personagem.getState().equals(StatePolicy.LOOKRIGHT))
 			return walkAnimationRight.getKeyFrame(personagem.getStateTime(),loop);
 		return bobFrame;
 	}
@@ -122,9 +122,7 @@ public class SpriteSheet {
 	 */
 	public void loadingSpriteSheet(String caminho, int FRAME_ROWS, int FRAME_COLS) {
 		walkSheet = new Texture(Gdx.files.internal(caminho));
-		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
-				walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()
-						/ FRAME_ROWS); // #10
+		TextureRegion[][] tmp = TextureRegion.split(walkSheet,walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()/ FRAME_ROWS);
 		walkCGTFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
 		int index = 0;
 		for (int i = 0; i < FRAME_ROWS; i++) {

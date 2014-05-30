@@ -2,9 +2,10 @@ package com.projetocgt.cenario;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import com.progetocgt.policy.StatePolicy;
 import com.projetocgt.personagens.CGTActor;
 import com.projetocgt.personagens.CGTActor.DirectionPolicy;
-import com.projetocgt.personagens.CGTActor.State;
 import com.projetocgt.personagens.SpriteSheet;
 
 /**
@@ -169,12 +170,12 @@ public class WorldController {
 			// Verifica se o personagem pode andar
 			if (renderer.isColision()) {
 				//bob.setPosition(renderer.getPosAnterior());
-				bob.setState(State.LOOKUP);
+				bob.setState(StatePolicy.LOOKUP);
 			} else {
 				// O personagem esta olhando para a cima
 				if(bob.getVelocity().y!=0)
 					renderer.getCam().position.y+=bob.getSpeed()/60;
-				bob.setState(State.LOOKUP);
+				bob.setState(StatePolicy.LOOKUP);
 				bob.getVelocity().y = bob.getSpeed();
 			}
 			
@@ -184,14 +185,14 @@ public class WorldController {
 			// Verifica se o personagem pode andar
 			if (renderer.isColision() ) {
 				//bob.setPosition(renderer.getPosAnterior());
-				bob.setState(State.LOOKDOWN);
+				bob.setState(StatePolicy.LOOKDOWN);
 			} else {
 				if (bob.getVelocity().y!=0) {
 					renderer.getCam().position.y-=bob.getSpeed()/60;
 				}
 				
 				// O personagem esta olhando para a baixo
-				bob.setState(State.LOOKDOWN);
+				bob.setState(StatePolicy.LOOKDOWN);
 				bob.getVelocity().y = -bob.getSpeed();
 			}
 			
@@ -201,12 +202,12 @@ public class WorldController {
 			// Verifica se o personagem pode andar
 			if (renderer.isColision()) {
 				//bob.setPosition(renderer.getPosAnterior());
-				bob.setState(State.LOOKLEFT);
+				bob.setState(StatePolicy.LOOKLEFT);
 			} else {
 				if (bob.getVelocity().x != 0) {
 					renderer.getCam().position.x-=bob.getSpeed()/60;
 				}
-				bob.setState(State.LOOKLEFT);
+				bob.setState(StatePolicy.LOOKLEFT);
 				bob.getVelocity().x = -bob.getSpeed();;
 			}		
 		}
@@ -214,12 +215,12 @@ public class WorldController {
 			// Verifica se o personagem pode andar
 			if (renderer.isColision()) {
 				//bob.setPosition(renderer.getPosAnterior());
-				bob.setState(State.LOOKRIGHT);
+				bob.setState(StatePolicy.LOOKRIGHT);
 			} else {
 				if (bob.getVelocity().x!=0) {
 					renderer.getCam().position.x+=bob.getSpeed()/60;
 				}
-				bob.setState(State.LOOKRIGHT);
+				bob.setState(StatePolicy.LOOKRIGHT);
 				bob.getVelocity().x = bob.getSpeed();;
 			}	
 		}

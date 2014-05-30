@@ -30,7 +30,7 @@ public class GameScreen implements Screen, InputProcessor {
 	
 	@Override
 	public void render(float delta) {
-		acelerometroX=Gdx.input.getAccelerometerX();
+		/*acelerometroX=Gdx.input.getAccelerometerX();
 		MathUtils.clamp(acelerometroX, acelerometroX-0.5f, acelerometroX+0.5f);
 		if( acelerometroX >=1.5f)
 			controller.downPressed();
@@ -60,7 +60,7 @@ public class GameScreen implements Screen, InputProcessor {
 		else{
 			if(acelerometroY-0.1 < 0)
 				controller.leftReleased();
-		}
+		}*/
 		
 		controller.update(delta);
 		renderer.render();

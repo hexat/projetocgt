@@ -84,15 +84,23 @@ public class MyWorld {
 		projetilAgua.setActionFire("A");
 		projetilAgua.getSpriteSheet().loadingSpriteSheet("data/CGTProjectile/SpriteSheet_agua.png", 2, 2);
 		
-		ProjectileOrientation direcao = new ProjectileOrientation();
-		direcao.setPosition(new Vector2(900f, 900f));
-		direcao.setSpriteLine(2);
-		direcao.setSpriteNumberOfColumns(2);
-		direcao.setSpriteVelocity(2);
-		direcao.setState(StatePolicy.LOOKRIGHT);
-		projetilAgua.getListaDeProjectileOrientation().add(direcao);
+		ProjectileOrientation direcaoRight = new ProjectileOrientation();
+		//direcaoRight.setPosition(new Vector2(900f, 900f));
+		direcaoRight.setPositionRetativeToGameObject(new Vector2(80,0));
+		direcaoRight.setSpriteLine(2);
+		direcaoRight.setSpriteNumberOfColumns(2);
+		direcaoRight.setSpriteVelocity(2);
+		direcaoRight.setState(StatePolicy.LOOKRIGHT);
+		projetilAgua.getListaDeProjectileOrientation().add(direcaoRight);
 		
-		
+		ProjectileOrientation direcaoLeft = new ProjectileOrientation();
+		//direcaoLeft.setPosition(new Vector2(920f, 900f));
+		direcaoLeft.setPositionRetativeToGameObject(new Vector2(0f, 0f));
+		direcaoLeft.setSpriteLine(2);
+		direcaoLeft.setSpriteNumberOfColumns(2);
+		direcaoLeft.setSpriteVelocity(2);
+		direcaoLeft.setState(StatePolicy.LOOKLEFT);
+		projetilAgua.getListaDeProjectileOrientation().add(direcaoLeft);
 		
 		listaDeProjectile.add(projetilAgua);
 	}

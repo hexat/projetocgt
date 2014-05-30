@@ -1,6 +1,7 @@
 package com.projetocgt.personagens;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.progetocgt.policy.StatePolicy;
 /**
  * Classe utilizada para representar os Personagens do jogo
  * cada personagem sofre uma acao.
@@ -8,9 +9,6 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class CGTActor extends CGTGameObject{
 
-	public enum State {
-		IDLE, WALKING, JUMPING, DYING, LOOKUP, LOOKDOWN, LOOKLEFT, LOOKRIGHT 
-	}
 	public enum DirectionPolicy {
 		FOUR_DIRECTION 
 	}
@@ -19,7 +17,7 @@ public class CGTActor extends CGTGameObject{
 	private Vector2 position = new Vector2();		//Vetor que informa a posicao do personagem
 	private Vector2 velocity = new Vector2();		//Vetor que informa a velocidade do personagem
 	private Rectangle bounds = new Rectangle();		// Area que sera' desenhado o personagem
-	private State state = State.IDLE;				//
+	private StatePolicy state = StatePolicy.IDLE;				//
 	private boolean facingLeft = true;				
 	private Rectangle rectPer;
 	private float posXColider, posYColider; 
@@ -48,7 +46,7 @@ public class CGTActor extends CGTGameObject{
 	 * @param newState 
 	 * 					Estado do Personagem
 	 */
-	public void setState(State newState) {
+	public void setState(StatePolicy newState) {
 		this.state = newState;
 	}
 	/*Adicionar a distância percorrida no delta segundos para a posição actual de Bob. 
@@ -96,7 +94,7 @@ public class CGTActor extends CGTGameObject{
 		this.velocity = velocity;
 	}
 
-	public State getState() {
+	public StatePolicy getState() {
 		return this.state;
 	}
 
