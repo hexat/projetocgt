@@ -130,8 +130,7 @@ public class SpriteSheet {
 				walkCGTFrames[index++] = tmp[i][j];
 			}
 		}
-		walkCGTAnimation = new Animation(RUNNING_FRAME_DURATION,
-				walkCGTFrames);
+		walkCGTAnimation = new Animation(RUNNING_FRAME_DURATION,walkCGTFrames);
 	}
 
 	public TextureRegion CGTAnimation(CGTActor personagem) {
