@@ -83,6 +83,11 @@ public class WorldRenderer   {
 			if(world.getListaDeOpposite().get(i).getLife()>=0)
 				spriteBatch.draw(world.getListaDeOpposite().get(i).getSpriteSheet().CGTAnimation(personagem), world.listaDeOpposite.get(i).getPosition().x, world.listaDeOpposite.get(i).getPosition().y, world.listaDeOpposite.get(i).getBounds().width, world.listaDeOpposite.get(i).getBounds().height);
 		}
+		//Desenha todos os Enemy
+		for(int i =0;i<world.getListaDeEnemy().size();i++){
+			if(world.getListaDeEnemy().get(i).getLife()>=0)
+				spriteBatch.draw(world.getListaDeEnemy().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeEnemy().get(i).getPosition().x, world.getListaDeEnemy().get(i).getPosition().y, world.getListaDeEnemy().get(i).getBounds().width, world.getListaDeEnemy().get(i).getBounds().height);
+		}
 		//Desenha todos os Bonus
 		for(int i =0;i<world.getListaDeBonus().size();i++){
 			spriteBatch.draw(world.getListaDeBonus().get(i).getTexture(), world.getListaDeBonus().get(i).getPosition().x, world.getListaDeBonus().get(i).getPosition().y, world.getListaDeBonus().get(i).getBounds().width, world.getListaDeBonus().get(i).getBounds().height);
@@ -96,17 +101,20 @@ public class WorldRenderer   {
 				//verifica se dos ativos qual a posicao que sera' desenhado
 				for(int w =0; w<world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().size(); w++){
 					if(personagem.getState()==world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getState())
-						spriteBatch.draw(world.getListaDeProjectili().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeProjectili().get(i).getPosition().x+world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().x, world.getListaDeProjectili().get(i).getPosition().y+world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().y, world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
+						spriteBatch.draw(world.getListaDeProjectili().get(i).getSpriteSheet().CGTAnimation(personagem),
+								world.getListaDeProjectili().get(i).getPosition().x+world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().x, 
+								world.getListaDeProjectili().get(i).getPosition().y+world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().y,
+								world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
 				}
 				
 				
-				for(int j=0; j < world.getListaDeOpposite().size(); j++){
-					if(world.getListaDeOpposite().get(j).getRectangle().overlaps(world.getListaDeProjectili().get(i).getRectangle())){
-						world.getListaDeOpposite().get(j).setLife(world.getListaDeOpposite().get(j).getLife()-1);
+				for(int j=0; j < world.getListaDeEnemy().size(); j++){
+					if(world.getListaDeEnemy().get(j).getRectangle().overlaps(world.getListaDeProjectili().get(i).getRectangle())){
+						world.getListaDeEnemy().get(j).setLife(world.getListaDeEnemy().get(j).getLife()-1);
 						//world.getListaDeOpposite().get(j).setBlock(false);
-						if(world.getListaDeOpposite().get(j).getLife()==0)//Se o life for zero remove da cena
-							world.getListaDeOpposite().remove(j);
-						if(world.getListaDeOpposite().size()==0)//Verifica se tem algum inimigo na cena
+						if(world.getListaDeEnemy().get(j).getLife()==0)//Se o life for zero remove da cena
+							world.getListaDeEnemy().remove(j);
+						if(world.getListaDeEnemy().size()==0)//Verifica se tem algum inimigo na cena
 							System.out.println("Ganhou");	
 					}
 				}
@@ -136,11 +144,20 @@ public class WorldRenderer   {
 			
 		//Carrega o debug para todos os Opposite
 		for(int i=0;i<world.getListaDeOpposite().size();i++){				
-			if(world.getListaDeOpposite().get(i).getLife()>=0){
+			//if(world.getListaDeOpposite().get(i).getLife()>=0){
 			debugRenderer.setColor(new Color(0, 1, 0, 1));
 			debugRenderer.rect(world.getListaDeOpposite().get(i).getRectangle().x, world.getListaDeOpposite().get(i).getRectangle().y, world.getListaDeOpposite().get(i).getRectangle().getWidth(), world.getListaDeOpposite().get(i).getRectangle().getHeight());
+			//}
+		}
+		
+		//Carrega o debug para todos os Enemy
+		for(int i=0;i<world.getListaDeEnemy().size();i++){				
+			if(world.getListaDeEnemy().get(i).getLife()>=0){
+				debugRenderer.setColor(new Color(0, 1, 0, 1));
+				debugRenderer.rect(world.getListaDeEnemy().get(i).getRectangle().x, world.getListaDeEnemy().get(i).getRectangle().y, world.getListaDeEnemy().get(i).getRectangle().getWidth(), world.getListaDeEnemy().get(i).getRectangle().getHeight());
 			}
 		}
+		
 		//Carrega o debug para todos os Actor
 		for(int i=0;i<world.getListaActor().size();i++){				
 			debugRenderer.setColor(new Color(0, 1, 0, 1));
@@ -163,9 +180,9 @@ public class WorldRenderer   {
 		debugRenderer.end();
 	}
 	void damageCGTActor(CGTActor personagem){
-		for(int i=0; i < world.getListaDeOpposite().size(); i++){
-			if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectPer())){
-				personagem.setLife(personagem.getLife()-world.getListaDeOpposite().get(i).getDamage());
+		for(int i=0; i < world.getListaDeEnemy().size(); i++){
+			if(world.getListaDeEnemy().get(i).getRectangle().overlaps(personagem.getRectPer())){
+				personagem.setLife(personagem.getLife()-world.getListaDeEnemy().get(i).getDamage());
 				System.out.println(personagem.getLife());
 				if(personagem.getLife()<0)
 					System.out.println("Game Over");
@@ -184,6 +201,12 @@ public class WorldRenderer   {
 			if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeOpposite().get(i).isBlock())
 				colisao=true;
 			
+		}
+		
+		//Verifica se colidiu com algum Opposite
+		for(int i=0; i < world.getListaDeEnemy().size(); i++){
+			if(world.getListaDeEnemy().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeEnemy().get(i).isBlock())
+				colisao=true;
 		}
 		
 		//Verifica se colidiu com algum Bonus

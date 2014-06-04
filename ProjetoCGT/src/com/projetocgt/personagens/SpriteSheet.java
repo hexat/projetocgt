@@ -112,7 +112,7 @@ public class SpriteSheet {
 		return bobFrame;
 	}
 	/**
-	 * Carrega o sprie sheet do GameObject
+	 * Carrega o sprite sheet do GameObject
 	 * @param caminho
 	 * 				Informa o caminho do arquivo
 	 * @param FRAME_ROWS

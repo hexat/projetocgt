@@ -9,6 +9,7 @@ import com.progetocgt.policy.StatePolicy;
 import com.progetocgt.util.ProjectileOrientation;
 import com.projetocgt.personagens.CGTActor;
 import com.projetocgt.personagens.CGTBonus;
+import com.projetocgt.personagens.CGTEnemy;
 import com.projetocgt.personagens.CGTOpposite;
 import com.projetocgt.personagens.CGTProjectile;
 import com.projetocgt.personagens.SpriteSheet;
@@ -23,6 +24,7 @@ public class MyWorld {
 	ArrayList<CGTProjectile> listaDeProjectile = new ArrayList<CGTProjectile>();
 	ArrayList<CGTOpposite> listaDeOpposite = new ArrayList<CGTOpposite>();
 	ArrayList<CGTBonus> listaDeBonus = new ArrayList<CGTBonus>();
+	ArrayList<CGTEnemy> listaDeEnemy = new ArrayList<CGTEnemy>();
 	private CGTActor personagemActor;
 	private Texture backGround;
 	
@@ -64,14 +66,14 @@ public class MyWorld {
 			}
 		}
 		//Instancia o opposite fogo
-		CGTOpposite opositorFogo = new CGTOpposite(new Vector2(200,850), 50, 50, 50, 0, 0);
+		CGTEnemy enemyFogo = new CGTEnemy(new Vector2(200,850), 50, 50, 50, 0, 0);
 		//opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
-		opositorFogo.setBlock(true);
-		opositorFogo.setDamage(1);
-		opositorFogo.setLife(50);
-		opositorFogo.setSpriteSheet(new SpriteSheet());
-		opositorFogo.getSpriteSheet().loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
-		listaDeOpposite.add(opositorFogo);
+		enemyFogo.setBlock(false);
+		enemyFogo.setDamage(1);
+		enemyFogo.setLife(50);
+		enemyFogo.setSpriteSheet(new SpriteSheet());
+		enemyFogo.getSpriteSheet().loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
+		listaDeEnemy.add(enemyFogo);
 		
 		CGTBonus hidrate = new CGTBonus(new Vector2(800,800),50, 50, 50, 0, 0);
 		hidrate.setTexture(new Texture("data/CGTBonus/SpriteSheet_tubo.png"));
@@ -167,5 +169,17 @@ public class MyWorld {
 	 */
 	public void setListaDeBonus(ArrayList<CGTBonus> listaDeBonus) {
 		this.listaDeBonus = listaDeBonus;
+	}
+	/**
+	 * @return the listaDeEnemy
+	 */
+	public ArrayList<CGTEnemy> getListaDeEnemy() {
+		return listaDeEnemy;
+	}
+	/**
+	 * @param listaDeEnemy the listaDeEnemy to set
+	 */
+	public void setListaDeEnemy(ArrayList<CGTEnemy> listaDeEnemy) {
+		this.listaDeEnemy = listaDeEnemy;
 	}
 }
