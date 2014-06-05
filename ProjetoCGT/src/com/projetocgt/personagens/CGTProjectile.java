@@ -38,12 +38,14 @@ public class CGTProjectile {
 		this.setRectangle(new Rectangle(position.x+this.posXColider,position.y+this.posYColider,colider,colider));
 	}
 	/**
-	 * Utilizada para ficar atualizando a posicao do personagem
+	 * Utilizada para ficar atualizando a posicao do Game Object CGTProjectile
 	 * @param delta
 	 */
 	public void update(float delta) {
+		//for(int i=0;i<listaDeProjectileOrientation.size();i++){
 		rectangle.x=this.position.x+posXColider;
 		rectangle.y=this.position.y+posYColider;
+		//}
 	}
 	/**
 	 * @return the texture

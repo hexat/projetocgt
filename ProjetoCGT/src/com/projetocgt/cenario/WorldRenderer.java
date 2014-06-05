@@ -100,15 +100,20 @@ public class WorldRenderer   {
 				//TODO aqui sera as variacoes do projectile
 				//verifica se dos ativos qual a posicao que sera' desenhado
 				for(int w =0; w<world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().size(); w++){
-					if(personagem.getState()==world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getState())
+					if(personagem.getState()==world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getState()){
 						spriteBatch.draw(world.getListaDeProjectili().get(i).getSpriteSheet().CGTAnimation(personagem),
 								world.getListaDeProjectili().get(i).getPosition().x+world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().x, 
 								world.getListaDeProjectili().get(i).getPosition().y+world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().y,
 								world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
+						world.getListaDeProjectili().get(i).getRectangle().x += world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().x;
+						world.getListaDeProjectili().get(i).getRectangle().y += world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().y;
+					}
+					
 				}
 				
-				
+				//Percorre a lista de Enemy
 				for(int j=0; j < world.getListaDeEnemy().size(); j++){
+					//verifica se algum Enemy esta colindindo com algum Projectile
 					if(world.getListaDeEnemy().get(j).getRectangle().overlaps(world.getListaDeProjectili().get(i).getRectangle())){
 						world.getListaDeEnemy().get(j).setLife(world.getListaDeEnemy().get(j).getLife()-1);
 						//world.getListaDeOpposite().get(j).setBlock(false);
@@ -174,7 +179,9 @@ public class WorldRenderer   {
 				//verifica se dos ativos qual a posicao que sera' desenhado
 				for(int w =0; w<world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().size(); w++){
 					if(personagem.getState()==world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getState())
-						debugRenderer.rect(world.getListaDeProjectili().get(i).getRectangle().x+world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().x, world.getListaDeProjectili().get(i).getRectangle().y+world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().y, world.getListaDeProjectili().get(i).getRectangle().getWidth(), world.getListaDeProjectili().get(i).getRectangle().getHeight());
+						debugRenderer.rect(world.getListaDeProjectili().get(i).getRectangle().x,
+								world.getListaDeProjectili().get(i).getRectangle().y, 
+								world.getListaDeProjectili().get(i).getRectangle().getWidth(), world.getListaDeProjectili().get(i).getRectangle().getHeight());
 				}
 		}
 		debugRenderer.end();
