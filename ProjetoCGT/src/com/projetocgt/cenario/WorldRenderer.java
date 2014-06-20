@@ -98,15 +98,22 @@ public class WorldRenderer   {
 			//Verifica se tem alguem ativo
 			if(world.getListaDeProjectili().get(i).isFlagAtivar()){
 				//TODO aqui sera as variacoes do projectile
-				//verifica se dos ativos qual a posicao que sera' desenhado
+				//verifica se dos ativados qual a posicao que sera' desenhado
 				for(int w =0; w<world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().size(); w++){
 					if(personagem.getState()==world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getState()){
+						//faz um movimento do projectile
+						//world.getListaDeProjectili().get(i).getPosition().x=world.getListaDeProjectili().get(i).getVelocityInitial().x;
+						world.getListaDeProjectili().get(i).getRectangle().x += world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().x;
+						world.getListaDeProjectili().get(i).getRectangle().y += world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().y;						
+						
 						spriteBatch.draw(world.getListaDeProjectili().get(i).getSpriteSheet().CGTAnimation(personagem),
 								world.getListaDeProjectili().get(i).getPosition().x+world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().x, 
 								world.getListaDeProjectili().get(i).getPosition().y+world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().y,
 								world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
-						world.getListaDeProjectili().get(i).getRectangle().x += world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().x;
-						world.getListaDeProjectili().get(i).getRectangle().y += world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().y;
+						
+						
+
+						
 					}
 					
 				}
@@ -132,7 +139,6 @@ public class WorldRenderer   {
 	 */
 	private void drawCGTActor() {
 		//Desenha o Actor na cena
-		//spriteBatch.draw(spriteBob.CGTActorAnimation(personagem), personagem.getPosition().x, personagem.getPosition().y, personagem.getBounds().width, personagem.getBounds().height);
 		spriteBatch.draw(personagem.getSpriteSheet().CGTActorAnimation(personagem), personagem.getPosition().x, personagem.getPosition().y, personagem.getBounds().width, personagem.getBounds().height);
 	}
 	
@@ -179,9 +185,9 @@ public class WorldRenderer   {
 				//verifica se dos ativos qual a posicao que sera' desenhado
 				for(int w =0; w<world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().size(); w++){
 					if(personagem.getState()==world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getState())
-						debugRenderer.rect(world.getListaDeProjectili().get(i).getRectangle().x,
-								world.getListaDeProjectili().get(i).getRectangle().y, 
-								world.getListaDeProjectili().get(i).getRectangle().getWidth(), world.getListaDeProjectili().get(i).getRectangle().getHeight());
+						debugRenderer.rect(	world.getListaDeProjectili().get(i).getRectangle().x,
+											world.getListaDeProjectili().get(i).getRectangle().y, 
+											world.getListaDeProjectili().get(i).getRectangle().getWidth(), world.getListaDeProjectili().get(i).getRectangle().getHeight());
 				}
 		}
 		debugRenderer.end();

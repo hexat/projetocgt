@@ -6,6 +6,8 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.projetocgt.cenario.MyWorld;
 import com.projetocgt.cenario.WorldController;
 import com.projetocgt.cenario.WorldRenderer;
@@ -21,9 +23,10 @@ public class GameScreen implements Screen, InputProcessor {
 	private Music music;
 
 	private float acelerometroY;
+
+	private boolean flagButton;
 	public GameScreen() {
 		super();
-		
 		//Carrega os audios
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/temabombeiro.wav"));
 		}
@@ -64,6 +67,17 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		controller.update(delta);
 		renderer.render();
+		
+		if(flagButton){
+			Timer.schedule(new Task(){
+				@Override
+				public void run() {
+					flagButton=false;
+					controller.fireReleased();
+					Timer.instance().clear();
+				}
+			}, 2);
+		}
 	}
 	
 
@@ -122,6 +136,7 @@ public class GameScreen implements Screen, InputProcessor {
 			controller.downPressed();
 		}
 		if (keycode == Keys.A){
+			flagButton=false;
 			controller.firePressed();
 		}
 		return true;
@@ -139,8 +154,10 @@ public class GameScreen implements Screen, InputProcessor {
 			controller.upReleased();
 		if (keycode == Keys.DOWN)
 			controller.downReleased();
-		if (keycode == Keys.A)
-			controller.fireReleased();
+		if (keycode == Keys.A){
+			flagButton=true;
+			//controller.fireReleased();
+		}
 		return true;
 	}
 
@@ -153,14 +170,14 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
 		//TODO Verificar se a politica se toque foi habilitada
-		controller.firePressed();
+		//controller.firePressed();
 		return true;
 	}
 
 	@Override
 	public boolean touchUp(int x, int y, int pointer, int button) {
 		//TODO Verificar se a politica se toque foi habilitada
-		controller.fireReleased();
+		//controller.fireReleased();
 		return true;
 	}
 	

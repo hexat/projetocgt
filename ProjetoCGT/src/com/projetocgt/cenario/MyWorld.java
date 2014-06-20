@@ -68,7 +68,7 @@ public class MyWorld {
 		//Instancia o opposite fogo
 		CGTEnemy enemyFogo = new CGTEnemy(new Vector2(200,850), 50, 50, 50, 0, 0);
 		//opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
-		enemyFogo.setBlock(false);
+		enemyFogo.setBlock(true);
 		enemyFogo.setDamage(1);
 		enemyFogo.setLife(50);
 		enemyFogo.setSpriteSheet(new SpriteSheet());
@@ -78,7 +78,7 @@ public class MyWorld {
 		//Instancia o opposite fogo
 		CGTEnemy enemyFogo2 = new CGTEnemy(new Vector2(200,1050), 50, 50, 50, 0, 0);
 		//opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
-		enemyFogo2.setBlock(false);
+		enemyFogo2.setBlock(true);
 		enemyFogo2.setDamage(1);
 		enemyFogo2.setLife(200);
 		enemyFogo2.setSpriteSheet(new SpriteSheet());
@@ -99,11 +99,13 @@ public class MyWorld {
 		hidrate.setTexture(new Texture("data/CGTBonus/SpriteSheet_tubo.png"));
 		listaDeBonus.add(hidrate);
 		
-		CGTProjectile projetilAgua = new CGTProjectile(new Vector2(900f, 900f), 30, 30, 30, 0, 0);
+		CGTProjectile projetilAgua = new CGTProjectile(new Vector2(100f, 200f), 30, 30, 30, 0, 0);
 		//projetilAgua.setTexture(new Texture("data/CGTProjectile/SpriteSheet_agua.png"));
 		projetilAgua.setSpriteSheet(new SpriteSheet());
 		//Indica que a minha animacao e' um por um
 		projetilAgua.setActionFire("A");
+		projetilAgua.getVelocityInitial().x= 100f;
+		projetilAgua.setInterval(2);
 		projetilAgua.getSpriteSheet().loadingSpriteSheet("data/CGTProjectile/SpriteSheet_agua.png", 2, 2);
 		
 		ProjectileOrientation direcaoRight = new ProjectileOrientation();

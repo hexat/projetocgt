@@ -6,7 +6,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.progetocgt.util.ProjectileOrientation;
-
+/**
+ * Classe reponsavel pela construcao do CGTProjectile que tera as informacoes sobre 
+ * os inimigos 
+ * @author bruno
+ *
+ */
 public class CGTProjectile {
 	private boolean flagAtivar;
 	private String actionFire;
@@ -15,7 +20,7 @@ public class CGTProjectile {
 	private int interval;
 	private int ammo;
 	private Vector2 positionRetativeToGameObject;
-	private int velocityInitial;
+	private Vector2 velocityInitial = new Vector2();
 	private float angle;
 	//private LabelID labelID;
 	private Texture texture;
@@ -42,10 +47,10 @@ public class CGTProjectile {
 	 * @param delta
 	 */
 	public void update(float delta) {
-		//for(int i=0;i<listaDeProjectileOrientation.size();i++){
+		//Soma uma velcidade a uma posicao de personagem
+		//position.add(velocityInitial.cpy().scl(delta));
 		rectangle.x=this.position.x+posXColider;
 		rectangle.y=this.position.y+posYColider;
-		//}
 	}
 	/**
 	 * @return the texture
@@ -122,13 +127,13 @@ public class CGTProjectile {
 	/**
 	 * @return the velocityInitial
 	 */
-	public int getVelocityInitial() {
+	public Vector2 getVelocityInitial() {
 		return velocityInitial;
 	}
 	/**
 	 * @param velocityInitial the velocityInitial to set
 	 */
-	public void setVelocityInitial(int velocityInitial) {
+	public void setVelocityInitial(Vector2 velocityInitial) {
 		this.velocityInitial = velocityInitial;
 	}
 	/**
