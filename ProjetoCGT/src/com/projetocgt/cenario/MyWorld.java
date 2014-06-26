@@ -68,7 +68,7 @@ public class MyWorld {
 		//Instancia o opposite fogo
 		CGTEnemy enemyFogo = new CGTEnemy(new Vector2(200,850), 50, 50, 50, 0, 0);
 		//opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
-		enemyFogo.setBlock(true);
+		enemyFogo.setBlock(false);
 		enemyFogo.setDamage(1);
 		enemyFogo.setLife(50);
 		enemyFogo.setSpriteSheet(new SpriteSheet());
@@ -105,7 +105,8 @@ public class MyWorld {
 		//Indica que a minha animacao e' um por um
 		projetilAgua.setActionFire("A");
 		projetilAgua.getVelocityInitial().x= 100f;
-		projetilAgua.setInterval(2);
+		projetilAgua.setInterval(1);
+		projetilAgua.setAmmo(2);
 		projetilAgua.getSpriteSheet().loadingSpriteSheet("data/CGTProjectile/SpriteSheet_agua.png", 2, 2);
 		
 		ProjectileOrientation direcaoRight = new ProjectileOrientation();

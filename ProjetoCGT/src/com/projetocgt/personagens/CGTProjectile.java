@@ -52,6 +52,14 @@ public class CGTProjectile {
 		rectangle.x=this.position.x+posXColider;
 		rectangle.y=this.position.y+posYColider;
 	}
+	
+	/**
+	 * Diminui um do valor do ammo
+	 */
+	public void ammoDown(){
+		ammo--;
+	}
+	
 	/**
 	 * @return the texture
 	 */

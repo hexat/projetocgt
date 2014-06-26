@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.projetocgt.personagens.CGTActor;
 
 /**
@@ -20,7 +22,9 @@ public class WorldRenderer   {
 	private MyWorld world;			//Declara a variavel do tipo World que sera passada de parametro no renderer 
 	private OrthographicCamera camera;	//Declara a variavel da camera
 	private CGTActor personagem;
-		
+	private int interval; 
+	private int ammo;
+	
 	/** for debug rendering **/
 	ShapeRenderer debugRenderer = new ShapeRenderer();
 	private SpriteBatch spriteBatch;
@@ -95,8 +99,14 @@ public class WorldRenderer   {
 		}
 		//Desenha todos os Projectile
 		for(int i =0;i<world.getListaDeProjectili().size();i++){
+			
 			//Verifica se tem alguem ativo
-			if(world.getListaDeProjectili().get(i).isFlagAtivar()){
+			if(world.getListaDeProjectili().get(i).isFlagAtivar() && world.getListaDeProjectili().get(i).getAmmo()>0){
+				
+				//Verifica o intervalo
+				interval=world.getListaDeProjectili().get(i).getInterval();
+				//world.getListaDeProjectili().get(i).ammoDown();
+				
 				//TODO aqui sera as variacoes do projectile
 				//verifica se dos ativados qual a posicao que sera' desenhado
 				for(int w =0; w<world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().size(); w++){
@@ -105,17 +115,12 @@ public class WorldRenderer   {
 						//world.getListaDeProjectili().get(i).getPosition().x=world.getListaDeProjectili().get(i).getVelocityInitial().x;
 						world.getListaDeProjectili().get(i).getRectangle().x += world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().x;
 						world.getListaDeProjectili().get(i).getRectangle().y += world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().y;						
-						
+			
 						spriteBatch.draw(world.getListaDeProjectili().get(i).getSpriteSheet().CGTAnimation(personagem),
 								world.getListaDeProjectili().get(i).getPosition().x+world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().x, 
 								world.getListaDeProjectili().get(i).getPosition().y+world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getPositionRetativeToGameObject().y,
-								world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);
-						
-						
-
-						
+								world.getListaDeProjectili().get(i).getBounds().width, world.getListaDeProjectili().get(i).getBounds().height);		
 					}
-					
 				}
 				
 				//Percorre a lista de Enemy
@@ -181,7 +186,7 @@ public class WorldRenderer   {
 		}
 		//Carrega o debug para todos os Projectile
 		for(int i =0;i<world.getListaDeProjectili().size();i++){
-			if(world.getListaDeProjectili().get(i).isFlagAtivar())
+			if(world.getListaDeProjectili().get(i).isFlagAtivar() && world.getListaDeProjectili().get(i).getAmmo()>0)
 				//verifica se dos ativos qual a posicao que sera' desenhado
 				for(int w =0; w<world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().size(); w++){
 					if(personagem.getState()==world.getListaDeProjectili().get(i).getListaDeProjectileOrientation().get(w).getState())
@@ -240,6 +245,26 @@ public class WorldRenderer   {
 		}
 		return colisao;
 	}
+	
+	/**
+	 * 
+	 * @param n
+	 */
+	public void ammoDown(int n){
+		n--;
+	}
+	
+	public void timerProjectili(int time){
+		Timer.schedule(new Task(){
+			@Override
+			public void run() {
+				//verifica se o ammo é zero
+				//if()
+				Timer.instance().clear();
+			}
+		}, time);
+	}
+	
 	/**
 	 * @return the camera
 	 */
@@ -259,5 +284,23 @@ public class WorldRenderer   {
 	 */
 	public Vector2 getPosAnterior() {
 		return posAnterior;
+	}
+	/**
+	 * @return the interval
+	 */
+	public int getInterval() {
+		return interval;
+	}
+	/**
+	 * @return the ammo
+	 */
+	public int getAmmo() {
+		return ammo;
+	}
+	/**
+	 * @param ammo the ammo to set
+	 */
+	public void setAmmo(int ammo) {
+		this.ammo = ammo;
 	}
 }

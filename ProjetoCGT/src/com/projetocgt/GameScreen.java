@@ -67,16 +67,17 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		controller.update(delta);
 		renderer.render();
-		
+		//Utilizado para ativar o projectili por um determinado Tempo
 		if(flagButton){
 			Timer.schedule(new Task(){
 				@Override
 				public void run() {
 					flagButton=false;
+					//verifica se o ammo é zero
 					controller.fireReleased();
 					Timer.instance().clear();
 				}
-			}, 2);
+			}, renderer.getInterval());
 		}
 	}
 	
@@ -136,7 +137,7 @@ public class GameScreen implements Screen, InputProcessor {
 			controller.downPressed();
 		}
 		if (keycode == Keys.A){
-			flagButton=false;
+			flagButton=true;
 			controller.firePressed();
 		}
 		return true;
@@ -155,7 +156,7 @@ public class GameScreen implements Screen, InputProcessor {
 		if (keycode == Keys.DOWN)
 			controller.downReleased();
 		if (keycode == Keys.A){
-			flagButton=true;
+			flagButton=false;
 			//controller.fireReleased();
 		}
 		return true;

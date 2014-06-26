@@ -100,6 +100,7 @@ public class WorldController {
 			if(world.getListaDeProjectili().get(i).getActionFire() == "A"){
 				world.getListaDeProjectili().get(i).setPosition(bob.getPosition());
 				world.getListaDeProjectili().get(i).setFlagAtivar(true);
+				
 			}
 		}
 		
