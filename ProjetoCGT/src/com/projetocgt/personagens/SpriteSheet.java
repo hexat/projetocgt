@@ -1,10 +1,11 @@
 package com.projetocgt.personagens;
 
+import cgt.policy.StatePolicy;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.progetocgt.policy.StatePolicy;
 
 /**
  * Classe responsavel pelos sprites do personagem

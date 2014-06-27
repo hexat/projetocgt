@@ -1,7 +1,8 @@
 package com.progetocgt.util;
 
+import cgt.policy.StatePolicy;
+
 import com.badlogic.gdx.math.Vector2;
-import com.progetocgt.policy.StatePolicy;
 
 public class ProjectileOrientation {
 	// private ActionMovePolicy movePolicyActor;

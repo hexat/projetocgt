@@ -2,10 +2,11 @@ package com.projetocgt.cenario;
 
 import java.util.ArrayList;
 
+import cgt.policy.StatePolicy;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.progetocgt.policy.StatePolicy;
 import com.progetocgt.util.ProjectileOrientation;
 import com.projetocgt.personagens.ActorCGT;
 import com.projetocgt.personagens.Bonus;
@@ -107,7 +108,7 @@ public class MyWorld {
 		//projetilAgua.getActionFire().addInput(InputPolicy.GO_TAP);
 		projetilAgua.getVelocityInitial().x= 100f;
 		projetilAgua.setInterval(1);
-		projetilAgua.setAmmo(2);
+		projetilAgua.setAmmo(3);
 		projetilAgua.getSpriteSheet().loadingSpriteSheet("data/CGTProjectile/SpriteSheet_agua.png", 2, 2);
 		
 		ProjectileOrientation direcaoRight = new ProjectileOrientation();

@@ -1,11 +1,11 @@
 package com.projetocgt.personagens;
 import java.util.ArrayList;
 import cgt.core.CGTProjectile;
+import cgt.policy.StatePolicy;
 import cgt.util.Jump;
 import cgt.util.Move;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.progetocgt.policy.StatePolicy;
 /**
  * Classe utilizada para representar os Personagens do jogo
  * cada personagem sofre uma acao.

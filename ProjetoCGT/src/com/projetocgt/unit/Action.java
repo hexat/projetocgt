@@ -2,7 +2,8 @@ package com.projetocgt.unit;
 
 import java.util.ArrayList;
 
-import com.progetocgt.policy.InputPolicy;
+import cgt.policy.InputPolicy;
+
 import com.projetocgt.personagens.ActorCGT;
 
 public abstract class Action {

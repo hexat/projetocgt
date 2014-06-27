@@ -3,10 +3,7 @@ package com.projetocgt.cenario;
 import java.util.HashMap;
 import java.util.Map;
 
-import cgt.policy.InputPolicy;
-import cgt.unit.ActionFire;
-
-import com.progetocgt.policy.StatePolicy;
+import cgt.policy.StatePolicy;
 import com.projetocgt.personagens.ActorCGT;
 import com.projetocgt.personagens.ActorCGT.DirectionPolicy;
 import com.projetocgt.personagens.SpriteSheet;
@@ -143,7 +140,14 @@ public class WorldController {
 		keys.get(keys.put(Keys.FIRE, false));
 		//Desabilita o loop da animacao
 		for(int i=0;i<world.getListaDeProjectili().size();i++){
-			world.getListaDeProjectili().get(i).setFlagAtivar(false);
+			//so vai pra falso quem tiver ativo
+			if(world.getListaDeProjectili().get(i).isFlagAtivar()){
+				world.getListaDeProjectili().get(i).ammoDown();
+				world.getListaDeProjectili().get(i).setFlagAtivar(false);
+				//if(world.getListaDeProjectili().get(i).getAmmo() == 0){
+					//world.getListaDeProjectili().get(i).setFlagAtivar(false);}
+					
+			}
 		}
 	}
 
