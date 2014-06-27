@@ -8,10 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.progetocgt.policy.StatePolicy;
 import com.progetocgt.util.ProjectileOrientation;
 import com.projetocgt.personagens.ActorCGT;
-import com.projetocgt.personagens.CGTBonus;
-import com.projetocgt.personagens.CGTEnemy;
+import com.projetocgt.personagens.Bonus;
+import com.projetocgt.personagens.Enemy;
 import com.projetocgt.personagens.CGTOpposite;
-import com.projetocgt.personagens.CGTProjectile;
+import com.projetocgt.personagens.Projectile;
 import com.projetocgt.personagens.SpriteSheet;
 /**
  * Responsavel por construir o jogo
@@ -21,10 +21,10 @@ import com.projetocgt.personagens.SpriteSheet;
 public class MyWorld {
 	
 	ArrayList<ActorCGT> listaActor = new ArrayList<ActorCGT>();
-	ArrayList<CGTProjectile> listaDeProjectile = new ArrayList<CGTProjectile>();
+	ArrayList<Projectile> listaDeProjectile = new ArrayList<Projectile>();
 	ArrayList<CGTOpposite> listaDeOpposite = new ArrayList<CGTOpposite>();
-	ArrayList<CGTBonus> listaDeBonus = new ArrayList<CGTBonus>();
-	ArrayList<CGTEnemy> listaDeEnemy = new ArrayList<CGTEnemy>();
+	ArrayList<Bonus> listaDeBonus = new ArrayList<Bonus>();
+	ArrayList<Enemy> listaDeEnemy = new ArrayList<Enemy>();
 	private ActorCGT personagemActor;
 	private Texture backGround;
 	
@@ -66,7 +66,7 @@ public class MyWorld {
 			}
 		}
 		//Instancia o opposite fogo
-		CGTEnemy enemyFogo = new CGTEnemy(new Vector2(200,850), 50, 50, 50, 0, 0);
+		Enemy enemyFogo = new Enemy(new Vector2(200,850), 50, 50, 50, 0, 0);
 		//opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
 		enemyFogo.setBlock(false);
 		enemyFogo.setDamage(1);
@@ -76,7 +76,7 @@ public class MyWorld {
 		listaDeEnemy.add(enemyFogo);
 		
 		//Instancia o opposite fogo
-		CGTEnemy enemyFogo2 = new CGTEnemy(new Vector2(200,1050), 50, 50, 50, 0, 0);
+		Enemy enemyFogo2 = new Enemy(new Vector2(200,1050), 50, 50, 50, 0, 0);
 		//opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
 		enemyFogo2.setBlock(true);
 		enemyFogo2.setDamage(1);
@@ -86,7 +86,7 @@ public class MyWorld {
 		listaDeEnemy.add(enemyFogo2);
 		
 		//Instancia o opposite fogo
-		CGTEnemy enemyFogo3 = new CGTEnemy(new Vector2(200,1500), 50, 50, 50, 0, 0);
+		Enemy enemyFogo3 = new Enemy(new Vector2(200,1500), 50, 50, 50, 0, 0);
 		//opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
 		enemyFogo3.setBlock(true);
 		enemyFogo3.setDamage(2);
@@ -95,11 +95,11 @@ public class MyWorld {
 		enemyFogo3.getSpriteSheet().loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
 		listaDeEnemy.add(enemyFogo3);
 		
-		CGTBonus hidrate = new CGTBonus(new Vector2(800,800),50, 50, 50, 0, 0);
+		Bonus hidrate = new Bonus(new Vector2(800,800),50, 50, 50, 0, 0);
 		hidrate.setTexture(new Texture("data/CGTBonus/SpriteSheet_tubo.png"));
 		listaDeBonus.add(hidrate);
 		
-		CGTProjectile projetilAgua = new CGTProjectile(new Vector2(100f, 200f), 30, 30, 30, 0, 0);
+		Projectile projetilAgua = new Projectile(new Vector2(100f, 200f), 30, 30, 30, 0, 0);
 		//projetilAgua.setTexture(new Texture("data/CGTProjectile/SpriteSheet_agua.png"));
 		projetilAgua.setSpriteSheet(new SpriteSheet());
 		//Indica que a minha animacao e' um por um
@@ -171,14 +171,14 @@ public class MyWorld {
 	/**
 	 * @return the listaDeProjectili
 	 */
-	public ArrayList<CGTProjectile> getListaDeProjectili() {
+	public ArrayList<Projectile> getListaDeProjectili() {
 		return listaDeProjectile;
 	}
 
 	/**
 	 * @param listaDeProjectili the listaDeProjectili to set
 	 */
-	public void setListaDeProjectili(ArrayList<CGTProjectile> listaDeProjectili) {
+	public void setListaDeProjectili(ArrayList<Projectile> listaDeProjectili) {
 		this.listaDeProjectile = listaDeProjectili;
 	}
 
@@ -210,25 +210,25 @@ public class MyWorld {
 	/**
 	 * @return the listaDeBonus
 	 */
-	public ArrayList<CGTBonus> getListaDeBonus() {
+	public ArrayList<Bonus> getListaDeBonus() {
 		return listaDeBonus;
 	}
 	/**
 	 * @param listaDeBonus the listaDeBonus to set
 	 */
-	public void setListaDeBonus(ArrayList<CGTBonus> listaDeBonus) {
+	public void setListaDeBonus(ArrayList<Bonus> listaDeBonus) {
 		this.listaDeBonus = listaDeBonus;
 	}
 	/**
 	 * @return the listaDeEnemy
 	 */
-	public ArrayList<CGTEnemy> getListaDeEnemy() {
+	public ArrayList<Enemy> getListaDeEnemy() {
 		return listaDeEnemy;
 	}
 	/**
 	 * @param listaDeEnemy the listaDeEnemy to set
 	 */
-	public void setListaDeEnemy(ArrayList<CGTEnemy> listaDeEnemy) {
+	public void setListaDeEnemy(ArrayList<Enemy> listaDeEnemy) {
 		this.listaDeEnemy = listaDeEnemy;
 	}
 }

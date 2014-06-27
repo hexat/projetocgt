@@ -14,7 +14,7 @@ import com.progetocgt.util.ProjectileOrientation;
  * @author bruno
  *
  */
-public class CGTProjectile {
+public class Projectile {
 	private boolean flagAtivar;
 	private ActionFire actionFire;
 	private int numFiresForOneInput;
@@ -36,7 +36,7 @@ public class CGTProjectile {
 	 * Recebe uma posicao inicial
 	 * @param position
 	 */
-	public CGTProjectile(Vector2 position ,float width, float height, float colider, float posXColider, float posYColider){
+	public Projectile(Vector2 position ,float width, float height, float colider, float posXColider, float posYColider){
 		setPosition(position);
 		this.bounds.height=width;
 		this.bounds.width=height;

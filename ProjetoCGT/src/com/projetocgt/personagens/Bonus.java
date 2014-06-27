@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class CGTBonus {
+public class Bonus {
 	//private LabelID labelID;
 	//private AIPolicy move;
 	private int score;
@@ -18,7 +18,7 @@ public class CGTBonus {
 	private SpriteSheet spriteSheet;
 	//private ArrayList<BonusPolicy> policys;
 	
-	public CGTBonus(Vector2 position, float width, float height, float colider, float posXColider, float posYColider) {
+	public Bonus(Vector2 position, float width, float height, float colider, float posXColider, float posYColider) {
 		this.setPosition(position);		//Posicao inicial
 		this.bounds.height=width;
 		this.bounds.width=height;

@@ -8,7 +8,7 @@ public class CGTOpposite extends GameObject{
 	private boolean block;
 	private boolean destroyable;
 	private int damage;
-	private CGTProjectile fire;
+	private Projectile fire;
 	private SpriteSheet spriteSheet;
 	private Vector2 position;
 	private Rectangle bounds = new Rectangle();		// Area que sera' desenhado o personagem
@@ -79,13 +79,13 @@ public class CGTOpposite extends GameObject{
 	/**
 	 * @return the fire
 	 */
-	public CGTProjectile getFire() {
+	public Projectile getFire() {
 		return fire;
 	}
 	/**
 	 * @param fire the fire to set
 	 */
-	public void setFire(CGTProjectile fire) {
+	public void setFire(Projectile fire) {
 		this.fire = fire;
 	}
 	/**

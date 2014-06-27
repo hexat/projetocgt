@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.progetocgt.behaviors.Behavior;
 
-public class CGTEnemy extends GameObject{
+public class Enemy extends GameObject{
 	private int damage;
 	private ArrayList<Behavior> behaviors;
 	private boolean block;
@@ -17,7 +17,7 @@ public class CGTEnemy extends GameObject{
 	private float posXColider, posYColider; 
 	private Rectangle rectangle;
 	
-	public CGTEnemy(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ){
+	public Enemy(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ){
 		this.setPosition(position);		//Posicao inicial
 		this.bounds.height=height;
 		this.bounds.width=width;

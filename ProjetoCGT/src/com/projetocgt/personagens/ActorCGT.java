@@ -42,10 +42,6 @@ public class ActorCGT extends GameObject{
 		this.directionPolicy = DirectionPolicy.FOUR_DIRECTION;
 	}
 	
-	public ActorCGT(){
-		
-	}
-	
 	/**
 	 * Adiciona o estado atual do Personagem
 	 * @param newState 
