@@ -24,7 +24,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 	private float acelerometroY;
 
-	private boolean flagButton;
+	private boolean flagTouch;
 	public GameScreen() {
 		super();
 		//Carrega os audios
@@ -68,13 +68,14 @@ public class GameScreen implements Screen, InputProcessor {
 		controller.update(delta);
 		renderer.render();
 		//Utilizado para ativar o projectili por um determinado Tempo
-		if(flagButton){
+		//Com um touch
+		if(flagTouch){
 			Timer.schedule(new Task(){
 				@Override
 				public void run() {
-					flagButton=false;
+					flagTouch=false;
 					//verifica se o ammo é zero
-					controller.fireReleased();
+					controller.fireReleasedTouch();
 					Timer.instance().clear();
 				}
 			}, renderer.getInterval());
@@ -137,8 +138,8 @@ public class GameScreen implements Screen, InputProcessor {
 			controller.downPressed();
 		}
 		if (keycode == Keys.A){
-			flagButton=true;
-			controller.firePressed();
+			flagTouch=true;
+			controller.firePressedTouch();
 		}
 		return true;
 	}
@@ -156,7 +157,7 @@ public class GameScreen implements Screen, InputProcessor {
 		if (keycode == Keys.DOWN)
 			controller.downReleased();
 		if (keycode == Keys.A){
-			flagButton=false;
+			flagTouch=false;
 			//controller.fireReleased();
 		}
 		return true;
@@ -170,16 +171,17 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		//TODO Verificar se a politica se toque foi habilitada
-		flagButton=true;
-		controller.firePressed();
+		//TODO Verificar se a politica de toque foi habilitada
+		//TODO Cada policy terá uma funcao para habilitar ou desabilitar o projectili
+		flagTouch=true;
+		controller.firePressedTouch();
 		return true;
 	}
 
 	@Override
 	public boolean touchUp(int x, int y, int pointer, int button) {
 		//TODO Verificar se a politica se toque foi habilitada
-		//controller.fireReleased();
+		//controller.fireReleasedTouch();
 		return true;
 	}
 	

@@ -94,9 +94,10 @@ public class WorldController {
 		//Habilita o loop da animacao
 	}
 
-	public void firePressed() {
+	public void firePressedTouch() {
 		keys.get(keys.put(Keys.FIRE, true));
 		for(int i=0;i<world.getListaDeProjectili().size();i++){
+			//TODO
 			//if(world.getListaDeProjectili().get(i).getActionFire().getInputs().get(0) == InputPolicy.GO_TAP){
 				world.getListaDeProjectili().get(i).setPosition(bob.getPosition());
 				world.getListaDeProjectili().get(i).setFlagAtivar(true);	
@@ -136,7 +137,7 @@ public class WorldController {
 		actorAnimation.setLoop(false);
 	}
 
-	public void fireReleased() {
+	public void fireReleasedTouch() {
 		keys.get(keys.put(Keys.FIRE, false));
 		//Desabilita o loop da animacao
 		for(int i=0;i<world.getListaDeProjectili().size();i++){
@@ -145,8 +146,7 @@ public class WorldController {
 				world.getListaDeProjectili().get(i).ammoDown();
 				world.getListaDeProjectili().get(i).setFlagAtivar(false);
 				//if(world.getListaDeProjectili().get(i).getAmmo() == 0){
-					//world.getListaDeProjectili().get(i).setFlagAtivar(false);}
-					
+					//world.getListaDeProjectili().get(i).setFlagAtivar(false);}		
 			}
 		}
 	}
