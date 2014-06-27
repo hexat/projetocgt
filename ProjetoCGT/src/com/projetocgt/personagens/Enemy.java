@@ -2,6 +2,8 @@ package com.projetocgt.personagens;
 
 import java.util.ArrayList;
 
+import cgt.policy.StatePolicy;
+
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.progetocgt.behaviors.Behavior;
@@ -16,6 +18,7 @@ public class Enemy extends GameObject{
 	private Rectangle bounds = new Rectangle();		// Area que sera' desenhado o personagem
 	private float posXColider, posYColider; 
 	private Rectangle rectangle;
+	private StatePolicy state;
 	
 	public Enemy(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ){
 		this.setPosition(position);		//Posicao inicial
@@ -153,5 +156,17 @@ public class Enemy extends GameObject{
 	 */
 	public void setBounds(Rectangle bounds) {
 		this.bounds = bounds;
+	}
+	/**
+	 * @return the state
+	 */
+	public StatePolicy getState() {
+		return state;
+	}
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(StatePolicy state) {
+		this.state = state;
 	}
 }

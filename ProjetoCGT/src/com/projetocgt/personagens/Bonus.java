@@ -1,12 +1,17 @@
 package com.projetocgt.personagens;
 
+import java.util.ArrayList;
+
+import cgt.policy.AIPolicy;
+import cgt.policy.BonusPolicy;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class Bonus {
+public class Bonus extends GameObject{
 	//private LabelID labelID;
-	//private AIPolicy move;
+	private AIPolicy move;
 	private int score;
 	private boolean destroyable;
 	private int lifetime;
@@ -15,8 +20,8 @@ public class Bonus {
 	private float posXColider, posYColider;
 	private Rectangle rectangle;
 	private Texture texture;
-	private SpriteSheet spriteSheet;
-	//private ArrayList<BonusPolicy> policys;
+	//private SpriteSheet spriteSheet;
+	private ArrayList<BonusPolicy> policys;
 	
 	public Bonus(Vector2 position, float width, float height, float colider, float posXColider, float posYColider) {
 		this.setPosition(position);		//Posicao inicial
@@ -118,16 +123,29 @@ public class Bonus {
 	public void setBounds(Rectangle bounds) {
 		this.bounds = bounds;
 	}
+	
 	/**
-	 * @return the spriteSheet
+	 * @return the move
 	 */
-	public SpriteSheet getSpriteSheet() {
-		return spriteSheet;
+	public AIPolicy getMove() {
+		return move;
 	}
 	/**
-	 * @param spriteSheet the spriteSheet to set
+	 * @param move the move to set
 	 */
-	public void setSpriteSheet(SpriteSheet spriteSheet) {
-		this.spriteSheet = spriteSheet;
+	public void setMove(AIPolicy move) {
+		this.move = move;
+	}
+	/**
+	 * @return the policys
+	 */
+	public ArrayList<BonusPolicy> getPolicys() {
+		return policys;
+	}
+	/**
+	 * @param policys the policys to set
+	 */
+	public void setPolicys(ArrayList<BonusPolicy> policys) {
+		this.policys = policys;
 	}
 }

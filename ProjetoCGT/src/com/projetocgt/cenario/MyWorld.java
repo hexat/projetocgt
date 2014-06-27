@@ -10,7 +10,7 @@ import com.progetocgt.util.ProjectileOrientation;
 import com.projetocgt.personagens.ActorCGT;
 import com.projetocgt.personagens.Bonus;
 import com.projetocgt.personagens.Enemy;
-import com.projetocgt.personagens.CGTOpposite;
+import com.projetocgt.personagens.Opposite;
 import com.projetocgt.personagens.Projectile;
 import com.projetocgt.personagens.SpriteSheet;
 /**
@@ -22,7 +22,7 @@ public class MyWorld {
 	
 	ArrayList<ActorCGT> listaActor = new ArrayList<ActorCGT>();
 	ArrayList<Projectile> listaDeProjectile = new ArrayList<Projectile>();
-	ArrayList<CGTOpposite> listaDeOpposite = new ArrayList<CGTOpposite>();
+	ArrayList<Opposite> listaDeOpposite = new ArrayList<Opposite>();
 	ArrayList<Bonus> listaDeBonus = new ArrayList<Bonus>();
 	ArrayList<Enemy> listaDeEnemy = new ArrayList<Enemy>();
 	private ActorCGT personagemActor;
@@ -54,7 +54,7 @@ public class MyWorld {
 		 */
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
-				CGTOpposite opositorCasa = new CGTOpposite(new Vector2(450*(i+1)+i*20,400*(j+1)+j*90), 300, 300, 300, 0, 0);
+				Opposite opositorCasa = new Opposite(new Vector2(450*(i+1)+i*20,400*(j+1)+j*90), 300, 300, 300, 0, 0);
 				//opositorCasa.setTexture(new Texture("data/Cenario/casa_sprite_sheet.png"));
 				opositorCasa.setBlock(true);
 				opositorCasa.setDestroyable(false);
@@ -185,14 +185,14 @@ public class MyWorld {
 	/**
 	 * @return the listaDeOpposite
 	 */
-	public ArrayList<CGTOpposite> getListaDeOpposite() {
+	public ArrayList<Opposite> getListaDeOpposite() {
 		return listaDeOpposite;
 	}
 
 	/**
 	 * @param listaDeOpposite the listaDeOpposite to set
 	 */
-	public void setListaDeOpposite(ArrayList<CGTOpposite> listaDeOpposite) {
+	public void setListaDeOpposite(ArrayList<Opposite> listaDeOpposite) {
 		this.listaDeOpposite = listaDeOpposite;
 	}
 	/**

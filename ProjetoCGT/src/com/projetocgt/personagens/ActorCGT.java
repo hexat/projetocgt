@@ -1,4 +1,8 @@
 package com.projetocgt.personagens;
+import java.util.ArrayList;
+import cgt.core.CGTProjectile;
+import cgt.util.Jump;
+import cgt.util.Move;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.progetocgt.policy.StatePolicy;
@@ -23,6 +27,9 @@ public class ActorCGT extends GameObject{
 	private float posXColider, posYColider; 
 	private SpriteSheet spriteSheet;
 	private DirectionPolicy directionPolicy;
+	private ArrayList<Move> moves;
+	private ArrayList<Jump> jumps;
+	private ArrayList<CGTProjectile> projectiles;
 	private int jumpDefault;
 	private int fireDefault;
 	
@@ -190,5 +197,47 @@ public class ActorCGT extends GameObject{
 	 */
 	public void setFireDefault(int fireDefault) {
 		this.fireDefault = fireDefault;
+	}
+
+	/**
+	 * @return the moves
+	 */
+	public ArrayList<Move> getMoves() {
+		return moves;
+	}
+
+	/**
+	 * @param moves the moves to set
+	 */
+	public void setMoves(ArrayList<Move> moves) {
+		this.moves = moves;
+	}
+
+	/**
+	 * @return the jumps
+	 */
+	public ArrayList<Jump> getJumps() {
+		return jumps;
+	}
+
+	/**
+	 * @param jumps the jumps to set
+	 */
+	public void setJumps(ArrayList<Jump> jumps) {
+		this.jumps = jumps;
+	}
+
+	/**
+	 * @return the projectiles
+	 */
+	public ArrayList<CGTProjectile> getProjectiles() {
+		return projectiles;
+	}
+
+	/**
+	 * @param projectiles the projectiles to set
+	 */
+	public void setProjectiles(ArrayList<CGTProjectile> projectiles) {
+		this.projectiles = projectiles;
 	}
 }

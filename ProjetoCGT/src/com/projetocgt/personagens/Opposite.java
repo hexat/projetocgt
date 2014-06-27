@@ -1,9 +1,13 @@
 package com.projetocgt.personagens;
 
+import java.util.ArrayList;
+
+import cgt.behaviors.Behavior;
+
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-public class CGTOpposite extends GameObject{
+public class Opposite extends GameObject{
 	//private AIPolicy move;
 	private boolean block;
 	private boolean destroyable;
@@ -14,7 +18,7 @@ public class CGTOpposite extends GameObject{
 	private Rectangle bounds = new Rectangle();		// Area que sera' desenhado o personagem
 	private float posXColider, posYColider; 
 	private Rectangle rectangle;
-
+	private ArrayList<Behavior> behaviors;
 	/**
 	 * 
 	 * @param position posicao na tela
@@ -24,7 +28,7 @@ public class CGTOpposite extends GameObject{
 	 * @param posXColider
 	 * @param posYColider
 	 */
-	public CGTOpposite(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ){
+	public Opposite(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ){
 		this.setPosition(position);		//Posicao inicial
 		this.bounds.height=height;
 		this.bounds.width=width;
@@ -135,5 +139,17 @@ public class CGTOpposite extends GameObject{
 	 */
 	public void setRectangle(Rectangle rectangle) {
 		this.rectangle = rectangle;
+	}
+	/**
+	 * @return the behaviors
+	 */
+	public ArrayList<Behavior> getBehaviors() {
+		return behaviors;
+	}
+	/**
+	 * @param behaviors the behaviors to set
+	 */
+	public void setBehaviors(ArrayList<Behavior> behaviors) {
+		this.behaviors = behaviors;
 	}
 }

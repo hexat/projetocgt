@@ -99,12 +99,12 @@ public class WorldController {
 
 	public void firePressed() {
 		keys.get(keys.put(Keys.FIRE, true));
-		/*for(int i=0;i<world.getListaDeProjectili().size();i++){
-			if(world.getListaDeProjectili().get(i).getActionFire().getInputs().get(0) == InputPolicy.GO_TAP){
+		for(int i=0;i<world.getListaDeProjectili().size();i++){
+			//if(world.getListaDeProjectili().get(i).getActionFire().getInputs().get(0) == InputPolicy.GO_TAP){
 				world.getListaDeProjectili().get(i).setPosition(bob.getPosition());
 				world.getListaDeProjectili().get(i).setFlagAtivar(true);	
-			}
-		}*/
+			//}
+		}
 		
 	}
 

@@ -2,8 +2,8 @@ package com.projetocgt.personagens;
 
 import java.util.ArrayList;
 
+import cgt.core.CGTGameObject;
 import cgt.unit.ActionFire;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -32,6 +32,7 @@ public class Projectile {
 	private Rectangle rectangle;
 	private SpriteSheet spriteSheet;
 	ArrayList<ProjectileOrientation> listaDeProjectileOrientation = new ArrayList<ProjectileOrientation>();
+	private CGTGameObject owner;
 	/***
 	 * Recebe uma posicao inicial
 	 * @param position
@@ -243,6 +244,18 @@ public class Projectile {
 	public void setListaDeProjectileOrientation(
 			ArrayList<ProjectileOrientation> listaDeProjectileOrientation) {
 		this.listaDeProjectileOrientation = listaDeProjectileOrientation;
+	}
+	/**
+	 * @return the owner
+	 */
+	public CGTGameObject getOwner() {
+		return owner;
+	}
+	/**
+	 * @param owner the owner to set
+	 */
+	public void setOwner(CGTGameObject owner) {
+		this.owner = owner;
 	}
 	
 }
