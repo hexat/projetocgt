@@ -7,7 +7,7 @@ import com.progetocgt.policy.StatePolicy;
  * cada personagem sofre uma acao.
  * @autor Bruno Roberto
  */
-public class CGTActor extends CGTGameObject{
+public class ActorCGT extends GameObject{
 
 	public enum DirectionPolicy {
 		FOUR_DIRECTION 
@@ -25,12 +25,13 @@ public class CGTActor extends CGTGameObject{
 	private DirectionPolicy directionPolicy;
 	private int jumpDefault;
 	private int fireDefault;
+	
 	/**
 	 * Construtor padrao que recebe uma posicao inicial, um life e verifica se o personagem e'
 	 * um opositor ou não.
 	 * @param position,life,opositor,bonus,size, colider
 	 */
-	public CGTActor(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ) {
+	public ActorCGT(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ) {
 		this.position = position;		//Posicao inicial
 		this.bounds.height = width;		//Altura do personagem (Altura da area onde o personagem sera desenhado)
 		this.bounds.width =  height;		//Largura do personagem (Largura da area onde o personagem sera desenhado)
@@ -39,6 +40,10 @@ public class CGTActor extends CGTGameObject{
 		this.rectPer = new Rectangle(position.x+this.posXColider,position.y+this.posYColider,colider,colider);
 		
 		this.directionPolicy = DirectionPolicy.FOUR_DIRECTION;
+	}
+	
+	public ActorCGT(){
+		
 	}
 	
 	/**

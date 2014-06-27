@@ -2,6 +2,8 @@ package com.projetocgt.personagens;
 
 import java.util.ArrayList;
 
+import cgt.unit.ActionFire;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -14,7 +16,7 @@ import com.progetocgt.util.ProjectileOrientation;
  */
 public class CGTProjectile {
 	private boolean flagAtivar;
-	private String actionFire;
+	private ActionFire actionFire;
 	private int numFiresForOneInput;
 	private int damage;
 	private int interval;
@@ -208,13 +210,13 @@ public class CGTProjectile {
 	/**
 	 * @return the actionFire
 	 */
-	public String getActionFire() {
+	public ActionFire getActionFire() {
 		return actionFire;
 	}
 	/**
 	 * @param actionFire the actionFire to set
 	 */
-	public void setActionFire(String actionFire) {
+	public void setActionFire(ActionFire actionFire) {
 		this.actionFire = actionFire;
 	}
 	/**

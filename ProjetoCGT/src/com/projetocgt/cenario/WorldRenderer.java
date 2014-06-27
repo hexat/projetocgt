@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-import com.projetocgt.personagens.CGTActor;
+import com.projetocgt.personagens.ActorCGT;
 
 /**
  * Class utilizada para renderizar imagens do jogo na tela.Isso inclui Actor, Opposites, Bonus...
@@ -21,7 +21,7 @@ public class WorldRenderer   {
 	
 	private MyWorld world;			//Declara a variavel do tipo World que sera passada de parametro no renderer 
 	private OrthographicCamera camera;	//Declara a variavel da camera
-	private CGTActor personagem;
+	private ActorCGT personagem;
 	private int interval; 
 	private int ammo;
 	
@@ -197,7 +197,7 @@ public class WorldRenderer   {
 		}
 		debugRenderer.end();
 	}
-	void damageCGTActor(CGTActor personagem){
+	void damageCGTActor(ActorCGT personagem){
 		for(int i=0; i < world.getListaDeEnemy().size(); i++){
 			if(world.getListaDeEnemy().get(i).getRectangle().overlaps(personagem.getRectPer())){
 				personagem.setLife(personagem.getLife()-world.getListaDeEnemy().get(i).getDamage());

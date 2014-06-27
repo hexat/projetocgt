@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.progetocgt.behaviors.Behavior;
 
-public class CGTEnemy extends CGTGameObject{
+public class CGTEnemy extends GameObject{
 	private int damage;
 	private ArrayList<Behavior> behaviors;
 	private boolean block;

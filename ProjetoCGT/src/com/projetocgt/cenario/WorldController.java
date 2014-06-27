@@ -3,9 +3,12 @@ package com.projetocgt.cenario;
 import java.util.HashMap;
 import java.util.Map;
 
+import cgt.policy.InputPolicy;
+import cgt.unit.ActionFire;
+
 import com.progetocgt.policy.StatePolicy;
-import com.projetocgt.personagens.CGTActor;
-import com.projetocgt.personagens.CGTActor.DirectionPolicy;
+import com.projetocgt.personagens.ActorCGT;
+import com.projetocgt.personagens.ActorCGT.DirectionPolicy;
 import com.projetocgt.personagens.SpriteSheet;
 
 /**
@@ -21,7 +24,7 @@ public class WorldController {
 	};
 
 	private MyWorld world;
-	private CGTActor bob;
+	private ActorCGT bob;
 	private SpriteSheet actorAnimation;
 	private WorldRenderer renderer;
 	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
@@ -96,13 +99,12 @@ public class WorldController {
 
 	public void firePressed() {
 		keys.get(keys.put(Keys.FIRE, true));
-		for(int i=0;i<world.getListaDeProjectili().size();i++){
-			if(world.getListaDeProjectili().get(i).getActionFire() == "A"){
+		/*for(int i=0;i<world.getListaDeProjectili().size();i++){
+			if(world.getListaDeProjectili().get(i).getActionFire().getInputs().get(0) == InputPolicy.GO_TAP){
 				world.getListaDeProjectili().get(i).setPosition(bob.getPosition());
-				world.getListaDeProjectili().get(i).setFlagAtivar(true);
-				
+				world.getListaDeProjectili().get(i).setFlagAtivar(true);	
 			}
-		}
+		}*/
 		
 	}
 

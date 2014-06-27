@@ -50,7 +50,7 @@ public class SpriteSheet {
 	 *        FRAME_COLS
 	 *        		Informa o numero de colunas do Sprite Sheet  
 	 */
-	public void loadSpiteCGTACtor(String caminho, int FRAME_ROWS, int FRAME_COLS) {
+	public void loadSpriteActorCGT(String caminho, int FRAME_ROWS, int FRAME_COLS) {
 		walkSheet = new Texture(Gdx.files.internal(caminho));
 		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
 				walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight()
@@ -93,7 +93,7 @@ public class SpriteSheet {
 	 *            O personagem que a funcao ira fazer a animacao
 	 * @return bobFrama o freme do personagem
 	 */
-	public TextureRegion CGTActorAnimation(CGTActor personagem) {
+	public TextureRegion CGTActorAnimation(ActorCGT personagem) {
 
 		// animacao inicial do personagem
 		bobFrame = walkAnimationDown.getKeyFrame(personagem.getStateTime(),false);
@@ -133,7 +133,7 @@ public class SpriteSheet {
 		walkCGTAnimation = new Animation(RUNNING_FRAME_DURATION,walkCGTFrames);
 	}
 
-	public TextureRegion CGTAnimation(CGTActor personagem) {
+	public TextureRegion CGTAnimation(ActorCGT personagem) {
 		return walkCGTAnimation.getKeyFrame(personagem.getStateTime(), true);
 	}
 

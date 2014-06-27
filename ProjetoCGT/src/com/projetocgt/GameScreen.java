@@ -171,14 +171,14 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
 		//TODO Verificar se a politica se toque foi habilitada
-		//controller.firePressed();
+		controller.firePressed();
 		return true;
 	}
 
 	@Override
 	public boolean touchUp(int x, int y, int pointer, int button) {
 		//TODO Verificar se a politica se toque foi habilitada
-		//controller.fireReleased();
+		controller.fireReleased();
 		return true;
 	}
 	

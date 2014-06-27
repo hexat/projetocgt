@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.progetocgt.policy.StatePolicy;
 import com.progetocgt.util.ProjectileOrientation;
-import com.projetocgt.personagens.CGTActor;
+import com.projetocgt.personagens.ActorCGT;
 import com.projetocgt.personagens.CGTBonus;
 import com.projetocgt.personagens.CGTEnemy;
 import com.projetocgt.personagens.CGTOpposite;
@@ -20,12 +20,12 @@ import com.projetocgt.personagens.SpriteSheet;
  */
 public class MyWorld {
 	
-	ArrayList<CGTActor> listaActor = new ArrayList<CGTActor>();
+	ArrayList<ActorCGT> listaActor = new ArrayList<ActorCGT>();
 	ArrayList<CGTProjectile> listaDeProjectile = new ArrayList<CGTProjectile>();
 	ArrayList<CGTOpposite> listaDeOpposite = new ArrayList<CGTOpposite>();
 	ArrayList<CGTBonus> listaDeBonus = new ArrayList<CGTBonus>();
 	ArrayList<CGTEnemy> listaDeEnemy = new ArrayList<CGTEnemy>();
-	private CGTActor personagemActor;
+	private ActorCGT personagemActor;
 	private Texture backGround;
 	
 	public MyWorld() {
@@ -38,7 +38,7 @@ public class MyWorld {
 		
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
 		
-		personagemActor = new CGTActor(new Vector2(330, 400), 100f, 100f, 80f, 10f, 10f);
+		personagemActor = new ActorCGT(new Vector2(330, 400), 100f, 100f, 80f, 10f, 10f);
 		personagemActor.setSpeed(180);
 		personagemActor.setLife(3);
 		SpriteSheet spriteSheetActor = new SpriteSheet();
@@ -47,7 +47,7 @@ public class MyWorld {
 		spriteSheetActor.setLinhaDoSpriteDown(2);
 		spriteSheetActor.setLinhaDoSpriteLeft(1);
 		spriteSheetActor.setLinhaDoSpriteRight(1);
-		spriteSheetActor.loadSpiteCGTACtor("data/SpriteCGTActor/SpriteSheet_bombeiro.png",5,3);
+		spriteSheetActor.loadSpriteActorCGT("data/SpriteCGTActor/SpriteSheet_bombeiro.png",5,3);
 		
 		/* Esse opposite nao tem animacao, seria melhor adicionar uma textura do que uma animacao 
 		 * um por um.
@@ -103,7 +103,8 @@ public class MyWorld {
 		//projetilAgua.setTexture(new Texture("data/CGTProjectile/SpriteSheet_agua.png"));
 		projetilAgua.setSpriteSheet(new SpriteSheet());
 		//Indica que a minha animacao e' um por um
-		projetilAgua.setActionFire("A");
+		//projetilAgua.setActionFire(ActionCreator.getInstance().newActionFire(ActionFirePolicy.FIRE));
+		//projetilAgua.getActionFire().addInput(InputPolicy.GO_TAP);
 		projetilAgua.getVelocityInitial().x= 100f;
 		projetilAgua.setInterval(1);
 		projetilAgua.setAmmo(2);
@@ -148,6 +149,13 @@ public class MyWorld {
 		listaDeProjectile.add(projetilAgua);
 	}
 
+	private void createWorld(String fileCGT){
+		//CGTGameWorld world = CGTGameWorld.lerStream(fileCGT);
+		//personagemActor = new ActorCGT(world.getSprite());
+		//for
+		//inimigo = new inimigo()
+		
+	}
 	/**
 	 * @return the backGround
 	 */
@@ -190,13 +198,13 @@ public class MyWorld {
 	/**
 	 * @return the personagem
 	 */
-	public CGTActor getPersonagem() {
+	public ActorCGT getPersonagem() {
 		return personagemActor;
 	}
 	/**
 	 * @return the listaActor
 	 */
-	public ArrayList<CGTActor> getListaActor() {
+	public ArrayList<ActorCGT> getListaActor() {
 		return listaActor;
 	}
 	/**
