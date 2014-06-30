@@ -21,9 +21,7 @@ public class GameScreen implements Screen, InputProcessor {
 	private WorldController	controller;
 	private float acelerometroX=0;
 	private Music music;
-
 	private float acelerometroY;
-
 	private boolean flagTouch;
 	public GameScreen() {
 		super();

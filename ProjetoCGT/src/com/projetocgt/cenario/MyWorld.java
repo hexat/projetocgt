@@ -2,6 +2,8 @@ package com.projetocgt.cenario;
 
 import java.util.ArrayList;
 
+import cgt.behaviors.Direction;
+import cgt.policy.DirectionPolicy;
 import cgt.policy.StatePolicy;
 
 import com.badlogic.gdx.Gdx;
@@ -96,6 +98,21 @@ public class MyWorld {
 		enemyFogo3.getSpriteSheet().loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
 		listaDeEnemy.add(enemyFogo3);
 		
+		
+		Direction direction = new Direction(DirectionPolicy.UP_AND_DOWN);
+		direction.setMaxSpeed(2);
+		
+		//Instancia o opposite fogo
+		Enemy carro = new Enemy(new Vector2(800,1050), 50, 50, 50, 0, 0);
+		carro.setBlock(true);
+		carro.setDestroyable(false);
+		carro.setDamage(10);
+		carro.addBehavior(direction);
+		//carro.setLife(200);
+		carro.setSpriteSheet(new SpriteSheet());
+		carro.getSpriteSheet().loadingSpriteSheet("data/Enemy/Carro.png", 1, 1);
+		listaDeEnemy.add(carro);
+		
 		Bonus hidrate = new Bonus(new Vector2(800,800),50, 50, 50, 0, 0);
 		hidrate.setTexture(new Texture("data/CGTBonus/SpriteSheet_tubo.png"));
 		listaDeBonus.add(hidrate);
@@ -108,7 +125,7 @@ public class MyWorld {
 		//projetilAgua.getActionFire().addInput(InputPolicy.GO_TAP);
 		projetilAgua.getVelocityInitial().x= 100f;
 		projetilAgua.setInterval(1);
-		projetilAgua.setAmmo(3);
+		projetilAgua.setAmmo(4);
 		projetilAgua.getSpriteSheet().loadingSpriteSheet("data/CGTProjectile/SpriteSheet_agua.png", 2, 2);
 		
 		ProjectileOrientation direcaoRight = new ProjectileOrientation();

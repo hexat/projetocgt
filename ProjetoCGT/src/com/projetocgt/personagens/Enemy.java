@@ -2,11 +2,11 @@ package com.projetocgt.personagens;
 
 import java.util.ArrayList;
 
+import cgt.behaviors.Behavior;
 import cgt.policy.StatePolicy;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.progetocgt.behaviors.Behavior;
 
 public class Enemy extends GameObject{
 	private int damage;
@@ -27,6 +27,7 @@ public class Enemy extends GameObject{
 		this.posXColider=posXColider;
 		this.posYColider=posYColider;
 		this.setRectangle(new Rectangle(position.x+this.posXColider,position.y+this.posYColider,colider,colider));
+		behaviors = new ArrayList<Behavior>();
 	}
 	/**
 	 * Utilizada para ficar atualizando a posicao do personagem CGTEnemy
@@ -78,6 +79,14 @@ public class Enemy extends GameObject{
 	public ArrayList<Behavior> getBehaviors() {
 		return behaviors;
 	}
+	/**
+	 * 
+	 * @param behavior
+	 */
+	public void addBehavior(Behavior behavior){
+		this.behaviors.add(behavior);
+	}
+	
 	/**
 	 * @param behaviors the behaviors to set
 	 */
