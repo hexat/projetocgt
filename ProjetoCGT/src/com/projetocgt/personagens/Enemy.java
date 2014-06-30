@@ -19,6 +19,8 @@ public class Enemy extends GameObject{
 	private float posXColider, posYColider; 
 	private Rectangle rectangle;
 	private StatePolicy state;
+	private Vector2 velocity = new Vector2();		//Vetor que informa a velocidade do personagem
+	private float speed;
 	
 	public Enemy(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ){
 		this.setPosition(position);		//Posicao inicial
@@ -34,6 +36,7 @@ public class Enemy extends GameObject{
 	 * @param delta
 	 */
 	public void update(float delta) {
+		position.add(velocity.cpy().scl(delta));
 		rectangle.x=this.position.x+posXColider;
 		rectangle.y=this.position.y+posYColider;
 	}
@@ -177,5 +180,29 @@ public class Enemy extends GameObject{
 	 */
 	public void setState(StatePolicy state) {
 		this.state = state;
+	}
+	/**
+	 * @return the velocity
+	 */
+	public Vector2 getVelocity() {
+		return velocity;
+	}
+	/**
+	 * @param velocity the velocity to set
+	 */
+	public void setVelocity(Vector2 velocity) {
+		this.velocity = velocity;
+	}
+	/**
+	 * @return the speed
+	 */
+	public float getSpeed() {
+		return speed;
+	}
+	/**
+	 * @param speed the speed to set
+	 */
+	public void setSpeed(float speed) {
+		this.speed = speed;
 	}
 }

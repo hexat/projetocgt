@@ -163,11 +163,17 @@ public class WorldController {
 		for (int i=0; i<world.getListaDeOpposite().size(); i++) {
 			world.getListaDeOpposite().get(i).update(delta);
 		}
+		
 		for (int i=0; i<world.getListaDeBonus().size(); i++) {
 			world.getListaDeBonus().get(i).update(delta);
 		}
+		
 		for (int i=0; i<world.getListaDeProjectili().size(); i++) {
 			world.getListaDeProjectili().get(i).update(delta);
+		}
+		
+		for (int i=0; i<world.getListaDeEnemy().size(); i++) {
+			world.getListaDeEnemy().get(i).update(delta);
 		}
 	}
 	

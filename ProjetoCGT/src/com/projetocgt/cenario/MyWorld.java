@@ -73,6 +73,7 @@ public class MyWorld {
 		//opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
 		enemyFogo.setBlock(false);
 		enemyFogo.setDamage(1);
+		enemyFogo.setDestroyable(true);
 		enemyFogo.setLife(50);
 		enemyFogo.setSpriteSheet(new SpriteSheet());
 		enemyFogo.getSpriteSheet().loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
@@ -82,6 +83,7 @@ public class MyWorld {
 		Enemy enemyFogo2 = new Enemy(new Vector2(200,1050), 50, 50, 50, 0, 0);
 		//opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
 		enemyFogo2.setBlock(true);
+		enemyFogo2.setDestroyable(true);
 		enemyFogo2.setDamage(1);
 		enemyFogo2.setLife(200);
 		enemyFogo2.setSpriteSheet(new SpriteSheet());
@@ -92,6 +94,7 @@ public class MyWorld {
 		Enemy enemyFogo3 = new Enemy(new Vector2(200,1500), 50, 50, 50, 0, 0);
 		//opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
 		enemyFogo3.setBlock(true);
+		enemyFogo3.setDestroyable(true);
 		enemyFogo3.setDamage(2);
 		enemyFogo3.setLife(100);
 		enemyFogo3.setSpriteSheet(new SpriteSheet());
@@ -108,12 +111,13 @@ public class MyWorld {
 		carro.setDestroyable(false);
 		carro.setDamage(10);
 		carro.addBehavior(direction);
+		carro.setSpeed(100);
 		//carro.setLife(200);
 		carro.setSpriteSheet(new SpriteSheet());
 		carro.getSpriteSheet().loadingSpriteSheet("data/Enemy/Carro.png", 1, 1);
 		listaDeEnemy.add(carro);
 		
-		Bonus hidrate = new Bonus(new Vector2(800,800),50, 50, 50, 0, 0);
+		Bonus hidrate = new Bonus(new Vector2(1000,800),50, 50, 50, 0, 0);
 		hidrate.setTexture(new Texture("data/CGTBonus/SpriteSheet_tubo.png"));
 		listaDeBonus.add(hidrate);
 		
@@ -124,8 +128,8 @@ public class MyWorld {
 		//projetilAgua.setActionFire(ActionCreator.getInstance().newActionFire(ActionFirePolicy.FIRE));
 		//projetilAgua.getActionFire().addInput(InputPolicy.GO_TAP);
 		projetilAgua.getVelocityInitial().x= 100f;
-		projetilAgua.setInterval(1);
-		projetilAgua.setAmmo(4);
+		projetilAgua.setInterval(2);
+		projetilAgua.setAmmo(5);
 		projetilAgua.getSpriteSheet().loadingSpriteSheet("data/CGTProjectile/SpriteSheet_agua.png", 2, 2);
 		
 		ProjectileOrientation direcaoRight = new ProjectileOrientation();

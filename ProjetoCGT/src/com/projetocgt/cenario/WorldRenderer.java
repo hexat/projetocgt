@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
 import com.projetocgt.personagens.ActorCGT;
 
 /**
@@ -87,16 +85,24 @@ public class WorldRenderer   {
 			if(world.getListaDeOpposite().get(i).getLife()>=0)
 				spriteBatch.draw(world.getListaDeOpposite().get(i).getSpriteSheet().CGTAnimation(personagem), world.listaDeOpposite.get(i).getPosition().x, world.listaDeOpposite.get(i).getPosition().y, world.listaDeOpposite.get(i).getBounds().width, world.listaDeOpposite.get(i).getBounds().height);
 		}
+		
 		//Desenha todos os Enemy
 		for(int i =0;i<world.getListaDeEnemy().size();i++){
-			if(world.getListaDeEnemy().get(i).getLife()>=0)
+			if(world.getListaDeEnemy().get(i).getLife()>=0){
+				//TODO Verifica qual a Direction Policy
+				world.getListaDeEnemy().get(i).getVelocity().y=-world.getListaDeEnemy().get(i).getSpeed();
+				//world.getListaDeEnemy().get(i).getVelocity().x=-world.getListaDeEnemy().get(i).getSpeed();
 				spriteBatch.draw(world.getListaDeEnemy().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeEnemy().get(i).getPosition().x, world.getListaDeEnemy().get(i).getPosition().y, world.getListaDeEnemy().get(i).getBounds().width, world.getListaDeEnemy().get(i).getBounds().height);
+				
+			}
 		}
+		
 		//Desenha todos os Bonus
 		for(int i =0;i<world.getListaDeBonus().size();i++){
 			spriteBatch.draw(world.getListaDeBonus().get(i).getTexture(), world.getListaDeBonus().get(i).getPosition().x, world.getListaDeBonus().get(i).getPosition().y, world.getListaDeBonus().get(i).getBounds().width, world.getListaDeBonus().get(i).getBounds().height);
 			//spriteBatch.draw(world.listaDeBonus.get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeBonus().get(i).getPosition().x, world.getListaDeBonus().get(i).getPosition().y, world.getListaDeBonus().get(i).getBounds().width, world.getListaDeBonus().get(i).getBounds().height);
 		}
+		
 		//Desenha todos os Projectile
 		for(int i =0;i<world.getListaDeProjectili().size();i++){
 			
@@ -125,8 +131,8 @@ public class WorldRenderer   {
 				
 				//Percorre a lista de Enemy
 				for(int j=0; j < world.getListaDeEnemy().size(); j++){
-					//verifica se algum Enemy esta colindindo com algum Projectile
-					if(world.getListaDeEnemy().get(j).getRectangle().overlaps(world.getListaDeProjectili().get(i).getRectangle())){
+					//verifica se algum Enemy destrutivel esta colindindo com algum Projectile
+					if(world.getListaDeEnemy().get(j).getRectangle().overlaps(world.getListaDeProjectili().get(i).getRectangle()) && world.getListaDeEnemy().get(j).isDestroyable()){
 						world.getListaDeEnemy().get(j).setLife(world.getListaDeEnemy().get(j).getLife()-1);
 						//world.getListaDeOpposite().get(j).setBlock(false);
 						if(world.getListaDeEnemy().get(j).getLife()==0)//Se o life for zero remove da cena
@@ -246,24 +252,6 @@ public class WorldRenderer   {
 		return colisao;
 	}
 	
-	/**
-	 * 
-	 * @param n
-	 */
-	public void ammoDown(int n){
-		n--;
-	}
-	
-	public void timerProjectili(int time){
-		Timer.schedule(new Task(){
-			@Override
-			public void run() {
-				//verifica se o ammo é zero
-				//if()
-				Timer.instance().clear();
-			}
-		}, time);
-	}
 	
 	/**
 	 * @return the camera
