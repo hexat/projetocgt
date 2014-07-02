@@ -89,12 +89,16 @@ public class WorldRenderer   {
 		//Desenha todos os Enemy
 		for(int i =0;i<world.getListaDeEnemy().size();i++){
 			if(world.getListaDeEnemy().get(i).getLife()>=0){
-				//TODO Verifica qual a Direction Policy
-				world.getListaDeEnemy().get(i).getVelocity().y=-world.getListaDeEnemy().get(i).getSpeed();
-				//world.getListaDeEnemy().get(i).getVelocity().x=-world.getListaDeEnemy().get(i).getSpeed();
 				spriteBatch.draw(world.getListaDeEnemy().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeEnemy().get(i).getPosition().x, world.getListaDeEnemy().get(i).getPosition().y, world.getListaDeEnemy().get(i).getBounds().width, world.getListaDeEnemy().get(i).getBounds().height);
-				
-			}
+				//TODO Verifica qual a Direction Policy
+				//if(world.getListaDeEnemy().get(i).getPosition().y >= 400){
+					//world.getListaDeEnemy().get(i).getVelocity().y=-world.getListaDeEnemy().get(i).getSpeed();
+					//System.out.print(world.getListaDeEnemy().get(i).getPosition().y+"\n");
+				//}
+				//else{
+					//world.getListaDeEnemy().get(i).getVelocity().y=0;
+					//}
+				}
 		}
 		
 		//Desenha todos os Bonus

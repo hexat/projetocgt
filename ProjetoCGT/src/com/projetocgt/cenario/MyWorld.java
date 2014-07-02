@@ -106,7 +106,7 @@ public class MyWorld {
 		direction.setMaxSpeed(2);
 		
 		//Instancia o opposite fogo
-		Enemy carro = new Enemy(new Vector2(800,1050), 50, 50, 50, 0, 0);
+		Enemy carro = new Enemy(new Vector2(800,2050), 50, 50, 50, 0, 0);
 		carro.setBlock(true);
 		carro.setDestroyable(false);
 		carro.setDamage(10);
@@ -128,8 +128,8 @@ public class MyWorld {
 		//projetilAgua.setActionFire(ActionCreator.getInstance().newActionFire(ActionFirePolicy.FIRE));
 		//projetilAgua.getActionFire().addInput(InputPolicy.GO_TAP);
 		projetilAgua.getVelocityInitial().x= 100f;
-		projetilAgua.setInterval(2);
-		projetilAgua.setAmmo(5);
+		projetilAgua.setInterval(1);
+		projetilAgua.setAmmo(2);
 		projetilAgua.getSpriteSheet().loadingSpriteSheet("data/CGTProjectile/SpriteSheet_agua.png", 2, 2);
 		
 		ProjectileOrientation direcaoRight = new ProjectileOrientation();
