@@ -127,6 +127,7 @@ public class MyWorld {
 		directionUp.setMaxY(600);
 		directionUp.setMinY(400);
 		
+<<<<<<< HEAD
 		Direction directionEight = new Direction(DirectionPolicy.EIGHT_DIRECTION);
 		directionEight.setUp(true);
 		directionEight.setMaxY(600);
@@ -139,6 +140,10 @@ public class MyWorld {
 		fadeCar.setFadeInTime(2);
 		//Instancia o opposite carro
 		Enemy carro = new Enemy(new Vector2(800,400), 50, 50, 50, 0, 0);
+=======
+		//Instancia o opposite fogo
+		Enemy carro = new Enemy(new Vector2(800,2050), 50, 50, 50, 0, 0);
+>>>>>>> 4c7bdb14a95e4ef9daac6ca24e0e8a5f491907bb
 		carro.setBlock(true);
 		carro.setDestroyable(false);
 		carro.setDamage(10);
@@ -160,8 +165,8 @@ public class MyWorld {
 		//projetilAgua.setActionFire(ActionCreator.getInstance().newActionFire(ActionFirePolicy.FIRE));
 		//projetilAgua.getActionFire().addInput(InputPolicy.GO_TAP);
 		projetilAgua.getVelocityInitial().x= 100f;
-		projetilAgua.setInterval(2);
-		projetilAgua.setAmmo(5);
+		projetilAgua.setInterval(1);
+		projetilAgua.setAmmo(2);
 		projetilAgua.getSpriteSheet().loadingSpriteSheet("data/CGTProjectile/SpriteSheet_agua.png", 2, 2);
 		
 		ProjectileOrientation direcaoRight = new ProjectileOrientation();

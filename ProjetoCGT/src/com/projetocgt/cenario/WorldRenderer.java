@@ -101,10 +101,23 @@ public class WorldRenderer   {
 		//Desenha todos os Enemy
 		for(int i =0;i<world.getListaDeEnemy().size();i++){
 			if(world.getListaDeEnemy().get(i).getLife()>=0){
+<<<<<<< HEAD
 				configBehavior(world.getListaDeEnemy().get(i));
 				spriteBatch.setColor(1.0f, 1.0f, 1.0f, world.getListaDeEnemy().get(i).getAlpha());
 				spriteBatch.draw(world.getListaDeEnemy().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeEnemy().get(i).getPosition().x, world.getListaDeEnemy().get(i).getPosition().y, world.getListaDeEnemy().get(i).getBounds().width, world.getListaDeEnemy().get(i).getBounds().height);
 			}
+=======
+				spriteBatch.draw(world.getListaDeEnemy().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeEnemy().get(i).getPosition().x, world.getListaDeEnemy().get(i).getPosition().y, world.getListaDeEnemy().get(i).getBounds().width, world.getListaDeEnemy().get(i).getBounds().height);
+				//TODO Verifica qual a Direction Policy
+				//if(world.getListaDeEnemy().get(i).getPosition().y >= 400){
+					//world.getListaDeEnemy().get(i).getVelocity().y=-world.getListaDeEnemy().get(i).getSpeed();
+					//System.out.print(world.getListaDeEnemy().get(i).getPosition().y+"\n");
+				//}
+				//else{
+					//world.getListaDeEnemy().get(i).getVelocity().y=0;
+					//}
+				}
+>>>>>>> 4c7bdb14a95e4ef9daac6ca24e0e8a5f491907bb
 		}
 
 		//Desenha todos os Bonus
