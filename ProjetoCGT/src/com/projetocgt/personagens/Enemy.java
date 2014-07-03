@@ -21,6 +21,7 @@ public class Enemy extends GameObject{
 	private StatePolicy state;
 	private Vector2 velocity = new Vector2();		//Vetor que informa a velocidade do personagem
 	private float speed;
+	private float alpha; //nivel de transparencia
 	
 	public Enemy(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ){
 		this.setPosition(position);		//Posicao inicial
@@ -28,6 +29,7 @@ public class Enemy extends GameObject{
 		this.bounds.width=width;
 		this.posXColider=posXColider;
 		this.posYColider=posYColider;
+		this.alpha=0f;
 		this.setRectangle(new Rectangle(position.x+this.posXColider,position.y+this.posYColider,colider,colider));
 		behaviors = new ArrayList<Behavior>();
 	}
@@ -204,5 +206,11 @@ public class Enemy extends GameObject{
 	 */
 	public void setSpeed(float speed) {
 		this.speed = speed;
+	}
+	public float getAlpha() {
+		return alpha;
+	}
+	public void setAlpha(float alpha) {
+		this.alpha = alpha;
 	}
 }
