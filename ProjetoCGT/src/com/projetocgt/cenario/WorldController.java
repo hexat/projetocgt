@@ -2,7 +2,6 @@ package com.projetocgt.cenario;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import cgt.policy.StatePolicy;
 import com.projetocgt.personagens.ActorCGT;
 import com.projetocgt.personagens.ActorCGT.DirectionPolicy;

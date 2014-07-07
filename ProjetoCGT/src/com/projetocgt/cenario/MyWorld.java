@@ -40,6 +40,7 @@ public class MyWorld {
 	private void createWorld() {
 		
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
+		//backGround = new Texture(Gdx.files.internal("data/Cenario/pista1280.png"));
 		
 		personagemActor = new ActorCGT(new Vector2(330, 400), 100f, 100f, 80f, 10f, 10f);
 		personagemActor.setSpeed(180);
