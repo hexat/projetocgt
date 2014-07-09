@@ -3,6 +3,8 @@ package com.projetocgt.cenario;
 import java.util.HashMap;
 import java.util.Map;
 import cgt.policy.StatePolicy;
+
+import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.personagens.ActorCGT;
 import com.projetocgt.personagens.ActorCGT.DirectionPolicy;
 import com.projetocgt.personagens.SpriteSheet;
@@ -179,33 +181,46 @@ public class WorldController {
 	private void processInput() {
 		//movimento();
 		if (keys.get(Keys.UP)) {
-			// Verifica se o personagem pode andar
+			//Verifica se o personagem pode andar
 			if (renderer.isColision()) {
 				//bob.setPosition(renderer.getPosAnterior());
 				bob.setState(StatePolicy.LOOKUP);
-			} else {
+				System.out.print("lkfjgokfsghlkxzcghodifghidfhgsdhgudhf");
+			}else {
 				// O personagem esta olhando para a cima
-				if(bob.getVelocity().y!=0)
-					renderer.getCam().position.y+=bob.getSpeed()/60;
+				if(bob.getVelocity().y!=0 && bob.getPosition().y > renderer.getCam().viewportHeight/2)	
+					if( bob.getPosition().y < renderer.getWorld().getBackGround().getHeight()-renderer.getCam().viewportHeight/2)
+						renderer.getCam().position.y+=bob.getSpeed()/60;
+				
 				bob.setState(StatePolicy.LOOKUP);
-				bob.getVelocity().y = bob.getSpeed();
+				if( (bob.getPosition().y + bob.getBounds().height) < renderer.getWorld().getBackGround().getHeight())
+					bob.getVelocity().y = bob.getSpeed();
+				else
+					bob.getVelocity().y = 0;
 			}
 			
 		}
 
 		if (keys.get(Keys.DOWN)) {
 			// Verifica se o personagem pode andar
-			if (renderer.isColision() ) {
+			if (renderer.isColision()) {
 				//bob.setPosition(renderer.getPosAnterior());
 				bob.setState(StatePolicy.LOOKDOWN);
+				System.out.print("lkfjgokfsghlkxzcghodifghidfhgsdhgudhf");
+				//bob.getPosition().y=0;
 			} else {
-				if (bob.getVelocity().y!=0) {
-					renderer.getCam().position.y-=bob.getSpeed()/60;
+				if (bob.getVelocity().y!=0 && bob.getPosition().y > renderer.getCam().viewportHeight/2) {
+					
+					if( bob.getPosition().y < renderer.getWorld().getBackGround().getHeight()-renderer.getCam().viewportHeight/2)
+						renderer.getCam().position.y-=bob.getSpeed()/60;
 				}
 				
 				// O personagem esta olhando para a baixo
 				bob.setState(StatePolicy.LOOKDOWN);
-				bob.getVelocity().y = -bob.getSpeed();
+				if(bob.getPosition().y > 0)
+					bob.getVelocity().y = -bob.getSpeed();
+				else
+					bob.getVelocity().y = 0;
 			}
 			
 		}
@@ -215,12 +230,19 @@ public class WorldController {
 			if (renderer.isColision()) {
 				//bob.setPosition(renderer.getPosAnterior());
 				bob.setState(StatePolicy.LOOKLEFT);
+				System.out.print("lkfjgokfsghlkxzcghodifghidfhgsdhgudhf");
 			} else {
-				if (bob.getVelocity().x != 0) {
-					renderer.getCam().position.x-=bob.getSpeed()/60;
+				if (bob.getVelocity().x != 0 && bob.getPosition().x > renderer.getCam().viewportWidth/2) {
+					verificaLimites();
+					if( bob.getPosition().x < renderer.getWorld().getBackGround().getWidth()-renderer.getCam().viewportWidth/2)
+						renderer.getCam().position.x-=bob.getSpeed()/60;
 				}
+				
 				bob.setState(StatePolicy.LOOKLEFT);
-				bob.getVelocity().x = -bob.getSpeed();;
+				if(bob.getPosition().x > 0)
+					bob.getVelocity().x = -bob.getSpeed();
+				else
+					bob.getVelocity().x = 0;
 			}		
 		}
 		if (keys.get(Keys.RIGHT)) {
@@ -228,12 +250,18 @@ public class WorldController {
 			if (renderer.isColision()) {
 				//bob.setPosition(renderer.getPosAnterior());
 				bob.setState(StatePolicy.LOOKRIGHT);
+				System.out.print("lkfjgokfsghlkxzcghodifghidfhgsdhgudhf");
 			} else {
-				if (bob.getVelocity().x!=0) {
-					renderer.getCam().position.x+=bob.getSpeed()/60;
+				if (bob.getVelocity().x!=0 && bob.getPosition().x > renderer.getCam().viewportWidth/2) {
+					if( bob.getPosition().x < renderer.getWorld().getBackGround().getWidth()-renderer.getCam().viewportWidth/2)
+						renderer.getCam().position.x+=bob.getSpeed()/60;
 				}
+				
 				bob.setState(StatePolicy.LOOKRIGHT);
-				bob.getVelocity().x = bob.getSpeed();;
+				if( (bob.getPosition().x+bob.getBounds().width) < renderer.getWorld().getBackGround().getWidth())
+					bob.getVelocity().x = bob.getSpeed();
+				else
+					bob.getVelocity().x = 0;
 			}	
 		}
 		// Verifica se ambos ou nenhum dos sentidos sao presionados
@@ -253,6 +281,9 @@ public class WorldController {
 			// Vertival speed is 0
 			bob.getVelocity().y = 0;
 		}
+	}
+	public void verificaLimites(){
+		if(renderer.getCam().position.x<0);
 	}
 
 }

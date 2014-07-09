@@ -1,11 +1,8 @@
 package com.projetocgt.cenario;
 
 import java.util.ArrayList;
-
-import cgt.behaviors.Direction;
-import cgt.policy.DirectionPolicy;
-import cgt.policy.StatePolicy;
-
+import cgt.behaviors.*;
+import cgt.policy.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
@@ -42,7 +39,8 @@ public class MyWorld {
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
 		//backGround = new Texture(Gdx.files.internal("data/Cenario/pista1280.png"));
 		
-		personagemActor = new ActorCGT(new Vector2(330, 400), 100f, 100f, 80f, 10f, 10f);
+		//personagemActor = new ActorCGT(new Vector2(330, 800), 100f, 100f, 80f, 10f, 10f);
+		personagemActor = new ActorCGT(new Vector2(800,900), 100f, 100f, 80f, 10f, 10f);
 		personagemActor.setSpeed(180);
 		personagemActor.setLife(3);
 		SpriteSheet spriteSheetActor = new SpriteSheet();
@@ -69,16 +67,28 @@ public class MyWorld {
 				listaDeOpposite.add(opositorCasa);				
 			}
 		}
+		Fade fade = new Fade(FadePolicy.FADE_IN);
+		fade.setFadeInTime(5);
+		
+		Sine sine = new Sine(MovementPolicy.HEIGHT);
+		sine.setMax(100);
+		sine.setMin(50);
+		sine.setAtFirstStep(true);
 		//Instancia o opposite fogo
-		Enemy enemyFogo = new Enemy(new Vector2(200,850), 50, 50, 50, 0, 0);
+		Enemy enemyFogo = new Enemy(new Vector2(400,850), 50, 50, 50, 0, 0);
 		//opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
 		enemyFogo.setBlock(false);
 		enemyFogo.setDamage(1);
 		enemyFogo.setDestroyable(true);
+		enemyFogo.addBehavior(fade);
+		enemyFogo.addBehavior(sine);
 		enemyFogo.setLife(50);
 		enemyFogo.setSpriteSheet(new SpriteSheet());
 		enemyFogo.getSpriteSheet().loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
 		listaDeEnemy.add(enemyFogo);
+		
+		Fade fade2 = new Fade(FadePolicy.FADE_IN);
+		fade2.setFadeInTime(7);
 		
 		//Instancia o opposite fogo
 		Enemy enemyFogo2 = new Enemy(new Vector2(200,1050), 50, 50, 50, 0, 0);
@@ -86,10 +96,14 @@ public class MyWorld {
 		enemyFogo2.setBlock(true);
 		enemyFogo2.setDestroyable(true);
 		enemyFogo2.setDamage(1);
+		enemyFogo2.addBehavior(fade2);
 		enemyFogo2.setLife(200);
 		enemyFogo2.setSpriteSheet(new SpriteSheet());
 		enemyFogo2.getSpriteSheet().loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
 		listaDeEnemy.add(enemyFogo2);
+		
+		Fade fade3 = new Fade(FadePolicy.FADE_IN);
+		fade3.setFadeInTime(10);
 		
 		//Instancia o opposite fogo
 		Enemy enemyFogo3 = new Enemy(new Vector2(200,1500), 50, 50, 50, 0, 0);
@@ -98,21 +112,38 @@ public class MyWorld {
 		enemyFogo3.setDestroyable(true);
 		enemyFogo3.setDamage(2);
 		enemyFogo3.setLife(100);
+		enemyFogo3.addBehavior(fade3);
 		enemyFogo3.setSpriteSheet(new SpriteSheet());
 		enemyFogo3.getSpriteSheet().loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
 		listaDeEnemy.add(enemyFogo3);
 		
+		Direction direction = new Direction(DirectionPolicy.LEFT_AND_RIGHT);
+		direction.setLeft(true);
+		direction.setMaxX(800);
+		direction.setMinX(330);
 		
-		Direction direction = new Direction(DirectionPolicy.UP_AND_DOWN);
-		direction.setMaxSpeed(2);
+		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
+		directionUp.setUp(true);
+		directionUp.setMaxY(600);
+		directionUp.setMinY(400);
 		
-		//Instancia o opposite fogo
-		Enemy carro = new Enemy(new Vector2(800,2050), 50, 50, 50, 0, 0);
+		Direction directionEight = new Direction(DirectionPolicy.EIGHT_DIRECTION);
+		directionEight.setUp(true);
+		directionEight.setMaxY(600);
+		directionEight.setMinY(400);
+		directionEight.setMaxX(800);
+		directionEight.setMinX(330);
+		
+		
+		Fade fadeCar = new Fade(FadePolicy.FADE_IN);
+		fadeCar.setFadeInTime(2);
+		//Instancia o opposite carro
+		Enemy carro = new Enemy(new Vector2(800,400), 50, 50, 50, 0, 0);
 		carro.setBlock(true);
 		carro.setDestroyable(false);
 		carro.setDamage(10);
-		carro.addBehavior(direction);
-		carro.setSpeed(100);
+		carro.addBehavior(fadeCar);
+		carro.setSpeed(200);
 		//carro.setLife(200);
 		carro.setSpriteSheet(new SpriteSheet());
 		carro.getSpriteSheet().loadingSpriteSheet("data/Enemy/Carro.png", 1, 1);
@@ -130,7 +161,7 @@ public class MyWorld {
 		//projetilAgua.getActionFire().addInput(InputPolicy.GO_TAP);
 		projetilAgua.getVelocityInitial().x= 100f;
 		projetilAgua.setInterval(1);
-		projetilAgua.setAmmo(2);
+		projetilAgua.setAmmo(4);
 		projetilAgua.getSpriteSheet().loadingSpriteSheet("data/CGTProjectile/SpriteSheet_agua.png", 2, 2);
 		
 		ProjectileOrientation direcaoRight = new ProjectileOrientation();
