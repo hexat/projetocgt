@@ -51,6 +51,7 @@ public class MyWorld {
 		spriteSheetActor.setLinhaDoSpriteRight(1);
 		spriteSheetActor.loadSpriteActorCGT("data/SpriteCGTActor/SpriteSheet_bombeiro.png",5,3);
 		
+		
 		/* Esse opposite nao tem animacao, seria melhor adicionar uma textura do que uma animacao 
 		 * um por um.
 		 */

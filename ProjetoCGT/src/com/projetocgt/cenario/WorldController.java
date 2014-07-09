@@ -207,7 +207,6 @@ public class WorldController {
 				//bob.setPosition(renderer.getPosAnterior());
 				bob.setState(StatePolicy.LOOKDOWN);
 				System.out.print("lkfjgokfsghlkxzcghodifghidfhgsdhgudhf");
-				//bob.getPosition().y=0;
 			} else {
 				if (bob.getVelocity().y!=0 && bob.getPosition().y > renderer.getCam().viewportHeight/2) {
 					

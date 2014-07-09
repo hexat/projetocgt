@@ -32,7 +32,7 @@ public class WorldRenderer   {
 	private ActorCGT personagem;
 	private int interval; 
 	private int ammo;
-
+	private boolean colisao;
 	/** for debug rendering **/
 	ShapeRenderer debugRenderer = new ShapeRenderer();
 	private SpriteBatch spriteBatch;
@@ -431,8 +431,9 @@ public class WorldRenderer   {
 	 * @return the colisao
 	 */
 	public boolean isColision() {
-		boolean colisao = false;
+		
 		damageCGTActor(personagem);
+		
 		//Verifica se colidiu com algum Opposite
 		for(int i=0; i < world.getListaDeOpposite().size(); i++){
 			if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeOpposite().get(i).isBlock())
@@ -451,7 +452,11 @@ public class WorldRenderer   {
 		//Verifica se colidiu com algum Bonus
 		for(int i=0; i < world.getListaDeBonus().size(); i++){
 			if(world.getListaDeBonus().get(i).getRectangle().overlaps(personagem.getRectPer())){
-				colisao=true;}
+				for(int j=0; j < world.getListaDeProjectili().size(); j++){
+					world.getListaDeProjectili().get(j).setAmmo(4);
+				}
+			colisao=true;
+			}
 		}
 
 		
@@ -529,5 +534,17 @@ public class WorldRenderer   {
 	 */
 	public MyWorld getWorld() {
 		return world;
+	}
+	/**
+	 * @return the colisao
+	 */
+	public boolean isColisao() {
+		return colisao;
+	}
+	/**
+	 * @param colisao the colisao to set
+	 */
+	public void setColisao(boolean colisao) {
+		this.colisao = colisao;
 	}
 }
