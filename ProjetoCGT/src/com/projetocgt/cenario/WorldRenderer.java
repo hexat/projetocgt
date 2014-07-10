@@ -7,7 +7,6 @@ import cgt.behaviors.Direction;
 import cgt.behaviors.Fade;
 import cgt.behaviors.Sine;
 import cgt.policy.DirectionPolicy;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -33,7 +32,7 @@ public class WorldRenderer   {
 	private ActorCGT personagem;
 	private int interval; 
 	private int ammo;
-
+	private boolean colisao;
 	/** for debug rendering **/
 	ShapeRenderer debugRenderer = new ShapeRenderer();
 	private SpriteBatch spriteBatch;
@@ -106,6 +105,7 @@ public class WorldRenderer   {
 				spriteBatch.setColor(1.0f, 1.0f, 1.0f, world.getListaDeEnemy().get(i).getAlpha());
 				spriteBatch.draw(world.getListaDeEnemy().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeEnemy().get(i).getPosition().x, world.getListaDeEnemy().get(i).getPosition().y, world.getListaDeEnemy().get(i).getBounds().width, world.getListaDeEnemy().get(i).getBounds().height);
 			}
+
 			//spriteBatch.draw(world.getListaDeEnemy().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeEnemy().get(i).getPosition().x, world.getListaDeEnemy().get(i).getPosition().y, world.getListaDeEnemy().get(i).getBounds().width, world.getListaDeEnemy().get(i).getBounds().height);
 			//TODO Verifica qual a Direction Policy
 			//if(world.getListaDeEnemy().get(i).getPosition().y >= 400){
@@ -115,6 +115,17 @@ public class WorldRenderer   {
 			//else{
 			//world.getListaDeEnemy().get(i).getVelocity().y=0;
 			//}
+
+				spriteBatch.draw(world.getListaDeEnemy().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeEnemy().get(i).getPosition().x, world.getListaDeEnemy().get(i).getPosition().y, world.getListaDeEnemy().get(i).getBounds().width, world.getListaDeEnemy().get(i).getBounds().height);
+				//TODO Verifica qual a Direction Policy
+				//if(world.getListaDeEnemy().get(i).getPosition().y >= 400){
+					//world.getListaDeEnemy().get(i).getVelocity().y=-world.getListaDeEnemy().get(i).getSpeed();
+					//System.out.print(world.getListaDeEnemy().get(i).getPosition().y+"\n");
+				//}
+				//else{
+					//world.getListaDeEnemy().get(i).getVelocity().y=0;
+					//}
+
 		}
 
 
@@ -431,58 +442,73 @@ public class WorldRenderer   {
 				enemy.getVelocity().y=enemy.getSpeed();
 			}
 
+
 			if(angulos[indice]>180 && angulos[indice]<360){
 				enemy.getVelocity().y=-enemy.getSpeed();
 			}
 
 		}
 
-		/**
-		 * Utilizado para verificar se o CGTACtor colidiu com algum Bloqueante
-		 * @return the colisao
-		 */
-		public boolean isColision() {
-			boolean colisao = false;
-			damageCGTActor(personagem);
-			//Verifica se colidiu com algum Opposite
-			for(int i=0; i < world.getListaDeOpposite().size(); i++){
-				if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeOpposite().get(i).isBlock())
-					colisao=true;
+	/**
+	 * Utilizado para verificar se o CGTACtor colidiu com algum Bloqueante
+	 * @return the colisao
+	 */
+	public boolean isColision() {
+		
+		damageCGTActor(personagem);
+		
+		//Verifica se colidiu com algum Opposite
+		for(int i=0; i < world.getListaDeOpposite().size(); i++){
+			if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeOpposite().get(i).isBlock())
+				colisao=true;
 
-			}
-
-			//Verifica se colidiu com algum Opposite
-			for(int i=0; i < world.getListaDeEnemy().size(); i++){
-				if(world.getListaDeEnemy().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeEnemy().get(i).isBlock())
-					colisao=true;
-			}
-
-			//Verifica se colidiu com algum Bonus
-			for(int i=0; i < world.getListaDeBonus().size(); i++){
-				if(world.getListaDeBonus().get(i).getRectangle().overlaps(personagem.getRectPer()))
-					colisao=true;
-			}
-
-
-			if(!colisao){
-				posAnterior.x = personagem.getPosition().x;
-				posAnterior.y = personagem.getPosition().y;
-			}else{
-				personagem.getVelocity().x=0;
-				personagem.getVelocity().y=0;
-				personagem.setPosition(posAnterior);
-				colisao = false;
-			}
-			return colisao;
 		}
 
-
-		/**
-		 * @return the camera
-		 */
-		public OrthographicCamera getCam() {
-			return camera;
+		//Verifica se colidiu com algum Enemy
+		for(int i=0; i < world.getListaDeEnemy().size(); i++){
+			if(world.getListaDeEnemy().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeEnemy().get(i).isBlock()){
+				//animationDamege(personagem);
+				colisao=true;
+			}
 		}
+
+		//Verifica se colidiu com algum Bonus
+		for(int i=0; i < world.getListaDeBonus().size(); i++){
+			if(world.getListaDeBonus().get(i).getRectangle().overlaps(personagem.getRectPer())){
+				for(int j=0; j < world.getListaDeProjectili().size(); j++){
+					world.getListaDeProjectili().get(j).setAmmo(4);
+				}
+			colisao=true;
+			}
+		}
+
+		
+		if(!colisao){
+			posAnterior.x = personagem.getPosition().x;
+			posAnterior.y = personagem.getPosition().y;
+		}else{
+			personagem.getVelocity().x=0;
+			personagem.getVelocity().y=0;
+			personagem.setPosition(posAnterior);
+			colisao = false;
+		}
+		return colisao;
+	}
+	
+	/**
+	 * 
+	 * @param personagem
+	 */
+	public void animationDamege(ActorCGT personagem){
+		personagem.getPosition().y = -100;
+	}
+	/**
+	 * @return the camera
+	 */
+	public OrthographicCamera getCam() {
+		return camera;
+	}
+
 
 		/**
 		 * @param camera the cam to set
@@ -515,4 +541,37 @@ public class WorldRenderer   {
 		public void setAmmo(int ammo) {
 			this.ammo = ammo;
 		}
+	
+
+	/**
+	 * @return the width
+	 */
+	public int getWidth() {
+		return width;
 	}
+	/**
+	 * @return the height
+	 */
+	public int getHeight() {
+		return height;
+	}
+	/**
+	 * @return the world
+	 */
+	public MyWorld getWorld() {
+		return world;
+	}
+	/**
+	 * @return the colisao
+	 */
+	public boolean isColisao() {
+		return colisao;
+	}
+	/**
+	 * @param colisao the colisao to set
+	 */
+	public void setColisao(boolean colisao) {
+		this.colisao = colisao;
+	}
+}
+

@@ -1,10 +1,8 @@
 package com.projetocgt.cenario;
 
 import java.util.ArrayList;
-
 import cgt.behaviors.*;
 import cgt.policy.*;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
@@ -39,8 +37,12 @@ public class MyWorld {
 	private void createWorld() {
 		
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
+		//backGround = new Texture(Gdx.files.internal("data/Cenario/pista1280.png"));
 		
+
 		personagemActor = new ActorCGT(new Vector2(800, 800), 100f, 100f, 80f, 10f, 10f);
+		//personagemActor = new ActorCGT(new Vector2(330, 800), 100f, 100f, 80f, 10f, 10f);
+		personagemActor = new ActorCGT(new Vector2(800,900), 100f, 100f, 80f, 10f, 10f);
 		personagemActor.setSpeed(180);
 		personagemActor.setLife(3);
 		SpriteSheet spriteSheetActor = new SpriteSheet();
@@ -50,6 +52,7 @@ public class MyWorld {
 		spriteSheetActor.setLinhaDoSpriteLeft(1);
 		spriteSheetActor.setLinhaDoSpriteRight(1);
 		spriteSheetActor.loadSpriteActorCGT("data/SpriteCGTActor/SpriteSheet_bombeiro.png",5,3);
+		
 		
 		/* Esse opposite nao tem animacao, seria melhor adicionar uma textura do que uma animacao 
 		 * um por um.
@@ -127,11 +130,13 @@ public class MyWorld {
 		directionUp.setMaxY(2000);
 		directionUp.setMinY(200);
 		
+
 		Direction directionFour = new Direction(DirectionPolicy.FOUR_DIRECTION);
 		directionFour.setMaxY(600);
 		directionFour.setMinY(400);
 		directionFour.setMaxX(1600);
 		directionFour.setMinX(1130);
+
 
 		Direction directionEight = new Direction(DirectionPolicy.EIGHT_DIRECTION);
 		directionEight.setMaxY(600);
@@ -144,7 +149,9 @@ public class MyWorld {
 		fadeCar.setFadeInTime(2);
 		
 		//Instancia o opposite carro
+
 		Enemy carro = new Enemy(new Vector2(800,700), 50, 50, 50, 0, 0);
+
 		carro.setBlock(true);
 		carro.setDestroyable(false);
 		carro.setDamage(10);
@@ -169,6 +176,7 @@ public class MyWorld {
 		projetilAgua.getVelocityInitial().x= 100f;
 		projetilAgua.setInterval(1);
 		projetilAgua.setAmmo(100);
+		projetilAgua.setAmmo(4);
 		projetilAgua.getSpriteSheet().loadingSpriteSheet("data/CGTProjectile/SpriteSheet_agua.png", 2, 2);
 		
 		ProjectileOrientation direcaoRight = new ProjectileOrientation();

@@ -45,7 +45,6 @@ public class ActorCGT extends GameObject{
 		this.posXColider=posXColider;
 		this.posYColider=posYColider;
 		this.rectPer = new Rectangle(position.x+this.posXColider,position.y+this.posYColider,colider,colider);
-		
 		this.directionPolicy = DirectionPolicy.FOUR_DIRECTION;
 	}
 	

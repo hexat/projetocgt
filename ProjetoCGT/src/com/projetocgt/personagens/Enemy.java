@@ -1,10 +1,8 @@
 package com.projetocgt.personagens;
 
 import java.util.ArrayList;
-
 import cgt.behaviors.Behavior;
 import cgt.policy.StatePolicy;
-
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
