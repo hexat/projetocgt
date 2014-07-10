@@ -101,24 +101,22 @@ public class WorldRenderer   {
 		//Desenha todos os Enemy
 		for(int i =0;i<world.getListaDeEnemy().size();i++){
 			if(world.getListaDeEnemy().get(i).getLife()>=0){
-<<<<<<< HEAD
+
 				configBehavior(world.getListaDeEnemy().get(i));
 				spriteBatch.setColor(1.0f, 1.0f, 1.0f, world.getListaDeEnemy().get(i).getAlpha());
 				spriteBatch.draw(world.getListaDeEnemy().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeEnemy().get(i).getPosition().x, world.getListaDeEnemy().get(i).getPosition().y, world.getListaDeEnemy().get(i).getBounds().width, world.getListaDeEnemy().get(i).getBounds().height);
 			}
-=======
-				spriteBatch.draw(world.getListaDeEnemy().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeEnemy().get(i).getPosition().x, world.getListaDeEnemy().get(i).getPosition().y, world.getListaDeEnemy().get(i).getBounds().width, world.getListaDeEnemy().get(i).getBounds().height);
-				//TODO Verifica qual a Direction Policy
-				//if(world.getListaDeEnemy().get(i).getPosition().y >= 400){
-					//world.getListaDeEnemy().get(i).getVelocity().y=-world.getListaDeEnemy().get(i).getSpeed();
-					//System.out.print(world.getListaDeEnemy().get(i).getPosition().y+"\n");
-				//}
-				//else{
-					//world.getListaDeEnemy().get(i).getVelocity().y=0;
-					//}
-				}
->>>>>>> 4c7bdb14a95e4ef9daac6ca24e0e8a5f491907bb
+			//spriteBatch.draw(world.getListaDeEnemy().get(i).getSpriteSheet().CGTAnimation(personagem), world.getListaDeEnemy().get(i).getPosition().x, world.getListaDeEnemy().get(i).getPosition().y, world.getListaDeEnemy().get(i).getBounds().width, world.getListaDeEnemy().get(i).getBounds().height);
+			//TODO Verifica qual a Direction Policy
+			//if(world.getListaDeEnemy().get(i).getPosition().y >= 400){
+			//world.getListaDeEnemy().get(i).getVelocity().y=-world.getListaDeEnemy().get(i).getSpeed();
+			//System.out.print(world.getListaDeEnemy().get(i).getPosition().y+"\n");
+			//}
+			//else{
+			//world.getListaDeEnemy().get(i).getVelocity().y=0;
+			//}
 		}
+
 
 		//Desenha todos os Bonus
 		for(int i =0;i<world.getListaDeBonus().size();i++){
@@ -158,9 +156,14 @@ public class WorldRenderer   {
 					if(world.getListaDeEnemy().get(j).getRectangle().overlaps(world.getListaDeProjectili().get(i).getRectangle()) && world.getListaDeEnemy().get(j).isDestroyable()){
 						world.getListaDeEnemy().get(j).setLife(world.getListaDeEnemy().get(j).getLife()-1);
 						//world.getListaDeOpposite().get(j).setBlock(false);
-						if(world.getListaDeEnemy().get(j).getLife()==0)//Se o life for zero remove da cena
+						if(world.getListaDeEnemy().get(j).getLife()<=0)//Se o life for zero remove da cena
 							world.getListaDeEnemy().remove(j);
-						if(world.getListaDeEnemy().size()==0)//Verifica se tem algum inimigo na cena
+						boolean ganhou=true;
+						for(int index = 0; index < world.getListaDeEnemy().size() && ganhou; index++){
+							if (world.getListaDeEnemy().get(index).isDestroyable() && world.getListaDeEnemy().get(index).getLife() > 0)
+								ganhou = false;
+						}
+						if(ganhou)//Verifica se tem algum inimigo na cena
 							System.out.println("Ganhou");	
 					}
 				}
@@ -173,6 +176,7 @@ public class WorldRenderer   {
 	 */
 	private void drawCGTActor() {
 		//Desenha o Actor na cena
+		System.out.println(personagem.getLife());
 		spriteBatch.setColor(1.0f, 1.0f, 1.0f, 1.0f);
 		spriteBatch.draw(personagem.getSpriteSheet().CGTActorAnimation(personagem), personagem.getPosition().x, personagem.getPosition().y, personagem.getBounds().width, personagem.getBounds().height);
 	}
@@ -276,13 +280,13 @@ public class WorldRenderer   {
 				Sine sine = (Sine)behavior;
 
 				if(sine.isAtFirstStep()){
-					enemy.getRectangle().width+=1;
-					enemy.getBounds().width+=1;
+					enemy.getRectangle().width+=enemy.getSpeed();
+					enemy.getBounds().width+=enemy.getSpeed();
 				}
 
 				else{
-					enemy.getBounds().width-=1;
-					enemy.getRectangle().width-=1;
+					enemy.getBounds().width-=enemy.getSpeed();
+					enemy.getRectangle().width-=enemy.getSpeed();
 				}
 
 				if(enemy.getRectangle().width<sine.getMin())
@@ -295,13 +299,13 @@ public class WorldRenderer   {
 				Sine sine = (Sine)behavior;
 
 				if(sine.isAtFirstStep()){
-					enemy.getRectangle().height+=1;
-					enemy.getBounds().height+=1;
+					enemy.getRectangle().height+=enemy.getSpeed();
+					enemy.getBounds().height+=enemy.getSpeed();
 				}
 
 				else{
-					enemy.getBounds().height-=1;
-					enemy.getRectangle().height-=1;
+					enemy.getBounds().height-=enemy.getSpeed();
+					enemy.getRectangle().height-=enemy.getSpeed();
 				}
 
 				if(enemy.getRectangle().height<sine.getMin())
@@ -311,26 +315,45 @@ public class WorldRenderer   {
 			}
 
 			else if(behavior.getBehaviorPolicy().equals("LEFT_AND_RIGHT")){
-				final Direction direction = (Direction)behavior;
+				Direction direction = (Direction)behavior;
 				int[] angulos = {0, 180};
 
 				Random random = new Random();
 				if(random.nextFloat()<0.0001*enemy.getSpeed())
-					scheduleDirection(angulos, enemy, 1);
+					scheduleDirection(angulos, enemy);
 
 				if(enemy.getPosition().x<direction.getMinX())
-					direction.setLeft(false);
+					enemy.getVelocity().x=enemy.getSpeed();
 				if(enemy.getPosition().x>direction.getMaxX())
-					direction.setLeft(true);
+					enemy.getVelocity().x=-enemy.getSpeed();
 			}
 
 			else if(behavior.getBehaviorPolicy().equals("UP_AND_DOWN")){
-				final Direction direction = (Direction)behavior;
+				Direction direction = (Direction)behavior;
 				int[] angulos = {90, 270};
 
 				Random random = new Random();
 				if(random.nextFloat()<0.0001*enemy.getSpeed())
-					scheduleDirection(angulos, enemy, 1);
+					scheduleDirection(angulos, enemy);
+
+				if(enemy.getPosition().y<direction.getMinY())
+					enemy.getVelocity().y=enemy.getSpeed();
+				if(enemy.getPosition().y>direction.getMaxY())
+					enemy.getVelocity().y=-enemy.getSpeed();
+			}
+
+			else if(behavior.getBehaviorPolicy().equals("FOUR_DIRECTION")){
+				Direction direction = (Direction)behavior;
+				int[] angulos = {0, 90, 180, 270};
+
+				Random random = new Random();
+				if(random.nextFloat()<0.0001*enemy.getSpeed())
+					scheduleDirection(angulos, enemy);
+
+				if(enemy.getPosition().x<direction.getMinX())
+					enemy.getVelocity().x=enemy.getSpeed();
+				if(enemy.getPosition().x>direction.getMaxX())
+					enemy.getVelocity().x=-enemy.getSpeed();
 
 				if(enemy.getPosition().y<direction.getMinY())
 					enemy.getVelocity().y=enemy.getSpeed();
@@ -339,12 +362,12 @@ public class WorldRenderer   {
 			}
 
 			else if(behavior.getBehaviorPolicy().equals("EIGHT_DIRECTION")){
-				final Direction direction = (Direction)behavior;
+				Direction direction = (Direction)behavior;
 				int[] angulos = {0, 45, 90, 135, 180, 225, 270, 315};
 
 				Random random = new Random();
 				if(random.nextFloat()<0.0001*enemy.getSpeed())
-					scheduleDirection(angulos, enemy, 1);
+					scheduleDirection(angulos, enemy);
 
 				if(enemy.getPosition().x<direction.getMinX())
 					enemy.getVelocity().x=enemy.getSpeed();
@@ -367,145 +390,129 @@ public class WorldRenderer   {
 
 
 	}
-	private void scheduleFadeIn(final Enemy enemy, final Fade fade){
+	private void scheduleFadeIn(final Enemy enemy,Fade fade){
 		if(!fade.isStarted()){
 			fade.setStarted(true);
+			enemy.setDestroyable(false);
+			final int damage = enemy.getDamage();
+			enemy.setDamage(0);
+			enemy.setAlpha(0f);
+			
 			Timer.schedule(new Task(){
-				@Override
 				public void run(){
 					for(float alpha = 0f; alpha<=1f;alpha+=0.01f){
 						enemy.setAlpha(alpha);
 					}
-				}
-			}, fade.getFadeInTime());
-		}
-	}
-	private void scheduleDirection(final int[] angulos, final Enemy enemy, final int time){
-		Timer.schedule(new Task(){
-			@Override
-			public void run(){
-				Random random = new Random();
-				int indice = random.nextInt(angulos.length);
-
-				if(angulos[indice]==0){
-					enemy.getVelocity().x=enemy.getSpeed();
-					enemy.getVelocity().y=0;
-				}
-				
-				if(angulos[indice]==45){
-					enemy.getVelocity().x=enemy.getSpeed();
-					enemy.getVelocity().y=enemy.getSpeed();
-				}
-
-				if(angulos[indice]==90){
-					enemy.getVelocity().y=enemy.getSpeed();
-					enemy.getVelocity().x=0;
-				}
-				
-				if(angulos[indice]==135){
-					enemy.getVelocity().x=-enemy.getSpeed();
-					enemy.getVelocity().y=enemy.getSpeed();
-				}
-
-				if(angulos[indice]==180){
-					enemy.getVelocity().x=-enemy.getSpeed();
-					enemy.getVelocity().y=0;
-				}
-				
-				if(angulos[indice]==225){
-					enemy.getVelocity().x=-enemy.getSpeed();
-					enemy.getVelocity().y=-enemy.getSpeed();
-				}
-
-				if(angulos[indice]==270){
-					enemy.getVelocity().y=-enemy.getSpeed();
-					enemy.getVelocity().x=0;
-				}
-
-				if(angulos[indice]==315){
-					enemy.getVelocity().x=enemy.getSpeed();
-					enemy.getVelocity().y=-enemy.getSpeed();
-				}
+					enemy.setDestroyable(true);
+					enemy.setDamage(damage);
+				}}, fade.getFadeInTime());
 			}
-		}, time);
-	}
+		}
 
-	/**
-	 * Utilizado para verificar se o CGTACtor colidiu com algum Bloqueante
-	 * @return the colisao
-	 */
-	public boolean isColision() {
-		boolean colisao = false;
-		damageCGTActor(personagem);
-		//Verifica se colidiu com algum Opposite
-		for(int i=0; i < world.getListaDeOpposite().size(); i++){
-			if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeOpposite().get(i).isBlock())
-				colisao=true;
+		private void scheduleDirection(int[] angulos, Enemy enemy){
+			enemy.getVelocity().x=0;
+			enemy.getVelocity().y=0;
+			Random random = new Random();
+			int indice = random.nextInt(angulos.length);
+
+			//Velocidade X no 1º e 4º quadrantes
+			if((angulos[indice]>=0 && angulos[indice]<90) ||
+					(angulos[indice]>270 && angulos[indice]<360)){
+				enemy.getVelocity().x=enemy.getSpeed();
+			}
+
+			//Velocidade X no 2º e 3º quadrantes
+			if(angulos[indice]>90 && angulos[indice]<270){
+				enemy.getVelocity().x=-enemy.getSpeed();
+			}
+
+			//Velocidade Y no 1º e 2º quadrantes
+			if(angulos[indice]>0 && angulos[indice]<180){
+				enemy.getVelocity().y=enemy.getSpeed();
+			}
+
+			if(angulos[indice]>180 && angulos[indice]<360){
+				enemy.getVelocity().y=-enemy.getSpeed();
+			}
 
 		}
 
-		//Verifica se colidiu com algum Opposite
-		for(int i=0; i < world.getListaDeEnemy().size(); i++){
-			if(world.getListaDeEnemy().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeEnemy().get(i).isBlock())
-				colisao=true;
+		/**
+		 * Utilizado para verificar se o CGTACtor colidiu com algum Bloqueante
+		 * @return the colisao
+		 */
+		public boolean isColision() {
+			boolean colisao = false;
+			damageCGTActor(personagem);
+			//Verifica se colidiu com algum Opposite
+			for(int i=0; i < world.getListaDeOpposite().size(); i++){
+				if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeOpposite().get(i).isBlock())
+					colisao=true;
+
+			}
+
+			//Verifica se colidiu com algum Opposite
+			for(int i=0; i < world.getListaDeEnemy().size(); i++){
+				if(world.getListaDeEnemy().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeEnemy().get(i).isBlock())
+					colisao=true;
+			}
+
+			//Verifica se colidiu com algum Bonus
+			for(int i=0; i < world.getListaDeBonus().size(); i++){
+				if(world.getListaDeBonus().get(i).getRectangle().overlaps(personagem.getRectPer()))
+					colisao=true;
+			}
+
+
+			if(!colisao){
+				posAnterior.x = personagem.getPosition().x;
+				posAnterior.y = personagem.getPosition().y;
+			}else{
+				personagem.getVelocity().x=0;
+				personagem.getVelocity().y=0;
+				personagem.setPosition(posAnterior);
+				colisao = false;
+			}
+			return colisao;
 		}
 
-		//Verifica se colidiu com algum Bonus
-		for(int i=0; i < world.getListaDeBonus().size(); i++){
-			if(world.getListaDeBonus().get(i).getRectangle().overlaps(personagem.getRectPer()))
-				colisao=true;
+
+		/**
+		 * @return the camera
+		 */
+		public OrthographicCamera getCam() {
+			return camera;
 		}
 
-
-		if(!colisao){
-			posAnterior.x = personagem.getPosition().x;
-			posAnterior.y = personagem.getPosition().y;
-		}else{
-			personagem.getVelocity().x=0;
-			personagem.getVelocity().y=0;
-			personagem.setPosition(posAnterior);
-			colisao = false;
+		/**
+		 * @param camera the cam to set
+		 */
+		public void setCam(OrthographicCamera cam) {
+			this.camera = cam;
 		}
-		return colisao;
-	}
 
-
-	/**
-	 * @return the camera
-	 */
-	public OrthographicCamera getCam() {
-		return camera;
+		/**
+		 * @return the posAnterior
+		 */
+		public Vector2 getPosAnterior() {
+			return posAnterior;
+		}
+		/**
+		 * @return the interval
+		 */
+		public int getInterval() {
+			return interval;
+		}
+		/**
+		 * @return the ammo
+		 */
+		public int getAmmo() {
+			return ammo;
+		}
+		/**
+		 * @param ammo the ammo to set
+		 */
+		public void setAmmo(int ammo) {
+			this.ammo = ammo;
+		}
 	}
-
-	/**
-	 * @param camera the cam to set
-	 */
-	public void setCam(OrthographicCamera cam) {
-		this.camera = cam;
-	}
-
-	/**
-	 * @return the posAnterior
-	 */
-	public Vector2 getPosAnterior() {
-		return posAnterior;
-	}
-	/**
-	 * @return the interval
-	 */
-	public int getInterval() {
-		return interval;
-	}
-	/**
-	 * @return the ammo
-	 */
-	public int getAmmo() {
-		return ammo;
-	}
-	/**
-	 * @param ammo the ammo to set
-	 */
-	public void setAmmo(int ammo) {
-		this.ammo = ammo;
-	}
-}

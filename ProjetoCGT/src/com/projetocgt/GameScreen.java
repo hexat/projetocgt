@@ -14,7 +14,7 @@ import com.projetocgt.cenario.WorldRenderer;
 
 public class GameScreen implements Screen, InputProcessor {
 	
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 	
 	private MyWorld world;
 	private WorldRenderer renderer;

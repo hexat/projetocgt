@@ -29,7 +29,7 @@ public class Enemy extends GameObject{
 		this.bounds.width=width;
 		this.posXColider=posXColider;
 		this.posYColider=posYColider;
-		this.alpha=0f;
+		this.alpha=1f;
 		this.setRectangle(new Rectangle(position.x+this.posXColider,position.y+this.posYColider,colider,colider));
 		behaviors = new ArrayList<Behavior>();
 	}
