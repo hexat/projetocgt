@@ -48,8 +48,13 @@ public class MyWorld {
 		personagemActor.setLife(3);
 		SpriteSheet spriteSheetActor = new SpriteSheet();
 		personagemActor.setSpriteSheet(spriteSheetActor );
-		Music soundDamage = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/temabombeiro.wav"));
+		//Adicionando o audio de colisao
+		Music soundDamage = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/colisao.wav"));
 		personagemActor.setSoundDamage(soundDamage);
+		
+		Music soundDie = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/gameOver.wav"));
+		personagemActor.setSoundDie(soundDie);
+		
 		spriteSheetActor.setLinhaDoSpriteUp(3);
 		spriteSheetActor.setLinhaDoSpriteDown(2);
 		spriteSheetActor.setLinhaDoSpriteLeft(1);

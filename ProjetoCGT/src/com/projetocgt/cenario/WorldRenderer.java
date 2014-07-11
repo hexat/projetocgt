@@ -255,8 +255,10 @@ public class WorldRenderer   {
 				animationDamege(personagem);
 				//System.out.println(personagem.getLife());
 				
-				if(personagem.getLife()<0)
+				if(personagem.getLife()<0){
 					System.out.println("Game Over");
+					personagem.getSoundDie().play();
+				}
 			}		
 		}
 	}
