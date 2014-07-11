@@ -1,11 +1,12 @@
 package com.projetocgt.personagens;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class GameObject {
 	//private Sound sound;
-	//private Sound soundDie;
-	//private Sound soundDamage;
+	private Music soundDie;
+	private Music soundDamage;
 	private Vector2 position;
 	private int life;
 	private SpriteSheet spriteSheet;
@@ -45,5 +46,29 @@ public abstract class GameObject {
 	 */
 	public void setPosition(Vector2 position) {
 		this.position = position;
+	}
+	/**
+	 * @return the soundDie
+	 */
+	public Music getSoundDie() {
+		return soundDie;
+	}
+	/**
+	 * @param soundDie the soundDie to set
+	 */
+	public void setSoundDie(Music soundDie) {
+		this.soundDie = soundDie;
+	}
+	/**
+	 * @return the soundDamage
+	 */
+	public Music getSoundDamage() {
+		return soundDamage;
+	}
+	/**
+	 * @param soundDamage the soundDamage to set
+	 */
+	public void setSoundDamage(Music soundDamage) {
+		this.soundDamage = soundDamage;
 	}
 }

@@ -32,6 +32,7 @@ public class ActorCGT extends GameObject{
 	private ArrayList<CGTProjectile> projectiles;
 	private int jumpDefault;
 	private int fireDefault;
+	private boolean invincible;
 	
 	/**
 	 * Construtor padrao que recebe uma posicao inicial, um life e verifica se o personagem e'
@@ -46,6 +47,7 @@ public class ActorCGT extends GameObject{
 		this.posYColider=posYColider;
 		this.rectPer = new Rectangle(position.x+this.posXColider,position.y+this.posYColider,colider,colider);
 		this.directionPolicy = DirectionPolicy.FOUR_DIRECTION;
+		this.invincible=false;
 	}
 	
 	/**
@@ -238,5 +240,19 @@ public class ActorCGT extends GameObject{
 	 */
 	public void setProjectiles(ArrayList<CGTProjectile> projectiles) {
 		this.projectiles = projectiles;
+	}
+
+	/**
+	 * @return the invincible
+	 */
+	public boolean isInvincible() {
+		return invincible;
+	}
+
+	/**
+	 * @param invincible the invincible to set
+	 */
+	public void setInvincible(boolean invincible) {
+		this.invincible = invincible;
 	}
 }

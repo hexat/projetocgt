@@ -67,7 +67,8 @@ public class WorldRenderer   {
 		spriteBatch.begin();
 		drawGameObjects();
 		drawCGTActor();
-		animationDamege(personagem);
+		System.out.println(personagem.getLife());
+		System.out.println(personagem.isInvincible());
 		spriteBatch.end();
 		if (flagDebug)
 			drawDebug();
@@ -193,7 +194,6 @@ public class WorldRenderer   {
 	 */
 	private void drawCGTActor() {
 		//Desenha o Actor na cena
-		System.out.println(personagem.getLife());
 		spriteBatch.setColor(1.0f, 1.0f, 1.0f, 1.0f);
 		spriteBatch.draw(personagem.getSpriteSheet().CGTActorAnimation(personagem), personagem.getPosition().x, personagem.getPosition().y, personagem.getBounds().width, personagem.getBounds().height);
 	}
@@ -251,8 +251,10 @@ public class WorldRenderer   {
 	void damageActorCGT(ActorCGT personagem){
 		for(int i=0; i < world.getListaDeEnemy().size(); i++){
 			if(world.getListaDeEnemy().get(i).getRectangle().overlaps(personagem.getRectPer())){
-				personagem.setLife(personagem.getLife()-world.getListaDeEnemy().get(i).getDamage());
-				System.out.println(personagem.getLife());
+				//personagem.setLife(personagem.getLife()-world.getListaDeEnemy().get(i).getDamage());
+				animationDamege(personagem);
+				//System.out.println(personagem.getLife());
+				
 				if(personagem.getLife()<0)
 					System.out.println("Game Over");
 			}		
@@ -409,6 +411,7 @@ public class WorldRenderer   {
 	}
 	private void scheduleFadeIn(final Enemy enemy,Fade fade){
 		if(!fade.isStarted()){
+			
 			fade.setStarted(true);
 			enemy.setDestroyable(false);
 			final int damage = enemy.getDamage();
@@ -426,7 +429,7 @@ public class WorldRenderer   {
 			}
 		}
 
-		private void scheduleDirection(int[] angulos, Enemy enemy){
+	private void scheduleDirection(int[] angulos, Enemy enemy){
 			enemy.getVelocity().x=0;
 			enemy.getVelocity().y=0;
 			Random random = new Random();
@@ -473,6 +476,7 @@ public class WorldRenderer   {
 		for(int i=0; i < world.getListaDeEnemy().size(); i++){
 			if(world.getListaDeEnemy().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeEnemy().get(i).isBlock()){
 				colisaoEnemy=true;
+				//animationDamege(personagem);
 				colisao=true;
 			}
 		}
@@ -505,15 +509,23 @@ public class WorldRenderer   {
 	 * 
 	 * @param personagem
 	 */
-	public void animationDamege(ActorCGT personagem){
-		if(colisaoEnemy)
+	public void animationDamege(ActorCGT boy){
+		
+		if(!personagem.isInvincible()){
+			personagem.setInvincible(true);
+			final StatePolicy state = personagem.getState();
 			personagem.setState(StatePolicy.DAMEGE);
+			personagem.setLife(personagem.getLife()-1);
+			personagem.getSoundDamage().play();
 			Timer.schedule(new Task(){
 				@Override
 				public void run() {
-					colisaoEnemy=false;
+					personagem.setState(state);
+					personagem.setInvincible(false);
+					
 				}
-			}, 2);
+			}, 3);
+		}
 	}
 	/**
 	 * @return the camera

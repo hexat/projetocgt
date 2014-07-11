@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import cgt.behaviors.*;
 import cgt.policy.*;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.progetocgt.util.ProjectileOrientation;
@@ -39,7 +40,7 @@ public class MyWorld {
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
 		//backGround = new Texture(Gdx.files.internal("data/Cenario/pista1280.png"));
 		
-
+		
 		personagemActor = new ActorCGT(new Vector2(800, 800), 100f, 100f, 80f, 10f, 10f);
 		//personagemActor = new ActorCGT(new Vector2(330, 800), 100f, 100f, 80f, 10f, 10f);
 		personagemActor = new ActorCGT(new Vector2(800,900), 100f, 100f, 80f, 10f, 10f);
@@ -47,6 +48,8 @@ public class MyWorld {
 		personagemActor.setLife(3);
 		SpriteSheet spriteSheetActor = new SpriteSheet();
 		personagemActor.setSpriteSheet(spriteSheetActor );
+		Music soundDamage = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/temabombeiro.wav"));
+		personagemActor.setSoundDamage(soundDamage);
 		spriteSheetActor.setLinhaDoSpriteUp(3);
 		spriteSheetActor.setLinhaDoSpriteDown(2);
 		spriteSheetActor.setLinhaDoSpriteLeft(1);
