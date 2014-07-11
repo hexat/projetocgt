@@ -21,16 +21,19 @@ public class SpriteSheet {
 	private int linhaDoSpriteDown; 
 	private int linhaDoSpriteLeft; 
 	private int linhaDoSpriteRight; 
+	private int linhaDoSpriteDamege;
 	private Texture walkSheet;
 	private TextureRegion[] walkFramesUp;
 	private TextureRegion[] walkFramesDown;
 	private TextureRegion[] walkFramesLeft;
 	private TextureRegion[] walkFramesRight;
 	private TextureRegion[] walkFramesStandBy;
+	private TextureRegion[] framesDamege;
 	private Animation walkAnimationUp;
 	private Animation walkAnimationDown;
 	private Animation walkAnimationLeft;
 	private Animation walkAnimationRight;
+	private Animation animationDamege;
 	private boolean loop;
 	float stateTime;
 
@@ -64,9 +67,11 @@ public class SpriteSheet {
 		walkFramesDown = new TextureRegion[FRAME_COLS];
 		walkFramesLeft = new TextureRegion[FRAME_COLS];
 		walkFramesRight = new TextureRegion[FRAME_COLS];
+		framesDamege = new TextureRegion[FRAME_COLS];
 
 		for (int i = 0; i < 1; i++) {
 			for (int j = 0; j < FRAME_COLS; j++) {
+				framesDamege[j]=tmp[linhaDoSpriteDamege - 1][j];
 				walkFramesUp[j] = tmp[linhaDoSpriteUp - 1][j];
 				walkFramesDown[j] = tmp[linhaDoSpriteDown - 1][j];
 				walkFramesLeft[j] = tmpLeft[linhaDoSpriteLeft - 1][j];
@@ -78,14 +83,13 @@ public class SpriteSheet {
 		// Animacao do personagem para cima
 		walkAnimationUp = new Animation(RUNNING_FRAME_DURATION, walkFramesUp);
 		// Animacao do personagem para baixo
-		walkAnimationDown = new Animation(RUNNING_FRAME_DURATION,
-				walkFramesDown);
+		walkAnimationDown = new Animation(RUNNING_FRAME_DURATION,walkFramesDown);
 		// Animacao do personagem para esquerda
-		walkAnimationLeft = new Animation(RUNNING_FRAME_DURATION,
-				walkFramesLeft);
+		walkAnimationLeft = new Animation(RUNNING_FRAME_DURATION,walkFramesLeft);
 		// Animacao do personagem para direita
-		walkAnimationRight = new Animation(RUNNING_FRAME_DURATION,
-				walkFramesRight);
+		walkAnimationRight = new Animation(RUNNING_FRAME_DURATION,walkFramesRight);
+		//Animacao do personagem com damege
+		animationDamege = new Animation(RUNNING_FRAME_DURATION,framesDamege);
 	}
 
 	/***
@@ -110,6 +114,8 @@ public class SpriteSheet {
 		// Verifica se o personagem esta olhando para direita e faz a aniamcao
 		if (personagem.getState().equals(StatePolicy.LOOKRIGHT))
 			return walkAnimationRight.getKeyFrame(personagem.getStateTime(),loop);
+		if (personagem.getState().equals(StatePolicy.DAMEGE))
+			return animationDamege.getKeyFrame(personagem.getStateTime(),loop);
 		return bobFrame;
 	}
 	/**
@@ -179,6 +185,20 @@ public class SpriteSheet {
 
 	public void setLoop(boolean loop) {
 		this.loop = loop;
+	}
+
+	/**
+	 * @return the linhaDoSpriteDamege
+	 */
+	public int getLinhaDoSpriteDamege() {
+		return linhaDoSpriteDamege;
+	}
+
+	/**
+	 * @param linhaDoSpriteDamege the linhaDoSpriteDamege to set
+	 */
+	public void setLinhaDoSpriteDamege(int linhaDoSpriteDamege) {
+		this.linhaDoSpriteDamege = linhaDoSpriteDamege;
 	}
 
 }

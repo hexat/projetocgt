@@ -49,6 +49,7 @@ public class MyWorld {
 		spriteSheetActor.setLinhaDoSpriteDown(2);
 		spriteSheetActor.setLinhaDoSpriteLeft(1);
 		spriteSheetActor.setLinhaDoSpriteRight(1);
+		spriteSheetActor.setLinhaDoSpriteDamege(5);
 		spriteSheetActor.loadSpriteActorCGT("data/SpriteCGTActor/SpriteSheet_bombeiro.png",5,3);
 		
 		
@@ -144,6 +145,7 @@ public class MyWorld {
 		carro.setDestroyable(false);
 		carro.setDamage(10);
 		carro.addBehavior(fadeCar);
+		carro.addBehavior(directionUp);
 		carro.setSpeed(200);
 		//carro.setLife(200);
 		carro.setSpriteSheet(new SpriteSheet());

@@ -7,6 +7,8 @@ import cgt.behaviors.Direction;
 import cgt.behaviors.Fade;
 import cgt.behaviors.Sine;
 import cgt.policy.DirectionPolicy;
+import cgt.policy.StatePolicy;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -33,6 +35,7 @@ public class WorldRenderer   {
 	private int interval; 
 	private int ammo;
 	private boolean colisao;
+	private boolean colisaoEnemy;
 	/** for debug rendering **/
 	ShapeRenderer debugRenderer = new ShapeRenderer();
 	private SpriteBatch spriteBatch;
@@ -58,15 +61,18 @@ public class WorldRenderer   {
 	 * Responsavel por desenhar todos os objetos na tela.
 	 */
 	public void render( ) {
-		//isColision(); // ATENCAO
+		isColision(); // ATENCAO
 		this.camera.update(); 			//Atualiza a tela
 		spriteBatch.setProjectionMatrix(camera.combined); //Possibilita a camera acompanhar o personagem
 		spriteBatch.begin();
 		drawGameObjects();
 		drawCGTActor();
+		animationDamege(personagem);
 		spriteBatch.end();
 		if (flagDebug)
 			drawDebug();
+		
+		
 	}
 	/**
 	 * Utilizado para limpar o desenho da tela
@@ -223,7 +229,7 @@ public class WorldRenderer   {
 		}
 		debugRenderer.end();
 	}
-	void damageCGTActor(ActorCGT personagem){
+	void damageActorCGT(ActorCGT personagem){
 		for(int i=0; i < world.getListaDeEnemy().size(); i++){
 			if(world.getListaDeEnemy().get(i).getRectangle().overlaps(personagem.getRectPer())){
 				personagem.setLife(personagem.getLife()-world.getListaDeEnemy().get(i).getDamage());
@@ -427,13 +433,12 @@ public class WorldRenderer   {
 	}
 
 	/**
-	 * Utilizado para verificar se o CGTACtor colidiu com algum Bloqueante
+	 * Utilizado para verificar se o ActorCGT colidiu com algum Bloqueante
 	 * @return the colisao
 	 */
 	public boolean isColision() {
-		
-		damageCGTActor(personagem);
-		
+		//colisao = false;
+		damageActorCGT(personagem);
 		//Verifica se colidiu com algum Opposite
 		for(int i=0; i < world.getListaDeOpposite().size(); i++){
 			if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeOpposite().get(i).isBlock())
@@ -444,7 +449,7 @@ public class WorldRenderer   {
 		//Verifica se colidiu com algum Enemy
 		for(int i=0; i < world.getListaDeEnemy().size(); i++){
 			if(world.getListaDeEnemy().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeEnemy().get(i).isBlock()){
-				//animationDamege(personagem);
+				colisaoEnemy=true;
 				colisao=true;
 			}
 		}
@@ -467,6 +472,7 @@ public class WorldRenderer   {
 			personagem.getVelocity().x=0;
 			personagem.getVelocity().y=0;
 			personagem.setPosition(posAnterior);
+			//return colisao;
 			colisao = false;
 		}
 		return colisao;
@@ -477,7 +483,14 @@ public class WorldRenderer   {
 	 * @param personagem
 	 */
 	public void animationDamege(ActorCGT personagem){
-		personagem.getPosition().y = -100;
+		if(colisaoEnemy)
+			personagem.setState(StatePolicy.DAMEGE);
+			Timer.schedule(new Task(){
+				@Override
+				public void run() {
+					colisaoEnemy=false;
+				}
+			}, 2);
 	}
 	/**
 	 * @return the camera
@@ -546,5 +559,17 @@ public class WorldRenderer   {
 	 */
 	public void setColisao(boolean colisao) {
 		this.colisao = colisao;
+	}
+	/**
+	 * @return the colisaoEnemy
+	 */
+	public boolean isColisaoEnemy() {
+		return colisaoEnemy;
+	}
+	/**
+	 * @param colisaoEnemy the colisaoEnemy to set
+	 */
+	public void setColisaoEnemy(boolean colisaoEnemy) {
+		this.colisaoEnemy = colisaoEnemy;
 	}
 }

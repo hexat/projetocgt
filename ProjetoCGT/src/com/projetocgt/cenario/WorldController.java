@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import cgt.policy.StatePolicy;
 
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.projetocgt.personagens.ActorCGT;
 import com.projetocgt.personagens.ActorCGT.DirectionPolicy;
 import com.projetocgt.personagens.SpriteSheet;
@@ -18,7 +19,7 @@ public class WorldController {
 
 	//Possiveis movimentos do personagem
 	enum Keys {
-		LEFT, RIGHT, JUMP, FIRE, UP, DOWN
+		LEFT, RIGHT, JUMP, FIRE, UP, DOWN, DAMEGE
 	};
 
 	private MyWorld world;
@@ -94,6 +95,12 @@ public class WorldController {
 		keys.get(keys.put(Keys.JUMP, true));
 		//Habilita o loop da animacao
 	}
+	
+	public void damegePressed() {
+		keys.get(keys.put(Keys.DAMEGE, true));
+		//Habilita o loop da animacao
+		actorAnimation.setLoop(true);
+	}
 
 	public void firePressedTouch() {
 		keys.get(keys.put(Keys.FIRE, true));
@@ -137,7 +144,13 @@ public class WorldController {
 		//Desabilita o loop da animacao
 		actorAnimation.setLoop(false);
 	}
-
+	
+	public void damegeReleased() {
+		keys.get(keys.put(Keys.DAMEGE, false));
+		//Desabilita o loop da animacao
+		actorAnimation.setLoop(false);
+	}
+	
 	public void fireReleasedTouch() {
 		keys.get(keys.put(Keys.FIRE, false));
 		//Desabilita o loop da animacao
@@ -185,7 +198,7 @@ public class WorldController {
 			if (renderer.isColision()) {
 				//bob.setPosition(renderer.getPosAnterior());
 				bob.setState(StatePolicy.LOOKUP);
-				System.out.print("lkfjgokfsghlkxzcghodifghidfhgsdhgudhf");
+				//actionDamegeEnemyUp();
 			}else {
 				// O personagem esta olhando para a cima
 				if(bob.getVelocity().y!=0 && bob.getPosition().y > renderer.getCam().viewportHeight/2)	
@@ -202,11 +215,12 @@ public class WorldController {
 		}
 
 		if (keys.get(Keys.DOWN)) {
+			//if(renderer.isColisaoEnemy())
+				//actionDamegeEnemyDown();
 			// Verifica se o personagem pode andar
 			if (renderer.isColision()) {
 				//bob.setPosition(renderer.getPosAnterior());
-				bob.setState(StatePolicy.LOOKDOWN);
-				System.out.print("lkfjgokfsghlkxzcghodifghidfhgsdhgudhf");
+				//bob.setState(StatePolicy.LOOKDOWN);
 			} else {
 				if (bob.getVelocity().y!=0 && bob.getPosition().y > renderer.getCam().viewportHeight/2) {
 					
@@ -229,10 +243,9 @@ public class WorldController {
 			if (renderer.isColision()) {
 				//bob.setPosition(renderer.getPosAnterior());
 				bob.setState(StatePolicy.LOOKLEFT);
-				System.out.print("lkfjgokfsghlkxzcghodifghidfhgsdhgudhf");
+				//actionDamegeEnemyLeft();
 			} else {
 				if (bob.getVelocity().x != 0 && bob.getPosition().x > renderer.getCam().viewportWidth/2) {
-					verificaLimites();
 					if( bob.getPosition().x < renderer.getWorld().getBackGround().getWidth()-renderer.getCam().viewportWidth/2)
 						renderer.getCam().position.x-=bob.getSpeed()/60;
 				}
@@ -249,7 +262,7 @@ public class WorldController {
 			if (renderer.isColision()) {
 				//bob.setPosition(renderer.getPosAnterior());
 				bob.setState(StatePolicy.LOOKRIGHT);
-				System.out.print("lkfjgokfsghlkxzcghodifghidfhgsdhgudhf");
+				//actionDamegeEnemyRight();
 			} else {
 				if (bob.getVelocity().x!=0 && bob.getPosition().x > renderer.getCam().viewportWidth/2) {
 					if( bob.getPosition().x < renderer.getWorld().getBackGround().getWidth()-renderer.getCam().viewportWidth/2)
@@ -281,8 +294,37 @@ public class WorldController {
 			bob.getVelocity().y = 0;
 		}
 	}
-	public void verificaLimites(){
-		if(renderer.getCam().position.x<0);
+	public void actionDamegeEnemyDown(){
+		//bob.getPosition().y+=50;
+		//renderer.getCam().position.y+=50;
+		bob.setState(StatePolicy.DAMEGE);
+		damegePressed();
+		Timer.schedule(new Task(){
+			@Override
+			public void run() {
+				damegeReleased();
+				bob.setState(StatePolicy.LOOKDOWN);
+			}
+		}, 2);
 	}
+	
+	public void actionDamegeEnemyUp(){
+		//bob.getPosition().y-=50;
+		//renderer.getCam().position.y-=50;
+		bob.setState(StatePolicy.DAMEGE);
+	}
+	
+	public void actionDamegeEnemyRight(){
+		//bob.getPosition().x-=50;
+		//renderer.getCam().position.x-=50;
+		bob.setState(StatePolicy.DAMEGE);
+	}
+	
+	public void actionDamegeEnemyLeft(){
+		//bob.getPosition().x+=50;
+		//renderer.getCam().position.x+=50;
+		bob.setState(StatePolicy.DAMEGE);
+	}
+	
 
 }
