@@ -114,7 +114,7 @@ public class SpriteSheet {
 		// Verifica se o personagem esta olhando para direita e faz a aniamcao
 		if (personagem.getState().equals(StatePolicy.LOOKRIGHT))
 			return walkAnimationRight.getKeyFrame(personagem.getStateTime(),loop);
-		if (personagem.getState().equals(StatePolicy.DAMEGE))
+		if (personagem.getState().equals(StatePolicy.DAMAGE))
 			return animationDamege.getKeyFrame(personagem.getStateTime(),loop);
 		return bobFrame;
 	}

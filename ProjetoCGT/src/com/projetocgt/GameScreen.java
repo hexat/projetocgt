@@ -29,7 +29,7 @@ public class GameScreen implements Screen, InputProcessor {
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/temabombeiro.wav"));
 		}
 	
-	@Override
+    @Override
 	public void render(float delta) {
 		/*acelerometroX=Gdx.input.getAccelerometerX();
 		MathUtils.clamp(acelerometroX, acelerometroX-0.5f, acelerometroX+0.5f);
@@ -61,8 +61,8 @@ public class GameScreen implements Screen, InputProcessor {
 		else{
 			if(acelerometroY-0.1 < 0)
 				controller.leftReleased();
-		}*/
-		
+		}
+		*/
 		controller.update(delta);
 		renderer.render();
 		//Utilizado para ativar o projectili por um determinado Tempo

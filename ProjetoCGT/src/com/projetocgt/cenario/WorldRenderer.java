@@ -2,12 +2,8 @@ package com.projetocgt.cenario;
 
 import java.util.Random;
 
-import cgt.behaviors.Behavior;
-import cgt.behaviors.Direction;
-import cgt.behaviors.Fade;
-import cgt.behaviors.Sine;
-import cgt.policy.DirectionPolicy;
-import cgt.policy.StatePolicy;
+import cgt.behaviors.*;
+import cgt.policy.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -51,7 +47,8 @@ public class WorldRenderer   {
 		this.camera = new OrthographicCamera(width, height);
 		//this.camera.position.set(width/2, height/2 , 0); 
 		this.camera.position.set(world.getPersonagem().getPosition().x, world.getPersonagem().getPosition().y , 0);
-		this.flagDebug = debug;												 
+		this.flagDebug = debug;	
+		//System.out.println(personagem.getLife());
 		spriteBatch = new SpriteBatch();
 		personagem = world.getPersonagem();
 	}
@@ -415,6 +412,7 @@ public class WorldRenderer   {
 		if(!fade.isStarted()){
 			
 			fade.setStarted(true);
+			final boolean destroyable = enemy.isDestroyable();
 			enemy.setDestroyable(false);
 			final int damage = enemy.getDamage();
 			enemy.setDamage(0);
@@ -425,7 +423,7 @@ public class WorldRenderer   {
 					for(float alpha = 0f; alpha<=1f;alpha+=0.01f){
 						enemy.setAlpha(alpha);
 					}
-					enemy.setDestroyable(true);
+					enemy.setDestroyable(destroyable);
 					enemy.setDamage(damage);
 				}}, fade.getFadeInTime());
 			}
@@ -516,7 +514,7 @@ public class WorldRenderer   {
 		if(!personagem.isInvincible()){
 			personagem.setInvincible(true);
 			final StatePolicy state = personagem.getState();
-			personagem.setState(StatePolicy.DAMEGE);
+			personagem.setState(StatePolicy.DAMAGE);
 			personagem.setLife(personagem.getLife()-1);
 			personagem.getSoundDamage().play();
 			Timer.schedule(new Task(){

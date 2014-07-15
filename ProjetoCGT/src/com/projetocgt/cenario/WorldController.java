@@ -19,7 +19,7 @@ public class WorldController {
 
 	//Possiveis movimentos do personagem
 	enum Keys {
-		LEFT, RIGHT, JUMP, FIRE, UP, DOWN, DAMEGE
+		LEFT, RIGHT, JUMP, FIRE, UP, DOWN, DAMAGE
 	};
 
 	private MyWorld world;
@@ -97,7 +97,7 @@ public class WorldController {
 	}
 	
 	public void damegePressed() {
-		keys.get(keys.put(Keys.DAMEGE, true));
+		keys.get(keys.put(Keys.DAMAGE, true));
 		//Habilita o loop da animacao
 		actorAnimation.setLoop(true);
 	}
@@ -146,7 +146,7 @@ public class WorldController {
 	}
 	
 	public void damegeReleased() {
-		keys.get(keys.put(Keys.DAMEGE, false));
+		keys.get(keys.put(Keys.DAMAGE, false));
 		//Desabilita o loop da animacao
 		actorAnimation.setLoop(false);
 	}
@@ -297,7 +297,7 @@ public class WorldController {
 	public void actionDamegeEnemyDown(){
 		//bob.getPosition().y+=50;
 		//renderer.getCam().position.y+=50;
-		bob.setState(StatePolicy.DAMEGE);
+		bob.setState(StatePolicy.DAMAGE);
 		damegePressed();
 		Timer.schedule(new Task(){
 			@Override
@@ -311,19 +311,19 @@ public class WorldController {
 	public void actionDamegeEnemyUp(){
 		//bob.getPosition().y-=50;
 		//renderer.getCam().position.y-=50;
-		bob.setState(StatePolicy.DAMEGE);
+		bob.setState(StatePolicy.DAMAGE);
 	}
 	
 	public void actionDamegeEnemyRight(){
 		//bob.getPosition().x-=50;
 		//renderer.getCam().position.x-=50;
-		bob.setState(StatePolicy.DAMEGE);
+		bob.setState(StatePolicy.DAMAGE);
 	}
 	
 	public void actionDamegeEnemyLeft(){
 		//bob.getPosition().x+=50;
 		//renderer.getCam().position.x+=50;
-		bob.setState(StatePolicy.DAMEGE);
+		bob.setState(StatePolicy.DAMAGE);
 	}
 	
 

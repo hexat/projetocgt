@@ -3,6 +3,7 @@ package com.projetocgt.cenario;
 import java.util.ArrayList;
 import cgt.behaviors.*;
 import cgt.policy.*;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
@@ -160,7 +161,7 @@ public class MyWorld {
 		//Instancia o opposite carro
 
 		Enemy carro = new Enemy(new Vector2(800,700), 50, 50, 50, 0, 0);
-
+		carro.setLife(10);
 		carro.setBlock(true);
 		carro.setDestroyable(false);
 		carro.setDamage(10);

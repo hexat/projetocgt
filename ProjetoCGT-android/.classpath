@@ -9,7 +9,7 @@
 	<classpathentry exported="true" kind="lib" path="/ProjetoCGT/libs/bodyeditor-loader.jar" sourcepath="/ProjetoCGT/libs/bodyeditor-loader-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="/ProjetoCGT/libs/gdx.jar" sourcepath="/ProjetoCGT/libs/gdx-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="/ProjetoCGT/libs/tween-engine-api.jar" sourcepath="/ProjetoCGT/libs/tween-engine-api-sources.jar"/>
-	<classpathentry kind="lib" path="C:/bin/adt/sdk/platforms/android-19/android.jar"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="lib" path="C:/Users/Projeto.NOVELBIZ2/Downloads/adt-bundle-windows-x86_64-20140702/adt-bundle-windows-x86_64-20140702/sdk/platforms/android-20/android.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
