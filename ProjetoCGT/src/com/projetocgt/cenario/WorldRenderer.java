@@ -475,7 +475,7 @@ public class WorldRenderer   {
 		//Verifica se colidiu com algum Enemy
 		for(int i=0; i < world.getListaDeEnemy().size(); i++){
 			if(world.getListaDeEnemy().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeEnemy().get(i).isBlock()){
-				colisaoEnemy=true;
+				//colisaoEnemy=true;
 				//animationDamege(personagem);
 				colisao=true;
 			}

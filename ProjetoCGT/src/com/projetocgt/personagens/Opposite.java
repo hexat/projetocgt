@@ -12,7 +12,7 @@ public class Opposite extends GameObject{
 	private boolean block;
 	private boolean destroyable;
 	private int damage;
-	private Projectile fire;
+	//private Projectile fire;
 	private SpriteSheet spriteSheet;
 	private Vector2 position;
 	private Rectangle bounds = new Rectangle();		// Area que sera' desenhado o personagem
@@ -80,18 +80,7 @@ public class Opposite extends GameObject{
 	public void setDamage(int damage) {
 		this.damage = damage;
 	}
-	/**
-	 * @return the fire
-	 */
-	public Projectile getFire() {
-		return fire;
-	}
-	/**
-	 * @param fire the fire to set
-	 */
-	public void setFire(Projectile fire) {
-		this.fire = fire;
-	}
+	
 	/**
 	 * @return the spriteSheet
 	 */
