@@ -2,12 +2,11 @@ package com.projetocgt.cenario;
 
 import java.util.HashMap;
 import java.util.Map;
-import cgt.policy.StatePolicy;
+import cgt.policy.*;
 
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.projetocgt.personagens.ActorCGT;
-import com.projetocgt.personagens.ActorCGT.DirectionPolicy;
 import com.projetocgt.personagens.SpriteSheet;
 
 /**
@@ -297,7 +296,7 @@ public class WorldController {
 	public void actionDamegeEnemyDown(){
 		//bob.getPosition().y+=50;
 		//renderer.getCam().position.y+=50;
-		bob.setState(StatePolicy.DAMAGE);
+		/*bob.setState(StatePolicy.DAMAGE);
 		damegePressed();
 		Timer.schedule(new Task(){
 			@Override
@@ -305,25 +304,25 @@ public class WorldController {
 				damegeReleased();
 				bob.setState(StatePolicy.LOOKDOWN);
 			}
-		}, 2);
+		}, 2);*/
 	}
 	
 	public void actionDamegeEnemyUp(){
 		//bob.getPosition().y-=50;
 		//renderer.getCam().position.y-=50;
-		bob.setState(StatePolicy.DAMAGE);
+		//bob.setState(StatePolicy.DAMAGE);
 	}
 	
 	public void actionDamegeEnemyRight(){
 		//bob.getPosition().x-=50;
 		//renderer.getCam().position.x-=50;
-		bob.setState(StatePolicy.DAMAGE);
+		//bob.setState(StatePolicy.DAMAGE);
 	}
 	
 	public void actionDamegeEnemyLeft(){
 		//bob.getPosition().x+=50;
 		//renderer.getCam().position.x+=50;
-		bob.setState(StatePolicy.DAMAGE);
+		//bob.setState(StatePolicy.DAMAGE);
 	}
 	
 

@@ -204,7 +204,7 @@ public class WorldRenderer   {
 		debugRenderer.begin(ShapeType.Line);
 
 		debugRenderer.setColor(new Color(0, 1, 0, 1));
-		debugRenderer.rect(personagem.getRectPer().x, personagem.getRectPer().y, personagem.getRectPer().getWidth(), personagem.getRectPer().getHeight());
+		debugRenderer.rect(personagem.getRectangle().x, personagem.getRectangle().y, personagem.getRectangle().getWidth(), personagem.getRectangle().getHeight());
 
 		//Carrega o debug para todos os Opposite
 		for(int i=0;i<world.getListaDeOpposite().size();i++){				
@@ -225,7 +225,7 @@ public class WorldRenderer   {
 		//Carrega o debug para todos os Actor
 		for(int i=0;i<world.getListaActor().size();i++){				
 			debugRenderer.setColor(new Color(0, 1, 0, 1));
-			debugRenderer.rect(world.getListaActor().get(i).getRectPer().x, world.getListaActor().get(i).getRectPer().y, world.getListaActor().get(i).getRectPer().getWidth(), world.getListaActor().get(i).getRectPer().getHeight());
+			debugRenderer.rect(world.getListaActor().get(i).getRectangle().x, world.getListaActor().get(i).getRectangle().y, world.getListaActor().get(i).getRectangle().getWidth(), world.getListaActor().get(i).getRectangle().getHeight());
 		}
 		//Carrega o debug para todos os Bonus
 		for(int i=0;i<world.getListaDeBonus().size();i++){				
@@ -245,11 +245,12 @@ public class WorldRenderer   {
 		}
 		debugRenderer.end();
 	}
+	
 	void damageActorCGT(ActorCGT personagem){
 		for(int i=0; i < world.getListaDeEnemy().size(); i++){
-			if(world.getListaDeEnemy().get(i).getRectangle().overlaps(personagem.getRectPer())){
+			if(world.getListaDeEnemy().get(i).getRectangle().overlaps(personagem.getRectangle())){
 				//personagem.setLife(personagem.getLife()-world.getListaDeEnemy().get(i).getDamage());
-				animationDamege(personagem);
+				animationDamage(personagem, world.getListaDeEnemy().get(i));
 				//System.out.println(personagem.getLife());
 				
 				if(personagem.getLife()<0){
@@ -260,6 +261,7 @@ public class WorldRenderer   {
 		}
 	}
 
+	//Verifica e executa o comportamento da lista de behaviors de um Enemy
 	private void configBehavior(Enemy enemy){
 		for(int indice=0; indice<enemy.getBehaviors().size(); indice++){
 
@@ -293,7 +295,8 @@ public class WorldRenderer   {
 				if(enemy.getPosition().x>sine.getMax())
 					sine.setAtFirstStep(true);
 			}
-
+			
+			//WIDTH e HEIGHT "esticam" o sprite
 			else if(behavior.getBehaviorPolicy().equals("WIDTH")){
 				Sine sine = (Sine)behavior;
 
@@ -332,6 +335,9 @@ public class WorldRenderer   {
 					sine.setAtFirstStep(false);
 			}
 
+			
+			//Direction - Padrão de movimentos dentro de uma area; Muda de direcao randomicamente;
+				//Direcoes descritas pelas policys
 			else if(behavior.getBehaviorPolicy().equals("LEFT_AND_RIGHT")){
 				Direction direction = (Direction)behavior;
 				int[] angulos = {0, 180};
@@ -398,6 +404,7 @@ public class WorldRenderer   {
 					enemy.getVelocity().y=-enemy.getSpeed();
 			}
 
+			//Fade - Usado para se "apagar" ou fazer um sprite "surgir"
 			else if(behavior.getBehaviorPolicy().equals("FADE_IN")){
 				Fade fade = (Fade)behavior;
 				scheduleFadeIn(enemy, fade);
@@ -408,10 +415,15 @@ public class WorldRenderer   {
 
 
 	}
+	
+	//Implementação do comportamento descrito por um behavior Fade
 	private void scheduleFadeIn(final Enemy enemy,Fade fade){
 		if(!fade.isStarted()){
 			
+			//Garante que este metodo sera executado somente uma vez
 			fade.setStarted(true);
+			
+			//Desativa-se as interacoes do enemy com o actor
 			final boolean destroyable = enemy.isDestroyable();
 			enemy.setDestroyable(false);
 			final int damage = enemy.getDamage();
@@ -423,12 +435,15 @@ public class WorldRenderer   {
 					for(float alpha = 0f; alpha<=1f;alpha+=0.01f){
 						enemy.setAlpha(alpha);
 					}
+					
+					//Recupera-se a interacao definida ao enemy
 					enemy.setDestroyable(destroyable);
 					enemy.setDamage(damage);
 				}}, fade.getFadeInTime());
 			}
 		}
 
+	//Implementação do comportamento descrito por um behavior Direction
 	private void scheduleDirection(int[] angulos, Enemy enemy){
 			enemy.getVelocity().x=0;
 			enemy.getVelocity().y=0;
@@ -451,7 +466,7 @@ public class WorldRenderer   {
 				enemy.getVelocity().y=enemy.getSpeed();
 			}
 
-
+			//Velocidade Y no 3º e 4º quadrantes
 			if(angulos[indice]>180 && angulos[indice]<360){
 				enemy.getVelocity().y=-enemy.getSpeed();
 			}
@@ -467,15 +482,15 @@ public class WorldRenderer   {
 		damageActorCGT(personagem);
 		//Verifica se colidiu com algum Opposite
 		for(int i=0; i < world.getListaDeOpposite().size(); i++){
-			if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeOpposite().get(i).isBlock())
+			if(world.getListaDeOpposite().get(i).getRectangle().overlaps(personagem.getRectangle()) && world.getListaDeOpposite().get(i).isBlock())
 				colisao=true;
 
 		}
 
 		//Verifica se colidiu com algum Enemy
 		for(int i=0; i < world.getListaDeEnemy().size(); i++){
-			if(world.getListaDeEnemy().get(i).getRectangle().overlaps(personagem.getRectPer()) && world.getListaDeEnemy().get(i).isBlock()){
-				//colisaoEnemy=true;
+			if(world.getListaDeEnemy().get(i).getRectangle().overlaps(personagem.getRectangle()) && world.getListaDeEnemy().get(i).isBlock()){
+				colisaoEnemy=true;
 				//animationDamege(personagem);
 				colisao=true;
 			}
@@ -483,7 +498,7 @@ public class WorldRenderer   {
 
 		//Verifica se colidiu com algum Bonus
 		for(int i=0; i < world.getListaDeBonus().size(); i++){
-			if(world.getListaDeBonus().get(i).getRectangle().overlaps(personagem.getRectPer())){
+			if(world.getListaDeBonus().get(i).getRectangle().overlaps(personagem.getRectangle())){
 				for(int j=0; j < world.getListaDeProjectili().size(); j++){
 					world.getListaDeProjectili().get(j).setAmmo(4);
 				}
@@ -509,13 +524,13 @@ public class WorldRenderer   {
 	 * 
 	 * @param personagem
 	 */
-	public void animationDamege(ActorCGT boy){
+	public void animationDamage(ActorCGT boy, Enemy enemy){
 		
 		if(!personagem.isInvincible()){
 			personagem.setInvincible(true);
 			final StatePolicy state = personagem.getState();
 			personagem.setState(StatePolicy.DAMAGE);
-			personagem.setLife(personagem.getLife()-1);
+			personagem.setLife(personagem.getLife()-enemy.getDamage());
 			personagem.getSoundDamage().play();
 			Timer.schedule(new Task(){
 				@Override
