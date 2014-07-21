@@ -24,7 +24,7 @@ public class ActorCGT extends GameObject {
 	private DirectionPolicy directionPolicy;
 	private ArrayList<Move> moves;
 	private ArrayList<Jump> jumps;
-	private ArrayList<CGTProjectile> projectiles;
+	private ArrayList<Projectile> listaDeProjectiles = new ArrayList<Projectile>();
 	private int jumpDefault;
 	private int fireDefault;
 	private boolean invincible;
@@ -162,17 +162,17 @@ public class ActorCGT extends GameObject {
 	}
 
 	/**
-	 * @return the projectiles
+	 * @return the listaDeProjectiles
 	 */
-	public ArrayList<CGTProjectile> getProjectiles() {
-		return projectiles;
+	public ArrayList<Projectile> getListaDeProjectiles() {
+		return listaDeProjectiles;
 	}
 
 	/**
-	 * @param projectiles the projectiles to set
+	 * @param listaDeProjectiles the listaDeProjectiles to set
 	 */
-	public void setProjectiles(ArrayList<CGTProjectile> projectiles) {
-		this.projectiles = projectiles;
+	public void setListaDeProjectiles(ArrayList<Projectile> projectiles) {
+		this.listaDeProjectiles = projectiles;
 	}
 
 	/**

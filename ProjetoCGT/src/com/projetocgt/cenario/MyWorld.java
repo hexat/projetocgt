@@ -2,7 +2,11 @@ package com.projetocgt.cenario;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import cgt.behaviors.*;
 import cgt.core.*;
 import cgt.policy.*;
@@ -27,8 +31,7 @@ import com.projetocgt.util.ProjectileOrientation;
  */
 public class MyWorld {
 	
-	ArrayList<ActorCGT> listaActor = new ArrayList<ActorCGT>();
-	ArrayList<Projectile> listaDeProjectile = new ArrayList<Projectile>();
+	//ArrayList<Projectile> listaDeProjectile = new ArrayList<Projectile>();
 	ArrayList<Opposite> listaDeOpposite = new ArrayList<Opposite>();
 	ArrayList<Bonus> listaDeBonus = new ArrayList<Bonus>();
 	ArrayList<Enemy> listaDeEnemy = new ArrayList<Enemy>();
@@ -48,9 +51,49 @@ public class MyWorld {
 		
 		//Action
 		//ActionCreator.getInstance().newActionMove(move, per)
-
-		personagemActor = new ActorCGT(new Vector2(800, 800), 100f, 100f, 80f, 10f, 10f);
-		//personagemActor = new ActorCGT(new Vector2(330, 800), 100f, 100f, 80f, 10f, 10f);
+		/*CGTActor personagemCGTActor = new CGTActor();
+		personagemCGTActor.setPosition(new Position(800,900));
+		Collision coliderPersonagem = new Collision(10, 10);
+		personagemCGTActor.setBounds(coliderPersonagem);
+		personagemCGTActor.setCollision(coliderPersonagem);
+		personagemCGTActor.setLife(100);
+		personagemCGTActor.setSpeed(180);
+		
+		try {
+			personagemCGTActor.setSpriteSheet(new CGTSpriteSheet(new CGTTexture(new File("data/SpriteCGTActor/SpriteSheet_bombeiro.png"))));
+			personagemCGTActor.getSpriteSheet().setRows(5);
+			personagemCGTActor.getSpriteSheet().setColumns(3);
+		} catch (FileNotFoundException e) {
+			System.out.println("Caminho errado");
+		}
+		
+		Sound somDamegePersonagem;
+		try {
+			somDamegePersonagem = new Sound("data/AudioBombeiro/colisao.wav");
+			personagemCGTActor.setSoundCollision(somDamegePersonagem);
+		} catch (UnsupportedAudioFileException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		Sound somDiePersonagem;
+		try {
+			somDiePersonagem = new Sound("data/AudioBombeiro/colisao.wav");
+			personagemCGTActor.setSoundDie(somDiePersonagem);
+		} catch (UnsupportedAudioFileException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		personagemActor = new ActorCGT(personagemCGTActor);*/
+		
+		
 		personagemActor = new ActorCGT(new Vector2(800,900), 100f, 100f, 80f, 10f, 10f);
 		personagemActor.setSpeed(180);
 		personagemActor.setLife(3);
@@ -248,7 +291,7 @@ public class MyWorld {
 		direcaoDown.setState(StatePolicy.LOOKDOWN);
 		projetilAgua.getListaDeProjectileOrientation().add(direcaoDown);
 		
-		listaDeProjectile.add(projetilAgua);
+		personagemActor.getListaDeProjectiles().add(projetilAgua);
 	}
 
 	private void createWorld(String fileCGT){
@@ -270,20 +313,7 @@ public class MyWorld {
 	public void setBackGround(Texture backGround) {
 		this.backGround = backGround;
 	}
-	/**
-	 * @return the listaDeProjectili
-	 */
-	public ArrayList<Projectile> getListaDeProjectili() {
-		return listaDeProjectile;
-	}
-
-	/**
-	 * @param listaDeProjectili the listaDeProjectili to set
-	 */
-	public void setListaDeProjectili(ArrayList<Projectile> listaDeProjectili) {
-		this.listaDeProjectile = listaDeProjectili;
-	}
-
+	
 	/**
 	 * @return the listaDeOpposite
 	 */
@@ -303,12 +333,7 @@ public class MyWorld {
 	public ActorCGT getPersonagem() {
 		return personagemActor;
 	}
-	/**
-	 * @return the listaActor
-	 */
-	public ArrayList<ActorCGT> getListaActor() {
-		return listaActor;
-	}
+	
 	/**
 	 * @return the listaDeBonus
 	 */

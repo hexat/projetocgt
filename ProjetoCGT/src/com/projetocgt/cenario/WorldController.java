@@ -103,11 +103,11 @@ public class WorldController {
 
 	public void firePressedTouch() {
 		keys.get(keys.put(Keys.FIRE, true));
-		for(int i=0;i<world.getListaDeProjectili().size();i++){
+		for(int i=0;i<world.getPersonagem().getListaDeProjectiles().size();i++){
 			//TODO
 			//if(world.getListaDeProjectili().get(i).getActionFire().getInputs().get(0) == InputPolicy.GO_TAP){
-				world.getListaDeProjectili().get(i).setPosition(bob.getPosition());
-				world.getListaDeProjectili().get(i).setFlagAtivar(true);	
+				world.getPersonagem().getListaDeProjectiles().get(i).setPosition(bob.getPosition());
+				world.getPersonagem().getListaDeProjectiles().get(i).setFlagAtivar(true);	
 			//}
 		}
 		
@@ -153,11 +153,11 @@ public class WorldController {
 	public void fireReleasedTouch() {
 		keys.get(keys.put(Keys.FIRE, false));
 		//Desabilita o loop da animacao
-		for(int i=0;i<world.getListaDeProjectili().size();i++){
+		for(int i=0;i<world.getPersonagem().getListaDeProjectiles().size();i++){
 			//so vai pra falso quem tiver ativo
-			if(world.getListaDeProjectili().get(i).isFlagAtivar()){
-				world.getListaDeProjectili().get(i).ammoDown();
-				world.getListaDeProjectili().get(i).setFlagAtivar(false);
+			if(world.getPersonagem().getListaDeProjectiles().get(i).isFlagAtivar()){
+				world.getPersonagem().getListaDeProjectiles().get(i).ammoDown();
+				world.getPersonagem().getListaDeProjectiles().get(i).setFlagAtivar(false);
 				//if(world.getListaDeProjectili().get(i).getAmmo() == 0){
 					//world.getListaDeProjectili().get(i).setFlagAtivar(false);}		
 			}
@@ -181,8 +181,8 @@ public class WorldController {
 			world.getListaDeBonus().get(i).update(delta);
 		}
 		
-		for (int i=0; i<world.getListaDeProjectili().size(); i++) {
-			world.getListaDeProjectili().get(i).update(delta);
+		for (int i=0; i<world.getPersonagem().getListaDeProjectiles().size(); i++) {
+			world.getPersonagem().getListaDeProjectiles().get(i).update(delta);
 		}
 		
 		for (int i=0; i<world.getListaDeEnemy().size(); i++) {
