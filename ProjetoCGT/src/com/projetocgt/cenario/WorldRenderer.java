@@ -261,7 +261,9 @@ public class WorldRenderer   {
 		}
 	}
 
-	//Verifica e executa o comportamento da lista de behaviors de um Enemy
+	/**
+	 * Verifica e executa o comportamento da lista de behaviors de um Enemy
+	 */
 	private void configBehavior(Enemy enemy){
 		for(int indice=0; indice<enemy.getBehaviors().size(); indice++){
 

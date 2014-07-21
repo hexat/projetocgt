@@ -1,10 +1,13 @@
 package com.projetocgt.cenario;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import cgt.behaviors.*;
+import cgt.core.*;
 import cgt.policy.*;
-import cgt.unit.Action;
-import cgt.unit.ActionCreator;
+import cgt.unit.*;
+import cgt.util.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -40,13 +43,12 @@ public class MyWorld {
 	 * Recebe os paramentros do jogos
 	 */
 	private void createWorld() {
-		
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
-		//backGround = new Texture(Gdx.files.internal("data/Cenario/pista1280.png"));
+		//backGround = new CGTTexture(Gdx.files.internal("data/Cenario/pista1280.png"));
 		
 		//Action
 		//ActionCreator.getInstance().newActionMove(move, per)
-		
+
 		personagemActor = new ActorCGT(new Vector2(800, 800), 100f, 100f, 80f, 10f, 10f);
 		//personagemActor = new ActorCGT(new Vector2(330, 800), 100f, 100f, 80f, 10f, 10f);
 		personagemActor = new ActorCGT(new Vector2(800,900), 100f, 100f, 80f, 10f, 10f);
@@ -74,15 +76,31 @@ public class MyWorld {
 		 */
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
-				Opposite opositorCasa = new Opposite(new Vector2(450*(i+1)+i*20,400*(j+1)+j*90), 300, 300, 300, 0, 0);
-				//opositorCasa.setTexture(new Texture("data/Cenario/casa_sprite_sheet.png"));
+				CGTOpposite opositorCasa = new CGTOpposite();
+				//new Vector2(450*(i+1)+i*20,400*(j+1)+j*90), 300, 300, 300, 0, 0
+				
+				Collision bounds = new Collision(300, 300);
+				opositorCasa.setBounds(bounds);
+				opositorCasa.setCollision(bounds);
+				
+				Position position = new Position(450*(i+1)+i*20, 400*(j+1)+j*90);
+				opositorCasa.setPosition(position);
+				
+				//opositorCasa.setTexture(new CGTTexture("data/Cenario/casa_sprite_sheet.png"));
 				opositorCasa.setBlock(true);
 				opositorCasa.setDestroyable(false);
 				opositorCasa.setLife(0);
-				opositorCasa.setSpriteSheet(new SpriteSheet());
+				try {
+					opositorCasa.setSpriteSheet(new CGTSpriteSheet(new CGTTexture(new File("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png"))));
+					opositorCasa.getSpriteSheet().setRows(1);
+					opositorCasa.getSpriteSheet().setColumns(1);
+				} catch (FileNotFoundException e) {
+					System.out.println("Caminho errado");
+				}
 				//Indica que a minha animacao e' um por um
-				opositorCasa.getSpriteSheet().loadingSpriteSheet("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png", 1, 1);
-				listaDeOpposite.add(opositorCasa);				
+				//opositorCasa.getSpriteSheet().loadingSpriteSheet("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png", 1, 1);
+				Opposite opositorCasaLib = new Opposite(opositorCasa);
+				listaDeOpposite.add(opositorCasaLib);				
 			}
 		}
 		Fade fade = new Fade(FadePolicy.FADE_IN);
@@ -95,7 +113,7 @@ public class MyWorld {
 		
 		//Instancia o opposite fogo
 		Enemy enemyFogo = new Enemy(new Vector2(400,850), 50, 50, 50, 0, 0);
-		//opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
+		//opositorFogo.setTexture(new CGTTexture("data/CGTOpposite/SpriteSheet_fogo.png"));
 		enemyFogo.setBlock(false);
 		enemyFogo.setDamage(1);
 		enemyFogo.setSpeed(2);
@@ -112,7 +130,7 @@ public class MyWorld {
 		
 		//Instancia o opposite fogo
 		Enemy enemyFogo2 = new Enemy(new Vector2(200,1050), 50, 50, 50, 0, 0);
-		//opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
+		//opositorFogo.setTexture(new CGTTexture("data/CGTOpposite/SpriteSheet_fogo.png"));
 		enemyFogo2.setBlock(true);
 		enemyFogo2.setDestroyable(true);
 		enemyFogo2.setDamage(1);
@@ -127,7 +145,7 @@ public class MyWorld {
 		
 		//Instancia o opposite fogo
 		Enemy enemyFogo3 = new Enemy(new Vector2(200,1500), 50, 50, 50, 0, 0);
-		//opositorFogo.setTexture(new Texture("data/CGTOpposite/SpriteSheet_fogo.png"));
+		//opositorFogo.setTexture(new CGTTexture("data/CGTOpposite/SpriteSheet_fogo.png"));
 		enemyFogo3.setBlock(true);
 		enemyFogo3.setDestroyable(true);
 		enemyFogo3.setDamage(2);
@@ -183,7 +201,7 @@ public class MyWorld {
 		listaDeBonus.add(hidrate);
 		
 		Projectile projetilAgua = new Projectile(new Vector2(100f, 200f), 30, 30, 30, 0, 0);
-		//projetilAgua.setTexture(new Texture("data/CGTProjectile/SpriteSheet_agua.png"));
+		//projetilAgua.setTexture(new CGTTexture("data/CGTProjectile/SpriteSheet_agua.png"));
 		projetilAgua.setSpriteSheet(new SpriteSheet());
 		//Indica que a minha animacao e' um por um
 		//projetilAgua.setActionFire(ActionCreator.getInstance().newActionFire(ActionFirePolicy.FIRE));

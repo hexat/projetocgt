@@ -15,7 +15,7 @@ public class Bonus extends GameObject{
 	private boolean destroyable;
 	private int lifetime;
 	private Texture texture;
-	//private SpriteSheet spriteSheet;
+	//private CGTSpriteSheet spriteSheet;
 	private ArrayList<BonusPolicy> policys;
 	
 	public Bonus(Vector2 position, float width, float height, float colider, float posXColider, float posYColider) {

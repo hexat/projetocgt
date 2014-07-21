@@ -1,7 +1,11 @@
 package com.projetocgt.personagens;
 import java.util.ArrayList;
+
+import cgt.core.CGTActor;
+import cgt.core.CGTGameObject;
 import cgt.core.CGTProjectile;
 import cgt.policy.*;
+import cgt.unit.LabelIDSingleton;
 import cgt.util.Jump; 
 import cgt.util.Move;
 import com.badlogic.gdx.math.Vector2;
@@ -10,7 +14,7 @@ import com.badlogic.gdx.math.Vector2;
  * cada personagem sofre uma acao.
  * @autor Bruno Roberto
  */
-public class ActorCGT extends GameObject{
+public class ActorCGT extends GameObject {
 
 	
 	private float stateTime = 0;					
@@ -32,8 +36,16 @@ public class ActorCGT extends GameObject{
 	 */
 	public ActorCGT(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ) {
 		super(position, width, height, colider, posXColider, posYColider);
+		setCgtGameObject(new CGTActor());
 		this.directionPolicy = DirectionPolicy.FOUR_DIRECTION;
 		this.invincible=false;
+	}
+	
+	public ActorCGT(CGTActor actor){
+		super(actor);
+		moves = actor.getMoves();
+		jumps = actor.getJumps();
+		
 	}
 	
 	/**

@@ -2,6 +2,7 @@ package com.projetocgt.personagens;
 
 import java.util.ArrayList;
 import cgt.behaviors.Behavior;
+import cgt.core.CGTEnemy;
 import cgt.policy.StatePolicy;
 import com.badlogic.gdx.math.Vector2;
 
@@ -15,6 +16,7 @@ public class Enemy extends GameObject{
 	
 	public Enemy(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ){
 		super(position, width, height, colider, posXColider, posYColider);
+		setCgtGameObject(new CGTEnemy());
 		this.alpha=1f;
 		behaviors = new ArrayList<Behavior>();
 	}

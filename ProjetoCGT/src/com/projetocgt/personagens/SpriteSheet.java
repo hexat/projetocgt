@@ -123,9 +123,9 @@ public class SpriteSheet {
 	 * @param caminho
 	 * 				Informa o caminho do arquivo
 	 * @param FRAME_ROWS
-	 * 				Informa o numero de linhas do SpriteSheet
+	 * 				Informa o numero de linhas do CGTSpriteSheet
 	 * @param FRAME_COLS
-	 * 				Informa o numero de colunas do SpriteSheet
+	 * 				Informa o numero de colunas do CGTSpriteSheet
 	 */
 	public void loadingSpriteSheet(String caminho, int FRAME_ROWS, int FRAME_COLS) {
 		walkSheet = new Texture(Gdx.files.internal(caminho));

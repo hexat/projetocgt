@@ -1,19 +1,21 @@
 package com.projetocgt.personagens;
 
 import cgt.core.CGTGameObject;
+import cgt.util.Position;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class GameObject {
+	
+	private CGTGameObject cgtGameObject;
+	
 	//private Sound sound;
 	private Music soundDie;
 	private Music soundDamage;
 	private Vector2 position; //Vetor que informa a posicao do personagem
-	private int life;
 	private SpriteSheet spriteSheet;
-	private float speed; //Velocidade do personagem
 	private Vector2 velocity;		//Vetor que informa a velocidade do personagem
 	private Rectangle bounds;		// Area que sera' desenhado o personagem
 	private Rectangle rectangle;
@@ -42,15 +44,31 @@ public abstract class GameObject {
 		this.posYColider=posYColider;
 
 		setRectangle(new Rectangle(position.x+this.posXColider,position.y+this.posYColider,colider,colider));
+		
 	}
 
 	protected GameObject(CGTGameObject gameObject){
-		Vector2 cgtPosition = new Vector2(gameObject.getPosition().getX(), gameObject.getPosition().getY());
-		this.setPosition(cgtPosition);
+		this.position= new Vector2();
+		velocity = new Vector2();
+		bounds= new Rectangle();
+		rectangle = new Rectangle();
+		
+		setCgtGameObject(gameObject);
+		setPosition(gameObject.getPosition());
 
-		bounds.setHeight(gameObject.getCollision().getHeight());
-		bounds.setWidth(gameObject.getCollision().getWidth());
-
+		bounds.setHeight(gameObject.getBounds().getHeight());
+		bounds.setWidth(gameObject.getBounds().getWidth());
+		
+		rectangle.setHeight(gameObject.getCollision().getHeight());
+		rectangle.setWidth(gameObject.getCollision().getWidth());
+		
+		rectangle.setPosition(position.x + gameObject.getCollision().getPositionRelativeToObject().x,
+									position.y + gameObject.getCollision().getPositionRelativeToObject().y);
+		
+		spriteSheet = new SpriteSheet();
+		spriteSheet.loadingSpriteSheet(gameObject.getSpriteSheet().getTexture().getFile().getPath(),
+											gameObject.getSpriteSheet().getRows(), gameObject.getSpriteSheet().getColumns());
+		
 	}
 
 	/**
@@ -67,14 +85,14 @@ public abstract class GameObject {
 	 * @return the life
 	 */
 	public int getLife() {
-		return life;
+		return cgtGameObject.getLife();
 	}
 
 	/**
 	 * @param life the life to set
 	 */
-	public void setLife(int life) {
-		this.life = life;
+	public void setLife(int life){
+		cgtGameObject.setLife(life);
 	}
 
 	/**
@@ -104,6 +122,11 @@ public abstract class GameObject {
 	public void setPosition(Vector2 position) {
 		this.position.x = position.x;
 		this.position.y = position.y;
+	}
+	
+	public void setPosition(Position position) {
+		this.position.x = position.getX();
+		this.position.y = position.getY();
 	}
 	
 	/**
@@ -179,13 +202,27 @@ public abstract class GameObject {
 	 * @return the sPEED
 	 */
 	public float getSpeed() {
-		return speed;
+		return cgtGameObject.getSpeed();
 	}
 
 	/**
 	 * @param sPEED the sPEED to set
 	 */
-	public void setSpeed(float sPEED) {
-		speed = sPEED;
+	public void setSpeed(int sPEED) {
+		cgtGameObject.setSpeed(sPEED);
+	}
+
+	/**
+	 * @return the cgtGameObject
+	 */
+	public CGTGameObject getCgtGameObject() {
+		return cgtGameObject;
+	}
+
+	/**
+	 * @param cgtGameObject the cgtGameObject to set
+	 */
+	public void setCgtGameObject(CGTGameObject cgtGameObject) {
+		this.cgtGameObject = cgtGameObject;
 	}
 }

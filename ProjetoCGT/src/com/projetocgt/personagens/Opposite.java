@@ -3,13 +3,14 @@ package com.projetocgt.personagens;
 import java.util.ArrayList;
 
 import cgt.behaviors.Behavior;
+import cgt.core.CGTOpposite;
+
 import com.badlogic.gdx.math.Vector2;
 
 public class Opposite extends GameObject{
 	//private AIPolicy move;
 	private boolean block;
 	private boolean destroyable;
-	private int damage;
 	//private Projectile fire;
 	private ArrayList<Behavior> behaviors;
 	
@@ -24,6 +25,14 @@ public class Opposite extends GameObject{
 	 */
 	public Opposite(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ){
 		super(position, width, height, colider, posXColider, posYColider);
+		setCgtGameObject(new CGTOpposite());
+	}
+	
+	public Opposite(CGTOpposite opposite){
+		super(opposite);
+		block = opposite.isBlock();
+		destroyable = opposite.isDestroyable();
+		behaviors = opposite.getBehaviors();
 	}
 	
 	/**
@@ -51,18 +60,7 @@ public class Opposite extends GameObject{
 	public void setDestroyable(boolean destroyable) {
 		this.destroyable = destroyable;
 	}
-	/**
-	 * @return the damage
-	 */
-	public int getDamage() {
-		return damage;
-	}
-	/**
-	 * @param damage the damage to set
-	 */
-	public void setDamage(int damage) {
-		this.damage = damage;
-	}
+	
 	
 	/**
 	 * @return the behaviors

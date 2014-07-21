@@ -6,27 +6,12 @@ import com.badlogic.gdx.math.Vector2;
 
 public class ProjectileOrientation {
 	// private ActionMovePolicy movePolicyActor;
-	private Vector2 position;
 	private int spriteLine;
 	private int spriteVelocity;
 	private int spriteNumberOfColumns;
 	private Vector2 positionRetativeToGameObject;
 	private StatePolicy state;
 
-	/**
-	 * @return the position
-	 */
-	public Vector2 getPosition() {
-		return position;
-	}
-
-	/**
-	 * @param position
-	 *            the position to set
-	 */
-	public void setPosition(Vector2 position) {
-		this.position = position;
-	}
 
 	/**
 	 * @return the spriteLine
