@@ -3,18 +3,20 @@ package com.projetocgt.cenario;
 import java.util.ArrayList;
 import cgt.behaviors.*;
 import cgt.policy.*;
+import cgt.unit.Action;
+import cgt.unit.ActionCreator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.progetocgt.util.ProjectileOrientation;
 import com.projetocgt.personagens.ActorCGT;
 import com.projetocgt.personagens.Bonus;
 import com.projetocgt.personagens.Enemy;
 import com.projetocgt.personagens.Opposite;
 import com.projetocgt.personagens.Projectile;
 import com.projetocgt.personagens.SpriteSheet;
+import com.projetocgt.util.ProjectileOrientation;
 /**
  * Responsavel por construir o jogo
  * @author Bruno Roberto
@@ -27,6 +29,7 @@ public class MyWorld {
 	ArrayList<Opposite> listaDeOpposite = new ArrayList<Opposite>();
 	ArrayList<Bonus> listaDeBonus = new ArrayList<Bonus>();
 	ArrayList<Enemy> listaDeEnemy = new ArrayList<Enemy>();
+	ArrayList<Action> listaDeAction = new ArrayList<Action>();
 	private ActorCGT personagemActor;
 	private Texture backGround;
 	
@@ -41,6 +44,8 @@ public class MyWorld {
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
 		//backGround = new Texture(Gdx.files.internal("data/Cenario/pista1280.png"));
 		
+		//Action
+		//ActionCreator.getInstance().newActionMove(move, per)
 		
 		personagemActor = new ActorCGT(new Vector2(800, 800), 100f, 100f, 80f, 10f, 10f);
 		//personagemActor = new ActorCGT(new Vector2(330, 800), 100f, 100f, 80f, 10f, 10f);

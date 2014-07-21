@@ -7,7 +7,7 @@ import cgt.unit.ActionFire;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.progetocgt.util.ProjectileOrientation;
+import com.projetocgt.util.ProjectileOrientation;
 /**
  * Classe reponsavel pela construcao do CGTProjectile que tera as informacoes sobre 
  * os inimigos 

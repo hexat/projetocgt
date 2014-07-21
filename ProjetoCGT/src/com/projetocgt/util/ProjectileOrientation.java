@@ -1,4 +1,4 @@
-package com.progetocgt.util;
+package com.projetocgt.util;
 
 import cgt.policy.StatePolicy;
 
