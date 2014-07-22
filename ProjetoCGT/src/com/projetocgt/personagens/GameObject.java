@@ -66,7 +66,8 @@ public abstract class GameObject {
 									position.y + gameObject.getCollision().getPositionRelativeToObject().y);
 		
 		spriteSheet = new SpriteSheet();
-		spriteSheet.loadingSpriteSheet(gameObject.getSpriteSheet().getTexture().getFile().getPath(),
+
+		spriteSheet.loadSprite(gameObject.getSpriteSheet().getTexture().getFile().getPath(),
 											gameObject.getSpriteSheet().getRows(), gameObject.getSpriteSheet().getColumns());
 		
 	}

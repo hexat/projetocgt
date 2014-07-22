@@ -2,12 +2,11 @@ package com.projetocgt.personagens;
 import java.util.ArrayList;
 
 import cgt.core.CGTActor;
-import cgt.core.CGTGameObject;
-import cgt.core.CGTProjectile;
-import cgt.policy.*;
-import cgt.unit.LabelIDSingleton;
-import cgt.util.Jump; 
+import cgt.policy.DirectionPolicy;
+import cgt.policy.StatePolicy;
+import cgt.util.Jump;
 import cgt.util.Move;
+
 import com.badlogic.gdx.math.Vector2;
 /**
  * Classe utilizada para representar os Personagens do jogo
@@ -15,10 +14,8 @@ import com.badlogic.gdx.math.Vector2;
  * @autor Bruno Roberto
  */
 public class ActorCGT extends GameObject {
-
 	
 	private float stateTime = 0;					
-	
 	private StatePolicy state = StatePolicy.IDLE;
 	private boolean facingLeft = true;				
 	private DirectionPolicy directionPolicy;
@@ -43,8 +40,10 @@ public class ActorCGT extends GameObject {
 	
 	public ActorCGT(CGTActor actor){
 		super(actor);
+
 		moves = actor.getMoves();
 		jumps = actor.getJumps();
+
 		
 	}
 	

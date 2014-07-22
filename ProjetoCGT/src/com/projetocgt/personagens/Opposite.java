@@ -8,10 +8,9 @@ import cgt.core.CGTOpposite;
 import com.badlogic.gdx.math.Vector2;
 
 public class Opposite extends GameObject{
-	//private AIPolicy move;
+
 	private boolean block;
 	private boolean destroyable;
-	//private Projectile fire;
 	private ArrayList<Behavior> behaviors;
 	
 	/**
@@ -23,10 +22,10 @@ public class Opposite extends GameObject{
 	 * @param posXColider
 	 * @param posYColider
 	 */
-	public Opposite(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ){
-		super(position, width, height, colider, posXColider, posYColider);
-		setCgtGameObject(new CGTOpposite());
-	}
+//	public Opposite(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ){
+//		super(position, width, height, colider, posXColider, posYColider);
+//		setCgtGameObject(new CGTOpposite());
+//	}
 	
 	public Opposite(CGTOpposite opposite){
 		super(opposite);
