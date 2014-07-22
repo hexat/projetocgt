@@ -11,7 +11,6 @@ public class Enemy extends GameObject{
 	private ArrayList<Behavior> behaviors;
 	private boolean block;
 	private boolean destroyable;
-	private StatePolicy state;
 	private float alpha; //nivel de transparencia
 	
 	public Enemy(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ){
@@ -76,20 +75,6 @@ public class Enemy extends GameObject{
 	 */
 	public void setBehaviors(ArrayList<Behavior> behaviors) {
 		this.behaviors = behaviors;
-	}
-	
-
-	/**
-	 * @return the state
-	 */
-	public StatePolicy getState() {
-		return state;
-	}
-	/**
-	 * @param state the state to set
-	 */
-	public void setState(StatePolicy state) {
-		this.state = state;
 	}
 	
 	public float getAlpha() {

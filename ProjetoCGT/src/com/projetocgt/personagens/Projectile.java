@@ -3,198 +3,121 @@ package com.projetocgt.personagens;
 import java.util.ArrayList;
 
 import cgt.core.CGTGameObject;
+import cgt.core.CGTProjectile;
 import cgt.unit.ActionFire;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.util.ProjectileOrientation;
+import com.sun.org.apache.bcel.internal.generic.CPInstruction;
 /**
  * Classe reponsavel pela construcao do CGTProjectile que tera as informacoes sobre 
  * os inimigos 
  * @author bruno
  *
  */
-public class Projectile {
+public class Projectile extends GameObject {
+	private CGTProjectile cgtProjectile;
 	private boolean flagAtivar;
-	private ActionFire actionFire;
-	private int numFiresForOneInput;
-	private int damage;
-	private int interval;
-	private int ammo;
+//	private ActionFire actionFire;
+//	private int numFiresForOneInput;
+//	private int damage;
+//	private int interval;
+//	private int ammo;
 	private Vector2 positionRetativeToGameObject;
-	private Vector2 velocityInitial = new Vector2();
-	private float angle;
+//	private float angle;
 	//private LabelID labelID;
-	private Texture texture;
-	private Vector2 position;
-	private float posXColider, posYColider;
-	private Rectangle bounds= new Rectangle();
-	private Rectangle rectangle;
-	private SpriteSheet spriteSheet;
+//	private Texture texture;
+//	private float posXColider, posYColider;
+//	private Rectangle bounds= new Rectangle();
+//	private Rectangle rectangle;
+//	private SpriteSheet spriteSheet;
 	ArrayList<ProjectileOrientation> listaDeProjectileOrientation = new ArrayList<ProjectileOrientation>();
-	private CGTGameObject owner;
+//	private CGTGameObject owner;
+	
 	/***
 	 * Recebe uma posicao inicial
 	 * @param position
 	 */
-	public Projectile(Vector2 position ,float width, float height, float colider, float posXColider, float posYColider){
-		setPosition(position);
-		this.bounds.height=width;
-		this.bounds.width=height;
-		this.posXColider=posXColider;
-		this.posYColider=posYColider;
-		this.setRectangle(new Rectangle(position.x+this.posXColider,position.y+this.posYColider,colider,colider));
-	}
-	/**
-	 * Utilizada para ficar atualizando a posicao do Game Object CGTProjectile
-	 * @param delta
-	 */
-	public void update(float delta) {
-		//Soma uma velcidade a uma posicao de personagem
-		//position.add(velocityInitial.cpy().scl(delta));
-		rectangle.x=this.position.x+posXColider;
-		rectangle.y=this.position.y+posYColider;
+//	public Projectile(Vector2 position ,float width, float height, float colider, float posXColider, float posYColider){
+//		super(position, width, height, colider, posXColider, posYColider);
+//	}
+	
+	public Projectile(CGTProjectile projectile) {
+		super(projectile);
+		cgtProjectile = projectile;
 	}
 	
 	/**
 	 * Diminui um do valor do ammo
 	 */
 	public void ammoDown(){
-		ammo--;
+		cgtProjectile.setAmmo(getAmmo()-1);
 	}
-	
-	/**
-	 * @return the texture
-	 */
-	public Texture getTexture() {
-		return texture;
-	}
-	/**
-	 * @param textura the texture to set
-	 */
-	public void setTexture(Texture textura) {
-		this.texture = textura;
-	}
-	/**
-	 * @return the position
-	 */
-	public Vector2 getPosition() {
-		return position;
-	}
-	/**
-	 * @param position the position to set
-	 */
-	public void setPosition(Vector2 position) {
-		this.position = position;
-	}
+
 	/**
 	 * @return the numFiresForOneInput
 	 */
 	public int getNumFiresForOneInput() {
-		return numFiresForOneInput;
+		return cgtProjectile.getNumFiresForOneInput();
 	}
 	/**
 	 * @param numFiresForOneInput the numFiresForOneInput to set
 	 */
 	public void setNumFiresForOneInput(int numFiresForOneInput) {
-		this.numFiresForOneInput = numFiresForOneInput;
+		cgtProjectile.setNumFiresForOneInput(numFiresForOneInput);
 	}
 	/**
 	 * @return the damage
 	 */
 	public int getDamage() {
-		return damage;
+		return cgtProjectile.getDamage();
 	}
 	/**
 	 * @param damage the damage to set
 	 */
 	public void setDamage(int damage) {
-		this.damage = damage;
+		cgtProjectile.setDamage(damage);
 	}
 	/**
 	 * @return the interval
 	 */
 	public int getInterval() {
-		return interval;
+		return cgtProjectile.getInterval();
 	}
 	/**
 	 * @param interval the interval to set
 	 */
 	public void setInterval(int interval) {
-		this.interval = interval;
+		cgtProjectile.setInterval(interval);
 	}
 	/**
 	 * @return the ammo
 	 */
 	public int getAmmo() {
-		return ammo;
+		return cgtProjectile.getAmmo();
 	}
 	/**
 	 * @param ammo the ammo to set
 	 */
 	public void setAmmo(int ammo) {
-		this.ammo = ammo;
+		cgtProjectile.setAmmo(ammo);
 	}
-	/**
-	 * @return the velocityInitial
-	 */
-	public Vector2 getVelocityInitial() {
-		return velocityInitial;
-	}
-	/**
-	 * @param velocityInitial the velocityInitial to set
-	 */
-	public void setVelocityInitial(Vector2 velocityInitial) {
-		this.velocityInitial = velocityInitial;
-	}
+	
 	/**
 	 * @return the angle
 	 */
 	public float getAngle() {
-		return angle;
+		return cgtProjectile.getAngle();
 	}
 	/**
 	 * @param angle the angle to set
 	 */
 	public void setAngle(float angle) {
-		this.angle = angle;
+		cgtProjectile.setAngle(angle);
 	}
-	/**
-	 * @return the rectangle
-	 */
-	public Rectangle getRectangle() {
-		return rectangle;
-	}
-	/**
-	 * @param rectangle the rectangle to set
-	 */
-	public void setRectangle(Rectangle rectangle) {
-		this.rectangle = rectangle;
-	}
-	/**
-	 * @return the bounds
-	 */
-	public Rectangle getBounds() {
-		return bounds;
-	}
-	/**
-	 * @param bounds the bounds to set
-	 */
-	public void setBounds(Rectangle bounds) {
-		this.bounds = bounds;
-	}
-	/**
-	 * @return the spriteSheet
-	 */
-	public SpriteSheet getSpriteSheet() {
-		return spriteSheet;
-	}
-	/**
-	 * @param spriteSheet the spriteSheet to set
-	 */
-	public void setSpriteSheet(SpriteSheet spriteSheet) {
-		this.spriteSheet = spriteSheet;
-	}
+
+	
 	/**
 	 * @return the positionRetativeToGameObject
 	 */
@@ -212,13 +135,13 @@ public class Projectile {
 	 * @return the actionFire
 	 */
 	public ActionFire getActionFire() {
-		return actionFire;
+		return cgtProjectile.getAction();
 	}
 	/**
 	 * @param actionFire the actionFire to set
 	 */
 	public void setActionFire(ActionFire actionFire) {
-		this.actionFire = actionFire;
+		cgtProjectile.setAction(actionFire);
 	}
 	/**
 	 * @return the flagAtivar
@@ -244,18 +167,6 @@ public class Projectile {
 	public void setListaDeProjectileOrientation(
 			ArrayList<ProjectileOrientation> listaDeProjectileOrientation) {
 		this.listaDeProjectileOrientation = listaDeProjectileOrientation;
-	}
-	/**
-	 * @return the owner
-	 */
-	public CGTGameObject getOwner() {
-		return owner;
-	}
-	/**
-	 * @param owner the owner to set
-	 */
-	public void setOwner(CGTGameObject owner) {
-		this.owner = owner;
 	}
 	
 }

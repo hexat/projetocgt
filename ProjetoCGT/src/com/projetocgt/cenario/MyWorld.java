@@ -1,18 +1,30 @@
 package com.projetocgt.cenario;
 
+import java.awt.Rectangle;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javax.sound.sampled.UnsupportedAudioFileException;
-import cgt.behaviors.*;
-import cgt.core.*;
-import cgt.policy.*;
-import cgt.unit.*;
-import cgt.util.*;
+
+import cgt.core.CGTActor;
+import cgt.core.CGTOpposite;
+import cgt.core.CGTProjectile;
+import cgt.policy.ActionMovePolicy;
+import cgt.policy.AnimationPolicy;
+import cgt.policy.InputPolicy;
+import cgt.policy.StatePolicy;
+import cgt.unit.Action;
+import cgt.unit.ActionCreator;
+import cgt.unit.ActionMove;
+import cgt.util.CGTSpriteSheet;
+import cgt.util.CGTTexture;
+import cgt.util.Collision;
+import cgt.util.Position;
+import cgt.util.Sound;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.personagens.ActorCGT;
@@ -20,7 +32,6 @@ import com.projetocgt.personagens.Bonus;
 import com.projetocgt.personagens.Enemy;
 import com.projetocgt.personagens.Opposite;
 import com.projetocgt.personagens.Projectile;
-import com.projetocgt.personagens.SpriteSheet;
 import com.projetocgt.util.ProjectileOrientation;
 
 /**
@@ -54,7 +65,7 @@ public class MyWorld {
 		Collision coliderPersonagem = new Collision(60, 60);
 		personagemCGTActor.setCollision(coliderPersonagem);
 		
-		Collision tamanhoPersonagem = new Collision(80, 80);
+		Rectangle tamanhoPersonagem = new Rectangle(80, 80);
 		personagemCGTActor.setBounds(tamanhoPersonagem);
 		
 		personagemCGTActor.setLife(100);
@@ -92,6 +103,7 @@ public class MyWorld {
 		//Action
 		ActionMove moveLEft = ActionCreator.getInstance().newActionMove(ActionMovePolicy.WALK_LEFT, personagemCGTActor);
 		moveLEft.setSpriteLine(1);
+		moveLEft.setStatePolicy(StatePolicy.LOOKLEFT);
 		moveLEft.setNumberOfColumns(3);
 		moveLEft.addInput(InputPolicy.ACEL_LEFT);
 		moveLEft.setSpriteVelocity(0.08f);
@@ -100,6 +112,7 @@ public class MyWorld {
 		
 		ActionMove moveRight = ActionCreator.getInstance().newActionMove(ActionMovePolicy.WALK_RIGHT, personagemCGTActor);
 		moveRight.setSpriteLine(1);
+		moveRight.setStatePolicy(StatePolicy.LOOKRIGHT);
 		moveRight.setNumberOfColumns(3);
 		moveRight.addInput(InputPolicy.ACEL_RIGHT);
 		moveRight.setSpriteVelocity(0.08f);
@@ -107,6 +120,7 @@ public class MyWorld {
 		
 		ActionMove moveUp = ActionCreator.getInstance().newActionMove(ActionMovePolicy.WALK_UP, personagemCGTActor);
 		moveUp.setSpriteLine(3);
+		moveUp.setStatePolicy(StatePolicy.LOOKUP);
 		moveUp.setNumberOfColumns(3);
 		moveUp.addInput(InputPolicy.ACEL_UP);
 		moveUp.setSpriteVelocity(0.08f);
@@ -114,6 +128,7 @@ public class MyWorld {
 		
 		ActionMove moveDown = ActionCreator.getInstance().newActionMove(ActionMovePolicy.WALK_DOWN, personagemCGTActor);
 		moveDown.setSpriteLine(2);
+		moveDown.setStatePolicy(StatePolicy.LOOKDOWN);
 		moveDown.setNumberOfColumns(3);
 		moveDown.addInput(InputPolicy.ACEL_DOWN);
 		moveDown.setSpriteVelocity(0.08f);
@@ -145,14 +160,22 @@ public class MyWorld {
 		/* Esse opposite nao tem animacao, seria melhor adicionar uma textura do que uma animacao 
 		 * um por um.
 		 */
-		/*for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				CGTOpposite opositorCasa = new CGTOpposite();
+				
+
+				ActionMove teste = ActionCreator.getInstance().newActionMove(opositorCasa);
+				teste.setSpriteLine(1);
+				teste.setStatePolicy(StatePolicy.IDLE);
+				teste.setNumberOfColumns(1);
+				teste.setAnimationPolicy(AnimationPolicy.LOOP);
+				
 				//new Vector2(450*(i+1)+i*20,400*(j+1)+j*90), 300, 300, 300, 0, 0
 				
-				Collision bounds = new Collision(300, 300);
+				Rectangle bounds = new Rectangle(300, 300);
 				opositorCasa.setBounds(bounds);
-				opositorCasa.setCollision(bounds);
+				opositorCasa.setCollision(new Collision(bounds));
 				
 				Position position = new Position(450*(i+1)+i*20, 400*(j+1)+j*90);
 				opositorCasa.setPosition(position);
@@ -168,12 +191,13 @@ public class MyWorld {
 				} catch (FileNotFoundException e) {
 					System.out.println("Caminho errado");
 				}
+				
 				//Indica que a minha animacao e' um por um
 				//opositorCasa.getSpriteSheet().loadingSpriteSheet("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png", 1, 1);
 				Opposite opositorCasaLib = new Opposite(opositorCasa);
 				listaDeOpposite.add(opositorCasaLib);				
 			}
-		}*/
+		}
 		/*Fade fade = new Fade(FadePolicy.FADE_IN);
 		fade.setFadeInTime(1);
 		
@@ -267,15 +291,34 @@ public class MyWorld {
 		hidrate.setTexture(new Texture("data/CGTBonus/SpriteSheet_tubo.png"));
 		listaDeBonus.add(hidrate);
 		
-		Projectile projetilAgua = new Projectile(new Vector2(100f, 200f), 30, 30, 30, 0, 0);
-		projetilAgua.setSpriteSheet(new SpriteSheet());
+		CGTProjectile projetilAguaCGT = new CGTProjectile();
+		Position position = new Position(100f,200f);
+		projetilAguaCGT.setPosition(position);
+		projetilAguaCGT.setBounds(new Rectangle(10, 10));
+		projetilAguaCGT.setInterval(1);
+
+		CGTSpriteSheet css = new CGTSpriteSheet(new CGTTexture("data/CGTProjectile/SpriteSheet_agua.png"));
+		css.setRows(2);
+		css.setColumns(2);
+		projetilAguaCGT.setSpriteSheet(css);
+		projetilAguaCGT.setAmmo(4);
+		
+		ActionMove m = ActionCreator.getInstance().newActionMove(projetilAguaCGT);
+		m.setSpriteLine(1);
+		m.setStatePolicy(StatePolicy.IDLE);
+		m.setNumberOfColumns(2);
+		m.setSpriteVelocity(0.08f);
+		m.setAnimationPolicy(AnimationPolicy.LOOP);
+		
+		Projectile projetilAgua = new Projectile(projetilAguaCGT);
+//		projetilAgua.setSpriteSheet(new SpriteSheet());
 		//Indica que a minha animacao e' um por um
 		//projetilAgua.setActionFire(ActionCreator.getInstance().newActionFire(ActionFirePolicy.FIRE));
 		//projetilAgua.getActionFire().addInput(InputPolicy.GO_TAP);
-		projetilAgua.getVelocityInitial().x= 100f;
-		projetilAgua.setInterval(1);
-		projetilAgua.setAmmo(100);
-		projetilAgua.setAmmo(4);
+//		projetilAgua.getVelocityInitial().x= 100f;
+		//projetilAgua.setInterval(1);
+		//projetilAgua.setAmmo(100);
+		//projetilAgua.setAmmo(4);
 //		projetilAgua.getSpriteSheet().loadingSpriteSheet("data/CGTProjectile/SpriteSheet_agua.png", 2, 2);
 		
 		ProjectileOrientation direcaoRight = new ProjectileOrientation();

@@ -3,7 +3,6 @@ import java.util.ArrayList;
 
 import cgt.core.CGTActor;
 import cgt.policy.DirectionPolicy;
-import cgt.policy.StatePolicy;
 import cgt.util.Jump;
 import cgt.util.Move;
 
@@ -14,9 +13,7 @@ import com.badlogic.gdx.math.Vector2;
  * @autor Bruno Roberto
  */
 public class ActorCGT extends GameObject {
-	
-	private float stateTime = 0;					
-	private StatePolicy state = StatePolicy.IDLE;
+					
 	private boolean facingLeft = true;				
 	private DirectionPolicy directionPolicy;
 	private ArrayList<Move> moves;
@@ -47,14 +44,6 @@ public class ActorCGT extends GameObject {
 		
 	}
 	
-	/**
-	 * Adiciona o estado atual do Personagem
-	 * @param newState 
-	 * 					Estado do Personagem
-	 */
-	public void setState(StatePolicy newState) {
-		this.state = newState;
-	}
 	/*Adicionar a distância percorrida no delta segundos para a posição actual de Bob. 
 	 * Usamos velocity.tmp () porque a tmp () cria um novo objeto com o mesmo valor de velocidade e multiplicarmos o 
 	 * valor desse objeto com o delta tempo decorrido. Em Java, temos de ter cuidado
@@ -71,11 +60,6 @@ public class ActorCGT extends GameObject {
 		super.update(delta);
 	}
 	
-
-	public StatePolicy getState() {
-		return this.state;
-	}
-
 	/**
 	 * Verificas se esta olhando para a esquerda
 	 * @return
@@ -88,14 +72,6 @@ public class ActorCGT extends GameObject {
 		this.facingLeft = facingLeft;
 	}
 
-	public float getStateTime() {
-		return stateTime;
-	}
-
-	public void setStateTime(float stateTime) {
-		this.stateTime = stateTime;
-	}
-	
 	public void pare(){
 		this.getVelocity().x = 0.0f;
 	}

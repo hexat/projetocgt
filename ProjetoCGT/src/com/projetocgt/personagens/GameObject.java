@@ -1,9 +1,11 @@
 package com.projetocgt.personagens;
 
 import cgt.core.CGTGameObject;
+import cgt.policy.StatePolicy;
 import cgt.util.Position;
 
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -12,6 +14,8 @@ public abstract class GameObject {
 	private CGTGameObject cgtGameObject;
 	
 	//private Sound sound;
+	private StatePolicy state = StatePolicy.IDLE;
+	private float stateTime = 0;	
 	private Music soundDie;
 	private Music soundDamage;
 	private Vector2 position; //Vetor que informa a posicao do personagem
@@ -56,19 +60,18 @@ public abstract class GameObject {
 		setCgtGameObject(gameObject);
 		setPosition(gameObject.getPosition());
 
-		bounds.setHeight(gameObject.getBounds().getHeight());
-		bounds.setWidth(gameObject.getBounds().getWidth());
+		bounds.setHeight(gameObject.getBounds().height);
+		bounds.setWidth(gameObject.getBounds().width);
 		
 		rectangle.setHeight(gameObject.getCollision().getHeight());
 		rectangle.setWidth(gameObject.getCollision().getWidth());
 		
-		rectangle.setPosition(position.x + gameObject.getCollision().getPositionRelativeToObject().x,
-									position.y + gameObject.getCollision().getPositionRelativeToObject().y);
+		rectangle.setPosition(	position.x + gameObject.getCollision().getPositionRelativeToObject().x,
+								position.y + gameObject.getCollision().getPositionRelativeToObject().y);
 		
-		spriteSheet = new SpriteSheet();
-
-		spriteSheet.loadSprite(gameObject.getSpriteSheet().getTexture().getFile().getPath(),
-											gameObject.getSpriteSheet().getRows(), gameObject.getSpriteSheet().getColumns());
+		spriteSheet = new SpriteSheet(gameObject);
+		spriteSheet.loadSprite(	gameObject.getSpriteSheet().getTexture().getFile().getPath(),
+								gameObject.getSpriteSheet().getRows(), gameObject.getSpriteSheet().getColumns());
 		
 	}
 
@@ -225,5 +228,37 @@ public abstract class GameObject {
 	 */
 	public void setCgtGameObject(CGTGameObject cgtGameObject) {
 		this.cgtGameObject = cgtGameObject;
+	}
+
+	/**
+	 * @return the state
+	 */
+	public StatePolicy getState() {
+		return state;
+	}
+
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(StatePolicy state) {
+		this.state = state;
+	}
+
+	/**
+	 * @return the stateTime
+	 */
+	public float getStateTime() {
+		return stateTime;
+	}
+
+	/**
+	 * @param stateTime the stateTime to set
+	 */
+	public void setStateTime(float stateTime) {
+		this.stateTime = stateTime;
+	}
+	
+	public TextureRegion getAnimation() {
+		return spriteSheet.CGTActorAnimation(this);
 	}
 }
