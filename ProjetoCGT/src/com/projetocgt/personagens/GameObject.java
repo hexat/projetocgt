@@ -35,6 +35,7 @@ public abstract class GameObject {
 	 * @param posYColider
 	 */
 	protected GameObject(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ){
+		
 		this.position= new Vector2();
 		velocity = new Vector2();
 		bounds= new Rectangle();
@@ -69,6 +70,9 @@ public abstract class GameObject {
 		rectangle.setPosition(	position.x + gameObject.getCollision().getPositionRelativeToObject().x,
 								position.y + gameObject.getCollision().getPositionRelativeToObject().y);
 		
+		this.posXColider=gameObject.getCollision().getPositionRelativeToObject().getX();
+		this.posYColider=gameObject.getCollision().getPositionRelativeToObject().getY();
+		
 		spriteSheet = new SpriteSheet(gameObject);
 		spriteSheet.loadSprite(	gameObject.getSpriteSheet().getTexture().getFile().getPath(),
 								gameObject.getSpriteSheet().getRows(), gameObject.getSpriteSheet().getColumns());
@@ -80,9 +84,14 @@ public abstract class GameObject {
 	 * @param delta
 	 */
 	public void update(float delta) {
+		setStateTime(getStateTime() + delta);
 		position.add(velocity.cpy().scl(delta));
+		
 		rectangle.x=this.position.x+posXColider;
 		rectangle.y=this.position.y+posYColider;
+		
+		bounds.x=this.position.x;
+		bounds.y=this.position.y;
 	}
 
 	/**

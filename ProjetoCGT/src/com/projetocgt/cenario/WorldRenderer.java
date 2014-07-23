@@ -38,7 +38,7 @@ public class WorldRenderer {
 	/** for debug rendering **/
 	ShapeRenderer debugRenderer = new ShapeRenderer();
 	private SpriteBatch spriteBatch;
-	private boolean flagDebug = false;
+	private boolean flagDebug;
 	private int width;
 	private int height;
 	private Vector2 posAnterior = new Vector2();
@@ -70,8 +70,8 @@ public class WorldRenderer {
 		spriteBatch.begin();
 		drawGameObjects();
 		drawCGTActor();
-		System.out.println(personagem.getLife());
-		System.out.println(personagem.isInvincible());
+		//System.out.println(personagem.getLife());
+		//System.out.println(personagem.isInvincible());
 		spriteBatch.end();
 		if (flagDebug)
 			drawDebug();
@@ -198,6 +198,7 @@ public class WorldRenderer {
 							.getListaDeProjectiles().get(i)
 							.getListaDeProjectileOrientation().get(w)
 							.getState()) {
+						world.getPersonagem().getListaDeProjectiles().get(i).setPosition(personagem.getPosition());
 						// faz um movimento do projectile
 						// world.getListaDeProjectili().get(i).getPosition().x=world.getListaDeProjectili().get(i).getVelocityInitial().x;
 						world.getPersonagem().getListaDeProjectiles().get(i)
@@ -386,9 +387,9 @@ public class WorldRenderer {
 		for (int i = 0; i < world.getListaDeEnemy().size(); i++) {
 			if (world.getListaDeEnemy().get(i).getRectangle()
 					.overlaps(personagem.getRectangle())) {
-				// personagem.setLife(personagem.getLife()-world.getListaDeEnemy().get(i).getDamage());
+				//personagem.setLife(personagem.getLife()-world.getListaDeEnemy().get(i).getDamage());
 				animationDamage(personagem, world.getListaDeEnemy().get(i));
-				// System.out.println(personagem.getLife());
+				System.out.println(personagem.getLife());
 
 				if (personagem.getLife() < 0) {
 					System.out.println("Game Over");
@@ -677,7 +678,7 @@ public class WorldRenderer {
 			final StatePolicy state = personagem.getState();
 			personagem.setState(StatePolicy.DAMAGE);
 			personagem.setLife(personagem.getLife() - enemy.getDamage());
-			personagem.getSoundDamage().play();
+			//personagem.getSoundDamage().play();
 			Timer.schedule(new Task() {
 				@Override
 				public void run() {

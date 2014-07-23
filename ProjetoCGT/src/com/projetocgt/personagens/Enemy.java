@@ -20,11 +20,19 @@ public class Enemy extends GameObject{
 		behaviors = new ArrayList<Behavior>();
 	}
 	
+	public Enemy(CGTEnemy enemy){
+		super(enemy);
+		this.damage=enemy.getDamage();
+		this.behaviors=enemy.getBehaviors();
+		this.block=enemy.isBlock();
+		this.destroyable=enemy.isDestroyable();
+	}
+	
 	/**
 	 * @return the damage
 	 */
 	public int getDamage() {
-		return damage;
+		return damage;		
 	}
 	/**
 	 * @param damage the damage to set

@@ -22,7 +22,7 @@ public class WorldController {
 	};
 
 	private MyWorld world;
-	private ActorCGT bob;
+	private ActorCGT personagem;
 	private SpriteSheet actorAnimation;
 	private WorldRenderer renderer;
 	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
@@ -42,13 +42,13 @@ public class WorldController {
 		this.world = world;
 		this.renderer = render;
 		// Posicao inicial do personagem
-		this.bob = world.getPersonagem();
+		this.personagem = world.getPersonagem();
 		this.actorAnimation = world.getPersonagem().getSpriteSheet();
 	}
 
 	// Funciona na descida do botao
 	public void leftPressed() {
-		if (bob.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
+		if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
 			releaseAllDirectionKeys();
 		}
 		keys.get(keys.put(Keys.LEFT, true));
@@ -57,7 +57,7 @@ public class WorldController {
 	}
 
 	public void rightPressed() {
-		if (bob.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
+		if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
 			releaseAllDirectionKeys();
 		}
 		keys.get(keys.put(Keys.RIGHT, true));
@@ -66,7 +66,7 @@ public class WorldController {
 	}
 
 	public void upPressed() {
-		if (bob.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
+		if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
 			releaseAllDirectionKeys();
 		}
 		keys.get(keys.put(Keys.UP, true));
@@ -82,7 +82,7 @@ public class WorldController {
 	}
 
 	public void downPressed() {
-		if (bob.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
+		if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
 			releaseAllDirectionKeys();
 		}
 		keys.get(keys.put(Keys.DOWN, true));
@@ -106,7 +106,9 @@ public class WorldController {
 		for(int i=0;i<world.getPersonagem().getListaDeProjectiles().size();i++){
 			//TODO
 			//if(world.getListaDeProjectili().get(i).getActionFire().getInputs().get(0) == InputPolicy.GO_TAP){
-				world.getPersonagem().getListaDeProjectiles().get(i).setPosition(bob.getPosition());
+				//world.getPersonagem().getListaDeProjectiles().get(i).setPosition(personagem.getPosition());
+				
+				world.getPersonagem().getListaDeProjectiles().get(i).setState(personagem.getState());
 				world.getPersonagem().getListaDeProjectiles().get(i).setFlagAtivar(true);	
 			//}
 		}
@@ -118,36 +120,42 @@ public class WorldController {
 		keys.get(keys.put(Keys.LEFT, false));
 		//Desabilita o loop da animacao
 		actorAnimation.setLoop(false);
+		//actorAnimation.stopAni();
 	}
 
 	public void rightReleased() {
 		keys.get(keys.put(Keys.RIGHT, false));
 		//Desabilita o loop da animacao
 		actorAnimation.setLoop(false);
+		//actorAnimation.stopAni();
 	}
 
 	public void upReleased() {
 		keys.get(keys.put(Keys.UP, false));	
 		//Desabilita o loop da animacao
 		actorAnimation.setLoop(false);
+		//actorAnimation.stopAni();
 	}
 
 	public void downReleased() {
 		keys.get(keys.put(Keys.DOWN, false));
 		//Desabilita o loop da animacao
 		actorAnimation.setLoop(false);
+		//actorAnimation.stopAni();
 	}
 
 	public void jumpReleased() {
 		keys.get(keys.put(Keys.JUMP, false));
 		//Desabilita o loop da animacao
 		actorAnimation.setLoop(false);
+		//actorAnimation.stopAni();
 	}
 	
 	public void damegeReleased() {
 		keys.get(keys.put(Keys.DAMAGE, false));
 		//Desabilita o loop da animacao
 		actorAnimation.setLoop(false);
+		//actorAnimation.stopAni();
 	}
 	
 	public void fireReleasedTouch() {
@@ -172,7 +180,8 @@ public class WorldController {
 	public void update(float delta) {
 		// Processa a entrada de algum parametro
 		processInput();
-		bob.update(delta);
+		personagem.update(delta);
+		
 		for (int i=0; i<world.getListaDeOpposite().size(); i++) {
 			world.getListaDeOpposite().get(i).update(delta);
 		}
@@ -195,20 +204,20 @@ public class WorldController {
 		if (keys.get(Keys.UP)) {
 			//Verifica se o personagem pode andar
 			if (renderer.isColision()) {
-				//bob.setPosition(renderer.getPosAnterior());
-				bob.setState(StatePolicy.LOOKUP);
+				//personagem.setPosition(renderer.getPosAnterior());
+				personagem.setState(StatePolicy.LOOKUP);
 				//actionDamegeEnemyUp();
 			}else {
 				// O personagem esta olhando para a cima
-				if(bob.getVelocity().y!=0 && bob.getPosition().y > renderer.getCam().viewportHeight/2)	
-					if( bob.getPosition().y < renderer.getWorld().getBackGround().getHeight()-renderer.getCam().viewportHeight/2)
-						renderer.getCam().position.y+=bob.getSpeed()/60;
+				if(personagem.getVelocity().y!=0 && personagem.getPosition().y > renderer.getCam().viewportHeight/2)	
+					if( personagem.getPosition().y < renderer.getWorld().getBackGround().getHeight()-renderer.getCam().viewportHeight/2)
+						renderer.getCam().position.y+=personagem.getSpeed()/60;
 				
-				bob.setState(StatePolicy.LOOKUP);
-				if( (bob.getPosition().y + bob.getBounds().height) < renderer.getWorld().getBackGround().getHeight())
-					bob.getVelocity().y = bob.getSpeed();
+				personagem.setState(StatePolicy.LOOKUP);
+				if( (personagem.getPosition().y + personagem.getBounds().height) < renderer.getWorld().getBackGround().getHeight())
+					personagem.getVelocity().y = personagem.getSpeed();
 				else
-					bob.getVelocity().y = 0;
+					personagem.getVelocity().y = 0;
 			}
 			
 		}
@@ -218,21 +227,21 @@ public class WorldController {
 				//actionDamegeEnemyDown();
 			// Verifica se o personagem pode andar
 			if (renderer.isColision()) {
-				//bob.setPosition(renderer.getPosAnterior());
-				//bob.setState(StatePolicy.LOOKDOWN);
+				//personagem.setPosition(renderer.getPosAnterior());
+				//personagem.setState(StatePolicy.LOOKDOWN);
 			} else {
-				if (bob.getVelocity().y!=0 && bob.getPosition().y > renderer.getCam().viewportHeight/2) {
+				if (personagem.getVelocity().y!=0 && personagem.getPosition().y > renderer.getCam().viewportHeight/2) {
 					
-					if( bob.getPosition().y < renderer.getWorld().getBackGround().getHeight()-renderer.getCam().viewportHeight/2)
-						renderer.getCam().position.y-=bob.getSpeed()/60;
+					if( personagem.getPosition().y < renderer.getWorld().getBackGround().getHeight()-renderer.getCam().viewportHeight/2)
+						renderer.getCam().position.y-=personagem.getSpeed()/60;
 				}
 				
 				// O personagem esta olhando para a baixo
-				bob.setState(StatePolicy.LOOKDOWN);
-				if(bob.getPosition().y > 0)
-					bob.getVelocity().y = -bob.getSpeed();
+				personagem.setState(StatePolicy.LOOKDOWN);
+				if(personagem.getPosition().y > 0)
+					personagem.getVelocity().y = -personagem.getSpeed();
 				else
-					bob.getVelocity().y = 0;
+					personagem.getVelocity().y = 0;
 			}
 			
 		}
@@ -240,89 +249,89 @@ public class WorldController {
 		if (keys.get(Keys.LEFT)) {
 			// Verifica se o personagem pode andar
 			if (renderer.isColision()) {
-				//bob.setPosition(renderer.getPosAnterior());
-				bob.setState(StatePolicy.LOOKLEFT);
+				//personagem.setPosition(renderer.getPosAnterior());
+				personagem.setState(StatePolicy.LOOKLEFT);
 				//actionDamegeEnemyLeft();
 			} else {
-				if (bob.getVelocity().x != 0 && bob.getPosition().x > renderer.getCam().viewportWidth/2) {
-					if( bob.getPosition().x < renderer.getWorld().getBackGround().getWidth()-renderer.getCam().viewportWidth/2)
-						renderer.getCam().position.x-=bob.getSpeed()/60;
+				if (personagem.getVelocity().x != 0 && personagem.getPosition().x > renderer.getCam().viewportWidth/2) {
+					if( personagem.getPosition().x < renderer.getWorld().getBackGround().getWidth()-renderer.getCam().viewportWidth/2)
+						renderer.getCam().position.x-=personagem.getSpeed()/60;
 				}
 				
-				bob.setState(StatePolicy.LOOKLEFT);
-				if(bob.getPosition().x > 0)
-					bob.getVelocity().x = -bob.getSpeed();
+				personagem.setState(StatePolicy.LOOKLEFT);
+				if(personagem.getPosition().x > 0)
+					personagem.getVelocity().x = -personagem.getSpeed();
 				else
-					bob.getVelocity().x = 0;
+					personagem.getVelocity().x = 0;
 			}		
 		}
 		if (keys.get(Keys.RIGHT)) {
 			// Verifica se o personagem pode andar
 			if (renderer.isColision()) {
-				//bob.setPosition(renderer.getPosAnterior());
-				bob.setState(StatePolicy.LOOKRIGHT);
+				//personagem.setPosition(renderer.getPosAnterior());
+				personagem.setState(StatePolicy.LOOKRIGHT);
 				//actionDamegeEnemyRight();
 			} else {
-				if (bob.getVelocity().x!=0 && bob.getPosition().x > renderer.getCam().viewportWidth/2) {
-					if( bob.getPosition().x < renderer.getWorld().getBackGround().getWidth()-renderer.getCam().viewportWidth/2)
-						renderer.getCam().position.x+=bob.getSpeed()/60;
+				if (personagem.getVelocity().x!=0 && personagem.getPosition().x > renderer.getCam().viewportWidth/2) {
+					if( personagem.getPosition().x < renderer.getWorld().getBackGround().getWidth()-renderer.getCam().viewportWidth/2)
+						renderer.getCam().position.x+=personagem.getSpeed()/60;
 				}
 				
-				bob.setState(StatePolicy.LOOKRIGHT);
-				if( (bob.getPosition().x+bob.getBounds().width) < renderer.getWorld().getBackGround().getWidth())
-					bob.getVelocity().x = bob.getSpeed();
+				personagem.setState(StatePolicy.LOOKRIGHT);
+				if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackGround().getWidth())
+					personagem.getVelocity().x = personagem.getSpeed();
 				else
-					bob.getVelocity().x = 0;
+					personagem.getVelocity().x = 0;
 			}	
 		}
 		// Verifica se ambos ou nenhum dos sentidos sao presionados
 		if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT))
 				|| (!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) {
-			//bob.setState(State.IDLE);
+			//personagem.setState(State.IDLE);
 			// acceleration is 0 on the x
 			// horizontal speed is 0
-			bob.getVelocity().x = 0;
+			personagem.getVelocity().x = 0;
 		}
 		// Verifica se ambos ou nenhum dos sentidos sao presionados
 		if ((keys.get(Keys.UP) && keys.get(Keys.DOWN))
 				|| (!keys.get(Keys.UP) && !(keys.get(Keys.DOWN)))) {
-			//bob.setState(State.IDLE);
+			//personagem.setState(State.IDLE);
 			// acceleration is 0 on the y
-			//bob.getAcceleration().y = 0;
+			//personagem.getAcceleration().y = 0;
 			// Vertival speed is 0
-			bob.getVelocity().y = 0;
+			personagem.getVelocity().y = 0;
 		}
 	}
 	public void actionDamegeEnemyDown(){
-		//bob.getPosition().y+=50;
+		//personagem.getPosition().y+=50;
 		//renderer.getCam().position.y+=50;
-		/*bob.setState(StatePolicy.DAMAGE);
+		/*personagem.setState(StatePolicy.DAMAGE);
 		damegePressed();
 		Timer.schedule(new Task(){
 			@Override
 			public void run() {
 				damegeReleased();
-				bob.setState(StatePolicy.LOOKDOWN);
+				personagem.setState(StatePolicy.LOOKDOWN);
 			}
 		}, 2);*/
 	}
 	
 	public void actionDamegeEnemyUp(){
-		//bob.getPosition().y-=50;
+		//personagem.getPosition().y-=50;
 		//renderer.getCam().position.y-=50;
-		//bob.setState(StatePolicy.DAMAGE);
+		//personagem.setState(StatePolicy.DAMAGE);
 	}
 	
 	public void actionDamegeEnemyRight(){
-		//bob.getPosition().x-=50;
+		//personagem.getPosition().x-=50;
 		//renderer.getCam().position.x-=50;
-		//bob.setState(StatePolicy.DAMAGE);
+		//personagem.setState(StatePolicy.DAMAGE);
 	}
 	
 	public void actionDamegeEnemyLeft(){
-		//bob.getPosition().x+=50;
+		//personagem.getPosition().x+=50;
 		//renderer.getCam().position.x+=50;
-		//bob.setState(StatePolicy.DAMAGE);
+		//personagem.setState(StatePolicy.DAMAGE);
 	}
 	
 

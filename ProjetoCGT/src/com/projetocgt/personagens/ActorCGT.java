@@ -55,11 +55,12 @@ public class ActorCGT extends GameObject {
 	 * @param delta
 	 */
 	
-	public void update(float delta) {
-		setStateTime(getStateTime() + delta);
-		super.update(delta);
-	}
 	
+	public void updateProjectiles(){
+		for(int i=0; i < listaDeProjectiles.size(); i++){
+			listaDeProjectiles.get(i).setPosition(getPosition());
+		}
+	}
 	/**
 	 * Verificas se esta olhando para a esquerda
 	 * @return

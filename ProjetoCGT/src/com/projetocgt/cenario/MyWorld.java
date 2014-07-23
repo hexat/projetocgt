@@ -8,11 +8,14 @@ import java.util.ArrayList;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import cgt.behaviors.Fade;
 import cgt.core.CGTActor;
+import cgt.core.CGTEnemy;
 import cgt.core.CGTOpposite;
 import cgt.core.CGTProjectile;
 import cgt.policy.ActionMovePolicy;
 import cgt.policy.AnimationPolicy;
+import cgt.policy.FadePolicy;
 import cgt.policy.InputPolicy;
 import cgt.policy.StatePolicy;
 import cgt.unit.Action;
@@ -60,9 +63,9 @@ public class MyWorld {
 		
 		
 		CGTActor personagemCGTActor = new CGTActor();
-		personagemCGTActor.setPosition(new Position(800,900));
+		personagemCGTActor.setPosition(new Position(800f,900f));
 		
-		Collision coliderPersonagem = new Collision(60, 60);
+		Collision coliderPersonagem = new Collision(60f, 60f);
 		personagemCGTActor.setCollision(coliderPersonagem);
 		
 		Rectangle tamanhoPersonagem = new Rectangle(80, 80);
@@ -108,31 +111,31 @@ public class MyWorld {
 		moveLEft.addInput(InputPolicy.ACEL_LEFT);
 		moveLEft.setSpriteVelocity(0.08f);
 		moveLEft.setFlip(true);
-		moveLEft.setAnimationPolicy(AnimationPolicy.LOOP);
+		moveLEft.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
 		
 		ActionMove moveRight = ActionCreator.getInstance().newActionMove(ActionMovePolicy.WALK_RIGHT, personagemCGTActor);
 		moveRight.setSpriteLine(1);
 		moveRight.setStatePolicy(StatePolicy.LOOKRIGHT);
 		moveRight.setNumberOfColumns(3);
 		moveRight.addInput(InputPolicy.ACEL_RIGHT);
-		moveRight.setSpriteVelocity(0.08f);
-		moveRight.setAnimationPolicy(AnimationPolicy.LOOP);
+		moveRight.setSpriteVelocity(0.2f);
+		moveRight.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
 		
 		ActionMove moveUp = ActionCreator.getInstance().newActionMove(ActionMovePolicy.WALK_UP, personagemCGTActor);
 		moveUp.setSpriteLine(3);
 		moveUp.setStatePolicy(StatePolicy.LOOKUP);
 		moveUp.setNumberOfColumns(3);
 		moveUp.addInput(InputPolicy.ACEL_UP);
-		moveUp.setSpriteVelocity(0.08f);
-		moveUp.setAnimationPolicy(AnimationPolicy.LOOP);
+		moveUp.setSpriteVelocity(0.2f);
+		moveUp.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
 		
 		ActionMove moveDown = ActionCreator.getInstance().newActionMove(ActionMovePolicy.WALK_DOWN, personagemCGTActor);
 		moveDown.setSpriteLine(2);
 		moveDown.setStatePolicy(StatePolicy.LOOKDOWN);
 		moveDown.setNumberOfColumns(3);
 		moveDown.addInput(InputPolicy.ACEL_DOWN);
-		moveDown.setSpriteVelocity(0.08f);
-		moveDown.setAnimationPolicy(AnimationPolicy.LOOP);
+		moveDown.setSpriteVelocity(0.2f);
+		moveDown.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
 		//Adicionando o personagem na libGDX
 		personagemActorLIB = new ActorCGT(personagemCGTActor);
 		
@@ -198,94 +201,135 @@ public class MyWorld {
 				listaDeOpposite.add(opositorCasaLib);				
 			}
 		}
-		/*Fade fade = new Fade(FadePolicy.FADE_IN);
+		Fade fade = new Fade(FadePolicy.FADE_IN);
 		fade.setFadeInTime(1);
+//		
+//		Sine sine = new Sine(MovementPolicy.HEIGHT);
+//		sine.setMax(100);
+//		sine.setMin(50);
+//		sine.setAtFirstStep(true);
+//		
+		CGTEnemy enemyFogoCGT = new CGTEnemy();
 		
-		Sine sine = new Sine(MovementPolicy.HEIGHT);
-		sine.setMax(100);
-		sine.setMin(50);
-		sine.setAtFirstStep(true);
+		Position positionEnemy = new Position(480,850);
+		enemyFogoCGT.setPosition(positionEnemy);
 		
-		//Instancia o opposite fogo
-		Enemy enemyFogo = new Enemy(new Vector2(400,850), 50, 50, 50, 0, 0);
-		enemyFogo.setBlock(false);
-		enemyFogo.setDamage(1);
-		enemyFogo.setSpeed(2);
-		enemyFogo.setDestroyable(true);
-		enemyFogo.addBehavior(fade);
-		enemyFogo.addBehavior(sine);
-		enemyFogo.setLife(50);
-		enemyFogo.setSpriteSheet(new SpriteSheet());
+		Collision coliderEnemy = new Collision(50, 50);
+		enemyFogoCGT.setCollision(coliderEnemy);
+		
+		Rectangle tamanhoEnemy = new Rectangle(50, 50);
+		enemyFogoCGT.setBounds(tamanhoEnemy);
+		
+		enemyFogoCGT.setBlock(false);
+		enemyFogoCGT.setDamage(1);
+		//enemyFogoCGT.setSpeed(2);
+		enemyFogoCGT.setDestroyable(true);
+		enemyFogoCGT.addBehavior(fade);
+		//enemyFogoCGT.addBehavior(sine);
+		enemyFogoCGT.setLife(50);
+		
+		try {
+			enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet(new CGTTexture(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png").file())));
+			enemyFogoCGT.getSpriteSheet().setRows(2);
+			enemyFogoCGT.getSpriteSheet().setColumns(2);
+		} catch (FileNotFoundException e) {
+			System.out.println("Caminho errado");
+		}
+		
+		//Action
+		ActionMove moveEnemy = ActionCreator.getInstance().newActionMove(enemyFogoCGT);
+		moveEnemy.setSpriteLine(1);
+		moveEnemy.setStatePolicy(StatePolicy.IDLE);
+		moveEnemy.setNumberOfColumns(2);
+		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
+		moveEnemy.setSpriteVelocity(0.08f);
+		moveEnemy.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		
+		Enemy enemyFogoLIB = new Enemy(enemyFogoCGT);
+		enemyFogoLIB.getSpriteSheet().setLoop(true);
+		//Add na lista de enemy
+		listaDeEnemy.add(enemyFogoLIB);
+		
+//		//Instancia o opposite fogo
+//		Enemy enemyFogo = new Enemy(new Vector2(400,850), 50, 50, 50, 0, 0);
+//		enemyFogo.setBlock(false);
+//		enemyFogo.setDamage(1);
+//		enemyFogo.setSpeed(2);
+//		enemyFogo.setDestroyable(true);
+//		enemyFogo.addBehavior(fade);
+//		enemyFogo.addBehavior(sine);
+//		enemyFogo.setLife(50);
+//		enemyFogo.setSpriteSheet(new SpriteSheet());
 //		enemyFogo.getSpriteSheet().loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
-		listaDeEnemy.add(enemyFogo);
-		
-		Fade fade2 = new Fade(FadePolicy.FADE_IN);
-		fade2.setFadeInTime(1);
-		
-		//Instancia o opposite fogo
-		Enemy enemyFogo2 = new Enemy(new Vector2(200,1050), 50, 50, 50, 0, 0);
-		enemyFogo2.setBlock(true);
-		enemyFogo2.setDestroyable(true);
-		enemyFogo2.setDamage(1);
-		enemyFogo2.addBehavior(fade2);
-		enemyFogo2.setLife(200);
-		enemyFogo2.setSpriteSheet(new SpriteSheet());
-//		enemyFogo2.getSpriteSheet().loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
-		listaDeEnemy.add(enemyFogo2);
-		
-		Fade fade3 = new Fade(FadePolicy.FADE_IN);
-		fade3.setFadeInTime(1);
-		
-		//Instancia o opposite fogo
-		Enemy enemyFogo3 = new Enemy(new Vector2(200,1500), 50, 50, 50, 0, 0);
-		enemyFogo3.setBlock(true);
-		enemyFogo3.setDestroyable(true);
-		enemyFogo3.setDamage(2);
-		enemyFogo3.setLife(100);
-		enemyFogo3.addBehavior(fade3);
-		enemyFogo3.setSpriteSheet(new SpriteSheet());
-//		enemyFogo3.getSpriteSheet().loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
-		listaDeEnemy.add(enemyFogo3);
-		
-		Direction direction = new Direction(DirectionPolicy.LEFT_AND_RIGHT);
-		direction.setMaxX(800);
-		direction.setMinX(330);
-		
-		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
-		directionUp.setMaxY(2000);
-		directionUp.setMinY(200);
-		
-
-		Direction directionFour = new Direction(DirectionPolicy.FOUR_DIRECTION);
-		directionFour.setMaxY(600);
-		directionFour.setMinY(400);
-		directionFour.setMaxX(1600);
-		directionFour.setMinX(1130);
-
-
-		Direction directionEight = new Direction(DirectionPolicy.EIGHT_DIRECTION);
-		directionEight.setMaxY(600);
-		directionEight.setMinY(400);
-		directionEight.setMaxX(800);
-		directionEight.setMinX(330);
-		
-		
-		Fade fadeCar = new Fade(FadePolicy.FADE_IN);
-		fadeCar.setFadeInTime(2);
-		
-		//Instancia o opposite carro
-		Enemy carro = new Enemy(new Vector2(800,700), 50, 50, 50, 0, 0);
-		carro.setLife(10);
-		carro.setBlock(true);
-		carro.setDestroyable(false);
-		carro.setDamage(10);
-		carro.addBehavior(fadeCar);
-		carro.addBehavior(directionUp);
-		carro.setSpeed(200);
-		//carro.setLife(200);
-		carro.setSpriteSheet(new SpriteSheet());
-//		carro.getSpriteSheet().loadingSpriteSheet("data/Enemy/Carro.png", 1, 1);
-		listaDeEnemy.add(carro);*/
+//		listaDeEnemy.add(enemyFogo);
+//		
+//		Fade fade2 = new Fade(FadePolicy.FADE_IN);
+//		fade2.setFadeInTime(1);
+//		
+//		//Instancia o opposite fogo
+//		Enemy enemyFogo2 = new Enemy(new Vector2(200,1050), 50, 50, 50, 0, 0);
+//		enemyFogo2.setBlock(true);
+//		enemyFogo2.setDestroyable(true);
+//		enemyFogo2.setDamage(1);
+//		enemyFogo2.addBehavior(fade2);
+//		enemyFogo2.setLife(200);
+//		enemyFogo2.setSpriteSheet(new SpriteSheet());
+////		enemyFogo2.getSpriteSheet().loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
+//		listaDeEnemy.add(enemyFogo2);
+//		
+//		Fade fade3 = new Fade(FadePolicy.FADE_IN);
+//		fade3.setFadeInTime(1);
+//		
+//		//Instancia o opposite fogo
+//		Enemy enemyFogo3 = new Enemy(new Vector2(200,1500), 50, 50, 50, 0, 0);
+//		enemyFogo3.setBlock(true);
+//		enemyFogo3.setDestroyable(true);
+//		enemyFogo3.setDamage(2);
+//		enemyFogo3.setLife(100);
+//		enemyFogo3.addBehavior(fade3);
+//		enemyFogo3.setSpriteSheet(new SpriteSheet());
+////		enemyFogo3.getSpriteSheet().loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
+//		listaDeEnemy.add(enemyFogo3);
+//		
+//		Direction direction = new Direction(DirectionPolicy.LEFT_AND_RIGHT);
+//		direction.setMaxX(800);
+//		direction.setMinX(330);
+//		
+//		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
+//		directionUp.setMaxY(2000);
+//		directionUp.setMinY(200);
+//		
+//
+//		Direction directionFour = new Direction(DirectionPolicy.FOUR_DIRECTION);
+//		directionFour.setMaxY(600);
+//		directionFour.setMinY(400);
+//		directionFour.setMaxX(1600);
+//		directionFour.setMinX(1130);
+//
+//
+//		Direction directionEight = new Direction(DirectionPolicy.EIGHT_DIRECTION);
+//		directionEight.setMaxY(600);
+//		directionEight.setMinY(400);
+//		directionEight.setMaxX(800);
+//		directionEight.setMinX(330);
+//		
+//		
+//		Fade fadeCar = new Fade(FadePolicy.FADE_IN);
+//		fadeCar.setFadeInTime(2);
+//		
+//		//Instancia o opposite carro
+//		Enemy carro = new Enemy(new Vector2(800,700), 50, 50, 50, 0, 0);
+//		carro.setLife(10);
+//		carro.setBlock(true);
+//		carro.setDestroyable(false);
+//		carro.setDamage(10);
+//		carro.addBehavior(fadeCar);
+//		carro.addBehavior(directionUp);
+//		carro.setSpeed(200);
+//		//carro.setLife(200);
+//		carro.setSpriteSheet(new SpriteSheet());
+////		carro.getSpriteSheet().loadingSpriteSheet("data/Enemy/Carro.png", 1, 1);
+//		listaDeEnemy.add(carro);
 		
 		Bonus hidrate = new Bonus(new Vector2(1000,800),50, 50, 50, 0, 0);
 		hidrate.setTexture(new Texture("data/CGTBonus/SpriteSheet_tubo.png"));
@@ -294,7 +338,11 @@ public class MyWorld {
 		CGTProjectile projetilAguaCGT = new CGTProjectile();
 		Position position = new Position(100f,200f);
 		projetilAguaCGT.setPosition(position);
-		projetilAguaCGT.setBounds(new Rectangle(10, 10));
+		projetilAguaCGT.setBounds(new Rectangle(30, 30));
+		Collision coliderProjectile = new Collision(30, 30);
+		Position positionRelative = new Position(0,0);
+		coliderProjectile.setPositionRelativeToObject(positionRelative);
+		projetilAguaCGT.setCollision(coliderProjectile);
 		projetilAguaCGT.setInterval(1);
 
 		CGTSpriteSheet css = new CGTSpriteSheet(new CGTTexture("data/CGTProjectile/SpriteSheet_agua.png"));
@@ -305,12 +353,37 @@ public class MyWorld {
 		
 		ActionMove m = ActionCreator.getInstance().newActionMove(projetilAguaCGT);
 		m.setSpriteLine(1);
-		m.setStatePolicy(StatePolicy.IDLE);
+		m.setFlip(true);
+		m.setStatePolicy(StatePolicy.LOOKLEFT);
 		m.setNumberOfColumns(2);
-		m.setSpriteVelocity(0.08f);
+		m.setSpriteVelocity(0.1f);
 		m.setAnimationPolicy(AnimationPolicy.LOOP);
 		
+		ActionMove a = ActionCreator.getInstance().newActionMove(projetilAguaCGT);
+		a.setSpriteLine(1);
+		a.setFlip(false);
+		a.setStatePolicy(StatePolicy.LOOKRIGHT);
+		a.setNumberOfColumns(2);
+		a.setSpriteVelocity(0.08f);
+		a.setAnimationPolicy(AnimationPolicy.LOOP);
+		
+		ActionMove down = ActionCreator.getInstance().newActionMove(projetilAguaCGT);
+		down.setSpriteLine(2);
+		down.setFlip(false);
+		down.setStatePolicy(StatePolicy.LOOKDOWN);
+		down.setNumberOfColumns(2);
+		down.setSpriteVelocity(0.08f);
+		down.setAnimationPolicy(AnimationPolicy.LOOP);
+		
+		ActionMove up = ActionCreator.getInstance().newActionMove(projetilAguaCGT);
+		up.setSpriteLine(2);
+		up.setFlip(true);
+		up.setStatePolicy(StatePolicy.LOOKUP);
+		up.setNumberOfColumns(2);
+		up.setSpriteVelocity(0.08f);
+		up.setAnimationPolicy(AnimationPolicy.LOOP);
 		Projectile projetilAgua = new Projectile(projetilAguaCGT);
+		projetilAgua.getSpriteSheet().setLoop(true);
 //		projetilAgua.setSpriteSheet(new SpriteSheet());
 		//Indica que a minha animacao e' um por um
 		//projetilAgua.setActionFire(ActionCreator.getInstance().newActionFire(ActionFirePolicy.FIRE));
@@ -322,16 +395,16 @@ public class MyWorld {
 //		projetilAgua.getSpriteSheet().loadingSpriteSheet("data/CGTProjectile/SpriteSheet_agua.png", 2, 2);
 		
 		ProjectileOrientation direcaoRight = new ProjectileOrientation();
-		direcaoRight.setPositionRetativeToGameObject(new Vector2(90,33));
-		direcaoRight.setSpriteLine(2);
+		direcaoRight.setPositionRetativeToGameObject(new Vector2(60f,15f));
+		direcaoRight.setSpriteLine(1);
 		direcaoRight.setSpriteNumberOfColumns(2);
 		direcaoRight.setSpriteVelocity(2);
 		direcaoRight.setState(StatePolicy.LOOKRIGHT);
 		projetilAgua.getListaDeProjectileOrientation().add(direcaoRight);
 		
 		ProjectileOrientation direcaoLeft = new ProjectileOrientation();
-		direcaoLeft.setPositionRetativeToGameObject(new Vector2(-20f, 33f));
-		direcaoLeft.setSpriteLine(2);
+		direcaoLeft.setPositionRetativeToGameObject(new Vector2(-20f, 15f));
+		direcaoLeft.setSpriteLine(1);
 		direcaoLeft.setSpriteNumberOfColumns(2);
 		direcaoLeft.setSpriteVelocity(2);
 		direcaoLeft.setState(StatePolicy.LOOKLEFT);
