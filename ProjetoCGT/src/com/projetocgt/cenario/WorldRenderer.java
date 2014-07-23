@@ -387,13 +387,13 @@ public class WorldRenderer {
 		for (int i = 0; i < world.getListaDeEnemy().size(); i++) {
 			if (world.getListaDeEnemy().get(i).getRectangle()
 					.overlaps(personagem.getRectangle())) {
-				//personagem.setLife(personagem.getLife()-world.getListaDeEnemy().get(i).getDamage());
 				animationDamage(personagem, world.getListaDeEnemy().get(i));
 				System.out.println(personagem.getLife());
 
 				if (personagem.getLife() < 0) {
 					System.out.println("Game Over");
-					personagem.getSoundDie().play();
+					//TODO musica do game over 
+					//personagem.getSoundDie().play();
 				}
 			}
 		}
@@ -686,7 +686,7 @@ public class WorldRenderer {
 					personagem.setInvincible(false);
 
 				}
-			}, 3);
+			}, enemy.getInterval());
 		}
 	}
 

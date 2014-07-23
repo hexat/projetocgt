@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import cgt.behaviors.Direction;
 import cgt.behaviors.Fade;
 import cgt.core.CGTActor;
 import cgt.core.CGTEnemy;
@@ -15,6 +16,7 @@ import cgt.core.CGTOpposite;
 import cgt.core.CGTProjectile;
 import cgt.policy.ActionMovePolicy;
 import cgt.policy.AnimationPolicy;
+import cgt.policy.DirectionPolicy;
 import cgt.policy.FadePolicy;
 import cgt.policy.InputPolicy;
 import cgt.policy.StatePolicy;
@@ -71,7 +73,7 @@ public class MyWorld {
 		Rectangle tamanhoPersonagem = new Rectangle(80, 80);
 		personagemCGTActor.setBounds(tamanhoPersonagem);
 		
-		personagemCGTActor.setLife(100);
+		personagemCGTActor.setLife(4);
 		personagemCGTActor.setSpeed(180);
 		
 		try {
@@ -227,6 +229,7 @@ public class MyWorld {
 		enemyFogoCGT.addBehavior(fade);
 		//enemyFogoCGT.addBehavior(sine);
 		enemyFogoCGT.setLife(50);
+		enemyFogoCGT.setInterval(4);
 		
 		try {
 			enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet(new CGTTexture(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png").file())));
@@ -295,9 +298,9 @@ public class MyWorld {
 //		direction.setMaxX(800);
 //		direction.setMinX(330);
 //		
-//		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
-//		directionUp.setMaxY(2000);
-//		directionUp.setMinY(200);
+		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
+		directionUp.setMaxY(2000);
+		directionUp.setMinY(200);
 //		
 //
 //		Direction directionFour = new Direction(DirectionPolicy.FOUR_DIRECTION);
@@ -314,9 +317,49 @@ public class MyWorld {
 //		directionEight.setMinX(330);
 //		
 //		
-//		Fade fadeCar = new Fade(FadePolicy.FADE_IN);
-//		fadeCar.setFadeInTime(2);
+		Fade fadeCar = new Fade(FadePolicy.FADE_IN);
+		fadeCar.setFadeInTime(2);
 //		
+		CGTEnemy carroCGT = new CGTEnemy();
+		
+		Position positionCarro = new Position(800,700);
+		carroCGT.setPosition(positionCarro);
+		
+		Collision coliderCarro = new Collision(80, 80);
+		carroCGT.setCollision(coliderCarro);
+		
+		Rectangle tamanhoCarro = new Rectangle(80, 80);
+		carroCGT.setBounds(tamanhoCarro);
+		
+		carroCGT.setBlock(true);
+		carroCGT.setDestroyable(true);
+		carroCGT.setDamage(10);
+		carroCGT.addBehavior(fadeCar);
+		carroCGT.addBehavior(directionUp);
+		carroCGT.setSpeed(200);
+		
+		try {
+			carroCGT.setSpriteSheet(new CGTSpriteSheet(new CGTTexture(Gdx.files.internal("data/Enemy/Carro.png").file())));
+			carroCGT.getSpriteSheet().setRows(1);
+			carroCGT.getSpriteSheet().setColumns(1);
+		} catch (FileNotFoundException e) {
+			System.out.println("Caminho errado");
+		}
+		
+		//Action
+		ActionMove moveCarro = ActionCreator.getInstance().newActionMove(carroCGT);
+		moveCarro.setSpriteLine(1);
+		moveCarro.setStatePolicy(StatePolicy.IDLE);
+		moveCarro.setNumberOfColumns(1);
+		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
+		moveCarro.setSpriteVelocity(0.08f);
+		moveCarro.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		
+		Enemy enemyCarroLIB = new Enemy(carroCGT);
+		enemyCarroLIB.getSpriteSheet().setLoop(true);
+		//Add na lista de enemy
+		listaDeEnemy.add(enemyCarroLIB);
+		
 //		//Instancia o opposite carro
 //		Enemy carro = new Enemy(new Vector2(800,700), 50, 50, 50, 0, 0);
 //		carro.setLife(10);

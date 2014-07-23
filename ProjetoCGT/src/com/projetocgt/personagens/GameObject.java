@@ -4,6 +4,7 @@ import cgt.core.CGTGameObject;
 import cgt.policy.StatePolicy;
 import cgt.util.Position;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -40,7 +41,7 @@ public abstract class GameObject {
 		velocity = new Vector2();
 		bounds= new Rectangle();
 		rectangle = new Rectangle();
-
+		
 		setPosition(position); 		//Posicao inicial
 		bounds.setHeight(height);	//Altura do personagem (Altura da area onde o personagem sera desenhado)
 		bounds.setWidth(width);		//Largura do personagem (Largura da area onde o personagem sera desenhado)
@@ -57,6 +58,8 @@ public abstract class GameObject {
 		velocity = new Vector2();
 		bounds= new Rectangle();
 		rectangle = new Rectangle();
+		
+		//soundDie = Gdx.audio.newMusic(Gdx.files.internal(gameObject.getSoundDie().getSoundFile().getPath()));
 		
 		setCgtGameObject(gameObject);
 		setPosition(gameObject.getPosition());

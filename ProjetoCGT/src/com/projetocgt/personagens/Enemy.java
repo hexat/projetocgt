@@ -3,7 +3,6 @@ package com.projetocgt.personagens;
 import java.util.ArrayList;
 import cgt.behaviors.Behavior;
 import cgt.core.CGTEnemy;
-import cgt.policy.StatePolicy;
 import com.badlogic.gdx.math.Vector2;
 
 public class Enemy extends GameObject{
@@ -12,12 +11,14 @@ public class Enemy extends GameObject{
 	private boolean block;
 	private boolean destroyable;
 	private float alpha; //nivel de transparencia
+	private int interval;
 	
 	public Enemy(Vector2 position, float width, float height, float colider, float posXColider, float posYColider ){
 		super(position, width, height, colider, posXColider, posYColider);
 		setCgtGameObject(new CGTEnemy());
 		this.alpha=1f;
 		behaviors = new ArrayList<Behavior>();
+		
 	}
 	
 	public Enemy(CGTEnemy enemy){
@@ -26,6 +27,7 @@ public class Enemy extends GameObject{
 		this.behaviors=enemy.getBehaviors();
 		this.block=enemy.isBlock();
 		this.destroyable=enemy.isDestroyable();
+		this.interval=enemy.getInterval();
 	}
 	
 	/**
@@ -90,5 +92,19 @@ public class Enemy extends GameObject{
 	}
 	public void setAlpha(float alpha) {
 		this.alpha = alpha;
+	}
+
+	/**
+	 * @return the interval
+	 */
+	public int getInterval() {
+		return interval;
+	}
+
+	/**
+	 * @param interval the interval to set
+	 */
+	public void setInterval(int interval) {
+		this.interval = interval;
 	}
 }
