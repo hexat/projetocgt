@@ -28,7 +28,7 @@ import com.projetocgt.personagens.Enemy;
 public class WorldRenderer {
 
 	private MyWorld world; // Declara a variavel do tipo World que sera passada
-							// de parametro no renderer
+	// de parametro no renderer
 	private OrthographicCamera camera; // Declara a variavel da camera
 	private ActorCGT personagem;
 	private int interval;
@@ -65,13 +65,13 @@ public class WorldRenderer {
 		isColision(); // ATENCAO
 		this.camera.update(); // Atualiza a tela
 		spriteBatch.setProjectionMatrix(camera.combined); // Possibilita a
-															// camera acompanhar
-															// o personagem
+		// camera acompanhar
+		// o personagem
 		spriteBatch.begin();
 		drawGameObjects();
 		drawCGTActor();
-		//System.out.println(personagem.getLife());
-		//System.out.println(personagem.isInvincible());
+		System.out.println(personagem.getLife());
+		System.out.println(personagem.isInvincible());
 		spriteBatch.end();
 		if (flagDebug)
 			drawDebug();
@@ -92,11 +92,11 @@ public class WorldRenderer {
 		for (int i = 0; i < world.getListaDeBonus().size(); i++) {
 			world.getListaDeBonus().get(i).getTexture().dispose();
 		}
-//		for (int i = 0; i < world.getPersonagem().getListaDeProjectiles()
-//				.size(); i++) {
-//			world.getPersonagem().getListaDeProjectiles().get(i).getTexture()
-//					.dispose();
-//		}
+		//		for (int i = 0; i < world.getPersonagem().getListaDeProjectiles()
+		//				.size(); i++) {
+		//			world.getPersonagem().getListaDeProjectiles().get(i).getTexture()
+		//					.dispose();
+		//		}
 		spriteBatch.dispose();
 	}
 
@@ -119,7 +119,6 @@ public class WorldRenderer {
 		// Desenha todos os Enemy
 		for (int i = 0; i < world.getListaDeEnemy().size(); i++) {
 			if (world.getListaDeEnemy().get(i).getLife() >= 0) {
-
 				configBehavior(world.getListaDeEnemy().get(i));
 				spriteBatch.setColor(1.0f, 1.0f, 1.0f, world.getListaDeEnemy()
 						.get(i).getAlpha());
@@ -182,7 +181,7 @@ public class WorldRenderer {
 			if (world.getPersonagem().getListaDeProjectiles().get(i)
 					.isFlagAtivar()
 					&& world.getPersonagem().getListaDeProjectiles().get(i)
-							.getAmmo() > 0) {
+					.getAmmo() > 0) {
 
 				// Verifica o intervalo
 				interval = world.getPersonagem().getListaDeProjectiles().get(i)
@@ -202,43 +201,43 @@ public class WorldRenderer {
 						// faz um movimento do projectile
 						// world.getListaDeProjectili().get(i).getPosition().x=world.getListaDeProjectili().get(i).getVelocityInitial().x;
 						world.getPersonagem().getListaDeProjectiles().get(i)
-								.getRectangle().x += world.getPersonagem()
-								.getListaDeProjectiles().get(i)
-								.getListaDeProjectileOrientation().get(w)
-								.getPositionRetativeToGameObject().x;
+						.getRectangle().x += world.getPersonagem()
+						.getListaDeProjectiles().get(i)
+						.getListaDeProjectileOrientation().get(w)
+						.getPositionRetativeToGameObject().x;
 						world.getPersonagem().getListaDeProjectiles().get(i)
-								.getRectangle().y += world.getPersonagem()
-								.getListaDeProjectiles().get(i)
-								.getListaDeProjectileOrientation().get(w)
-								.getPositionRetativeToGameObject().y;
+						.getRectangle().y += world.getPersonagem()
+						.getListaDeProjectiles().get(i)
+						.getListaDeProjectileOrientation().get(w)
+						.getPositionRetativeToGameObject().y;
 
 						spriteBatch
-								.draw(world.getPersonagem()
-										.getListaDeProjectiles().get(i).getAnimation(),
-										world.getPersonagem()
-												.getListaDeProjectiles().get(i)
-												.getPosition().x
-												+ world.getPersonagem()
-														.getListaDeProjectiles()
-														.get(i)
-														.getListaDeProjectileOrientation()
-														.get(w)
-														.getPositionRetativeToGameObject().x,
-										world.getPersonagem()
-												.getListaDeProjectiles().get(i)
-												.getPosition().y
-												+ world.getPersonagem()
-														.getListaDeProjectiles()
-														.get(i)
-														.getListaDeProjectileOrientation()
-														.get(w)
-														.getPositionRetativeToGameObject().y,
-										world.getPersonagem()
-												.getListaDeProjectiles().get(i)
-												.getBounds().width, world
-												.getPersonagem()
-												.getListaDeProjectiles().get(i)
-												.getBounds().height);
+						.draw(world.getPersonagem()
+								.getListaDeProjectiles().get(i).getAnimation(),
+								world.getPersonagem()
+								.getListaDeProjectiles().get(i)
+								.getPosition().x
+								+ world.getPersonagem()
+								.getListaDeProjectiles()
+								.get(i)
+								.getListaDeProjectileOrientation()
+								.get(w)
+								.getPositionRetativeToGameObject().x,
+								world.getPersonagem()
+								.getListaDeProjectiles().get(i)
+								.getPosition().y
+								+ world.getPersonagem()
+								.getListaDeProjectiles()
+								.get(i)
+								.getListaDeProjectileOrientation()
+								.get(w)
+								.getPositionRetativeToGameObject().y,
+								world.getPersonagem()
+								.getListaDeProjectiles().get(i)
+								.getBounds().width, world
+								.getPersonagem()
+								.getListaDeProjectiles().get(i)
+								.getBounds().height);
 					}
 				}
 
@@ -252,23 +251,23 @@ public class WorldRenderer {
 							.getRectangle()
 							.overlaps(
 									world.getPersonagem()
-											.getListaDeProjectiles().get(i)
-											.getRectangle())
-							&& world.getListaDeEnemy().get(j).isDestroyable()) {
+									.getListaDeProjectiles().get(i)
+									.getRectangle())
+									&& world.getListaDeEnemy().get(j).isDestroyable()) {
 						world.getListaDeEnemy()
-								.get(j)
-								.setLife(
-										world.getListaDeEnemy().get(j)
-												.getLife() - 1);
+						.get(j)
+						.setLife(
+								world.getListaDeEnemy().get(j)
+								.getLife() - 1);
 						// world.getListaDeOpposite().get(j).setBlock(false);
 						if (world.getListaDeEnemy().get(j).getLife() <= 0)// Se
-																			// o
-																			// life
-																			// for
-																			// zero
-																			// remove
-																			// da
-																			// cena
+							// o
+							// life
+							// for
+							// zero
+							// remove
+							// da
+							// cena
 							world.getListaDeEnemy().remove(j);
 						boolean ganhou = true;
 						for (int index = 0; index < world.getListaDeEnemy()
@@ -276,7 +275,7 @@ public class WorldRenderer {
 							if (world.getListaDeEnemy().get(index)
 									.isDestroyable()
 									&& world.getListaDeEnemy().get(index)
-											.getLife() > 0)
+									.getLife() > 0)
 								ganhou = false;
 						}
 						if (ganhou)// Verifica se tem algum inimigo na cena
@@ -317,11 +316,11 @@ public class WorldRenderer {
 			// if(world.getListaDeOpposite().get(i).getLife()>=0){
 			debugRenderer.setColor(new Color(0, 1, 0, 1));
 			debugRenderer
-					.rect(world.getListaDeOpposite().get(i).getRectangle().x,
-							world.getListaDeOpposite().get(i).getRectangle().y,
-							world.getListaDeOpposite().get(i).getRectangle()
-									.getWidth(), world.getListaDeOpposite()
-									.get(i).getRectangle().getHeight());
+			.rect(world.getListaDeOpposite().get(i).getRectangle().x,
+					world.getListaDeOpposite().get(i).getRectangle().y,
+					world.getListaDeOpposite().get(i).getRectangle()
+					.getWidth(), world.getListaDeOpposite()
+					.get(i).getRectangle().getHeight());
 			// }
 		}
 
@@ -357,7 +356,7 @@ public class WorldRenderer {
 			if (world.getPersonagem().getListaDeProjectiles().get(i)
 					.isFlagAtivar()
 					&& world.getPersonagem().getListaDeProjectiles().get(i)
-							.getAmmo() > 0)
+					.getAmmo() > 0)
 				// verifica se dos ativos qual a posicao que sera' desenhado
 				for (int w = 0; w < world.getPersonagem()
 						.getListaDeProjectiles().get(i)
@@ -368,16 +367,16 @@ public class WorldRenderer {
 							.getState())
 						debugRenderer.rect(
 								world.getPersonagem().getListaDeProjectiles()
-										.get(i).getRectangle().x, world
-										.getPersonagem()
-										.getListaDeProjectiles().get(i)
-										.getRectangle().y, world
-										.getPersonagem()
-										.getListaDeProjectiles().get(i)
-										.getRectangle().getWidth(), world
-										.getPersonagem()
-										.getListaDeProjectiles().get(i)
-										.getRectangle().getHeight());
+								.get(i).getRectangle().x, world
+								.getPersonagem()
+								.getListaDeProjectiles().get(i)
+								.getRectangle().y, world
+								.getPersonagem()
+								.getListaDeProjectiles().get(i)
+								.getRectangle().getWidth(), world
+								.getPersonagem()
+								.getListaDeProjectiles().get(i)
+								.getRectangle().getHeight());
 				}
 		}
 		debugRenderer.end();
@@ -416,10 +415,14 @@ public class WorldRenderer {
 				else
 					enemy.getVelocity().y = -enemy.getSpeed();
 
-				if (enemy.getPosition().y < sine.getMin())
+				if (enemy.getPosition().y < sine.getMin()){
 					sine.setAtFirstStep(true);
-				if (enemy.getPosition().y > sine.getMax())
+					enemy.setState(StatePolicy.LOOKUP);
+				}
+				if (enemy.getPosition().y > sine.getMax()){
 					sine.setAtFirstStep(false);
+					enemy.setState(StatePolicy.LOOKDOWN);
+				}
 			}
 
 			else if (behavior.getBehaviorPolicy().equals("HORIZONTAL")) {
@@ -430,10 +433,14 @@ public class WorldRenderer {
 				else
 					enemy.getVelocity().x = enemy.getSpeed();
 
-				if (enemy.getPosition().x < sine.getMin())
+				if (enemy.getPosition().x < sine.getMin()){
 					sine.setAtFirstStep(false);
-				if (enemy.getPosition().x > sine.getMax())
+					enemy.setState(StatePolicy.LOOKRIGHT);
+				}
+				if (enemy.getPosition().x > sine.getMax()){
 					sine.setAtFirstStep(true);
+					enemy.setState(StatePolicy.LOOKLEFT);
+				}
 			}
 
 			// WIDTH e HEIGHT "esticam" o sprite
@@ -511,7 +518,7 @@ public class WorldRenderer {
 				int[] angulos = { 0, 90, 180, 270 };
 
 				Random random = new Random();
-				if (random.nextFloat() < 0.0001 * enemy.getSpeed())
+				if (random.nextFloat() < 0.00005 * enemy.getSpeed())
 					scheduleDirection(angulos, enemy);
 
 				if (enemy.getPosition().x < direction.getMinX())
@@ -550,12 +557,28 @@ public class WorldRenderer {
 				scheduleFadeIn(enemy, fade);
 			}
 
+			stateUpdater(enemy);
+
 		}
 		// world.getListaDeEnemy().get(i).getVelocity().x=-world.getListaDeEnemy().get(i).getSpeed();
 
 	}
 
-	// Implementação do comportamento descrito por um behavior Fade
+	public void stateUpdater(Enemy enemy){
+		if(enemy.getVelocity().x>0 & enemy.getVelocity().y==0)
+			enemy.setState(StatePolicy.LOOKRIGHT);
+
+		else if(enemy.getVelocity().x<0 & enemy.getVelocity().y==0)
+			enemy.setState(StatePolicy.LOOKLEFT);
+
+		else if(enemy.getVelocity().y>0 & enemy.getVelocity().x==0)
+			enemy.setState(StatePolicy.LOOKUP);
+
+		else if(enemy.getVelocity().y<0 & enemy.getVelocity().x==0)
+			enemy.setState(StatePolicy.LOOKDOWN);
+	}
+
+	/** Implementação do comportamento descrito por um behavior Fade */
 	private void scheduleFadeIn(final Enemy enemy, Fade fade) {
 		if (!fade.isStarted()) {
 
@@ -594,21 +617,25 @@ public class WorldRenderer {
 		if ((angulos[indice] >= 0 && angulos[indice] < 90)
 				|| (angulos[indice] > 270 && angulos[indice] < 360)) {
 			enemy.getVelocity().x = enemy.getSpeed();
+
 		}
 
 		// Velocidade X no 2º e 3º quadrantes
 		if (angulos[indice] > 90 && angulos[indice] < 270) {
 			enemy.getVelocity().x = -enemy.getSpeed();
+			enemy.setState(StatePolicy.LOOKLEFT);
 		}
 
 		// Velocidade Y no 1º e 2º quadrantes
 		if (angulos[indice] > 0 && angulos[indice] < 180) {
 			enemy.getVelocity().y = enemy.getSpeed();
+
 		}
 
 		// Velocidade Y no 3º e 4º quadrantes
 		if (angulos[indice] > 180 && angulos[indice] < 360) {
 			enemy.getVelocity().y = -enemy.getSpeed();
+
 		}
 
 	}
@@ -648,11 +675,13 @@ public class WorldRenderer {
 				for (int j = 0; j < world.getPersonagem()
 						.getListaDeProjectiles().size(); j++) {
 					world.getPersonagem().getListaDeProjectiles().get(j)
-							.setAmmo(4);
+					.setAmmo(4);
 				}
 				colisao = true;
 			}
 		}
+
+
 
 		if (!colisao) {
 			posAnterior.x = personagem.getPosition().x;
@@ -664,6 +693,7 @@ public class WorldRenderer {
 			// return colisao;
 			colisao = false;
 		}
+		
 		return colisao;
 	}
 
@@ -675,14 +705,12 @@ public class WorldRenderer {
 
 		if (!personagem.isInvincible()) {
 			personagem.setInvincible(true);
-			final StatePolicy state = personagem.getState();
 			personagem.setState(StatePolicy.DAMAGE);
 			personagem.setLife(personagem.getLife() - enemy.getDamage());
 			//personagem.getSoundDamage().play();
 			Timer.schedule(new Task() {
 				@Override
 				public void run() {
-					personagem.setState(state);
 					personagem.setInvincible(false);
 
 				}

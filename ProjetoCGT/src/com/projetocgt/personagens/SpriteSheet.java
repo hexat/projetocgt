@@ -50,7 +50,7 @@ public class SpriteSheet {
 	private AnimationPolicy policy;
 	float stateTime;
 	private Map<StatePolicy, Animation> mapa;
-
+	private Map<Animation, PlayMode> playModes;
 	private TextureRegion[] walkCGTFrames;
 	private CGTGameObject owner;
 	private GameObject gameObjectOwner;
@@ -62,6 +62,7 @@ public class SpriteSheet {
 	public SpriteSheet(CGTGameObject owner) {
 		this.owner = owner;
 		mapa = new HashMap<StatePolicy, Animation>();
+		playModes = new HashMap<Animation, PlayMode>();
 	}
 
 	/***
@@ -88,11 +89,13 @@ public class SpriteSheet {
 						tex[j].flip(true, false);
 					}
 				}
-				mapa.put(a.getStatePolicy(), new Animation(a.getSpriteVelocity(), tex));
-				//mapa.get(a.getStatePolicy()).setPlayMode(PlayMode.valueOf(a.getAnimationPolicy().name()));
 				
+				Animation animation = new Animation(a.getSpriteVelocity(), tex);
+				mapa.put(a.getStatePolicy(), animation);
+				mapa.get(a.getStatePolicy()).setPlayMode(PlayMode.valueOf(a.getAnimationPolicy().name()));
 			}
 		}
+		bobFrame = tex[0];
 		//		walkFramesUp = new TextureRegion[FRAME_COLS];
 		//		walkFramesDown = new TextureRegion[FRAME_COLS];
 		//		walkFramesLeft = new TextureRegion[FRAME_COLS];
@@ -132,51 +135,73 @@ public class SpriteSheet {
 	public TextureRegion CGTActorAnimation(GameObject object) {
 		gameObjectOwner = object;
 		// animacao inicial do personagem
-		// bobFrame =
-		// mapa.get(StatePolicy.LOOKLEFT).getKeyFrame(personagem.getStateTime(),false);
+		Animation animation = null;
 		// Verifica se o personagem esta olhando para cima e faz a aniamcao
 		if (object.getState().equals(StatePolicy.LOOKUP)
 				&& mapa.containsKey(StatePolicy.LOOKUP)) {
-			
-			return mapa.get(StatePolicy.LOOKUP).getKeyFrame(object.getStateTime(), loop);
+			animation = mapa.get(StatePolicy.LOOKUP);
+			bobFrame = animation.getKeyFrame(object.getStateTime(), loop);
+			return bobFrame;
+			//return animation.getKeyFrame(object.getStateTime(), loop);
+			//return mapa.get(StatePolicy.LOOKUP).getKeyFrame(object.getStateTime(), loop);
 		}
 
 		// Verifica se o personagem esta olhando para baixo e faz a aniamcao
 		if (object.getState().equals(StatePolicy.LOOKDOWN)
 				&& mapa.containsKey(StatePolicy.LOOKDOWN)) {
-			return mapa.get(StatePolicy.LOOKDOWN).getKeyFrame(object.getStateTime(), loop);
+			animation = mapa.get(StatePolicy.LOOKDOWN);
+			bobFrame = animation.getKeyFrame(object.getStateTime(), loop);
+			return bobFrame;
+			//return animation.getKeyFrame(object.getStateTime(), loop);
+			//return mapa.get(StatePolicy.LOOKDOWN).getKeyFrame(object.getStateTime(), loop);
 		}
 
 		// Verifica se o personagem esta olhando para esquerda e faz a aniamcao
 		if (object.getState().equals(StatePolicy.LOOKLEFT)
 				&& mapa.containsKey(StatePolicy.LOOKLEFT)) {
-			return mapa.get(StatePolicy.LOOKLEFT).getKeyFrame(
-					object.getStateTime(), loop);
+
+			animation = mapa.get(StatePolicy.LOOKLEFT);
+			bobFrame = animation.getKeyFrame(object.getStateTime(), loop);
+			return bobFrame;
+			
+			//return animation.getKeyFrame(object.getStateTime(), loop);
+			//return mapa.get(StatePolicy.LOOKLEFT).getKeyFrame(
+			//	object.getStateTime(), loop);
 		}
 
 		// Verifica se o personagem esta olhando para direita e faz a aniamcao
 		if (object.getState().equals(StatePolicy.LOOKRIGHT)
 				&& mapa.containsKey(StatePolicy.LOOKRIGHT)) {
-			
-			return mapa.get(StatePolicy.LOOKRIGHT).getKeyFrame(
-					object.getStateTime(), loop);
+
+			animation = mapa.get(StatePolicy.LOOKRIGHT);
+			bobFrame = animation.getKeyFrame(object.getStateTime(), loop);
+			return bobFrame;
+			//return animation.getKeyFrame(object.getStateTime(), loop);
+			//return mapa.get(StatePolicy.LOOKRIGHT).getKeyFrame(
+			//	object.getStateTime(), loop);
 		}
 
-		if (object.getState().equals(StatePolicy.IDLE)
-				&& mapa.containsKey(StatePolicy.IDLE)) {
+		if (object.getState().equals(StatePolicy.IDLE)) {
+			if(mapa.containsKey(StatePolicy.IDLE)){
+				animation = mapa.get(StatePolicy.IDLE);
+				bobFrame = animation.getKeyFrame(object.getStateTime(), loop);
+				return bobFrame;
+			}
 			
-			return mapa.get(StatePolicy.IDLE).getKeyFrame(
-					object.getStateTime(), loop);
+			else{
+					return bobFrame;
+			}
 		}
 
-//		if (object.getState().equals(StatePolicy.DAMAGE)) {
-//			mapa.get(StatePolicy.LOOKUP).setPlayMode(PlayMode.valueOf(policy.name()));
-//			return animationDamege.getKeyFrame(object.getStateTime(), loop);
-//		}
+		//		if (object.getState().equals(StatePolicy.DAMAGE)) {
+		//			mapa.get(StatePolicy.LOOKUP).setPlayMode(PlayMode.valueOf(policy.name()));
+		//			return animationDamege.getKeyFrame(object.getStateTime(), loop);
+		//		}
+		//animation.getKeyFrame(object.getStateTime());
 
 		return mapa.values().iterator().next().getKeyFrame(object.getStateTime());
 	}
-	
+
 	/**
 	 * Carrega o sprite sheet do GameObject
 	 * @param caminho
@@ -204,12 +229,12 @@ public class SpriteSheet {
 	//	}
 
 	public void stopAni() {
-		
+		gameObjectOwner.setState(StatePolicy.IDLE);
 	}
 
 	public void startAni() {
 	}
-	
+
 	public int getLinhaDoSpriteUp() {
 		return linhaDoSpriteUp;
 	}
@@ -285,6 +310,6 @@ public class SpriteSheet {
 		this.loop = loop;
 	}
 
-	
+
 
 }
