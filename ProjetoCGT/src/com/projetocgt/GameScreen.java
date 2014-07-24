@@ -1,5 +1,7 @@
 package com.projetocgt;
 
+import cgt.CGTGameWorld;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -23,6 +25,8 @@ public class GameScreen implements Screen, InputProcessor {
 	private Music music;
 	private float acelerometroY;
 	private boolean flagTouch;
+	
+	
 	public GameScreen() {
 		super();
 		//Carrega os audios
@@ -84,7 +88,18 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public void resize(int width, int height) {
 	}
+	
+	/*
+	 * Instancia um MyWorld a partir de um arquivo .cgt 
+	 * do caminho dado pelo file
+	 * */
+	public MyWorld instanciaStream(String file){
 
+		CGTGameWorld cgtGameWorld = new CGTGameWorld();
+		MyWorld myWorld = new MyWorld(cgtGameWorld.lerStream(file));
+
+		return myWorld;
+	}
 	@Override
 	public void show() {
 		//Habilita a musica 
@@ -93,6 +108,8 @@ public class GameScreen implements Screen, InputProcessor {
 		
 		world = new MyWorld();
 		renderer = new WorldRenderer(world, DEBUG);
+		//renderer = new WorldRenderer(instanciaStream("teste"), DEBUG); //Desenhando a partir de um MyWorld criado pelo arquivo
+		
 		controller = new WorldController(world, renderer);
 		Gdx.input.setInputProcessor(this);
 	}

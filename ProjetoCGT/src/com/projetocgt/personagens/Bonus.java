@@ -2,6 +2,7 @@ package com.projetocgt.personagens;
 
 import java.util.ArrayList;
 
+import cgt.core.CGTBonus;
 import cgt.policy.AIPolicy;
 import cgt.policy.BonusPolicy;
 
@@ -13,7 +14,7 @@ public class Bonus extends GameObject{
 	private AIPolicy move;
 	private int score;
 	private boolean destroyable;
-	private int lifetime;
+	private float lifetime;
 	private Texture texture;
 	//private CGTSpriteSheet spriteSheet;
 	private ArrayList<BonusPolicy> policys;
@@ -21,7 +22,14 @@ public class Bonus extends GameObject{
 	public Bonus(Vector2 position, float width, float height, float colider, float posXColider, float posYColider) {
 		super(position, width, height, colider, posXColider, posYColider);
 	}
-	
+	public Bonus(CGTBonus bonus) {
+		super(bonus);
+		this.move = bonus.getMove();
+		this.score = bonus.getScore();
+		this.destroyable = bonus.isDestroyable();
+		this.lifetime = bonus.getLifeTime();
+		this.policys = bonus.getPolicies();
+	}
 	/**
 	 * @return the score
 	 */
@@ -49,7 +57,7 @@ public class Bonus extends GameObject{
 	/**
 	 * @return the lifetime
 	 */
-	public int getLifetime() {
+	public float getLifetime() {
 		return lifetime;
 	}
 	/**

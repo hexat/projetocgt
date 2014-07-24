@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 import cgt.core.CGTActor;
 import cgt.policy.DirectionPolicy;
+import cgt.policy.StatePolicy;
 import cgt.util.Jump;
 import cgt.util.Move;
 
@@ -13,7 +14,8 @@ import com.badlogic.gdx.math.Vector2;
  * @autor Bruno Roberto
  */
 public class ActorCGT extends GameObject {
-					
+		
+	private StatePolicy state = StatePolicy.IDLE;
 	private boolean facingLeft = true;				
 	private DirectionPolicy directionPolicy;
 	private ArrayList<Move> moves;
@@ -35,14 +37,29 @@ public class ActorCGT extends GameObject {
 		this.invincible=false;
 	}
 	
-	public ActorCGT(CGTActor actor){
+	public ActorCGT(CGTActor actor) {
 		super(actor);
-
-		moves = actor.getMoves();
-		jumps = actor.getJumps();
-
+		setSpeed(actor.getSpeed());
+		this.state = actor.getState();
+		this.moves = actor.getMoves();
+		this.jumps = actor.getJumps();
+		this.jumpDefault = actor.getJumpDefault();
+		this.fireDefault = actor.getFireDefault();
+		for(int i=0;i<actor.getProjectiles().size();i++){
+			Projectile projectile = new Projectile(actor.getProjectiles().get(i));
+			listaDeProjectiles.add(projectile);
+		}
 		
 	}
+	
+//	public ActorCGT(CGTActor actor){
+//		super(actor);
+//
+//		moves = actor.getMoves();
+//		jumps = actor.getJumps();
+//
+//		
+//	}
 	
 	/*Adicionar a distância percorrida no delta segundos para a posição actual de Bob. 
 	 * Usamos velocity.tmp () porque a tmp () cria um novo objeto com o mesmo valor de velocidade e multiplicarmos o 

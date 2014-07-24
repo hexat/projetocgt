@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import cgt.CGTGameWorld;
 import cgt.behaviors.Direction;
 import cgt.behaviors.Fade;
 import cgt.behaviors.Sine;
@@ -20,8 +21,10 @@ import cgt.policy.AnimationPolicy;
 import cgt.policy.DirectionPolicy;
 import cgt.policy.FadePolicy;
 import cgt.policy.InputPolicy;
+import cgt.policy.LosePolicy;
 import cgt.policy.MovementPolicy;
 import cgt.policy.StatePolicy;
+import cgt.policy.WinPolicy;
 import cgt.unit.Action;
 import cgt.unit.ActionCreator;
 import cgt.unit.ActionMove;
@@ -54,9 +57,34 @@ public class MyWorld {
 	ArrayList<Action> listaDeAction = new ArrayList<Action>();
 	private ActorCGT personagemActorLIB;
 	private Texture backGround;
+	private WinPolicy winPolicy;
+	private LosePolicy losePolicy;
+	private int countdown;
+	private int scoreTarget;
 	
 	public MyWorld() {
 		createWorld();
+	}
+	public MyWorld(CGTGameWorld cgtGameWorld){
+		this.personagemActorLIB = new ActorCGT(cgtGameWorld.getActor());
+		this.backGround=new Texture(cgtGameWorld.getBackground().getFile().getPath());
+		this.winPolicy = cgtGameWorld.getWinPolicy();
+		this.losePolicy = cgtGameWorld.getLosePolicy();
+		this.countdown = cgtGameWorld.getCountdown();
+		this.scoreTarget = cgtGameWorld.getScoreTarget();
+		
+		for(int i=0;i<cgtGameWorld.getBonus().size();i++){
+			Bonus bonus = new Bonus(cgtGameWorld.getBonus().get(i));
+			listaDeBonus.add(bonus);
+		}
+		for(int i=0;i<cgtGameWorld.getOpposites().size();i++){
+			Opposite opposite = new Opposite(cgtGameWorld.getOpposites().get(i));
+			listaDeOpposite.add(opposite);
+		}
+		for(int i=0;i<cgtGameWorld.getEnemies().size();i++){
+			Enemy enemy = new Enemy(cgtGameWorld.getEnemies().get(i));
+			listaDeEnemy.add(enemy);
+		}
 	}
 	/**
 	 * Recebe os paramentros do jogos
