@@ -2,7 +2,7 @@ package com.projetocgt.personagens;
 
 import cgt.core.CGTGameObject;
 import cgt.policy.StatePolicy;
-import cgt.util.Position;
+//import cgt.util.Position;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -20,7 +20,7 @@ public abstract class GameObject {
 	private Music soundDie;
 	private Music soundDamage;
 	private Vector2 position; //Vetor que informa a posicao do personagem
-	private SpriteSheet spriteSheet;
+	private CGTAnimation cGTAnimation;
 	private Vector2 velocity;		//Vetor que informa a velocidade do personagem
 	private Rectangle bounds;		// Area que sera' desenhado o personagem
 	private Rectangle rectangle;
@@ -67,17 +67,18 @@ public abstract class GameObject {
 		bounds.setHeight(gameObject.getBounds().height);
 		bounds.setWidth(gameObject.getBounds().width);
 		
-		rectangle.setHeight(gameObject.getCollision().getHeight());
-		rectangle.setWidth(gameObject.getCollision().getWidth());
+		rectangle = gameObject.getCollision();
+		//rectangle.setHeight(gameObject.getCollision().getHeight());
+		//rectangle.setWidth(gameObject.getCollision().getWidth());
 		
-		rectangle.setPosition(	position.x + gameObject.getCollision().getPositionRelativeToObject().x,
-								position.y + gameObject.getCollision().getPositionRelativeToObject().y);
+		rectangle.setPosition(	position.x + gameObject.getCollision().getX(),
+								position.y + gameObject.getCollision().getY());
 		
-		this.posXColider=gameObject.getCollision().getPositionRelativeToObject().getX();
-		this.posYColider=gameObject.getCollision().getPositionRelativeToObject().getY();
+		this.posXColider=gameObject.getCollision().getX();
+		this.posYColider=gameObject.getCollision().getY();
 		
-		spriteSheet = new SpriteSheet(gameObject);
-		spriteSheet.loadSprite(	gameObject.getSpriteSheet().getTexture().getFile().getPath(),
+		cGTAnimation = new CGTAnimation(gameObject);
+		cGTAnimation.loadSprite(	gameObject.getSpriteSheet().getTexture().getFile().getPath(),
 								gameObject.getSpriteSheet().getRows(), gameObject.getSpriteSheet().getColumns());
 		
 	}
@@ -112,17 +113,17 @@ public abstract class GameObject {
 	}
 
 	/**
-	 * @return the spriteSheet
+	 * @return the cGTAnimation
 	 */
-	public SpriteSheet getSpriteSheet() {
-		return spriteSheet;
+	public CGTAnimation getSpriteSheet() {
+		return cGTAnimation;
 	}
 
 	/**
-	 * @param spriteSheet the spriteSheet to set
+	 * @param cGTAnimation the cGTAnimation to set
 	 */
-	public void setSpriteSheet(SpriteSheet spriteSheet) {
-		this.spriteSheet = spriteSheet;
+	public void setSpriteSheet(CGTAnimation cGTAnimation) {
+		this.cGTAnimation = cGTAnimation;
 	}
 
 	/**
@@ -138,11 +139,6 @@ public abstract class GameObject {
 	public void setPosition(Vector2 position) {
 		this.position.x = position.x;
 		this.position.y = position.y;
-	}
-	
-	public void setPosition(Position position) {
-		this.position.x = position.getX();
-		this.position.y = position.getY();
 	}
 	
 	/**
@@ -271,6 +267,6 @@ public abstract class GameObject {
 	}
 	
 	public TextureRegion getAnimation() {
-		return spriteSheet.CGTActorAnimation(this);
+		return cGTAnimation.CGTActorAnimation(this);
 	}
 }

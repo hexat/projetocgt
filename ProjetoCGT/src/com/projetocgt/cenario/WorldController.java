@@ -2,12 +2,13 @@ package com.projetocgt.cenario;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import cgt.core.CGTActor;
 import cgt.policy.*;
 
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-import com.projetocgt.personagens.ActorCGT;
-import com.projetocgt.personagens.SpriteSheet;
+import com.projetocgt.personagens.CGTAnimation;
 
 /**
  * Controla os movimentos do mundo e dos personagens
@@ -22,8 +23,8 @@ public class WorldController {
 	};
 
 	private MyWorld world;
-	private ActorCGT personagem;
-	private SpriteSheet actorAnimation;
+	private CGTActor personagem;
+	private CGTAnimation actorAnimation;
 	private WorldRenderer renderer;
 	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
 	static {
@@ -43,32 +44,32 @@ public class WorldController {
 		this.renderer = render;
 		// Posicao inicial do personagem
 		this.personagem = world.getPersonagem();
-		this.actorAnimation = world.getPersonagem().getSpriteSheet();
+		this.actorAnimation = world.getPersonagem().getAnimation();
 	}
 
 	// Funciona na descida do botao
 	public void leftPressed() {
-		if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
+		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
 			releaseAllDirectionKeys();
-		}
+		//}
 		keys.get(keys.put(Keys.LEFT, true));
 		//Habilita o loop da animacao
 		actorAnimation.setLoop(true);
 	}
 
 	public void rightPressed() {
-		if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
+		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
 			releaseAllDirectionKeys();
-		}
+		//}
 		keys.get(keys.put(Keys.RIGHT, true));
 		//Habilita o loop da animacao
 		actorAnimation.setLoop(true);
 	}
 
 	public void upPressed() {
-		if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
+		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
 			releaseAllDirectionKeys();
-		}
+		//}
 		keys.get(keys.put(Keys.UP, true));
 		//Habilita o loop da animacao
 		actorAnimation.setLoop(true);
@@ -82,9 +83,9 @@ public class WorldController {
 	}
 
 	public void downPressed() {
-		if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
+		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
 			releaseAllDirectionKeys();
-		}
+		//}
 		keys.get(keys.put(Keys.DOWN, true));
 		//Habilita o loop da animacao
 		actorAnimation.setLoop(true);

@@ -96,7 +96,8 @@ public class GameScreen implements Screen, InputProcessor {
 	public MyWorld instanciaStream(String file){
 
 		CGTGameWorld cgtGameWorld = new CGTGameWorld();
-		MyWorld myWorld = new MyWorld(cgtGameWorld.lerStream(file));
+		//MyWorld myWorld = new MyWorld(cgtGameWorld.lerStream(file));
+		MyWorld myWorld = new MyWorld();
 
 		return myWorld;
 	}

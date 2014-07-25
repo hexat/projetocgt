@@ -24,45 +24,26 @@ import com.projetocgt.cenario.WorldController;
  * 
  * @author roberto.bruno@gmail.com
  */
-public class SpriteSheet {
+public class CGTAnimation {
 
 	// Animation
 	private static final float RUNNING_FRAME_DURATION = 0.08f;
 	private TextureRegion bobFrame;
-	private int linhaDoSpriteUp; 
-	private int linhaDoSpriteDown; 
-	private int linhaDoSpriteLeft; 
-	private int linhaDoSpriteRight; 
-	private int linhaDoSpriteDamege;
+
 	private Texture walkSheet;
 	private boolean loop; 
-	//	private TextureRegion[] walkFramesUp;
-	//	private TextureRegion[] walkFramesDown;
-	//	private TextureRegion[] walkFramesLeft;
-	//	private TextureRegion[] walkFramesRight;
-	private TextureRegion[] walkFramesStandBy;
-	private TextureRegion[] framesDamege;
-	//	private Animation walkAnimationUp;
-	//	private Animation walkAnimationDown;
-	//	private Animation walkAnimationLeft;
-	//	private Animation walkAnimationRight;
-	private Animation animationDamege;
+
 	private AnimationPolicy policy;
 	float stateTime;
 	private Map<StatePolicy, Animation> mapa;
-	private Map<Animation, PlayMode> playModes;
-	private TextureRegion[] walkCGTFrames;
+
 	private CGTGameObject owner;
 	private GameObject gameObjectOwner;
+	
 
-	private Animation walkCGTAnimation;
-
-	private Animation walkAnimationStandBy;
-
-	public SpriteSheet(CGTGameObject owner) {
+	public CGTAnimation(CGTGameObject owner) {
 		this.owner = owner;
 		mapa = new HashMap<StatePolicy, Animation>();
-		playModes = new HashMap<Animation, PlayMode>();
 	}
 
 	/***
@@ -224,7 +205,7 @@ public class SpriteSheet {
 	//		walkCGTAnimation = new Animation(RUNNING_FRAME_DURATION,walkCGTFrames);
 	//	}
 
-	//	public TextureRegion CGTAnimation(ActorCGT personagem) {
+	//	public TextureRegion CGTAnimation(CGTActor personagem) {
 	//		return walkCGTAnimation.getKeyFrame(personagem.getStateTime(), true);
 	//	}
 
@@ -233,53 +214,6 @@ public class SpriteSheet {
 	}
 
 	public void startAni() {
-	}
-
-	public int getLinhaDoSpriteUp() {
-		return linhaDoSpriteUp;
-	}
-
-	public void setLinhaDoSpriteUp(int linhaDoSpriteUp) {
-		this.linhaDoSpriteUp = linhaDoSpriteUp;
-	}
-
-	public int getLinhaDoSpriteDown() {
-		return linhaDoSpriteDown;
-	}
-
-	public void setLinhaDoSpriteDown(int linhaDoSpriteDown) {
-		this.linhaDoSpriteDown = linhaDoSpriteDown;
-	}
-
-	public int getLinhaDoSpriteLeft() {
-		return linhaDoSpriteLeft;
-	}
-
-	public void setLinhaDoSpriteLeft(int linhaDoSpriteLeft) {
-		this.linhaDoSpriteLeft = linhaDoSpriteLeft;
-	}
-
-	public int getLinhaDoSpriteRight() {
-		return linhaDoSpriteRight;
-	}
-
-	public void setLinhaDoSpriteRight(int linhaDoSpriteRight) {
-		this.linhaDoSpriteRight = linhaDoSpriteRight;
-	}
-
-
-	/**
-	 * @return the linhaDoSpriteDamege
-	 */
-	public int getLinhaDoSpriteDamege() {
-		return linhaDoSpriteDamege;
-	}
-
-	/**
-	 * @param linhaDoSpriteDamege the linhaDoSpriteDamege to set
-	 */
-	public void setLinhaDoSpriteDamege(int linhaDoSpriteDamege) {
-		this.linhaDoSpriteDamege = linhaDoSpriteDamege;
 	}
 
 	/**

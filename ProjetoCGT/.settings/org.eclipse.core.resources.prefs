@@ -2,5 +2,4 @@ eclipse.preferences.version=1
 encoding//src/com/projetocgt/GameScreen.java=UTF-8
 encoding//src/com/projetocgt/cenario/WorldController.java=UTF-8
 encoding//src/com/projetocgt/cenario/WorldRenderer.java=UTF-8
-encoding//src/com/projetocgt/personagens/ActorCGT.java=UTF-8
-encoding//src/com/projetocgt/personagens/SpriteSheet.java=UTF-8
+encoding//src/com/projetocgt/personagens/CGTAnimation.java=UTF-8
