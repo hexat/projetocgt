@@ -18,7 +18,7 @@ public class GameScreen implements Screen, InputProcessor {
 	
 	private static final boolean DEBUG = true;
 	
-	private MyWorld world;
+	private CGTGameWorld world;
 	private WorldRenderer renderer;
 	private WorldController	controller;
 	private float acelerometroX=0;
@@ -107,7 +107,7 @@ public class GameScreen implements Screen, InputProcessor {
 		music.play();
 		music.setLooping(true);
 		
-		world = new MyWorld();
+		world = new MyWorld().getCGT();
 		renderer = new WorldRenderer(world, DEBUG);
 		//renderer = new WorldRenderer(instanciaStream("teste"), DEBUG); //Desenhando a partir de um MyWorld criado pelo arquivo
 		

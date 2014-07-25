@@ -30,7 +30,6 @@ import cgt.unit.ActionMove;
 import cgt.util.CGTSpriteSheet;
 import cgt.util.CGTTexture;
 import cgt.util.ProjectileOrientation;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
@@ -45,25 +44,32 @@ import com.badlogic.gdx.audio.*;
  */
 public class MyWorld {
 
-	ArrayList<CGTOpposite> listaDeOpposite = new ArrayList<CGTOpposite>();
-	ArrayList<CGTBonus> listaDeBonus = new ArrayList<CGTBonus>();
-	ArrayList<CGTEnemy> listaDeEnemy = new ArrayList<CGTEnemy>();
-	ArrayList<Action> listaDeAction = new ArrayList<Action>();
-	private CGTActor personagemActorLIB;
-	private Texture backGround;
-	private WinPolicy winPolicy;
-	private LosePolicy losePolicy;
-	private int countdown;
-	private int scoreTarget;
+//	ArrayList<CGTOpposite> listaDeOpposite = new ArrayList<CGTOpposite>();
+//	ArrayList<CGTBonus> listaDeBonus = new ArrayList<CGTBonus>();
+//	ArrayList<CGTEnemy> listaDeEnemy = new ArrayList<CGTEnemy>();
+//	ArrayList<Action> listaDeAction = new ArrayList<Action>();
+//	private CGTActor personagemActorLIB;
+//	private Texture backGround;
+//	private WinPolicy winPolicy;
+//	private LosePolicy losePolicy;
+//	private int countdown;
+//	private int scoreTarget;
 
+	private CGTGameWorld world;
+	
 	public MyWorld() {
 		createWorld();
 	}
 
+	public CGTGameWorld getCGT() {
+		return world;
+	}
 	/**
 	 * Recebe os paramentros do jogos
 	 */
 	private void createWorld() {
+		world = new CGTGameWorld();
+		world.setBackground(background)
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
 		//backGround = new CGTTexture(Gdx.files.internal("data/Cenario/pista1280.png"));
 
