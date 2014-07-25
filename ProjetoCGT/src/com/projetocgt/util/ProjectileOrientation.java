@@ -1,5 +1,7 @@
 package com.projetocgt.util;
 
+import java.util.ArrayList;
+
 import cgt.policy.StatePolicy;
 
 import com.badlogic.gdx.math.Vector2;
@@ -10,9 +12,11 @@ public class ProjectileOrientation {
 	private int spriteVelocity;
 	private int spriteNumberOfColumns;
 	private Vector2 positionRetativeToGameObject;
-	private StatePolicy state;
+	private ArrayList<StatePolicy> state;
 
-
+	public ProjectileOrientation(){
+		state=new ArrayList<StatePolicy>();
+	}
 	/**
 	 * @return the spriteLine
 	 */
@@ -58,19 +62,6 @@ public class ProjectileOrientation {
 		this.spriteNumberOfColumns = spriteNumberOfColumns;
 	}
 
-	/**
-	 * @return the state
-	 */
-	public StatePolicy getState() {
-		return state;
-	}
-
-	/**
-	 * @param state the state to set
-	 */
-	public void setState(StatePolicy state) {
-		this.state = state;
-	}
 
 	/**
 	 * @return the positionRetativeToGameObject
@@ -85,5 +76,23 @@ public class ProjectileOrientation {
 	public void setPositionRetativeToGameObject(
 			Vector2 positionRetativeToGameObject) {
 		this.positionRetativeToGameObject = positionRetativeToGameObject;
+	}
+
+	/**
+	 * @return the state
+	 */
+	public ArrayList<StatePolicy> getState() {
+		return state;
+	}
+
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(ArrayList<StatePolicy> state) {
+		this.state = state;
+	}
+	
+	public void addState(StatePolicy state){
+		this.state.add(state);
 	}
 }

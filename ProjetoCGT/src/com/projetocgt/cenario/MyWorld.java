@@ -263,9 +263,9 @@ public class MyWorld {
 		enemyFogoCGT.setInterval(4);
 		
 		try {
-			enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet(new CGTTexture(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo2.png").file())));
-			enemyFogoCGT.getSpriteSheet().setRows(1);
-			enemyFogoCGT.getSpriteSheet().setColumns(4);
+			enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet(new CGTTexture(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png").file())));
+			enemyFogoCGT.getSpriteSheet().setRows(2);
+			enemyFogoCGT.getSpriteSheet().setColumns(2);
 		} catch (FileNotFoundException e) {
 			System.out.println("Caminho errado");
 		}
@@ -274,7 +274,7 @@ public class MyWorld {
 		ActionMove moveEnemy = ActionCreator.getInstance().newActionMove(enemyFogoCGT);
 		moveEnemy.setSpriteLine(1);
 		moveEnemy.setStatePolicy(StatePolicy.IDLE);
-		moveEnemy.setNumberOfColumns(4);
+		moveEnemy.setNumberOfColumns(2);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveEnemy.setSpriteVelocity(0.08f);
 		moveEnemy.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
@@ -363,8 +363,8 @@ public class MyWorld {
 		carroCGT.setBounds(tamanhoCarro);
 		
 		carroCGT.setInterval(3);
-		carroCGT.setBlock(true);
-		carroCGT.setDestroyable(true);
+		carroCGT.setBlock(false);
+		carroCGT.setDestroyable(false);
 		carroCGT.setDamage(10);
 		carroCGT.addBehavior(fadeCar);
 		carroCGT.addBehavior(directionUp);
@@ -452,6 +452,7 @@ public class MyWorld {
 		projetilAguaCGT.setSpriteSheet(css);
 		projetilAguaCGT.setAmmo(4);
 		
+		//Action dos projectiles
 		ActionMove m = ActionCreator.getInstance().newActionMove(projetilAguaCGT);
 		m.setSpriteLine(1);
 		m.setFlip(true);
@@ -483,24 +484,17 @@ public class MyWorld {
 		up.setNumberOfColumns(2);
 		up.setSpriteVelocity(0.08f);
 		up.setAnimationPolicy(AnimationPolicy.LOOP);
+		
 		Projectile projetilAgua = new Projectile(projetilAguaCGT);
 		projetilAgua.getSpriteSheet().setLoop(true);
-//		projetilAgua.setSpriteSheet(new SpriteSheet());
-		//Indica que a minha animacao e' um por um
-		//projetilAgua.setActionFire(ActionCreator.getInstance().newActionFire(ActionFirePolicy.FIRE));
-		//projetilAgua.getActionFire().addInput(InputPolicy.GO_TAP);
-//		projetilAgua.getVelocityInitial().x= 100f;
-		//projetilAgua.setInterval(1);
-		//projetilAgua.setAmmo(100);
-		//projetilAgua.setAmmo(4);
-//		projetilAgua.getSpriteSheet().loadingSpriteSheet("data/CGTProjectile/SpriteSheet_agua.png", 2, 2);
 		
+		//Projectile orientation
 		ProjectileOrientation direcaoRight = new ProjectileOrientation();
 		direcaoRight.setPositionRetativeToGameObject(new Vector2(60f,15f));
 		direcaoRight.setSpriteLine(1);
 		direcaoRight.setSpriteNumberOfColumns(2);
 		direcaoRight.setSpriteVelocity(2);
-		direcaoRight.setState(StatePolicy.LOOKRIGHT);
+		direcaoRight.addState(StatePolicy.LOOKRIGHT);
 		projetilAgua.getListaDeProjectileOrientation().add(direcaoRight);
 		
 		ProjectileOrientation direcaoLeft = new ProjectileOrientation();
@@ -508,7 +502,7 @@ public class MyWorld {
 		direcaoLeft.setSpriteLine(1);
 		direcaoLeft.setSpriteNumberOfColumns(2);
 		direcaoLeft.setSpriteVelocity(2);
-		direcaoLeft.setState(StatePolicy.LOOKLEFT);
+		direcaoLeft.addState(StatePolicy.LOOKLEFT);
 		projetilAgua.getListaDeProjectileOrientation().add(direcaoLeft);
 		
 		ProjectileOrientation direcaoUp = new ProjectileOrientation();
@@ -516,7 +510,7 @@ public class MyWorld {
 		direcaoUp.setSpriteLine(2);
 		direcaoUp.setSpriteNumberOfColumns(2);
 		direcaoUp.setSpriteVelocity(2);
-		direcaoUp.setState(StatePolicy.LOOKUP);
+		direcaoUp.addState(StatePolicy.LOOKUP);
 		projetilAgua.getListaDeProjectileOrientation().add(direcaoUp);
 		
 		ProjectileOrientation direcaoDown = new ProjectileOrientation();
@@ -524,7 +518,7 @@ public class MyWorld {
 		direcaoDown.setSpriteLine(2);
 		direcaoDown.setSpriteNumberOfColumns(2);
 		direcaoDown.setSpriteVelocity(2);
-		direcaoDown.setState(StatePolicy.LOOKDOWN);
+		direcaoDown.addState(StatePolicy.LOOKDOWN);
 		projetilAgua.getListaDeProjectileOrientation().add(direcaoDown);
 		
 		personagemActorLIB.getListaDeProjectiles().add(projetilAgua);
