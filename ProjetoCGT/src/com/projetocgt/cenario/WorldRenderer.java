@@ -193,10 +193,9 @@ public class WorldRenderer {
 				for (int w = 0; w < world.getPersonagem()
 						.getListaDeProjectiles().get(i)
 						.getListaDeProjectileOrientation().size(); w++) {
-					if (personagem.getState() == world.getPersonagem()
-							.getListaDeProjectiles().get(i)
+					if (world.getPersonagem().getListaDeProjectiles().get(i)
 							.getListaDeProjectileOrientation().get(w)
-							.getState()) {
+							.getState().contains(personagem.getState())) {
 						world.getPersonagem().getListaDeProjectiles().get(i).setPosition(personagem.getPosition());
 						// faz um movimento do projectile
 						// world.getListaDeProjectili().get(i).getPosition().x=world.getListaDeProjectili().get(i).getVelocityInitial().x;
@@ -361,10 +360,9 @@ public class WorldRenderer {
 				for (int w = 0; w < world.getPersonagem()
 						.getListaDeProjectiles().get(i)
 						.getListaDeProjectileOrientation().size(); w++) {
-					if (personagem.getState() == world.getPersonagem()
-							.getListaDeProjectiles().get(i)
+					if (world.getPersonagem().getListaDeProjectiles().get(i)
 							.getListaDeProjectileOrientation().get(w)
-							.getState())
+							.getState().contains(personagem.getState()))
 						debugRenderer.rect(
 								world.getPersonagem().getListaDeProjectiles()
 								.get(i).getRectangle().x, world
