@@ -119,43 +119,43 @@ public class WorldController {
 	public void leftReleased() {
 		keys.get(keys.put(Keys.LEFT, false));
 		//Desabilita o loop da animacao
-		actorAnimation.setLoop(false);
-		//actorAnimation.stopAni();
+		//actorAnimation.setLoop(false);
+		actorAnimation.stopAni();
 	}
 
 	public void rightReleased() {
 		keys.get(keys.put(Keys.RIGHT, false));
 		//Desabilita o loop da animacao
-		actorAnimation.setLoop(false);
-		//actorAnimation.stopAni();
+		//actorAnimation.setLoop(false);
+		actorAnimation.stopAni();
 	}
 
 	public void upReleased() {
 		keys.get(keys.put(Keys.UP, false));	
 		//Desabilita o loop da animacao
-		actorAnimation.setLoop(false);
-		//actorAnimation.stopAni();
+		//actorAnimation.setLoop(false);
+		actorAnimation.stopAni();
 	}
 
 	public void downReleased() {
 		keys.get(keys.put(Keys.DOWN, false));
 		//Desabilita o loop da animacao
-		actorAnimation.setLoop(false);
-		//actorAnimation.stopAni();
+		//actorAnimation.setLoop(false);
+		actorAnimation.stopAni();
 	}
 
 	public void jumpReleased() {
 		keys.get(keys.put(Keys.JUMP, false));
 		//Desabilita o loop da animacao
-		actorAnimation.setLoop(false);
-		//actorAnimation.stopAni();
+		//actorAnimation.setLoop(false);
+		actorAnimation.stopAni();
 	}
 	
 	public void damegeReleased() {
 		keys.get(keys.put(Keys.DAMAGE, false));
 		//Desabilita o loop da animacao
-		actorAnimation.setLoop(false);
-		//actorAnimation.stopAni();
+		//actorAnimation.setLoop(false);
+		actorAnimation.stopAni();
 	}
 	
 	public void fireReleasedTouch() {
