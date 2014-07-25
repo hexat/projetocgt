@@ -263,9 +263,9 @@ public class MyWorld {
 		enemyFogoCGT.setInterval(4);
 		
 		try {
-			enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet(new CGTTexture(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo2.png").file())));
-			enemyFogoCGT.getSpriteSheet().setRows(1);
-			enemyFogoCGT.getSpriteSheet().setColumns(4);
+			enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet(new CGTTexture(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png").file())));
+			enemyFogoCGT.getSpriteSheet().setRows(2);
+			enemyFogoCGT.getSpriteSheet().setColumns(2);
 		} catch (FileNotFoundException e) {
 			System.out.println("Caminho errado");
 		}
@@ -274,7 +274,7 @@ public class MyWorld {
 		ActionMove moveEnemy = ActionCreator.getInstance().newActionMove(enemyFogoCGT);
 		moveEnemy.setSpriteLine(1);
 		moveEnemy.setStatePolicy(StatePolicy.IDLE);
-		moveEnemy.setNumberOfColumns(4);
+		moveEnemy.setNumberOfColumns(2);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveEnemy.setSpriteVelocity(0.08f);
 		moveEnemy.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
