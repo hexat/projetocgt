@@ -30,7 +30,7 @@ public class GameScreen implements Screen, InputProcessor {
 	public GameScreen() {
 		super();
 		//Carrega os audios
-		music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/temabombeiro.wav"));
+		music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/principal.wav"));
 		}
 	
     @Override
