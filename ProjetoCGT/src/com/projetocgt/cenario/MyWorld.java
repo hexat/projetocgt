@@ -187,9 +187,9 @@ public class MyWorld {
 				opositorCasa.setDestroyable(false);
 				opositorCasa.setLife(0);
 
-					opositorCasa.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png")));
-					opositorCasa.getSpriteSheet().setRows(1);
-					opositorCasa.getSpriteSheet().setColumns(1);
+				opositorCasa.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png")));
+				opositorCasa.getSpriteSheet().setRows(1);
+				opositorCasa.getSpriteSheet().setColumns(1);
 
 
 				//Indica que a minha animacao e' um por um
@@ -482,7 +482,7 @@ public class MyWorld {
 		projetilAguaCGT.getOrientations().add(direcaoDown);
 		personagemCGTActor.getProjectiles().add(projetilAguaCGT);
 		
-		personagemCGTActor.addProjectile(projetilAguaCGT);
+//		personagemCGTActor.addProjectile(projetilAguaCGT);
 		world.setActor(personagemCGTActor);
 	}
 //

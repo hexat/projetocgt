@@ -606,7 +606,6 @@ public class WorldRenderer {
 					.overlaps(personagem.getCollision())
 					&& world.getOpposites().get(i).isBlock())
 				colisao = true;
-
 		}
 
 		// Verifica se colidiu com algum Enemy
@@ -637,11 +636,10 @@ public class WorldRenderer {
 		} else {
 			personagem.getVelocity().x = 0;
 			personagem.getVelocity().y = 0;
-			personagem.setPosition(posAnterior);
+			personagem.setPosition(posAnterior.cpy());
 			// return colisao;
 			colisao = false;
 		}
-
 		return colisao;
 	}
 
