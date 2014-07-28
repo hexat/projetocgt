@@ -205,16 +205,6 @@ public class WorldController {
 	private void processInput() {
 		//movimento();
 		if (keys.get(Keys.UP)) {
-			//Verifica se o personagem pode andar
-			if (renderer.isColision()) {
-				//personagem.setPosition(renderer.getPosAnterior());
-				personagem.setState(StatePolicy.LOOKUP);
-				//actionDamegeEnemyUp();
-			}else {
-				// O personagem esta olhando para a cima
-				if(personagem.getVelocity().y!=0 && personagem.getPosition().y > renderer.getCam().viewportHeight/2)	
-					if( personagem.getPosition().y < renderer.getWorld().getBackground().getHeight()-renderer.getCam().viewportHeight/2)
-						renderer.getCam().position.y+=personagem.getSpeed()/60;
 				
 				personagem.setState(StatePolicy.LOOKUP);
 				if( (personagem.getPosition().y + personagem.getBounds().height) < renderer.getWorld().getBackground().getHeight())
@@ -223,21 +213,16 @@ public class WorldController {
 					personagem.getVelocity().y = 0;
 			}
 			
-		}
 
 		if (keys.get(Keys.DOWN)) {
 			//if(renderer.isColisaoEnemy())
 				//actionDamegeEnemyDown();
 			// Verifica se o personagem pode andar
-			if (renderer.isColision()) {
-				//personagem.setPosition(renderer.getPosAnterior());
-				//personagem.setState(StatePolicy.LOOKDOWN);
-			} else {
-				if (personagem.getVelocity().y!=0 && personagem.getPosition().y > renderer.getCam().viewportHeight/2) {
+				/*if (personagem.getVelocity().y!=0 && personagem.getPosition().y > renderer.getCam().viewportHeight/2) {
 					
 					if( personagem.getPosition().y < renderer.getWorld().getBackground().getHeight()-renderer.getCam().viewportHeight/2)
 						renderer.getCam().position.y-=personagem.getSpeed()/60;
-				}
+				}*/
 				
 				// O personagem esta olhando para a baixo
 				personagem.setState(StatePolicy.LOOKDOWN);
@@ -247,19 +232,12 @@ public class WorldController {
 					personagem.getVelocity().y = 0;
 			}
 			
-		}
 
 		if (keys.get(Keys.LEFT)) {
-			// Verifica se o personagem pode andar
-			if (renderer.isColision()) {
-				//personagem.setPosition(renderer.getPosAnterior());
-				personagem.setState(StatePolicy.LOOKLEFT);
-				//actionDamegeEnemyLeft();
-			} else {
-				if (personagem.getVelocity().x != 0 && personagem.getPosition().x > renderer.getCam().viewportWidth/2) {
+				/*if (personagem.getVelocity().x != 0 && personagem.getPosition().x > renderer.getCam().viewportWidth/2) {
 					if( personagem.getPosition().x < renderer.getWorld().getBackground().getWidth()-renderer.getCam().viewportWidth/2)
 						renderer.getCam().position.x-=personagem.getSpeed()/60;
-				}
+				}*/
 				
 				personagem.setState(StatePolicy.LOOKLEFT);
 				if(personagem.getPosition().x > 0)
@@ -267,18 +245,13 @@ public class WorldController {
 				else
 					personagem.getVelocity().x = 0;
 			}		
-		}
+		
 		if (keys.get(Keys.RIGHT)) {
 			// Verifica se o personagem pode andar
-			if (renderer.isColision()) {
-				//personagem.setPosition(renderer.getPosAnterior());
-				personagem.setState(StatePolicy.LOOKRIGHT);
-				//actionDamegeEnemyRight();
-			} else {
-				if (personagem.getVelocity().x!=0 && personagem.getPosition().x > renderer.getCam().viewportWidth/2) {
+			/*	if (personagem.getVelocity().x!=0 && personagem.getPosition().x > renderer.getCam().viewportWidth/2) {
 					if( personagem.getPosition().x < renderer.getWorld().getBackground().getWidth()-renderer.getCam().viewportWidth/2)
 						renderer.getCam().position.x+=personagem.getSpeed()/60;
-				}
+				}*/
 				
 				personagem.setState(StatePolicy.LOOKRIGHT);
 				if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackground().getWidth())
@@ -286,7 +259,7 @@ public class WorldController {
 				else
 					personagem.getVelocity().x = 0;
 			}	
-		}
+		
 		// Verifica se ambos ou nenhum dos sentidos sao presionados
 		if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT))
 				|| (!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) {

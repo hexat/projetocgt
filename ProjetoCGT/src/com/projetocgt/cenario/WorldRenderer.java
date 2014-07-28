@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
@@ -67,7 +68,16 @@ public class WorldRenderer {
 	 */
 	public void render() {
 		isColision(); // ATENCAO
-		this.camera.update(); // Atualiza a tela
+		
+		if (world.getActor().getPosition().x-camera.viewportWidth/2>0 &&
+				world.getActor().getPosition().x+camera.viewportWidth/2<world.getBackground().getWidth())
+			camera.position.x=world.getActor().getPosition().x;
+		
+		if (world.getActor().getPosition().y-camera.viewportHeight/2>0 &&
+				world.getActor().getPosition().y + camera.viewportHeight/2<world.getBackground().getHeight())
+			camera.position.y=world.getActor().getPosition().y;
+		
+		camera.update();
 		spriteBatch.setProjectionMatrix(camera.combined); // Possibilita a
 		// camera acompanhar
 		// o personagem
@@ -79,6 +89,8 @@ public class WorldRenderer {
 		spriteBatch.end();
 		if (flagDebug)
 			drawDebug();
+		
+		 // Atualiza a tela
 
 	}
 
