@@ -51,7 +51,7 @@ public class WorldController {
 	// Funciona na descida do botao
 	public void leftPressed() {
 		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
-			releaseAllDirectionKeys();
+		releaseAllDirectionKeys();
 		//}
 		keys.get(keys.put(Keys.LEFT, true));
 		//Habilita o loop da animacao
@@ -60,7 +60,7 @@ public class WorldController {
 
 	public void rightPressed() {
 		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
-			releaseAllDirectionKeys();
+		releaseAllDirectionKeys();
 		//}
 		keys.get(keys.put(Keys.RIGHT, true));
 		//Habilita o loop da animacao
@@ -69,7 +69,7 @@ public class WorldController {
 
 	public void upPressed() {
 		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
-			releaseAllDirectionKeys();
+		releaseAllDirectionKeys();
 		//}
 		keys.get(keys.put(Keys.UP, true));
 		//Habilita o loop da animacao
@@ -85,7 +85,7 @@ public class WorldController {
 
 	public void downPressed() {
 		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
-			releaseAllDirectionKeys();
+		releaseAllDirectionKeys();
 		//}
 		keys.get(keys.put(Keys.DOWN, true));
 		//Habilita o loop da animacao
@@ -96,7 +96,7 @@ public class WorldController {
 		keys.get(keys.put(Keys.JUMP, true));
 		//Habilita o loop da animacao
 	}
-	
+
 	public void damegePressed() {
 		keys.get(keys.put(Keys.DAMAGE, true));
 		//Habilita o loop da animacao
@@ -108,13 +108,13 @@ public class WorldController {
 		for(int i=0;i<world.getActor().getProjectiles().size();i++){
 			//TODO
 			//if(world.getListaDeProjectili().get(i).getActionFire().getInputs().get(0) == InputPolicy.GO_TAP){
-				//world.getPersonagem().getListaDeProjectiles().get(i).setPosition(personagem.getPosition());
-				world.getActor().setFireDefault(0);
-				world.getActor().getProjectiles().get(i).setState(personagem.getState());
-//				world.getActor().getProjectiles().get(i).setFlagAtivar(true);	
+			//world.getPersonagem().getListaDeProjectiles().get(i).setPosition(personagem.getPosition());
+			world.getActor().setFireDefault(0);
+			//world.getActor().getProjectiles().get(i).setState(personagem.getState());
+			//				world.getActor().getProjectiles().get(i).setFlagAtivar(true);	
 			//}
 		}
-		
+
 	}
 
 	// Funciona na subida do botao
@@ -152,27 +152,27 @@ public class WorldController {
 		//actorAnimation.setLoop(false);
 		actorAnimation.stopAni();
 	}
-	
+
 	public void damegeReleased() {
 		keys.get(keys.put(Keys.DAMAGE, false));
 		//Desabilita o loop da animacao
 		//actorAnimation.setLoop(false);
 		actorAnimation.stopAni();
 	}
-	
+
 	public void fireReleasedTouch() {
 		keys.get(keys.put(Keys.FIRE, false));
 		//Desabilita o loop da animacao
-//		for(int i=0;i<world.getActor().getProjectiles().size();i++){
-			//so vai pra falso quem tiver ativo
-//		if(world.getActor().getProjectiles().get(i).isFlagAtivar()){
-		if (world.getActor().getFireDefault() != -1){
-				world.getActor().getProjectiles().get(world.getActor().getFireDefault()).ammoDown();
-				world.getActor().setFireDefault(-1);
-				//if(world.getListaDeProjectili().get(i).getAmmo() == 0){
-					//world.getListaDeProjectili().get(i).setFlagAtivar(false);}		
-			}
-//		}
+		//		for(int i=0;i<world.getActor().getProjectiles().size();i++){
+		//so vai pra falso quem tiver ativo
+		//		if(world.getActor().getProjectiles().get(i).isFlagAtivar()){
+		if (world.getActor().getFireDefault() != 0){
+			world.getActor().getProjectiles().get(world.getActor().getFireDefault()).ammoDown();
+			world.getActor().setFireDefault(0);
+			//if(world.getListaDeProjectili().get(i).getAmmo() == 0){
+			//world.getListaDeProjectili().get(i).setFlagAtivar(false);}		
+		}
+		//		}
 	}
 
 
@@ -184,104 +184,119 @@ public class WorldController {
 		// Processa a entrada de algum parametro
 		processInput();
 		personagem.update(delta);
-		
+
 		for (int i=0; i<world.getOpposites().size(); i++) {
 			world.getOpposites().get(i).update(delta);
 		}
-		
+
 		for (int i=0; i<world.getBonus().size(); i++) {
 			world.getBonus().get(i).update(delta);
 		}
-		
+
 		for (int i=0; i<world.getActor().getProjectiles().size(); i++) {
 			world.getActor().getProjectiles().get(i).update(delta);
 		}
-		
+
 		for (int i=0; i<world.getEnemies().size(); i++) {
 			world.getEnemies().get(i).update(delta);
 		}
 	}
-	
+
 	private void processInput() {
 		//movimento();
 		if (keys.get(Keys.UP)) {
-				
+
+			//Verifica se o personagem pode andar
+			if (renderer.isColisao()) {
+				personagem.setState(StatePolicy.LOOKUP);
+			}else {
 				personagem.setState(StatePolicy.LOOKUP);
 				if( (personagem.getPosition().y + personagem.getBounds().height) < renderer.getWorld().getBackground().getHeight())
 					personagem.getVelocity().y = personagem.getSpeed();
 				else
 					personagem.getVelocity().y = 0;
 			}
-			
+		}
 
-		if (keys.get(Keys.DOWN)) {
-			//if(renderer.isColisaoEnemy())
+
+			if (keys.get(Keys.DOWN)) {
+				//if(renderer.isColisaoEnemy())
 				//actionDamegeEnemyDown();
-			// Verifica se o personagem pode andar
-				/*if (personagem.getVelocity().y!=0 && personagem.getPosition().y > renderer.getCam().viewportHeight/2) {
-					
-					if( personagem.getPosition().y < renderer.getWorld().getBackground().getHeight()-renderer.getCam().viewportHeight/2)
-						renderer.getCam().position.y-=personagem.getSpeed()/60;
-				}*/
-				
-				// O personagem esta olhando para a baixo
-				personagem.setState(StatePolicy.LOOKDOWN);
-				if(personagem.getPosition().y > 0)
-					personagem.getVelocity().y = -personagem.getSpeed();
-				else
-					personagem.getVelocity().y = 0;
-			}
-			
+				// Verifica se o personagem pode andar
 
-		if (keys.get(Keys.LEFT)) {
-				/*if (personagem.getVelocity().x != 0 && personagem.getPosition().x > renderer.getCam().viewportWidth/2) {
-					if( personagem.getPosition().x < renderer.getWorld().getBackground().getWidth()-renderer.getCam().viewportWidth/2)
-						renderer.getCam().position.x-=personagem.getSpeed()/60;
-				}*/
-				
-				personagem.setState(StatePolicy.LOOKLEFT);
-				if(personagem.getPosition().x > 0)
-					personagem.getVelocity().x = -personagem.getSpeed();
-				else
+
+				if (renderer.isColisao()) {
+					//personagem.setPosition(renderer.getPosAnterior());
+					personagem.setState(StatePolicy.LOOKDOWN);
+				} else {
+
+
+					// O personagem esta olhando para a baixo
+					personagem.setState(StatePolicy.LOOKDOWN);
+					if(personagem.getPosition().y > 0)
+						personagem.getVelocity().y = -personagem.getSpeed();
+					else
+						personagem.getVelocity().y = 0;
+				}
+			}
+
+			if (keys.get(Keys.LEFT)) {
+
+				// Verifica se o personagem pode andar
+				if (renderer.isColisao()) {
+					//personagem.setPosition(renderer.getPosAnterior());
+					personagem.setState(StatePolicy.LOOKLEFT);
+					//actionDamegeEnemyLeft();
+				} else {
+
+					personagem.setState(StatePolicy.LOOKLEFT);
+					if(personagem.getPosition().x > 0)
+						personagem.getVelocity().x = -personagem.getSpeed();
+					else
+						personagem.getVelocity().x = 0;
+				}
+			}
+
+				if (keys.get(Keys.RIGHT)) {
+					// Verifica se o personagem pode andar
+					if (renderer.isColisao()) {
+						//personagem.setPosition(renderer.getPosAnterior());
+						personagem.setState(StatePolicy.LOOKRIGHT);
+						//actionDamegeEnemyRight();
+					} else {
+
+						personagem.setState(StatePolicy.LOOKRIGHT);
+						if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackground().getWidth())
+							personagem.getVelocity().x = personagem.getSpeed();
+						else
+							personagem.getVelocity().x = 0;
+					}	
+				}
+
+				// Verifica se ambos ou nenhum dos sentidos sao presionados
+				if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT))
+						|| (!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) {
+					//personagem.setState(State.IDLE);
+					// acceleration is 0 on the x
+					// horizontal speed is 0
 					personagem.getVelocity().x = 0;
-			}		
-		
-		if (keys.get(Keys.RIGHT)) {
-			// Verifica se o personagem pode andar
-			/*	if (personagem.getVelocity().x!=0 && personagem.getPosition().x > renderer.getCam().viewportWidth/2) {
-					if( personagem.getPosition().x < renderer.getWorld().getBackground().getWidth()-renderer.getCam().viewportWidth/2)
-						renderer.getCam().position.x+=personagem.getSpeed()/60;
-				}*/
-				
-				personagem.setState(StatePolicy.LOOKRIGHT);
-				if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackground().getWidth())
-					personagem.getVelocity().x = personagem.getSpeed();
-				else
-					personagem.getVelocity().x = 0;
-			}	
-		
-		// Verifica se ambos ou nenhum dos sentidos sao presionados
-		if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT))
-				|| (!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) {
-			//personagem.setState(State.IDLE);
-			// acceleration is 0 on the x
-			// horizontal speed is 0
-			personagem.getVelocity().x = 0;
-		}
-		// Verifica se ambos ou nenhum dos sentidos sao presionados
-		if ((keys.get(Keys.UP) && keys.get(Keys.DOWN))
-				|| (!keys.get(Keys.UP) && !(keys.get(Keys.DOWN)))) {
-			//personagem.setState(State.IDLE);
-			// acceleration is 0 on the y
-			//personagem.getAcceleration().y = 0;
-			// Vertival speed is 0
-			personagem.getVelocity().y = 0;
-		}
-	}
-	public void actionDamegeEnemyDown(){
-		//personagem.getPosition().y+=50;
-		//renderer.getCam().position.y+=50;
-		/*personagem.setState(StatePolicy.DAMAGE);
+				}
+				// Verifica se ambos ou nenhum dos sentidos sao presionados
+				if ((keys.get(Keys.UP) && keys.get(Keys.DOWN))
+						|| (!keys.get(Keys.UP) && !(keys.get(Keys.DOWN)))) {
+					//personagem.setState(State.IDLE);
+					// acceleration is 0 on the y
+					//personagem.getAcceleration().y = 0;
+					// Vertival speed is 0
+					personagem.getVelocity().y = 0;
+				}
+			}
+
+
+		public void actionDamegeEnemyDown(){
+			//personagem.getPosition().y+=50;
+			//renderer.getCam().position.y+=50;
+			/*personagem.setState(StatePolicy.DAMAGE);
 		damegePressed();
 		Timer.schedule(new Task(){
 			@Override
@@ -290,25 +305,25 @@ public class WorldController {
 				personagem.setState(StatePolicy.LOOKDOWN);
 			}
 		}, 2);*/
-	}
-	
-	public void actionDamegeEnemyUp(){
-		//personagem.getPosition().y-=50;
-		//renderer.getCam().position.y-=50;
-		//personagem.setState(StatePolicy.DAMAGE);
-	}
-	
-	public void actionDamegeEnemyRight(){
-		//personagem.getPosition().x-=50;
-		//renderer.getCam().position.x-=50;
-		//personagem.setState(StatePolicy.DAMAGE);
-	}
-	
-	public void actionDamegeEnemyLeft(){
-		//personagem.getPosition().x+=50;
-		//renderer.getCam().position.x+=50;
-		//personagem.setState(StatePolicy.DAMAGE);
-	}
-	
+		}
 
-}
+		public void actionDamegeEnemyUp(){
+			//personagem.getPosition().y-=50;
+			//renderer.getCam().position.y-=50;
+			//personagem.setState(StatePolicy.DAMAGE);
+		}
+
+		public void actionDamegeEnemyRight(){
+			//personagem.getPosition().x-=50;
+			//renderer.getCam().position.x-=50;
+			//personagem.setState(StatePolicy.DAMAGE);
+		}
+
+		public void actionDamegeEnemyLeft(){
+			//personagem.getPosition().x+=50;
+			//renderer.getCam().position.x+=50;
+			//personagem.setState(StatePolicy.DAMAGE);
+		}
+
+
+	}

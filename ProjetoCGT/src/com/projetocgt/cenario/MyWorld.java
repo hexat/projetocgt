@@ -187,9 +187,9 @@ public class MyWorld {
 				opositorCasa.setDestroyable(false);
 				opositorCasa.setLife(0);
 
-					opositorCasa.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png")));
-					opositorCasa.getSpriteSheet().setRows(1);
-					opositorCasa.getSpriteSheet().setColumns(1);
+				opositorCasa.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png")));
+				opositorCasa.getSpriteSheet().setRows(1);
+				opositorCasa.getSpriteSheet().setColumns(1);
 
 
 				//Indica que a minha animacao e' um por um
@@ -429,6 +429,7 @@ public class MyWorld {
 		a.setFlip(false);
 		a.setStatePolicy(StatePolicy.LOOKRIGHT);
 		a.setNumberOfColumns(2);
+		a.setSpriteVelocity(0.08f);
 		a.setAnimationPolicy(AnimationPolicy.LOOP);
 
 		ActionMove down = ActionCreator.getInstance().newActionMove(projetilAguaCGT);
