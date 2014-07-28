@@ -68,9 +68,7 @@ public class WorldRenderer {
 	public void render() {
 		isColision(); // ATENCAO
 		this.camera.update(); // Atualiza a tela
-		spriteBatch.setProjectionMatrix(camera.combined); // Possibilita a
-		// camera acompanhar
-		// o personagem
+		spriteBatch.setProjectionMatrix(camera.combined);
 		spriteBatch.begin();
 		drawGameObjects();
 		drawCGTActor();
@@ -178,45 +176,32 @@ public class WorldRenderer {
 		}
 
 		// Desenha todos os Projectile
-		// for (int i = 0; i < world.getActor().getProjectiles().size(); i++) {
-		// Verifica se tem alguem ativo
+		// Verifica se tem alguem ativo pelo fireDefault
 		// if (world.getActor().getProjectiles().get(i).isFlagAtivar()
 		// && world.getActor().getProjectiles().get(i).getAmmo() > 0) {
 		if (world.getActor().getFireDefault() != -1
-				&& world.getActor().getProjectiles()
-						.get(world.getActor().getFireDefault()).getAmmo() > 0) {
-			CGTProjectile pro = world.getActor().getProjectiles()
-					.get(world.getActor().getFireDefault());
+				&& world.getActor().getProjectiles().get(world.getActor().getFireDefault()).getAmmo() > 0) {
+			//Armazena o projectile
+			CGTProjectile pro = world.getActor().getProjectiles().get(world.getActor().getFireDefault());
+			
 			// Verifica o intervalo
 			interval = pro.getInterval();
 			// world.getListaDeProjectili().get(i).ammoDown();
 
 			// TODO aqui sera as variacoes do projectile
-			// verifica se dos ativados qual a posicao que sera' desenhado
 			for (int w = 0; w < pro.getOrientations().size(); w++) {
-				if (pro.getOrientations().get(w).getStates()
-						.contains(personagem.getState())) {
+				if (pro.getOrientations().get(w).getStates().contains(personagem.getState())) {
 					pro.setPosition(personagem.getPosition());
+					//Os desenhos sao feitos de acordo com os States. 
+					pro.setState(personagem.getState());
 					// faz um movimento do projectile
 					// world.getListaDeProjectili().get(i).getPosition().x=world.getListaDeProjectili().get(i).getVelocityInitial().x;
-					pro.getBounds().x += pro.getOrientations().get(w)
-							.getPositionRelativeToGameObject().x;
-
-					pro.getBounds().y += pro.getOrientations().get(w)
-							.getPositionRelativeToGameObject().y;
-
-					spriteBatch
-							.draw(pro.getAnimation(),
-									pro.getPosition().x
-											+ pro.getOrientations()
-													.get(w)
-													.getPositionRelativeToGameObject().x,
-									pro.getPosition().y
-											+ pro.getOrientations()
-													.get(w)
-													.getPositionRelativeToGameObject().y,
-									pro.getBounds().width,
-									pro.getBounds().height);
+					pro.getBounds().x += pro.getOrientations().get(w).getPositionRelativeToGameObject().x;
+					pro.getBounds().y += pro.getOrientations().get(w).getPositionRelativeToGameObject().y;
+					spriteBatch.draw(pro.getAnimation(),pro.getPosition().x + 
+							pro.getOrientations().get(w).getPositionRelativeToGameObject().x,
+							pro.getPosition().y+ pro.getOrientations().get(w).getPositionRelativeToGameObject().y,
+									pro.getBounds().width,pro.getBounds().height);
 				}
 			}
 
@@ -224,20 +209,10 @@ public class WorldRenderer {
 			for (int j = 0; j < world.getEnemies().size(); j++) {
 				// verifica se algum Enemy destrutivel esta colindindo com
 				// algum Projectile
-				if (world.getEnemies().get(j).getCollision()
-						.overlaps(pro.getCollision())
+				if (world.getEnemies().get(j).getCollision().overlaps(pro.getCollision())
 						&& world.getEnemies().get(j).isDestroyable()) {
-					world.getEnemies().get(j)
-							.setLife(world.getEnemies().get(j).getLife() - 1);
-					// world.getOpposites().get(j).setBlock(false);
+					world.getEnemies().get(j).setLife(world.getEnemies().get(j).getLife() - 1);					
 					if (world.getEnemies().get(j).getLife() <= 0)// Se
-						// o
-						// life
-						// for
-						// zero
-						// remove
-						// da
-						// cena
 						world.getEnemies().remove(j);
 					boolean ganhou = true;
 					for (int index = 0; index < world.getEnemies().size()
@@ -318,17 +293,15 @@ public class WorldRenderer {
 		// for (int i = 0; i < world.getActor().getProjectiles()
 		// .size(); i++) {
 		if (world.getActor().getFireDefault() != -1
-				&& world.getActor().getProjectiles()
-						.get(world.getActor().getFireDefault()).getAmmo() > 0)
+				&& world.getActor().getProjectiles().get(world.getActor().getFireDefault()).getAmmo() > 0){
 			// verifica se dos ativos qual a posicao que sera' desenhado
-			pro = world.getActor().getProjectiles()
-					.get(world.getActor().getFireDefault());
-		for (int w = 0; w < pro.getOrientations().size(); w++) {
-			if (pro.getOrientations().get(w).getStates()
-					.contains(personagem.getState()))
-				debugRenderer.rect(pro.getCollision().x, pro.getCollision().y,
-						pro.getCollision().getWidth(), pro.getCollision()
-								.getHeight());
+			pro = world.getActor().getProjectiles().get(world.getActor().getFireDefault());
+			for (int w = 0; w < pro.getOrientations().size(); w++) {
+				if (pro.getOrientations().get(w).getStates().contains(personagem.getState()))
+					debugRenderer.rect(pro.getCollision().x+pro.getOrientations().get(w).getPositionRelativeToGameObject().x,
+							pro.getCollision().y+pro.getOrientations().get(w).getPositionRelativeToGameObject().y,
+							pro.getCollision().getWidth(), pro.getCollision().getHeight());
+			}
 		}
 		// }
 		debugRenderer.end();

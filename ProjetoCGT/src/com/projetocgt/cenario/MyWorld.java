@@ -73,6 +73,7 @@ public class MyWorld {
 
 
 		CGTActor personagemCGTActor = new CGTActor();
+		//personagemCGTActor.setFireDefault(1);
 		personagemCGTActor.setPosition(new Vector2(800f,900f));
 
 		personagemCGTActor.setCollision(new Rectangle(10, 10, 60, 60));
@@ -83,19 +84,13 @@ public class MyWorld {
 		personagemCGTActor.setLife(4);
 		personagemCGTActor.setSpeed(180);
 
-
-
-			personagemCGTActor.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro.png")));
-			personagemCGTActor.getSpriteSheet().setRows(5);
-			personagemCGTActor.getSpriteSheet().setColumns(3);
-
-
+		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro.png")));
+		personagemCGTActor.getSpriteSheet().setRows(5);
+		personagemCGTActor.getSpriteSheet().setColumns(3);
 
 
 		Music somDamegePersonagem =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/colisao.wav"));
 		personagemCGTActor.setSoundCollision(somDamegePersonagem);
-
-
 
 		Music somDiePersonagem;
 
@@ -401,13 +396,16 @@ public class MyWorld {
 //		world.getBonus().add(hidrate);
 
 		CGTProjectile projetilAguaCGT = new CGTProjectile();
+		
 		Vector2 position = new Vector2(100f,200f);
 		projetilAguaCGT.setPosition(position);
+		
 		projetilAguaCGT.setBounds(new Rectangle(0,0,30, 30));
 		Rectangle coliderProjectile = new Rectangle(0,0,30, 30);
+		
 		Vector2 positionRelative = new Vector2(0,0);
 		projetilAguaCGT.setCollision(coliderProjectile);
-		projetilAguaCGT.setInterval(1);
+		projetilAguaCGT.setInterval(3);
 
 		CGTSpriteSheet css = new CGTSpriteSheet(Gdx.files.internal("data/CGTProjectile/SpriteSheet_agua.png"));
 		css.setRows(2);
@@ -421,7 +419,7 @@ public class MyWorld {
 		m.setFlip(true);
 		m.setStatePolicy(StatePolicy.LOOKLEFT);
 		m.setNumberOfColumns(2);
-		m.setSpriteVelocity(0.1f);
+		m.setSpriteVelocity(0.08f);
 		m.setAnimationPolicy(AnimationPolicy.LOOP);
 
 		ActionMove a = ActionCreator.getInstance().newActionMove(projetilAguaCGT);
@@ -429,6 +427,7 @@ public class MyWorld {
 		a.setFlip(false);
 		a.setStatePolicy(StatePolicy.LOOKRIGHT);
 		a.setNumberOfColumns(2);
+		a.setSpriteVelocity(0.08f);
 		a.setAnimationPolicy(AnimationPolicy.LOOP);
 
 		ActionMove down = ActionCreator.getInstance().newActionMove(projetilAguaCGT);
