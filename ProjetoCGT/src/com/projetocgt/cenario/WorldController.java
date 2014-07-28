@@ -170,9 +170,9 @@ public class WorldController {
 		//		for(int i=0;i<world.getActor().getProjectiles().size();i++){
 		//so vai pra falso quem tiver ativo
 		//		if(world.getActor().getProjectiles().get(i).isFlagAtivar()){
-		if (world.getActor().getFireDefault() != 0){
+		if (world.getActor().getFireDefault() != -1){
 			world.getActor().getProjectiles().get(world.getActor().getFireDefault()).ammoDown();
-			world.getActor().setFireDefault(0);
+			world.getActor().setFireDefault(-1);
 			//if(world.getListaDeProjectili().get(i).getAmmo() == 0){
 			//world.getListaDeProjectili().get(i).setFlagAtivar(false);}		
 		}
