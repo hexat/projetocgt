@@ -88,25 +88,13 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public void resize(int width, int height) {
 	}
-	
-	/*
-	 * Instancia um MyWorld a partir de um arquivo .cgt 
-	 * do caminho dado pelo file
-	 * */
-	public MyWorld instanciaStream(String file){
 
-		CGTGameWorld cgtGameWorld = new CGTGameWorld();
-		//MyWorld myWorld = new MyWorld(cgtGameWorld.lerStream(file));
-		MyWorld myWorld = new MyWorld();
 
-		return myWorld;
-	}
 	@Override
 	public void show() {
 		//Habilita a musica 
 		music.play();
 		music.setLooping(true);
-		
 		world = new MyWorld().getCGT();
 		renderer = new WorldRenderer(world, DEBUG);
 		//renderer = new WorldRenderer(instanciaStream("teste"), DEBUG); //Desenhando a partir de um MyWorld criado pelo arquivo

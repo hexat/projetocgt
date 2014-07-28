@@ -78,8 +78,8 @@ public abstract class GameObject {
 		this.posYColider=gameObject.getCollision().getY();
 		
 		cGTAnimation = new CGTAnimation(gameObject);
-		cGTAnimation.loadSprite(	gameObject.getSpriteSheet().getTexture().getFile().getPath(),
-								gameObject.getSpriteSheet().getRows(), gameObject.getSpriteSheet().getColumns());
+//		cGTAnimation.loadSprite(gameObject.getSpriteSheet().getTexture().getFile().getPath(),
+//								gameObject.getSpriteSheet().getRows(), gameObject.getSpriteSheet().getColumns());
 		
 	}
 

@@ -28,7 +28,6 @@ import cgt.unit.Action;
 import cgt.unit.ActionCreator;
 import cgt.unit.ActionMove;
 import cgt.util.CGTSpriteSheet;
-import cgt.util.CGTTexture;
 import cgt.util.ProjectileOrientation;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -44,12 +43,9 @@ import com.badlogic.gdx.audio.*;
  */
 public class MyWorld {
 
-//	ArrayList<CGTOpposite> listaDeOpposite = new ArrayList<CGTOpposite>();
-//	ArrayList<CGTBonus> listaDeBonus = new ArrayList<CGTBonus>();
-//	ArrayList<CGTEnemy> listaDeEnemy = new ArrayList<CGTEnemy>();
 //	ArrayList<Action> listaDeAction = new ArrayList<Action>();
 //	private CGTActor personagemActorLIB;
-//	private Texture backGround;
+	private Texture backGround;
 //	private WinPolicy winPolicy;
 //	private LosePolicy losePolicy;
 //	private int countdown;
@@ -69,8 +65,10 @@ public class MyWorld {
 	 */
 	private void createWorld() {
 		world = new CGTGameWorld();
-		world.setBackground(background)
+		
+		world = new CGTGameWorld();
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
+		world.setBackground(backGround);
 		//backGround = new CGTTexture(Gdx.files.internal("data/Cenario/pista1280.png"));
 
 
@@ -86,13 +84,11 @@ public class MyWorld {
 		personagemCGTActor.setSpeed(180);
 
 
-		try {
-			personagemCGTActor.setSpriteSheet(new CGTSpriteSheet(new CGTTexture(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro.png").file())));
+
+			personagemCGTActor.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro.png")));
 			personagemCGTActor.getSpriteSheet().setRows(5);
 			personagemCGTActor.getSpriteSheet().setColumns(3);
-		} catch (FileNotFoundException e) {
-			System.out.println("Caminho errado");
-		}
+
 
 
 
@@ -180,8 +176,8 @@ public class MyWorld {
 
 				//new Vector2(450*(i+1)+i*20,400*(j+1)+j*90), 300, 300, 300, 0, 0
 
-				opositorCasa.setBounds(new Rectangle(0,0,450*(i+1)+i*20, 400*(j+1)+j*90) );
-				opositorCasa.setCollision(new Rectangle(0,0,450*(i+1)+i*20, 400*(j+1)+j*90));
+				opositorCasa.setBounds(new Rectangle(0,0,300, 300) );
+				opositorCasa.setCollision(new Rectangle(0,0,300, 300));
 
 				Vector2 position = new Vector2(450*(i+1)+i*20, 400*(j+1)+j*90);
 				opositorCasa.setPosition(position);
@@ -190,18 +186,16 @@ public class MyWorld {
 				opositorCasa.setBlock(true);
 				opositorCasa.setDestroyable(false);
 				opositorCasa.setLife(0);
-				try {
-					opositorCasa.setSpriteSheet(new CGTSpriteSheet(new CGTTexture(new File("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png"))));
+
+					opositorCasa.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png")));
 					opositorCasa.getSpriteSheet().setRows(1);
 					opositorCasa.getSpriteSheet().setColumns(1);
-				} catch (FileNotFoundException e) {
-					System.out.println("Caminho errado");
-				}
+
 
 				//Indica que a minha animacao e' um por um
 				//opositorCasa.getSpriteSheet().loadingSpriteSheet("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png", 1, 1);
 				//Opposite opositorCasaLib = new Opposite(opositorCasa);
-				listaDeOpposite.add(opositorCasa);				
+				world.getOpposites().add(opositorCasa);				
 			}
 		}
 		Fade fade = new Fade(FadePolicy.FADE_IN);
@@ -232,13 +226,11 @@ public class MyWorld {
 		enemyFogoCGT.setLife(50);
 		enemyFogoCGT.setInterval(4);
 
-		try {
-			enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet(new CGTTexture(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png").file())));
+
+			enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png")));
 			enemyFogoCGT.getSpriteSheet().setRows(2);
 			enemyFogoCGT.getSpriteSheet().setColumns(2);
-		} catch (FileNotFoundException e) {
-			System.out.println("Caminho errado");
-		}
+
 
 		//Action
 		ActionMove moveEnemy = ActionCreator.getInstance().newActionMove(enemyFogoCGT);
@@ -252,7 +244,7 @@ public class MyWorld {
 		//Enemy enemyFogoLIB = new Enemy(enemyFogoCGT);
 		//enemyFogoCGT.getSpriteSheet().setLoop(true);
 		//Add na lista de enemy
-		listaDeEnemy.add(enemyFogoCGT);
+		world.getEnemies().add(enemyFogoCGT);
 
 		//		//Instancia o opposite fogo
 		//		Enemy enemyFogo = new Enemy(new Vector2(400,850), 50, 50, 50, 0, 0);
@@ -341,14 +333,9 @@ public class MyWorld {
 
 		carroCGT.setSpeed(200);
 
-		try {
-			carroCGT.setSpriteSheet(new CGTSpriteSheet(new CGTTexture(Gdx.files.internal("data/Enemy/SpriteSheet_carro.png").file())));
+			carroCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/Enemy/SpriteSheet_carro.png")));
 			carroCGT.getSpriteSheet().setRows(3);
 			carroCGT.getSpriteSheet().setColumns(2);
-		} catch (FileNotFoundException e) {
-			System.out.println("Caminho errado");
-		}
-
 		//Action
 		ActionMove moveCarro = ActionCreator.getInstance().newActionMove(carroCGT);
 		moveCarro.setSpriteLine(1);
@@ -386,7 +373,7 @@ public class MyWorld {
 		//Enemy enemyCarroLIB = new Enemy(carroCGT);
 		//enemyCarroLIB.getSpriteSheet().setLoop(true);
 		//Add na lista de enemy
-		listaDeEnemy.add(carroCGT);
+		world.getEnemies().add(carroCGT);
 
 		//		//Instancia o opposite carro
 		//		Enemy carro = new Enemy(new Vector2(800,700), 50, 50, 50, 0, 0);
@@ -407,14 +394,11 @@ public class MyWorld {
 		hidrate.setPosition(new Vector2(1000, 800));
 		hidrate.setBounds(new Rectangle(0,0,50,50));
 		hidrate.setCollision(new Rectangle(0,0,50,50));
-		try {
-			hidrate.setSpriteSheet(new CGTSpriteSheet(new CGTTexture(Gdx.files.internal("data/Enemy/SpriteSheet_tubo.png").file())));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		hidrate.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTBonus/SpriteSheet_tubo.png")));
+		
 		//hidrate.setTexture(new Texture("data/CGTBonus/SpriteSheet_tubo.png"));
-		listaDeBonus.add(hidrate);
+//		world.getBonus().add(hidrate);
 
 		CGTProjectile projetilAguaCGT = new CGTProjectile();
 		Vector2 position = new Vector2(100f,200f);
@@ -425,7 +409,7 @@ public class MyWorld {
 		projetilAguaCGT.setCollision(coliderProjectile);
 		projetilAguaCGT.setInterval(1);
 
-		CGTSpriteSheet css = new CGTSpriteSheet(new CGTTexture("data/CGTProjectile/SpriteSheet_agua.png"));
+		CGTSpriteSheet css = new CGTSpriteSheet(Gdx.files.internal("data/CGTProjectile/SpriteSheet_agua.png"));
 		css.setRows(2);
 		css.setColumns(2);
 		projetilAguaCGT.setSpriteSheet(css);
@@ -496,65 +480,67 @@ public class MyWorld {
 		direcaoDown.setSpriteVelocity(2);
 		direcaoDown.addState(StatePolicy.LOOKDOWN);
 		projetilAguaCGT.getOrientations().add(direcaoDown);
-
 		personagemCGTActor.getProjectiles().add(projetilAguaCGT);
+		
+		personagemCGTActor.addProjectile(projetilAguaCGT);
+		world.setActor(personagemCGTActor);
 	}
-
-	/**
-	 * @return the backGround
-	 */
-	public Texture getBackGround() {
-		return backGround;
-	}
-	/**
-	 * @param backGround the backGround to set
-	 */
-	public void setBackGround(Texture backGround) {
-		this.backGround = backGround;
-	}
-
-	/**
-	 * @return the listaDeOpposite
-	 */
-	public ArrayList<CGTOpposite> getListaDeOpposite() {
-		return listaDeOpposite;
-	}
-
-	/**
-	 * @param listaDeOpposite the listaDeOpposite to set
-	 */
-	public void setListaDeOpposite(ArrayList<CGTOpposite> listaDeOpposite) {
-		this.listaDeOpposite = listaDeOpposite;
-	}
-	/**
-	 * @return the personagem
-	 */
-	public CGTActor getPersonagem() {
-		return personagemActorLIB;
-	}
-
-	/**
-	 * @return the listaDeBonus
-	 */
-	public ArrayList<CGTBonus> getListaDeBonus() {
-		return listaDeBonus;
-	}
-	/**
-	 * @param listaDeBonus the listaDeBonus to set
-	 */
-	public void setListaDeBonus(ArrayList<CGTBonus> listaDeBonus) {
-		this.listaDeBonus = listaDeBonus;
-	}
-	/**
-	 * @return the listaDeEnemy
-	 */
-	public ArrayList<CGTEnemy> getListaDeEnemy() {
-		return listaDeEnemy;
-	}
-	/**
-	 * @param listaDeEnemy the listaDeEnemy to set
-	 */
-	public void setListaDeEnemy(ArrayList<CGTEnemy> listaDeEnemy) {
-		this.listaDeEnemy = listaDeEnemy;
-	}
+//
+//	/**
+//	 * @return the backGround
+//	 */
+//	public Texture getBackGround() {
+//		return backGround;
+//	}
+//	/**
+//	 * @param backGround the backGround to set
+//	 */
+//	public void setBackGround(Texture backGround) {
+//		this.backGround = backGround;
+//	}
+//
+//	/**
+//	 * @return the listaDeOpposite
+//	 */
+//	public ArrayList<CGTOpposite> getListaDeOpposite() {
+//		return listaDeOpposite;
+//	}
+//
+//	/**
+//	 * @param listaDeOpposite the listaDeOpposite to set
+//	 */
+//	public void setListaDeOpposite(ArrayList<CGTOpposite> listaDeOpposite) {
+//		this.listaDeOpposite = listaDeOpposite;
+//	}
+//	/**
+//	 * @return the personagem
+//	 */
+//	public CGTActor getPersonagem() {
+//		return personagemActorLIB;
+//	}
+//
+//	/**
+//	 * @return the listaDeBonus
+//	 */
+//	public ArrayList<CGTBonus> getListaDeBonus() {
+//		return listaDeBonus;
+//	}
+//	/**
+//	 * @param listaDeBonus the listaDeBonus to set
+//	 */
+//	public void setListaDeBonus(ArrayList<CGTBonus> listaDeBonus) {
+//		this.listaDeBonus = listaDeBonus;
+//	}
+//	/**
+//	 * @return the listaDeEnemy
+//	 */
+//	public ArrayList<CGTEnemy> getListaDeEnemy() {
+//		return listaDeEnemy;
+//	}
+//	/**
+//	 * @param listaDeEnemy the listaDeEnemy to set
+//	 */
+//	public void setListaDeEnemy(ArrayList<CGTEnemy> listaDeEnemy) {
+//		this.listaDeEnemy = listaDeEnemy;
+//	}
 }

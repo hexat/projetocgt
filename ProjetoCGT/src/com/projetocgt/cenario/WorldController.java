@@ -3,12 +3,13 @@ package com.projetocgt.cenario;
 import java.util.HashMap;
 import java.util.Map;
 
+import cgt.CGTGameWorld;
 import cgt.core.CGTActor;
 import cgt.policy.*;
+import cgt.util.CGTAnimation;
 
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-import com.projetocgt.personagens.CGTAnimation;
 
 /**
  * Controla os movimentos do mundo e dos personagens
@@ -22,7 +23,7 @@ public class WorldController {
 		LEFT, RIGHT, JUMP, FIRE, UP, DOWN, DAMAGE
 	};
 
-	private MyWorld world;
+	private CGTGameWorld world;
 	private CGTActor personagem;
 	private CGTAnimation actorAnimation;
 	private WorldRenderer renderer;
@@ -39,12 +40,12 @@ public class WorldController {
 	};
 
 	// Este construtor recebe o mundo como parametro
-	public WorldController(MyWorld world,WorldRenderer render) {
+	public WorldController(CGTGameWorld world,WorldRenderer render) {
 		this.world = world;
 		this.renderer = render;
 		// Posicao inicial do personagem
-		this.personagem = world.getPersonagem();
-		this.actorAnimation = world.getPersonagem().getAnimation();
+		this.personagem = world.getActor();
+		this.actorAnimation = world.getActor().getCGTAnimation();
 	}
 
 	// Funciona na descida do botao
@@ -104,13 +105,13 @@ public class WorldController {
 
 	public void firePressedTouch() {
 		keys.get(keys.put(Keys.FIRE, true));
-		for(int i=0;i<world.getPersonagem().getListaDeProjectiles().size();i++){
+		for(int i=0;i<world.getActor().getProjectiles().size();i++){
 			//TODO
 			//if(world.getListaDeProjectili().get(i).getActionFire().getInputs().get(0) == InputPolicy.GO_TAP){
 				//world.getPersonagem().getListaDeProjectiles().get(i).setPosition(personagem.getPosition());
-				
-				world.getPersonagem().getListaDeProjectiles().get(i).setState(personagem.getState());
-				world.getPersonagem().getListaDeProjectiles().get(i).setFlagAtivar(true);	
+				world.getActor().setFireDefault(0);
+				world.getActor().getProjectiles().get(i).setState(personagem.getState());
+//				world.getActor().getProjectiles().get(i).setFlagAtivar(true);	
 			//}
 		}
 		
@@ -162,15 +163,16 @@ public class WorldController {
 	public void fireReleasedTouch() {
 		keys.get(keys.put(Keys.FIRE, false));
 		//Desabilita o loop da animacao
-		for(int i=0;i<world.getPersonagem().getListaDeProjectiles().size();i++){
+//		for(int i=0;i<world.getActor().getProjectiles().size();i++){
 			//so vai pra falso quem tiver ativo
-			if(world.getPersonagem().getListaDeProjectiles().get(i).isFlagAtivar()){
-				world.getPersonagem().getListaDeProjectiles().get(i).ammoDown();
-				world.getPersonagem().getListaDeProjectiles().get(i).setFlagAtivar(false);
+//		if(world.getActor().getProjectiles().get(i).isFlagAtivar()){
+		if (world.getActor().getFireDefault() != -1){
+				world.getActor().getProjectiles().get(world.getActor().getFireDefault()).ammoDown();
+				world.getActor().setFireDefault(-1);
 				//if(world.getListaDeProjectili().get(i).getAmmo() == 0){
 					//world.getListaDeProjectili().get(i).setFlagAtivar(false);}		
 			}
-		}
+//		}
 	}
 
 
@@ -183,20 +185,20 @@ public class WorldController {
 		processInput();
 		personagem.update(delta);
 		
-		for (int i=0; i<world.getListaDeOpposite().size(); i++) {
-			world.getListaDeOpposite().get(i).update(delta);
+		for (int i=0; i<world.getOpposites().size(); i++) {
+			world.getOpposites().get(i).update(delta);
 		}
 		
-		for (int i=0; i<world.getListaDeBonus().size(); i++) {
-			world.getListaDeBonus().get(i).update(delta);
+		for (int i=0; i<world.getBonus().size(); i++) {
+			world.getBonus().get(i).update(delta);
 		}
 		
-		for (int i=0; i<world.getPersonagem().getListaDeProjectiles().size(); i++) {
-			world.getPersonagem().getListaDeProjectiles().get(i).update(delta);
+		for (int i=0; i<world.getActor().getProjectiles().size(); i++) {
+			world.getActor().getProjectiles().get(i).update(delta);
 		}
 		
-		for (int i=0; i<world.getListaDeEnemy().size(); i++) {
-			world.getListaDeEnemy().get(i).update(delta);
+		for (int i=0; i<world.getEnemies().size(); i++) {
+			world.getEnemies().get(i).update(delta);
 		}
 	}
 	
@@ -211,11 +213,11 @@ public class WorldController {
 			}else {
 				// O personagem esta olhando para a cima
 				if(personagem.getVelocity().y!=0 && personagem.getPosition().y > renderer.getCam().viewportHeight/2)	
-					if( personagem.getPosition().y < renderer.getWorld().getBackGround().getHeight()-renderer.getCam().viewportHeight/2)
+					if( personagem.getPosition().y < renderer.getWorld().getBackground().getHeight()-renderer.getCam().viewportHeight/2)
 						renderer.getCam().position.y+=personagem.getSpeed()/60;
 				
 				personagem.setState(StatePolicy.LOOKUP);
-				if( (personagem.getPosition().y + personagem.getBounds().height) < renderer.getWorld().getBackGround().getHeight())
+				if( (personagem.getPosition().y + personagem.getBounds().height) < renderer.getWorld().getBackground().getHeight())
 					personagem.getVelocity().y = personagem.getSpeed();
 				else
 					personagem.getVelocity().y = 0;
@@ -233,7 +235,7 @@ public class WorldController {
 			} else {
 				if (personagem.getVelocity().y!=0 && personagem.getPosition().y > renderer.getCam().viewportHeight/2) {
 					
-					if( personagem.getPosition().y < renderer.getWorld().getBackGround().getHeight()-renderer.getCam().viewportHeight/2)
+					if( personagem.getPosition().y < renderer.getWorld().getBackground().getHeight()-renderer.getCam().viewportHeight/2)
 						renderer.getCam().position.y-=personagem.getSpeed()/60;
 				}
 				
@@ -255,7 +257,7 @@ public class WorldController {
 				//actionDamegeEnemyLeft();
 			} else {
 				if (personagem.getVelocity().x != 0 && personagem.getPosition().x > renderer.getCam().viewportWidth/2) {
-					if( personagem.getPosition().x < renderer.getWorld().getBackGround().getWidth()-renderer.getCam().viewportWidth/2)
+					if( personagem.getPosition().x < renderer.getWorld().getBackground().getWidth()-renderer.getCam().viewportWidth/2)
 						renderer.getCam().position.x-=personagem.getSpeed()/60;
 				}
 				
@@ -274,12 +276,12 @@ public class WorldController {
 				//actionDamegeEnemyRight();
 			} else {
 				if (personagem.getVelocity().x!=0 && personagem.getPosition().x > renderer.getCam().viewportWidth/2) {
-					if( personagem.getPosition().x < renderer.getWorld().getBackGround().getWidth()-renderer.getCam().viewportWidth/2)
+					if( personagem.getPosition().x < renderer.getWorld().getBackground().getWidth()-renderer.getCam().viewportWidth/2)
 						renderer.getCam().position.x+=personagem.getSpeed()/60;
 				}
 				
 				personagem.setState(StatePolicy.LOOKRIGHT);
-				if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackGround().getWidth())
+				if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackground().getWidth())
 					personagem.getVelocity().x = personagem.getSpeed();
 				else
 					personagem.getVelocity().x = 0;
