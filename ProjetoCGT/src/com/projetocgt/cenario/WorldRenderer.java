@@ -31,7 +31,7 @@ import com.badlogic.gdx.utils.Timer.Task;
 public class WorldRenderer {
 
 	private CGTGameWorld world; // Declara a variavel do tipo World que sera
-								// passada
+	// passada
 	// de parametro no renderer
 	private OrthographicCamera camera; // Declara a variavel da camera
 	private CGTActor personagem;
@@ -70,15 +70,15 @@ public class WorldRenderer {
 		isColision(); // ATENCAO
 		this.camera.update(); // Atualiza a tela
 		spriteBatch.setProjectionMatrix(camera.combined);
-		
+
 		if (world.getActor().getPosition().x-camera.viewportWidth/2>0 &&
 				world.getActor().getPosition().x+camera.viewportWidth/2<world.getBackground().getWidth())
 			camera.position.x=world.getActor().getPosition().x;
-		
+
 		if (world.getActor().getPosition().y-camera.viewportHeight/2>0 &&
 				world.getActor().getPosition().y + camera.viewportHeight/2<world.getBackground().getHeight())
 			camera.position.y=world.getActor().getPosition().y;
-		
+
 		camera.update();
 		spriteBatch.setProjectionMatrix(camera.combined); // Possibilita a
 		// camera acompanhar
@@ -91,11 +91,30 @@ public class WorldRenderer {
 		spriteBatch.end();
 		if (flagDebug)
 			drawDebug();
-		
-		 // Atualiza a tela
+
+		// Atualiza a tela
 
 	}
 
+	public void verifyWin(WinPolicy policy){
+		if(policy.equals(WinPolicy.KILL_ENEMIES)){
+			for (int j = 0; j < world.getEnemies().size(); j++) {
+				boolean ganhou = true;
+				for (int index = 0; index < world.getEnemies().size() && ganhou; index++) {
+					if (world.getEnemies().get(index).isDestroyable()
+							&& world.getEnemies().get(index).getLife() > 0)
+						ganhou = false;
+				}
+
+				if (ganhou) // Verifica se tem algum inimigo na cena
+					System.out.println("Ganhou");
+			}
+
+
+		}
+
+
+	}
 	/**
 	 * Utilizado para limpar o desenho da tela
 	 */
@@ -129,9 +148,9 @@ public class WorldRenderer {
 			if (world.getOpposites().get(i).getLife() >= 0)
 				spriteBatch.draw(world.getOpposites().get(i).getAnimation(),
 						world.getOpposites().get(i).getPosition().x, world
-								.getOpposites().get(i).getPosition().y, world
-								.getOpposites().get(i).getBounds().width, world
-								.getOpposites().get(i).getBounds().height);
+						.getOpposites().get(i).getPosition().y, world
+						.getOpposites().get(i).getBounds().width, world
+						.getOpposites().get(i).getBounds().height);
 		}
 
 		// Desenha todos os Enemy
@@ -142,9 +161,9 @@ public class WorldRenderer {
 						.get(i).getAlpha());
 				spriteBatch.draw(world.getEnemies().get(i).getAnimation(),
 						world.getEnemies().get(i).getPosition().x, world
-								.getEnemies().get(i).getPosition().y, world
-								.getEnemies().get(i).getBounds().width, world
-								.getEnemies().get(i).getBounds().height);
+						.getEnemies().get(i).getPosition().y, world
+						.getEnemies().get(i).getBounds().width, world
+						.getEnemies().get(i).getBounds().height);
 			}
 
 			// spriteBatch.draw(world.getEnemies().get(i).getSpriteSheet().CGTAnimation(personagem),
@@ -183,7 +202,7 @@ public class WorldRenderer {
 					.getBonus().get(i).getPosition().x, world.getBonus().get(i)
 					.getPosition().y,
 					world.getBonus().get(i).getBounds().width, world.getBonus()
-							.get(i).getBounds().height);
+					.get(i).getBounds().height);
 			// spriteBatch.draw(world.listaDeBonus.get(i).getSpriteSheet().CGTAnimation(personagem),
 			// world.getBonus().get(i).getPosition().x,
 			// world.getBonus().get(i).getPosition().y,
@@ -199,7 +218,7 @@ public class WorldRenderer {
 				&& world.getActor().getProjectiles().get(world.getActor().getFireDefault()).getAmmo() > 0) {
 			//Armazena o projectile
 			CGTProjectile pro = world.getActor().getProjectiles().get(world.getActor().getFireDefault());
-			
+
 			// Verifica o intervalo
 			interval = pro.getInterval();
 			// world.getListaDeProjectili().get(i).ammoDown();
@@ -214,10 +233,12 @@ public class WorldRenderer {
 					// world.getListaDeProjectili().get(i).getPosition().x=world.getListaDeProjectili().get(i).getVelocityInitial().x;
 					pro.getBounds().x += pro.getOrientations().get(w).getPositionRelativeToGameObject().x;
 					pro.getBounds().y += pro.getOrientations().get(w).getPositionRelativeToGameObject().y;
+					pro.getCollision().x += pro.getOrientations().get(w).getPositionRelativeToGameObject().x;
+					pro.getCollision().y += pro.getOrientations().get(w).getPositionRelativeToGameObject().y;
 					spriteBatch.draw(pro.getAnimation(),pro.getPosition().x + 
 							pro.getOrientations().get(w).getPositionRelativeToGameObject().x,
 							pro.getPosition().y+ pro.getOrientations().get(w).getPositionRelativeToGameObject().y,
-									pro.getBounds().width,pro.getBounds().height);
+							pro.getBounds().width,pro.getBounds().height);
 				}
 			}
 
@@ -275,7 +296,7 @@ public class WorldRenderer {
 			debugRenderer.setColor(new Color(0, 1, 0, 1));
 			debugRenderer.rect(world.getOpposites().get(i).getCollision().x,
 					world.getOpposites().get(i).getCollision().y, world
-							.getOpposites().get(i).getCollision().getWidth(),
+					.getOpposites().get(i).getCollision().getWidth(),
 					world.getOpposites().get(i).getCollision().getHeight());
 			// }
 		}
@@ -286,7 +307,7 @@ public class WorldRenderer {
 				debugRenderer.setColor(new Color(0, 1, 0, 1));
 				debugRenderer.rect(world.getEnemies().get(i).getCollision().x,
 						world.getEnemies().get(i).getCollision().y, world
-								.getEnemies().get(i).getCollision().getWidth(),
+						.getEnemies().get(i).getCollision().getWidth(),
 						world.getEnemies().get(i).getCollision().getHeight());
 			}
 		}
@@ -314,8 +335,8 @@ public class WorldRenderer {
 			pro = world.getActor().getProjectiles().get(world.getActor().getFireDefault());
 			for (int w = 0; w < pro.getOrientations().size(); w++) {
 				if (pro.getOrientations().get(w).getStates().contains(personagem.getState()))
-					debugRenderer.rect(pro.getCollision().x+pro.getOrientations().get(w).getPositionRelativeToGameObject().x,
-							pro.getCollision().y+pro.getOrientations().get(w).getPositionRelativeToGameObject().y,
+					debugRenderer.rect(pro.getCollision().x,
+							pro.getCollision().y,
 							pro.getCollision().getWidth(), pro.getCollision().getHeight());
 			}
 		}

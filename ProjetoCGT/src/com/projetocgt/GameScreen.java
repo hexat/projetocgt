@@ -126,10 +126,15 @@ public class GameScreen implements Screen, InputProcessor {
 		renderer.dispose();
 	}
 	
+	public static void main(String[] args) {
+		System.out.println(Keys.toString(30));
+	}
 	//Funciona na descida do botao
 	@Override
 	public boolean keyDown(int keycode) {
+		
 		if (keycode == Keys.LEFT){
+			
 			controller.leftPressed();
 		}
 		if (keycode == Keys.RIGHT){
@@ -147,6 +152,8 @@ public class GameScreen implements Screen, InputProcessor {
 		}
 		return true;
 	}
+	
+	
 
 	//Funciona na subida do botao 
 	@Override
