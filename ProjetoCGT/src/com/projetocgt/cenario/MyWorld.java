@@ -27,6 +27,7 @@ import cgt.policy.WinPolicy;
 import cgt.unit.Action;
 import cgt.unit.ActionCreator;
 import cgt.unit.ActionMove;
+import cgt.util.CGTAnimation;
 import cgt.util.CGTSpriteSheet;
 import cgt.util.ProjectileOrientation;
 import com.badlogic.gdx.Gdx;
@@ -104,7 +105,7 @@ public class MyWorld {
 
 
 		//Action
-		ActionMove moveLEft = ActionCreator.getInstance().newActionMove(ActionMovePolicy.WALK_LEFT, personagemCGTActor);
+		CGTAnimation moveLEft = new CGTAnimation(personagemCGTActor);
 		moveLEft.setSpriteLine(1);
 		moveLEft.setStatePolicy(StatePolicy.LOOKLEFT);
 		moveLEft.setNumberOfColumns(3);

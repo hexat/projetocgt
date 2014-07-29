@@ -19,24 +19,32 @@ import com.badlogic.gdx.utils.Timer.Task;
 public class WorldController {
 
 	//Possiveis movimentos do personagem
-	enum Keys {
-		LEFT, RIGHT, JUMP, FIRE, UP, DOWN, DAMAGE
-	};
+//	enum Keys {
+//		LEFT, RIGHT, JUMP, FIRE, UP, DOWN, DAMAGE
+//	};
 
 	private CGTGameWorld world;
 	private CGTActor personagem;
 	private CGTAnimation actorAnimation;
 	private WorldRenderer renderer;
-	static Map<Keys, Boolean> keys = new HashMap<WorldController.Keys, Boolean>();
+	static Map<String, Boolean> keys = new HashMap<String, Boolean>();
 	static {
-		keys.put(Keys.LEFT, false);
-		keys.put(Keys.RIGHT, false);
-
-		keys.put(Keys.UP, false);
-		keys.put(Keys.DOWN, false);
-
-		keys.put(Keys.JUMP, false);
-		keys.put(Keys.FIRE, false);
+		for (ActionMovePolicy a : ActionMovePolicy.values()) {
+			keys.put(a.name(), false);
+		}
+		for (ActionFirePolicy a : ActionFirePolicy.values()) {
+			keys.put(a.name(), false);
+		}
+		for (ActionJumpPolicy a : ActionJumpPolicy.values()) {
+			keys.put(a.name(), false);
+		}
+//		keys.put(Keys.RIGHT, false);
+//
+//		keys.put(Keys.UP, false);
+//		keys.put(Keys.DOWN, false);
+//
+//		keys.put(Keys.JUMP, false);
+//		keys.put(Keys.FIRE, false);
 	};
 
 	// Este construtor recebe o mundo como parametro
@@ -48,6 +56,9 @@ public class WorldController {
 		this.actorAnimation = world.getActor().getCGTAnimation();
 	}
 
+	public void activeMoveKey(ActionMovePolicy policy) {
+		keys.put(Keys.LEFT, true);
+	}
 	// Funciona na descida do botao
 	public void leftPressed() {
 		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
