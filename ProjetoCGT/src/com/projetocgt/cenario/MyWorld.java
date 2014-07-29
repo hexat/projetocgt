@@ -74,6 +74,7 @@ public class MyWorld {
 
 
 		CGTActor personagemCGTActor = new CGTActor();
+		personagemCGTActor.setFireDefault(-1);
 		personagemCGTActor.setPosition(new Vector2(800f,900f));
 
 		personagemCGTActor.setCollision(new Rectangle(10, 10, 60, 60));
@@ -84,19 +85,13 @@ public class MyWorld {
 		personagemCGTActor.setLife(4);
 		personagemCGTActor.setSpeed(180);
 
-
-
-			personagemCGTActor.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro.png")));
-			personagemCGTActor.getSpriteSheet().setRows(5);
-			personagemCGTActor.getSpriteSheet().setColumns(3);
-
-
+		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro.png")));
+		personagemCGTActor.getSpriteSheet().setRows(5);
+		personagemCGTActor.getSpriteSheet().setColumns(3);
 
 
 		Music somDamegePersonagem =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/colisao.wav"));
 		personagemCGTActor.setSoundCollision(somDamegePersonagem);
-
-
 
 		Music somDiePersonagem;
 
@@ -107,7 +102,7 @@ public class MyWorld {
 		//Action
 		CGTAnimation moveLEft = new CGTAnimation(personagemCGTActor);
 		moveLEft.setSpriteLine(1);
-		moveLEft.setStatePolicy(StatePolicy.LOOKLEFT);
+		moveLEft.addStatePolicy(StatePolicy.LOOKLEFT);
 		moveLEft.setNumberOfColumns(3);
 		moveLEft.addInput(InputPolicy.ACEL_LEFT);
 		moveLEft.setSpriteVelocity(0.08f);
@@ -116,7 +111,7 @@ public class MyWorld {
 
 		ActionMove moveRight = ActionCreator.getInstance().newActionMove(ActionMovePolicy.WALK_RIGHT, personagemCGTActor);
 		moveRight.setSpriteLine(1);
-		moveRight.setStatePolicy(StatePolicy.LOOKRIGHT);
+		moveRight.addStatePolicy(StatePolicy.LOOKRIGHT);
 		moveRight.setNumberOfColumns(3);
 		moveRight.addInput(InputPolicy.ACEL_RIGHT);
 		moveRight.setSpriteVelocity(0.2f);
@@ -124,7 +119,7 @@ public class MyWorld {
 
 		ActionMove moveUp = ActionCreator.getInstance().newActionMove(ActionMovePolicy.WALK_UP, personagemCGTActor);
 		moveUp.setSpriteLine(3);
-		moveUp.setStatePolicy(StatePolicy.LOOKUP);
+		moveUp.addStatePolicy(StatePolicy.LOOKUP);
 		moveUp.setNumberOfColumns(3);
 		moveUp.addInput(InputPolicy.ACEL_UP);
 		moveUp.setSpriteVelocity(0.2f);
@@ -132,7 +127,7 @@ public class MyWorld {
 
 		ActionMove moveDown = ActionCreator.getInstance().newActionMove(ActionMovePolicy.WALK_DOWN, personagemCGTActor);
 		moveDown.setSpriteLine(2);
-		moveDown.setStatePolicy(StatePolicy.LOOKDOWN);
+		moveDown.addStatePolicy(StatePolicy.LOOKDOWN);
 		moveDown.setNumberOfColumns(3);
 		moveDown.addInput(InputPolicy.ACEL_DOWN);
 		moveDown.setSpriteVelocity(0.2f);
@@ -171,7 +166,7 @@ public class MyWorld {
 
 				ActionMove teste = ActionCreator.getInstance().newActionMove(opositorCasa);
 				teste.setSpriteLine(1);
-				teste.setStatePolicy(StatePolicy.IDLE);
+				teste.addStatePolicy(StatePolicy.IDLEDOWN);
 				teste.setNumberOfColumns(1);
 				teste.setAnimationPolicy(AnimationPolicy.LOOP);
 
@@ -218,6 +213,7 @@ public class MyWorld {
 		Rectangle tamanhoEnemy = new Rectangle(0,0,56, 98);
 		enemyFogoCGT.setBounds(tamanhoEnemy);
 
+		enemyFogoCGT.setState(StatePolicy.IDLEDOWN);
 		enemyFogoCGT.setBlock(false);
 		enemyFogoCGT.setDamage(1);
 		//enemyFogoCGT.setSpeed(2);
@@ -236,7 +232,7 @@ public class MyWorld {
 		//Action
 		ActionMove moveEnemy = ActionCreator.getInstance().newActionMove(enemyFogoCGT);
 		moveEnemy.setSpriteLine(1);
-		moveEnemy.setStatePolicy(StatePolicy.IDLE);
+		moveEnemy.addStatePolicy(StatePolicy.IDLEDOWN);
 		moveEnemy.setNumberOfColumns(2);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveEnemy.setSpriteVelocity(0.08f);
@@ -340,7 +336,7 @@ public class MyWorld {
 		//Action
 		ActionMove moveCarro = ActionCreator.getInstance().newActionMove(carroCGT);
 		moveCarro.setSpriteLine(1);
-		moveCarro.setStatePolicy(StatePolicy.LOOKRIGHT);
+		moveCarro.addStatePolicy(StatePolicy.LOOKRIGHT);
 		moveCarro.setNumberOfColumns(2);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveCarro.setSpriteVelocity(0.08f);
@@ -349,7 +345,7 @@ public class MyWorld {
 		ActionMove moveCarroLeft = ActionCreator.getInstance().newActionMove(carroCGT);
 		moveCarroLeft.setFlip(true);
 		moveCarroLeft.setSpriteLine(1);
-		moveCarroLeft.setStatePolicy(StatePolicy.LOOKLEFT);
+		moveCarroLeft.addStatePolicy(StatePolicy.LOOKLEFT);
 		moveCarroLeft.setNumberOfColumns(2);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveCarroLeft.setSpriteVelocity(0.08f);
@@ -357,7 +353,7 @@ public class MyWorld {
 
 		ActionMove moveCarroDown = ActionCreator.getInstance().newActionMove(carroCGT);
 		moveCarroDown.setSpriteLine(2);
-		moveCarroDown.setStatePolicy(StatePolicy.LOOKDOWN);
+		moveCarroDown.addStatePolicy(StatePolicy.LOOKDOWN);
 		moveCarroDown.setNumberOfColumns(2);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveCarroDown.setSpriteVelocity(0.08f);
@@ -365,7 +361,7 @@ public class MyWorld {
 
 		ActionMove moveCarroUp = ActionCreator.getInstance().newActionMove(carroCGT);
 		moveCarroUp.setSpriteLine(3);
-		moveCarroUp.setStatePolicy(StatePolicy.LOOKUP);
+		moveCarroUp.addStatePolicy(StatePolicy.LOOKUP);
 		moveCarroUp.setNumberOfColumns(2);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveCarroUp.setSpriteVelocity(0.08f);
@@ -402,13 +398,16 @@ public class MyWorld {
 //		world.getBonus().add(hidrate);
 
 		CGTProjectile projetilAguaCGT = new CGTProjectile();
+		
 		Vector2 position = new Vector2(100f,200f);
 		projetilAguaCGT.setPosition(position);
+		
 		projetilAguaCGT.setBounds(new Rectangle(0,0,30, 30));
 		Rectangle coliderProjectile = new Rectangle(0,0,30, 30);
-		Vector2 positionRelative = new Vector2(0,0);
+		
+		//Vector2 positionRelative = new Vector2(0,0);
 		projetilAguaCGT.setCollision(coliderProjectile);
-		projetilAguaCGT.setInterval(1);
+		projetilAguaCGT.setInterval(3);
 
 		CGTSpriteSheet css = new CGTSpriteSheet(Gdx.files.internal("data/CGTProjectile/SpriteSheet_agua.png"));
 		css.setRows(2);
@@ -420,22 +419,26 @@ public class MyWorld {
 		ActionMove m = ActionCreator.getInstance().newActionMove(projetilAguaCGT);
 		m.setSpriteLine(1);
 		m.setFlip(true);
-		m.setStatePolicy(StatePolicy.LOOKLEFT);
+		m.addStatePolicy(StatePolicy.LOOKLEFT);
+		m.addStatePolicy(StatePolicy.IDLELEFT);
 		m.setNumberOfColumns(2);
-		m.setSpriteVelocity(0.1f);
+		m.setSpriteVelocity(0.08f);
 		m.setAnimationPolicy(AnimationPolicy.LOOP);
 
 		ActionMove a = ActionCreator.getInstance().newActionMove(projetilAguaCGT);
 		a.setSpriteLine(1);
 		a.setFlip(false);
-		a.setStatePolicy(StatePolicy.LOOKRIGHT);
+		a.addStatePolicy(StatePolicy.LOOKRIGHT);
+		a.addStatePolicy(StatePolicy.IDLERIGHT);
 		a.setNumberOfColumns(2);
+		a.setSpriteVelocity(0.08f);
 		a.setAnimationPolicy(AnimationPolicy.LOOP);
 
 		ActionMove down = ActionCreator.getInstance().newActionMove(projetilAguaCGT);
 		down.setSpriteLine(2);
 		down.setFlip(false);
-		down.setStatePolicy(StatePolicy.LOOKDOWN);
+		down.addStatePolicy(StatePolicy.LOOKDOWN);
+		down.addStatePolicy(StatePolicy.IDLEDOWN);
 		down.setNumberOfColumns(2);
 		down.setSpriteVelocity(0.08f);
 		down.setAnimationPolicy(AnimationPolicy.LOOP);
@@ -443,7 +446,8 @@ public class MyWorld {
 		ActionMove up = ActionCreator.getInstance().newActionMove(projetilAguaCGT);
 		up.setSpriteLine(2);
 		up.setFlip(true);
-		up.setStatePolicy(StatePolicy.LOOKUP);
+		up.addStatePolicy(StatePolicy.LOOKUP);
+		up.addStatePolicy(StatePolicy.IDLEUP);
 		up.setNumberOfColumns(2);
 		up.setSpriteVelocity(0.08f);
 		up.setAnimationPolicy(AnimationPolicy.LOOP);
@@ -456,6 +460,7 @@ public class MyWorld {
 		direcaoRight.setSpriteNumberOfColumns(2);
 		direcaoRight.setSpriteVelocity(2);
 		direcaoRight.addState(StatePolicy.LOOKRIGHT);
+		direcaoRight.addState(StatePolicy.IDLERIGHT);
 		projetilAguaCGT.getOrientations().add(direcaoRight);
 
 		ProjectileOrientation direcaoLeft = new ProjectileOrientation();
@@ -464,6 +469,7 @@ public class MyWorld {
 		direcaoLeft.setSpriteNumberOfColumns(2);
 		direcaoLeft.setSpriteVelocity(2);
 		direcaoLeft.addState(StatePolicy.LOOKLEFT);
+		direcaoLeft.addState(StatePolicy.IDLELEFT);
 		projetilAguaCGT.getOrientations().add(direcaoLeft);
 
 		ProjectileOrientation direcaoUp = new ProjectileOrientation();
@@ -472,6 +478,7 @@ public class MyWorld {
 		direcaoUp.setSpriteNumberOfColumns(2);
 		direcaoUp.setSpriteVelocity(2);
 		direcaoUp.addState(StatePolicy.LOOKUP);
+		direcaoUp.addState(StatePolicy.IDLEUP);
 		projetilAguaCGT.getOrientations().add(direcaoUp);
 
 		ProjectileOrientation direcaoDown = new ProjectileOrientation();
@@ -480,10 +487,11 @@ public class MyWorld {
 		direcaoDown.setSpriteNumberOfColumns(2);
 		direcaoDown.setSpriteVelocity(2);
 		direcaoDown.addState(StatePolicy.LOOKDOWN);
+		direcaoDown.addState(StatePolicy.IDLEDOWN);
 		projetilAguaCGT.getOrientations().add(direcaoDown);
 		personagemCGTActor.getProjectiles().add(projetilAguaCGT);
 		
-//		personagemCGTActor.addProjectile(projetilAguaCGT);
+		personagemCGTActor.addProjectile(projetilAguaCGT);
 		world.setActor(personagemCGTActor);
 	}
 //
