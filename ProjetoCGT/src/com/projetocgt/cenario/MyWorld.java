@@ -1,11 +1,6 @@
 package com.projetocgt.cenario;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import cgt.CGTGameWorld;
 import cgt.behaviors.Direction;
 import cgt.behaviors.Fade;
@@ -15,27 +10,20 @@ import cgt.core.CGTBonus;
 import cgt.core.CGTEnemy;
 import cgt.core.CGTOpposite;
 import cgt.core.CGTProjectile;
-import cgt.policy.ActionMovePolicy;
 import cgt.policy.AnimationPolicy;
 import cgt.policy.DirectionPolicy;
 import cgt.policy.FadePolicy;
-import cgt.policy.InputPolicy;
-import cgt.policy.LosePolicy;
 import cgt.policy.MovementPolicy;
 import cgt.policy.StatePolicy;
-import cgt.policy.WinPolicy;
-import cgt.unit.Action;
-import cgt.unit.ActionCreator;
-import cgt.unit.ActionMove;
 import cgt.util.CGTAnimation;
 import cgt.util.CGTSpriteSheet;
 import cgt.util.ProjectileOrientation;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-
-import com.badlogic.gdx.audio.*;
 
 /**
  * Responsavel por construir o jogo
@@ -85,7 +73,8 @@ public class MyWorld {
 		personagemCGTActor.setLife(4);
 		personagemCGTActor.setSpeed(180);
 
-		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro.png")));
+		System.out.println(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro.png").exists());
+		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro.png").file()));
 		personagemCGTActor.getSpriteSheet().setRows(5);
 		personagemCGTActor.getSpriteSheet().setColumns(3);
 
@@ -104,34 +93,40 @@ public class MyWorld {
 		moveLEft.setSpriteLine(1);
 		moveLEft.addStatePolicy(StatePolicy.LOOKLEFT);
 		moveLEft.setNumberOfColumns(3);
-		moveLEft.addInput(InputPolicy.ACEL_LEFT);
+		//moveLEft.addInput(InputPolicy.ACEL_LEFT);
 		moveLEft.setSpriteVelocity(0.08f);
 		moveLEft.setFlip(true);
 		moveLEft.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
 
-		ActionMove moveRight = ActionCreator.getInstance().newActionMove(ActionMovePolicy.WALK_RIGHT, personagemCGTActor);
+		CGTAnimation moveRight = new CGTAnimation(personagemCGTActor);
 		moveRight.setSpriteLine(1);
 		moveRight.addStatePolicy(StatePolicy.LOOKRIGHT);
 		moveRight.setNumberOfColumns(3);
-		moveRight.addInput(InputPolicy.ACEL_RIGHT);
+		//moveRight.addInput(InputPolicy.ACEL_RIGHT);
 		moveRight.setSpriteVelocity(0.2f);
 		moveRight.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
 
-		ActionMove moveUp = ActionCreator.getInstance().newActionMove(ActionMovePolicy.WALK_UP, personagemCGTActor);
+		CGTAnimation moveUp = new CGTAnimation(personagemCGTActor);
 		moveUp.setSpriteLine(3);
 		moveUp.addStatePolicy(StatePolicy.LOOKUP);
 		moveUp.setNumberOfColumns(3);
-		moveUp.addInput(InputPolicy.ACEL_UP);
+		//moveUp.addInput(InputPolicy.ACEL_UP);
 		moveUp.setSpriteVelocity(0.2f);
 		moveUp.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
 
-		ActionMove moveDown = ActionCreator.getInstance().newActionMove(ActionMovePolicy.WALK_DOWN, personagemCGTActor);
+		CGTAnimation moveDown = new CGTAnimation(personagemCGTActor);
 		moveDown.setSpriteLine(2);
 		moveDown.addStatePolicy(StatePolicy.LOOKDOWN);
 		moveDown.setNumberOfColumns(3);
-		moveDown.addInput(InputPolicy.ACEL_DOWN);
+		//moveDown.addInput(InputPolicy.ACEL_DOWN);
 		moveDown.setSpriteVelocity(0.2f);
 		moveDown.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+
+		personagemCGTActor.getAnimarions().add(moveDown);
+		personagemCGTActor.getAnimarions().add(moveLEft);
+		personagemCGTActor.getAnimarions().add(moveRight);
+		personagemCGTActor.getAnimarions().add(moveUp);
+		
 		//Adicionando o personagem na libGDX
 		//personagemActorLIB = new ActorCGT(personagemCGTActor);
 
@@ -164,7 +159,7 @@ public class MyWorld {
 				CGTOpposite opositorCasa = new CGTOpposite();
 
 
-				ActionMove teste = ActionCreator.getInstance().newActionMove(opositorCasa);
+				CGTAnimation teste = new CGTAnimation(opositorCasa);
 				teste.setSpriteLine(1);
 				teste.addStatePolicy(StatePolicy.IDLEDOWN);
 				teste.setNumberOfColumns(1);
@@ -183,10 +178,10 @@ public class MyWorld {
 				opositorCasa.setDestroyable(false);
 				opositorCasa.setLife(0);
 
-				opositorCasa.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png")));
+				opositorCasa.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png").file()));
 				opositorCasa.getSpriteSheet().setRows(1);
 				opositorCasa.getSpriteSheet().setColumns(1);
-
+				opositorCasa.getAnimarions().add(teste);
 
 				//Indica que a minha animacao e' um por um
 				//opositorCasa.getSpriteSheet().loadingSpriteSheet("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png", 1, 1);
@@ -224,13 +219,13 @@ public class MyWorld {
 		enemyFogoCGT.setInterval(4);
 
 
-			enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png")));
+			enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png").file()));
 			enemyFogoCGT.getSpriteSheet().setRows(2);
 			enemyFogoCGT.getSpriteSheet().setColumns(2);
 
 
 		//Action
-		ActionMove moveEnemy = ActionCreator.getInstance().newActionMove(enemyFogoCGT);
+		CGTAnimation moveEnemy = new CGTAnimation(enemyFogoCGT);
 		moveEnemy.setSpriteLine(1);
 		moveEnemy.addStatePolicy(StatePolicy.IDLEDOWN);
 		moveEnemy.setNumberOfColumns(2);
@@ -241,6 +236,7 @@ public class MyWorld {
 		//Enemy enemyFogoLIB = new Enemy(enemyFogoCGT);
 		//enemyFogoCGT.getSpriteSheet().setLoop(true);
 		//Add na lista de enemy
+		enemyFogoCGT.getAnimarions().add(moveEnemy);
 		world.getEnemies().add(enemyFogoCGT);
 
 		//		//Instancia o opposite fogo
@@ -330,19 +326,20 @@ public class MyWorld {
 
 		carroCGT.setSpeed(200);
 
-			carroCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/Enemy/SpriteSheet_carro.png")));
+			carroCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/Enemy/SpriteSheet_carro.png").file()));
 			carroCGT.getSpriteSheet().setRows(3);
 			carroCGT.getSpriteSheet().setColumns(2);
 		//Action
-		ActionMove moveCarro = ActionCreator.getInstance().newActionMove(carroCGT);
+		CGTAnimation moveCarro = new CGTAnimation(carroCGT);
 		moveCarro.setSpriteLine(1);
 		moveCarro.addStatePolicy(StatePolicy.LOOKRIGHT);
 		moveCarro.setNumberOfColumns(2);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveCarro.setSpriteVelocity(0.08f);
 		moveCarro.setAnimationPolicy(AnimationPolicy.LOOP);
+		carroCGT.getAnimarions().add(moveCarro);
 
-		ActionMove moveCarroLeft = ActionCreator.getInstance().newActionMove(carroCGT);
+		CGTAnimation moveCarroLeft = new CGTAnimation(carroCGT);
 		moveCarroLeft.setFlip(true);
 		moveCarroLeft.setSpriteLine(1);
 		moveCarroLeft.addStatePolicy(StatePolicy.LOOKLEFT);
@@ -350,22 +347,25 @@ public class MyWorld {
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveCarroLeft.setSpriteVelocity(0.08f);
 		moveCarroLeft.setAnimationPolicy(AnimationPolicy.LOOP);
+		carroCGT.getAnimarions().add(moveCarroLeft);
 
-		ActionMove moveCarroDown = ActionCreator.getInstance().newActionMove(carroCGT);
+		CGTAnimation moveCarroDown = new CGTAnimation(carroCGT);
 		moveCarroDown.setSpriteLine(2);
 		moveCarroDown.addStatePolicy(StatePolicy.LOOKDOWN);
 		moveCarroDown.setNumberOfColumns(2);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveCarroDown.setSpriteVelocity(0.08f);
 		moveCarroDown.setAnimationPolicy(AnimationPolicy.LOOP);
+		carroCGT.getAnimarions().add(moveCarroDown);
 
-		ActionMove moveCarroUp = ActionCreator.getInstance().newActionMove(carroCGT);
+		CGTAnimation moveCarroUp = new CGTAnimation(carroCGT);
 		moveCarroUp.setSpriteLine(3);
 		moveCarroUp.addStatePolicy(StatePolicy.LOOKUP);
 		moveCarroUp.setNumberOfColumns(2);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveCarroUp.setSpriteVelocity(0.08f);
 		moveCarroUp.setAnimationPolicy(AnimationPolicy.LOOP);
+		carroCGT.getAnimarions().add(moveCarroUp);
 
 		//Enemy enemyCarroLIB = new Enemy(carroCGT);
 		//enemyCarroLIB.getSpriteSheet().setLoop(true);
@@ -392,7 +392,7 @@ public class MyWorld {
 		hidrate.setBounds(new Rectangle(0,0,50,50));
 		hidrate.setCollision(new Rectangle(0,0,50,50));
 		
-		hidrate.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTBonus/SpriteSheet_tubo.png")));
+		hidrate.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTBonus/SpriteSheet_tubo.png").file()));
 		
 		//hidrate.setTexture(new Texture("data/CGTBonus/SpriteSheet_tubo.png"));
 //		world.getBonus().add(hidrate);
@@ -409,14 +409,14 @@ public class MyWorld {
 		projetilAguaCGT.setCollision(coliderProjectile);
 		projetilAguaCGT.setInterval(3);
 
-		CGTSpriteSheet css = new CGTSpriteSheet(Gdx.files.internal("data/CGTProjectile/SpriteSheet_agua.png"));
+		CGTSpriteSheet css = new CGTSpriteSheet(Gdx.files.internal("data/CGTProjectile/SpriteSheet_agua.png").file());
 		css.setRows(2);
 		css.setColumns(2);
 		projetilAguaCGT.setSpriteSheet(css);
 		projetilAguaCGT.setAmmo(4);
 
 		//Action dos projectiles
-		ActionMove m = ActionCreator.getInstance().newActionMove(projetilAguaCGT);
+		CGTAnimation m = new CGTAnimation(projetilAguaCGT);
 		m.setSpriteLine(1);
 		m.setFlip(true);
 		m.addStatePolicy(StatePolicy.LOOKLEFT);
@@ -425,7 +425,7 @@ public class MyWorld {
 		m.setSpriteVelocity(0.08f);
 		m.setAnimationPolicy(AnimationPolicy.LOOP);
 
-		ActionMove a = ActionCreator.getInstance().newActionMove(projetilAguaCGT);
+		CGTAnimation a = new CGTAnimation(projetilAguaCGT);
 		a.setSpriteLine(1);
 		a.setFlip(false);
 		a.addStatePolicy(StatePolicy.LOOKRIGHT);
@@ -434,7 +434,7 @@ public class MyWorld {
 		a.setSpriteVelocity(0.08f);
 		a.setAnimationPolicy(AnimationPolicy.LOOP);
 
-		ActionMove down = ActionCreator.getInstance().newActionMove(projetilAguaCGT);
+		CGTAnimation down = new CGTAnimation(projetilAguaCGT);
 		down.setSpriteLine(2);
 		down.setFlip(false);
 		down.addStatePolicy(StatePolicy.LOOKDOWN);
@@ -443,7 +443,7 @@ public class MyWorld {
 		down.setSpriteVelocity(0.08f);
 		down.setAnimationPolicy(AnimationPolicy.LOOP);
 
-		ActionMove up = ActionCreator.getInstance().newActionMove(projetilAguaCGT);
+		CGTAnimation up = new CGTAnimation(projetilAguaCGT);
 		up.setSpriteLine(2);
 		up.setFlip(true);
 		up.addStatePolicy(StatePolicy.LOOKUP);
@@ -451,6 +451,10 @@ public class MyWorld {
 		up.setNumberOfColumns(2);
 		up.setSpriteVelocity(0.08f);
 		up.setAnimationPolicy(AnimationPolicy.LOOP);
+		projetilAguaCGT.getAnimarions().add(up);
+		projetilAguaCGT.getAnimarions().add(down);
+		projetilAguaCGT.getAnimarions().add(a);
+		projetilAguaCGT.getAnimarions().add(m);
 
 
 		//Projectile orientation

@@ -6,10 +6,7 @@ import java.util.Map;
 import cgt.CGTGameWorld;
 import cgt.core.CGTActor;
 import cgt.policy.*;
-import cgt.util.CGTAnimation;
-
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
+import cgt.util.AnimationHandle;
 
 /**
  * Controla os movimentos do mundo e dos personagens
@@ -19,32 +16,33 @@ import com.badlogic.gdx.utils.Timer.Task;
 public class WorldController {
 
 	//Possiveis movimentos do personagem
-//	enum Keys {
-//		LEFT, RIGHT, JUMP, FIRE, UP, DOWN, DAMAGE
-//	};
+	enum Keys {
+		LEFT, RIGHT, JUMP, FIRE, UP, DOWN, DAMAGE
+	};
 
 	private CGTGameWorld world;
 	private CGTActor personagem;
-	private CGTAnimation actorAnimation;
+	private AnimationHandle actorAnimation;
 	private WorldRenderer renderer;
-	static Map<String, Boolean> keys = new HashMap<String, Boolean>();
+	static Map<Keys, Boolean> keys = new HashMap<Keys, Boolean>();
 	static {
-		for (ActionMovePolicy a : ActionMovePolicy.values()) {
-			keys.put(a.name(), false);
-		}
-		for (ActionFirePolicy a : ActionFirePolicy.values()) {
-			keys.put(a.name(), false);
-		}
-		for (ActionJumpPolicy a : ActionJumpPolicy.values()) {
-			keys.put(a.name(), false);
-		}
-//		keys.put(Keys.RIGHT, false);
-//
-//		keys.put(Keys.UP, false);
-//		keys.put(Keys.DOWN, false);
-//
-//		keys.put(Keys.JUMP, false);
-//		keys.put(Keys.FIRE, false);
+//		for (ActionMovePolicy a : ActionMovePolicy.values()) {
+//			keys.put(a.name(), false);
+//		}
+//		for (ActionFirePolicy a : ActionFirePolicy.values()) {
+//			keys.put(a.name(), false);
+//		}
+//		for (ActionJumpPolicy a : ActionJumpPolicy.values()) {
+//			keys.put(a.name(), false);
+//		}
+		keys.put(Keys.RIGHT, false);
+		keys.put(Keys.LEFT, false);
+
+		keys.put(Keys.UP, false);
+		keys.put(Keys.DOWN, false);
+
+		keys.put(Keys.JUMP, false);
+		keys.put(Keys.FIRE, false);
 	};
 
 	// Este construtor recebe o mundo como parametro
