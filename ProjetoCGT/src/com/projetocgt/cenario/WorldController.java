@@ -60,7 +60,7 @@ public class WorldController {
 	// Funciona na descida do botao
 	public void leftPressed() {
 		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
-		releaseAllDirectionKeys();
+		//releaseAllDirectionKeys();
 		//}
 		keys.get(keys.put(Keys.LEFT, true));
 		//Habilita o loop da animacao
@@ -69,7 +69,7 @@ public class WorldController {
 
 	public void rightPressed() {
 		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
-		releaseAllDirectionKeys();
+		//releaseAllDirectionKeys();
 		//}
 		keys.get(keys.put(Keys.RIGHT, true));
 		//Habilita o loop da animacao
@@ -78,23 +78,18 @@ public class WorldController {
 
 	public void upPressed() {
 		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
-		releaseAllDirectionKeys();
+		//releaseAllDirectionKeys();
 		//}
 		keys.get(keys.put(Keys.UP, true));
 		//Habilita o loop da animacao
 		actorAnimation.setLoop(true);
 	}
 
-	private void releaseAllDirectionKeys() {
-		keys.put(Keys.LEFT, false);
-		keys.put(Keys.RIGHT, false);
-		keys.put(Keys.UP, false);
-		keys.put(Keys.DOWN, false);
-	}
+	
 
 	public void downPressed() {
 		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
-		releaseAllDirectionKeys();
+		//releaseAllDirectionKeys();
 		//}
 		keys.get(keys.put(Keys.DOWN, true));
 		//Habilita o loop da animacao
@@ -130,6 +125,13 @@ public class WorldController {
 
 	}
 
+	private void releaseAllDirectionKeys() {
+		keys.put(Keys.LEFT, false);
+		keys.put(Keys.RIGHT, false);
+		keys.put(Keys.UP, false);
+		keys.put(Keys.DOWN, false);
+	}
+	
 	// Funciona na subida do botao
 	public void leftReleased() {
 		keys.get(keys.put(Keys.LEFT, false));
@@ -195,7 +197,12 @@ public class WorldController {
 	 */
 	public void update(float delta) {
 		// Processa a entrada de algum parametro
-		processInput();
+		if(!personagem.isCommands()){
+			processInput();	
+		}else{
+			//personagem.getVelocity().y = 0;
+			releaseAllDirectionKeys();
+		}
 		personagem.update(delta);
 
 		for (int i=0; i<world.getOpposites().size(); i++) {
@@ -218,92 +225,57 @@ public class WorldController {
 	private void processInput() {
 		//movimento();
 		if (keys.get(Keys.UP)) {
-
 			//Verifica se o personagem pode andar
-			if (renderer.isColisao()) {
-				personagem.setState(StatePolicy.LOOKUP);
-			}else {
-				personagem.setState(StatePolicy.LOOKUP);
-				if( (personagem.getPosition().y + personagem.getBounds().height) < renderer.getWorld().getBackground().getHeight())
-					personagem.getVelocity().y = personagem.getSpeed();
-				else
-					personagem.getVelocity().y = 0;
-			}
+			personagem.setState(StatePolicy.LOOKUP);
+			if( (personagem.getPosition().y + personagem.getBounds().height) < renderer.getWorld().getBackground().getHeight())
+				personagem.getVelocity().y = personagem.getSpeed();
+			else
+				personagem.getVelocity().y = 0;
 		}
 
-
-			if (keys.get(Keys.DOWN)) {
-				//if(renderer.isColisaoEnemy())
-				//actionDamegeEnemyDown();
-				// Verifica se o personagem pode andar
-
-
-				if (renderer.isColisao()) {
-					//personagem.setPosition(renderer.getPosAnterior());
-					personagem.setState(StatePolicy.LOOKDOWN);
-				} else {
-
-
-					// O personagem esta olhando para a baixo
-					personagem.setState(StatePolicy.LOOKDOWN);
-					if(personagem.getPosition().y > 0)
-						personagem.getVelocity().y = -personagem.getSpeed();
-					else
-						personagem.getVelocity().y = 0;
-				}
+		if (keys.get(Keys.DOWN)) {
+			// O personagem esta olhando para a baixo
+			personagem.setState(StatePolicy.LOOKDOWN);
+			if(personagem.getPosition().y > 0)
+				personagem.getVelocity().y = -personagem.getSpeed();
+			else
+				personagem.getVelocity().y = 0;
 			}
 
-			if (keys.get(Keys.LEFT)) {
-
-				// Verifica se o personagem pode andar
-				if (renderer.isColisao()) {
-					//personagem.setPosition(renderer.getPosAnterior());
-					personagem.setState(StatePolicy.LOOKLEFT);
-					//actionDamegeEnemyLeft();
-				} else {
-
-					personagem.setState(StatePolicy.LOOKLEFT);
-					if(personagem.getPosition().x > 0)
-						personagem.getVelocity().x = -personagem.getSpeed();
-					else
-						personagem.getVelocity().x = 0;
-				}
-			}
-
-				if (keys.get(Keys.RIGHT)) {
-					// Verifica se o personagem pode andar
-					if (renderer.isColisao()) {
-						//personagem.setPosition(renderer.getPosAnterior());
-						personagem.setState(StatePolicy.LOOKRIGHT);
-						//actionDamegeEnemyRight();
-					} else {
-
-						personagem.setState(StatePolicy.LOOKRIGHT);
-						if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackground().getWidth())
-							personagem.getVelocity().x = personagem.getSpeed();
-						else
-							personagem.getVelocity().x = 0;
-					}	
-				}
-
-				// Verifica se ambos ou nenhum dos sentidos sao presionados
-				if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT))
-						|| (!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) {
-					//personagem.setState(State.IDLE);
-					// acceleration is 0 on the x
-					// horizontal speed is 0
-					personagem.getVelocity().x = 0;
-				}
-				// Verifica se ambos ou nenhum dos sentidos sao presionados
-				if ((keys.get(Keys.UP) && keys.get(Keys.DOWN))
-						|| (!keys.get(Keys.UP) && !(keys.get(Keys.DOWN)))) {
-					//personagem.setState(State.IDLE);
-					// acceleration is 0 on the y
-					//personagem.getAcceleration().y = 0;
-					// Vertival speed is 0
-					personagem.getVelocity().y = 0;
-				}
-			}
+		if (keys.get(Keys.LEFT)) {
+			personagem.setState(StatePolicy.LOOKLEFT);
+			if(personagem.getPosition().x > 0)
+				personagem.getVelocity().x = -personagem.getSpeed();
+			else
+				personagem.getVelocity().x = 0;
+				
+		}
+			
+		if (keys.get(Keys.RIGHT)) {
+			personagem.setState(StatePolicy.LOOKRIGHT);
+			if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackground().getWidth())
+				personagem.getVelocity().x = personagem.getSpeed();
+			else
+				personagem.getVelocity().x = 0;			
+		}
+		// Verifica se ambos ou nenhum dos sentidos sao presionados
+		if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT))
+				|| (!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) {
+			//personagem.setState(State.IDLE);
+			// acceleration is 0 on the x
+			// horizontal speed is 0
+			personagem.getVelocity().x = 0;
+		}
+		// Verifica se ambos ou nenhum dos sentidos sao presionados
+		if ((keys.get(Keys.UP) && keys.get(Keys.DOWN))
+				|| (!keys.get(Keys.UP) && !(keys.get(Keys.DOWN)))) {
+			//personagem.setState(State.IDLE);
+			// acceleration is 0 on the y
+			//personagem.getAcceleration().y = 0;
+			// Vertival speed is 0
+			personagem.getVelocity().y = 0;
+		}
+	}
 
 
 		public void actionDamegeEnemyDown(){

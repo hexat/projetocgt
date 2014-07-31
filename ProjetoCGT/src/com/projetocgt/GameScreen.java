@@ -1,6 +1,7 @@
 package com.projetocgt;
 
 import cgt.CGTGameWorld;
+import cgt.policy.StatePolicy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -15,7 +16,7 @@ import com.projetocgt.cenario.WorldRenderer;
 
 public class GameScreen implements Screen, InputProcessor {
 	
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 	
 	private CGTGameWorld world;
 	private WorldRenderer renderer;
@@ -132,22 +133,21 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		
-		if (keycode == Keys.LEFT){
-			
-			controller.leftPressed();
-		}
-		if (keycode == Keys.RIGHT){
-			controller.rightPressed();
-		}
-		if (keycode == Keys.UP){
-			controller.upPressed();
-		}
-		if (keycode == Keys.DOWN){
-			controller.downPressed();
-		}
-		if (keycode == Keys.A){
-			flagTouch=true;
-			controller.firePressedTouch();
+			if (keycode == Keys.LEFT ){
+				controller.leftPressed();
+			}
+			if (keycode == Keys.RIGHT){
+				controller.rightPressed();
+			}
+			if (keycode == Keys.UP){
+				controller.upPressed();
+			}
+			if (keycode == Keys.DOWN){
+				controller.downPressed();
+			}
+			if (keycode == Keys.A){
+				flagTouch=true;
+				controller.firePressedTouch();
 		}
 		return true;
 	}

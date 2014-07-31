@@ -71,10 +71,10 @@ public class MyWorld {
 		personagemCGTActor.setBounds(tamanhoPersonagem);
 
 		personagemCGTActor.setLife(4);
-		personagemCGTActor.setSpeed(180);
+		personagemCGTActor.setSpeed(280);
 
-		System.out.println(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro.png").exists());
-		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro.png").file()));
+		System.out.println(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro2.png").exists());
+		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro2.png").file()));
 		personagemCGTActor.getSpriteSheet().setRows(5);
 		personagemCGTActor.getSpriteSheet().setColumns(3);
 
@@ -94,7 +94,7 @@ public class MyWorld {
 		moveLEft.addStatePolicy(StatePolicy.LOOKLEFT);
 		moveLEft.setNumberOfColumns(3);
 		//moveLEft.addInput(InputPolicy.ACEL_LEFT);
-		moveLEft.setSpriteVelocity(0.08f);
+		moveLEft.setSpriteVelocity(0.2f);
 		moveLEft.setFlip(true);
 		moveLEft.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
 
@@ -121,11 +121,21 @@ public class MyWorld {
 		//moveDown.addInput(InputPolicy.ACEL_DOWN);
 		moveDown.setSpriteVelocity(0.2f);
 		moveDown.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		
+		CGTAnimation animationDamege = new CGTAnimation(personagemCGTActor);
+		animationDamege.setSpriteLine(5);
+		animationDamege.addStatePolicy(StatePolicy.DAMAGE);
+		animationDamege.setNumberOfColumns(1);
+		//moveDown.addInput(InputPolicy.ACEL_DOWN);
+		animationDamege.setSpriteVelocity(0.2f);
+		animationDamege.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
 
+		personagemCGTActor.getAnimarions().add(animationDamege);
 		personagemCGTActor.getAnimarions().add(moveDown);
 		personagemCGTActor.getAnimarions().add(moveLEft);
 		personagemCGTActor.getAnimarions().add(moveRight);
 		personagemCGTActor.getAnimarions().add(moveUp);
+		
 		
 		//Adicionando o personagem na libGDX
 		//personagemActorLIB = new ActorCGT(personagemCGTActor);
@@ -408,7 +418,7 @@ public class MyWorld {
 		
 		//Vector2 positionRelative = new Vector2(0,0);
 		projetilAguaCGT.setCollision(coliderProjectile);
-		projetilAguaCGT.setInterval(3);
+		projetilAguaCGT.setInterval(1);
 
 		CGTSpriteSheet css = new CGTSpriteSheet(Gdx.files.internal("data/CGTProjectile/SpriteSheet_agua.png").file());
 		css.setRows(2);

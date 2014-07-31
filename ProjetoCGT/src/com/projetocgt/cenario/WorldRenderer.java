@@ -346,11 +346,9 @@ public class WorldRenderer {
 
 	void damageActorCGT(CGTActor personagem) {
 		for (int i = 0; i < world.getEnemies().size(); i++) {
-			if (world.getEnemies().get(i).getCollision()
-					.overlaps(personagem.getCollision())) {
+			if (world.getEnemies().get(i).getCollision().overlaps(personagem.getCollision())) {
 				animationDamage(personagem, world.getEnemies().get(i));
 				System.out.println(personagem.getLife());
-
 				if (personagem.getLife() < 0) {
 					System.out.println("Game Over");
 					// TODO musica do game over
@@ -610,6 +608,7 @@ public class WorldRenderer {
 	public boolean isColision() {
 		// colisao = false;
 		damageActorCGT(personagem);
+		System.out.println(personagem.getState().name());
 		// Verifica se colidiu com algum Opposite
 		for (int i = 0; i < world.getOpposites().size(); i++) {
 			if (world.getOpposites().get(i).getCollision()
@@ -620,11 +619,11 @@ public class WorldRenderer {
 
 		// Verifica se colidiu com algum Enemy
 		for (int i = 0; i < world.getEnemies().size(); i++) {
-			if (world.getEnemies().get(i).getCollision()
-					.overlaps(personagem.getCollision())
+			if (world.getEnemies().get(i).getCollision().overlaps(personagem.getCollision())
 					&& world.getEnemies().get(i).isBlock()) {
 				colisaoEnemy = true;
-				// animationDamege(personagem);
+				
+				//animationDamege(personagem);
 				colisao = true;
 			}
 		}
@@ -660,15 +659,24 @@ public class WorldRenderer {
 	public void animationDamage(CGTActor boy, CGTEnemy enemy) {
 
 		if (!personagem.isInvincible()) {
+			
 			personagem.setInvincible(true);
+//			final StatePolicy state = personagem.getState();
 			personagem.setState(StatePolicy.DAMAGE);
+			personagem.setCommands(true);
+			Timer.schedule(new Task() {
+				@Override
+				public void run() {
+					personagem.setCommands(false);
+				}
+			}, 0.05f);
+			
 			personagem.setLife(personagem.getLife() - enemy.getDamage());
 			// personagem.getSoundDamage().play();
 			Timer.schedule(new Task() {
 				@Override
 				public void run() {
 					personagem.setInvincible(false);
-
 				}
 			}, enemy.getInterval());
 		}
