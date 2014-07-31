@@ -393,9 +393,10 @@ public class MyWorld {
 		hidrate.setCollision(new Rectangle(0,0,50,50));
 		
 		hidrate.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTBonus/SpriteSheet_tubo.png").file()));
-		
+		CGTAnimation aniHidrante = new CGTAnimation(hidrate);
+		hidrate.getAnimarions().add(aniHidrante);
 		//hidrate.setTexture(new Texture("data/CGTBonus/SpriteSheet_tubo.png"));
-//		world.getBonus().add(hidrate);
+		world.getBonus().add(hidrate);
 
 		CGTProjectile projetilAguaCGT = new CGTProjectile();
 		
@@ -468,7 +469,7 @@ public class MyWorld {
 		projetilAguaCGT.getOrientations().add(direcaoRight);
 
 		ProjectileOrientation direcaoLeft = new ProjectileOrientation();
-		direcaoLeft.setPositionRelativeToGameObject(new Vector2(-20f, 15f));
+		direcaoLeft.setPositionRelativeToGameObject(new Vector2(-13f, 15f));
 		direcaoLeft.setSpriteLine(1);
 		direcaoLeft.setSpriteNumberOfColumns(2);
 		direcaoLeft.setSpriteVelocity(2);
@@ -477,7 +478,7 @@ public class MyWorld {
 		projetilAguaCGT.getOrientations().add(direcaoLeft);
 
 		ProjectileOrientation direcaoUp = new ProjectileOrientation();
-		direcaoUp.setPositionRelativeToGameObject(new Vector2(40f, 80f));
+		direcaoUp.setPositionRelativeToGameObject(new Vector2(30f, 60f));
 		direcaoUp.setSpriteLine(2);
 		direcaoUp.setSpriteNumberOfColumns(2);
 		direcaoUp.setSpriteVelocity(2);
@@ -486,7 +487,7 @@ public class MyWorld {
 		projetilAguaCGT.getOrientations().add(direcaoUp);
 
 		ProjectileOrientation direcaoDown = new ProjectileOrientation();
-		direcaoDown.setPositionRelativeToGameObject(new Vector2(40f, -10f));
+		direcaoDown.setPositionRelativeToGameObject(new Vector2(25f, -20f));
 		direcaoDown.setSpriteLine(2);
 		direcaoDown.setSpriteNumberOfColumns(2);
 		direcaoDown.setSpriteVelocity(2);
@@ -498,62 +499,4 @@ public class MyWorld {
 		personagemCGTActor.addProjectile(projetilAguaCGT);
 		world.setActor(personagemCGTActor);
 	}
-//
-//	/**
-//	 * @return the backGround
-//	 */
-//	public Texture getBackGround() {
-//		return backGround;
-//	}
-//	/**
-//	 * @param backGround the backGround to set
-//	 */
-//	public void setBackGround(Texture backGround) {
-//		this.backGround = backGround;
-//	}
-//
-//	/**
-//	 * @return the listaDeOpposite
-//	 */
-//	public ArrayList<CGTOpposite> getListaDeOpposite() {
-//		return listaDeOpposite;
-//	}
-//
-//	/**
-//	 * @param listaDeOpposite the listaDeOpposite to set
-//	 */
-//	public void setListaDeOpposite(ArrayList<CGTOpposite> listaDeOpposite) {
-//		this.listaDeOpposite = listaDeOpposite;
-//	}
-//	/**
-//	 * @return the personagem
-//	 */
-//	public CGTActor getPersonagem() {
-//		return personagemActorLIB;
-//	}
-//
-//	/**
-//	 * @return the listaDeBonus
-//	 */
-//	public ArrayList<CGTBonus> getListaDeBonus() {
-//		return listaDeBonus;
-//	}
-//	/**
-//	 * @param listaDeBonus the listaDeBonus to set
-//	 */
-//	public void setListaDeBonus(ArrayList<CGTBonus> listaDeBonus) {
-//		this.listaDeBonus = listaDeBonus;
-//	}
-//	/**
-//	 * @return the listaDeEnemy
-//	 */
-//	public ArrayList<CGTEnemy> getListaDeEnemy() {
-//		return listaDeEnemy;
-//	}
-//	/**
-//	 * @param listaDeEnemy the listaDeEnemy to set
-//	 */
-//	public void setListaDeEnemy(ArrayList<CGTEnemy> listaDeEnemy) {
-//		this.listaDeEnemy = listaDeEnemy;
-//	}
 }
