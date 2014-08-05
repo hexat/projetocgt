@@ -3,8 +3,12 @@ package com.projetocgt.cenario;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
+
 import cgt.CGTGameWorld;
 import cgt.core.CGTActor;
+import cgt.core.CGTProjectile;
 import cgt.policy.*;
 import cgt.util.AnimationHandle;
 
@@ -15,6 +19,7 @@ import cgt.util.AnimationHandle;
  */
 public class WorldController {
 
+	private boolean ammoCheck=true;
 	//Possiveis movimentos do personagem
 	enum Keys {
 		LEFT, RIGHT, JUMP, FIRE, UP, DOWN, DAMAGE
@@ -119,15 +124,30 @@ public class WorldController {
 			//if(world.getListaDeProjectili().get(i).getActionFire().getInputs().get(0) == InputPolicy.GO_TAP){
 				//world.getPersonagem().getListaDeProjectiles().get(i).setPosition(personagem.getPosition());
 				world.getActor().setFireDefault(0);
+				ammoDowner(world.getActor().getProjectiles().get(0));
+				
 				//world.getActor().getProjectiles().get(i).setState(personagem.getState());
 //				world.getActor().getProjectiles().get(i).setFlagAtivar(true);	
 			//world.getPersonagem().getListaDeProjectiles().get(i).setPosition(personagem.getPosition());
-			world.getActor().setFireDefault(0);
+			//world.getActor().setFireDefault(0);
 			//world.getActor().getProjectiles().get(i).setState(personagem.getState());
 			//				world.getActor().getProjectiles().get(i).setFlagAtivar(true);	
 			//}
 		}
 
+	}
+	
+	public void ammoDowner(final CGTProjectile projectile){
+		if(ammoCheck){
+			ammoCheck=false;
+			Timer.schedule(new Task() {
+				@Override
+				public void run() {
+					projectile.ammoDown();
+					ammoCheck=true;
+				}
+			}, projectile.getInterval());
+		}
 	}
 
 	// Funciona na subida do botao
@@ -215,6 +235,7 @@ public class WorldController {
 		}
 	}
 
+	
 	private void processInput() {
 		//movimento();
 		if (keys.get(Keys.UP)) {

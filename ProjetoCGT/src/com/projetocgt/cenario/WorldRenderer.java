@@ -8,6 +8,7 @@ import cgt.core.CGTActor;
 import cgt.core.CGTEnemy;
 import cgt.core.CGTProjectile;
 import cgt.policy.*;
+import cgt.util.CGTButton;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -17,6 +18,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
@@ -42,6 +45,10 @@ public class WorldRenderer {
 	/** for debug rendering **/
 	ShapeRenderer debugRenderer = new ShapeRenderer();
 	private SpriteBatch spriteBatch;
+	public SpriteBatch getSpriteBatch() {
+		return spriteBatch;
+	}
+
 	private boolean flagDebug;
 	private int width;
 	private int height;
@@ -52,7 +59,8 @@ public class WorldRenderer {
 		this.width = Gdx.graphics.getWidth();
 		this.height = Gdx.graphics.getHeight();
 		this.camera = new OrthographicCamera(width, height);
-
+	
+		
 		// this.camera.position.set(width/2, height/2 , 0);
 		this.camera.position.set(world.getActor().getPosition().x, world
 				.getActor().getPosition().y, 0);
@@ -84,10 +92,12 @@ public class WorldRenderer {
 		// camera acompanhar
 		// o personagem
 		spriteBatch.begin();
+		
 		drawGameObjects();
 		drawCGTActor();
-		System.out.println(personagem.getLife());
-		System.out.println(personagem.isInvincible());
+		
+		//System.out.println(personagem.getLife());
+		//System.out.println(personagem.isInvincible());
 		spriteBatch.end();
 		if (flagDebug)
 			drawDebug();
@@ -95,7 +105,7 @@ public class WorldRenderer {
 		// Atualiza a tela
 
 	}
-
+	
 	public void verifyWin(WinPolicy policy){
 		if(policy.equals(WinPolicy.KILL_ENEMIES)){
 			for (int j = 0; j < world.getEnemies().size(); j++) {
@@ -134,6 +144,7 @@ public class WorldRenderer {
 		// world.getActor().getProjectiles().get(i).getTexture()
 		// .dispose();
 		// }
+		
 		spriteBatch.dispose();
 	}
 
@@ -142,7 +153,9 @@ public class WorldRenderer {
 	 * CGTProjectle
 	 */
 	private void drawGameObjects() {
+		
 		spriteBatch.draw(world.getBackground(), 0, 0);
+		
 		// Desenha todos os Opposite
 		for (int i = 0; i < world.getOpposites().size(); i++) {
 			if (world.getOpposites().get(i).getLife() >= 0)

@@ -10,5 +10,6 @@
 	<classpathentry exported="true" kind="lib" path="/ProjetoCGT/libs/gdx.jar" sourcepath="/ProjetoCGT/libs/gdx-sources.jar"/>
 	<classpathentry exported="true" kind="lib" path="/ProjetoCGT/libs/tween-engine-api.jar" sourcepath="/ProjetoCGT/libs/tween-engine-api-sources.jar"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry kind="lib" path="libs/CGT.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
