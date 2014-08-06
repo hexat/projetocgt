@@ -96,8 +96,8 @@ public class WorldRenderer {
 		drawGameObjects();
 		drawCGTActor();
 		
-		//System.out.println(personagem.getLife());
-		//System.out.println(personagem.isInvincible());
+		System.out.println(personagem.getLife());
+		System.out.println(personagem.isInvincible());
 		spriteBatch.end();
 		if (flagDebug)
 			drawDebug();

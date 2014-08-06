@@ -424,7 +424,7 @@ public class MyWorld {
 		css.setRows(2);
 		css.setColumns(2);
 		projetilAguaCGT.setSpriteSheet(css);
-		projetilAguaCGT.setAmmo(3);
+		projetilAguaCGT.setAmmo(100);
 
 		//Action dos projectiles
 		CGTAnimation m = new CGTAnimation(projetilAguaCGT);
@@ -516,7 +516,7 @@ public class MyWorld {
 		Texture textureDown = new Texture("data/buttons/base.png");
 		buttonPad.setTextureDown(textureDown);
 		
-		buttonPad.setBounds(0, 0, textureUp.getWidth(), textureUp.getHeight());
+		buttonPad.setBounds(0, 0, textureUp.getWidth()/3, textureUp.getHeight()/3);
 		
 		CGTButton button = new CGTButton();
 		button.setInput(InputPolicy.BTN_UP);
@@ -527,7 +527,7 @@ public class MyWorld {
 		textureDown = new Texture("data/buttons/bt_up_press.png");
 		button.setTextureDown(textureDown);
 		
-		button.setBounds(137, 184.7f, textureUp.getWidth(), textureUp.getHeight());
+		button.setBounds(137/3, 184.7f/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 		
 		
 		CGTButton buttonDown = new CGTButton();
@@ -538,7 +538,7 @@ public class MyWorld {
 		textureDown = new Texture("data/buttons/bt_down_press.png");
 		buttonDown.setTextureDown(textureDown);
 		
-		buttonDown.setBounds(137, 36, textureUp.getWidth(), textureUp.getHeight());
+		buttonDown.setBounds(137/3, 36/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 		
 		
 		CGTButton buttonLeft = new CGTButton();
@@ -550,7 +550,7 @@ public class MyWorld {
 		textureDown = new Texture("data/buttons/bt_left_press.png");
 		buttonLeft.setTextureDown(textureDown);
 		
-		buttonLeft.setBounds(64, 126, textureUp.getWidth(), textureUp.getHeight());
+		buttonLeft.setBounds(64/3, 126/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 		
 		
 		CGTButton buttonRight = new CGTButton();
@@ -561,7 +561,7 @@ public class MyWorld {
 		textureDown = new Texture("data/buttons/bt_right_press.png");
 		buttonRight.setTextureDown(textureDown);
 		
-		buttonRight.setBounds(183, 126, textureUp.getWidth(), textureUp.getHeight());
+		buttonRight.setBounds(183/3, 126/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 		
 		CGTButton button1 = new CGTButton();
 		button1.setInput(InputPolicy.BTN_1);
@@ -571,7 +571,7 @@ public class MyWorld {
 		textureDown = new Texture("data/buttons/bt_1_press.png");
 		button1.setTextureDown(textureDown);
 		
-		button1.setBounds(914, 10, textureUp.getWidth(), textureUp.getHeight());
+		button1.setBounds(914/2.5f, 200/2, textureUp.getWidth()/2, textureUp.getHeight()/2);
 		
 		
 		/*CGTAnimation moveButton = new CGTAnimation(button);

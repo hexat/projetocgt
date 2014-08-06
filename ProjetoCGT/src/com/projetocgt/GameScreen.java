@@ -1,25 +1,21 @@
 package com.projetocgt;
 
-import java.awt.event.InputEvent;
+
 
 import cgt.CGTGameWorld;
-import cgt.policy.ActionMovePolicy;
-import cgt.policy.InputPolicy;
+import cgt.policy.*;
 import cgt.util.CGTButton;
 
-import com.badlogic.gdx.ApplicationListener;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.projetocgt.cenario.MyWorld;
@@ -50,12 +46,11 @@ public class GameScreen extends Stage implements Screen, InputProcessor{
 	public void buttonHandler(){
 		for(CGTButton button : world.getButtons()){
 			if(button.isActive()){
-				System.out.println("activated");
 				pressHandler(button);
 			}
-			else{
+			else if(button.isReleased()){
 				releaseHandler(button);
-				System.out.println("unactivated");
+				button.setReleased(false);
 			}
 
 		}
@@ -125,6 +120,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor{
 		controller.update(delta);
 		renderer.render();
 		buttonHandler();
+		this.act();
 		getSpriteBatch().begin();
 		this.draw();
 		getSpriteBatch().end();
@@ -156,7 +152,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor{
 		music.setLooping(true);
 		world = new MyWorld().getCGT();
 		renderer = new WorldRenderer(world, DEBUG);
-		world.getButtons().get(0).setTouchable(Touchable.enabled);
 		for(Actor button : world.getButtons()){
 			this.addActor(button);
 		}
