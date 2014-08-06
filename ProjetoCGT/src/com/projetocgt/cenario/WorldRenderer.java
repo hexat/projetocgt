@@ -661,15 +661,17 @@ public class WorldRenderer {
 		if (!personagem.isInvincible()) {
 			
 			personagem.setInvincible(true);
-//			final StatePolicy state = personagem.getState();
+			//final StatePolicy state = personagem.getState();
 			personagem.setState(StatePolicy.DAMAGE);
 			personagem.setCommands(true);
+			
 			Timer.schedule(new Task() {
 				@Override
 				public void run() {
 					personagem.setCommands(false);
+					//personagem.setState(state);
 				}
-			}, 0.05f);
+			}, 0.04f);
 			
 			personagem.setLife(personagem.getLife() - enemy.getDamage());
 			// personagem.getSoundDamage().play();

@@ -60,7 +60,7 @@ public class WorldController {
 	// Funciona na descida do botao
 	public void leftPressed() {
 		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
-		//releaseAllDirectionKeys();
+		releaseAllDirectionKeys();
 		//}
 		keys.get(keys.put(Keys.LEFT, true));
 		//Habilita o loop da animacao
@@ -69,7 +69,7 @@ public class WorldController {
 
 	public void rightPressed() {
 		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
-		//releaseAllDirectionKeys();
+		releaseAllDirectionKeys();
 		//}
 		keys.get(keys.put(Keys.RIGHT, true));
 		//Habilita o loop da animacao
@@ -78,7 +78,7 @@ public class WorldController {
 
 	public void upPressed() {
 		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
-		//releaseAllDirectionKeys();
+		releaseAllDirectionKeys();
 		//}
 		keys.get(keys.put(Keys.UP, true));
 		//Habilita o loop da animacao
@@ -89,7 +89,7 @@ public class WorldController {
 
 	public void downPressed() {
 		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
-		//releaseAllDirectionKeys();
+		releaseAllDirectionKeys();
 		//}
 		keys.get(keys.put(Keys.DOWN, true));
 		//Habilita o loop da animacao
