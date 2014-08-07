@@ -10,20 +10,30 @@ import cgt.core.CGTBonus;
 import cgt.core.CGTEnemy;
 import cgt.core.CGTOpposite;
 import cgt.core.CGTProjectile;
+import cgt.policy.ActionFirePolicy;
+import cgt.policy.ActionMovePolicy;
 import cgt.policy.AnimationPolicy;
 import cgt.policy.DirectionPolicy;
 import cgt.policy.FadePolicy;
+import cgt.policy.InputPolicy;
 import cgt.policy.MovementPolicy;
 import cgt.policy.StatePolicy;
 import cgt.util.CGTAnimation;
+import cgt.util.CGTButton;
 import cgt.util.CGTSpriteSheet;
 import cgt.util.ProjectileOrientation;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
  * Responsavel por construir o jogo
@@ -55,7 +65,7 @@ public class MyWorld {
 	private void createWorld() {
 		world = new CGTGameWorld();
 		
-		world = new CGTGameWorld();
+		//world = new CGTGameWorld();
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
 		world.setBackground(backGround);
 		//backGround = new CGTTexture(Gdx.files.internal("data/Cenario/pista1280.png"));
@@ -424,7 +434,7 @@ public class MyWorld {
 		css.setRows(2);
 		css.setColumns(2);
 		projetilAguaCGT.setSpriteSheet(css);
-		projetilAguaCGT.setAmmo(4);
+		projetilAguaCGT.setAmmo(100);
 
 		//Action dos projectiles
 		CGTAnimation m = new CGTAnimation(projetilAguaCGT);
@@ -508,5 +518,102 @@ public class MyWorld {
 		
 		personagemCGTActor.addProjectile(projetilAguaCGT);
 		world.setActor(personagemCGTActor);
+		
+		CGTButton buttonPad = new CGTButton();
+		
+		Texture textureUp = new Texture("data/buttons/base.png");
+		buttonPad.setTextureUp(textureUp);
+		Texture textureDown = new Texture("data/buttons/base.png");
+		buttonPad.setTextureDown(textureDown);
+		
+		buttonPad.setBounds(0, 0, textureUp.getWidth()/3, textureUp.getHeight()/3);
+		
+		CGTButton button = new CGTButton();
+		button.setInput(InputPolicy.BTN_UP);
+		
+		textureUp = new Texture("data/buttons/bt_up_up.png");
+		button.setTextureUp(textureUp);
+		
+		textureDown = new Texture("data/buttons/bt_up_press.png");
+		button.setTextureDown(textureDown);
+		
+		button.setBounds(137/3, 184.7f/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
+		
+		
+		CGTButton buttonDown = new CGTButton();
+		buttonDown.setInput(InputPolicy.BTN_DOWN);
+		
+		textureUp = new Texture("data/buttons/bt_down_up.png");
+		buttonDown.setTextureUp(textureUp);
+		textureDown = new Texture("data/buttons/bt_down_press.png");
+		buttonDown.setTextureDown(textureDown);
+		
+		buttonDown.setBounds(137/3, 36/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
+		
+		
+		CGTButton buttonLeft = new CGTButton();
+		buttonLeft.setInput(InputPolicy.BTN_LEFT);
+		
+		textureUp = new Texture("data/buttons/bt_left_up.png");
+		buttonLeft.setTextureUp(textureUp);
+		
+		textureDown = new Texture("data/buttons/bt_left_press.png");
+		buttonLeft.setTextureDown(textureDown);
+		
+		buttonLeft.setBounds(64/3, 126/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
+		
+		
+		CGTButton buttonRight = new CGTButton();
+		buttonRight.setInput(InputPolicy.BTN_RIGHT);
+		
+		textureUp = new Texture("data/buttons/bt_right_up.png");
+		buttonRight.setTextureUp(textureUp);
+		textureDown = new Texture("data/buttons/bt_right_press.png");
+		buttonRight.setTextureDown(textureDown);
+		
+		buttonRight.setBounds(183/3, 126/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
+		
+		CGTButton button1 = new CGTButton();
+		button1.setInput(InputPolicy.BTN_1);
+		
+		textureUp = new Texture("data/buttons/bt_agua_up.png");
+		button1.setTextureUp(textureUp);
+		textureDown = new Texture("data/buttons/bt_agua_down.png");
+		button1.setTextureDown(textureDown);
+		
+		button1.setBounds(914/2.5f, 200/2, textureUp.getWidth()/2, textureUp.getHeight()/2);
+		
+		
+		/*CGTAnimation moveButton = new CGTAnimation(button);
+		moveButton.setSpriteLine(1);
+		moveButton.addStatePolicy(StatePolicy.IDLEDOWN);
+		moveButton.setNumberOfColumns(2);
+		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
+		moveButton.setSpriteVelocity(0.08f);
+		moveButton.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		
+		CGTAnimation moveButton2 = new CGTAnimation(button);
+		moveButton2.setSpriteLine(2);
+		moveButton2.addStatePolicy(StatePolicy.IDLEUP);
+		moveButton2.setNumberOfColumns(2);
+		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
+		moveButton2.setSpriteVelocity(0.08f);
+		moveButton2.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		
+		button.getAnimarions().add(moveButton);
+		button.getAnimarions().add(moveButton2);
+		
+		
+		
+		//button.draw(batch, parentAlpha)
+		  */
+		world.addButton(buttonPad);
+		world.addButton(button);
+		world.addButton(buttonDown);
+		world.addButton(buttonLeft);
+		world.addButton(buttonRight);
+		world.addButton(button1);
+		 
 	}
+	
 }
