@@ -2,26 +2,13 @@ package com.projetocgt.cenario;
 
 
 import cgt.CGTGameWorld;
-import cgt.behaviors.Direction;
-import cgt.behaviors.Fade;
-import cgt.behaviors.Sine;
-import cgt.core.CGTActor;
-import cgt.core.CGTBonus;
-import cgt.core.CGTEnemy;
-import cgt.core.CGTOpposite;
-import cgt.core.CGTProjectile;
-import cgt.policy.ActionFirePolicy;
-import cgt.policy.ActionMovePolicy;
-import cgt.policy.AnimationPolicy;
-import cgt.policy.DirectionPolicy;
-import cgt.policy.FadePolicy;
-import cgt.policy.InputPolicy;
-import cgt.policy.MovementPolicy;
-import cgt.policy.StatePolicy;
-import cgt.util.CGTAnimation;
-import cgt.util.CGTButton;
-import cgt.util.CGTSpriteSheet;
-import cgt.util.ProjectileOrientation;
+import cgt.behaviors.*;
+import cgt.core.*;
+import cgt.lose.LifeDepleted;
+import cgt.lose.TargetTime;
+import cgt.policy.*;
+import cgt.util.*;
+import cgt.win.KillAllEnemies;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -80,7 +67,7 @@ public class MyWorld {
 		Rectangle tamanhoPersonagem = new Rectangle(0, 0, 80, 80);
 		personagemCGTActor.setBounds(tamanhoPersonagem);
 
-		personagemCGTActor.setLife(4);
+		personagemCGTActor.setLife(5);
 		personagemCGTActor.setSpeed(280);
 
 		System.out.println(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro2.png").exists());
@@ -526,6 +513,10 @@ public class MyWorld {
 		Texture textureDown = new Texture("data/buttons/base.png");
 		buttonPad.setTextureDown(textureDown);
 		
+		buttonPad.setRelativeX(0);
+		buttonPad.setRelativeY(0);
+		buttonPad.setRelativeWidth(0.29f);
+		buttonPad.setRelativeHeight(0.29f);
 		buttonPad.setBounds(0, 0, textureUp.getWidth()/3, textureUp.getHeight()/3);
 		
 		CGTButton button = new CGTButton();
@@ -537,6 +528,10 @@ public class MyWorld {
 		textureDown = new Texture("data/buttons/bt_up_press.png");
 		button.setTextureDown(textureDown);
 		
+		button.setRelativeX(0.095f);
+		button.setRelativeY(0.145f);
+		button.setRelativeWidth(0.1f);
+		button.setRelativeHeight(0.1f);
 		button.setBounds(137/3, 184.7f/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 		
 		
@@ -548,6 +543,10 @@ public class MyWorld {
 		textureDown = new Texture("data/buttons/bt_down_press.png");
 		buttonDown.setTextureDown(textureDown);
 		
+		buttonDown.setRelativeX(0.095f);
+		buttonDown.setRelativeY(0.028f);
+		buttonDown.setRelativeWidth(0.1f);
+		buttonDown.setRelativeHeight(0.1f);
 		buttonDown.setBounds(137/3, 36/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 		
 		
@@ -560,6 +559,10 @@ public class MyWorld {
 		textureDown = new Texture("data/buttons/bt_left_press.png");
 		buttonLeft.setTextureDown(textureDown);
 		
+		buttonLeft.setRelativeX(0.048f);
+		buttonLeft.setRelativeY(0.09f);
+		buttonLeft.setRelativeWidth(0.1f);
+		buttonLeft.setRelativeHeight(0.1f);
 		buttonLeft.setBounds(64/3, 126/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 		
 		
@@ -571,6 +574,10 @@ public class MyWorld {
 		textureDown = new Texture("data/buttons/bt_right_press.png");
 		buttonRight.setTextureDown(textureDown);
 		
+		buttonRight.setRelativeX(0.142f);
+		buttonRight.setRelativeY(0.09f);
+		buttonRight.setRelativeWidth(0.1f);
+		buttonRight.setRelativeHeight(0.1f);
 		buttonRight.setBounds(183/3, 126/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 		
 		CGTButton button1 = new CGTButton();
@@ -581,7 +588,11 @@ public class MyWorld {
 		textureDown = new Texture("data/buttons/bt_agua_down.png");
 		button1.setTextureDown(textureDown);
 		
-		button1.setBounds(914/2.5f, 200/2, textureUp.getWidth()/2, textureUp.getHeight()/2);
+		button1.setRelativeX(0.9f);
+		button1.setRelativeY(0.1f);
+		button1.setRelativeWidth(0.1f);
+		button1.setRelativeHeight(0.1f);
+		button1.setBounds(0, 0, textureUp.getWidth()/2, textureUp.getHeight()/2);
 		
 		
 		/*CGTAnimation moveButton = new CGTAnimation(button);
@@ -613,7 +624,10 @@ public class MyWorld {
 		world.addButton(buttonLeft);
 		world.addButton(buttonRight);
 		world.addButton(button1);
-		 
+		
+		world.addLoseCriterion(new TargetTime(5));
+		world.addLoseCriterion(new LifeDepleted(world.getActor()));
+		world.addWinCriterion(new KillAllEnemies(world.getEnemies()));
 	}
 	
 }

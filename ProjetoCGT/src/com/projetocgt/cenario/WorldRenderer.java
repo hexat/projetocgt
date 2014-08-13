@@ -9,9 +9,11 @@ import cgt.core.CGTEnemy;
 import cgt.core.CGTProjectile;
 import cgt.policy.*;
 import cgt.util.CGTButton;
+import cgt.win.Win;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -59,8 +61,8 @@ public class WorldRenderer {
 		this.width = Gdx.graphics.getWidth();
 		this.height = Gdx.graphics.getHeight();
 		this.camera = new OrthographicCamera(width, height);
-	
-		
+
+
 		// this.camera.position.set(width/2, height/2 , 0);
 		this.camera.position.set(world.getActor().getPosition().x, world
 				.getActor().getPosition().y, 0);
@@ -92,36 +94,52 @@ public class WorldRenderer {
 		// camera acompanhar
 		// o personagem
 		spriteBatch.begin();
-		
-		drawGameObjects();
-		drawCGTActor();
-		
-		System.out.println(personagem.getLife());
-		System.out.println(personagem.isInvincible());
-		spriteBatch.end();
-		if (flagDebug)
-			drawDebug();
+		if(!verifyLose()){
+			verifyWin();
+			drawGameObjects();
+			drawCGTActor();
+			spriteBatch.end();
+			if (flagDebug)
+				drawDebug();
 
+		}
+
+		else{
+			Gdx.graphics.getGL20().glClearColor(0, 0, 0, 1);
+			Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT);
+			spriteBatch.end();
+		}
 		// Atualiza a tela
 
 	}
-	
-	public void verifyWin(WinPolicy policy){
-		if(policy.equals(WinPolicy.KILL_ENEMIES)){
-			for (int j = 0; j < world.getEnemies().size(); j++) {
-				boolean ganhou = true;
-				for (int index = 0; index < world.getEnemies().size() && ganhou; index++) {
-					if (world.getEnemies().get(index).isDestroyable()
-							&& world.getEnemies().get(index).getLife() > 0)
-						ganhou = false;
-				}
 
-				if (ganhou) // Verifica se tem algum inimigo na cena
-					System.out.println("Ganhou");
-			}
+	public boolean verifyLose(){
+		boolean lose = false;
 
-
+		for(int index = 0; index<world.getLoseCriteria().size() && !lose; index++){
+			lose = world.getLoseCriteria().get(index).lost();
 		}
+
+		if(lose){
+			System.out.println("Perdeu");
+		}
+		return lose;
+	}
+
+	public boolean verifyWin(){
+		boolean win = true;
+
+		for(int index = 0; index<world.getWinCriteria().size() && win; index++){
+			win = world.getWinCriteria().get(index).achieved();
+		}
+
+		if(win){
+			System.out.println("Ganhou");
+		}
+		else{
+			System.out.println("Ainda nao ganhou");
+		}
+		return win;
 
 
 	}
@@ -144,7 +162,7 @@ public class WorldRenderer {
 		// world.getActor().getProjectiles().get(i).getTexture()
 		// .dispose();
 		// }
-		
+
 		spriteBatch.dispose();
 	}
 
@@ -153,9 +171,9 @@ public class WorldRenderer {
 	 * CGTProjectle
 	 */
 	private void drawGameObjects() {
-		
+
 		spriteBatch.draw(world.getBackground(), 0, 0);
-		
+
 		// Desenha todos os Opposite
 		for (int i = 0; i < world.getOpposites().size(); i++) {
 			if (world.getOpposites().get(i).getLife() >= 0)
@@ -264,15 +282,6 @@ public class WorldRenderer {
 					world.getEnemies().get(j).setLife(world.getEnemies().get(j).getLife() - 1);					
 					if (world.getEnemies().get(j).getLife() <= 0)// Se
 						world.getEnemies().remove(j);
-					boolean ganhou = true;
-					for (int index = 0; index < world.getEnemies().size()
-							&& ganhou; index++) {
-						if (world.getEnemies().get(index).isDestroyable()
-								&& world.getEnemies().get(index).getLife() > 0)
-							ganhou = false;
-					}
-					if (ganhou)// Verifica se tem algum inimigo na cena
-						System.out.println("Ganhou");
 				}
 			}
 			// }
@@ -635,7 +644,7 @@ public class WorldRenderer {
 			if (world.getEnemies().get(i).getCollision().overlaps(personagem.getCollision())
 					&& world.getEnemies().get(i).isBlock()) {
 				colisaoEnemy = true;
-				
+
 				//animationDamege(personagem);
 				colisao = true;
 			}
@@ -672,20 +681,20 @@ public class WorldRenderer {
 	public void animationDamage(CGTActor boy, CGTEnemy enemy) {
 
 		if (!personagem.isInvincible()) {
-			
+
 			personagem.setInvincible(true);
 			//final StatePolicy state = personagem.getState();
 			personagem.setState(StatePolicy.DAMAGE);
 			personagem.setCommands(true);
-			
+
 			Timer.schedule(new Task() {
 				@Override
 				public void run() {
 					personagem.setCommands(false);
 					//personagem.setState(state);
 				}
-			}, 0.04f);
-			
+			}, 1);
+
 			personagem.setLife(personagem.getLife() - enemy.getDamage());
 			// personagem.getSoundDamage().play();
 			Timer.schedule(new Task() {
