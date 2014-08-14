@@ -32,6 +32,8 @@ public class MyWorld {
 //	ArrayList<Action> listaDeAction = new ArrayList<Action>();
 //	private CGTActor personagemActorLIB;
 	private Texture backGround;
+	private Texture lifeBar;
+	private Texture lifeBarCGTEnemy;
 //	private WinPolicy winPolicy;
 //	private LosePolicy losePolicy;
 //	private int countdown;
@@ -55,9 +57,19 @@ public class MyWorld {
 		//world = new CGTGameWorld();
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
 		world.setBackground(backGround);
-		//backGround = new CGTTexture(Gdx.files.internal("data/Cenario/pista1280.png"));
-
-
+		
+		lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
+		world.setPosRelativaLifeBarX(-500);
+		world.setPosRelativaLifeBarY(300);
+		world.setLifeBar(lifeBar);
+		
+		lifeBarCGTEnemy = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
+		world.setPosRelativaLifeBarCGTEnemyX(500);
+		world.setPosRelativaLifeBarCGTEnemyY(300);
+		world.setLifeBarCGTEnemy(lifeBarCGTEnemy);
+//		world.setNumDeCGTEnemyDetroyble(2);
+		
+		
 		CGTActor personagemCGTActor = new CGTActor();
 		personagemCGTActor.setFireDefault(-1);
 		personagemCGTActor.setPosition(new Vector2(800f,900f));
@@ -198,7 +210,7 @@ public class MyWorld {
 		}
 		Fade fade = new Fade(FadePolicy.FADE_IN);
 		fade.setFadeInTime(1);
-
+		
 		Sine sine = new Sine(MovementPolicy.HEIGHT);
 		sine.setMax(100);
 		sine.setMin(50);
@@ -225,10 +237,9 @@ public class MyWorld {
 		enemyFogoCGT.setLife(50);
 		enemyFogoCGT.setInterval(4);
 
-
-			enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png").file()));
-			enemyFogoCGT.getSpriteSheet().setRows(2);
-			enemyFogoCGT.getSpriteSheet().setColumns(2);
+		enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png").file()));
+		enemyFogoCGT.getSpriteSheet().setRows(2);
+		enemyFogoCGT.getSpriteSheet().setColumns(2);
 
 
 		//Action
@@ -240,11 +251,50 @@ public class MyWorld {
 		moveEnemy.setSpriteVelocity(0.08f);
 		moveEnemy.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
 
-		//Enemy enemyFogoLIB = new Enemy(enemyFogoCGT);
-		//enemyFogoCGT.getSpriteSheet().setLoop(true);
-		//Add na lista de enemy
 		enemyFogoCGT.getAnimarions().add(moveEnemy);
 		world.getEnemies().add(enemyFogoCGT);
+		
+		
+		Fade fade2 = new Fade(FadePolicy.FADE_IN);
+		fade2.setFadeInTime(1);
+		
+		CGTEnemy enemyFogoCGT2 = new CGTEnemy();
+
+		Vector2 positionEnemy2 = new Vector2(680,850);
+		enemyFogoCGT2.setPosition(positionEnemy2);
+
+		Rectangle coliderEnemy2 = new Rectangle(0, 0, 56, 98);
+		enemyFogoCGT2.setCollision(coliderEnemy2);
+
+		Rectangle tamanhoEnemy2 = new Rectangle(0,0,56, 98);
+		enemyFogoCGT2.setBounds(tamanhoEnemy2);
+
+		enemyFogoCGT2.setState(StatePolicy.IDLEDOWN);
+		enemyFogoCGT2.setBlock(false);
+		enemyFogoCGT2.setDamage(1);
+		//enemyFogoCGT.setSpeed(2);
+		enemyFogoCGT2.setDestroyable(true);
+		enemyFogoCGT2.addBehavior(fade2);
+		enemyFogoCGT2.addBehavior(sine);
+		enemyFogoCGT2.setLife(50);
+		enemyFogoCGT2.setInterval(4);
+
+		enemyFogoCGT2.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png").file()));
+		enemyFogoCGT2.getSpriteSheet().setRows(2);
+		enemyFogoCGT2.getSpriteSheet().setColumns(2);
+
+
+		//Action
+		CGTAnimation moveEnemy2 = new CGTAnimation(enemyFogoCGT2);
+		moveEnemy2.setSpriteLine(1);
+		moveEnemy2.addStatePolicy(StatePolicy.IDLEDOWN);
+		moveEnemy2.setNumberOfColumns(2);
+		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
+		moveEnemy2.setSpriteVelocity(0.08f);
+		moveEnemy2.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+
+		enemyFogoCGT2.getAnimarions().add(moveEnemy2);
+		world.getEnemies().add(enemyFogoCGT2);
 
 		//		//Instancia o opposite fogo
 		//		Enemy enemyFogo = new Enemy(new Vector2(400,850), 50, 50, 50, 0, 0);
@@ -333,9 +383,9 @@ public class MyWorld {
 
 		carroCGT.setSpeed(200);
 
-			carroCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/Enemy/SpriteSheet_carro.png").file()));
-			carroCGT.getSpriteSheet().setRows(3);
-			carroCGT.getSpriteSheet().setColumns(2);
+		carroCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/Enemy/SpriteSheet_carro.png").file()));
+		carroCGT.getSpriteSheet().setRows(3);
+		carroCGT.getSpriteSheet().setColumns(2);
 		//Action
 		CGTAnimation moveCarro = new CGTAnimation(carroCGT);
 		moveCarro.setSpriteLine(1);
@@ -625,7 +675,7 @@ public class MyWorld {
 		world.addButton(buttonRight);
 		world.addButton(button1);
 		
-		world.addLoseCriterion(new TargetTime(5));
+		//world.addLoseCriterion(new TargetTime(5));
 		world.addLoseCriterion(new LifeDepleted(world.getActor()));
 		world.addWinCriterion(new KillAllEnemies(world.getEnemies()));
 	}
