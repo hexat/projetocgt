@@ -5,6 +5,7 @@ public class StarAssault extends Game {
 
 	@Override
 	public void create() {
-		setScreen(new GameScreen());
+//		setScreen(new GameScreen());
+		setScreen(new GeneralScreen(this));
 	}
 }

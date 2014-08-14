@@ -143,6 +143,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor{
 
 	@Override
 	public void resize(int width, int height) {
+		renderer.getViewport().update(width, height);
 	}
 
 
@@ -156,6 +157,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor{
 		for(Actor button : world.getButtons()){
 			this.addActor(button);
 		}
+		//this.setViewport(renderer.getViewport());
 		setSpriteBatch(new SpriteBatch());
 		//renderer = new WorldRenderer(instanciaStream("teste"), DEBUG); //Desenhando a partir de um MyWorld criado pelo arquivo
 		controller = new WorldController(world, renderer);

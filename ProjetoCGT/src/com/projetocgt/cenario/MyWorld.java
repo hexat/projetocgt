@@ -10,8 +10,6 @@ import cgt.core.CGTBonus;
 import cgt.core.CGTEnemy;
 import cgt.core.CGTOpposite;
 import cgt.core.CGTProjectile;
-import cgt.policy.ActionFirePolicy;
-import cgt.policy.ActionMovePolicy;
 import cgt.policy.AnimationPolicy;
 import cgt.policy.DirectionPolicy;
 import cgt.policy.FadePolicy;
@@ -26,14 +24,8 @@ import cgt.util.ProjectileOrientation;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
  * Responsavel por construir o jogo
