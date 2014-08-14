@@ -1,7 +1,5 @@
 package com.projetocgt;
 
-
-
 import cgt.CGTGameWorld;
 
 import cgt.policy.*;
@@ -118,6 +116,8 @@ public class GameScreen extends Stage implements Screen, InputProcessor{
 				controller.leftReleased();
 		}
 		 */
+		System.out.println("Width: " + this.getWidth());
+		System.out.println("Height: " + this.getHeight());
 		controller.update(delta);
 		renderer.render();
 		buttonHandler();
@@ -143,7 +143,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor{
 
 	@Override
 	public void resize(int width, int height) {
-		renderer.getViewport().update(width, height);
+//		renderer.getViewport().update(width, height);
 	}
 
 
@@ -154,6 +154,15 @@ public class GameScreen extends Stage implements Screen, InputProcessor{
 		music.setLooping(true);
 		world = new MyWorld().getCGT();
 		renderer = new WorldRenderer(world, DEBUG);
+		
+		for(int i = 0; i < world.getWinCriteria().size(); i++){
+			world.getWinCriteria().get(i).start();
+		}
+		
+		for(int i = 0; i < world.getLoseCriteria().size(); i++){
+			world.getLoseCriteria().get(i).start();
+		}
+		
 		for(Actor button : world.getButtons()){
 			this.addActor(button);
 		}
@@ -253,9 +262,4 @@ public class GameScreen extends Stage implements Screen, InputProcessor{
 	public void setSpriteBatch(SpriteBatch spriteBatch) {
 		this.spriteBatch = spriteBatch;
 	}
-
-
-
-
-
 }

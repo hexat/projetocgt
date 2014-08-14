@@ -10,6 +10,7 @@ import cgt.core.CGTBonus;
 import cgt.core.CGTEnemy;
 import cgt.core.CGTOpposite;
 import cgt.core.CGTProjectile;
+import cgt.lose.LifeDepleted;
 import cgt.policy.AnimationPolicy;
 import cgt.policy.DirectionPolicy;
 import cgt.policy.FadePolicy;
@@ -20,6 +21,7 @@ import cgt.util.CGTAnimation;
 import cgt.util.CGTButton;
 import cgt.util.CGTSpriteSheet;
 import cgt.util.ProjectileOrientation;
+import cgt.win.KillAllEnemies;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -37,6 +39,8 @@ public class MyWorld {
 //	ArrayList<Action> listaDeAction = new ArrayList<Action>();
 //	private CGTActor personagemActorLIB;
 	private Texture backGround;
+	private Texture lifeBar;
+	private Texture lifeBarCGTEnemy;
 //	private WinPolicy winPolicy;
 //	private LosePolicy losePolicy;
 //	private int countdown;
@@ -60,9 +64,19 @@ public class MyWorld {
 		//world = new CGTGameWorld();
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
 		world.setBackground(backGround);
-		//backGround = new CGTTexture(Gdx.files.internal("data/Cenario/pista1280.png"));
-
-
+		
+		lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
+		world.setPosRelativaLifeBarX(-500);
+		world.setPosRelativaLifeBarY(300);
+		world.setLifeBar(lifeBar);
+		
+		lifeBarCGTEnemy = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
+		world.setPosRelativaLifeBarCGTEnemyX(500);
+		world.setPosRelativaLifeBarCGTEnemyY(300);
+		world.setLifeBarCGTEnemy(lifeBarCGTEnemy);
+//		world.setNumDeCGTEnemyDetroyble(2);
+		
+		
 		CGTActor personagemCGTActor = new CGTActor();
 		personagemCGTActor.setFireDefault(-1);
 		personagemCGTActor.setPosition(new Vector2(800f,900f));
@@ -72,7 +86,7 @@ public class MyWorld {
 		Rectangle tamanhoPersonagem = new Rectangle(0, 0, 80, 80);
 		personagemCGTActor.setBounds(tamanhoPersonagem);
 
-		personagemCGTActor.setLife(4);
+		personagemCGTActor.setLife(5);
 		personagemCGTActor.setSpeed(280);
 
 		System.out.println(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro2.png").exists());
@@ -203,7 +217,7 @@ public class MyWorld {
 		}
 		Fade fade = new Fade(FadePolicy.FADE_IN);
 		fade.setFadeInTime(1);
-
+		
 		Sine sine = new Sine(MovementPolicy.HEIGHT);
 		sine.setMax(100);
 		sine.setMin(50);
@@ -230,10 +244,9 @@ public class MyWorld {
 		enemyFogoCGT.setLife(50);
 		enemyFogoCGT.setInterval(4);
 
-
-			enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png").file()));
-			enemyFogoCGT.getSpriteSheet().setRows(2);
-			enemyFogoCGT.getSpriteSheet().setColumns(2);
+		enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png").file()));
+		enemyFogoCGT.getSpriteSheet().setRows(2);
+		enemyFogoCGT.getSpriteSheet().setColumns(2);
 
 
 		//Action
@@ -245,11 +258,50 @@ public class MyWorld {
 		moveEnemy.setSpriteVelocity(0.08f);
 		moveEnemy.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
 
-		//Enemy enemyFogoLIB = new Enemy(enemyFogoCGT);
-		//enemyFogoCGT.getSpriteSheet().setLoop(true);
-		//Add na lista de enemy
 		enemyFogoCGT.getAnimarions().add(moveEnemy);
 		world.getEnemies().add(enemyFogoCGT);
+		
+		
+		Fade fade2 = new Fade(FadePolicy.FADE_IN);
+		fade2.setFadeInTime(1);
+		
+		CGTEnemy enemyFogoCGT2 = new CGTEnemy();
+
+		Vector2 positionEnemy2 = new Vector2(680,850);
+		enemyFogoCGT2.setPosition(positionEnemy2);
+
+		Rectangle coliderEnemy2 = new Rectangle(0, 0, 56, 98);
+		enemyFogoCGT2.setCollision(coliderEnemy2);
+
+		Rectangle tamanhoEnemy2 = new Rectangle(0,0,56, 98);
+		enemyFogoCGT2.setBounds(tamanhoEnemy2);
+
+		enemyFogoCGT2.setState(StatePolicy.IDLEDOWN);
+		enemyFogoCGT2.setBlock(false);
+		enemyFogoCGT2.setDamage(1);
+		//enemyFogoCGT.setSpeed(2);
+		enemyFogoCGT2.setDestroyable(true);
+		enemyFogoCGT2.addBehavior(fade2);
+		enemyFogoCGT2.addBehavior(sine);
+		enemyFogoCGT2.setLife(50);
+		enemyFogoCGT2.setInterval(4);
+
+		enemyFogoCGT2.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png").file()));
+		enemyFogoCGT2.getSpriteSheet().setRows(2);
+		enemyFogoCGT2.getSpriteSheet().setColumns(2);
+
+
+		//Action
+		CGTAnimation moveEnemy2 = new CGTAnimation(enemyFogoCGT2);
+		moveEnemy2.setSpriteLine(1);
+		moveEnemy2.addStatePolicy(StatePolicy.IDLEDOWN);
+		moveEnemy2.setNumberOfColumns(2);
+		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
+		moveEnemy2.setSpriteVelocity(0.08f);
+		moveEnemy2.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+
+		enemyFogoCGT2.getAnimarions().add(moveEnemy2);
+		world.getEnemies().add(enemyFogoCGT2);
 
 		//		//Instancia o opposite fogo
 		//		Enemy enemyFogo = new Enemy(new Vector2(400,850), 50, 50, 50, 0, 0);
@@ -338,9 +390,9 @@ public class MyWorld {
 
 		carroCGT.setSpeed(200);
 
-			carroCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/Enemy/SpriteSheet_carro.png").file()));
-			carroCGT.getSpriteSheet().setRows(3);
-			carroCGT.getSpriteSheet().setColumns(2);
+		carroCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/Enemy/SpriteSheet_carro.png").file()));
+		carroCGT.getSpriteSheet().setRows(3);
+		carroCGT.getSpriteSheet().setColumns(2);
 		//Action
 		CGTAnimation moveCarro = new CGTAnimation(carroCGT);
 		moveCarro.setSpriteLine(1);
@@ -518,6 +570,10 @@ public class MyWorld {
 		Texture textureDown = new Texture("data/buttons/base.png");
 		buttonPad.setTextureDown(textureDown);
 		
+		buttonPad.setRelativeX(0);
+		buttonPad.setRelativeY(0);
+		buttonPad.setRelativeWidth(0.29f);
+		buttonPad.setRelativeHeight(0.29f);
 		buttonPad.setBounds(0, 0, textureUp.getWidth()/3, textureUp.getHeight()/3);
 		
 		CGTButton button = new CGTButton();
@@ -529,6 +585,10 @@ public class MyWorld {
 		textureDown = new Texture("data/buttons/bt_up_press.png");
 		button.setTextureDown(textureDown);
 		
+		button.setRelativeX(0.095f);
+		button.setRelativeY(0.145f);
+		button.setRelativeWidth(0.1f);
+		button.setRelativeHeight(0.1f);
 		button.setBounds(137/3, 184.7f/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 		
 		
@@ -540,6 +600,10 @@ public class MyWorld {
 		textureDown = new Texture("data/buttons/bt_down_press.png");
 		buttonDown.setTextureDown(textureDown);
 		
+		buttonDown.setRelativeX(0.095f);
+		buttonDown.setRelativeY(0.028f);
+		buttonDown.setRelativeWidth(0.1f);
+		buttonDown.setRelativeHeight(0.1f);
 		buttonDown.setBounds(137/3, 36/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 		
 		
@@ -552,6 +616,10 @@ public class MyWorld {
 		textureDown = new Texture("data/buttons/bt_left_press.png");
 		buttonLeft.setTextureDown(textureDown);
 		
+		buttonLeft.setRelativeX(0.048f);
+		buttonLeft.setRelativeY(0.09f);
+		buttonLeft.setRelativeWidth(0.1f);
+		buttonLeft.setRelativeHeight(0.1f);
 		buttonLeft.setBounds(64/3, 126/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 		
 		
@@ -563,6 +631,10 @@ public class MyWorld {
 		textureDown = new Texture("data/buttons/bt_right_press.png");
 		buttonRight.setTextureDown(textureDown);
 		
+		buttonRight.setRelativeX(0.142f);
+		buttonRight.setRelativeY(0.09f);
+		buttonRight.setRelativeWidth(0.1f);
+		buttonRight.setRelativeHeight(0.1f);
 		buttonRight.setBounds(183/3, 126/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 		
 		CGTButton button1 = new CGTButton();
@@ -573,7 +645,11 @@ public class MyWorld {
 		textureDown = new Texture("data/buttons/bt_agua_down.png");
 		button1.setTextureDown(textureDown);
 		
-		button1.setBounds(914/2.5f, 200/2, textureUp.getWidth()/2, textureUp.getHeight()/2);
+		button1.setRelativeX(0.9f);
+		button1.setRelativeY(0.1f);
+		button1.setRelativeWidth(0.1f);
+		button1.setRelativeHeight(0.1f);
+		button1.setBounds(0, 0, textureUp.getWidth()/2, textureUp.getHeight()/2);
 		
 		
 		/*CGTAnimation moveButton = new CGTAnimation(button);
@@ -605,7 +681,10 @@ public class MyWorld {
 		world.addButton(buttonLeft);
 		world.addButton(buttonRight);
 		world.addButton(button1);
-		 
+		
+		//world.addLoseCriterion(new TargetTime(5));
+		world.addLoseCriterion(new LifeDepleted(world.getActor()));
+		world.addWinCriterion(new KillAllEnemies(world.getEnemies()));
 	}
 	
 }

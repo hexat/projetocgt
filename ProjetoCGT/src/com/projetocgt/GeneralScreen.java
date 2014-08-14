@@ -1,7 +1,6 @@
 package com.projetocgt;
 
-import java.io.File;
-
+import cgt.screen.CGTButton;
 import cgt.screen.CGTScreen;
 import cgt.util.CGTTexture;
 
@@ -9,9 +8,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class GeneralScreen extends Stage implements Screen {
@@ -27,8 +30,14 @@ public class GeneralScreen extends Stage implements Screen {
 //	    stage = new Stage(new ScreenViewport());
 	    Gdx.input.setInputProcessor(this);
 	    
-		CGTTexture t = new CGTTexture(new File("data/menu/back_gui.png"));
+		CGTTexture t = new CGTTexture("data/menu/back_gui.png");
+		CGTButton btn = new CGTButton("data/menu/iniciar_gui.png");
+		btn.setBounds(new Rectangle(400, 400, 200, 100));
+		btn.setNextScene(null);
+//		CGTButton btn = new CGTButton("data/menu/_gui.png");
+//		btn.setBounds(new Rectangle(400, 400, 200, 100));
 		screen = new CGTScreen(t);
+		screen.getButtons().add(btn);
 		
 	}
 	
@@ -52,6 +61,24 @@ public class GeneralScreen extends Stage implements Screen {
 	@Override
 	public void show() {
         splsh = new Texture(Gdx.files.internal(screen.getBackground().getFile().getPath()));
+        for (CGTButton b : screen.getButtons()) {
+        	Button tb = new Button((new TextureRegionDrawable(new TextureRegion(new Texture(b.getFilepath())))));
+//        	tb.setBackground((new TextureRegionDrawable(new TextureRegion(new Texture(b.getFilepath())))));
+//        	tb.set
+        	tb.setX(b.getBounds().x);
+        	tb.setY(b.getBounds().y);
+        	tb.setWidth(b.getBounds().width);
+        	tb.setHeight(b.getBounds().getHeight());
+        	tb.addListener(new EventListener() {
+				
+				@Override
+				public boolean handle(Event event) {
+					game.setScreen(new GameScreen());
+					return true;
+				}
+			});
+        	addActor(tb);
+        }
 	}
 
 	@Override

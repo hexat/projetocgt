@@ -220,7 +220,8 @@ public class WorldController {
 		if(!personagem.isCommands()){
 			processInput();	
 		}else{
-			//personagem.getVelocity().y = 0;
+			personagem.getVelocity().y = 0;
+			personagem.getVelocity().x = 0;
 			releaseAllDirectionKeys();
 		}
 		personagem.update(delta);
