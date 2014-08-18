@@ -596,7 +596,7 @@ public class WorldRenderer {
 
 	/** Implementação do comportamento descrito por um behavior Fade */
 	private void scheduleFadeIn(final CGTEnemy enemy, Fade fade) {
-		if (!fade.isStarted()) {
+		
 
 			// Garante que este metodo sera executado somente uma vez
 			fade.setStarted(true);
@@ -607,7 +607,7 @@ public class WorldRenderer {
 			final int damage = enemy.getDamage();
 			enemy.setDamage(0);
 			enemy.setAlpha(0f);
-
+			enemy.removeBehavior(fade);
 			Timer.schedule(new Task() {
 				public void run() {
 					for (float alpha = 0f; alpha <= 1f; alpha += 0.01f) {
@@ -620,7 +620,6 @@ public class WorldRenderer {
 				}
 			}, fade.getFadeInTime());
 		}
-	}
 
 	// Implementação do comportamento descrito por um behavior Direction
 	private void scheduleDirection(int[] angulos, CGTEnemy enemy) {

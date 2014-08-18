@@ -261,10 +261,6 @@ public class MyWorld {
 		enemyFogoCGT.getAnimarions().add(moveEnemy);
 		world.getEnemies().add(enemyFogoCGT);
 		
-		
-		Fade fade2 = new Fade(FadePolicy.FADE_IN);
-		fade2.setFadeInTime(1);
-		
 		CGTEnemy enemyFogoCGT2 = new CGTEnemy();
 
 		Vector2 positionEnemy2 = new Vector2(680,850);
@@ -281,7 +277,7 @@ public class MyWorld {
 		enemyFogoCGT2.setDamage(1);
 		//enemyFogoCGT.setSpeed(2);
 		enemyFogoCGT2.setDestroyable(true);
-		enemyFogoCGT2.addBehavior(fade2);
+		enemyFogoCGT2.addBehavior(fade);
 		enemyFogoCGT2.addBehavior(sine);
 		enemyFogoCGT2.setLife(50);
 		enemyFogoCGT2.setInterval(4);
