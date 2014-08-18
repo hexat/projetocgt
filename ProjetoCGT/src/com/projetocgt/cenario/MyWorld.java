@@ -79,7 +79,7 @@ public class MyWorld {
 		
 		CGTActor personagemCGTActor = new CGTActor();
 		personagemCGTActor.setFireDefault(-1);
-		personagemCGTActor.setPosition(new Vector2(800f,900f));
+		personagemCGTActor.setPosition(new Vector2(1800f,900f));
 
 		personagemCGTActor.setCollision(new Rectangle(10, 10, 60, 60));
 

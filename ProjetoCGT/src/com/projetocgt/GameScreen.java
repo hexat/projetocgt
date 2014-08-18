@@ -39,6 +39,25 @@ public class GameScreen extends Stage implements Screen, InputProcessor{
 		super();
 		//Carrega os audios
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/principal.wav"));
+		world = new MyWorld().getCGT();
+		renderer = new WorldRenderer(world, DEBUG);
+		
+		for(int i = 0; i < world.getWinCriteria().size(); i++){
+			world.getWinCriteria().get(i).start();
+		}
+		
+		for(int i = 0; i < world.getLoseCriteria().size(); i++){
+			world.getLoseCriteria().get(i).start();
+		}
+		
+		for(Actor button : world.getButtons()){
+			this.addActor(button);
+		}
+		//this.setViewport(renderer.getViewport());
+		setSpriteBatch(new SpriteBatch());
+		//renderer = new WorldRenderer(instanciaStream("teste"), DEBUG); //Desenhando a partir de um MyWorld criado pelo arquivo
+		controller = new WorldController(world, renderer);
+		
 	}
 
 
@@ -143,7 +162,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor{
 
 	@Override
 	public void resize(int width, int height) {
-//		renderer.getViewport().update(width, height);
+		renderer.getViewport().update(width, height);
 	}
 
 
@@ -152,24 +171,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor{
 		//Habilita a musica 
 		music.play();
 		music.setLooping(true);
-		world = new MyWorld().getCGT();
-		renderer = new WorldRenderer(world, DEBUG);
-		
-		for(int i = 0; i < world.getWinCriteria().size(); i++){
-			world.getWinCriteria().get(i).start();
-		}
-		
-		for(int i = 0; i < world.getLoseCriteria().size(); i++){
-			world.getLoseCriteria().get(i).start();
-		}
-		
-		for(Actor button : world.getButtons()){
-			this.addActor(button);
-		}
-		//this.setViewport(renderer.getViewport());
-		setSpriteBatch(new SpriteBatch());
-		//renderer = new WorldRenderer(instanciaStream("teste"), DEBUG); //Desenhando a partir de um MyWorld criado pelo arquivo
-		controller = new WorldController(world, renderer);
 		Gdx.input.setInputProcessor(this);
 
 	}

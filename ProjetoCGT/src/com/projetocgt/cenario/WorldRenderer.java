@@ -66,15 +66,14 @@ public class WorldRenderer {
 	private int width;
 	private int height;
 	private Vector2 posAnterior = new Vector2();
-//	private StretchViewport viewport;
+	private StretchViewport viewport;
 
 	public WorldRenderer(CGTGameWorld world, boolean debug) {
 		this.world = world;
 		this.width = Gdx.graphics.getWidth();
 		this.height = Gdx.graphics.getHeight();
 		this.camera = new OrthographicCamera(width, height);
-//	    this.viewport = new StretchViewport(800, 480, camera);
-	
+	    this.viewport = new StretchViewport(800, 480, camera);
 		
 		// this.camera.position.set(width/2, height/2 , 0);
 		this.camera.position.set(world.getActor().getPosition().x, world
@@ -834,7 +833,7 @@ public class WorldRenderer {
 		this.colisaoEnemy = colisaoEnemy;
 	}
 
-//	public StretchViewport getViewport() {
-//		return viewport;
-//	}
+	public StretchViewport getViewport() {
+		return viewport;
+	}
 }
