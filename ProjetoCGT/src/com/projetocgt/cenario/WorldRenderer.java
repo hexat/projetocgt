@@ -136,7 +136,7 @@ public class WorldRenderer {
 		}
 
 		if(lose){
-			System.out.println("Perdeu");
+			//System.out.println("Perdeu");
 		}
 		return lose;
 	}
@@ -299,7 +299,7 @@ public class WorldRenderer {
 				}
 				
 				if (world.getEnemies().get(j).getCollision().overlaps(pro.getCollision())
-						&& world.getEnemies().get(j).isDestroyable()) {
+						&& world.getEnemies().get(j).isDestroyable() && world.getEnemies().get(j).isVulnerable()) {
 					world.getEnemies().get(j).setLife(world.getEnemies().get(j).getLife() - 1);					
 					if (world.getEnemies().get(j).getLife() <= 0)
 						world.getEnemies().remove(j);
@@ -403,9 +403,9 @@ public class WorldRenderer {
 		for (int i = 0; i < world.getEnemies().size(); i++) {
 			if (world.getEnemies().get(i).getCollision().overlaps(personagem.getCollision())) {
 				animationDamage(personagem, world.getEnemies().get(i));
-				System.out.println(personagem.getLife());
+				//System.out.println(personagem.getLife());
 				if (personagem.getLife() < 0) {
-					System.out.println("Game Over");
+					//System.out.println("Game Over");
 					// TODO musica do game over
 					// personagem.getSoundDie().play();
 				}
@@ -595,17 +595,10 @@ public class WorldRenderer {
 
 	/** Implementação do comportamento descrito por um behavior Fade */
 	private void scheduleFadeIn(final CGTEnemy enemy, Fade fade) {
-		
 
-			// Garante que este metodo sera executado somente uma vez
-			fade.setStarted(true);
-
-			// Desativa-se as interacoes do enemy com o actor
-			final boolean destroyable = enemy.isDestroyable();
-			enemy.setDestroyable(false);
-			final int damage = enemy.getDamage();
-			enemy.setDamage(0);
-			enemy.setAlpha(0f);
+			// Desativa-se as interacoes do enemy com o actor e retira-se o behavior
+			// para que ocorra apenas uma vez
+			enemy.setVulnerable(false);
 			enemy.removeBehavior(fade);
 			Timer.schedule(new Task() {
 				public void run() {
@@ -613,9 +606,8 @@ public class WorldRenderer {
 						enemy.setAlpha(alpha);
 					}
 
-					// Recupera-se a interacao definida ao enemy
-					enemy.setDestroyable(destroyable);
-					enemy.setDamage(damage);
+					// Recupera-se a interacao
+					enemy.setVulnerable(true);
 				}
 			}, fade.getFadeInTime());
 		}
@@ -662,7 +654,7 @@ public class WorldRenderer {
 	public boolean isColision() {
 		// colisao = false;
 		damageActorCGT(personagem);
-		System.out.println(personagem.getState().name());
+		//System.out.println(personagem.getState().name());
 		// Verifica se colidiu com algum Opposite
 		for (int i = 0; i < world.getOpposites().size(); i++) {
 			if (world.getOpposites().get(i).getCollision()
@@ -712,7 +704,7 @@ public class WorldRenderer {
 	 */
 	public void animationDamage(CGTActor boy, CGTEnemy enemy) {
 
-		if (!personagem.isInvincible()) {
+		if (!personagem.isInvincible() && enemy.isVulnerable()) {
 
 			personagem.setInvincible(true);
 			//final StatePolicy state = personagem.getState();
