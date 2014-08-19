@@ -113,8 +113,8 @@ public class WorldRenderer {
 			verifyWin();
 			drawGameObjects();
 			drawCGTActor();
-			drawLifeBarCGTACtor();
-			drawLifeBarCGTEnemy();
+			//drawLifeBarCGTACtor();
+			//drawLifeBarCGTEnemy();
 			spriteBatch.end();
 			if (flagDebug)
 				drawDebug();
@@ -321,7 +321,7 @@ public class WorldRenderer {
 				personagem.getBounds().height);
 		
 	}
-	
+	/*
 	private void drawLifeBarCGTACtor(){
 		spriteBatch.draw(world.getLifeBar(), camera.position.x+world.getPosRelativaLifeBarX(), 
 				camera.position.y+world.getPosRelativaLifeBarY(),50*personagem.getLife(),50);
@@ -331,7 +331,7 @@ public class WorldRenderer {
 		spriteBatch.draw(world.getLifeBarCGTEnemy(), camera.position.x+world.getPosRelativaLifeBarCGTEnemyX(), 
 				camera.position.y+world.getPosRelativaLifeBarCGTEnemyY(),-50*(world.getEnemies().size()-numCGTEnemyDestroyble),50);
 	}
-	
+	*/
 	/***
 	 * Metodo utilizada para fazer o debug
 	 */
