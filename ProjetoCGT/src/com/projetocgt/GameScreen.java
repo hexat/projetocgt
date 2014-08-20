@@ -23,7 +23,7 @@ import com.projetocgt.cenario.WorldRenderer;
 
 public class GameScreen extends Stage implements Screen, InputProcessor{
 
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 
 	private CGTGameWorld world;
 	private WorldRenderer renderer;
@@ -52,6 +52,10 @@ public class GameScreen extends Stage implements Screen, InputProcessor{
 		
 		for(Actor button : world.getButtons()){
 			this.addActor(button);
+		}
+		
+		for(Actor lifebar : world.getLifeBars()){
+			this.addActor(lifebar);
 		}
 		//this.setViewport(renderer.getViewport());
 		setSpriteBatch(new SpriteBatch());

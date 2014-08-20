@@ -2,25 +2,11 @@ package com.projetocgt.cenario;
 
 
 import cgt.CGTGameWorld;
-import cgt.behaviors.Direction;
-import cgt.behaviors.Fade;
-import cgt.behaviors.Sine;
-import cgt.core.CGTActor;
-import cgt.core.CGTBonus;
-import cgt.core.CGTEnemy;
-import cgt.core.CGTOpposite;
-import cgt.core.CGTProjectile;
+import cgt.behaviors.*;
+import cgt.core.*;
 import cgt.lose.LifeDepleted;
-import cgt.policy.AnimationPolicy;
-import cgt.policy.DirectionPolicy;
-import cgt.policy.FadePolicy;
-import cgt.policy.InputPolicy;
-import cgt.policy.MovementPolicy;
-import cgt.policy.StatePolicy;
-import cgt.util.CGTAnimation;
-import cgt.util.CGTButton;
-import cgt.util.CGTSpriteSheet;
-import cgt.util.ProjectileOrientation;
+import cgt.policy.*;
+import cgt.util.*;
 import cgt.win.KillAllEnemies;
 
 import com.badlogic.gdx.Gdx;
@@ -39,8 +25,8 @@ public class MyWorld {
 //	ArrayList<Action> listaDeAction = new ArrayList<Action>();
 //	private CGTActor personagemActorLIB;
 	private Texture backGround;
-	private Texture lifeBar;
-	private Texture lifeBarCGTEnemy;
+	//private Texture lifeBar;
+	//private Texture lifeBarCGTEnemy;
 //	private WinPolicy winPolicy;
 //	private LosePolicy losePolicy;
 //	private int countdown;
@@ -65,16 +51,27 @@ public class MyWorld {
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
 		world.setBackground(backGround);
 		
-		/*lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
-		world.setPosRelativaLifeBarX(-500);
-		world.setPosRelativaLifeBarY(300);
-		world.setLifeBar(lifeBar);
+
+		Texture lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
+		Texture lifeBarBack = new Texture(Gdx.files.internal("data/lifeBar/lifeBarBack.png"));
+		LifeBar actorLifeBar = new LifeBar();
+		actorLifeBar.setBar(lifeBar);
+		actorLifeBar.setBackgroundBar(lifeBarBack);
+		actorLifeBar.setRelativeX(0.1f);
+		actorLifeBar.setRelativeY(0.9f);
+		actorLifeBar.setRelativeHeight(0.1f);
+		actorLifeBar.setRelativeWidth(0.25f);
 		
-		lifeBarCGTEnemy = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
-		world.setPosRelativaLifeBarCGTEnemyX(500);
-		world.setPosRelativaLifeBarCGTEnemyY(300);
-		world.setLifeBarCGTEnemy(lifeBarCGTEnemy);
-		world.setNumDeCGTEnemyDetroyble(2);*/
+		//world.setPosRelativaLifeBarX(-500);
+//		world.setPosRelativaLifeBarY(300);
+//		world.setLifeBar(lifeBar);
+		
+		//Texture lifeBarCGTEnemy = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
+//		world.setPosRelativaLifeBarCGTEnemyX(500);
+//		world.setPosRelativaLifeBarCGTEnemyY(300);
+//		world.setLifeBarCGTEnemy(lifeBarCGTEnemy);
+//		world.setNumDeCGTEnemyDetroyble(2);
+
 		
 		
 		CGTActor personagemCGTActor = new CGTActor();
@@ -86,7 +83,10 @@ public class MyWorld {
 		Rectangle tamanhoPersonagem = new Rectangle(0, 0, 80, 80);
 		personagemCGTActor.setBounds(tamanhoPersonagem);
 
-		personagemCGTActor.setLife(5);
+		personagemCGTActor.setLife(3);
+		actorLifeBar.setMaxLife(3);
+		actorLifeBar.setOwner(personagemCGTActor);
+		world.addLifeBar(actorLifeBar);
 		personagemCGTActor.setSpeed(280);
 
 		System.out.println(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro2.png").exists());
