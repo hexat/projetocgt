@@ -65,7 +65,7 @@ public class MyWorld {
 		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
 		world.setBackground(backGround);
 		
-		lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
+		/*lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
 		world.setPosRelativaLifeBarX(-500);
 		world.setPosRelativaLifeBarY(300);
 		world.setLifeBar(lifeBar);
@@ -74,7 +74,7 @@ public class MyWorld {
 		world.setPosRelativaLifeBarCGTEnemyX(500);
 		world.setPosRelativaLifeBarCGTEnemyY(300);
 		world.setLifeBarCGTEnemy(lifeBarCGTEnemy);
-//		world.setNumDeCGTEnemyDetroyble(2);
+		world.setNumDeCGTEnemyDetroyble(2);*/
 		
 		
 		CGTActor personagemCGTActor = new CGTActor();
@@ -180,6 +180,8 @@ public class MyWorld {
 		/* Esse opposite nao tem animacao, seria melhor adicionar uma textura do que uma animacao 
 		 * um por um.
 		 */
+		
+		// esse for serve para iniciar as casas no cenário
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				CGTOpposite opositorCasa = new CGTOpposite();
@@ -194,9 +196,24 @@ public class MyWorld {
 				//new Vector2(450*(i+1)+i*20,400*(j+1)+j*90), 300, 300, 300, 0, 0
 
 				opositorCasa.setBounds(new Rectangle(0,0,300, 300) );
-				opositorCasa.setCollision(new Rectangle(0,0,300, 300));
-
-				Vector2 position = new Vector2(450*(i+1)+i*20, 400*(j+1)+j*90);
+				if ((i == 0 && j== 3) || (i==1 && (j==1 || j==2)) || (i==2 &&( j==2 || j==3)) || (i==3 && j==3) ){
+					opositorCasa.setCollision(new Rectangle(30,60,190, 200));
+				}
+				else if((i == 0 && (j== 0 || j==2)) || (i==1 && (j==0 || j==3)) || (i==2 && (j==0 || j==1))){
+					opositorCasa.setCollision(new Rectangle(30,70,190, 210));
+				}
+				else if((i == 0 && j==1) || (i==3 && j==0) ){
+					opositorCasa.setCollision(new Rectangle(30,0,190, 290));
+				}
+				else if(i==3 && j==1){
+					opositorCasa.setCollision(new Rectangle(0,60,300, 210));
+				}
+				else{
+					opositorCasa.setCollision(new Rectangle(25,60,200, 230));
+				}
+				
+				
+				Vector2 position = new Vector2(450*(i+1)+ i*20, 400*(j+1)+j*90);
 				opositorCasa.setPosition(position);
 
 				//opositorCasa.setTexture(new CGTTexture("data/Cenario/casa_sprite_sheet.png"));
@@ -215,6 +232,11 @@ public class MyWorld {
 				world.getOpposites().add(opositorCasa);				
 			}
 		}
+		
+		// ajuste da posição da casa do bombeiro na tela
+		world.getOpposites().get(13).setPosition(new Vector2(1880,890));
+		
+		
 		Fade fade = new Fade(FadePolicy.FADE_IN);
 		fade.setFadeInTime(1);
 		
@@ -371,7 +393,7 @@ public class MyWorld {
 		Vector2 positionCarro = new Vector2(800,600);
 		carroCGT.setPosition(positionCarro);
 
-		Rectangle coliderCarro = new Rectangle(0,0,98, 90);
+		Rectangle coliderCarro = new Rectangle(0,0,90, 98);
 		carroCGT.setCollision(coliderCarro);
 
 		Rectangle tamanhoCarro = new Rectangle(0,0,98, 90);
@@ -448,7 +470,7 @@ public class MyWorld {
 
 		CGTBonus hidrate = new CGTBonus();
 
-		hidrate.setPosition(new Vector2(1000, 800));
+		hidrate.setPosition(new Vector2(1880, 880));
 		hidrate.setBounds(new Rectangle(0,0,50,50));
 		hidrate.setCollision(new Rectangle(0,0,50,50));
 		

@@ -23,7 +23,7 @@ import com.projetocgt.cenario.WorldRenderer;
 
 public class GameScreen extends Stage implements Screen, InputProcessor{
 
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private CGTGameWorld world;
 	private WorldRenderer renderer;
@@ -60,6 +60,11 @@ public class GameScreen extends Stage implements Screen, InputProcessor{
 		
 	}
 
+	public boolean touchDown(int screenx, int screeny, int pointer, int button){
+		System.out.println("x: "+screenx);
+		System.out.println("y: "+screeny);
+		return false;
+	}
 
 	public void buttonHandler(){
 		for(CGTButton button : world.getButtons()){
@@ -135,8 +140,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor{
 				controller.leftReleased();
 		}
 		 */
-		System.out.println("Width: " + this.getWidth());
-		System.out.println("Height: " + this.getHeight());
+		
 		controller.update(delta);
 		renderer.render();
 		buttonHandler();
@@ -199,9 +203,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor{
 		this.dispose();
 	}
 
-	public static void main(String[] args) {
-		System.out.println(Keys.toString(30));
-	}
+	
 	//Funciona na descida do botao
 	@Override
 	public boolean keyDown(int keycode) {

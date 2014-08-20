@@ -113,8 +113,8 @@ public class WorldRenderer {
 			verifyWin();
 			drawGameObjects();
 			drawCGTActor();
-			drawLifeBarCGTACtor();
-			drawLifeBarCGTEnemy();
+			//drawLifeBarCGTACtor();
+			//drawLifeBarCGTEnemy();
 			spriteBatch.end();
 			if (flagDebug)
 				drawDebug();
@@ -152,7 +152,7 @@ public class WorldRenderer {
 			System.out.println("Ganhou");
 		}
 		else{
-			System.out.println("Ainda nao ganhou");
+			//System.out.println("Ainda nao ganhou");
 		}
 		return win;
 
@@ -322,6 +322,7 @@ public class WorldRenderer {
 		
 	}
 	
+	/*
 	private void drawLifeBarCGTACtor(){
 		spriteBatch.draw(world.getLifeBar(), camera.position.x+world.getPosRelativaLifeBarX(), 
 				camera.position.y+world.getPosRelativaLifeBarY(),50*personagem.getLife(),50);
@@ -331,7 +332,7 @@ public class WorldRenderer {
 		spriteBatch.draw(world.getLifeBarCGTEnemy(), camera.position.x+world.getPosRelativaLifeBarCGTEnemyX(), 
 				camera.position.y+world.getPosRelativaLifeBarCGTEnemyY(),-50*(world.getEnemies().size()-numCGTEnemyDestroyble),50);
 	}
-	
+	*/
 	/***
 	 * Metodo utilizada para fazer o debug
 	 */
@@ -662,7 +663,7 @@ public class WorldRenderer {
 	public boolean isColision() {
 		// colisao = false;
 		damageActorCGT(personagem);
-		System.out.println(personagem.getState().name());
+		//System.out.println(personagem.getState().name());
 		// Verifica se colidiu com algum Opposite
 		for (int i = 0; i < world.getOpposites().size(); i++) {
 			if (world.getOpposites().get(i).getCollision()
