@@ -1,7 +1,6 @@
 package com.projetocgt;
 
 import cgt.CGTGameWorld;
-
 import cgt.policy.*;
 import cgt.util.CGTButton;
 
@@ -17,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.projetocgt.cenario.MyWorld;
+import com.projetocgt.cenario.MyWorldPexe;
 import com.projetocgt.cenario.WorldController;
 import com.projetocgt.cenario.WorldRenderer;
 	
@@ -39,7 +39,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor{
 		super();
 		//Carrega os audios
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/principal.wav"));
-		world = new MyWorld().getCGT();
+		world = new MyWorldPexe().getCGT();
 		renderer = new WorldRenderer(world, DEBUG);
 		
 		for(int i = 0; i < world.getWinCriteria().size(); i++){
