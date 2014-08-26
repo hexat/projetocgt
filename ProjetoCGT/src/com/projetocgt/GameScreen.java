@@ -23,7 +23,7 @@ import com.projetocgt.cenario.WorldRenderer;
 
 public class GameScreen extends Stage implements Screen, InputProcessor{
 
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private CGTGameWorld world;
 	private WorldRenderer renderer;
