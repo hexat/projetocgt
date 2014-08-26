@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -65,7 +66,8 @@ public class GeneralScreen extends Stage implements Screen {
         
         for (CGTButton b : screen.getButtons()) {
         	if(b.isActive()){
-        		//this.pause();
+        		this.dispose();
+        		b.setTouchable(Touchable.disabled);
         		game.setScreen(b.getScreenToGo());
         	}
         }
@@ -105,7 +107,8 @@ public class GeneralScreen extends Stage implements Screen {
 
 	@Override
 	public void dispose() {
-		this.dispose();
+		splsh.dispose();
+		spriteBatch.dispose();
 
 	}
 	

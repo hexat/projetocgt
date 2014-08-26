@@ -78,9 +78,9 @@ public class MyWorldPexe {
 		personagemCGTActor.setFireDefault(-1);
 		personagemCGTActor.setPosition(new Vector2(800f,900f));
 
-		personagemCGTActor.setCollision(new Rectangle(10, 10, 60, 60));
+		personagemCGTActor.setCollision(new Rectangle(10, 10, 40, 40));
 
-		Rectangle tamanhoPersonagem = new Rectangle(0, 0, 80, 80);
+		Rectangle tamanhoPersonagem = new Rectangle(0, 0, 60, 60);
 		personagemCGTActor.setBounds(tamanhoPersonagem);
 
 		personagemCGTActor.setLife(3);
@@ -181,97 +181,87 @@ public class MyWorldPexe {
 		 */
 		
 		// esse for serve para iniciar as casas no cenario
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
+		for (int y =0; y < 3; y++) {
+			int x;
+			for (x = 0; x < 4; x++) {
 				CGTOpposite opositorCasa = new CGTOpposite();
-
-
+				
 				CGTAnimation teste = new CGTAnimation(opositorCasa);
 				teste.setSpriteLine(1);
 				teste.addStatePolicy(StatePolicy.IDLEDOWN);
 				teste.setNumberOfColumns(1);
-				teste.setAnimationPolicy(AnimationPolicy.LOOP);
-
-				//new Vector2(450*(i+1)+i*20,400*(j+1)+j*90), 300, 300, 300, 0, 0
-
-				opositorCasa.setBounds(new Rectangle(0,0,300, 300) );
-				if ((i == 0 && j== 3) || (i==1 && (j==1 || j==2)) || (i==2 &&( j==2 || j==3)) || (i==3 && j==3) ){
-					opositorCasa.setCollision(new Rectangle(30,60,190, 200));
-				}
-				else if((i == 0 && (j== 0 || j==2)) || (i==1 && (j==0 || j==3)) || (i==2 && (j==0 || j==1))){
-					opositorCasa.setCollision(new Rectangle(30,70,190, 210));
-				}
-				else if((i == 0 && j==1) || (i==3 && j==0) ){
-					opositorCasa.setCollision(new Rectangle(30,0,190, 290));
-				}
-				else if(i==3 && j==1){
-					opositorCasa.setCollision(new Rectangle(0,60,300, 210));
-				}
-				else{
-					opositorCasa.setCollision(new Rectangle(25,60,200, 230));
-				}
+				teste.setAnimationPolicy(AnimationPolicy.LOOP);				
 				
-				
-				Vector2 position = new Vector2(450*(i+1)+ i*20, 400*(j+1)+j*90);
+				Vector2 position = new Vector2(90 + x*260, 880 - y*250);
 				opositorCasa.setPosition(position);
+				Rectangle bounds = new Rectangle(0,0,178, 165);
+				opositorCasa.setBounds(bounds);
+				opositorCasa.setCollision(bounds);
 
-				//opositorCasa.setTexture(new CGTTexture("data/Cenario/casa_sprite_sheet.png"));
+				//Texture texture = new CGTTexture("data/Cenario/casa_sprite_sheet.png");
 				opositorCasa.setBlock(true);
 				opositorCasa.setDestroyable(false);
 				opositorCasa.setLife(0);
 
-				opositorCasa.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png").file()));
+				opositorCasa.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/casa1-corte.png").file()));
 				opositorCasa.getSpriteSheet().setRows(1);
 				opositorCasa.getSpriteSheet().setColumns(1);
 				opositorCasa.getAnimarions().add(teste);
 
+				
 				//Indica que a minha animacao e' um por um
 				//opositorCasa.getSpriteSheet().loadingSpriteSheet("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png", 1, 1);
 				//Opposite opositorCasaLib = new Opposite(opositorCasa);
 				world.getOpposites().add(opositorCasa);				
 			}
+			x=0;
 		}
 		
 		// ajuste da posicao da casa do bombeiro na tela
-		world.getOpposites().get(13).setPosition(new Vector2(1880,890));
+		world.getOpposites().get(6).setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/casa2-corte.png").file()));
+		world.getOpposites().get(6).setPosition(new Vector2(590,620));
+		world.getOpposites().get(6).setBounds(new Rectangle(0,0,204,188 ));
+		world.getOpposites().get(6).setCollision(new Rectangle(0,0,204,188 ));
 		
+		Fade fade1 = new Fade(FadePolicy.FADE_IN);
+		fade1.setFadeInTime(0);
 		
-		Fade fade = new Fade(FadePolicy.FADE_IN);
-		fade.setFadeInTime(1);
+		Fade fade5 = new Fade(FadePolicy.FADE_IN);
+		fade5.setFadeInTime(5);
 		
 		Sine sine = new Sine(MovementPolicy.HEIGHT);
-		sine.setMax(100);
-		sine.setMin(50);
+		sine.setMax(187);
+		sine.setMin(177);
 		sine.setAtFirstStep(true);
 
-		CGTEnemy enemyFogoCGT = new CGTEnemy();
+		CGTEnemy alertaPeixe = new CGTEnemy();
 
-		Vector2 positionEnemy = new Vector2(480,850);
-		enemyFogoCGT.setPosition(positionEnemy);
+		Vector2 positionEnemy = world.getOpposites().get(1).getPosition();
+		alertaPeixe.setPosition(positionEnemy);
 //
-//		Rectangle coliderEnemy = new Rectangle(0, 0, 56, 98);
-//		enemyFogoCGT.setCollision(coliderEnemy);
+		Rectangle coliderEnemy = new Rectangle(0, 0, 269, 177);
+		alertaPeixe.setCollision(coliderEnemy);
 //
-//		Rectangle tamanhoEnemy = new Rectangle(0,0,56, 98);
-//		enemyFogoCGT.setBounds(tamanhoEnemy);
+		Rectangle tamanhoEnemy = new Rectangle(0, 0, 269, 177);
+		alertaPeixe.setBounds(tamanhoEnemy);
 
-		enemyFogoCGT.setState(StatePolicy.IDLEDOWN);
-		enemyFogoCGT.setBlock(false);
-		enemyFogoCGT.setDamage(1);
-		//enemyFogoCGT.setSpeed(2);
-		enemyFogoCGT.setDestroyable(true);
-		enemyFogoCGT.addBehavior(fade);
-		enemyFogoCGT.addBehavior(sine);
-		enemyFogoCGT.setLife(50);
-		enemyFogoCGT.setInterval(4);
+		alertaPeixe.setState(StatePolicy.IDLEDOWN);
+		alertaPeixe.setBlock(false);
+		alertaPeixe.setDamage(0);
+		alertaPeixe.setSpeed(1);
+		alertaPeixe.setDestroyable(true);
+		alertaPeixe.addBehavior(fade1);
+		alertaPeixe.addBehavior(sine);
+		alertaPeixe.setLife(50);
+		alertaPeixe.setInterval(4);
 
-		enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/alert_peixe.png").file()));
-		enemyFogoCGT.getSpriteSheet().setRows(2);
-		enemyFogoCGT.getSpriteSheet().setColumns(2);
+		alertaPeixe.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/alert_peixe.png").file()));
+		alertaPeixe.getSpriteSheet().setRows(1);
+		alertaPeixe.getSpriteSheet().setColumns(1);
 
 
 		//Action
-		CGTAnimation moveEnemy = new CGTAnimation(enemyFogoCGT);
+		CGTAnimation moveEnemy = new CGTAnimation(alertaPeixe);
 		moveEnemy.setSpriteLine(1);
 		moveEnemy.addStatePolicy(StatePolicy.IDLEDOWN);
 		moveEnemy.setNumberOfColumns(1);
@@ -279,37 +269,42 @@ public class MyWorldPexe {
 		moveEnemy.setSpriteVelocity(0.08f);
 		moveEnemy.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
 
-		enemyFogoCGT.getAnimarions().add(moveEnemy);
-		world.getEnemies().add(enemyFogoCGT);
+		alertaPeixe.getAnimarions().add(moveEnemy);
+		world.getEnemies().add(alertaPeixe);
 		
-		CGTEnemy enemyFogoCGT2 = new CGTEnemy();
+		CGTEnemy alertaPeixe2 = new CGTEnemy();
 
-		Vector2 positionEnemy2 = new Vector2(680,850);
-		enemyFogoCGT2.setPosition(positionEnemy2);
+		Vector2 positionEnemy2 = world.getOpposites().get(8).getPosition();
+		alertaPeixe2.setPosition(positionEnemy2);
 
-//		Rectangle coliderEnemy2 = new Rectangle(0, 0, 56, 98);
-//		enemyFogoCGT2.setCollision(coliderEnemy2);
-//
-//		Rectangle tamanhoEnemy2 = new Rectangle(0,0,56, 98);
-//		enemyFogoCGT2.setBounds(tamanhoEnemy2);
+		Rectangle coliderEnemy2 = new Rectangle(0, 0, 269, 177);
+		alertaPeixe2.setCollision(coliderEnemy2);
 
-		enemyFogoCGT2.setState(StatePolicy.IDLEDOWN);
-		enemyFogoCGT2.setBlock(false);
-		enemyFogoCGT2.setDamage(1);
-		//enemyFogoCGT.setSpeed(2);
-		enemyFogoCGT2.setDestroyable(true);
-		enemyFogoCGT2.addBehavior(fade);
-		enemyFogoCGT2.addBehavior(sine);
-		enemyFogoCGT2.setLife(50);
-		enemyFogoCGT2.setInterval(4);
+		Rectangle tamanhoEnemy2 = new Rectangle(0,0,269, 177);
+		alertaPeixe2.setBounds(tamanhoEnemy2);
 
-		enemyFogoCGT2.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/alert_peixe.png").file()));
-		enemyFogoCGT2.getSpriteSheet().setRows(2);
-		enemyFogoCGT2.getSpriteSheet().setColumns(2);
+		Sine sine2 = new Sine(MovementPolicy.HEIGHT);
+		sine2.setMax(187);
+		sine2.setMin(177);
+		sine2.setAtFirstStep(true);
+		
+		alertaPeixe2.setState(StatePolicy.IDLEDOWN);
+		alertaPeixe2.setBlock(false);
+		alertaPeixe2.setDamage(0);
+		alertaPeixe2.setSpeed(1);
+		alertaPeixe2.setDestroyable(true);
+		alertaPeixe2.addBehavior(fade5);
+		alertaPeixe2.addBehavior(sine2);
+		alertaPeixe2.setLife(50);
+		alertaPeixe2.setInterval(4);
+
+		alertaPeixe2.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/alert_peixe.png").file()));
+		alertaPeixe2.getSpriteSheet().setRows(1);
+		alertaPeixe2.getSpriteSheet().setColumns(1);
 
 
 		//Action
-		CGTAnimation moveEnemy2 = new CGTAnimation(enemyFogoCGT2);
+		CGTAnimation moveEnemy2 = new CGTAnimation(alertaPeixe2);
 		moveEnemy2.setSpriteLine(1);
 		moveEnemy2.addStatePolicy(StatePolicy.IDLEDOWN);
 		moveEnemy2.setNumberOfColumns(1);
@@ -317,8 +312,8 @@ public class MyWorldPexe {
 		moveEnemy2.setSpriteVelocity(0.08f);
 		moveEnemy2.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
 
-		enemyFogoCGT2.getAnimarions().add(moveEnemy2);
-		world.getEnemies().add(enemyFogoCGT2);
+		alertaPeixe2.getAnimarions().add(moveEnemy2);
+		world.getEnemies().add(alertaPeixe2);
 
 		//		//Instancia o opposite fogo
 		//		Enemy enemyFogo = new Enemy(new Vector2(400,850), 50, 50, 50, 0, 0);
@@ -366,7 +361,7 @@ public class MyWorldPexe {
 		direction.setMinX(330);
 		//		
 		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
-		directionUp.setMaxY(2000);
+		directionUp.setMaxY(900);
 		directionUp.setMinY(200);
 		//		
 		//
@@ -469,11 +464,11 @@ public class MyWorldPexe {
 
 		CGTBonus hidrate = new CGTBonus();
 
-		hidrate.setPosition(new Vector2(1880, 880));
-		hidrate.setBounds(new Rectangle(0,0,50,50));
-		hidrate.setCollision(new Rectangle(0,0,50,50));
+		hidrate.setPosition(new Vector2(920, 180));
+		hidrate.setBounds(new Rectangle(0,0,255,224));
+		hidrate.setCollision(new Rectangle(0,0,255,80));
 		
-		hidrate.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/jangada.png").file()));
+		hidrate.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/jangada-corte.png").file()));
 		CGTAnimation aniHidrante = new CGTAnimation(hidrate);
 		hidrate.getAnimarions().add(aniHidrante);
 		//hidrate.setTexture(new Texture("data/CGTBonus/SpriteSheet_tubo.png"));
@@ -487,7 +482,7 @@ public class MyWorldPexe {
 		projetilAguaCGT.setBounds(new Rectangle(0,0,30, 30));
 		Rectangle coliderProjectile = new Rectangle(0,0,30, 30);
 		
-		//Vector2 positionRelative = new Vector2(0,0);
+		Vector2 positionRelative = new Vector2(0,0);
 		projetilAguaCGT.setCollision(coliderProjectile);
 		projetilAguaCGT.setInterval(1);
 
@@ -517,7 +512,7 @@ public class MyWorldPexe {
 		a.setAnimationPolicy(AnimationPolicy.LOOP);
 
 		CGTAnimation down = new CGTAnimation(projetilAguaCGT);
-		down.setSpriteLine(2);
+		down.setSpriteLine(1);
 		down.setFlip(false);
 		down.addStatePolicy(StatePolicy.LOOKDOWN);
 		down.addStatePolicy(StatePolicy.IDLEDOWN);
@@ -526,7 +521,7 @@ public class MyWorldPexe {
 		down.setAnimationPolicy(AnimationPolicy.LOOP);
 
 		CGTAnimation up = new CGTAnimation(projetilAguaCGT);
-		up.setSpriteLine(2);
+		up.setSpriteLine(1);
 		up.setFlip(true);
 		up.addStatePolicy(StatePolicy.LOOKUP);
 		up.addStatePolicy(StatePolicy.IDLEUP);
@@ -560,7 +555,7 @@ public class MyWorldPexe {
 
 		ProjectileOrientation direcaoUp = new ProjectileOrientation();
 		direcaoUp.setPositionRelativeToGameObject(new Vector2(30f, 60f));
-		direcaoUp.setSpriteLine(2);
+		direcaoUp.setSpriteLine(1);
 		direcaoUp.setSpriteNumberOfColumns(2);
 		direcaoUp.setSpriteVelocity(2);
 		direcaoUp.addState(StatePolicy.LOOKUP);
@@ -569,7 +564,7 @@ public class MyWorldPexe {
 
 		ProjectileOrientation direcaoDown = new ProjectileOrientation();
 		direcaoDown.setPositionRelativeToGameObject(new Vector2(25f, -20f));
-		direcaoDown.setSpriteLine(2);
+		direcaoDown.setSpriteLine(1);
 		direcaoDown.setSpriteNumberOfColumns(2);
 		direcaoDown.setSpriteVelocity(2);
 		direcaoDown.addState(StatePolicy.LOOKDOWN);

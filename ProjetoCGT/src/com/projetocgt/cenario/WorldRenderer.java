@@ -111,8 +111,10 @@ public class WorldRenderer {
 		spriteBatch.begin();
 		if(!verifyLose()){
 			verifyWin();
-			drawGameObjects();
+			drawBackground();
 			drawCGTActor();
+			drawGameObjects();
+			
 			//drawLifeBarCGTACtor();
 			//drawLifeBarCGTEnemy();
 			spriteBatch.end();
@@ -162,7 +164,7 @@ public class WorldRenderer {
 	 * Utilizado para limpar o desenho da tela
 	 */
 	public void dispose() {
-		world.getBackground().dispose();
+		//world.getBackground().dispose();
 		/*
 		 * for(int i =0;i<world.getOpposites().size();i++){
 		 * //world.getOpposites().get(i).getTexture().dispose();
@@ -185,9 +187,12 @@ public class WorldRenderer {
 	 * Desenha os obejtos na cena, backGroud, CGTOpposite, CGTBonus e
 	 * CGTProjectle
 	 */
+	private void drawBackground(){
+		spriteBatch.draw(world.getBackground(), 0, 0);
+	}
 	private void drawGameObjects() {
 
-		spriteBatch.draw(world.getBackground(), 0, 0);
+		
 
 		// Desenha todos os Opposite
 		for (int i = 0; i < world.getOpposites().size(); i++) {
@@ -483,8 +488,9 @@ public class WorldRenderer {
 				Sine sine = (Sine) behavior;
 
 				if (sine.isAtFirstStep()) {
-					enemy.getCollision().height += enemy.getSpeed();
 					enemy.getBounds().height += enemy.getSpeed();
+					enemy.getCollision().height += enemy.getSpeed();
+					
 				}
 
 				else {
@@ -705,7 +711,7 @@ public class WorldRenderer {
 	 */
 	public void animationDamage(CGTActor boy, CGTEnemy enemy) {
 
-		if (!personagem.isInvincible() && enemy.isVulnerable()) {
+		if (!personagem.isInvincible() && enemy.isVulnerable() && enemy.getDamage()>0) {
 
 			personagem.setInvincible(true);
 			//final StatePolicy state = personagem.getState();
