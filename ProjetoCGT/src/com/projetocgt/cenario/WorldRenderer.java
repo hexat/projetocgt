@@ -8,29 +8,18 @@ import cgt.core.CGTActor;
 import cgt.core.CGTEnemy;
 import cgt.core.CGTProjectile;
 import cgt.policy.*;
-import cgt.util.CGTButton;
-import cgt.win.Win;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 /**
@@ -53,8 +42,6 @@ public class WorldRenderer {
 	private int ammo;
 	private boolean colisao;
 	private boolean colisaoEnemy;
-	private int numCGTEnemyDestroyble;
-	private boolean flagContanumCGTEnemyDestroyble; 
 	/** for debug rendering **/
 	ShapeRenderer debugRenderer = new ShapeRenderer();
 	private SpriteBatch spriteBatch;
@@ -81,7 +68,6 @@ public class WorldRenderer {
 		this.flagDebug = debug;
 		spriteBatch = new SpriteBatch();
 		personagem = world.getActor();
-		numCGTEnemyDestroyble=0;
 //		texture = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
 //		region = new TextureRegion(texture, 20, 20);
 	}
@@ -297,12 +283,6 @@ public class WorldRenderer {
 			for (int j = 0; j < world.getEnemies().size(); j++) {
 				// verifica se algum Enemy destrutivel esta colindindo com
 				// algum Projectile
-				
-				//Conta o numero de enemys destroyable
-				if(!world.getEnemies().get(j).isDestroyable() && !flagContanumCGTEnemyDestroyble){
-					numCGTEnemyDestroyble++;
-				}
-				
 				if (world.getEnemies().get(j).getCollision().overlaps(pro.getCollision())
 						&& world.getEnemies().get(j).isDestroyable() && world.getEnemies().get(j).isVulnerable()) {
 					world.getEnemies().get(j).setLife(world.getEnemies().get(j).getLife() - 1);					
@@ -310,7 +290,7 @@ public class WorldRenderer {
 						world.getEnemies().remove(j);
 				}
 			}
-			flagContanumCGTEnemyDestroyble=true;
+			
 			// }
 		}
 	}
