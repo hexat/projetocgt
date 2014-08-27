@@ -34,13 +34,13 @@ public class GeneralScreen extends Stage implements Screen {
 //	    stage = new Stage(new ScreenViewport());
 	    Gdx.input.setInputProcessor(this);
 	    
-		CGTTexture t = new CGTTexture("data/menu/back_gui.png");
+		CGTTexture t = new CGTTexture("data/dapexe/menuInicial.png");
 		CGTButton btn = new CGTButton();
 		btn.setRelativeX(0.33f);
 		btn.setRelativeY(0.5f);
 		btn.setRelativeWidth(0.25f);
 		btn.setRelativeHeight(0.3f);
-		Texture texture = new Texture("data/menu/iniciar_gui.png");
+		Texture texture = new Texture("data/dapexe/iniciar.png");
 		btn.setTextureDown(texture);
 		btn.setTextureUp(texture);
 		btn.setBounds(0, 0, texture.getWidth(), texture.getHeight());
@@ -59,7 +59,7 @@ public class GeneralScreen extends Stage implements Screen {
         this.act();
         
         getSpriteBatch().begin();
-        getSpriteBatch().draw(new Texture("data/menu/back_gui.png"), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        getSpriteBatch().draw(new Texture("data/dapexe/menuInicial.png"), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         getSpriteBatch().end();
         
         this.draw();

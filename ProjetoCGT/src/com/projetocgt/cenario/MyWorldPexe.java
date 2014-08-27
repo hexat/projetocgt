@@ -217,7 +217,17 @@ public class MyWorldPexe {
 			x=0;
 		}
 		
-		// ajuste da posicao da casa do bombeiro na tela
+		world.getOpposites().get(0).setCollision(new Rectangle(23,0,125,140));
+		world.getOpposites().get(1).setCollision(new Rectangle(30,0,125,140));
+		world.getOpposites().get(2).setCollision(new Rectangle(0,20,178,130));
+		world.getOpposites().get(4).setCollision(new Rectangle(0,20,178,120));
+		world.getOpposites().get(5).setCollision(new Rectangle(0,20,178,120));
+		world.getOpposites().get(7).setCollision(new Rectangle(0,0,178,140));
+		world.getOpposites().get(9).setCollision(new Rectangle(0,0,178,140));
+		world.getOpposites().get(10).setCollision(new Rectangle(23,0,125,140));
+		world.getOpposites().get(11).setCollision(new Rectangle(0,20,178,120));
+		
+		// ajuste da posicao do lago na tela
 		world.getOpposites().get(6).setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/casa233-corte.png").file()));
 		world.getOpposites().get(6).setPosition(new Vector2(590,620));
 		world.getOpposites().get(6).setBounds(new Rectangle(0,0,204,188 ));
@@ -238,10 +248,10 @@ public class MyWorldPexe {
 
 		Vector2 positionEnemy = world.getOpposites().get(1).getPosition();
 		alertaPeixe.setPosition(positionEnemy);
-//
+
 		Rectangle coliderEnemy = new Rectangle(0, 0, 269, 177);
 		alertaPeixe.setCollision(coliderEnemy);
-//
+
 		Rectangle tamanhoEnemy = new Rectangle(0, 0, 269, 177);
 		alertaPeixe.setBounds(tamanhoEnemy);
 
@@ -565,7 +575,7 @@ public class MyWorldPexe {
 		css.setRows(1);
 		css.setColumns(2);
 		projetilAguaCGT.setSpriteSheet(css);
-		projetilAguaCGT.setAmmo(0);
+		projetilAguaCGT.setAmmo(1);
 
 		//Action dos projectiles
 		CGTAnimation m = new CGTAnimation(projetilAguaCGT);
