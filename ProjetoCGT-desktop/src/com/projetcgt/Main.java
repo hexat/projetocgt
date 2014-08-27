@@ -11,6 +11,6 @@ public class Main {
 		//cgf.vSyncEnabled = true;
 //		cgf.width = 480;
 //		cgf.height = 320;
-		new LwjglApplication(new StarAssault(),cgf);
+		new LwjglApplication(StarAssault.getInstance(),cgf);
 	}
 }

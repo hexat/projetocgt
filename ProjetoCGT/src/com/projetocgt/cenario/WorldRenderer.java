@@ -21,6 +21,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.projetocgt.GameScreen;
+import com.projetocgt.GeneralScreen;
+import com.projetocgt.StarAssault;
 
 /**
  * Class utilizada para renderizar imagens do jogo na tela.Isso inclui Actor,
@@ -45,6 +48,7 @@ public class WorldRenderer {
 	/** for debug rendering **/
 	ShapeRenderer debugRenderer = new ShapeRenderer();
 	private SpriteBatch spriteBatch;
+	private StarAssault instance;
 	public SpriteBatch getSpriteBatch() {
 		return spriteBatch;
 	}
@@ -110,9 +114,12 @@ public class WorldRenderer {
 		}
 		
 		else{
-			Gdx.graphics.getGL20().glClearColor(0, 0, 0, 1);
-			Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT);
-			spriteBatch.end();
+			instance = StarAssault.getInstance();
+			instance.setScreen(new GeneralScreen(instance));
+			
+			//Gdx.graphics.getGL20().glClearColor(0, 0, 0, 1);
+			//Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT);
+			//spriteBatch.end();
 		}
 		
 	}

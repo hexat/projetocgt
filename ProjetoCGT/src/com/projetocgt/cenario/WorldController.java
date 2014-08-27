@@ -40,6 +40,7 @@ public class WorldController {
 //		for (ActionJumpPolicy a : ActionJumpPolicy.values()) {
 //			keys.put(a.name(), false);
 //		}
+		
 		keys.put(Keys.RIGHT, false);
 		keys.put(Keys.LEFT, false);
 
@@ -57,6 +58,7 @@ public class WorldController {
 		// Posicao inicial do personagem
 		this.personagem = world.getActor();
 		this.actorAnimation = world.getActor().getCGTAnimation();
+		releaseAllDirectionKeys();
 	}
 
 	public void activeMoveKey(ActionMovePolicy policy) {

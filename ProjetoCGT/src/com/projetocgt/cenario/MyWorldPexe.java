@@ -218,6 +218,7 @@ public class MyWorldPexe {
 			x=0;
 		}
 		
+		// ajuste das colisões das casas
 		world.getOpposites().get(0).setCollision(new Rectangle(23,0,125,140));
 		world.getOpposites().get(1).setCollision(new Rectangle(30,0,125,140));
 		world.getOpposites().get(2).setCollision(new Rectangle(0,15,178,130));
