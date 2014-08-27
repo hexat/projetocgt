@@ -219,7 +219,7 @@ public class WorldController {
 	 */
 	public void update(float delta) {
 		// Processa a entrada de algum parametro
-		if(!personagem.isCommands()){
+		if(!personagem.isInputsEnabled()){
 			processInput();	
 		}else{
 			personagem.getVelocity().y = 0;

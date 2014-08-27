@@ -77,7 +77,7 @@ public class MyWorldPexe {
 		CGTActor personagemCGTActor = new CGTActor();
 		personagemCGTActor.setFireDefault(-1);
 		personagemCGTActor.setPosition(new Vector2(800f,900f));
-
+		personagemCGTActor.setTimeToRecovery(4);
 		personagemCGTActor.setCollision(new Rectangle(10, 10, 40, 45));
 
 		Rectangle tamanhoPersonagem = new Rectangle(0, 0, 60, 60);
@@ -87,7 +87,7 @@ public class MyWorldPexe {
 		actorLifeBar.setMaxLife(3);
 		actorLifeBar.setOwner(personagemCGTActor);
 		world.addLifeBar(actorLifeBar);
-		personagemCGTActor.setSpeed(280);
+		personagemCGTActor.setSpeed(800);
 
 		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/sprite_garoto.png").file()));
 		personagemCGTActor.getSpriteSheet().setRows(5);
@@ -284,7 +284,6 @@ public class MyWorldPexe {
 		alertaPeixe.addBehavior(fade1);
 		alertaPeixe.addBehavior(sine);
 		alertaPeixe.setLife(50);
-		alertaPeixe.setInterval(4);
 
 		alertaPeixe.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/alert_peixe.png").file()));
 		alertaPeixe.getSpriteSheet().setRows(1);
@@ -327,7 +326,6 @@ public class MyWorldPexe {
 		alertaPeixe2.addBehavior(fade5);
 		alertaPeixe2.addBehavior(sine2);
 		alertaPeixe2.setLife(50);
-		alertaPeixe2.setInterval(4);
 
 		alertaPeixe2.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/alert_peixe.png").file()));
 		alertaPeixe2.getSpriteSheet().setRows(1);
@@ -425,7 +423,6 @@ public class MyWorldPexe {
 		Rectangle tamanhoCarro = new Rectangle(0,0,98, 90);
 		carroCGT.setBounds(tamanhoCarro);
 
-		carroCGT.setInterval(3);
 		carroCGT.setBlock(true);
 		carroCGT.setDestroyable(false);
 		carroCGT.setDamage(10);
@@ -506,7 +503,6 @@ public class MyWorldPexe {
 		Rectangle tamanhoCarro2 = new Rectangle(0,0,98, 90);
 		carroCGT2.setBounds(tamanhoCarro2);
 
-		carroCGT2.setInterval(3);
 		carroCGT2.setBlock(true);
 		carroCGT2.setDestroyable(false);
 		carroCGT2.setDamage(10);

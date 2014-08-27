@@ -77,6 +77,7 @@ public class MyWorld {
 		CGTActor personagemCGTActor = new CGTActor();
 		personagemCGTActor.setFireDefault(-1);
 		personagemCGTActor.setPosition(new Vector2(1800f,900f));
+		personagemCGTActor.setTimeToRecovery(3);
 
 		personagemCGTActor.setCollision(new Rectangle(10, 10, 60, 60));
 
@@ -176,7 +177,7 @@ public class MyWorld {
 		 * um por um.
 		 */
 		
-		// esse for serve para iniciar as casas no cenário
+		// esse for serve para iniciar as casas no cenï¿½rio
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				CGTOpposite opositorCasa = new CGTOpposite();
@@ -230,7 +231,7 @@ public class MyWorld {
 			}
 		}
 		
-		// ajuste da posição da casa do bombeiro na tela
+		// ajuste da posiï¿½ï¿½o da casa do bombeiro na tela
 		world.getOpposites().get(13).setPosition(new Vector2(1880,890));
 		
 		
@@ -261,7 +262,6 @@ public class MyWorld {
 		enemyFogoCGT.addBehavior(fade);
 		enemyFogoCGT.addBehavior(sine);
 		enemyFogoCGT.setLife(50);
-		enemyFogoCGT.setInterval(4);
 
 		enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png").file()));
 		enemyFogoCGT.getSpriteSheet().setRows(2);
@@ -299,7 +299,6 @@ public class MyWorld {
 		enemyFogoCGT2.addBehavior(fade);
 		enemyFogoCGT2.addBehavior(sine);
 		enemyFogoCGT2.setLife(50);
-		enemyFogoCGT2.setInterval(4);
 
 		enemyFogoCGT2.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png").file()));
 		enemyFogoCGT2.getSpriteSheet().setRows(2);
@@ -396,7 +395,6 @@ public class MyWorld {
 		Rectangle tamanhoCarro = new Rectangle(0,0,98, 90);
 		carroCGT.setBounds(tamanhoCarro);
 
-		carroCGT.setInterval(3);
 		carroCGT.setBlock(false);
 		carroCGT.setDestroyable(false);
 		carroCGT.setDamage(10);
