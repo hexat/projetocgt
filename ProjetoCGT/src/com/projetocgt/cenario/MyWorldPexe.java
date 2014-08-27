@@ -78,7 +78,7 @@ public class MyWorldPexe {
 		personagemCGTActor.setFireDefault(-1);
 		personagemCGTActor.setPosition(new Vector2(800f,900f));
 
-		personagemCGTActor.setCollision(new Rectangle(10, 10, 40, 40));
+		personagemCGTActor.setCollision(new Rectangle(10, 10, 40, 45));
 
 		Rectangle tamanhoPersonagem = new Rectangle(0, 0, 60, 60);
 		personagemCGTActor.setBounds(tamanhoPersonagem);
@@ -220,7 +220,7 @@ public class MyWorldPexe {
 		
 		world.getOpposites().get(0).setCollision(new Rectangle(23,0,125,140));
 		world.getOpposites().get(1).setCollision(new Rectangle(30,0,125,140));
-		world.getOpposites().get(2).setCollision(new Rectangle(0,20,178,130));
+		world.getOpposites().get(2).setCollision(new Rectangle(0,15,178,130));
 		world.getOpposites().get(4).setCollision(new Rectangle(0,20,178,120));
 		world.getOpposites().get(5).setCollision(new Rectangle(0,20,178,120));
 		world.getOpposites().get(7).setCollision(new Rectangle(0,0,178,140));
@@ -418,7 +418,7 @@ public class MyWorldPexe {
 		Vector2 positionCarro = new Vector2(780,600);
 		carroCGT.setPosition(positionCarro);
 
-		Rectangle coliderCarro = new Rectangle(0,0,90, 98);
+		Rectangle coliderCarro = new Rectangle(22,0,60, 94);
 		carroCGT.setCollision(coliderCarro);
 
 		Rectangle tamanhoCarro = new Rectangle(0,0,98, 90);
@@ -499,7 +499,7 @@ public class MyWorldPexe {
 		Vector2 positionCarro2 = new Vector2(600,560);
 		carroCGT2.setPosition(positionCarro2);
 
-		Rectangle coliderCarro2 = new Rectangle(0,0,90, 98);
+		Rectangle coliderCarro2 = new Rectangle(0,0,90, 80);
 		carroCGT2.setCollision(coliderCarro2);
 
 		Rectangle tamanhoCarro2 = new Rectangle(0,0,98, 90);
