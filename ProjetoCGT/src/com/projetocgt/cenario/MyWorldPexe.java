@@ -281,7 +281,7 @@ public class MyWorldPexe {
 		alertaPeixe.setDamage(0);
 		alertaPeixe.setSpeed(1);
 		alertaPeixe.setDestroyable(true);
-		alertaPeixe.addBehavior(fade1);
+		alertaPeixe.addBehavior(fade5);
 		alertaPeixe.addBehavior(sine);
 		alertaPeixe.setLife(50);
 		alertaPeixe.setInterval(4);
@@ -324,7 +324,7 @@ public class MyWorldPexe {
 		alertaPeixe2.setDamage(0);
 		alertaPeixe2.setSpeed(1);
 		alertaPeixe2.setDestroyable(true);
-		alertaPeixe2.addBehavior(fade5);
+		//alertaPeixe2.addBehavior(fade5);
 		alertaPeixe2.addBehavior(sine2);
 		alertaPeixe2.setLife(50);
 		alertaPeixe2.setInterval(4);

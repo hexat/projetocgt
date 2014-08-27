@@ -147,6 +147,8 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		
 		controller.update(delta);
 		renderer.render();
+		if(renderer.verifyLose())
+			music.stop();
 		buttonHandler();
 		this.act();
 		getSpriteBatch().begin();

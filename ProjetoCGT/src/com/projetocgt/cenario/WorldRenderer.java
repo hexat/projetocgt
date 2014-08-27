@@ -592,6 +592,7 @@ public class WorldRenderer {
 
 			// Desativa-se as interacoes do enemy com o actor e retira-se o behavior
 			// para que ocorra apenas uma vez
+			enemy.setAlpha(0);
 			enemy.setVulnerable(false);
 			enemy.removeBehavior(fade);
 			Timer.schedule(new Task() {
