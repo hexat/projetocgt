@@ -257,7 +257,7 @@ public class WorldRenderer {
 
 		// Carrega o debug para todos os Opposite
 		for (int i = 0; i < world.getOpposites().size(); i++) {
-			debugRenderer.setColor(new Color(0, 1, 0, 1));
+			//debugRenderer.setColor(new Color(0, 1, 0, 1));
 			debugRenderer.rect(world.getOpposites().get(i).getCollision().x,
 					world.getOpposites().get(i).getCollision().y, world
 					.getOpposites().get(i).getCollision().getWidth(),
@@ -267,7 +267,7 @@ public class WorldRenderer {
 		// Carrega o debug para todos os Enemy
 		for (int i = 0; i < world.getEnemies().size(); i++) {
 			if (world.getEnemies().get(i).getLife() >= 0) {
-				debugRenderer.setColor(new Color(0, 1, 0, 1));
+				//debugRenderer.setColor(new Color(0, 1, 0, 1));
 				debugRenderer.rect(world.getEnemies().get(i).getCollision().x,
 						world.getEnemies().get(i).getCollision().y, world
 						.getEnemies().get(i).getCollision().getWidth(),
@@ -276,13 +276,13 @@ public class WorldRenderer {
 		}
 
 		// Carrega o debug para todos os Actor
-		debugRenderer.setColor(new Color(0, 1, 0, 1));
+		//debugRenderer.setColor(new Color(0, 1, 0, 1));
 		debugRenderer.rect(world.getActor().getCollision().x, world.getActor()
 				.getCollision().y, world.getActor().getCollision().getWidth(),
 				world.getActor().getCollision().getHeight());
 		// Carrega o debug para todos os Bonus
 		for (int i = 0; i < world.getBonus().size(); i++) {
-			debugRenderer.setColor(new Color(0, 1, 0, 1));
+			//debugRenderer.setColor(new Color(0, 1, 0, 1));
 			debugRenderer.rect(world.getBonus().get(i).getCollision().x, world
 					.getBonus().get(i).getCollision().y, world.getBonus()
 					.get(i).getCollision().getWidth(), world.getBonus().get(i)
@@ -504,9 +504,9 @@ public class WorldRenderer {
 			enemy.removeBehavior(fade);
 			Timer.schedule(new Task() {
 				public void run() {
-					for (float alpha = 0f; alpha <= 1f; alpha += 0.01f) {
-						enemy.setAlpha(alpha);
-					}
+					System.out.println(enemy.getGroup()+": FADE ATIVADO");
+						enemy.setAlpha(1);
+					
 					// Recupera-se a interacao
 					enemy.setVulnerable(true);
 				}

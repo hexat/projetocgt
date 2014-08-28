@@ -276,12 +276,13 @@ public class MyWorldPexe {
 		Rectangle tamanhoEnemy = new Rectangle(0, 0, 269, 177);
 		alertaPeixe.setBounds(tamanhoEnemy);
 
+		alertaPeixe.setGroup("AlertaPeixe1");
 		alertaPeixe.setState(StatePolicy.IDLEDOWN);
 		alertaPeixe.setBlock(false);
 		alertaPeixe.setDamage(0);
 		alertaPeixe.setSpeed(1);
 		alertaPeixe.setDestroyable(true);
-		alertaPeixe.addBehavior(fade5);
+		//alertaPeixe.addBehavior(fade1);
 		alertaPeixe.addBehavior(sine);
 		alertaPeixe.setLife(50);
 
@@ -304,7 +305,7 @@ public class MyWorldPexe {
 		
 		CGTEnemy alertaPeixe2 = new CGTEnemy();
 
-		Vector2 positionEnemy2 = world.getOpposites().get(8).getPosition();
+		Vector2 positionEnemy2 = world.getOpposites().get(3).getPosition();
 		alertaPeixe2.setPosition(positionEnemy2);
 
 		Rectangle coliderEnemy2 = new Rectangle(0, 0, 269, 177);
@@ -318,12 +319,13 @@ public class MyWorldPexe {
 		sine2.setMin(177);
 		sine2.setAtFirstStep(true);
 		
+		alertaPeixe2.setGroup("AlertaPeixe2");
 		alertaPeixe2.setState(StatePolicy.IDLEDOWN);
 		alertaPeixe2.setBlock(false);
 		alertaPeixe2.setDamage(0);
 		alertaPeixe2.setSpeed(1);
 		alertaPeixe2.setDestroyable(true);
-		//alertaPeixe2.addBehavior(fade5);
+		alertaPeixe2.addBehavior(fade5);
 		alertaPeixe2.addBehavior(sine2);
 		alertaPeixe2.setLife(50);
 
@@ -408,8 +410,6 @@ public class MyWorldPexe {
 		//		directionEight.setMinX(330);
 		//		
 		//		
-		Fade fadeCar = new Fade(FadePolicy.FADE_IN);
-		fadeCar.setFadeInTime(0);
 		
 		// inicializando o carro no cen�rio		
 		CGTEnemy carroCGT = new CGTEnemy();
@@ -426,7 +426,6 @@ public class MyWorldPexe {
 		carroCGT.setBlock(true);
 		carroCGT.setDestroyable(false);
 		carroCGT.setDamage(10);
-		carroCGT.addBehavior(fadeCar);
 		carroCGT.addBehavior(directionUp);
 
 		carroCGT.setSpeed(200);
@@ -488,9 +487,6 @@ public class MyWorldPexe {
 		//Add na lista de enemy
 		world.getEnemies().add(carroCGT);
 		
-		Fade fadeCar1 = new Fade(FadePolicy.FADE_IN);
-		fadeCar1.setFadeInTime(0);
-		
 		// inicializando o carro no cen�rio		
 		CGTEnemy carroCGT2 = new CGTEnemy();
 
@@ -506,7 +502,6 @@ public class MyWorldPexe {
 		carroCGT2.setBlock(true);
 		carroCGT2.setDestroyable(false);
 		carroCGT2.setDamage(10);
-		carroCGT2.addBehavior(fadeCar1);
 		carroCGT2.addBehavior(direction);
 
 		carroCGT2.setSpeed(200);

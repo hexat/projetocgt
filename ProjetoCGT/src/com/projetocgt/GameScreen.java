@@ -22,7 +22,7 @@ import com.projetocgt.cenario.WorldRenderer;
 
 public class GameScreen extends Stage implements Screen, InputProcessor {
 
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = true;
 
 	private CGTGameWorld world;
 	private WorldRenderer renderer;
@@ -125,7 +125,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 					flagTouch=false;
 					//verifica se o ammo é zero
 					controller.fireReleasedTouch();
-					Timer.instance().clear();
+					//Timer.instance().clear();
 				}
 			}, renderer.getCurrentActorProjectile().getInterval());
 		}
