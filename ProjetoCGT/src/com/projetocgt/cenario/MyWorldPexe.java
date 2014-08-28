@@ -2,16 +2,31 @@ package com.projetocgt.cenario;
 
 
 import cgt.CGTGameWorld;
-import cgt.behaviors.*;
-import cgt.core.*;
+import cgt.behaviors.Direction;
+import cgt.behaviors.Fade;
+import cgt.behaviors.Sine;
+import cgt.core.CGTActor;
+import cgt.core.CGTBonus;
+import cgt.core.CGTEnemy;
+import cgt.core.CGTOpposite;
+import cgt.core.CGTProjectile;
 import cgt.lose.LifeDepleted;
-import cgt.policy.*;
-import cgt.util.*;
+import cgt.policy.DirectionPolicy;
+import cgt.policy.FadePolicy;
+import cgt.policy.InputPolicy;
+import cgt.policy.MovementPolicy;
+import cgt.policy.StatePolicy;
+import cgt.util.CGTAnimation;
+import cgt.util.CGTButton;
+import cgt.util.CGTSpriteSheet;
+import cgt.util.LifeBar;
+import cgt.util.ProjectileOrientation;
 import cgt.win.KillAllEnemies;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -110,16 +125,16 @@ public class MyWorldPexe {
 		
 		//moveLEft.addInput(InputPolicy.ACEL_LEFT);
 		moveLEft.setSpriteVelocity(0.2f);
-		moveLEft.setFlip(true);
-		moveLEft.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		moveLEft.setFlipHorizontal(true);
+		moveLEft.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
 		CGTAnimation moveRight = new CGTAnimation(personagemCGTActor);
 		moveRight.setSpriteLine(2);
 		moveRight.addStatePolicy(StatePolicy.LOOKRIGHT);
-		moveRight.setFlip(false);
+		moveRight.setFlipHorizontal(false);
 		//moveRight.addInput(InputPolicy.ACEL_RIGHT);
 		moveRight.setSpriteVelocity(0.2f);
-		moveRight.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		moveRight.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
 		CGTAnimation moveUp = new CGTAnimation(personagemCGTActor);
 		moveUp.setSpriteLine(1);
@@ -127,7 +142,7 @@ public class MyWorldPexe {
 		
 		//moveUp.addInput(InputPolicy.ACEL_UP);
 		moveUp.setSpriteVelocity(0.2f);
-		moveUp.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		moveUp.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
 		CGTAnimation moveDown = new CGTAnimation(personagemCGTActor);
 		moveDown.setSpriteLine(3);
@@ -135,7 +150,7 @@ public class MyWorldPexe {
 		
 		//moveDown.addInput(InputPolicy.ACEL_DOWN);
 		moveDown.setSpriteVelocity(0.2f);
-		moveDown.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		moveDown.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 		
 		CGTAnimation animationDamege = new CGTAnimation(personagemCGTActor);
 		animationDamege.setSpriteLine(5);
@@ -143,7 +158,7 @@ public class MyWorldPexe {
 		
 		//moveDown.addInput(InputPolicy.ACEL_DOWN);
 		animationDamege.setSpriteVelocity(0.2f);
-		animationDamege.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		animationDamege.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
 		personagemCGTActor.getAnimarions().add(animationDamege);
 		personagemCGTActor.getAnimarions().add(moveDown);
@@ -207,7 +222,7 @@ public class MyWorldPexe {
 				CGTAnimation teste = new CGTAnimation(opositorCasa);
 				teste.setSpriteLine(1);
 				teste.addStatePolicy(StatePolicy.IDLEDOWN);
-				teste.setAnimationPolicy(AnimationPolicy.LOOP);
+				teste.setAnimationPolicy(PlayMode.LOOP);
 				opositorCasa.getAnimarions().add(teste);
 				
 				//Indica que a minha animacao e' um por um
@@ -250,7 +265,7 @@ public class MyWorldPexe {
 		marAnimation.setInitialFrame(new Vector2(0,0));
 		marAnimation.setEndingFrame(new Vector2(4,9));
 		marAnimation.addStatePolicy(StatePolicy.IDLEDOWN);
-		marAnimation.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		marAnimation.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 		
 		mar.getAnimarions().add(marAnimation);
 		world.addOpposite(mar);
@@ -297,7 +312,7 @@ public class MyWorldPexe {
 		
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveEnemy.setSpriteVelocity(0.08f);
-		moveEnemy.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		moveEnemy.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
 		alertaPeixe.getAnimarions().add(moveEnemy);
 		world.getEnemies().add(alertaPeixe);
@@ -339,7 +354,7 @@ public class MyWorldPexe {
 		
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveEnemy2.setSpriteVelocity(0.08f);
-		moveEnemy2.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		moveEnemy2.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
 		alertaPeixe2.getAnimarions().add(moveEnemy2);
 		world.getEnemies().add(alertaPeixe2);
@@ -447,7 +462,7 @@ public class MyWorldPexe {
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 >>>>>>> e1b8bce29cead427cdf4703326a50bb9844ab4db
 		moveCarro.setSpriteVelocity(0.08f);
-		moveCarro.setAnimationPolicy(AnimationPolicy.LOOP);
+		moveCarro.setAnimationPolicy(PlayMode.LOOP);
 		carroCGT.getAnimarions().add(moveCarro);
 
 		CGTAnimation moveCarroLeft = new CGTAnimation(carroCGT);
@@ -461,7 +476,7 @@ public class MyWorldPexe {
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 >>>>>>> e1b8bce29cead427cdf4703326a50bb9844ab4db
 		moveCarroLeft.setSpriteVelocity(0.08f);
-		moveCarroLeft.setAnimationPolicy(AnimationPolicy.LOOP);
+		moveCarroLeft.setAnimationPolicy(PlayMode.LOOP);
 		carroCGT.getAnimarions().add(moveCarroLeft);
 		*/
 
@@ -471,7 +486,7 @@ public class MyWorldPexe {
 		
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveCarroDown.setSpriteVelocity(0.08f);
-		moveCarroDown.setAnimationPolicy(AnimationPolicy.LOOP);
+		moveCarroDown.setAnimationPolicy(PlayMode.LOOP);
 		carroCGT.getAnimarions().add(moveCarroDown);
 
 		CGTAnimation moveCarroUp = new CGTAnimation(carroCGT);
@@ -480,7 +495,7 @@ public class MyWorldPexe {
 		
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveCarroUp.setSpriteVelocity(0.08f);
-		moveCarroUp.setAnimationPolicy(AnimationPolicy.LOOP);
+		moveCarroUp.setAnimationPolicy(PlayMode.LOOP);
 		carroCGT.getAnimarions().add(moveCarroUp);
 
 		//Enemy enemyCarroLIB = new Enemy(carroCGT);
@@ -522,16 +537,16 @@ public class MyWorldPexe {
 		moveCarro.addStatePolicy(StatePolicy.LOOKRIGHT);
 //		moveCarro.setNumberOfColumns(2);
 		moveCarro.setSpriteVelocity(0.08f);
-		moveCarro.setAnimationPolicy(AnimationPolicy.LOOP);
+		moveCarro.setAnimationPolicy(PlayMode.LOOP);
 		carroCGT2.getAnimarions().add(moveCarro);
 
 		CGTAnimation moveCarroLeft = new CGTAnimation(carroCGT2);
-		moveCarroLeft.setFlip(true);
+		moveCarroLeft.setFlipHorizontal(true);
 		moveCarroLeft.setSpriteLine(1);
 		moveCarroLeft.addStatePolicy(StatePolicy.LOOKLEFT);
 //		moveCarroLeft.setNumberOfColumns(2);
 		moveCarroLeft.setSpriteVelocity(0.08f);
-		moveCarroLeft.setAnimationPolicy(AnimationPolicy.LOOP);
+		moveCarroLeft.setAnimationPolicy(PlayMode.LOOP);
 		carroCGT2.getAnimarions().add(moveCarroLeft);
 		
 		/*
@@ -541,7 +556,7 @@ public class MyWorldPexe {
 		moveCarroDown.setNumberOfColumns(2);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveCarroDown.setSpriteVelocity(0.08f);
-		moveCarroDown.setAnimationPolicy(AnimationPolicy.LOOP);
+		moveCarroDown.setAnimationPolicy(PlayMode.LOOP);
 		carroCGT.getAnimarions().add(moveCarroDown);
 
 		CGTAnimation moveCarroUp = new CGTAnimation(carroCGT);
@@ -550,7 +565,7 @@ public class MyWorldPexe {
 		moveCarroUp.setNumberOfColumns(2);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveCarroUp.setSpriteVelocity(0.08f);
-		moveCarroUp.setAnimationPolicy(AnimationPolicy.LOOP);
+		moveCarroUp.setAnimationPolicy(PlayMode.LOOP);
 		carroCGT.getAnimarions().add(moveCarroUp);
 		*/
 
@@ -609,38 +624,38 @@ public class MyWorldPexe {
 		//Action dos projectiles
 		CGTAnimation m = new CGTAnimation(projetilPeixe);
 		m.setSpriteLine(1);
-		m.setFlip(true);
+		m.setFlipHorizontal(true);
 		m.addStatePolicy(StatePolicy.LOOKLEFT);
 		m.addStatePolicy(StatePolicy.IDLELEFT);
 		
 		m.setSpriteVelocity(1f);
-		m.setAnimationPolicy(AnimationPolicy.LOOP);
+		m.setAnimationPolicy(PlayMode.LOOP);
 
 		CGTAnimation a = new CGTAnimation(projetilPeixe);
 		a.setSpriteLine(1);
-		a.setFlip(false);
+		a.setFlipHorizontal(false);
 		a.addStatePolicy(StatePolicy.LOOKRIGHT);
 		a.addStatePolicy(StatePolicy.IDLERIGHT);
 		
 		a.setSpriteVelocity(1);
-		a.setAnimationPolicy(AnimationPolicy.LOOP);
+		a.setAnimationPolicy(PlayMode.LOOP);
 
 		CGTAnimation down = new CGTAnimation(projetilPeixe);
 		down.setSpriteLine(1);
-		down.setFlip(false);
+		down.setFlipHorizontal(false);
 		down.addStatePolicy(StatePolicy.LOOKDOWN);
 		down.addStatePolicy(StatePolicy.IDLEDOWN);
 		
 		down.setSpriteVelocity(1f);
-		down.setAnimationPolicy(AnimationPolicy.LOOP);
+		down.setAnimationPolicy(PlayMode.LOOP);
 
 		CGTAnimation up = new CGTAnimation(projetilPeixe);
 		up.setSpriteLine(1);
-		up.setFlip(true);
+		up.setFlipHorizontal(true);
 		up.addStatePolicy(StatePolicy.LOOKUP);
 		up.addStatePolicy(StatePolicy.IDLEUP);
 		up.setSpriteVelocity(1f);
-		up.setAnimationPolicy(AnimationPolicy.LOOP);
+		up.setAnimationPolicy(PlayMode.LOOP);
 		projetilPeixe.getAnimarions().add(up);
 		projetilPeixe.getAnimarions().add(down);
 		projetilPeixe.getAnimarions().add(a);
@@ -786,7 +801,7 @@ public class MyWorldPexe {
 		moveButton.setNumberOfColumns(2);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveButton.setSpriteVelocity(0.08f);
-		moveButton.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		moveButton.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 		
 		CGTAnimation moveButton2 = new CGTAnimation(button);
 		moveButton2.setSpriteLine(2);
@@ -794,7 +809,7 @@ public class MyWorldPexe {
 		moveButton2.setNumberOfColumns(2);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveButton2.setSpriteVelocity(0.08f);
-		moveButton2.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		moveButton2.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 		
 		button.getAnimarions().add(moveButton);
 		button.getAnimarions().add(moveButton2);

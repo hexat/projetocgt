@@ -31,15 +31,6 @@ public class WorldController {
 	private WorldRenderer renderer;
 	static Map<Keys, Boolean> keys = new HashMap<Keys, Boolean>();
 	static {
-//		for (ActionMovePolicy a : ActionMovePolicy.values()) {
-//			keys.put(a.name(), false);
-//		}
-//		for (ActionFirePolicy a : ActionFirePolicy.values()) {
-//			keys.put(a.name(), false);
-//		}
-//		for (ActionJumpPolicy a : ActionJumpPolicy.values()) {
-//			keys.put(a.name(), false);
-//		}
 		
 		keys.put(Keys.RIGHT, false);
 		keys.put(Keys.LEFT, false);
@@ -64,43 +55,28 @@ public class WorldController {
 	public void activeMoveKey(ActionMovePolicy policy) {
 		keys.put(Keys.LEFT, true);
 	}
-	// Funciona na descida do botao
+
 	public void leftPressed() {
-		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
 		releaseAllDirectionKeys();
-		//}
+
 		keys.get(keys.put(Keys.LEFT, true));
-		//Habilita o loop da animacao
-		actorAnimation.setLoop(true);
 	}
 
 	public void rightPressed() {
-		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
 		releaseAllDirectionKeys();
-		//}
+		
 		keys.get(keys.put(Keys.RIGHT, true));
-		//Habilita o loop da animacao
-		actorAnimation.setLoop(true);
 	}
 
 	public void upPressed() {
-		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
 		releaseAllDirectionKeys();
-		//}
 		keys.get(keys.put(Keys.UP, true));
-		//Habilita o loop da animacao
-		actorAnimation.setLoop(true);
 	}
 
-	
-
 	public void downPressed() {
-		//if (personagem.getDirectionPolicy() == DirectionPolicy.FOUR_DIRECTION) {
 		releaseAllDirectionKeys();
-		//}
+
 		keys.get(keys.put(Keys.DOWN, true));
-		//Habilita o loop da animacao
-		actorAnimation.setLoop(true);
 	}
 
 	public void jumpPressed() {
@@ -110,8 +86,6 @@ public class WorldController {
 
 	public void damegePressed() {
 		keys.get(keys.put(Keys.DAMAGE, true));
-		//Habilita o loop da animacao
-		actorAnimation.setLoop(true);
 	}
 
 	public void firePressedTouch() {

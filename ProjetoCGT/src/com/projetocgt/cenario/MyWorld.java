@@ -12,6 +12,7 @@ import cgt.win.KillAllEnemies;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -111,36 +112,36 @@ public class MyWorld {
 		moveLEft.addStatePolicy(StatePolicy.LOOKLEFT);
 		//moveLEft.addInput(InputPolicy.ACEL_LEFT);
 		moveLEft.setSpriteVelocity(0.2f);
-		moveLEft.setFlip(true);
-		moveLEft.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		moveLEft.setFlipHorizontal(true);
+		moveLEft.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
 		CGTAnimation moveRight = new CGTAnimation(personagemCGTActor);
 		moveRight.setSpriteLine(1);
 		moveRight.addStatePolicy(StatePolicy.LOOKRIGHT);
 		//moveRight.addInput(InputPolicy.ACEL_RIGHT);
 		moveRight.setSpriteVelocity(0.2f);
-		moveRight.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		moveRight.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
 		CGTAnimation moveUp = new CGTAnimation(personagemCGTActor);
 		moveUp.setSpriteLine(3);
 		moveUp.addStatePolicy(StatePolicy.LOOKUP);
 		//moveUp.addInput(InputPolicy.ACEL_UP);
 		moveUp.setSpriteVelocity(0.2f);
-		moveUp.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		moveUp.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
 		CGTAnimation moveDown = new CGTAnimation(personagemCGTActor);
 		moveDown.setSpriteLine(2);
 		moveDown.addStatePolicy(StatePolicy.LOOKDOWN);
 		//moveDown.addInput(InputPolicy.ACEL_DOWN);
 		moveDown.setSpriteVelocity(0.2f);
-		moveDown.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		moveDown.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 		
 		CGTAnimation animationDamege = new CGTAnimation(personagemCGTActor);
 		animationDamege.setSpriteLine(5);
 		animationDamege.addStatePolicy(StatePolicy.DAMAGE);
 		//moveDown.addInput(InputPolicy.ACEL_DOWN);
 		animationDamege.setSpriteVelocity(0.2f);
-		animationDamege.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		animationDamege.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
 		personagemCGTActor.getAnimarions().add(animationDamege);
 		personagemCGTActor.getAnimarions().add(moveDown);
@@ -221,7 +222,7 @@ public class MyWorld {
 				CGTAnimation teste = new CGTAnimation(opositorCasa);
 				teste.setSpriteLine(1);
 				teste.addStatePolicy(StatePolicy.IDLEDOWN);
-				teste.setAnimationPolicy(AnimationPolicy.LOOP);
+				teste.setAnimationPolicy(PlayMode.LOOP);
 				opositorCasa.getAnimarions().add(teste);
 				
 				//Indica que a minha animacao e' um por um
@@ -275,8 +276,9 @@ public class MyWorld {
 		moveEnemy.addStatePolicy(StatePolicy.IDLEDOWN);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveEnemy.setSpriteVelocity(0.2f);
-		moveEnemy.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		moveEnemy.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
+		enemyFogoCGT.setGroup("fogo1");
 		enemyFogoCGT.getAnimarions().add(moveEnemy);
 		world.getEnemies().add(enemyFogoCGT);
 		
@@ -311,8 +313,8 @@ public class MyWorld {
 		moveEnemy2.setEndingFrame(new Vector2(1,1));
 		moveEnemy2.addStatePolicy(StatePolicy.IDLEDOWN);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
-		moveEnemy2.setSpriteVelocity(0.2f);
-		moveEnemy2.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		moveEnemy2.setSpriteVelocity(1f);
+		moveEnemy2.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
 		enemyFogoCGT2.getAnimarions().add(moveEnemy2);
 		world.getEnemies().add(enemyFogoCGT2);
@@ -412,16 +414,16 @@ public class MyWorld {
 		moveCarro.addStatePolicy(StatePolicy.LOOKRIGHT);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveCarro.setSpriteVelocity(0.08f);
-		moveCarro.setAnimationPolicy(AnimationPolicy.LOOP);
+		moveCarro.setAnimationPolicy(PlayMode.LOOP);
 		carroCGT.getAnimarions().add(moveCarro);
 
 		CGTAnimation moveCarroLeft = new CGTAnimation(carroCGT);
-		moveCarroLeft.setFlip(true);
+		moveCarroLeft.setFlipHorizontal(true);
 		moveCarroLeft.setSpriteLine(1);
 		moveCarroLeft.addStatePolicy(StatePolicy.LOOKLEFT);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveCarroLeft.setSpriteVelocity(0.08f);
-		moveCarroLeft.setAnimationPolicy(AnimationPolicy.LOOP);
+		moveCarroLeft.setAnimationPolicy(PlayMode.LOOP);
 		carroCGT.getAnimarions().add(moveCarroLeft);
 
 		CGTAnimation moveCarroDown = new CGTAnimation(carroCGT);
@@ -429,7 +431,7 @@ public class MyWorld {
 		moveCarroDown.addStatePolicy(StatePolicy.LOOKDOWN);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveCarroDown.setSpriteVelocity(0.08f);
-		moveCarroDown.setAnimationPolicy(AnimationPolicy.LOOP);
+		moveCarroDown.setAnimationPolicy(PlayMode.LOOP);
 		carroCGT.getAnimarions().add(moveCarroDown);
 
 		CGTAnimation moveCarroUp = new CGTAnimation(carroCGT);
@@ -437,7 +439,7 @@ public class MyWorld {
 		moveCarroUp.addStatePolicy(StatePolicy.LOOKUP);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveCarroUp.setSpriteVelocity(0.08f);
-		moveCarroUp.setAnimationPolicy(AnimationPolicy.LOOP);
+		moveCarroUp.setAnimationPolicy(PlayMode.LOOP);
 		carroCGT.getAnimarions().add(moveCarroUp);
 
 		//Enemy enemyCarroLIB = new Enemy(carroCGT);
@@ -494,35 +496,35 @@ public class MyWorld {
 		//Action dos projectiles
 		CGTAnimation m = new CGTAnimation(projetilAguaCGT);
 		m.setSpriteLine(1);
-		m.setFlip(true);
+		m.setFlipHorizontal(true);
 		m.addStatePolicy(StatePolicy.LOOKLEFT);
 		m.addStatePolicy(StatePolicy.IDLELEFT);
 		m.setSpriteVelocity(0.08f);
-		m.setAnimationPolicy(AnimationPolicy.LOOP);
+		m.setAnimationPolicy(PlayMode.LOOP);
 
 		CGTAnimation a = new CGTAnimation(projetilAguaCGT);
 		a.setSpriteLine(1);
-		a.setFlip(false);
+		a.setFlipHorizontal(false);
 		a.addStatePolicy(StatePolicy.LOOKRIGHT);
 		a.addStatePolicy(StatePolicy.IDLERIGHT);
 		a.setSpriteVelocity(0.08f);
-		a.setAnimationPolicy(AnimationPolicy.LOOP);
+		a.setAnimationPolicy(PlayMode.LOOP);
 
 		CGTAnimation down = new CGTAnimation(projetilAguaCGT);
 		down.setSpriteLine(2);
-		down.setFlip(false);
+		down.setFlipHorizontal(false);
 		down.addStatePolicy(StatePolicy.LOOKDOWN);
 		down.addStatePolicy(StatePolicy.IDLEDOWN);
 		down.setSpriteVelocity(0.08f);
-		down.setAnimationPolicy(AnimationPolicy.LOOP);
+		down.setAnimationPolicy(PlayMode.LOOP);
 
 		CGTAnimation up = new CGTAnimation(projetilAguaCGT);
 		up.setSpriteLine(2);
-		up.setFlip(true);
+		up.setFlipHorizontal(true);
 		up.addStatePolicy(StatePolicy.LOOKUP);
 		up.addStatePolicy(StatePolicy.IDLEUP);
 		up.setSpriteVelocity(0.08f);
-		up.setAnimationPolicy(AnimationPolicy.LOOP);
+		up.setAnimationPolicy(PlayMode.LOOP);
 		projetilAguaCGT.getAnimarions().add(up);
 		projetilAguaCGT.getAnimarions().add(down);
 		projetilAguaCGT.getAnimarions().add(a);
@@ -665,7 +667,7 @@ public class MyWorld {
 		moveButton.setNumberOfColumns(2);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveButton.setSpriteVelocity(0.08f);
-		moveButton.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		moveButton.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 		
 		CGTAnimation moveButton2 = new CGTAnimation(button);
 		moveButton2.setSpriteLine(2);
@@ -673,7 +675,7 @@ public class MyWorld {
 		moveButton2.setNumberOfColumns(2);
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveButton2.setSpriteVelocity(0.08f);
-		moveButton2.setAnimationPolicy(AnimationPolicy.LOOP_PINGPONG);
+		moveButton2.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 		
 		button.getAnimarions().add(moveButton);
 		button.getAnimarions().add(moveButton2);
