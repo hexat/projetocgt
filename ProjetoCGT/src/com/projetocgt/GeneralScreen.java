@@ -1,6 +1,8 @@
 package com.projetocgt;
 
+import cgt.CGTGameWorld;
 import cgt.util.CGTButton;
+import cgt.screen.CGTButtonScreen;
 import cgt.screen.CGTScreen;
 import cgt.util.CGTTexture;
 
@@ -28,47 +30,33 @@ public class GeneralScreen extends Stage implements Screen {
     private SpriteBatch spriteBatch;
 
 	
-	public GeneralScreen(StarAssault game) {
+	public GeneralScreen(CGTScreen screen) {
 		super(new ScreenViewport());
-		this.game = game;
-//	    stage = new Stage(new ScreenViewport());
+		this.screen = screen; 
+		this.game = StarAssault.getInstance();
 	    Gdx.input.setInputProcessor(this);
-	    
-		CGTTexture t = new CGTTexture("data/dapexe/menuInicial.png");
-		CGTButton btn = new CGTButton();
-		btn.setRelativeX(0.33f);
-		btn.setRelativeY(0.5f);
-		btn.setRelativeWidth(0.25f);
-		btn.setRelativeHeight(0.3f);
-		Texture texture = new Texture("data/dapexe/iniciar.png");
-		btn.setTextureDown(texture);
-		btn.setTextureUp(texture);
-		btn.setBounds(0, 0, texture.getWidth(), texture.getHeight());
-		btn.setScreenToGo(new GameScreen());
-//		CGTButton btn = new CGTButton("data/menu/_gui.png");
-//		btn.setBounds(new Rectangle(400, 400, 200, 100));
-		screen = new CGTScreen(t);
-		screen.getButtons().add(btn);
-		
 	}
 	
 	@Override
 	public void render(float delta) {
-
-       // Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         this.act();
         
         getSpriteBatch().begin();
-        getSpriteBatch().draw(new Texture("data/dapexe/menuInicial.png"), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        getSpriteBatch().draw(new Texture(screen.getBackground().getFilepath()),
+        		0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         getSpriteBatch().end();
         
         this.draw();
         
-        for (CGTButton b : screen.getButtons()) {
+        for (CGTButtonScreen b : screen.getButtons()) {
         	if(b.isActive()){
         		this.dispose();
         		b.setTouchable(Touchable.disabled);
-        		game.setScreen(b.getScreenToGo());
+        		if (b.getScreenToGo() instanceof CGTGameWorld) {
+        			game.setScreen(new GameScreen((CGTGameWorld) b.getScreenToGo()));
+        		} else {
+        			
+        		}
         	}
         }
 	}

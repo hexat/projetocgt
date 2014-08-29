@@ -86,7 +86,7 @@ public class WorldRenderer {
 			}
 		} else {
 			instance = StarAssault.getInstance();
-			instance.setScreen(new GeneralScreen(instance));
+			instance.setScreen(new GeneralScreen(instance.getMenu()));
 		}
 		
 	}

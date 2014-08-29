@@ -14,8 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-import com.projetocgt.cenario.MyWorld;
-import com.projetocgt.cenario.MyWorldPexe;
 import com.projetocgt.cenario.WorldController;
 import com.projetocgt.cenario.WorldRenderer;
 	
@@ -31,9 +29,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	private Music music;
 	private boolean flagTouch;
 
-	public GameScreen() {
-		music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/principal.wav"));
-		world = new MyWorldPexe().getCGT();
+	public GameScreen(CGTGameWorld world) {
+		this.music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/principal.wav"));
+		this.world = world;
 		renderer = new WorldRenderer(world);
 		
 		for (int i = 0; i < world.getWinCriteria().size(); i++){
