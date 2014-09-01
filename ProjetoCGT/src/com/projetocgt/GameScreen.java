@@ -54,11 +54,11 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		controller = new WorldController(world, renderer);
 	}
 
-	public boolean touchDown(int screenx, int screeny, int pointer, int button){
-		System.out.println("x: "+screenx);
-		System.out.println("y: "+screeny);
-		return false;
-	}
+//	public boolean touchDown(int screenx, int screeny, int pointer, int button){
+//		System.out.println("x: "+screenx);
+//		System.out.println("y: "+screeny);
+//		return false;
+//	}
 
 	public void buttonHandler(){
 		for(CGTButton button : world.getButtons()){
