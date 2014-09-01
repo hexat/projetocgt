@@ -562,6 +562,13 @@ public class MyWorldPexe {
 		button1.setRelativeWidth(0.1f);
 		button1.setRelativeHeight(0.1f);
 		button1.setBounds(0, 0, textureUp.getWidth()/2, textureUp.getHeight()/2);
+		
+		world.addButton(buttonPad);
+		world.addButton(button);
+		world.addButton(buttonDown);
+		world.addButton(buttonLeft);
+		world.addButton(buttonRight);
+		world.addButton(button1);
 	}
 	
 	/**
