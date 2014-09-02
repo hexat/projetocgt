@@ -1,6 +1,8 @@
 package com.projetocgt.cenario;
 
 
+import java.util.ArrayList;
+
 import cgt.CGTGameWorld;
 import cgt.behaviors.*;
 import cgt.core.*;
@@ -99,11 +101,11 @@ public class MyWorld {
 
 		Music somDamegePersonagem =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/colisao.wav"));
 		personagemCGTActor.setSoundCollision(somDamegePersonagem);
-
-		Music somDiePersonagem;
-
-		somDiePersonagem = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/colisao.wav"));
-		personagemCGTActor.setSoundDie(somDiePersonagem);
+		
+		ArrayList<Music> listaSomDie = new ArrayList<Music>();
+		Music somDiePersonagem = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/colisao.wav"));
+		listaSomDie.add(somDiePersonagem);
+		personagemCGTActor.setSoundDie(listaSomDie);
 
 
 		//Action

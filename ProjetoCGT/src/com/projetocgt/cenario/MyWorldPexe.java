@@ -1,6 +1,8 @@
 package com.projetocgt.cenario;
 
 
+import java.util.ArrayList;
+
 import cgt.CGTGame;
 import cgt.CGTGameWorld;
 import cgt.behaviors.Direction;
@@ -28,13 +30,12 @@ import cgt.util.ProjectileOrientation;
 import cgt.win.KillAllEnemies;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.projetocgt.GameScreen;
+
 
 /**
  * Responsavel por construir o jogo
@@ -82,14 +83,17 @@ public class MyWorldPexe {
 		personagemCGTActor.getSpriteSheet().setRows(5);
 		personagemCGTActor.getSpriteSheet().setColumns(3);
 
+		
+		Music somDamagePersonagem =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/voz_1.wav"));
+		Music somDamagePersonagem1 =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/voz_4.wav"));
+		personagemCGTActor.setSoundCollision(somDamagePersonagem);
+		personagemCGTActor.setSoundCollision(somDamagePersonagem1);
 
-		Music somDamegePersonagem =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/colisao.wav"));
-		personagemCGTActor.setSoundCollision(somDamegePersonagem);
-
-		Music somDiePersonagem;
-
-		somDiePersonagem = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/colisao.wav"));
+		
+		Music somDiePersonagem =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/voz_2.wav"));
+		Music somDiePersonagem1 =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/voz_3.wav"));
 		personagemCGTActor.setSoundDie(somDiePersonagem);
+		personagemCGTActor.setSoundDie(somDiePersonagem1);
 
 	}
 	
@@ -180,6 +184,8 @@ public class MyWorldPexe {
 		mar.getSpriteSheet().setRows(10);
 		mar.getSpriteSheet().setColumns(5);
 		
+		
+		
 		CGTAnimation marAnimation= new CGTAnimation(mar);
 		marAnimation.setSpriteVelocity(0.08f);
 		marAnimation.setInitialFrame(new Vector2(0,0));
@@ -193,91 +199,91 @@ public class MyWorldPexe {
 	
 	public void configuracaoCarros(Direction direction, Direction directionUp){
 		// inicializando o carro no cenario		
-				CGTEnemy carroCGT = new CGTEnemy();
+			CGTEnemy carroCGT = new CGTEnemy();
 
-				Vector2 positionCarro = new Vector2(780,600);
-				carroCGT.setPosition(positionCarro);
+			Vector2 positionCarro = new Vector2(780,600);
+			carroCGT.setPosition(positionCarro);
 
-				Rectangle coliderCarro = new Rectangle(22,0,60, 94);
-				carroCGT.setCollision(coliderCarro);
+			Rectangle coliderCarro = new Rectangle(22,0,60, 94);
+			carroCGT.setCollision(coliderCarro);
 
-				Rectangle tamanhoCarro = new Rectangle(0,0,98, 90);
-				carroCGT.setBounds(tamanhoCarro);
+			Rectangle tamanhoCarro = new Rectangle(0,0,98, 90);
+			carroCGT.setBounds(tamanhoCarro);
 
-				carroCGT.setBlock(true);
-				carroCGT.setDestroyable(false);
-				carroCGT.setDamage(10);
-				carroCGT.addBehavior(directionUp);
+			carroCGT.setBlock(true);
+			carroCGT.setDestroyable(false);
+			carroCGT.setDamage(10);
+			carroCGT.addBehavior(directionUp);
 
-				carroCGT.setSpeed(200);
+			carroCGT.setSpeed(200);
 
-				carroCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/SpriteSheet_carro_jeep.png").file()));
-				carroCGT.getSpriteSheet().setRows(3);
-				carroCGT.getSpriteSheet().setColumns(2);
-				
-				//Action
-				CGTAnimation moveCarroDown = new CGTAnimation(carroCGT);
-				moveCarroDown.setSpriteLine(2);
-				moveCarroDown.addStatePolicy(StatePolicy.LOOKDOWN);
-				
-				moveCarroDown.setSpriteVelocity(0.08f);
-				moveCarroDown.setAnimationPolicy(PlayMode.LOOP);
-				carroCGT.getAnimarions().add(moveCarroDown);
+			carroCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/SpriteSheet_carro_jeep.png").file()));
+			carroCGT.getSpriteSheet().setRows(3);
+			carroCGT.getSpriteSheet().setColumns(2);
+			
+			//Action
+			CGTAnimation moveCarroDown = new CGTAnimation(carroCGT);
+			moveCarroDown.setSpriteLine(2);
+			moveCarroDown.addStatePolicy(StatePolicy.LOOKDOWN);
+			
+			moveCarroDown.setSpriteVelocity(0.08f);
+			moveCarroDown.setAnimationPolicy(PlayMode.LOOP);
+			carroCGT.getAnimarions().add(moveCarroDown);
 
-				CGTAnimation moveCarroUp = new CGTAnimation(carroCGT);
-				moveCarroUp.setSpriteLine(3);
-				moveCarroUp.addStatePolicy(StatePolicy.LOOKUP);
-				
-				moveCarroUp.setSpriteVelocity(0.08f);
-				moveCarroUp.setAnimationPolicy(PlayMode.LOOP);
-				carroCGT.getAnimarions().add(moveCarroUp);
+			CGTAnimation moveCarroUp = new CGTAnimation(carroCGT);
+			moveCarroUp.setSpriteLine(3);
+			moveCarroUp.addStatePolicy(StatePolicy.LOOKUP);
+			
+			moveCarroUp.setSpriteVelocity(0.08f);
+			moveCarroUp.setAnimationPolicy(PlayMode.LOOP);
+			carroCGT.getAnimarions().add(moveCarroUp);
 
-				//Add na lista de enemy
-				world.getEnemies().add(carroCGT);
-				
-				// inicializando o carro no cenario		
-				CGTEnemy carroCGT2 = new CGTEnemy();
+			//Add na lista de enemy
+			world.getEnemies().add(carroCGT);
+			
+			// inicializando o carro no cenario		
+			CGTEnemy carroCGT2 = new CGTEnemy();
 
-				Vector2 positionCarro2 = new Vector2(600,560);
-				carroCGT2.setPosition(positionCarro2);
+			Vector2 positionCarro2 = new Vector2(600,560);
+			carroCGT2.setPosition(positionCarro2);
 
-				Rectangle coliderCarro2 = new Rectangle(0,0,90, 80);
-				carroCGT2.setCollision(coliderCarro2);
+			Rectangle coliderCarro2 = new Rectangle(0,0,90, 80);
+			carroCGT2.setCollision(coliderCarro2);
 
-				Rectangle tamanhoCarro2 = new Rectangle(0,0,98, 90);
-				carroCGT2.setBounds(tamanhoCarro2);
+			Rectangle tamanhoCarro2 = new Rectangle(0,0,98, 90);
+			carroCGT2.setBounds(tamanhoCarro2);
 
-				carroCGT2.setBlock(true);
-				carroCGT2.setDestroyable(false);
-				carroCGT2.setDamage(10);
-				carroCGT2.addBehavior(direction);
+			carroCGT2.setBlock(true);
+			carroCGT2.setDestroyable(false);
+			carroCGT2.setDamage(10);
+			carroCGT2.addBehavior(direction);
 
-				carroCGT2.setSpeed(200);
+			carroCGT2.setSpeed(200);
 
-				carroCGT2.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/SpriteSheet_carro_jeep.png").file()));
-				carroCGT2.getSpriteSheet().setRows(3);
-				carroCGT2.getSpriteSheet().setColumns(2);
-				
-				//Action
-				
-				CGTAnimation moveCarro = new CGTAnimation(carroCGT2);
-				moveCarro.setSpriteLine(1);
-				moveCarro.addStatePolicy(StatePolicy.LOOKRIGHT);
+			carroCGT2.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/SpriteSheet_carro_jeep.png").file()));
+			carroCGT2.getSpriteSheet().setRows(3);
+			carroCGT2.getSpriteSheet().setColumns(2);
+			
+			//Action
+			
+			CGTAnimation moveCarro = new CGTAnimation(carroCGT2);
+			moveCarro.setSpriteLine(1);
+			moveCarro.addStatePolicy(StatePolicy.LOOKRIGHT);
 
-				moveCarro.setSpriteVelocity(0.08f);
-				moveCarro.setAnimationPolicy(PlayMode.LOOP);
-				carroCGT2.getAnimarions().add(moveCarro);
+			moveCarro.setSpriteVelocity(0.08f);
+			moveCarro.setAnimationPolicy(PlayMode.LOOP);
+			carroCGT2.getAnimarions().add(moveCarro);
 
-				CGTAnimation moveCarroLeft = new CGTAnimation(carroCGT2);
-				moveCarroLeft.setFlipHorizontal(true);
-				moveCarroLeft.setSpriteLine(1);
-				moveCarroLeft.addStatePolicy(StatePolicy.LOOKLEFT);
-				moveCarroLeft.setSpriteVelocity(0.08f);
-				moveCarroLeft.setAnimationPolicy(PlayMode.LOOP);
-				carroCGT2.getAnimarions().add(moveCarroLeft);
-				
-				//Add na lista de enemy
-				world.getEnemies().add(carroCGT2);
+			CGTAnimation moveCarroLeft = new CGTAnimation(carroCGT2);
+			moveCarroLeft.setFlipHorizontal(true);
+			moveCarroLeft.setSpriteLine(1);
+			moveCarroLeft.addStatePolicy(StatePolicy.LOOKLEFT);
+			moveCarroLeft.setSpriteVelocity(0.08f);
+			moveCarroLeft.setAnimationPolicy(PlayMode.LOOP);
+			carroCGT2.getAnimarions().add(moveCarroLeft);
+			
+			//Add na lista de enemy
+			world.getEnemies().add(carroCGT2);
 	}
 	
 	public void configuracaoPeixes(){
@@ -316,6 +322,9 @@ public class MyWorldPexe {
 		alertaPeixe.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/alert_peixe.png").file()));
 		alertaPeixe.getSpriteSheet().setRows(1);
 		alertaPeixe.getSpriteSheet().setColumns(1);
+		
+		Music somPexeCollision =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/caixa_registradora.wav"));
+		alertaPeixe.setSoundCollision(somPexeCollision);
 
 
 		//Action
@@ -382,6 +391,9 @@ public class MyWorldPexe {
 		jangada.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/jangada-corte.png").file()));
 		CGTAnimation aniHidrante = new CGTAnimation(jangada);
 		aniHidrante.setSpriteLine(1);
+		
+		Music somCollisionJangada =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/splash.wav"));
+		jangada.setSoundCollision(somCollisionJangada);
 		
 		jangada.getAnimarions().add(aniHidrante);
 	
@@ -571,6 +583,8 @@ public class MyWorldPexe {
 		world.addButton(button1);
 	}
 	
+	
+	
 	/**
 	 * Recebe os paramentros do jogos
 	 */
@@ -634,6 +648,8 @@ public class MyWorldPexe {
 		configuracaoProjetil(personagemCGTActor);
 		
 		configuracaoButtonPad();	
+		
+		
 		
 		//world.addLoseCriterion(new TargetTime(5));
 		world.addLoseCriterion(new LifeDepleted(world.getActor()));

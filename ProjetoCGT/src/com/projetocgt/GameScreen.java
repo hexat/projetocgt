@@ -30,7 +30,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	private boolean flagTouch;
 
 	public GameScreen(CGTGameWorld world) {
-		this.music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/principal.wav"));
+		this.music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/temaDaPexe.wav"));
 		this.world = world;
 		renderer = new WorldRenderer(world);
 		

@@ -85,6 +85,9 @@ public class WorldRenderer {
 				spriteBatch.end();
 			}
 		} else {
+			Random r = new Random();
+			int numeroAleatorio = r.nextInt(personagem.getSoundDie().size() - 0 );
+			personagem.getSoundDie().get(numeroAleatorio).play();
 			instance = StarAssault.getInstance();
 			instance.setScreen(new GeneralScreen(instance.getMenu()));
 		}
@@ -217,6 +220,7 @@ public class WorldRenderer {
 							pro.getBounds().width,pro.getBounds().height);
 				}
 			}
+			
 		}
 	}
 
@@ -579,8 +583,10 @@ public class WorldRenderer {
 					.overlaps(personagem.getCollision())) {
 				for (int j = 0; j < world.getActor().getProjectiles().size(); j++) {
 					world.getActor().getProjectiles().get(j).setAmmo(4);
+					
 				}
 				colision = true;
+				world.getBonus().get(0).getSoundCollision().get(0).play(); 
 			}
 		}
 
@@ -615,7 +621,9 @@ public class WorldRenderer {
 					personagem.setInputsEnabled(false);
 				}
 			}, personagem.getTimeToEnableInputs());
-
+			Random r = new Random();
+			int numeroAleatorio = r.nextInt(personagem.getSoundCollision().size() - 0 );
+			personagem.getSoundCollision().get(numeroAleatorio).play();
 			personagem.setLife(personagem.getLife() - enemy.getDamage());
 			Timer.schedule(new Task() {
 				@Override
