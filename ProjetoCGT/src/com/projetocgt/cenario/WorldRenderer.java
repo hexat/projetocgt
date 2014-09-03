@@ -183,13 +183,14 @@ public class WorldRenderer {
 				// verifica se algum Enemy destrutivel esta colindindo com
 				// algum Projectile
 				if (world.getActor().getFireDefault() != -1
-						&& world.getActor().getProjectiles().get(world.getActor().getFireDefault()).getAmmo() > 0
-						&& world.getEnemies().get(i).getCollision().overlaps(getCurrentActorProjectile().getCollision())
-						&& world.getEnemies().get(i).isDestroyable()
-						&& world.getEnemies().get(i).isVulnerable()) {
-					world.getEnemies().get(i).setLife(world.getEnemies().get(i).getLife() - 1);					
-					if (world.getEnemies().get(i).getLife() <= 0)
-						world.getEnemies().remove(i);
+					&& world.getActor().getProjectiles().get(world.getActor().getFireDefault()).getAmmo() > 0
+					&& world.getEnemies().get(i).getCollision().overlaps(getCurrentActorProjectile().getCollision())
+					&& world.getEnemies().get(i).isDestroyable()
+					&& world.getEnemies().get(i).isVulnerable()) {
+						world.getEnemies().get(i).setLife(world.getEnemies().get(i).getLife() - 1);
+						world.getEnemies().get(i).getSoundCollision().get(0).play();
+						if (world.getEnemies().get(i).getLife() <= 0)
+							world.getEnemies().remove(i);
 				}
 			}
 		}

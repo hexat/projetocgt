@@ -367,6 +367,8 @@ public class MyWorldPexe {
 		alertaPeixe2.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/alert_peixe.png").file()));
 		alertaPeixe2.getSpriteSheet().setRows(1);
 		alertaPeixe2.getSpriteSheet().setColumns(1);
+		
+		alertaPeixe2.setSoundCollision(somPexeCollision);
 
 
 		//Action
