@@ -20,7 +20,9 @@ import cgt.policy.InputPolicy;
 import cgt.policy.MovementPolicy;
 import cgt.policy.StatePolicy;
 import cgt.screen.CGTButtonScreen;
+import cgt.screen.CGTDialog;
 import cgt.screen.CGTScreen;
+import cgt.screen.CGTWindow;
 import cgt.util.CGTAnimation;
 import cgt.util.CGTButton;
 import cgt.util.CGTSpriteSheet;
@@ -53,6 +55,29 @@ public class MyWorldPexe {
 		createWorld();
 	}
 
+	public void configuracaoPauseDialog(){
+		CGTDialog pauseDialog = new CGTDialog();
+		pauseDialog.setActive(false);
+		pauseDialog.setWindow(new Texture(Gdx.files.internal("data/dapexe/pause.png")));
+		pauseDialog.setRelativeX(0.25f);
+		pauseDialog.setRelativeY(0.25f);
+		pauseDialog.setRelativeWidth(0.5f);
+		pauseDialog.setRelativeHeight(0.5f);
+		
+		CGTTexture cgtTexture = new CGTTexture(Gdx.files.internal("data/dapexe/pause.png").file());
+		
+		CGTButtonScreen voltarMenu = new CGTButtonScreen();
+		voltarMenu.setScreenToGo(new CGTScreen(cgtTexture));
+		voltarMenu.setTextureUp(new Texture(Gdx.files.internal("data/dapexe/mar2.png")));
+		voltarMenu.setTextureDown(new Texture(Gdx.files.internal("data/dapexe/mar2.png")));
+		voltarMenu.setRelativeX(0f);
+		voltarMenu.setRelativeY(0f);
+		voltarMenu.setRelativeWidth(0.5f);
+		voltarMenu.setRelativeHeight(0.5f);
+		
+		pauseDialog.setCloseButton(voltarMenu);
+		world.setDialog(pauseDialog);
+	}
 	public void configuracaoLifeBar(LifeBar actorLifeBar){
 		Texture lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
 		Texture lifeBarBack = new Texture(Gdx.files.internal("data/lifeBar/lifeBarBack.png"));
@@ -176,11 +201,11 @@ public class MyWorldPexe {
 	public void configuracaoMar(){
 		CGTOpposite mar = new CGTOpposite();
 		mar.setPosition(new Vector2(0, 0));
-		Rectangle bounds = new Rectangle(0,0,1210, 422);
+		Rectangle bounds = new Rectangle(0,0,1200, 240);
 		mar.setBounds(bounds);
 		mar.setCollision(bounds);
 		
-		mar.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/Spritesheet_mar-corte.png").file()));
+		mar.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/mar2.png").file()));
 		mar.getSpriteSheet().setRows(10);
 		mar.getSpriteSheet().setColumns(5);
 		
@@ -604,6 +629,7 @@ public class MyWorldPexe {
 		configuracaoActionActor(personagemCGTActor);
 		
 		configuracaoCasasCenario();
+		configuracaoPauseDialog();
 		
 		
 		// ajuste das colisões das casas

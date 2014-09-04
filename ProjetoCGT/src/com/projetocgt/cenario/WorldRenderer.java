@@ -140,7 +140,7 @@ public class WorldRenderer {
 		spriteBatch.draw(world.getBackground(), 0, 0);
 	}
 	
-	private void draw() {
+	public void draw() {
 
 		drawBackground();
 		drawCGTActor();
