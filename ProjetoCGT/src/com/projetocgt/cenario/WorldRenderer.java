@@ -9,7 +9,9 @@ import cgt.behaviors.Fade;
 import cgt.behaviors.Sine;
 import cgt.core.CGTActor;
 import cgt.core.CGTEnemy;
+import cgt.core.CGTOpposite;
 import cgt.core.CGTProjectile;
+import cgt.policy.BonusPolicy;
 import cgt.policy.StatePolicy;
 
 import com.badlogic.gdx.Gdx;
@@ -18,6 +20,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Frustum;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
@@ -72,6 +76,8 @@ public class WorldRenderer {
 	 */
 	public void render() {		
 		isColision();
+		
+		//cameraPosition();
 
 		updateCamera();
 		
@@ -85,14 +91,20 @@ public class WorldRenderer {
 				spriteBatch.end();
 			}
 		} else {
-			Random r = new Random();
-			int numeroAleatorio = r.nextInt(personagem.getSoundDie().size() - 0 );
-			personagem.getSoundDie().get(numeroAleatorio).play();
+			world.getActor().getSoundDie();
 			instance = StarAssault.getInstance();
 			instance.setScreen(new GeneralScreen(instance.getMenu()));
 		}
 		
 	}
+	/*
+	private void cameraPosition(){
+		System.out.println(camera.position.x);
+		System.out.println(camera.position.y);
+		Rectangle cameraBound = new Rectangle(0,0,camera.viewportWidth,camera.viewportHeight);
+		
+		
+	}*/
 
 	private void updateCamera() {
 		camera.update();
@@ -188,9 +200,11 @@ public class WorldRenderer {
 					&& world.getEnemies().get(i).isDestroyable()
 					&& world.getEnemies().get(i).isVulnerable()) {
 						world.getEnemies().get(i).setLife(world.getEnemies().get(i).getLife() - 1);
-						world.getEnemies().get(i).getSoundCollision().get(0).play();
-						if (world.getEnemies().get(i).getLife() <= 0)
+						world.getEnemies().get(i).playSoundCollision();
+						if (world.getEnemies().get(i).getLife() <= 0){
+							world.getEnemies().get(i).playSoundDie();
 							world.getEnemies().remove(i);
+						}
 				}
 			}
 		}
@@ -582,12 +596,20 @@ public class WorldRenderer {
 		for (int i = 0; i < world.getBonus().size(); i++) {
 			if (world.getBonus().get(i).getCollision()
 					.overlaps(personagem.getCollision())) {
-				for (int j = 0; j < world.getActor().getProjectiles().size(); j++) {
-					world.getActor().getProjectiles().get(j).setAmmo(4);
+				if (world.getBonus().get(i).getPolicies().contains(BonusPolicy.ADD_AMMO)){
+					int ammoCurrent =  world.getActor().getProjectiles().get(0).getAmmo();
+					int maxAmmo = world.getActor().getProjectiles().get(0).getMaxAmmo();
+					if (ammoCurrent < maxAmmo) {
+						world.getActor().getProjectiles().get(0).addAmmo(world.getBonus().get(i).getScore());
+						world.getBonus().get(0).playSoundCollision();
+					}
 					
 				}
+				/*for (int j = 0; j < world.getActor().getProjectiles().size(); j++) {
+					world.getActor().getProjectiles().get(j).setAmmo(4);					
+				}*/
 				colision = true;
-				world.getBonus().get(0).getSoundCollision().get(0).play(); 
+				 
 			}
 		}
 
@@ -622,9 +644,7 @@ public class WorldRenderer {
 					personagem.setInputsEnabled(false);
 				}
 			}, personagem.getTimeToEnableInputs());
-			Random r = new Random();
-			int numeroAleatorio = r.nextInt(personagem.getSoundCollision().size() - 0 );
-			personagem.getSoundCollision().get(numeroAleatorio).play();
+			personagem.playSoundCollision();
 			personagem.setLife(personagem.getLife() - enemy.getDamage());
 			Timer.schedule(new Task() {
 				@Override

@@ -14,6 +14,7 @@ import cgt.core.CGTEnemy;
 import cgt.core.CGTOpposite;
 import cgt.core.CGTProjectile;
 import cgt.lose.LifeDepleted;
+import cgt.policy.BonusPolicy;
 import cgt.policy.DirectionPolicy;
 import cgt.policy.FadePolicy;
 import cgt.policy.InputPolicy;
@@ -78,6 +79,7 @@ public class MyWorldPexe {
 		actorLifeBar.setOwner(personagemCGTActor);
 		world.addLifeBar(actorLifeBar);
 		personagemCGTActor.setSpeed(800);
+		
 
 		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/sprite_garoto.png").file()));
 		personagemCGTActor.getSpriteSheet().setRows(5);
@@ -324,6 +326,7 @@ public class MyWorldPexe {
 		alertaPeixe.getSpriteSheet().setColumns(1);
 		
 		Music somPexeCollision =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/caixa_registradora.wav"));
+		alertaPeixe.setSoundDie(somPexeCollision);
 		alertaPeixe.setSoundCollision(somPexeCollision);
 
 
@@ -368,7 +371,7 @@ public class MyWorldPexe {
 		alertaPeixe2.getSpriteSheet().setRows(1);
 		alertaPeixe2.getSpriteSheet().setColumns(1);
 		
-		alertaPeixe2.setSoundCollision(somPexeCollision);
+		alertaPeixe2.setSoundDie(somPexeCollision);
 
 
 		//Action
@@ -389,6 +392,8 @@ public class MyWorldPexe {
 		jangada.setPosition(new Vector2(920, 180));
 		jangada.setBounds(new Rectangle(0,0,255,224));
 		jangada.setCollision(new Rectangle(0,0,255,80));
+		jangada.addPolicy(BonusPolicy.ADD_AMMO);
+		jangada.setScore(4);
 	
 		jangada.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/jangada-corte.png").file()));
 		CGTAnimation aniHidrante = new CGTAnimation(jangada);
@@ -418,7 +423,8 @@ public class MyWorldPexe {
 		css.setRows(1);
 		css.setColumns(2);
 		projetilPeixe.setSpriteSheet(css);
-		projetilPeixe.setAmmo(2);
+		projetilPeixe.setMaxAmmo(4);
+		projetilPeixe.setAmmo(4);
 
 		//Action dos projectiles
 		CGTAnimation m = new CGTAnimation(projetilPeixe);

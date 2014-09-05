@@ -158,8 +158,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-
+		music.play();
 	}
 
 	@Override
