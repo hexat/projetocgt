@@ -32,7 +32,7 @@ public class GeneralScreen extends Stage implements Screen {
 	
 	public GeneralScreen(CGTScreen screen) {
 		super(new ScreenViewport());
-		this.screen = screen; 
+		this.screen = screen;
 		this.game = StarAssault.getInstance();
 	    Gdx.input.setInputProcessor(this);
 	}
@@ -50,7 +50,6 @@ public class GeneralScreen extends Stage implements Screen {
         
         for (CGTButtonScreen b : screen.getButtons()) {
         	if(b.isActive()){
-        		this.dispose();
         		b.setTouchable(Touchable.disabled);
         		if (b.getScreenToGo() instanceof CGTGameWorld) {
         			game.setScreen(new GameScreen((CGTGameWorld) b.getScreenToGo()));
@@ -68,10 +67,11 @@ public class GeneralScreen extends Stage implements Screen {
 
 	@Override
 	public void show() {
-        splsh = new Texture(Gdx.files.internal(screen.getBackground().getFile().getPath()));
+        splsh = new Texture(screen.getBackground().getFile().getFileHandle());
         setSpriteBatch(new SpriteBatch());
         for (CGTButton b : screen.getButtons()) {
         	this.addActor(b);
+        	b.autosize();
         }
 	}
 

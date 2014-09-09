@@ -111,8 +111,9 @@ public class WorldRenderer {
 				if (!world.getOpposites().get(i).isPlayingCollision()){
 					world.getOpposites().get(i).playSound();					
 				}
-				float distancia = world.getActor().getPosition().dst(world.getOpposites().get(i).getPosition());
-				world.getOpposites().get(i).getSound().setVolume(volume)
+				float distanciaObjeto = world.getActor().getPosition().dst(world.getOpposites().get(i).getPosition());				
+				float distanciaMaxima = (float) Math.sqrt((double) (Math.exp((double) camera.viewportHeight)  + Math.exp((double) camera.viewportWidth)));
+				
 			} else {
 				if (world.getOpposites().get(i).isPlayingCollision()){
 					world.getOpposites().get(i).stopMusic();
@@ -181,7 +182,7 @@ public class WorldRenderer {
 		spriteBatch.draw(world.getBackground(), 0, 0);
 	}
 	
-	private void draw() {
+	public void draw() {
 
 		drawBackground();
 		drawCGTActor();

@@ -1,9 +1,12 @@
 package com.projetocgt;
 
+import cgt.CGTGameWorld;
 import cgt.screen.CGTScreen;
+import cgt.screen.CGTWindow;
 
 import com.badlogic.gdx.Game;
 import com.projetocgt.cenario.MyWorldPexe;
+import com.sun.org.apache.bcel.internal.generic.INSTANCEOF;
 public class StarAssault extends Game {
 	
 	private static StarAssault instance =  null;
@@ -21,6 +24,15 @@ public class StarAssault extends Game {
 	
 	public CGTScreen getMenu() {
 		return menu;
+	}
+	
+	public void setScreen(CGTWindow window){
+		if(window instanceof CGTGameWorld){
+			setScreen(new GameScreen((CGTGameWorld) window));
+		}
+		else
+			setScreen(new GeneralScreen(new MyWorldPexe().getGame().getMenu()));
+
 	}
 	
 	public static StarAssault getInstance(){

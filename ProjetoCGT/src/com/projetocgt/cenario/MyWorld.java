@@ -12,7 +12,6 @@ import cgt.util.*;
 import cgt.win.KillAllEnemies;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Rectangle;
@@ -94,16 +93,16 @@ public class MyWorld {
 		personagemCGTActor.setSpeed(280);
 
 		System.out.println(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro2.png").exists());
-		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro2.png").file()));
+		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet("data/SpriteCGTActor/SpriteSheet_bombeiro2.png"));
 		personagemCGTActor.getSpriteSheet().setRows(5);
 		personagemCGTActor.getSpriteSheet().setColumns(3);
 
 
-		Music somDamegePersonagem =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/colisao.wav"));
+		CGTSound somDamegePersonagem = new CGTSound("data/AudioBombeiro/colisao.wav");
 		personagemCGTActor.setSoundCollision(somDamegePersonagem);
 		
-		ArrayList<Music> listaSomDie = new ArrayList<Music>();
-		Music somDiePersonagem = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/colisao.wav"));
+		ArrayList<CGTSound> listaSomDie = new ArrayList<CGTSound>();
+		CGTSound somDiePersonagem = new CGTSound("data/AudioBombeiro/colisao.wav");
 		listaSomDie.add(somDiePersonagem);
 		personagemCGTActor.setSoundDie(listaSomDie);
 
@@ -216,7 +215,7 @@ public class MyWorld {
 				opositorCasa.setDestroyable(false);
 				opositorCasa.setLife(0);
 
-				opositorCasa.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png").file()));
+				opositorCasa.setSpriteSheet(new CGTSpriteSheet("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png"));
 				opositorCasa.getSpriteSheet().setRows(1);
 				opositorCasa.getSpriteSheet().setColumns(1);
 				
@@ -266,7 +265,7 @@ public class MyWorld {
 		enemyFogoCGT.addBehavior(sine);
 		enemyFogoCGT.setLife(50);
 
-		enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png").file()));
+		enemyFogoCGT.setSpriteSheet(new CGTSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png"));
 		enemyFogoCGT.getSpriteSheet().setRows(2);
 		enemyFogoCGT.getSpriteSheet().setColumns(2);
 
@@ -304,7 +303,7 @@ public class MyWorld {
 		enemyFogoCGT2.addBehavior(sine);
 		enemyFogoCGT2.setLife(50);
 
-		enemyFogoCGT2.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTOpposite/SpriteSheet_fogo.png").file()));
+		enemyFogoCGT2.setSpriteSheet(new CGTSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png"));
 		enemyFogoCGT2.getSpriteSheet().setRows(2);
 		enemyFogoCGT2.getSpriteSheet().setColumns(2);
 
@@ -407,7 +406,7 @@ public class MyWorld {
 
 		carroCGT.setSpeed(200);
 
-		carroCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/Enemy/SpriteSheet_carro.png").file()));
+		carroCGT.setSpriteSheet(new CGTSpriteSheet("data/Enemy/SpriteSheet_carro.png"));
 		carroCGT.getSpriteSheet().setRows(3);
 		carroCGT.getSpriteSheet().setColumns(2);
 		//Action
@@ -469,7 +468,7 @@ public class MyWorld {
 		hidrate.setBounds(new Rectangle(0,0,50,50));
 		hidrate.setCollision(new Rectangle(0,0,50,50));
 		
-		hidrate.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/CGTBonus/SpriteSheet_tubo.png").file()));
+		hidrate.setSpriteSheet(new CGTSpriteSheet("data/CGTBonus/SpriteSheet_tubo.png"));
 		
 		CGTAnimation aniHidrante = new CGTAnimation(hidrate);
 		aniHidrante.setSpriteLine(1);
@@ -489,7 +488,7 @@ public class MyWorld {
 		projetilAguaCGT.setCollision(coliderProjectile);
 		projetilAguaCGT.setInterval(1);
 
-		CGTSpriteSheet css = new CGTSpriteSheet(Gdx.files.internal("data/CGTProjectile/SpriteSheet_agua.png").file());
+		CGTSpriteSheet css = new CGTSpriteSheet("data/CGTProjectile/SpriteSheet_agua.png");
 		css.setRows(2);
 		css.setColumns(2);
 		projetilAguaCGT.setSpriteSheet(css);
