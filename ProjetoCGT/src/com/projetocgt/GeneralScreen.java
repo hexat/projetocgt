@@ -50,7 +50,6 @@ public class GeneralScreen extends Stage implements Screen {
         
         for (CGTButtonScreen b : screen.getButtons()) {
         	if(b.isActive()){
-        		this.dispose();
         		b.setTouchable(Touchable.disabled);
         		if (b.getScreenToGo() instanceof CGTGameWorld) {
         			game.setScreen(new GameScreen((CGTGameWorld) b.getScreenToGo()));
