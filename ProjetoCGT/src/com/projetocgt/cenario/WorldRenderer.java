@@ -107,12 +107,19 @@ public class WorldRenderer {
 		
 		// verifica Opposites
 		for(int i = 0; i < world.getOpposites().size(); i++){
-			if (rectangleCamera.overlaps(world.getOpposites().get(i).getCollision())){
+			if (world.getOpposites().get(i).getSound() != null && rectangleCamera.overlaps(world.getOpposites().get(i).getCollision())){
 				if (!world.getOpposites().get(i).isPlayingCollision()){
 					world.getOpposites().get(i).playSound();					
 				}
-				float distanciaObjeto = world.getActor().getPosition().dst(world.getOpposites().get(i).getPosition());				
-				float distanciaMaxima = (float) Math.sqrt((double) (Math.exp((double) camera.viewportHeight)  + Math.exp((double) camera.viewportWidth)));
+				
+					float distanciaObjeto = world.getActor().getPosition().dst(world.getOpposites().get(i).getPosition());				
+					float distanciaMaxima = (float) Math.sqrt((double) (Math.pow((double) camera.viewportHeight, 2)) + Math.pow((double) camera.viewportWidth, 2));
+					float volume = (1 - distanciaObjeto/distanciaMaxima)* world.getOpposites().get(i).getSound().getVolume();
+					if (volume <= 0){
+						volume = 0;
+					}
+					world.getOpposites().get(i).getSound().getMusic().setVolume(volume);
+				
 				
 			} else {
 				if (world.getOpposites().get(i).isPlayingCollision()){
@@ -122,11 +129,21 @@ public class WorldRenderer {
 		}
 		// verifica Enemies
 		for(int i = 0; i < world.getEnemies().size(); i++){
-			if (rectangleCamera.overlaps(world.getEnemies().get(i).getCollision())){
+			if (world.getEnemies().get(i).getSound() != null && rectangleCamera.overlaps(world.getEnemies().get(i).getCollision())){
 				if (!world.getEnemies().get(i).isPlayingCollision()){
 					world.getEnemies().get(i).playSound();
-					
 				}
+				
+					float distanciaObjeto = world.getActor().getPosition().dst(world.getEnemies().get(i).getPosition());
+					float distanciaMaxima = (float) Math.sqrt((double) (Math.pow((double) camera.viewportHeight, 2)) + Math.pow((double) camera.viewportWidth, 2));
+					System.out.println(distanciaMaxima);
+					float volume = (1 - distanciaObjeto/distanciaMaxima)* world.getEnemies().get(i).getSound().getVolume();
+					if (volume <= 0){
+						volume = 0;
+					}
+					world.getEnemies().get(i).getSound().getMusic().setVolume(volume);
+				
+				
 			} else {
 				if (world.getEnemies().get(i).isPlayingCollision()){
 					world.getEnemies().get(i).stopMusic();

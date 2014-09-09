@@ -273,6 +273,9 @@ public class MyWorldPexe {
 		carroCGT.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
 		carroCGT.getSpriteSheet().setRows(3);
 		carroCGT.getSpriteSheet().setColumns(2);
+		
+		CGTSound soundCar = new CGTSound("data/AudioDaPexe/carro_1.wav");
+		//carroCGT.setSound(soundCar);
 
 		//Action
 		CGTAnimation moveCarroDown = new CGTAnimation(carroCGT);
@@ -315,6 +318,8 @@ public class MyWorldPexe {
 		carroCGT2.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
 		carroCGT2.getSpriteSheet().setRows(3);
 		carroCGT2.getSpriteSheet().setColumns(2);
+		
+		carroCGT2.setSound(soundCar);
 
 		//Action
 
