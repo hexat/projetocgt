@@ -1,7 +1,10 @@
 package com.projetocgt;
 
+import java.util.ArrayList;
+
 import cgt.CGTGameWorld;
 import cgt.policy.InputPolicy;
+import cgt.screen.CGTDialog;
 import cgt.util.CGTButton;
 
 import com.badlogic.gdx.Gdx;
@@ -10,18 +13,23 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.projetocgt.cenario.WorldController;
 import com.projetocgt.cenario.WorldRenderer;
-	
+
 
 public class GameScreen extends Stage implements Screen, InputProcessor {
 
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 
+	private enum State{PAUSED, RESUMING, PLAYING;};
+	private State state = State.PLAYING;
 	private CGTGameWorld world;
 	private WorldRenderer renderer;
 	private WorldController	controller;
@@ -33,32 +41,35 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		this.music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/temaDaPexe.wav"));
 		this.world = world;
 		renderer = new WorldRenderer(world);
-		
-		for (int i = 0; i < world.getWinCriteria().size(); i++){
-			world.getWinCriteria().get(i).start();
-		}
-		
-		for (int i = 0; i < world.getLoseCriteria().size(); i++){
-			world.getLoseCriteria().get(i).start();
-		}
-		
-		for (Actor button : world.getButtons()){
-			this.addActor(button);
-		}
-		
-		for (Actor lifebar : world.getLifeBars()){
-			this.addActor(lifebar);
-		}
-		
+		getActorsFromWorld();
 		setSpriteBatch(new SpriteBatch());
 		controller = new WorldController(world, renderer);
 	}
 
-//	public boolean touchDown(int screenx, int screeny, int pointer, int button){
-//		System.out.println("x: "+screenx);
-//		System.out.println("y: "+screeny);
-//		return false;
-//	}
+	private void getActorsFromWorld(){
+		for (int i = 0; i < world.getWinCriteria().size(); i++){
+			world.getWinCriteria().get(i).start();
+		}
+
+		for (int i = 0; i < world.getLoseCriteria().size(); i++){
+			world.getLoseCriteria().get(i).start();
+		}
+
+		for (CGTButton button : world.getButtons()){
+			this.addActor(button);
+			button.autosize();
+		}
+
+		for (Actor lifebar : world.getLifeBars()){
+			this.addActor(lifebar);
+		}
+	}
+
+	//	public boolean touchDown(int screenx, int screeny, int pointer, int button){
+	//		System.out.println("x: "+screenx);
+	//		System.out.println("y: "+screeny);
+	//		return false;
+	//	}
 
 	public void buttonHandler(){
 		for(CGTButton button : world.getButtons()){
@@ -70,12 +81,18 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				button.setReleased(false);
 			}
 
+			CGTButton closeButton = world.getPauseDialog().getCloseButton();
+			if (closeButton.isActive()){
+				resume();
+			}
+
 		}
 	}
-	
+
 	public void pressHandler(CGTButton button){
 		if(button.getInput()==InputPolicy.BTN_1)
-			controller.firePressedTouch();
+			//controller.firePressedTouch();
+			pause();
 		if(button.getInput()==InputPolicy.BTN_UP)
 			controller.upPressed();
 		else if(button.getInput()==InputPolicy.BTN_DOWN)
@@ -85,10 +102,11 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		else if(button.getInput()==InputPolicy.BTN_RIGHT)
 			controller.rightPressed();
 	}
-	
+
 	public void releaseHandler(CGTButton button){
 		if(button.getInput()==InputPolicy.BTN_1)
 			controller.fireReleasedTouch();
+		//resume();
 		if(button.getInput()==InputPolicy.BTN_UP)
 			controller.upReleased();
 		else if(button.getInput()==InputPolicy.BTN_DOWN)
@@ -100,35 +118,92 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	}
 
 
+	public void debug(Actor actor){
+		ShapeRenderer shape = new ShapeRenderer();
+		shape.begin(ShapeType.Line);
+		shape.rect(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight());
+		shape.end();
+	}
 	@Override
 	public void render(float delta) {
-		controller.update(delta);
-		renderer.render();
-		if(renderer.verifyLose())
-			music.stop();
-		buttonHandler();
-		this.act();
-		getSpriteBatch().begin();
-		this.draw();
-		getSpriteBatch().end();
-		
-		
-		//TODO O trecho de codigo abaixo so' eh utilizado quando a tecla A e' pressionada
-		//Utilizado para ativar o projectili por um determinado Tempo
-		//Com um touch
-		if(flagTouch){
-			Timer.schedule(new Task(){
-				@Override
-				public void run() {
-					flagTouch=false;
-					//verifica se o ammo é zero
-					controller.fireReleasedTouch();
-					//Timer.instance().clear();
-				}
-			}, renderer.getCurrentActorProjectile().getInterval());
+		switch(state){
+		case PLAYING:
+			controller.update(delta);
+			renderer.render();
+			if(renderer.verifyLose())
+				music.stop();
+			buttonHandler();
+			this.act();
+			getSpriteBatch().begin();
+			this.draw();
+
+			getSpriteBatch().end();
+
+
+			//TODO O trecho de codigo abaixo so' eh utilizado quando a tecla A e' pressionada
+			//Utilizado para ativar o projectili por um determinado Tempo
+			//Com um touch
+			if(flagTouch){
+				Timer.schedule(new Task(){
+					@Override
+					public void run() {
+						flagTouch=false;
+						//verifica se o ammo é zero
+						controller.fireReleasedTouch();
+						//Timer.instance().clear();
+					}
+				}, renderer.getCurrentActorProjectile().getInterval());
+			}
+			break;
+
+		case PAUSED:
+			if(!world.getPauseDialog().isActive()){
+				world.getPauseDialog().setActive(true);
+				Timer.instance().stop();
+				renderer.getSpriteBatch().flush();
+				music.pause();
+				this.getActors().clear();
+				addDialog(world.getPauseDialog());
+				world.getPauseDialog().autosize();
+			}
+			buttonHandler();
+			this.act();
+			getSpriteBatch().begin();
+			this.draw();
+			getSpriteBatch().end();
+			break;
+
+		case RESUMING:
+			world.getPauseDialog().setActive(false);
+			Timer.instance().start();
+			this.getActors().clear();
+			getActorsFromWorld();
+			music.play();
+			state = State.PLAYING;
+			break;
 		}
+
 	}
 
+	private void addDialog(CGTDialog dialog){
+		addActor(dialog);
+
+		for(CGTButton button : dialog.getButtons()){
+			addActor(button);
+		}
+
+		addActor(dialog.getCloseButton());
+	}
+
+	private void removeDialog(CGTDialog dialog){
+		getActors().indexOf(dialog, false);
+
+		for(CGTButton button : dialog.getButtons()){
+			addActor(button);
+		}
+
+		addActor(dialog.getCloseButton());
+	}
 
 	@Override
 	public void resize(int width, int height) {
@@ -152,13 +227,13 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-		music.stop();
+		state = State.PAUSED;
+
 	}
 
 	@Override
 	public void resume() {
-		music.play();
+		state = State.RESUMING;
 	}
 
 	@Override
@@ -167,26 +242,26 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		this.dispose();
 	}
 
-	
+
 	//Funciona na descida do botao
 	@Override
 	public boolean keyDown(int keycode) {
-		
-			if (keycode == Keys.LEFT ){
-				controller.leftPressed();
-			}
-			if (keycode == Keys.RIGHT){
-				controller.rightPressed();
-			}
-			if (keycode == Keys.UP){
-				controller.upPressed();
-			}
-			if (keycode == Keys.DOWN){
-				controller.downPressed();
-			}
-			if (keycode == Keys.A){
-				flagTouch=true;
-				controller.firePressedTouch();
+
+		if (keycode == Keys.LEFT ){
+			controller.leftPressed();
+		}
+		if (keycode == Keys.RIGHT){
+			controller.rightPressed();
+		}
+		if (keycode == Keys.UP){
+			controller.upPressed();
+		}
+		if (keycode == Keys.DOWN){
+			controller.downPressed();
+		}
+		if (keycode == Keys.A){
+			flagTouch=true;
+			controller.firePressedTouch();
 		}
 		return true;
 	}
@@ -200,19 +275,19 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		if (keycode == Keys.LEFT) {
 			controller.leftReleased();
 		}
-		
+
 		if (keycode == Keys.RIGHT) {
 			controller.rightReleased();
 		}
-		
+
 		if (keycode == Keys.UP) {
 			controller.upReleased();
 		}
-		
+
 		if (keycode == Keys.DOWN) {
 			controller.downReleased();
 		}
-		
+
 		if (keycode == Keys.A) {
 			flagTouch=false;
 		}

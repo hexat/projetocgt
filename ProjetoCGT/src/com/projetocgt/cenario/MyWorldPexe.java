@@ -21,7 +21,9 @@ import cgt.policy.InputPolicy;
 import cgt.policy.MovementPolicy;
 import cgt.policy.StatePolicy;
 import cgt.screen.CGTButtonScreen;
+import cgt.screen.CGTDialog;
 import cgt.screen.CGTScreen;
+import cgt.screen.CGTWindow;
 import cgt.util.CGTAnimation;
 import cgt.util.CGTButton;
 import cgt.util.CGTSound;
@@ -54,6 +56,29 @@ public class MyWorldPexe {
 		createWorld();
 	}
 
+	public void configuracaoPauseDialog(){
+		CGTDialog pauseDialog = new CGTDialog();
+		pauseDialog.setActive(false);
+		pauseDialog.setWindow(new Texture(Gdx.files.internal("data/dapexe/pause.png")));
+		pauseDialog.setRelativeX(0.25f);
+		pauseDialog.setRelativeY(0.25f);
+		pauseDialog.setRelativeWidth(0.5f);
+		pauseDialog.setRelativeHeight(0.5f);
+		
+		CGTTexture cgtTexture = new CGTTexture("data/dapexe/pause.png");
+		
+		CGTButtonScreen voltarMenu = new CGTButtonScreen();
+		voltarMenu.setScreenToGo(new CGTScreen(cgtTexture));
+		voltarMenu.setTextureUp(new Texture(Gdx.files.internal("data/dapexe/mar2.png")));
+		voltarMenu.setTextureDown(new Texture(Gdx.files.internal("data/dapexe/mar2.png")));
+		voltarMenu.setRelativeX(0.65f);
+		voltarMenu.setRelativeY(0.65f);
+		voltarMenu.setRelativeWidth(0.1f);
+		voltarMenu.setRelativeHeight(0.1f);
+		
+		pauseDialog.setCloseButton(voltarMenu);
+		world.setPauseDialog(pauseDialog);
+	}
 	public void configuracaoLifeBar(LifeBar actorLifeBar){
 		Texture lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
 		Texture lifeBarBack = new Texture(Gdx.files.internal("data/lifeBar/lifeBarBack.png"));
@@ -81,7 +106,7 @@ public class MyWorldPexe {
 		personagemCGTActor.setSpeed(800);
 		
 
-		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/sprite_garoto.png").file()));
+		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet("data/dapexe/sprite_garoto.png"));
 		personagemCGTActor.getSpriteSheet().setRows(5);
 		personagemCGTActor.getSpriteSheet().setColumns(3);
 
@@ -157,7 +182,7 @@ public class MyWorldPexe {
 				opositorCasa.setDestroyable(false);
 				opositorCasa.setLife(0);
 
-				opositorCasa.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/casa"+y+x+"-corte.png").file()));
+				opositorCasa.setSpriteSheet(new CGTSpriteSheet("data/dapexe/casa"+y+x+"-corte.png"));
 				opositorCasa.getSpriteSheet().setRows(1);
 				opositorCasa.getSpriteSheet().setColumns(1);
 				
@@ -178,11 +203,11 @@ public class MyWorldPexe {
 	public void configuracaoMar(){
 		CGTOpposite mar = new CGTOpposite();
 		mar.setPosition(new Vector2(0, 0));
-		Rectangle bounds = new Rectangle(0,0,1210, 422);
+		Rectangle bounds = new Rectangle(0,0,1200, 240);
 		mar.setBounds(bounds);
 		mar.setCollision(bounds);
 		
-		mar.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/Spritesheet_mar-corte.png").file()));
+		mar.setSpriteSheet(new CGTSpriteSheet("data/dapexe/mar2.png"));
 		mar.getSpriteSheet().setRows(10);
 		mar.getSpriteSheet().setColumns(5);
 		
@@ -219,7 +244,7 @@ public class MyWorldPexe {
 
 			carroCGT.setSpeed(200);
 
-			carroCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/SpriteSheet_carro_jeep.png").file()));
+			carroCGT.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
 			carroCGT.getSpriteSheet().setRows(3);
 			carroCGT.getSpriteSheet().setColumns(2);
 			
@@ -241,7 +266,7 @@ public class MyWorldPexe {
 			carroCGT.getAnimarions().add(moveCarroUp);
 
 			//Add na lista de enemy
-			world.getEnemies().add(carroCGT);
+			//world.getEnemies().add(carroCGT);
 			
 			// inicializando o carro no cenario		
 			CGTEnemy carroCGT2 = new CGTEnemy();
@@ -262,7 +287,7 @@ public class MyWorldPexe {
 
 			carroCGT2.setSpeed(200);
 
-			carroCGT2.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/SpriteSheet_carro_jeep.png").file()));
+			carroCGT2.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
 			carroCGT2.getSpriteSheet().setRows(3);
 			carroCGT2.getSpriteSheet().setColumns(2);
 			
@@ -321,7 +346,7 @@ public class MyWorldPexe {
 		alertaPeixe.addBehavior(sine);
 		alertaPeixe.setLife(50);
 
-		alertaPeixe.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/alert_peixe.png").file()));
+		alertaPeixe.setSpriteSheet(new CGTSpriteSheet("data/dapexe/alert_peixe.png"));
 		alertaPeixe.getSpriteSheet().setRows(1);
 		alertaPeixe.getSpriteSheet().setColumns(1);
 		
@@ -367,7 +392,7 @@ public class MyWorldPexe {
 		alertaPeixe2.addBehavior(sine2);
 		alertaPeixe2.setLife(50);
 
-		alertaPeixe2.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/alert_peixe.png").file()));
+		alertaPeixe2.setSpriteSheet(new CGTSpriteSheet("data/dapexe/alert_peixe.png"));
 		alertaPeixe2.getSpriteSheet().setRows(1);
 		alertaPeixe2.getSpriteSheet().setColumns(1);
 		
@@ -395,7 +420,7 @@ public class MyWorldPexe {
 		jangada.addPolicy(BonusPolicy.ADD_AMMO);
 		jangada.setScore(4);
 	
-		jangada.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/jangada-corte.png").file()));
+		jangada.setSpriteSheet(new CGTSpriteSheet("data/dapexe/jangada-corte.png"));
 		CGTAnimation aniHidrante = new CGTAnimation(jangada);
 		aniHidrante.setSpriteLine(1);
 		
@@ -419,7 +444,7 @@ public class MyWorldPexe {
 		projetilPeixe.setCollision(coliderProjectile);
 		projetilPeixe.setInterval(1);
 
-		CGTSpriteSheet css = new CGTSpriteSheet(Gdx.files.internal("data/dapexe/peixe_entrega.png").file());
+		CGTSpriteSheet css = new CGTSpriteSheet(("data/dapexe/peixe_entrega.png"));
 		css.setRows(1);
 		css.setColumns(2);
 		projetilPeixe.setSpriteSheet(css);
@@ -612,6 +637,7 @@ public class MyWorldPexe {
 		configuracaoActionActor(personagemCGTActor);
 		
 		configuracaoCasasCenario();
+		configuracaoPauseDialog();
 		
 		
 		// ajuste das colisões das casas
@@ -626,7 +652,7 @@ public class MyWorldPexe {
 		world.getOpposites().get(11).setCollision(new Rectangle(0,20,178,120));
 		
 		// ajuste da posicao do lago na tela
-		world.getOpposites().get(6).setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/casa233-corte.png").file()));
+		world.getOpposites().get(6).setSpriteSheet(new CGTSpriteSheet("data/dapexe/casa233-corte.png"));
 		world.getOpposites().get(6).setPosition(new Vector2(590,620));
 		world.getOpposites().get(6).setBounds(new Rectangle(0,0,204,188 ));
 		world.getOpposites().get(6).setCollision(new Rectangle(0,0,204,188 ));
