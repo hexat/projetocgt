@@ -99,11 +99,11 @@ public class MyWorld {
 		personagemCGTActor.getSpriteSheet().setColumns(3);
 
 
-		Music somDamegePersonagem =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/colisao.wav"));
+		CGTSound somDamegePersonagem = new CGTSound("data/AudioBombeiro/colisao.wav");
 		personagemCGTActor.setSoundCollision(somDamegePersonagem);
 		
-		ArrayList<Music> listaSomDie = new ArrayList<Music>();
-		Music somDiePersonagem = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/colisao.wav"));
+		ArrayList<CGTSound> listaSomDie = new ArrayList<CGTSound>();
+		CGTSound somDiePersonagem = new CGTSound("data/AudioBombeiro/colisao.wav");
 		listaSomDie.add(somDiePersonagem);
 		personagemCGTActor.setSoundDie(listaSomDie);
 

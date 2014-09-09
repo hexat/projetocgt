@@ -24,6 +24,7 @@ import cgt.screen.CGTButtonScreen;
 import cgt.screen.CGTScreen;
 import cgt.util.CGTAnimation;
 import cgt.util.CGTButton;
+import cgt.util.CGTSound;
 import cgt.util.CGTSpriteSheet;
 import cgt.util.CGTTexture;
 import cgt.util.LifeBar;
@@ -31,7 +32,6 @@ import cgt.util.ProjectileOrientation;
 import cgt.win.KillAllEnemies;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Rectangle;
@@ -86,14 +86,14 @@ public class MyWorldPexe {
 		personagemCGTActor.getSpriteSheet().setColumns(3);
 
 		
-		Music somDamagePersonagem =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/voz_1.wav"));
-		Music somDamagePersonagem1 =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/voz_4.wav"));
+		CGTSound somDamagePersonagem =  new CGTSound("data/AudioDaPexe/voz_1.wav");
+		CGTSound somDamagePersonagem1 =  new CGTSound("data/AudioDaPexe/voz_4.wav");
 		personagemCGTActor.setSoundCollision(somDamagePersonagem);
 		personagemCGTActor.setSoundCollision(somDamagePersonagem1);
 
 		
-		Music somDiePersonagem =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/voz_2.wav"));
-		Music somDiePersonagem1 =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/voz_3.wav"));
+		CGTSound somDiePersonagem = new CGTSound("data/AudioDaPexe/voz_2.wav");
+		CGTSound somDiePersonagem1 =  new CGTSound("data/AudioDaPexe/voz_3.wav");
 		personagemCGTActor.setSoundDie(somDiePersonagem);
 		personagemCGTActor.setSoundDie(somDiePersonagem1);
 
@@ -325,7 +325,7 @@ public class MyWorldPexe {
 		alertaPeixe.getSpriteSheet().setRows(1);
 		alertaPeixe.getSpriteSheet().setColumns(1);
 		
-		Music somPexeCollision =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/caixa_registradora.wav"));
+		CGTSound somPexeCollision = new CGTSound("data/AudioDaPexe/caixa_registradora.wav");
 		alertaPeixe.setSoundDie(somPexeCollision);
 		alertaPeixe.setSoundCollision(somPexeCollision);
 
@@ -399,7 +399,7 @@ public class MyWorldPexe {
 		CGTAnimation aniHidrante = new CGTAnimation(jangada);
 		aniHidrante.setSpriteLine(1);
 		
-		Music somCollisionJangada =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/splash.wav"));
+		CGTSound somCollisionJangada = new CGTSound("data/AudioDaPexe/splash.wav");
 		jangada.setSoundCollision(somCollisionJangada);
 		
 		jangada.getAnimarions().add(aniHidrante);
