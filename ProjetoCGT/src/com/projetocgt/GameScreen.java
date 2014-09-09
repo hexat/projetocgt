@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import cgt.CGTGameWorld;
 import cgt.policy.InputPolicy;
+import cgt.screen.CGTDialog;
 import cgt.util.CGTButton;
 
 import com.badlogic.gdx.Gdx;
@@ -29,7 +30,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 	private enum State{PAUSED, RESUMING, PLAYING;};
 	private State state = State.PLAYING;
-	private Array<Actor> actors;
 	private CGTGameWorld world;
 	private WorldRenderer renderer;
 	private WorldController	controller;
@@ -38,7 +38,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	private boolean flagTouch;
 
 	public GameScreen(CGTGameWorld world) {
-		actors = new Array<Actor>();
 		this.music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/temaDaPexe.wav"));
 		this.world = world;
 		renderer = new WorldRenderer(world);
@@ -46,7 +45,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		setSpriteBatch(new SpriteBatch());
 		controller = new WorldController(world, renderer);
 	}
-	
+
 	private void getActorsFromWorld(){
 		for (int i = 0; i < world.getWinCriteria().size(); i++){
 			world.getWinCriteria().get(i).start();
@@ -56,8 +55,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			world.getLoseCriteria().get(i).start();
 		}
 
-		for (Actor button : world.getButtons()){
+		for (CGTButton button : world.getButtons()){
 			this.addActor(button);
+			button.autosize();
 		}
 
 		for (Actor lifebar : world.getLifeBars()){
@@ -80,12 +80,11 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				releaseHandler(button);
 				button.setReleased(false);
 			}
-			
-		CGTButton closeButton = world.getDialog().getCloseButton();
-		if (closeButton.isActive()){
-			world.getDialog().setActive(false);
-			resume();
-		}
+
+			CGTButton closeButton = world.getPauseDialog().getCloseButton();
+			if (closeButton.isActive()){
+				resume();
+			}
 
 		}
 	}
@@ -122,7 +121,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	public void debug(Actor actor){
 		ShapeRenderer shape = new ShapeRenderer();
 		shape.begin(ShapeType.Line);
-			shape.rect(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight());
+		shape.rect(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight());
 		shape.end();
 	}
 	@Override
@@ -137,7 +136,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			this.act();
 			getSpriteBatch().begin();
 			this.draw();
-			
+
 			getSpriteBatch().end();
 
 
@@ -156,26 +155,26 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				}, renderer.getCurrentActorProjectile().getInterval());
 			}
 			break;
-			
+
 		case PAUSED:
-			Timer.instance().stop();
-			if(world.getDialog().isActive()){
+			if(!world.getPauseDialog().isActive()){
+				world.getPauseDialog().setActive(true);
+				Timer.instance().stop();
 				renderer.getSpriteBatch().flush();
-				actors = this.getActors();
-				this.getActors().clear();
 				music.pause();
-				this.addActor(world.getDialog());
+				this.getActors().clear();
+				addDialog(world.getPauseDialog());
+				world.getPauseDialog().autosize();
 			}
-			
 			buttonHandler();
 			this.act();
 			getSpriteBatch().begin();
 			this.draw();
-			debug(world.getDialog().getChildren().first());
 			getSpriteBatch().end();
 			break;
 
 		case RESUMING:
+			world.getPauseDialog().setActive(false);
 			Timer.instance().start();
 			this.getActors().clear();
 			getActorsFromWorld();
@@ -186,6 +185,25 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 	}
 
+	private void addDialog(CGTDialog dialog){
+		addActor(dialog);
+
+		for(CGTButton button : dialog.getButtons()){
+			addActor(button);
+		}
+
+		addActor(dialog.getCloseButton());
+	}
+
+	private void removeDialog(CGTDialog dialog){
+		getActors().indexOf(dialog, false);
+
+		for(CGTButton button : dialog.getButtons()){
+			addActor(button);
+		}
+
+		addActor(dialog.getCloseButton());
+	}
 
 	@Override
 	public void resize(int width, int height) {
@@ -209,8 +227,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-		world.getDialog().setActive(true);
 		state = State.PAUSED;
 
 	}

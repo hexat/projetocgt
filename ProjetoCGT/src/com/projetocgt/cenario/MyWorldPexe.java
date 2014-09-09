@@ -70,13 +70,13 @@ public class MyWorldPexe {
 		voltarMenu.setScreenToGo(new CGTScreen(cgtTexture));
 		voltarMenu.setTextureUp(new Texture(Gdx.files.internal("data/dapexe/mar2.png")));
 		voltarMenu.setTextureDown(new Texture(Gdx.files.internal("data/dapexe/mar2.png")));
-		voltarMenu.setRelativeX(0f);
-		voltarMenu.setRelativeY(0f);
-		voltarMenu.setRelativeWidth(0.5f);
-		voltarMenu.setRelativeHeight(0.5f);
+		voltarMenu.setRelativeX(0.65f);
+		voltarMenu.setRelativeY(0.65f);
+		voltarMenu.setRelativeWidth(0.1f);
+		voltarMenu.setRelativeHeight(0.1f);
 		
 		pauseDialog.setCloseButton(voltarMenu);
-		world.setDialog(pauseDialog);
+		world.setPauseDialog(pauseDialog);
 	}
 	public void configuracaoLifeBar(LifeBar actorLifeBar){
 		Texture lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
@@ -264,7 +264,7 @@ public class MyWorldPexe {
 			carroCGT.getAnimarions().add(moveCarroUp);
 
 			//Add na lista de enemy
-			world.getEnemies().add(carroCGT);
+			//world.getEnemies().add(carroCGT);
 			
 			// inicializando o carro no cenario		
 			CGTEnemy carroCGT2 = new CGTEnemy();
