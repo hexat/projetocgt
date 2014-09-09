@@ -186,6 +186,9 @@ public class MyWorldPexe {
 		mar.getSpriteSheet().setRows(10);
 		mar.getSpriteSheet().setColumns(5);
 		
+		Music marSound = Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/mar.wav"));
+		mar.setSound(marSound);
+		
 		
 		
 		CGTAnimation marAnimation= new CGTAnimation(mar);
@@ -222,6 +225,9 @@ public class MyWorldPexe {
 			carroCGT.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/SpriteSheet_carro_jeep.png").file()));
 			carroCGT.getSpriteSheet().setRows(3);
 			carroCGT.getSpriteSheet().setColumns(2);
+			
+			Music soundCar = Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/carro_1.wav"));
+			carroCGT.setSound(soundCar);
 			
 			//Action
 			CGTAnimation moveCarroDown = new CGTAnimation(carroCGT);
@@ -396,13 +402,13 @@ public class MyWorldPexe {
 		jangada.setScore(4);
 	
 		jangada.setSpriteSheet(new CGTSpriteSheet(Gdx.files.internal("data/dapexe/jangada-corte.png").file()));
-		CGTAnimation aniHidrante = new CGTAnimation(jangada);
-		aniHidrante.setSpriteLine(1);
+		CGTAnimation animacaoJangada = new CGTAnimation(jangada);
+		animacaoJangada.setSpriteLine(1);
 		
 		Music somCollisionJangada =  Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/splash.wav"));
 		jangada.setSoundCollision(somCollisionJangada);
 		
-		jangada.getAnimarions().add(aniHidrante);
+		jangada.getAnimarions().add(animacaoJangada);
 	
 		world.getBonus().add(jangada);
 	}

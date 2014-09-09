@@ -23,6 +23,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Frustum;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -49,6 +50,7 @@ public class WorldRenderer {
 	private int width;
 	private int height;
 	private StretchViewport viewport;
+	private Rectangle rectangleCamera;
 
 	private Vector2 lastActorPosition;
 	
@@ -64,6 +66,7 @@ public class WorldRenderer {
 		this.lastActorPosition = new Vector2();
 		this.spriteBatch = new SpriteBatch();
 		this.personagem = world.getActor();
+		rectangleCamera = new Rectangle(camera.position.x - camera.viewportWidth/2, camera.position.y - camera.viewportHeight/2, camera.viewportWidth, camera.viewportHeight);
 	}
 
 	public SpriteBatch getSpriteBatch() {
@@ -77,7 +80,7 @@ public class WorldRenderer {
 	public void render() {		
 		isColision();
 		
-		//cameraPosition();
+		verifyObjectsOnCamera();
 
 		updateCamera();
 		
@@ -97,14 +100,40 @@ public class WorldRenderer {
 		}
 		
 	}
-	/*
-	private void cameraPosition(){
-		System.out.println(camera.position.x);
-		System.out.println(camera.position.y);
-		Rectangle cameraBound = new Rectangle(0,0,camera.viewportWidth,camera.viewportHeight);
+	
+	// executa música caso o objeto esteja visível na camera
+	private void verifyObjectsOnCamera(){		
+		rectangleCamera.set(camera.position.x - camera.viewportWidth/2, camera.position.y - camera.viewportHeight/2, camera.viewportWidth, camera.viewportHeight);
 		
+		// verifica Opposites
+		for(int i = 0; i < world.getOpposites().size(); i++){
+			if (rectangleCamera.overlaps(world.getOpposites().get(i).getCollision())){
+				if (!world.getOpposites().get(i).isPlayingCollision()){
+					world.getOpposites().get(i).playSound();					
+				}
+				float distancia = world.getActor().getPosition().dst(world.getOpposites().get(i).getPosition());
+				world.getOpposites().get(i).getSound().setVolume(volume)
+			} else {
+				if (world.getOpposites().get(i).isPlayingCollision()){
+					world.getOpposites().get(i).stopMusic();
+				}
+			}
+		}
+		// verifica Enemies
+		for(int i = 0; i < world.getEnemies().size(); i++){
+			if (rectangleCamera.overlaps(world.getEnemies().get(i).getCollision())){
+				if (!world.getEnemies().get(i).isPlayingCollision()){
+					world.getEnemies().get(i).playSound();
+					
+				}
+			} else {
+				if (world.getEnemies().get(i).isPlayingCollision()){
+					world.getEnemies().get(i).stopMusic();
+				}
+			}
+		}		
 		
-	}*/
+	}
 
 	private void updateCamera() {
 		camera.update();
@@ -602,6 +631,7 @@ public class WorldRenderer {
 					if (ammoCurrent < maxAmmo) {
 						world.getActor().getProjectiles().get(0).addAmmo(world.getBonus().get(i).getScore());
 						world.getBonus().get(0).playSoundCollision();
+						System.out.println("Aqui");
 					}
 					
 				}
