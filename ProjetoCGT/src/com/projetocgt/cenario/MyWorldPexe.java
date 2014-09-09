@@ -51,7 +51,7 @@ public class MyWorldPexe {
 	private CGTGameWorld world;
 	private CGTScreen screen;
 	private CGTGame game;
-	
+
 	public MyWorldPexe() {
 		createWorld();
 	}
@@ -64,21 +64,30 @@ public class MyWorldPexe {
 		pauseDialog.setRelativeY(0.25f);
 		pauseDialog.setRelativeWidth(0.5f);
 		pauseDialog.setRelativeHeight(0.5f);
-		
-		CGTTexture cgtTexture = new CGTTexture("data/dapexe/pause.png");
-		
+
+		CGTButton voltar = new CGTButtonScreen();
+		voltar.setTextureUp(new Texture(Gdx.files.internal("data/dapexe/mar2.png")));
+		voltar.setTextureDown(new Texture(Gdx.files.internal("data/dapexe/mar2.png")));
+		voltar.setRelativeX(0.65f);
+		voltar.setRelativeY(0.65f);
+		voltar.setRelativeWidth(0.1f);
+		voltar.setRelativeHeight(0.1f);
+
+
 		CGTButtonScreen voltarMenu = new CGTButtonScreen();
-		voltarMenu.setScreenToGo(new CGTScreen(cgtTexture));
+		voltarMenu.setScreenToGo(game.getMenu());
 		voltarMenu.setTextureUp(new Texture(Gdx.files.internal("data/dapexe/mar2.png")));
 		voltarMenu.setTextureDown(new Texture(Gdx.files.internal("data/dapexe/mar2.png")));
-		voltarMenu.setRelativeX(0.65f);
+		voltarMenu.setRelativeX(0.25f);
 		voltarMenu.setRelativeY(0.65f);
 		voltarMenu.setRelativeWidth(0.1f);
 		voltarMenu.setRelativeHeight(0.1f);
-		
-		pauseDialog.setCloseButton(voltarMenu);
+
+		pauseDialog.addButton(voltarMenu);
+		pauseDialog.setCloseButton(voltar);
 		world.setPauseDialog(pauseDialog);
 	}
+	
 	public void configuracaoLifeBar(LifeBar actorLifeBar){
 		Texture lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
 		Texture lifeBarBack = new Texture(Gdx.files.internal("data/lifeBar/lifeBarBack.png"));
@@ -89,7 +98,7 @@ public class MyWorldPexe {
 		actorLifeBar.setRelativeHeight(0.1f);
 		actorLifeBar.setRelativeWidth(0.25f);
 	}
-	
+
 	public void configuracaoActor(LifeBar actorLifeBar, CGTActor personagemCGTActor){
 		personagemCGTActor.setFireDefault(-1);
 		personagemCGTActor.setPosition(new Vector2(800f,900f));
@@ -109,7 +118,6 @@ public class MyWorldPexe {
 		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet("data/dapexe/sprite_garoto.png"));
 		personagemCGTActor.getSpriteSheet().setRows(5);
 		personagemCGTActor.getSpriteSheet().setColumns(3);
-
 		
 		CGTSound somDamagePersonagem =  new CGTSound("data/AudioDaPexe/voz_1.wav");
 		CGTSound somDamagePersonagem1 =  new CGTSound("data/AudioDaPexe/voz_4.wav");
@@ -119,11 +127,12 @@ public class MyWorldPexe {
 		
 		CGTSound somDiePersonagem = new CGTSound("data/AudioDaPexe/voz_2.wav");
 		CGTSound somDiePersonagem1 =  new CGTSound("data/AudioDaPexe/voz_3.wav");
+
 		personagemCGTActor.setSoundDie(somDiePersonagem);
 		personagemCGTActor.setSoundDie(somDiePersonagem1);
 
 	}
-	
+
 	public void configuracaoActionActor(CGTActor personagemCGTActor){
 		CGTAnimation moveLEft = new CGTAnimation(personagemCGTActor);
 		moveLEft.setSpriteLine(2);
@@ -150,7 +159,7 @@ public class MyWorldPexe {
 		moveDown.addStatePolicy(StatePolicy.LOOKDOWN);
 		moveDown.setSpriteVelocity(0.2f);
 		moveDown.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
-		
+
 		CGTAnimation animationDamege = new CGTAnimation(personagemCGTActor);
 		animationDamege.setSpriteLine(5);
 		animationDamege.addStatePolicy(StatePolicy.DAMAGE);
@@ -163,15 +172,15 @@ public class MyWorldPexe {
 		personagemCGTActor.getAnimarions().add(moveRight);
 		personagemCGTActor.getAnimarions().add(moveUp);
 	}
-	
+
 	public void configuracaoCasasCenario(){
 		for (int y =0; y < 3; y++) {
 			int x;
 			for (x = 0; x < 4; x++) {
 				CGTOpposite opositorCasa = new CGTOpposite();
-				
-								
-				
+
+
+
 				Vector2 position = new Vector2(90 + x*260, 880 - y*250);
 				opositorCasa.setPosition(position);
 				Rectangle bounds = new Rectangle(0,0,178, 165);
@@ -185,21 +194,21 @@ public class MyWorldPexe {
 				opositorCasa.setSpriteSheet(new CGTSpriteSheet("data/dapexe/casa"+y+x+"-corte.png"));
 				opositorCasa.getSpriteSheet().setRows(1);
 				opositorCasa.getSpriteSheet().setColumns(1);
-				
+
 
 				CGTAnimation teste = new CGTAnimation(opositorCasa);
 				teste.setSpriteLine(1);
 				teste.addStatePolicy(StatePolicy.IDLEDOWN);
 				teste.setAnimationPolicy(PlayMode.LOOP);
 				opositorCasa.getAnimarions().add(teste);
-				
-				
+
+
 				world.getOpposites().add(opositorCasa);				
 			}
 			x=0;
 		}
 	}
-	
+
 	public void configuracaoMar(){
 		CGTOpposite mar = new CGTOpposite();
 		mar.setPosition(new Vector2(0, 0));
@@ -208,118 +217,133 @@ public class MyWorldPexe {
 		mar.setCollision(bounds);
 		
 		mar.setSpriteSheet(new CGTSpriteSheet("data/dapexe/mar2.png"));
+
 		mar.getSpriteSheet().setRows(10);
 		mar.getSpriteSheet().setColumns(5);
-		
-		
-		
+
+
+
 		CGTAnimation marAnimation= new CGTAnimation(mar);
 		marAnimation.setSpriteVelocity(0.08f);
 		marAnimation.setInitialFrame(new Vector2(0,0));
 		marAnimation.setEndingFrame(new Vector2(4,9));
 		marAnimation.addStatePolicy(StatePolicy.IDLEDOWN);
 		marAnimation.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
-		
+
 		mar.getAnimarions().add(marAnimation);
 		world.addOpposite(mar);
 	}
-	
-	public void configuracaoCarros(Direction direction, Direction directionUp){
+
+	public void configuracaoCarros(){
+		// inicializando o carro no cenario	
+
+		Direction direction = new Direction(DirectionPolicy.LEFT_AND_RIGHT);
+		direction.setMaxX(700);
+		direction.setMinX(20);
+
+		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
+		directionUp.setMaxY(900);
+		directionUp.setMinY(200);
+
+		Direction directionFour = new Direction(DirectionPolicy.FOUR_DIRECTION);
+		directionFour.setMaxY(600);
+		directionFour.setMinY(400);
+		directionFour.setMaxX(1600);
+		directionFour.setMinX(1130);
+		CGTEnemy carroCGT = new CGTEnemy();
+
+		Vector2 positionCarro = new Vector2(780,600);
+		carroCGT.setPosition(positionCarro);
+
+		Rectangle coliderCarro = new Rectangle(22,0,60, 94);
+		carroCGT.setCollision(coliderCarro);
+
+		Rectangle tamanhoCarro = new Rectangle(0,0,98, 90);
+		carroCGT.setBounds(tamanhoCarro);
+
+		carroCGT.setBlock(true);
+		carroCGT.setDestroyable(false);
+		carroCGT.setDamage(10);
+		carroCGT.addBehavior(directionUp);
+
+		carroCGT.setSpeed(200);
+
+		carroCGT.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
+		carroCGT.getSpriteSheet().setRows(3);
+		carroCGT.getSpriteSheet().setColumns(2);
+
+		//Action
+		CGTAnimation moveCarroDown = new CGTAnimation(carroCGT);
+		moveCarroDown.setSpriteLine(2);
+		moveCarroDown.addStatePolicy(StatePolicy.LOOKDOWN);
+
+		moveCarroDown.setSpriteVelocity(0.08f);
+		moveCarroDown.setAnimationPolicy(PlayMode.LOOP);
+		carroCGT.getAnimarions().add(moveCarroDown);
+
+		CGTAnimation moveCarroUp = new CGTAnimation(carroCGT);
+		moveCarroUp.setSpriteLine(3);
+		moveCarroUp.addStatePolicy(StatePolicy.LOOKUP);
+
+		moveCarroUp.setSpriteVelocity(0.08f);
+		moveCarroUp.setAnimationPolicy(PlayMode.LOOP);
+		carroCGT.getAnimarions().add(moveCarroUp);
+
+		//Add na lista de enemy
+		//world.getEnemies().add(carroCGT);
+
 		// inicializando o carro no cenario		
-			CGTEnemy carroCGT = new CGTEnemy();
+		CGTEnemy carroCGT2 = new CGTEnemy();
 
-			Vector2 positionCarro = new Vector2(780,600);
-			carroCGT.setPosition(positionCarro);
+		Vector2 positionCarro2 = new Vector2(600,560);
+		carroCGT2.setPosition(positionCarro2);
 
-			Rectangle coliderCarro = new Rectangle(22,0,60, 94);
-			carroCGT.setCollision(coliderCarro);
+		Rectangle coliderCarro2 = new Rectangle(0,0,90, 80);
+		carroCGT2.setCollision(coliderCarro2);
 
-			Rectangle tamanhoCarro = new Rectangle(0,0,98, 90);
-			carroCGT.setBounds(tamanhoCarro);
+		Rectangle tamanhoCarro2 = new Rectangle(0,0,98, 90);
+		carroCGT2.setBounds(tamanhoCarro2);
 
-			carroCGT.setBlock(true);
-			carroCGT.setDestroyable(false);
-			carroCGT.setDamage(10);
-			carroCGT.addBehavior(directionUp);
+		carroCGT2.setBlock(true);
+		carroCGT2.setDestroyable(false);
+		carroCGT2.setDamage(10);
+		carroCGT2.addBehavior(direction);
 
-			carroCGT.setSpeed(200);
+		carroCGT2.setSpeed(200);
 
-			carroCGT.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
-			carroCGT.getSpriteSheet().setRows(3);
-			carroCGT.getSpriteSheet().setColumns(2);
-			
-			//Action
-			CGTAnimation moveCarroDown = new CGTAnimation(carroCGT);
-			moveCarroDown.setSpriteLine(2);
-			moveCarroDown.addStatePolicy(StatePolicy.LOOKDOWN);
-			
-			moveCarroDown.setSpriteVelocity(0.08f);
-			moveCarroDown.setAnimationPolicy(PlayMode.LOOP);
-			carroCGT.getAnimarions().add(moveCarroDown);
+		carroCGT2.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
+		carroCGT2.getSpriteSheet().setRows(3);
+		carroCGT2.getSpriteSheet().setColumns(2);
 
-			CGTAnimation moveCarroUp = new CGTAnimation(carroCGT);
-			moveCarroUp.setSpriteLine(3);
-			moveCarroUp.addStatePolicy(StatePolicy.LOOKUP);
-			
-			moveCarroUp.setSpriteVelocity(0.08f);
-			moveCarroUp.setAnimationPolicy(PlayMode.LOOP);
-			carroCGT.getAnimarions().add(moveCarroUp);
+		//Action
 
-			//Add na lista de enemy
-			//world.getEnemies().add(carroCGT);
-			
-			// inicializando o carro no cenario		
-			CGTEnemy carroCGT2 = new CGTEnemy();
+		CGTAnimation moveCarro = new CGTAnimation(carroCGT2);
+		moveCarro.setSpriteLine(1);
+		moveCarro.addStatePolicy(StatePolicy.LOOKRIGHT);
 
-			Vector2 positionCarro2 = new Vector2(600,560);
-			carroCGT2.setPosition(positionCarro2);
+		moveCarro.setSpriteVelocity(0.08f);
+		moveCarro.setAnimationPolicy(PlayMode.LOOP);
+		carroCGT2.getAnimarions().add(moveCarro);
 
-			Rectangle coliderCarro2 = new Rectangle(0,0,90, 80);
-			carroCGT2.setCollision(coliderCarro2);
+		CGTAnimation moveCarroLeft = new CGTAnimation(carroCGT2);
+		moveCarroLeft.setFlipHorizontal(true);
+		moveCarroLeft.setSpriteLine(1);
+		moveCarroLeft.addStatePolicy(StatePolicy.LOOKLEFT);
+		moveCarroLeft.setSpriteVelocity(0.08f);
+		moveCarroLeft.setAnimationPolicy(PlayMode.LOOP);
+		carroCGT2.getAnimarions().add(moveCarroLeft);
 
-			Rectangle tamanhoCarro2 = new Rectangle(0,0,98, 90);
-			carroCGT2.setBounds(tamanhoCarro2);
-
-			carroCGT2.setBlock(true);
-			carroCGT2.setDestroyable(false);
-			carroCGT2.setDamage(10);
-			carroCGT2.addBehavior(direction);
-
-			carroCGT2.setSpeed(200);
-
-			carroCGT2.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
-			carroCGT2.getSpriteSheet().setRows(3);
-			carroCGT2.getSpriteSheet().setColumns(2);
-			
-			//Action
-			
-			CGTAnimation moveCarro = new CGTAnimation(carroCGT2);
-			moveCarro.setSpriteLine(1);
-			moveCarro.addStatePolicy(StatePolicy.LOOKRIGHT);
-
-			moveCarro.setSpriteVelocity(0.08f);
-			moveCarro.setAnimationPolicy(PlayMode.LOOP);
-			carroCGT2.getAnimarions().add(moveCarro);
-
-			CGTAnimation moveCarroLeft = new CGTAnimation(carroCGT2);
-			moveCarroLeft.setFlipHorizontal(true);
-			moveCarroLeft.setSpriteLine(1);
-			moveCarroLeft.addStatePolicy(StatePolicy.LOOKLEFT);
-			moveCarroLeft.setSpriteVelocity(0.08f);
-			moveCarroLeft.setAnimationPolicy(PlayMode.LOOP);
-			carroCGT2.getAnimarions().add(moveCarroLeft);
-			
-			//Add na lista de enemy
-			world.getEnemies().add(carroCGT2);
+		//Add na lista de enemy
+		world.getEnemies().add(carroCGT2);
 	}
-	
+
 	public void configuracaoPeixes(){
 		Fade fade1 = new Fade(FadePolicy.FADE_IN);
 		fade1.setFadeInTime(0);
-		
+
 		Fade fade5 = new Fade(FadePolicy.FADE_IN);
 		fade5.setFadeInTime(5);
-		
+
 		Sine sine = new Sine(MovementPolicy.HEIGHT);
 		sine.setMax(187);
 		sine.setMin(177);
@@ -336,7 +360,7 @@ public class MyWorldPexe {
 		Rectangle tamanhoEnemy = new Rectangle(0, 0, 269, 177);
 		alertaPeixe.setBounds(tamanhoEnemy);
 
-		
+
 		alertaPeixe.setState(StatePolicy.IDLEDOWN);
 		alertaPeixe.setBlock(false);
 		alertaPeixe.setDamage(0);
@@ -349,7 +373,6 @@ public class MyWorldPexe {
 		alertaPeixe.setSpriteSheet(new CGTSpriteSheet("data/dapexe/alert_peixe.png"));
 		alertaPeixe.getSpriteSheet().setRows(1);
 		alertaPeixe.getSpriteSheet().setColumns(1);
-		
 		CGTSound somPexeCollision = new CGTSound("data/AudioDaPexe/caixa_registradora.wav");
 		alertaPeixe.setSoundDie(somPexeCollision);
 		alertaPeixe.setSoundCollision(somPexeCollision);
@@ -359,13 +382,13 @@ public class MyWorldPexe {
 		CGTAnimation moveEnemy = new CGTAnimation(alertaPeixe);
 		moveEnemy.setSpriteLine(1);
 		moveEnemy.addStatePolicy(StatePolicy.IDLEDOWN);
-		
+
 		moveEnemy.setSpriteVelocity(0.08f);
 		moveEnemy.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
 		alertaPeixe.getAnimarions().add(moveEnemy);
 		world.getEnemies().add(alertaPeixe);
-		
+
 		CGTEnemy alertaPeixe2 = new CGTEnemy();
 
 		Vector2 positionEnemy2 = world.getOpposites().get(3).getPosition();
@@ -381,8 +404,8 @@ public class MyWorldPexe {
 		sine2.setMax(187);
 		sine2.setMin(177);
 		sine2.setAtFirstStep(true);
-		
-		
+
+
 		alertaPeixe2.setState(StatePolicy.IDLEDOWN);
 		alertaPeixe2.setBlock(false);
 		alertaPeixe2.setDamage(0);
@@ -403,14 +426,14 @@ public class MyWorldPexe {
 		CGTAnimation moveEnemy2 = new CGTAnimation(alertaPeixe2);
 		moveEnemy2.setSpriteLine(1);
 		moveEnemy2.addStatePolicy(StatePolicy.IDLEDOWN);
-		
+
 		moveEnemy2.setSpriteVelocity(0.08f);
 		moveEnemy2.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
 		alertaPeixe2.getAnimarions().add(moveEnemy2);
 		world.getEnemies().add(alertaPeixe2);
 	}
-	
+
 	public void configuracaoJangada(){
 		CGTBonus jangada = new CGTBonus();
 
@@ -426,21 +449,21 @@ public class MyWorldPexe {
 		
 		CGTSound somCollisionJangada = new CGTSound("data/AudioDaPexe/splash.wav");
 		jangada.setSoundCollision(somCollisionJangada);
-		
+
 		jangada.getAnimarions().add(aniHidrante);
-	
+
 		world.getBonus().add(jangada);
 	}
-	
+
 	public void configuracaoProjetil(CGTActor personagemCGTActor){
 		CGTProjectile projetilPeixe = new CGTProjectile();
-		
+
 		Vector2 position = new Vector2(100f,200f);
 		projetilPeixe.setPosition(position);
-		
+
 		projetilPeixe.setBounds(new Rectangle(0,0,30, 30));
 		Rectangle coliderProjectile = new Rectangle(0,0,30, 30);
-			
+
 		projetilPeixe.setCollision(coliderProjectile);
 		projetilPeixe.setInterval(1);
 
@@ -514,100 +537,100 @@ public class MyWorldPexe {
 		direcaoDown.addState(StatePolicy.IDLEDOWN);
 		projetilPeixe.getOrientations().add(direcaoDown);
 		personagemCGTActor.getProjectiles().add(projetilPeixe);
-		
+
 		personagemCGTActor.addProjectile(projetilPeixe);
 		world.setActor(personagemCGTActor);
 	}
-	
+
 	public void configuracaoButtonPad(){
 		CGTButton buttonPad = new CGTButton();
-		
+
 		Texture textureUp = new Texture("data/buttons/base.png");
 		buttonPad.setTextureUp(textureUp);
 		Texture textureDown = new Texture("data/buttons/base.png");
 		buttonPad.setTextureDown(textureDown);
-		
+
 		buttonPad.setRelativeX(0);
 		buttonPad.setRelativeY(0);
 		buttonPad.setRelativeWidth(0.29f);
 		buttonPad.setRelativeHeight(0.29f);
 		buttonPad.setBounds(0, 0, textureUp.getWidth()/3, textureUp.getHeight()/3);
-		
+
 		CGTButton button = new CGTButton();
 		button.setInput(InputPolicy.BTN_UP);
-		
+
 		textureUp = new Texture("data/buttons/bt_up_up.png");
 		button.setTextureUp(textureUp);
-		
+
 		textureDown = new Texture("data/buttons/bt_up_press.png");
 		button.setTextureDown(textureDown);
-		
+
 		button.setRelativeX(0.095f);
 		button.setRelativeY(0.145f);
 		button.setRelativeWidth(0.1f);
 		button.setRelativeHeight(0.1f);
 		button.setBounds(137/3, 184.7f/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
-		
-		
+
+
 		CGTButton buttonDown = new CGTButton();
 		buttonDown.setInput(InputPolicy.BTN_DOWN);
-		
+
 		textureUp = new Texture("data/buttons/bt_down_up.png");
 		buttonDown.setTextureUp(textureUp);
 		textureDown = new Texture("data/buttons/bt_down_press.png");
 		buttonDown.setTextureDown(textureDown);
-		
+
 		buttonDown.setRelativeX(0.095f);
 		buttonDown.setRelativeY(0.028f);
 		buttonDown.setRelativeWidth(0.1f);
 		buttonDown.setRelativeHeight(0.1f);
 		buttonDown.setBounds(137/3, 36/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
-		
-		
+
+
 		CGTButton buttonLeft = new CGTButton();
 		buttonLeft.setInput(InputPolicy.BTN_LEFT);
-		
+
 		textureUp = new Texture("data/buttons/bt_left_up.png");
 		buttonLeft.setTextureUp(textureUp);
-		
+
 		textureDown = new Texture("data/buttons/bt_left_press.png");
 		buttonLeft.setTextureDown(textureDown);
-		
+
 		buttonLeft.setRelativeX(0.048f);
 		buttonLeft.setRelativeY(0.09f);
 		buttonLeft.setRelativeWidth(0.1f);
 		buttonLeft.setRelativeHeight(0.1f);
 		buttonLeft.setBounds(64/3, 126/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
-		
-		
+
+
 		CGTButton buttonRight = new CGTButton();
 		buttonRight.setInput(InputPolicy.BTN_RIGHT);
-		
+
 		textureUp = new Texture("data/buttons/bt_right_up.png");
 		buttonRight.setTextureUp(textureUp);
 		textureDown = new Texture("data/buttons/bt_right_press.png");
 		buttonRight.setTextureDown(textureDown);
-		
+
 		buttonRight.setRelativeX(0.142f);
 		buttonRight.setRelativeY(0.09f);
 		buttonRight.setRelativeWidth(0.1f);
 		buttonRight.setRelativeHeight(0.1f);
 		buttonRight.setBounds(183/3, 126/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
-		
+
 		CGTButton button1 = new CGTButton();
 		button1.setInput(InputPolicy.BTN_1);
-		
+
 		textureUp = new Texture("data/buttons/bt_agua_up.png");
 		button1.setTextureUp(textureUp);
 		textureDown = new Texture("data/buttons/bt_agua_down.png");
 		button1.setTextureDown(textureDown);
-		
+
 		button1.setRelativeX(0.9f);
 		button1.setRelativeY(0.1f);
 		button1.setRelativeWidth(0.1f);
 		button1.setRelativeHeight(0.1f);
 		button1.setBounds(0, 0, textureUp.getWidth()/2, textureUp.getHeight()/2);
-		
+
 		world.addButton(buttonPad);
 		world.addButton(button);
 		world.addButton(buttonDown);
@@ -615,31 +638,31 @@ public class MyWorldPexe {
 		world.addButton(buttonRight);
 		world.addButton(button1);
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Recebe os paramentros do jogos
 	 */
 	private void createWorld() {
-		
+
 		world = new CGTGameWorld();		
 		backGround = new Texture(Gdx.files.internal("data/dapexe/casas_ceara_cenario.png"));
 		world.setBackground(backGround);
-		
+
 		// instancias criada no método principal pois é compartilhada por mais de um objeto
 		LifeBar actorLifeBar = new LifeBar();
 		CGTActor personagemCGTActor = new CGTActor();
-		
+
 		configuracaoLifeBar(actorLifeBar);			
-		
+
 		configuracaoActor(actorLifeBar, personagemCGTActor);
 		configuracaoActionActor(personagemCGTActor);
-		
+
 		configuracaoCasasCenario();
-		configuracaoPauseDialog();
 		
-		
+
+
 		// ajuste das colisões das casas
 		world.getOpposites().get(0).setCollision(new Rectangle(23,0,125,140));
 		world.getOpposites().get(1).setCollision(new Rectangle(30,0,125,140));
@@ -650,45 +673,31 @@ public class MyWorldPexe {
 		world.getOpposites().get(9).setCollision(new Rectangle(0,0,178,140));
 		world.getOpposites().get(10).setCollision(new Rectangle(23,0,125,140));
 		world.getOpposites().get(11).setCollision(new Rectangle(0,20,178,120));
-		
+
 		// ajuste da posicao do lago na tela
 		world.getOpposites().get(6).setSpriteSheet(new CGTSpriteSheet("data/dapexe/casa233-corte.png"));
 		world.getOpposites().get(6).setPosition(new Vector2(590,620));
 		world.getOpposites().get(6).setBounds(new Rectangle(0,0,204,188 ));
 		world.getOpposites().get(6).setCollision(new Rectangle(0,0,204,188 ));
-		
+
 		configuracaoMar();
-		
+
 		configuracaoPeixes();
-		
-		Direction direction = new Direction(DirectionPolicy.LEFT_AND_RIGHT);
-		direction.setMaxX(700);
-		direction.setMinX(20);
-				
-		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
-		directionUp.setMaxY(900);
-		directionUp.setMinY(200);
-					
-		Direction directionFour = new Direction(DirectionPolicy.FOUR_DIRECTION);
-		directionFour.setMaxY(600);
-		directionFour.setMinY(400);
-		directionFour.setMaxX(1600);
-		directionFour.setMinX(1130);
-				
-		configuracaoCarros(direction, directionUp);
-		
+
+		configuracaoCarros();
+
 		configuracaoJangada();
-				
+
 		configuracaoProjetil(personagemCGTActor);
-		
+
 		configuracaoButtonPad();	
-		
-		
-		
+
+
+
 		//world.addLoseCriterion(new TargetTime(5));
 		world.addLoseCriterion(new LifeDepleted(world.getActor()));
 		world.addWinCriterion(new KillAllEnemies(world.getEnemies()));
-		
+
 
 		CGTTexture t = new CGTTexture("data/dapexe/menuInicial.png");
 		CGTButtonScreen btn = new CGTButtonScreen();
@@ -701,17 +710,18 @@ public class MyWorldPexe {
 		btn.setTextureUp(texture);
 		btn.setBounds(0, 0, texture.getWidth(), texture.getHeight());
 		btn.setScreenToGo(world);
-//		CGTButton btn = new CGTButton("data/menu/_gui.png");
-//		btn.setBounds(new Rectangle(400, 400, 200, 100));
+		//		CGTButton btn = new CGTButton("data/menu/_gui.png");
+		//		btn.setBounds(new Rectangle(400, 400, 200, 100));
 		screen = new CGTScreen(t);
 		screen.getButtons().add(btn);
-		
+
 		game = new CGTGame();
 		game.setMenu(screen);
+		configuracaoPauseDialog();
 	}
 
 	public CGTGame getGame() {
 		return game;
 	}
-	
+
 }
