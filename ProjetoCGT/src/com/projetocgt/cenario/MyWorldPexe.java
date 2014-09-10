@@ -110,7 +110,7 @@ public class MyWorldPexe {
 		Rectangle tamanhoPersonagem = new Rectangle(0, 0, 60, 60);
 		personagemCGTActor.setBounds(tamanhoPersonagem);
 
-		personagemCGTActor.setLife(30);
+		personagemCGTActor.setLife(3);
 		actorLifeBar.setMaxLife(personagemCGTActor.getLife());
 		actorLifeBar.setOwner(personagemCGTActor);
 		world.addLifeBar(actorLifeBar);
@@ -729,6 +729,10 @@ public class MyWorldPexe {
 		game = new CGTGame();
 		game.setMenu(screen);
 		configuracaoPauseDialog();
+	}
+	
+	public CGTGameWorld getWorld() {
+		return world;
 	}
 
 	public CGTGame getGame() {
