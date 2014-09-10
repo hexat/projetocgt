@@ -60,10 +60,12 @@ public class MyWorldPexe {
 		CGTDialog pauseDialog = new CGTDialog();
 		pauseDialog.setActive(false);
 		pauseDialog.setWindow(new Texture(Gdx.files.internal("data/dapexe/pause.png")));
-		pauseDialog.setRelativeX(0.25f);
-		pauseDialog.setRelativeY(0.25f);
-		pauseDialog.setRelativeWidth(0.5f);
-		pauseDialog.setRelativeHeight(0.5f);
+		pauseDialog.setHorizontalBorderTexture(new Texture(Gdx.files.internal("data/dapexe/borda.png")));
+		pauseDialog.setRightBottomCorner(new Texture(Gdx.files.internal("data/dapexe/canto.png")));
+		pauseDialog.setRelativeX(0.20f);
+		pauseDialog.setRelativeY(0.20f);
+		pauseDialog.setRelativeWidth(0.6f);
+		pauseDialog.setRelativeHeight(0.6f);
 
 		CGTButton voltar = new CGTButtonScreen();
 		voltar.setTextureUp(new Texture(Gdx.files.internal("data/dapexe/mar2.png")));
@@ -273,8 +275,10 @@ public class MyWorldPexe {
 		carroCGT.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
 		carroCGT.getSpriteSheet().setRows(3);
 		carroCGT.getSpriteSheet().setColumns(2);
+
 		CGTSound soundCar = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.2f);
 		//carroCGT.setSound(soundCar);
+
 
 		//Action
 		CGTAnimation moveCarroDown = new CGTAnimation(carroCGT);
