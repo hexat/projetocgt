@@ -84,6 +84,7 @@ public class WorldRenderer {
 
 		updateCamera();
 		
+		
 		if (!verifyLose()) {
 			
 			if (verifyWin()) {
@@ -136,7 +137,6 @@ public class WorldRenderer {
 				
 					float distanciaObjeto = world.getActor().getPosition().dst(world.getEnemies().get(i).getPosition());
 					float distanciaMaxima = (float) Math.sqrt((double) (Math.pow((double) camera.viewportHeight, 2)) + Math.pow((double) camera.viewportWidth, 2));
-					System.out.println(distanciaMaxima);
 					float volume = (1 - distanciaObjeto/distanciaMaxima)* world.getEnemies().get(i).getSound().getVolume();
 					if (volume <= 0){
 						volume = 0;
@@ -648,6 +648,7 @@ public class WorldRenderer {
 					int maxAmmo = world.getActor().getProjectiles().get(0).getMaxAmmo();
 					if (ammoCurrent < maxAmmo) {
 						world.getActor().getProjectiles().get(0).addAmmo(world.getBonus().get(i).getScore());
+						System.out.println(world.getActor().getProjectiles().get(0).getAmmo());
 						world.getBonus().get(0).playSoundCollision();
 						System.out.println("Aqui");
 					}

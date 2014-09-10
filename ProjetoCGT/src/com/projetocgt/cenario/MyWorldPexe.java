@@ -108,11 +108,11 @@ public class MyWorldPexe {
 		Rectangle tamanhoPersonagem = new Rectangle(0, 0, 60, 60);
 		personagemCGTActor.setBounds(tamanhoPersonagem);
 
-		personagemCGTActor.setLife(3);
-		actorLifeBar.setMaxLife(3);
+		personagemCGTActor.setLife(30);
+		actorLifeBar.setMaxLife(personagemCGTActor.getLife());
 		actorLifeBar.setOwner(personagemCGTActor);
 		world.addLifeBar(actorLifeBar);
-		personagemCGTActor.setSpeed(800);
+		personagemCGTActor.setSpeed(400);
 		
 
 		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet("data/dapexe/sprite_garoto.png"));
@@ -265,7 +265,7 @@ public class MyWorldPexe {
 
 		carroCGT.setBlock(true);
 		carroCGT.setDestroyable(false);
-		carroCGT.setDamage(10);
+		carroCGT.setDamage(5);
 		carroCGT.addBehavior(directionUp);
 
 		carroCGT.setSpeed(200);
@@ -273,8 +273,7 @@ public class MyWorldPexe {
 		carroCGT.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
 		carroCGT.getSpriteSheet().setRows(3);
 		carroCGT.getSpriteSheet().setColumns(2);
-		
-		CGTSound soundCar = new CGTSound("data/AudioDaPexe/carro_1.wav");
+		CGTSound soundCar = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.2f);
 		//carroCGT.setSound(soundCar);
 
 		//Action
