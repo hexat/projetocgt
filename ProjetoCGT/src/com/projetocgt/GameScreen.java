@@ -7,6 +7,7 @@ import cgt.policy.InputPolicy;
 import cgt.screen.CGTButtonScreen;
 import cgt.screen.CGTDialog;
 import cgt.util.CGTButton;
+import cgt.util.LifeBar;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -62,8 +63,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			button.autosize();
 		}
 
-		for (Actor lifebar : world.getLifeBars()){
+		for (LifeBar lifebar : world.getLifeBars()){
 			this.addActor(lifebar);
+			lifebar.autosize();
 		}
 	}
 
@@ -84,106 +86,109 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			}
 		}
 
+/*
+		for(CGTButtonScreen buttonScreen : world.getPauseDialog().getButtons()){
+			if(buttonScreen.isActive()){
+				buttonScreen.setTouchable(Touchable.disabled);
+				StarAssault.getInstance().setScreen(buttonScreen.getScreenToGo());
+			}
+		}
 
-			for(CGTButtonScreen buttonScreen : world.getPauseDialog().getButtons()){
-				if(buttonScreen.isActive()){
-					buttonScreen.setTouchable(Touchable.disabled);
-					StarAssault.getInstance().setScreen(buttonScreen.getScreenToGo());
-				}
+		CGTButton closeButton = world.getPauseDialog().getCloseButton();
+		if (closeButton.isActive()){
+			world.getPauseDialog().setActive(false);
+			resume();
+		}
+		*/
+	}
+
+	public void pressHandler(CGTButton button){
+		if(button.getInput()==InputPolicy.BTN_1)
+			//controller.firePressedTouch();
+			pause();
+		if(button.getInput()==InputPolicy.BTN_UP)
+			controller.upPressed();
+		else if(button.getInput()==InputPolicy.BTN_DOWN)
+			controller.downPressed();
+		else if(button.getInput()==InputPolicy.BTN_LEFT)
+			controller.leftPressed();
+		else if(button.getInput()==InputPolicy.BTN_RIGHT)
+			controller.rightPressed();
+	}
+
+	public void releaseHandler(CGTButton button){
+		if(button.getInput()==InputPolicy.BTN_1)
+			controller.fireReleasedTouch();
+		//resume();
+		if(button.getInput()==InputPolicy.BTN_UP)
+			controller.upReleased();
+		else if(button.getInput()==InputPolicy.BTN_DOWN)
+			controller.downReleased();
+		else if(button.getInput()==InputPolicy.BTN_LEFT)
+			controller.leftReleased();
+		else if(button.getInput()==InputPolicy.BTN_RIGHT)
+			controller.rightReleased();
+	}
+
+
+	public void debug(Actor actor){
+		ShapeRenderer shape = new ShapeRenderer();
+		shape.begin(ShapeType.Line);
+		shape.rect(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight());
+		shape.end();
+	}
+	@Override
+	public void render(float delta) {
+		switch(state){
+		case PLAYING:
+			controller.update(delta);
+			renderer.render();
+			if(renderer.verifyLose())
+				music.stop();
+			buttonHandler();
+			this.act();
+			getSpriteBatch().begin();
+			this.draw();
+
+			getSpriteBatch().end();
+
+
+			//TODO O trecho de codigo abaixo so' eh utilizado quando a tecla A e' pressionada
+			//Utilizado para ativar o projectili por um determinado Tempo
+			//Com um touch
+			if(flagTouch){
+				Timer.schedule(new Task(){
+					@Override
+					public void run() {
+						flagTouch=false;
+						//verifica se o ammo é zero
+						controller.fireReleasedTouch();
+						//Timer.instance().clear();
+					}
+				}, renderer.getCurrentActorProjectile().getInterval());
+			}
+			break;
+
+		case PAUSED:
+			if(!world.getPauseDialog().isActive()){
+				world.getPauseDialog().setActive(true);
+				Timer.instance().stop(); //Para os behaviors
+				renderer.getSpriteBatch().flush();
+				music.pause();
+				this.getActors().clear();
+				addDialog(world.getPauseDialog());
+				world.getPauseDialog().autosize();
 			}
 
-			CGTButton closeButton = world.getPauseDialog().getCloseButton();
-			if (closeButton.isActive())
-				resume();
-		}
+			buttonHandler();
+			this.act();
+			getSpriteBatch().begin();
+			this.draw();
+			getSpriteBatch().end();
+			break;
 
-		public void pressHandler(CGTButton button){
-			if(button.getInput()==InputPolicy.BTN_1)
-				//controller.firePressedTouch();
-				pause();
-			if(button.getInput()==InputPolicy.BTN_UP)
-				controller.upPressed();
-			else if(button.getInput()==InputPolicy.BTN_DOWN)
-				controller.downPressed();
-			else if(button.getInput()==InputPolicy.BTN_LEFT)
-				controller.leftPressed();
-			else if(button.getInput()==InputPolicy.BTN_RIGHT)
-				controller.rightPressed();
-		}
-
-		public void releaseHandler(CGTButton button){
-			if(button.getInput()==InputPolicy.BTN_1)
-				controller.fireReleasedTouch();
-			//resume();
-			if(button.getInput()==InputPolicy.BTN_UP)
-				controller.upReleased();
-			else if(button.getInput()==InputPolicy.BTN_DOWN)
-				controller.downReleased();
-			else if(button.getInput()==InputPolicy.BTN_LEFT)
-				controller.leftReleased();
-			else if(button.getInput()==InputPolicy.BTN_RIGHT)
-				controller.rightReleased();
-		}
-
-
-		public void debug(Actor actor){
-			ShapeRenderer shape = new ShapeRenderer();
-			shape.begin(ShapeType.Line);
-			shape.rect(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight());
-			shape.end();
-		}
-		@Override
-		public void render(float delta) {
-			switch(state){
-			case PLAYING:
-				controller.update(delta);
-				renderer.render();
-				if(renderer.verifyLose())
-					music.stop();
-				buttonHandler();
-				this.act();
-				getSpriteBatch().begin();
-				this.draw();
-
-				getSpriteBatch().end();
-
-
-				//TODO O trecho de codigo abaixo so' eh utilizado quando a tecla A e' pressionada
-				//Utilizado para ativar o projectili por um determinado Tempo
-				//Com um touch
-				if(flagTouch){
-					Timer.schedule(new Task(){
-						@Override
-						public void run() {
-							flagTouch=false;
-							//verifica se o ammo é zero
-							controller.fireReleasedTouch();
-							//Timer.instance().clear();
-						}
-					}, renderer.getCurrentActorProjectile().getInterval());
-				}
-				break;
-
-			case PAUSED:
-				if(!world.getPauseDialog().isActive()){
-					world.getPauseDialog().setActive(true);
-					Timer.instance().stop(); //Para os behaviors
-					renderer.getSpriteBatch().flush();
-					music.pause();
-					this.getActors().clear();
-					addDialog(world.getPauseDialog());
-					world.getPauseDialog().autosize();
-				}
-
-				buttonHandler();
-				this.act();
-				getSpriteBatch().begin();
-				this.draw();
-				getSpriteBatch().end();
-				break;
-
-			case RESUMING:
-				world.getPauseDialog().setActive(false);
+		case RESUMING:
+			if(!world.getPauseDialog().isActive()){
 				Timer.instance().start();
 				this.getActors().clear();
 				getActorsFromWorld();
@@ -191,130 +196,133 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				state = State.PLAYING;
 				break;
 			}
-
+			else
+				pause();
 		}
 
-		private void addDialog(CGTDialog dialog){
-			addActor(dialog);
-
-			for(CGTButtonScreen button : dialog.getButtons()){
-				addActor(button);
-				button.autosize();
-			}
-			addActor(dialog.getCloseButton());
-		}
-
-		private void removeDialog(CGTDialog dialog){
-			getActors().indexOf(dialog, false);
-
-			for(CGTButton button : dialog.getButtons()){
-				addActor(button);
-			}
-
-			addActor(dialog.getCloseButton());
-		}
-
-		@Override
-		public void resize(int width, int height) {
-			renderer.getViewport().update(width, height);
-		}
-
-
-		@Override
-		public void show() {
-			music.play();
-			music.setLooping(true);
-			Gdx.input.setInputProcessor(this);
-
-		}
-
-		@Override
-		public void hide() {
-			// TODO Auto-generated method stub
-
-		}
-
-		@Override
-		public void pause() {
-			state = State.PAUSED;
-
-		}
-		
-		@Override
-		public void resume() {
-			// TODO Auto-generated method stub
-			state = State.RESUMING;
-		}
-
-		@Override
-		public void dispose() {
-			renderer.dispose();
-			this.dispose();
-		}
-
-
-		//Funciona na descida do botao
-		@Override
-		public boolean keyDown(int keycode) {
-
-			if (keycode == Keys.LEFT ){
-				controller.leftPressed();
-			}
-			if (keycode == Keys.RIGHT){
-				controller.rightPressed();
-			}
-			if (keycode == Keys.UP){
-				controller.upPressed();
-			}
-			if (keycode == Keys.DOWN){
-				controller.downPressed();
-			}
-			if (keycode == Keys.A){
-				flagTouch=true;
-				controller.firePressedTouch();
-			}
-			return true;
-		}
-
-
-
-		//Funciona na subida do botao 
-		@Override
-		public boolean keyUp(int keycode) {
-
-			if (keycode == Keys.LEFT) {
-				controller.leftReleased();
-			}
-
-			if (keycode == Keys.RIGHT) {
-				controller.rightReleased();
-			}
-
-			if (keycode == Keys.UP) {
-				controller.upReleased();
-			}
-
-			if (keycode == Keys.DOWN) {
-				controller.downReleased();
-			}
-
-			if (keycode == Keys.A) {
-				flagTouch=false;
-			}
-			return true;
-		}
-
-		@Override
-		public boolean keyTyped(char character) {
-
-			return false;
-		}
-
-		public SpriteBatch getSpriteBatch() {
-			return spriteBatch;
-		}
-
-		public void setSpriteBatch(SpriteBatch spriteBatch) {
-			this.spriteBatch = spriteBatch;
-		}
 	}
+
+	private void addDialog(CGTDialog dialog){
+		addActor(dialog);
+
+		for(CGTButtonScreen button : dialog.getButtons()){
+			addActor(button);
+			button.autosize();
+		}
+		addActor(dialog.getCloseButton());
+	}
+
+	private void removeDialog(CGTDialog dialog){
+		getActors().indexOf(dialog, false);
+
+		for(CGTButton button : dialog.getButtons()){
+			addActor(button);
+		}
+
+		addActor(dialog.getCloseButton());
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		renderer.getViewport().update(width, height);
+	}
+
+
+	@Override
+	public void show() {
+		music.play();
+		music.setLooping(true);
+		Gdx.input.setInputProcessor(this);
+
+	}
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void pause() {
+		state = State.PAUSED;
+
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		state = State.RESUMING;
+	}
+
+	@Override
+	public void dispose() {
+		renderer.dispose();
+		this.dispose();
+	}
+
+
+	//Funciona na descida do botao
+	@Override
+	public boolean keyDown(int keycode) {
+
+		if (keycode == Keys.LEFT ){
+			controller.leftPressed();
+		}
+		if (keycode == Keys.RIGHT){
+			controller.rightPressed();
+		}
+		if (keycode == Keys.UP){
+			controller.upPressed();
+		}
+		if (keycode == Keys.DOWN){
+			controller.downPressed();
+		}
+		if (keycode == Keys.A){
+			flagTouch=true;
+			controller.firePressedTouch();
+		}
+		return true;
+	}
+
+
+
+	//Funciona na subida do botao 
+	@Override
+	public boolean keyUp(int keycode) {
+
+		if (keycode == Keys.LEFT) {
+			controller.leftReleased();
+		}
+
+		if (keycode == Keys.RIGHT) {
+			controller.rightReleased();
+		}
+
+		if (keycode == Keys.UP) {
+			controller.upReleased();
+		}
+
+		if (keycode == Keys.DOWN) {
+			controller.downReleased();
+		}
+
+		if (keycode == Keys.A) {
+			flagTouch=false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+
+		return false;
+	}
+
+	public SpriteBatch getSpriteBatch() {
+		return spriteBatch;
+	}
+
+	public void setSpriteBatch(SpriteBatch spriteBatch) {
+		this.spriteBatch = spriteBatch;
+	}
+}

@@ -24,18 +24,18 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class MyWorld {
 
-//	ArrayList<Action> listaDeAction = new ArrayList<Action>();
-//	private CGTActor personagemActorLIB;
+	//	ArrayList<Action> listaDeAction = new ArrayList<Action>();
+	//	private CGTActor personagemActorLIB;
 	private Texture backGround;
 	//private Texture lifeBar;
 	//private Texture lifeBarCGTEnemy;
-//	private WinPolicy winPolicy;
-//	private LosePolicy losePolicy;
-//	private int countdown;
-//	private int scoreTarget;
+	//	private WinPolicy winPolicy;
+	//	private LosePolicy losePolicy;
+	//	private int countdown;
+	//	private int scoreTarget;
 
 	private CGTGameWorld world;
-	
+
 	public MyWorld() {
 		createWorld();
 	}
@@ -48,34 +48,25 @@ public class MyWorld {
 	 */
 	private void createWorld() {
 		world = new CGTGameWorld();
-		
+
 		//world = new CGTGameWorld();
-		backGround = new Texture(Gdx.files.internal("data/Cenario/asfalto_grama_sprite_sheet.png"));
+		backGround = new Texture("data/Cenario/asfalto_grama_sprite_sheet.png");
 		world.setBackground(backGround);
+
 		
 
-		Texture lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
-		Texture lifeBarBack = new Texture(Gdx.files.internal("data/lifeBar/lifeBarBack.png"));
-		LifeBar actorLifeBar = new LifeBar();
-		actorLifeBar.setBar(lifeBar);
-		actorLifeBar.setBackgroundBar(lifeBarBack);
-		actorLifeBar.setRelativeX(0.1f);
-		actorLifeBar.setRelativeY(0.9f);
-		actorLifeBar.setRelativeHeight(0.1f);
-		actorLifeBar.setRelativeWidth(0.25f);
-		
 		//world.setPosRelativaLifeBarX(-500);
-//		world.setPosRelativaLifeBarY(300);
-//		world.setLifeBar(lifeBar);
-		
-		//Texture lifeBarCGTEnemy = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
-//		world.setPosRelativaLifeBarCGTEnemyX(500);
-//		world.setPosRelativaLifeBarCGTEnemyY(300);
-//		world.setLifeBarCGTEnemy(lifeBarCGTEnemy);
-//		world.setNumDeCGTEnemyDetroyble(2);
+		//		world.setPosRelativaLifeBarY(300);
+		//		world.setLifeBar(lifeBar);
 
-		
-		
+		//Texture lifeBarCGTEnemy = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
+		//		world.setPosRelativaLifeBarCGTEnemyX(500);
+		//		world.setPosRelativaLifeBarCGTEnemyY(300);
+		//		world.setLifeBarCGTEnemy(lifeBarCGTEnemy);
+		//		world.setNumDeCGTEnemyDetroyble(2);
+
+
+
 		CGTActor personagemCGTActor = new CGTActor();
 		personagemCGTActor.setFireDefault(-1);
 		personagemCGTActor.setPosition(new Vector2(1800f,900f));
@@ -85,10 +76,19 @@ public class MyWorld {
 
 		Rectangle tamanhoPersonagem = new Rectangle(0, 0, 80, 80);
 		personagemCGTActor.setBounds(tamanhoPersonagem);
-
 		personagemCGTActor.setLife(3);
-		actorLifeBar.setMaxLife(3);
-		actorLifeBar.setOwner(personagemCGTActor);
+
+		Texture lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
+		Texture lifeBarBack = new Texture(Gdx.files.internal("data/lifeBar/lifeBarBack.png"));
+		IndividualLifeBar actorLifeBar = new IndividualLifeBar(personagemCGTActor);
+		actorLifeBar.setBar(lifeBar);
+		actorLifeBar.setBackgroundBar(lifeBarBack);
+		actorLifeBar.setRelativeX(0.1f);
+		actorLifeBar.setRelativeY(0.9f);
+		actorLifeBar.setRelativeHeight(0.1f);
+		actorLifeBar.setRelativeWidth(0.25f);
+
+
 		world.addLifeBar(actorLifeBar);
 		personagemCGTActor.setSpeed(280);
 
@@ -100,7 +100,7 @@ public class MyWorld {
 
 		CGTSound somDamegePersonagem = new CGTSound("data/AudioBombeiro/colisao.wav");
 		personagemCGTActor.setSoundCollision(somDamegePersonagem);
-		
+
 		ArrayList<CGTSound> listaSomDie = new ArrayList<CGTSound>();
 		CGTSound somDiePersonagem = new CGTSound("data/AudioBombeiro/colisao.wav");
 		listaSomDie.add(somDiePersonagem);
@@ -136,7 +136,7 @@ public class MyWorld {
 		//moveDown.addInput(InputPolicy.ACEL_DOWN);
 		moveDown.setSpriteVelocity(0.2f);
 		moveDown.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
-		
+
 		CGTAnimation animationDamege = new CGTAnimation(personagemCGTActor);
 		animationDamege.setSpriteLine(5);
 		animationDamege.addStatePolicy(StatePolicy.DAMAGE);
@@ -149,8 +149,8 @@ public class MyWorld {
 		personagemCGTActor.getAnimarions().add(moveLEft);
 		personagemCGTActor.getAnimarions().add(moveRight);
 		personagemCGTActor.getAnimarions().add(moveUp);
-		
-		
+
+
 		//Adicionando o personagem na libGDX
 		//personagemActorLIB = new ActorCGT(personagemCGTActor);
 
@@ -178,14 +178,14 @@ public class MyWorld {
 		/* Esse opposite nao tem animacao, seria melhor adicionar uma textura do que uma animacao 
 		 * um por um.
 		 */
-		
+
 		// esse for serve para iniciar as casas no cen�rio
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				CGTOpposite opositorCasa = new CGTOpposite();
 
 
-				
+
 
 				//new Vector2(450*(i+1)+i*20,400*(j+1)+j*90), 300, 300, 300, 0, 0
 
@@ -205,8 +205,8 @@ public class MyWorld {
 				else{
 					opositorCasa.setCollision(new Rectangle(25,60,200, 230));
 				}
-				
-				
+
+
 				Vector2 position = new Vector2(450*(i+1)+ i*20, 400*(j+1)+j*90);
 				opositorCasa.setPosition(position);
 
@@ -218,28 +218,28 @@ public class MyWorld {
 				opositorCasa.setSpriteSheet(new CGTSpriteSheet("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png"));
 				opositorCasa.getSpriteSheet().setRows(1);
 				opositorCasa.getSpriteSheet().setColumns(1);
-				
+
 
 				CGTAnimation teste = new CGTAnimation(opositorCasa);
 				teste.setSpriteLine(1);
 				teste.addStatePolicy(StatePolicy.IDLEDOWN);
 				teste.setAnimationPolicy(PlayMode.LOOP);
 				opositorCasa.getAnimarions().add(teste);
-				
+
 				//Indica que a minha animacao e' um por um
 				//opositorCasa.getSpriteSheet().loadingSpriteSheet("data/Cenario/casas/casa_sprite_sheet"+i+""+j+".png", 1, 1);
 				//Opposite opositorCasaLib = new Opposite(opositorCasa);
 				world.getOpposites().add(opositorCasa);				
 			}
 		}
-		
+
 		// ajuste da posi��o da casa do bombeiro na tela
 		world.getOpposites().get(13).setPosition(new Vector2(1880,890));
-		
-		
+
+
 		Fade fade = new Fade(FadePolicy.FADE_IN);
 		fade.setFadeInTime(1);
-		
+
 		Sine sine = new Sine(MovementPolicy.HEIGHT);
 		sine.setMax(100);
 		sine.setMin(50);
@@ -282,7 +282,7 @@ public class MyWorld {
 		enemyFogoCGT.setGroup("fogo1");
 		enemyFogoCGT.getAnimarions().add(moveEnemy);
 		world.getEnemies().add(enemyFogoCGT);
-		
+
 		CGTEnemy enemyFogoCGT2 = new CGTEnemy();
 
 		Vector2 positionEnemy2 = new Vector2(680,850);
@@ -467,9 +467,9 @@ public class MyWorld {
 		hidrate.setPosition(new Vector2(1880, 880));
 		hidrate.setBounds(new Rectangle(0,0,50,50));
 		hidrate.setCollision(new Rectangle(0,0,50,50));
-		
+
 		hidrate.setSpriteSheet(new CGTSpriteSheet("data/CGTBonus/SpriteSheet_tubo.png"));
-		
+
 		CGTAnimation aniHidrante = new CGTAnimation(hidrate);
 		aniHidrante.setSpriteLine(1);
 		hidrate.getAnimarions().add(aniHidrante);
@@ -477,13 +477,13 @@ public class MyWorld {
 		world.getBonus().add(hidrate);
 
 		CGTProjectile projetilAguaCGT = new CGTProjectile();
-		
+
 		Vector2 position = new Vector2(100f,200f);
 		projetilAguaCGT.setPosition(position);
-		
+
 		projetilAguaCGT.setBounds(new Rectangle(0,0,30, 30));
 		Rectangle coliderProjectile = new Rectangle(0,0,30, 30);
-		
+
 		//Vector2 positionRelative = new Vector2(0,0);
 		projetilAguaCGT.setCollision(coliderProjectile);
 		projetilAguaCGT.setInterval(1);
@@ -569,99 +569,99 @@ public class MyWorld {
 		direcaoDown.addState(StatePolicy.IDLEDOWN);
 		projetilAguaCGT.getOrientations().add(direcaoDown);
 		personagemCGTActor.getProjectiles().add(projetilAguaCGT);
-		
+
 		personagemCGTActor.addProjectile(projetilAguaCGT);
 		world.setActor(personagemCGTActor);
-		
+
 		CGTButton buttonPad = new CGTButton();
-		
+
 		Texture textureUp = new Texture("data/buttons/base.png");
 		buttonPad.setTextureUp(textureUp);
 		Texture textureDown = new Texture("data/buttons/base.png");
 		buttonPad.setTextureDown(textureDown);
-		
+
 		buttonPad.setRelativeX(0);
 		buttonPad.setRelativeY(0);
 		buttonPad.setRelativeWidth(0.29f);
 		buttonPad.setRelativeHeight(0.29f);
 		buttonPad.setBounds(0, 0, textureUp.getWidth()/3, textureUp.getHeight()/3);
-		
+
 		CGTButton button = new CGTButton();
 		button.setInput(InputPolicy.BTN_UP);
-		
+
 		textureUp = new Texture("data/buttons/bt_up_up.png");
 		button.setTextureUp(textureUp);
-		
+
 		textureDown = new Texture("data/buttons/bt_up_press.png");
 		button.setTextureDown(textureDown);
-		
+
 		button.setRelativeX(0.095f);
 		button.setRelativeY(0.145f);
 		button.setRelativeWidth(0.1f);
 		button.setRelativeHeight(0.1f);
 		button.setBounds(137/3, 184.7f/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
-		
-		
+
+
 		CGTButton buttonDown = new CGTButton();
 		buttonDown.setInput(InputPolicy.BTN_DOWN);
-		
+
 		textureUp = new Texture("data/buttons/bt_down_up.png");
 		buttonDown.setTextureUp(textureUp);
 		textureDown = new Texture("data/buttons/bt_down_press.png");
 		buttonDown.setTextureDown(textureDown);
-		
+
 		buttonDown.setRelativeX(0.095f);
 		buttonDown.setRelativeY(0.028f);
 		buttonDown.setRelativeWidth(0.1f);
 		buttonDown.setRelativeHeight(0.1f);
 		buttonDown.setBounds(137/3, 36/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
-		
-		
+
+
 		CGTButton buttonLeft = new CGTButton();
 		buttonLeft.setInput(InputPolicy.BTN_LEFT);
-		
+
 		textureUp = new Texture("data/buttons/bt_left_up.png");
 		buttonLeft.setTextureUp(textureUp);
-		
+
 		textureDown = new Texture("data/buttons/bt_left_press.png");
 		buttonLeft.setTextureDown(textureDown);
-		
+
 		buttonLeft.setRelativeX(0.048f);
 		buttonLeft.setRelativeY(0.09f);
 		buttonLeft.setRelativeWidth(0.1f);
 		buttonLeft.setRelativeHeight(0.1f);
 		buttonLeft.setBounds(64/3, 126/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
-		
-		
+
+
 		CGTButton buttonRight = new CGTButton();
 		buttonRight.setInput(InputPolicy.BTN_RIGHT);
-		
+
 		textureUp = new Texture("data/buttons/bt_right_up.png");
 		buttonRight.setTextureUp(textureUp);
 		textureDown = new Texture("data/buttons/bt_right_press.png");
 		buttonRight.setTextureDown(textureDown);
-		
+
 		buttonRight.setRelativeX(0.142f);
 		buttonRight.setRelativeY(0.09f);
 		buttonRight.setRelativeWidth(0.1f);
 		buttonRight.setRelativeHeight(0.1f);
 		buttonRight.setBounds(183/3, 126/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
-		
+
 		CGTButton button1 = new CGTButton();
 		button1.setInput(InputPolicy.BTN_1);
-		
+
 		textureUp = new Texture("data/buttons/bt_agua_up.png");
 		button1.setTextureUp(textureUp);
 		textureDown = new Texture("data/buttons/bt_agua_down.png");
 		button1.setTextureDown(textureDown);
-		
+
 		button1.setRelativeX(0.9f);
 		button1.setRelativeY(0.1f);
 		button1.setRelativeWidth(0.1f);
 		button1.setRelativeHeight(0.1f);
 		button1.setBounds(0, 0, textureUp.getWidth()/2, textureUp.getHeight()/2);
-		
-		
+
+
 		/*CGTAnimation moveButton = new CGTAnimation(button);
 		moveButton.setSpriteLine(1);
 		moveButton.addStatePolicy(StatePolicy.IDLEDOWN);
@@ -669,7 +669,7 @@ public class MyWorld {
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveButton.setSpriteVelocity(0.08f);
 		moveButton.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
-		
+
 		CGTAnimation moveButton2 = new CGTAnimation(button);
 		moveButton2.setSpriteLine(2);
 		moveButton2.addStatePolicy(StatePolicy.IDLEUP);
@@ -677,24 +677,36 @@ public class MyWorld {
 		//moveEnemy.addInput(InputPolicy.ACEL_LEFT);
 		moveButton2.setSpriteVelocity(0.08f);
 		moveButton2.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
-		
+
 		button.getAnimarions().add(moveButton);
 		button.getAnimarions().add(moveButton2);
-		
-		
-		
+
+
+
 		//button.draw(batch, parentAlpha)
-		  */
+		 */
 		world.addButton(buttonPad);
 		world.addButton(button);
 		world.addButton(buttonDown);
 		world.addButton(buttonLeft);
 		world.addButton(buttonRight);
 		world.addButton(button1);
+
+		
+		EnemyGroupLifeBar alerts = new EnemyGroupLifeBar(world.getEnemies());
+		Texture enemyLifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
+		Texture enemyLifeBarBack = new Texture(Gdx.files.internal("data/lifeBar/lifeBarBack.png"));
+		alerts.setBar(enemyLifeBar);
+		alerts.setBackgroundBar(enemyLifeBarBack);
+		alerts.setRelativeX(0.7f);
+		alerts.setRelativeY(0.9f);
+		alerts.setRelativeHeight(0.1f);
+		alerts.setRelativeWidth(0.25f);
+		world.addLifeBar(alerts);
 		
 		//world.addLoseCriterion(new TargetTime(5));
 		world.addLoseCriterion(new LifeDepleted(world.getActor()));
 		world.addWinCriterion(new KillAllEnemies(world.getEnemies()));
 	}
-	
+
 }

@@ -18,7 +18,7 @@ public class StarAssault extends Game {
 
 	@Override
 	public void create() {
-		menu = new MyWorldPexe().getGame().getMenu();
+		//menu = new MyWorldPexe().getGame().getMenu();
 		setScreen(new GeneralScreen(new MyWorldPexe().getGame().getMenu()));
 	}
 	

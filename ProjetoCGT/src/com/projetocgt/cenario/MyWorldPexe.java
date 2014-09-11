@@ -29,6 +29,8 @@ import cgt.util.CGTButton;
 import cgt.util.CGTSound;
 import cgt.util.CGTSpriteSheet;
 import cgt.util.CGTTexture;
+import cgt.util.EnemyGroupLifeBar;
+import cgt.util.IndividualLifeBar;
 import cgt.util.LifeBar;
 import cgt.util.ProjectileOrientation;
 import cgt.win.KillAllEnemies;
@@ -101,7 +103,7 @@ public class MyWorldPexe {
 		actorLifeBar.setRelativeWidth(0.25f);
 	}
 
-	public void configuracaoActor(LifeBar actorLifeBar, CGTActor personagemCGTActor){
+	public void configuracaoActor(IndividualLifeBar actorLifeBar, CGTActor personagemCGTActor){
 		personagemCGTActor.setFireDefault(-1);
 		personagemCGTActor.setPosition(new Vector2(800f,900f));
 		personagemCGTActor.setTimeToRecovery(4);
@@ -276,8 +278,8 @@ public class MyWorldPexe {
 		carroCGT.getSpriteSheet().setRows(3);
 		carroCGT.getSpriteSheet().setColumns(2);
 
-		CGTSound soundCar = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.2f);
-		//carroCGT.setSound(soundCar);
+		CGTSound soundCar = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.5f);
+		carroCGT.setSound(soundCar);
 
 
 		//Action
@@ -322,7 +324,8 @@ public class MyWorldPexe {
 		carroCGT2.getSpriteSheet().setRows(3);
 		carroCGT2.getSpriteSheet().setColumns(2);
 		
-		carroCGT2.setSound(soundCar);
+		CGTSound soundCar2 = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.5f);
+		carroCGT2.setSound(soundCar2);
 
 		//Action
 
@@ -442,6 +445,17 @@ public class MyWorldPexe {
 
 		alertaPeixe2.getAnimarions().add(moveEnemy2);
 		world.getEnemies().add(alertaPeixe2);
+		
+		EnemyGroupLifeBar alerts = new EnemyGroupLifeBar(world.getEnemies());
+		Texture lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
+		Texture lifeBarBack = new Texture(Gdx.files.internal("data/lifeBar/lifeBarBack.png"));
+		alerts.setBar(lifeBar);
+		alerts.setBackgroundBar(lifeBarBack);
+		alerts.setRelativeX(0.7f);
+		alerts.setRelativeY(0.9f);
+		alerts.setRelativeHeight(0.1f);
+		alerts.setRelativeWidth(0.25f);
+		world.addLifeBar(alerts);
 	}
 
 	public void configuracaoJangada(){
@@ -662,9 +676,9 @@ public class MyWorldPexe {
 		world.setBackground(backGround);
 
 		// instancias criada no método principal pois é compartilhada por mais de um objeto
-		LifeBar actorLifeBar = new LifeBar();
+		
 		CGTActor personagemCGTActor = new CGTActor();
-
+		IndividualLifeBar actorLifeBar = new IndividualLifeBar(personagemCGTActor);
 		configuracaoLifeBar(actorLifeBar);			
 
 		configuracaoActor(actorLifeBar, personagemCGTActor);
@@ -720,6 +734,7 @@ public class MyWorldPexe {
 		btn.setTextureDown(texture);
 		btn.setTextureUp(texture);
 		btn.setBounds(0, 0, texture.getWidth(), texture.getHeight());
+		//btn.setScreenToGo(new MyWorld().getCGT());
 		btn.setScreenToGo(world);
 		//		CGTButton btn = new CGTButton("data/menu/_gui.png");
 		//		btn.setBounds(new Rectangle(400, 400, 200, 100));
