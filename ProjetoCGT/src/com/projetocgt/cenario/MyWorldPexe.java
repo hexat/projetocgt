@@ -110,7 +110,7 @@ public class MyWorldPexe {
 		Rectangle tamanhoPersonagem = new Rectangle(0, 0, 60, 60);
 		personagemCGTActor.setBounds(tamanhoPersonagem);
 
-		personagemCGTActor.setLife(3);
+		personagemCGTActor.setLife(30);
 		actorLifeBar.setMaxLife(personagemCGTActor.getLife());
 		actorLifeBar.setOwner(personagemCGTActor);
 		world.addLifeBar(actorLifeBar);
