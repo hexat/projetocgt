@@ -86,7 +86,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			}
 		}
 
-/*
+
 		for(CGTButtonScreen buttonScreen : world.getPauseDialog().getButtons()){
 			if(buttonScreen.isActive()){
 				buttonScreen.setTouchable(Touchable.disabled);
@@ -99,7 +99,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			world.getPauseDialog().setActive(false);
 			resume();
 		}
-		*/
+		
 	}
 
 	public void pressHandler(CGTButton button){
