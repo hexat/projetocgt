@@ -94,6 +94,13 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			}
 		}
 
+		for(CGTButtonScreen buttonScreen : world.getWinDialog().getButtons()){
+			if(buttonScreen.isActive()){
+				buttonScreen.setTouchable(Touchable.disabled);
+				StarAssault.getInstance().setScreen(buttonScreen.getScreenToGo());
+			}
+		}
+
 		CGTButton closeButton = world.getPauseDialog().getCloseButton();
 		if (closeButton.isActive()){
 			world.getPauseDialog().setActive(false);
@@ -203,12 +210,13 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 		case WIN:
 			Timer.instance().stop(); //Para os behaviors
+			world.getWinDialog().setActive(true);
 			renderer.getSpriteBatch().flush();
 			music.pause();
 			this.getActors().clear();
 			addDialog(world.getWinDialog());
 			world.getWinDialog().autosize();
-			
+
 			buttonHandler();
 			this.act();
 			getSpriteBatch().begin();

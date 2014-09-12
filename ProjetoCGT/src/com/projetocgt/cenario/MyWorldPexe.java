@@ -92,6 +92,39 @@ public class MyWorldPexe {
 		world.setPauseDialog(pauseDialog);
 	}
 	
+	public void configuracaoWinDialog(){
+		CGTDialog pauseDialog = new CGTDialog();
+		pauseDialog.setActive(false);
+		pauseDialog.setWindow(new Texture(Gdx.files.internal("data/dapexe/Ganhou.png")));
+		pauseDialog.setHorizontalBorderTexture(new Texture(Gdx.files.internal("data/dapexe/borda.png")));
+		pauseDialog.setRightBottomCorner(new Texture(Gdx.files.internal("data/dapexe/canto.png")));
+		pauseDialog.setRelativeX(0.20f);
+		pauseDialog.setRelativeY(0.20f);
+		pauseDialog.setRelativeWidth(0.6f);
+		pauseDialog.setRelativeHeight(0.6f);
+
+		CGTButton voltar = new CGTButtonScreen();
+		voltar.setTextureUp(new Texture(Gdx.files.internal("data/dapexe/close_btn.png")));
+		voltar.setTextureDown(new Texture(Gdx.files.internal("data/dapexe/close_btn.png")));
+		voltar.setRelativeX(0.65f);
+		voltar.setRelativeY(0.65f);
+		voltar.setRelativeWidth(0.1f);
+		voltar.setRelativeHeight(0.1f);
+
+
+		CGTButtonScreen voltarMenu = new CGTButtonScreen();
+		voltarMenu.setScreenToGo(game.getMenu());
+		voltarMenu.setTextureUp(new Texture(Gdx.files.internal("data/dapexe/back_btn.png")));
+		voltarMenu.setTextureDown(new Texture(Gdx.files.internal("data/dapexe/back_btn.png")));
+		voltarMenu.setRelativeX(0.25f);
+		voltarMenu.setRelativeY(0.65f);
+		voltarMenu.setRelativeWidth(0.1f);
+		voltarMenu.setRelativeHeight(0.1f);
+
+		pauseDialog.addButton(voltarMenu);
+		world.setWinDialog(pauseDialog);
+	}
+	
 	public void configuracaoLifeBar(LifeBar actorLifeBar){
 		Texture lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
 		Texture lifeBarBack = new Texture(Gdx.files.internal("data/lifeBar/lifeBarBack.png"));
@@ -116,7 +149,7 @@ public class MyWorldPexe {
 		actorLifeBar.setMaxLife(personagemCGTActor.getLife());
 		actorLifeBar.setOwner(personagemCGTActor);
 		world.addLifeBar(actorLifeBar);
-		personagemCGTActor.setSpeed(400);
+		personagemCGTActor.setSpeed(300);
 		
 
 		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet("data/dapexe/sprite_garoto.png"));
@@ -745,6 +778,7 @@ public class MyWorldPexe {
 		game = new CGTGame();
 		game.setMenu(screen);
 		configuracaoPauseDialog();
+		configuracaoWinDialog();
 	}
 	
 	public CGTGameWorld getWorld() {
