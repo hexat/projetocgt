@@ -31,7 +31,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 	public static final boolean DEBUG = false;
 
-	private enum State{PAUSED, RESUMING, PLAYING;};
+	private enum State{PAUSED, RESUMING, PLAYING, WIN, LOSE;};
 	private State state = State.PLAYING;
 	private CGTGameWorld world;
 	private WorldRenderer renderer;
@@ -99,13 +99,12 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			world.getPauseDialog().setActive(false);
 			resume();
 		}
-		
 	}
 
 	public void pressHandler(CGTButton button){
 		if(button.getInput()==InputPolicy.BTN_1)
-			//controller.firePressedTouch();
-			pause();
+			controller.firePressedTouch();
+		//pause();
 		if(button.getInput()==InputPolicy.BTN_UP)
 			controller.upPressed();
 		else if(button.getInput()==InputPolicy.BTN_DOWN)
@@ -143,6 +142,8 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		case PLAYING:
 			controller.update(delta);
 			renderer.render();
+			if(renderer.verifyWin())
+				state = State.WIN;
 			if(renderer.verifyLose())
 				music.stop();
 			buttonHandler();
@@ -198,7 +199,24 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			}
 			else
 				pause();
+
+
+		case WIN:
+			Timer.instance().stop(); //Para os behaviors
+			renderer.getSpriteBatch().flush();
+			music.pause();
+			this.getActors().clear();
+			addDialog(world.getWinDialog());
+			world.getWinDialog().autosize();
+			
+			buttonHandler();
+			this.act();
+			getSpriteBatch().begin();
+			this.draw();
+			getSpriteBatch().end();
+			break;
 		}
+
 
 	}
 
@@ -209,7 +227,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			addActor(button);
 			button.autosize();
 		}
-		addActor(dialog.getCloseButton());
+		if(dialog.getCloseButton()!=null){
+			addActor(dialog.getCloseButton());
+		}
 	}
 
 	private void removeDialog(CGTDialog dialog){
