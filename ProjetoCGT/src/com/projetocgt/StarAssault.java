@@ -18,7 +18,7 @@ public class StarAssault extends Game {
 
 	@Override
 	public void create() {
-		setScreen(menu);
+		setScreen(new GeneralScreen(new MyWorldPexe().getGame().getMenu()));
 	}
 	
 	public CGTScreen getMenu() {
