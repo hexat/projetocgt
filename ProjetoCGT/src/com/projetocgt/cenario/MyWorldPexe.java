@@ -116,8 +116,8 @@ public class MyWorldPexe {
 		voltarMenu.setScreenToGo(game.getMenu());
 		voltarMenu.setTextureUp(new Texture(Gdx.files.internal("data/dapexe/back_btn.png")));
 		voltarMenu.setTextureDown(new Texture(Gdx.files.internal("data/dapexe/back_btn.png")));
-		voltarMenu.setRelativeX(0.25f);
-		voltarMenu.setRelativeY(0.65f);
+		voltarMenu.setRelativeX(0.45f);
+		voltarMenu.setRelativeY(0.25f);
 		voltarMenu.setRelativeWidth(0.1f);
 		voltarMenu.setRelativeHeight(0.1f);
 
@@ -127,7 +127,8 @@ public class MyWorldPexe {
 	
 	public void configuracaoLifeBar(LifeBar actorLifeBar){
 		Texture lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
-		Texture lifeBarBack = new Texture(Gdx.files.internal("data/lifeBar/lifeBarBack.png"));
+		Texture lifeBarBack = new Texture(Gdx.files.internal("data/lifeBar/actorLifeBarBack.png"));
+		actorLifeBar.setOffsetX(0.25f);
 		actorLifeBar.setBar(lifeBar);
 		actorLifeBar.setBackgroundBar(lifeBarBack);
 		actorLifeBar.setRelativeX(0.1f);
@@ -482,8 +483,9 @@ public class MyWorldPexe {
 		
 		EnemyGroupLifeBar alerts = new EnemyGroupLifeBar(world.getEnemies());
 		Texture lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
-		Texture lifeBarBack = new Texture(Gdx.files.internal("data/lifeBar/lifeBarBack.png"));
+		Texture lifeBarBack = new Texture(Gdx.files.internal("data/lifeBar/enemyLifeBarBack.png"));
 		alerts.setBar(lifeBar);
+		alerts.setOffsetX(0.25f);
 		alerts.setBackgroundBar(lifeBarBack);
 		alerts.setRelativeX(0.7f);
 		alerts.setRelativeY(0.9f);
