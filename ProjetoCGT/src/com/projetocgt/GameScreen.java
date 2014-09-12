@@ -99,7 +99,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			world.getPauseDialog().setActive(false);
 			resume();
 		}
-
 	}
 
 	public void pressHandler(CGTButton button){
