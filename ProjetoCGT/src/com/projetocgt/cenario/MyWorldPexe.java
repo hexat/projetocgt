@@ -386,9 +386,8 @@ public class MyWorldPexe {
 		alertaPeixe.setSpriteSheet(new CGTSpriteSheet("data/dapexe/alert_peixe.png"));
 		alertaPeixe.getSpriteSheet().setRows(1);
 		alertaPeixe.getSpriteSheet().setColumns(1);
-		CGTSound somPexeCollision = new CGTSound("data/AudioDaPexe/caixa_registradora.wav");
-		alertaPeixe.setSoundDie(somPexeCollision);
-		alertaPeixe.setSoundCollision(somPexeCollision);
+		CGTSound somPexeDie = new CGTSound("data/AudioDaPexe/caixa_registradora.wav");
+		alertaPeixe.setSoundDie(somPexeDie);
 
 
 		//Action
@@ -432,7 +431,9 @@ public class MyWorldPexe {
 		alertaPeixe2.getSpriteSheet().setRows(1);
 		alertaPeixe2.getSpriteSheet().setColumns(1);
 		
-		alertaPeixe2.setSoundDie(somPexeCollision);
+		
+		CGTSound somPexeDie2 = new CGTSound("data/AudioDaPexe/caixa_registradora.wav");
+		alertaPeixe2.setSoundDie(somPexeDie2);
 
 
 		//Action
