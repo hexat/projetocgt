@@ -18,17 +18,16 @@ public class StarAssault extends Game {
 
 	@Override
 	public void create() {
-		//menu = new MyWorldPexe().getGame().getMenu();
 		setScreen(new GeneralScreen(new MyWorldPexe().getGame().getMenu()));
 	}
 	
 	public CGTScreen getMenu() {
-		return menu;
+		return new MyWorldPexe().getGame().getMenu();
 	}
 	
 	public void setScreen(CGTWindow window){
 		if(window instanceof CGTGameWorld){
-			setScreen(new GameScreen((CGTGameWorld) window));
+			setScreen(new GameScreen(new MyWorldPexe().getWorld()));
 		}
 		else
 			setScreen(new GeneralScreen(new MyWorldPexe().getGame().getMenu()));

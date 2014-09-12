@@ -70,8 +70,8 @@ public class MyWorldPexe {
 		pauseDialog.setRelativeHeight(0.6f);
 
 		CGTButton voltar = new CGTButtonScreen();
-		voltar.setTextureUp(new Texture(Gdx.files.internal("data/dapexe/mar2.png")));
-		voltar.setTextureDown(new Texture(Gdx.files.internal("data/dapexe/mar2.png")));
+		voltar.setTextureUp(new Texture(Gdx.files.internal("data/dapexe/close_btn.png")));
+		voltar.setTextureDown(new Texture(Gdx.files.internal("data/dapexe/close_btn.png")));
 		voltar.setRelativeX(0.65f);
 		voltar.setRelativeY(0.65f);
 		voltar.setRelativeWidth(0.1f);
@@ -80,8 +80,8 @@ public class MyWorldPexe {
 
 		CGTButtonScreen voltarMenu = new CGTButtonScreen();
 		voltarMenu.setScreenToGo(game.getMenu());
-		voltarMenu.setTextureUp(new Texture(Gdx.files.internal("data/dapexe/mar2.png")));
-		voltarMenu.setTextureDown(new Texture(Gdx.files.internal("data/dapexe/mar2.png")));
+		voltarMenu.setTextureUp(new Texture(Gdx.files.internal("data/dapexe/back_btn.png")));
+		voltarMenu.setTextureDown(new Texture(Gdx.files.internal("data/dapexe/back_btn.png")));
 		voltarMenu.setRelativeX(0.25f);
 		voltarMenu.setRelativeY(0.65f);
 		voltarMenu.setRelativeWidth(0.1f);
@@ -745,6 +745,10 @@ public class MyWorldPexe {
 		game = new CGTGame();
 		game.setMenu(screen);
 		configuracaoPauseDialog();
+	}
+	
+	public CGTGameWorld getWorld() {
+		return world;
 	}
 
 	public CGTGame getGame() {
