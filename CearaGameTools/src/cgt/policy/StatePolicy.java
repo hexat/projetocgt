@@ -1,0 +1,16 @@
+package cgt.policy;
+
+public enum StatePolicy {
+	IDLELEFT,
+	IDLERIGHT,
+	IDLEUP,
+	IDLEDOWN,
+	WALKING,
+	JUMPING,
+	DYING,
+	LOOKUP,
+	LOOKDOWN,
+	LOOKLEFT,
+	LOOKRIGHT,
+	DAMAGE;
+}
