@@ -1,6 +1,7 @@
 package com.projetocgt.cenario;
 
 import java.util.Random;
+import java.util.TimerTask;
 
 import cgt.CGTGameWorld;
 import cgt.behaviors.Behavior;
@@ -17,6 +18,7 @@ import cgt.policy.StatePolicy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -24,6 +26,8 @@ import com.badlogic.gdx.math.Frustum;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -53,13 +57,13 @@ public class WorldRenderer {
 	private Rectangle rectangleCamera;
 
 	private Vector2 lastActorPosition;
-	
+
 	public WorldRenderer(CGTGameWorld world) {
 		this.world = world;
 		this.width = Gdx.graphics.getWidth();
 		this.height = Gdx.graphics.getHeight();
 		this.camera = new OrthographicCamera(width, height);
-	    this.viewport = new StretchViewport(800, 480, camera);
+		this.viewport = new StretchViewport(800, 480, camera);
 		this.debugRenderer = new ShapeRenderer();
 		this.camera.position.set(world.getActor().getPosition().x, world
 				.getActor().getPosition().y, 0);
@@ -72,56 +76,61 @@ public class WorldRenderer {
 	public SpriteBatch getSpriteBatch() {
 		return spriteBatch;
 	}
-	
+
 	/**
 	 * Esta funcao e' chamada no metodo render da class GameScreen. Responsavel
 	 * por desenhar todos os objetos na tela.
 	 */
 	public void render() {		
 		isColision();
-		
+
 		verifyObjectsOnCamera();
 
 		updateCamera();
-		
-		
+
 		if (!verifyLose()) {
-			
+
 			if (verifyWin()) {
 				System.out.println("ganhou");
 			} else {
 				spriteBatch.begin();
 				draw();
-				spriteBatch.end();
 			}
-		} else {
+			spriteBatch.end();
+		}
+
+		else {
 			world.getActor().getSoundDie();
+			Timer.instance().clear();
 			instance = StarAssault.getInstance();
 			instance.setScreen(new GeneralScreen(instance.getMenu()));
 		}
-		
+
+
+
 	}
-	
+
+
 	// executa música caso o objeto esteja visível na camera
 	private void verifyObjectsOnCamera(){		
 		rectangleCamera.set(camera.position.x - camera.viewportWidth/2, camera.position.y - camera.viewportHeight/2, camera.viewportWidth, camera.viewportHeight);
-		
+
 		// verifica Opposites
 		for(int i = 0; i < world.getOpposites().size(); i++){
 			if (world.getOpposites().get(i).getSound() != null && rectangleCamera.overlaps(world.getOpposites().get(i).getCollision())){
 				if (!world.getOpposites().get(i).isPlayingCollision()){
 					world.getOpposites().get(i).playSound();					
 				}
-				
-					float distanciaObjeto = world.getActor().getPosition().dst(world.getOpposites().get(i).getPosition());				
-					float distanciaMaxima = (float) Math.sqrt((double) (Math.pow((double) camera.viewportHeight, 2)) + Math.pow((double) camera.viewportWidth, 2));
-					float volume = (1 - distanciaObjeto/distanciaMaxima)* world.getOpposites().get(i).getSound().getVolume();
-					if (volume <= 0){
-						volume = 0;
-					}
-					world.getOpposites().get(i).getSound().getMusic().setVolume(volume);
-				
-				
+
+				float distanciaObjeto = world.getActor().getPosition().dst(world.getOpposites().get(i).getPosition());				
+				float distanciaMaxima = (float) Math.sqrt((double) (Math.pow((double) camera.viewportHeight, 2)) + Math.pow((double) camera.viewportWidth, 2));
+				float volume = (1 - distanciaObjeto/distanciaMaxima)* world.getOpposites().get(i).getSound().getVolume();
+				if (volume <= 0){
+					volume = 0;
+				}
+				world.getOpposites().get(i).getSound().getMusic().setVolume(volume);
+
+
 			} else {
 				if (world.getOpposites().get(i).isPlayingCollision()){
 					world.getOpposites().get(i).stopMusic();
@@ -134,38 +143,38 @@ public class WorldRenderer {
 				if (!world.getEnemies().get(i).isPlayingCollision()){
 					world.getEnemies().get(i).playSound();
 				}
-				
-					float distanciaObjeto = world.getActor().getPosition().dst(world.getEnemies().get(i).getPosition());
-					float distanciaMaxima = (float) Math.sqrt((double) (Math.pow((double) camera.viewportHeight, 2)) + Math.pow((double) camera.viewportWidth, 2));
-					float volume = (1 - distanciaObjeto/distanciaMaxima)* world.getEnemies().get(i).getSound().getVolume();
-					if (volume <= 0){
-						volume = 0;
-					}
-					world.getEnemies().get(i).getSound().getMusic().setVolume(volume);
-				
-				
+
+				float distanciaObjeto = world.getActor().getPosition().dst(world.getEnemies().get(i).getPosition());
+				float distanciaMaxima = (float) Math.sqrt((double) (Math.pow((double) camera.viewportHeight, 2)) + Math.pow((double) camera.viewportWidth, 2));
+				float volume = (1 - distanciaObjeto/distanciaMaxima)* world.getEnemies().get(i).getSound().getVolume();
+				if (volume <= 0){
+					volume = 0;
+				}
+				world.getEnemies().get(i).getSound().getMusic().setVolume(volume);
+
+
 			} else {
 				if (world.getEnemies().get(i).isPlayingCollision()){
 					world.getEnemies().get(i).stopMusic();
 				}
 			}
 		}		
-		
+
 	}
 
 	private void updateCamera() {
 		camera.update();
 		spriteBatch.setProjectionMatrix(camera.combined); // Possibilita a camera acompanhar o personagem
-		
+
 		if (world.getActor().getPosition().x - camera.viewportWidth / 2 > 0
 				&& world.getActor().getPosition().x + camera.viewportWidth / 2 < world
-						.getBackground().getWidth()) {
+				.getBackground().getWidth()) {
 			camera.position.x = world.getActor().getPosition().x;
 		}
-		
+
 		if (world.getActor().getPosition().y - camera.viewportHeight / 2 > 0
 				&& world.getActor().getPosition().y + camera.viewportHeight / 2 < world
-						.getBackground().getHeight()) {
+				.getBackground().getHeight()) {
 			camera.position.y = world.getActor().getPosition().y;
 		}
 	}
@@ -187,7 +196,7 @@ public class WorldRenderer {
 
 		return win;
 	}
-	
+
 	/**
 	 * Utilizado para limpar o desenho da tela
 	 */
@@ -198,7 +207,7 @@ public class WorldRenderer {
 	private void drawBackground(){
 		spriteBatch.draw(world.getBackground(), 0, 0);
 	}
-	
+
 	public void draw() {
 
 		drawBackground();
@@ -209,10 +218,11 @@ public class WorldRenderer {
 		drawBonus();
 
 		drawDamageActor();
-		
+
 		if (GameScreen.DEBUG) {
 			drawDebug();
 		}
+
 	}
 
 	private void drawBonus() {
@@ -229,29 +239,29 @@ public class WorldRenderer {
 		for (int i = 0; i < world.getEnemies().size(); i++) {
 			if (world.getEnemies().get(i).getLife() >= 0) {
 				configBehavior(world.getEnemies().get(i));
-				
+
 				spriteBatch.setColor(1.0f, 1.0f, 1.0f, world.getEnemies()
 						.get(i).getAlpha());
-				
+
 				spriteBatch.draw(world.getEnemies().get(i).getAnimation(),
 						world.getEnemies().get(i).getPosition().x, world
 						.getEnemies().get(i).getPosition().y, world
 						.getEnemies().get(i).getBounds().width, world
 						.getEnemies().get(i).getBounds().height);
-				
+
 				// verifica se algum Enemy destrutivel esta colindindo com
 				// algum Projectile
 				if (world.getActor().getFireDefault() != -1
-					&& world.getActor().getProjectiles().get(world.getActor().getFireDefault()).getAmmo() > 0
-					&& world.getEnemies().get(i).getCollision().overlaps(getCurrentActorProjectile().getCollision())
-					&& world.getEnemies().get(i).isDestroyable()
-					&& world.getEnemies().get(i).isVulnerable()) {
-						world.getEnemies().get(i).setLife(world.getEnemies().get(i).getLife() - 1);
-						world.getEnemies().get(i).playSoundCollision();
-						if (world.getEnemies().get(i).getLife() <= 0){
-							world.getEnemies().get(i).playSoundDie();
-							world.getEnemies().remove(i);
-						}
+						&& world.getActor().getProjectiles().get(world.getActor().getFireDefault()).getAmmo() > 0
+						&& world.getEnemies().get(i).getCollision().overlaps(getCurrentActorProjectile().getCollision())
+						&& world.getEnemies().get(i).isDestroyable()
+						&& world.getEnemies().get(i).isVulnerable()) {
+					world.getEnemies().get(i).setLife(world.getEnemies().get(i).getLife() - 1);
+					world.getEnemies().get(i).playSoundCollision();
+					if (world.getEnemies().get(i).getLife() <= 0){
+						world.getEnemies().get(i).playSoundDie();
+						world.getEnemies().remove(i);
+					}
 				}
 			}
 		}
@@ -270,7 +280,7 @@ public class WorldRenderer {
 					pro.setPosition(personagem.getPosition());
 					//Os desenhos sao feitos de acordo com os States. 
 					pro.setState(personagem.getState());
-					
+
 					// faz um movimento do projectile
 					pro.getBounds().x += pro.getOrientations().get(w).getPositionRelativeToGameObject().x;
 					pro.getBounds().y += pro.getOrientations().get(w).getPositionRelativeToGameObject().y;
@@ -282,7 +292,7 @@ public class WorldRenderer {
 							pro.getBounds().width,pro.getBounds().height);
 				}
 			}
-			
+
 		}
 	}
 
@@ -307,7 +317,7 @@ public class WorldRenderer {
 		spriteBatch.draw(personagem.getAnimation(), personagem.getPosition().x,
 				personagem.getPosition().y, personagem.getBounds().width,
 				personagem.getBounds().height);
-		
+
 	}
 
 	/***
@@ -449,7 +459,7 @@ public class WorldRenderer {
 				if (sine.isAtFirstStep()) {
 					enemy.getBounds().height += enemy.getSpeed();
 					enemy.getCollision().height += enemy.getSpeed();
-					
+
 				}
 
 				else {
@@ -563,21 +573,21 @@ public class WorldRenderer {
 	 * @param fade
 	 */
 	private void scheduleFadeIn(final CGTEnemy enemy, Fade fade) {
-			// Desativa-se as interacoes do enemy com o actor e retira-se o behavior
-			// para que ocorra apenas uma vez
-			enemy.setAlpha(0);
-			enemy.setVulnerable(false);
-			enemy.removeBehavior(fade);
-			Timer.schedule(new Task() {
-				public void run() {
-					System.out.println(enemy.getGroup()+": FADE ATIVADO");
-						enemy.setAlpha(1);
-					
-					// Recupera-se a interacao
-					enemy.setVulnerable(true);
-				}
-			}, fade.getFadeInTime());
-		}
+		// Desativa-se as interacoes do enemy com o actor e retira-se o behavior
+		// para que ocorra apenas uma vez
+		enemy.setAlpha(0);
+		enemy.setVulnerable(false);
+		enemy.removeBehavior(fade);
+		Timer.instance().scheduleTask(new Task() {
+			public void run() {
+				System.out.println(enemy.getGroup()+": FADE ATIVADO");
+				enemy.setAlpha(1);
+
+				// Recupera-se a interacao
+				enemy.setVulnerable(true);
+			}
+		}, fade.getFadeInTime());
+	}
 
 	// Implementação do comportamento descrito por um behavior Direction
 	private void scheduleDirection(int[] angulos, CGTEnemy enemy) {
@@ -620,7 +630,7 @@ public class WorldRenderer {
 	 */
 	public boolean isColision() {
 		boolean colision = false;
-		
+
 		//System.out.println(personagem.getState().name());
 		// Verifica se colidiu com algum Opposite
 		for (int i = 0; i < world.getOpposites().size(); i++) {
@@ -638,7 +648,7 @@ public class WorldRenderer {
 				colision = true;
 			}
 		}
-		
+
 		// Verifica se colidiu com algum Bonus
 		for (int i = 0; i < world.getBonus().size(); i++) {
 			if (world.getBonus().get(i).getCollision()
@@ -648,17 +658,17 @@ public class WorldRenderer {
 					int maxAmmo = world.getActor().getProjectiles().get(0).getMaxAmmo();
 					if (ammoCurrent < maxAmmo) {
 						world.getActor().getProjectiles().get(0).addAmmo(world.getBonus().get(i).getScore());
-						System.out.println(world.getActor().getProjectiles().get(0).getAmmo());
+
 						world.getBonus().get(0).playSoundCollision();
 						System.out.println("Aqui");
 					}
-					
+
 				}
 				/*for (int j = 0; j < world.getActor().getProjectiles().size(); j++) {
 					world.getActor().getProjectiles().get(j).setAmmo(4);					
 				}*/
 				colision = true;
-				 
+
 			}
 		}
 
@@ -693,6 +703,7 @@ public class WorldRenderer {
 					personagem.setInputsEnabled(false);
 				}
 			}, personagem.getTimeToEnableInputs());
+
 			personagem.playSoundCollision();
 			personagem.setLife(personagem.getLife() - enemy.getDamage());
 			Timer.schedule(new Task() {
@@ -704,6 +715,13 @@ public class WorldRenderer {
 		}
 	}
 
+	public void pause(){
+		Timer.instance().stop();
+	}
+	
+	public void resume(){
+		Timer.instance().start();
+	}
 	/**
 	 * @return the camera
 	 */

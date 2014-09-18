@@ -43,13 +43,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	public GameScreen(CGTGameWorld world) {
 		this.music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/temaDaPexe.wav"));
 		this.world = world;
-		renderer = new WorldRenderer(world);
-		getActorsFromWorld();
-		setSpriteBatch(new SpriteBatch());
-		controller = new WorldController(world, renderer);
-	}
-
-	private void getActorsFromWorld(){
+		Timer.instance().start();
 		for (int i = 0; i < world.getWinCriteria().size(); i++){
 			world.getWinCriteria().get(i).start();
 		}
@@ -58,6 +52,14 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			world.getLoseCriteria().get(i).start();
 		}
 
+		getActorsFromWorld();
+		renderer = new WorldRenderer(world);
+		setSpriteBatch(new SpriteBatch());
+		controller = new WorldController(world, renderer);
+	}
+
+	private void getActorsFromWorld(){
+		
 		for (CGTButton button : world.getButtons()){
 			this.addActor(button);
 			button.autosize();
@@ -67,13 +69,10 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			this.addActor(lifebar);
 			lifebar.autosize();
 		}
+		
+		this.addActor(world.getLabel());
+		world.getLabel().autosize();
 	}
-
-	//	public boolean touchDown(int screenx, int screeny, int pointer, int button){
-	//		System.out.println("x: "+screenx);
-	//		System.out.println("y: "+screeny);
-	//		return false;
-	//	}
 
 	public void buttonHandler(){
 		for(CGTButton button : world.getButtons()){
@@ -184,6 +183,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				//renderer.getSpriteBatch().flush();
 				music.pause();
 				this.getActors().clear();
+				
 				addDialog(world.getPauseDialog());
 				world.getPauseDialog().autosize();
 			}
