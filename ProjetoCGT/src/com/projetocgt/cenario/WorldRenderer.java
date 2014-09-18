@@ -83,7 +83,6 @@ public class WorldRenderer {
 
 		updateCamera();
 		
-		
 		if (!verifyLose()) {
 			
 			if (verifyWin()) {
