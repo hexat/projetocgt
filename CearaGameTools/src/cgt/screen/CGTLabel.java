@@ -1,43 +1,57 @@
 package cgt.screen;
 
-import cgt.util.CGTTexture;
-
-import com.badlogic.gdx.math.Rectangle;
-
-public class CGTLabel {
-
-	private Rectangle bounds;
-	private String text;
-	private CGTTexture background;
+public class CGTLabel extends com.badlogic.gdx.scenes.scene2d.ui.Label {
 	
-	public CGTLabel() {
-		bounds = new Rectangle(0, 0, 0, 0);
-		text = "";
-		background = null;
+	protected float relativeX;
+	protected float relativeY;
+	protected float relativeWidth;
+	protected float relativeHeight;
+
+	public CGTLabel(CharSequence text, LabelStyle style) {
+		super(text, style);
+		// TODO Auto-generated constructor stub
+	}
+	
+	public void autosize(){
+		setWidth(getStage().getWidth()*relativeWidth);
+		setHeight(getStage().getHeight()*relativeHeight);
+	
+		setX(getStage().getWidth()*relativeX);
+		setY(getStage().getHeight()*relativeY);
 	}
 
-	public Rectangle getBounds() {
-		return bounds;
+	public float getRelativeX() {
+		return relativeX;
 	}
 
-	public void setBounds(Rectangle bounds) {
-		this.bounds = bounds;
+	public void setRelativeX(float relativeX) {
+		this.relativeX = relativeX;
 	}
 
-	public String getText() {
-		return text;
+	public float getRelativeY() {
+		return relativeY;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setRelativeY(float relativeY) {
+		this.relativeY = relativeY;
 	}
 
-	public CGTTexture getBackground() {
-		return background;
+	public float getRelativeWidth() {
+		return relativeWidth;
 	}
 
-	public void setBackground(CGTTexture background) {
-		this.background = background;
+	public void setRelativeWidth(float relativeWidth) {
+		this.relativeWidth = relativeWidth;
 	}
+
+	public float getRelativeHeight() {
+		return relativeHeight;
+	}
+
+	public void setRelativeHeight(float relativeHeight) {
+		this.relativeHeight = relativeHeight;
+	}
+	
+	
 
 }

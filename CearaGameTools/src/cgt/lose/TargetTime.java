@@ -1,9 +1,9 @@
 package cgt.lose;
 
-import cgt.util.CGTLabel;
+
+import cgt.screen.CGTLabel;
 
 import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
 
 public class TargetTime implements Lose{
 	public int timer;
