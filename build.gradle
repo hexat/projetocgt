@@ -29,7 +29,7 @@ project(":CearaGameTools") {
     }
 }
 
-project(":ProjetoCGT") {
+project(":core") {
     apply plugin: "java"
 
     dependencies {
@@ -38,24 +38,24 @@ project(":ProjetoCGT") {
     }
 }
 
-project(":ProjetoCGT-desktop") {
+project(":desktop") {
     apply plugin: "java"
     apply plugin: "application"
 
     dependencies {
-        compile project(":ProjetoCGT")
+        compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     }
 }
 
-project(":ProjetoCGT-android") {
+project(":android") {
     apply plugin: "android"
 
     configurations { natives }
 
     dependencies {
-        compile project(":ProjetoCGT")
+        compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
