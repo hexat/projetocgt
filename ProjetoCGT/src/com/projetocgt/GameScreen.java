@@ -181,7 +181,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		case PAUSED:
 			if(!world.getPauseDialog().isActive()){
 				world.getPauseDialog().setActive(true);
-				Timer.instance().stop(); //Para os behaviors
+				 //Para os behaviors
 				//renderer.getSpriteBatch().flush();
 				music.pause();
 				this.getActors().clear();
@@ -208,6 +208,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				break;
 			}
 			else{
+				Timer.instance().start();
 				pause();
 				break;
 			}
@@ -277,8 +278,8 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 	@Override
 	public void pause() {
-//		state = State.PAUSED;
-
+		Timer.instance().stop();
+		state = State.PAUSED;
 	}
 
 	@Override

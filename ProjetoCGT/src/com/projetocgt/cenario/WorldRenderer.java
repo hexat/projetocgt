@@ -56,6 +56,7 @@ public class WorldRenderer {
 	private int height;
 	private StretchViewport viewport;
 	private Rectangle rectangleCamera;
+	
 
 	private Vector2 lastActorPosition;
 
@@ -573,22 +574,26 @@ public class WorldRenderer {
 	 * @param enemy
 	 * @param fade
 	 */
-	private void scheduleFadeIn(final CGTEnemy enemy, Fade fade) {
+	private void scheduleFadeIn(final CGTEnemy enemy, final Fade fade) {
 		// Desativa-se as interacoes do enemy com o actor e retira-se o behavior
 		// para que ocorra apenas uma vez
 		enemy.setAlpha(0);
 		enemy.setVulnerable(false);
 		enemy.removeBehavior(fade);
+		
 		Timer.schedule(new Timer.Task() {
+			int tempo = 0;
 			public void run() {
-				
-				System.out.println(enemy.getGroup()+": FADE ATIVADO");
-				enemy.setAlpha(1);
-
-				// Recupera-se a interacao
-				enemy.setVulnerable(true);
+				tempo++;
+				if(tempo >= fade.getFadeInTime()){
+					System.out.println(enemy.getGroup()+": FADE ATIVADO");
+					enemy.setAlpha(1);
+					enemy.setVulnerable(true);
+					this.cancel();
+				}
+				System.out.println("Fade : "+ tempo);
 			}
-		}, fade.getFadeInTime());
+		}, 1, 1);
 	}
 
 	// Implementação do comportamento descrito por um behavior Direction
@@ -716,14 +721,7 @@ public class WorldRenderer {
 			}, personagem.getTimeToRecovery());
 		}
 	}
-
-//	public void pause(){
-//		Timer.instance().stop();
-//	}
 	
-//	public void resume(){
-//		Timer.instance().start();
-//	}
 	/**
 	 * @return the camera
 	 */
