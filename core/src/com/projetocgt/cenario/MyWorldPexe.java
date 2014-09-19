@@ -9,7 +9,6 @@ import cgt.lose.*;
 import cgt.policy.*;
 import cgt.screen.*;
 import cgt.util.*;
-import cgt.util.CGTLabel;
 import cgt.win.KillAllEnemies;
 
 import com.badlogic.gdx.Gdx;

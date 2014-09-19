@@ -56,6 +56,8 @@ public class WorldRenderer {
 	private int height;
 	private StretchViewport viewport;
 	private Rectangle rectangleCamera;
+	private Random random;
+	
 	
 
 	private Vector2 lastActorPosition;
@@ -73,6 +75,7 @@ public class WorldRenderer {
 		this.spriteBatch = new SpriteBatch();
 		this.personagem = world.getActor();
 		rectangleCamera = new Rectangle(camera.position.x - camera.viewportWidth/2, camera.position.y - camera.viewportHeight/2, camera.viewportWidth, camera.viewportHeight);
+		random = new Random();
 	}
 
 	public SpriteBatch getSpriteBatch() {
@@ -482,7 +485,7 @@ public class WorldRenderer {
 				Direction direction = (Direction) behavior;
 				int[] angulos = { 0, 180 };
 
-				Random random = new Random();
+	
 				if (random.nextFloat() < 0.0001 * enemy.getSpeed())
 					scheduleDirection(angulos, enemy);
 
@@ -496,7 +499,6 @@ public class WorldRenderer {
 				Direction direction = (Direction) behavior;
 				int[] angulos = { 90, 270 };
 
-				Random random = new Random();
 				if (random.nextFloat() < 0.0001 * enemy.getSpeed())
 					scheduleDirection(angulos, enemy);
 
@@ -510,7 +512,7 @@ public class WorldRenderer {
 				Direction direction = (Direction) behavior;
 				int[] angulos = { 0, 90, 180, 270 };
 
-				Random random = new Random();
+
 				if (random.nextFloat() < 0.00005 * enemy.getSpeed())
 					scheduleDirection(angulos, enemy);
 
@@ -529,7 +531,6 @@ public class WorldRenderer {
 				Direction direction = (Direction) behavior;
 				int[] angulos = { 0, 45, 90, 135, 180, 225, 270, 315 };
 
-				Random random = new Random();
 				if (random.nextFloat() < 0.0001 * enemy.getSpeed())
 					scheduleDirection(angulos, enemy);
 
@@ -600,7 +601,7 @@ public class WorldRenderer {
 	private void scheduleDirection(int[] angulos, CGTEnemy enemy) {
 		enemy.getVelocity().x = 0;
 		enemy.getVelocity().y = 0;
-		Random random = new Random();
+	
 		int indice = random.nextInt(angulos.length);
 
 		// Velocidade X no 1º e 4º quadrantes
