@@ -3,12 +3,35 @@ package com.projetocgt.cenario;
 
 import cgt.CGTGame;
 import cgt.CGTGameWorld;
-import cgt.behaviors.*;
-import cgt.core.*;
-import cgt.lose.*;
-import cgt.policy.*;
-import cgt.screen.*;
-import cgt.util.*;
+import cgt.behaviors.Direction;
+import cgt.behaviors.Fade;
+import cgt.behaviors.Sine;
+import cgt.core.CGTActor;
+import cgt.core.CGTBonus;
+import cgt.core.CGTEnemy;
+import cgt.core.CGTOpposite;
+import cgt.core.CGTProjectile;
+import cgt.lose.LifeDepleted;
+import cgt.lose.TargetTime;
+import cgt.policy.BonusPolicy;
+import cgt.policy.DirectionPolicy;
+import cgt.policy.FadePolicy;
+import cgt.policy.InputPolicy;
+import cgt.policy.MovementPolicy;
+import cgt.policy.StatePolicy;
+import cgt.screen.CGTButtonScreen;
+import cgt.screen.CGTDialog;
+import cgt.screen.CGTScreen;
+import cgt.util.CGTAnimation;
+import cgt.util.CGTButton;
+import cgt.util.CGTLabel;
+import cgt.util.CGTSound;
+import cgt.util.CGTSpriteSheet;
+import cgt.util.CGTTexture;
+import cgt.util.EnemyGroupLifeBar;
+import cgt.util.IndividualLifeBar;
+import cgt.util.LifeBar;
+import cgt.util.ProjectileOrientation;
 import cgt.win.KillAllEnemies;
 
 import com.badlogic.gdx.Gdx;
@@ -16,10 +39,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 
 /**
@@ -736,8 +760,12 @@ public class MyWorldPexe {
 		configuracaoProjetil(personagemCGTActor);
 
 		configuracaoButtonPad();	
-		BitmapFont font = new BitmapFont();
-		LabelStyle style = new LabelStyle(font, Color.BLACK);
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.ttf"));
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = 12;
+		BitmapFont font12 = generator.generateFont(parameter); // font size 12 pixels
+		generator.dispose();
+		LabelStyle style = new LabelStyle(font12, Color.BLACK);
 		CGTLabel label = new CGTLabel("x", style);
 		label.setRelativeX(0.5f);
 		label.setRelativeY(0.5f);
