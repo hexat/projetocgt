@@ -26,7 +26,6 @@ import com.badlogic.gdx.math.Frustum;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
@@ -580,8 +579,9 @@ public class WorldRenderer {
 		enemy.setAlpha(0);
 		enemy.setVulnerable(false);
 		enemy.removeBehavior(fade);
-		Timer.instance().scheduleTask(new Task() {
+		Timer.schedule(new Timer.Task() {
 			public void run() {
+				
 				System.out.println(enemy.getGroup()+": FADE ATIVADO");
 				enemy.setAlpha(1);
 
@@ -717,13 +717,13 @@ public class WorldRenderer {
 		}
 	}
 
-	public void pause(){
-		Timer.instance().stop();
-	}
+//	public void pause(){
+//		Timer.instance().stop();
+//	}
 	
-	public void resume(){
-		Timer.instance().start();
-	}
+//	public void resume(){
+//		Timer.instance().start();
+//	}
 	/**
 	 * @return the camera
 	 */

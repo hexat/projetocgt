@@ -43,7 +43,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	public GameScreen(CGTGameWorld world) {
 		this.music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/temaDaPexe.wav"));
 		this.world = world;
+		
 		Timer.instance().start();
+		
 		for (int i = 0; i < world.getWinCriteria().size(); i++){
 			world.getWinCriteria().get(i).start();
 		}
@@ -197,11 +199,12 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 		case RESUMING:
 			if(!world.getPauseDialog().isActive()){
+				state = State.PLAYING;
+				System.out.println("Entreiaki");
 				Timer.instance().start();
 				this.getActors().clear();
 				getActorsFromWorld();
 				music.play();
-				state = State.PLAYING;
 				break;
 			}
 			else{
@@ -274,7 +277,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 	@Override
 	public void pause() {
-		state = State.PAUSED;
+//		state = State.PAUSED;
 
 	}
 
@@ -310,6 +313,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		if (keycode == Keys.A){
 			flagTouch=true;
 			controller.firePressedTouch();
+		}
+		if (keycode == Keys.P){
+			state = State.PAUSED;
 		}
 		return true;
 	}

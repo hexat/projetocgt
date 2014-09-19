@@ -17,6 +17,7 @@ import cgt.screen.CGTDialog;
 import cgt.screen.CGTWindow;
 import cgt.util.CGTButton;
 import cgt.util.Camera;
+import cgt.util.CGTLabel;
 import cgt.util.LifeBar;
 import cgt.win.Win;
 
@@ -39,6 +40,7 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private ArrayList<Lose> loseCriteria;
 	private int countdown;
 	private int scoreTarget;
+	private CGTLabel label;
 //	private int gridLines;
 //	private int gridColumn;
 	
@@ -293,5 +295,15 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	public void setWinDialog(CGTDialog winDialog) {
 		this.winDialog = winDialog;
 	}
+
+	public CGTLabel getLabel() {
+		return label;
+	}
+
+	public void setLabel(CGTLabel label) {
+		this.label = label;
+	}
+	
+	
 }
  
