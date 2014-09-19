@@ -1,6 +1,5 @@
 package cgt.lose;
 
-
 import cgt.screen.CGTLabel;
 
 import com.badlogic.gdx.utils.Timer;
