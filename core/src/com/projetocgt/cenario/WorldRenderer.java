@@ -304,11 +304,13 @@ public class WorldRenderer {
 	private void drawOpposites() {
 		for (int i = 0; i < world.getOpposites().size(); i++) {
 			if (world.getOpposites().get(i).getLife() >= 0) {
+				if (world.getOpposites().get(i).getSpriteSheet() != null){
 				spriteBatch.draw(world.getOpposites().get(i).getAnimation(),
 						world.getOpposites().get(i).getPosition().x, world
 						.getOpposites().get(i).getPosition().y, world
 						.getOpposites().get(i).getBounds().width, world
 						.getOpposites().get(i).getBounds().height);
+				}
 			}
 		}
 	}

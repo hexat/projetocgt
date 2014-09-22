@@ -1,8 +1,10 @@
 package cgt;
 
+import java.io.Serializable;
+
 import cgt.screen.CGTScreen;
 
-public class CGTGame {
+public class CGTGame implements Serializable{
 	private CGTScreen menu;
 
 	public CGTGame() {
@@ -20,4 +22,6 @@ public class CGTGame {
 	public void setMenu(CGTScreen menu) {
 		this.menu = menu;
 	}
+	
+	
 }

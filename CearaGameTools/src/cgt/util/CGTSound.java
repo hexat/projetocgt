@@ -31,7 +31,8 @@ public class CGTSound {
 	
  	public Music getMusic() {
  		if (musicGDX == null) {
- 			musicGDX = Gdx.audio.newMusic(file.getFileHandle()); 
+ 			musicGDX = Gdx.audio.newMusic(file.getFileHandle());
+ 			musicGDX.setVolume(volume);
  		}
 		return musicGDX;
 	}

@@ -17,10 +17,12 @@ import cgt.screen.CGTDialog;
 import cgt.screen.CGTLabel;
 import cgt.screen.CGTWindow;
 import cgt.util.CGTButton;
+import cgt.util.CGTSound;
 import cgt.util.Camera;
 import cgt.util.LifeBar;
 import cgt.win.Win;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -41,6 +43,7 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private int countdown;
 	private int scoreTarget;
 	private CGTLabel label;
+	private CGTSound music;
 //	private int gridLines;
 //	private int gridColumn;
 	
@@ -85,6 +88,10 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
                 e.printStackTrace( );
         }
 	}
+	
+	
+
+	
 
 	public CGTGameWorld lerStream(String file){
 		CGTGameWorld cgtGameWorld = new CGTGameWorld();
@@ -102,6 +109,14 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 			e.printStackTrace( );
         }
 		return cgtGameWorld; 
+	}
+	
+	public Music getMusic() {
+		return music.getMusic();
+	}
+
+	public void setMusic(CGTSound music) {
+		this.music = music;
 	}
 
 	public void setActor(CGTActor actor) {

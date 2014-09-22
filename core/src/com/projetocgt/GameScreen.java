@@ -7,6 +7,7 @@ import cgt.policy.InputPolicy;
 import cgt.screen.CGTButtonScreen;
 import cgt.screen.CGTDialog;
 import cgt.util.CGTButton;
+import cgt.util.CGTSound;
 import cgt.util.LifeBar;
 
 import com.badlogic.gdx.Gdx;
@@ -41,8 +42,8 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	private boolean flagTouch;
 
 	public GameScreen(CGTGameWorld world) {
-		this.music = Gdx.audio.newMusic(Gdx.files.internal("data/AudioDaPexe/temaDaPexe.wav"));
 		this.world = world;
+		this.music = world.getMusic();
 		
 		Timer.instance().start();
 		

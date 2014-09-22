@@ -1,10 +1,11 @@
 package cgt.screen;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import cgt.util.CGTTexture;
 
-public class CGTScreen extends CGTWindow {
+public class CGTScreen extends CGTWindow implements Serializable{
 	private ArrayList<CGTLabel> labels;
 	private ArrayList<CGTImage> images;
 	private ArrayList<CGTButtonScreen> buttons;

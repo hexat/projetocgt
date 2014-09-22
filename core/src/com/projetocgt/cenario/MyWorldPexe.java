@@ -1,6 +1,9 @@
 package com.projetocgt.cenario;
 
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+
 import cgt.CGTGame;
 import cgt.CGTGameWorld;
 import cgt.behaviors.*;
@@ -33,6 +36,10 @@ public class MyWorldPexe {
 	private CGTGameWorld world;
 	private CGTScreen screen;
 	private CGTGame game;
+	
+	
+	
+	
 
 	public MyWorldPexe() {
 		createWorld();
@@ -232,14 +239,17 @@ public class MyWorldPexe {
 		mar.setPosition(new Vector2(0, 0));
 		Rectangle bounds = new Rectangle(0,0,1200, 240);
 		mar.setBounds(bounds);
-		mar.setCollision(bounds);
+		Rectangle collision = new Rectangle(0,0,1200,120);
+		mar.setCollision(collision);
+		
+		mar.setBlock(true);
 		
 		mar.setSpriteSheet(new CGTSpriteSheet("data/dapexe/mar2.png"));
 
 		mar.getSpriteSheet().setRows(10);
 		mar.getSpriteSheet().setColumns(5);
 		
-		CGTSound marSound = new CGTSound("data/AudioDaPexe/mar.wav");
+		CGTSound marSound = new CGTSound("data/AudioDaPexe/mar.wav",1);
 		mar.setSound(marSound);
 		
 
@@ -270,6 +280,7 @@ public class MyWorldPexe {
 		directionFour.setMinY(400);
 		directionFour.setMaxX(1600);
 		directionFour.setMinX(1130);
+		
 		CGTEnemy carroCGT = new CGTEnemy();
 
 		Vector2 positionCarro = new Vector2(780,600);
@@ -292,7 +303,7 @@ public class MyWorldPexe {
 		carroCGT.getSpriteSheet().setRows(3);
 		carroCGT.getSpriteSheet().setColumns(2);
 
-		CGTSound soundCar = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.5f);
+		CGTSound soundCar = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.2f);
 		carroCGT.setSound(soundCar);
 
 
@@ -338,7 +349,7 @@ public class MyWorldPexe {
 		carroCGT2.getSpriteSheet().setRows(3);
 		carroCGT2.getSpriteSheet().setColumns(2);
 		
-		CGTSound soundCar2 = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.5f);
+		CGTSound soundCar2 = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.2f);
 		carroCGT2.setSound(soundCar2);
 
 		//Action
@@ -680,9 +691,41 @@ public class MyWorldPexe {
 		world.addButton(button1);
 	}
 	
-	
+	public CGTLabel configuracaoLabel(){
+		BitmapFont font = new BitmapFont();
+		LabelStyle style = new LabelStyle(font, Color.BLACK);
+		CGTLabel label = new CGTLabel("x", style);
+		label.setRelativeX(0.5f);
+		label.setRelativeY(0.5f);
+		
+		label.setFontScaleX(2);
+		label.setFontScaleY(2);
+		
 
+		world.setLabel(label);
+		return label;
+	}
 
+	public void oppositeFalesia(){
+		CGTOpposite falesia = new CGTOpposite();
+		
+		Vector2 position = new Vector2(0,1100);
+		falesia.setPosition(position);
+		Rectangle bounds = new Rectangle(0,0,1200,100);
+		falesia.setBounds(bounds);
+		falesia.setCollision(bounds);
+		
+		falesia.setBlock(true);
+		falesia.setDestroyable(false);
+		falesia.setLife(0);
+		
+		//CGTAnimation animacao = new CGTAnimation(falesia);
+		//animacao.addStatePolicy(StatePolicy.IDLEDOWN);
+		//animacao.setAnimationPolicy(PlayMode.LOOP);
+		//falesia.getAnimarions().add(animacao);
+		
+		world.getOpposites().add(falesia);
+	}
 
 	/**
 	 * Recebe os paramentros do jogos
@@ -692,8 +735,10 @@ public class MyWorldPexe {
 		world = new CGTGameWorld();		
 		backGround = new Texture(Gdx.files.internal("data/dapexe/casas_ceara_cenario.png"));
 		world.setBackground(backGround);
+		
+		world.setMusic(new CGTSound("data/AudioDaPexe/temaDaPexe.wav",0.3f));
 
-		// instancias criada no mÃ©todo principal pois Ã© compartilhada por mais de um objeto
+		// instancias criadaa no método principal pois são compartilhadas por mais de um objeto
 		
 		CGTActor personagemCGTActor = new CGTActor();
 		IndividualLifeBar actorLifeBar = new IndividualLifeBar(personagemCGTActor);
@@ -702,11 +747,7 @@ public class MyWorldPexe {
 		configuracaoActor(actorLifeBar, personagemCGTActor);
 		configuracaoActionActor(personagemCGTActor);
 
-		configuracaoCasasCenario();
-		
-		
-		
-		
+		configuracaoCasasCenario();	
 
 		// ajuste das colisÃµes das casas
 		world.getOpposites().get(0).setCollision(new Rectangle(23,0,125,140));
@@ -736,27 +777,21 @@ public class MyWorldPexe {
 		configuracaoProjetil(personagemCGTActor);
 
 		configuracaoButtonPad();	
-		BitmapFont font = new BitmapFont();
-		LabelStyle style = new LabelStyle(font, Color.BLACK);
-		CGTLabel label = new CGTLabel("x", style);
-		label.setRelativeX(0.5f);
-		label.setRelativeY(0.5f);
 		
-		label.setFontScaleX(2);
-		label.setFontScaleY(2);
+		oppositeFalesia();
 		
-
-		world.setLabel(label);
+		CGTLabel label = configuracaoLabel();
+		
 		world.addLoseCriterion(new TargetTime(20, label));
 		world.addLoseCriterion(new LifeDepleted(world.getActor()));
 		world.addWinCriterion(new KillAllEnemies(world.getEnemies()));
 
 		CGTTexture t = new CGTTexture("data/dapexe/menuInicial.png");
 		CGTButtonScreen btn = new CGTButtonScreen();
-		btn.setRelativeX(0.33f);
-		btn.setRelativeY(0.5f);
-		btn.setRelativeWidth(0.25f);
-		btn.setRelativeHeight(0.3f);
+		btn.setRelativeX(0.39f);
+		btn.setRelativeY(0.7f);
+		btn.setRelativeWidth(0.20f);
+		btn.setRelativeHeight(0.1f);
 		Texture texture = new Texture("data/dapexe/iniciar.png");
 		btn.setTextureDown(texture);
 		btn.setTextureUp(texture);
@@ -772,7 +807,24 @@ public class MyWorldPexe {
 		game.setMenu(screen);
 		configuracaoPauseDialog();
 		configuracaoWinDialog();
+		
+		
+		
+		// salvando...
+		/*
+		try {
+			
+			FileOutputStream saveConfig = new FileOutputStream("gameConfig.txt");
+			ObjectOutputStream obj = new ObjectOutputStream(saveConfig);
+			obj.writeObject(game);
+			obj.close();
+			System.out.println("Gravação realizada com sucesso");
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}*/
 	}
+	
 	
 	public CGTGameWorld getWorld() {
 		return world;
