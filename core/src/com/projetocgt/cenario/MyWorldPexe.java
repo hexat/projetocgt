@@ -760,18 +760,15 @@ public class MyWorldPexe {
 		configuracaoProjetil(personagemCGTActor);
 
 		configuracaoButtonPad();	
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.ttf"));
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.TTF"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 12;
+		parameter.size = 100;
 		BitmapFont font12 = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose();
 		LabelStyle style = new LabelStyle(font12, Color.BLACK);
 		CGTLabel label = new CGTLabel("x", style);
 		label.setRelativeX(0.5f);
 		label.setRelativeY(0.5f);
-		
-		label.setFontScaleX(2);
-		label.setFontScaleY(2);
 		
 
 		world.setLabel(label);
