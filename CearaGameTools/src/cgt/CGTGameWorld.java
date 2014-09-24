@@ -8,18 +8,11 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import cgt.core.CGTActor;
-import cgt.core.CGTBonus;
-import cgt.core.CGTEnemy;
-import cgt.core.CGTOpposite;
+import cgt.HUD.*;
+import cgt.core.*;
 import cgt.lose.Lose;
-import cgt.screen.CGTDialog;
-import cgt.screen.CGTLabel;
-import cgt.screen.CGTWindow;
-import cgt.util.CGTButton;
-import cgt.util.CGTSound;
-import cgt.util.Camera;
-import cgt.util.LifeBar;
+import cgt.screen.*;
+import cgt.util.*;
 import cgt.win.Win;
 
 import com.badlogic.gdx.audio.Music;

@@ -1,7 +1,7 @@
 package com.projetocgt;
 
 import cgt.CGTGameWorld;
-import cgt.util.CGTButton;
+import cgt.HUD.CGTButton;
 import cgt.screen.CGTButtonScreen;
 import cgt.screen.CGTScreen;
 import cgt.util.CGTTexture;
@@ -33,6 +33,12 @@ public class GeneralScreen extends Stage implements Screen {
 	public GeneralScreen(CGTScreen screen) {
 		super(new ScreenViewport());
 		this.screen = screen;
+		splsh = new Texture(screen.getBackground().getFile().getFileHandle());
+        setSpriteBatch(new SpriteBatch());
+        for (CGTButton b : screen.getButtons()) {
+        	this.addActor(b);
+        	b.autosize();
+        }
 		this.game = StarAssault.getInstance();
 	    Gdx.input.setInputProcessor(this);
 	}
@@ -42,7 +48,7 @@ public class GeneralScreen extends Stage implements Screen {
         this.act();
         
         getSpriteBatch().begin();
-        getSpriteBatch().draw(new Texture(screen.getBackground().getFilepath()),
+        getSpriteBatch().draw(splsh,
         		0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         getSpriteBatch().end();
         
@@ -67,12 +73,7 @@ public class GeneralScreen extends Stage implements Screen {
 
 	@Override
 	public void show() {
-        splsh = new Texture(screen.getBackground().getFile().getFileHandle());
-        setSpriteBatch(new SpriteBatch());
-        for (CGTButton b : screen.getButtons()) {
-        	this.addActor(b);
-        	b.autosize();
-        }
+        
 	}
 
 	@Override

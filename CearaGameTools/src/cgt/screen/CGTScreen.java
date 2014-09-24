@@ -3,6 +3,7 @@ package cgt.screen;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import cgt.HUD.CGTLabel;
 import cgt.util.CGTTexture;
 
 public class CGTScreen extends CGTWindow implements Serializable{

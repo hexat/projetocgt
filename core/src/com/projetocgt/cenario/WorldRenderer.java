@@ -57,8 +57,8 @@ public class WorldRenderer {
 	private StretchViewport viewport;
 	private Rectangle rectangleCamera;
 	private Random random;
-	
-	
+
+
 
 	private Vector2 lastActorPosition;
 
@@ -95,12 +95,10 @@ public class WorldRenderer {
 
 		if (!verifyLose()) {
 
-			if (verifyWin()) {
+			if (verifyWin()) 
 				System.out.println("ganhou");
-			} else {
-				spriteBatch.begin();
-				draw();
-			}
+			spriteBatch.begin();
+			draw();
 			spriteBatch.end();
 		}
 
@@ -487,7 +485,7 @@ public class WorldRenderer {
 				Direction direction = (Direction) behavior;
 				int[] angulos = { 0, 180 };
 
-	
+
 				if (random.nextFloat() < 0.0001 * enemy.getSpeed())
 					scheduleDirection(angulos, enemy);
 
@@ -583,7 +581,7 @@ public class WorldRenderer {
 		enemy.setAlpha(0);
 		enemy.setVulnerable(false);
 		enemy.removeBehavior(fade);
-		
+
 		Timer.schedule(new Timer.Task() {
 			int tempo = 0;
 			public void run() {
@@ -603,7 +601,7 @@ public class WorldRenderer {
 	private void scheduleDirection(int[] angulos, CGTEnemy enemy) {
 		enemy.getVelocity().x = 0;
 		enemy.getVelocity().y = 0;
-	
+
 		int indice = random.nextInt(angulos.length);
 
 		// Velocidade X no 1º e 4º quadrantes
@@ -724,7 +722,7 @@ public class WorldRenderer {
 			}, personagem.getTimeToRecovery());
 		}
 	}
-	
+
 	/**
 	 * @return the camera
 	 */

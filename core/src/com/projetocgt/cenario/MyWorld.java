@@ -4,6 +4,9 @@ package com.projetocgt.cenario;
 import java.util.ArrayList;
 
 import cgt.CGTGameWorld;
+import cgt.HUD.CGTButton;
+import cgt.HUD.EnemyGroupLifeBar;
+import cgt.HUD.IndividualLifeBar;
 import cgt.behaviors.*;
 import cgt.core.*;
 import cgt.lose.LifeDepleted;
