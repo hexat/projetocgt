@@ -3,6 +3,11 @@ package com.projetocgt.cenario;
 
 import cgt.CGTGame;
 import cgt.CGTGameWorld;
+import cgt.HUD.CGTButton;
+import cgt.HUD.CGTLabel;
+import cgt.HUD.EnemyGroupLifeBar;
+import cgt.HUD.IndividualLifeBar;
+import cgt.HUD.LifeBar;
 import cgt.behaviors.Direction;
 import cgt.behaviors.Fade;
 import cgt.behaviors.Sine;
@@ -23,14 +28,9 @@ import cgt.screen.CGTButtonScreen;
 import cgt.screen.CGTDialog;
 import cgt.screen.CGTScreen;
 import cgt.util.CGTAnimation;
-import cgt.util.CGTButton;
-import cgt.util.CGTLabel;
 import cgt.util.CGTSound;
 import cgt.util.CGTSpriteSheet;
 import cgt.util.CGTTexture;
-import cgt.util.EnemyGroupLifeBar;
-import cgt.util.IndividualLifeBar;
-import cgt.util.LifeBar;
 import cgt.util.ProjectileOrientation;
 import cgt.win.KillAllEnemies;
 

@@ -3,13 +3,13 @@ package com.projetocgt;
 import java.util.ArrayList;
 
 import cgt.CGTGameWorld;
+import cgt.HUD.CGTButton;
+import cgt.HUD.LifeBar;
 import cgt.lose.Lose;
 import cgt.lose.TargetTime;
 import cgt.policy.InputPolicy;
 import cgt.screen.CGTButtonScreen;
 import cgt.screen.CGTDialog;
-import cgt.util.CGTButton;
-import cgt.util.LifeBar;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;

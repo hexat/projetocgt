@@ -8,6 +8,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import cgt.HUD.CGTButton;
+import cgt.HUD.CGTLabel;
+import cgt.HUD.LifeBar;
 import cgt.core.CGTActor;
 import cgt.core.CGTBonus;
 import cgt.core.CGTEnemy;
@@ -15,10 +18,7 @@ import cgt.core.CGTOpposite;
 import cgt.lose.Lose;
 import cgt.screen.CGTDialog;
 import cgt.screen.CGTWindow;
-import cgt.util.CGTButton;
 import cgt.util.Camera;
-import cgt.util.CGTLabel;
-import cgt.util.LifeBar;
 import cgt.win.Win;
 
 import com.badlogic.gdx.files.FileHandle;
