@@ -25,8 +25,8 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private ArrayList<CGTOpposite> opposites;
 	private ArrayList<CGTEnemy> enemies;
 	private ArrayList<CGTBonus> bonus;
-	private ArrayList<CGTButton> buttons;
-	private ArrayList<LifeBar> lifeBars;
+	private ArrayList<HUDComponent> hud;
+
 	private CGTDialog pauseDialog;
 	private CGTDialog winDialog;
 	private Camera camera;
@@ -44,10 +44,9 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		opposites = new ArrayList<CGTOpposite>();
 		bonus = new ArrayList<CGTBonus>();
 		enemies = new ArrayList<CGTEnemy>();
-		buttons = new ArrayList<CGTButton>();
+		hud = new ArrayList<HUDComponent>();
 		winCriteria = new ArrayList<Win>();
 		loseCriteria = new ArrayList<Lose>();
-		lifeBars = new ArrayList<LifeBar>();
 		
 	}
 
@@ -233,23 +232,11 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	}
 
 	public void addButton(CGTButton button){
-		buttons.add(button);
-	}
-	
-	public ArrayList<CGTButton> getButtons() {
-		return buttons;
-	}
-
-	public void setButtons(ArrayList<CGTButton> buttons) {
-		this.buttons = buttons;
-	}
-	
-	public void removeButton(int index){
-		buttons.remove(index);
+		hud.add(button);
 	}
 	
 	public void removeButton(CGTButton button){
-		buttons.remove(button);
+		hud.remove(button);
 	}
 
 	public ArrayList<Win> getWinCriteria() {
@@ -275,17 +262,13 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	public void addLoseCriterion(Lose loseCriterion){
 		this.loseCriteria.add(loseCriterion);
 	}
-
-	public ArrayList<LifeBar> getLifeBars() {
-		return lifeBars;
-	}
-
-	public void setLifeBars(ArrayList<LifeBar> lifeBars) {
-		this.lifeBars = lifeBars;
-	}
 	
 	public void addLifeBar(LifeBar lifeBar){
-		lifeBars.add(lifeBar);
+		hud.add(lifeBar);
+	}
+	
+	public void removeLifeBar(LifeBar lifeBar){
+		hud.remove(lifeBar);
 	}
 
 	public CGTDialog getPauseDialog() {
@@ -312,6 +295,13 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		this.label = label;
 	}
 	
+	public ArrayList<HUDComponent> getHUD() {
+		return hud;
+	}
+	
+	public void addHUDComponent(HUDComponent component){
+		hud.add(component);
+	}
 	
 }
  

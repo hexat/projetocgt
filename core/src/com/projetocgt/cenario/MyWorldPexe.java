@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 
 import cgt.CGTGame;
 import cgt.CGTGameWorld;
+import cgt.HUD.AmmoDisplay;
 import cgt.HUD.CGTButton;
 import cgt.HUD.CGTLabel;
 import cgt.HUD.EnemyGroupLifeBar;
@@ -46,6 +47,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 
@@ -637,6 +639,7 @@ public class MyWorldPexe {
 		personagemCGTActor.getProjectiles().add(projetilPeixe);
 
 		personagemCGTActor.addProjectile(projetilPeixe);
+		configuraAmmoCounter(projetilPeixe);
 		world.setActor(personagemCGTActor);
 	}
 
@@ -745,15 +748,41 @@ public class MyWorldPexe {
 		BitmapFont font12 = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose();
 		LabelStyle style = new LabelStyle(font12, Color.BLACK);
-		CGTLabel label = new CGTLabel("x", style);
-		label.setRelativeX(0.45f);
-		label.setRelativeY(0.9f);
-
+		
+		Label label = new Label("x", style);
+		
+		CGTLabel labelHUD = new CGTLabel(label);
+		
+		labelHUD.setRelativeHeight(0.05f);
+		labelHUD.setRelativeX(0.45f);
+		labelHUD.setRelativeY(0.9f);
+		
+		world.addHUDComponent(labelHUD);
 
 		world.addLoseCriterion(new TargetTime(20, label));
 		world.addLoseCriterion(new LifeDepleted(world.getActor()));
 		world.addWinCriterion(new KillAllEnemies(world.getEnemies()));
 
+	}
+	
+	private void configuraAmmoCounter(CGTProjectile projectile){
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.TTF"));
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = 20;
+		BitmapFont font12 = generator.generateFont(parameter); // font size 12 pixels
+		generator.dispose();
+		LabelStyle style = new LabelStyle(font12, Color.BLACK);
+		
+		Label label = new Label("x", style);
+		
+		Texture texture = new Texture("data/dapexe/ammo.png");
+		
+		AmmoDisplay counter = new AmmoDisplay(texture, projectile, label);
+		counter.setRelativeHeight(0.05f);
+		counter.setRelativeWidth(0.05f);
+		counter.setRelativeX(0.01f);
+		counter.setRelativeY(0.85f);
+		world.addHUDComponent(counter);
 	}
 
 		

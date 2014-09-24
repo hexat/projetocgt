@@ -2,14 +2,15 @@ package cgt.lose;
 
 import cgt.HUD.CGTLabel;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;
 
 public class TargetTime implements Lose{
 	public int timer;
-	public CGTLabel label;
+	public Label label;
 	public boolean expired;
 	
-	public TargetTime(int time, CGTLabel label){
+	public TargetTime(int time, Label label){
 		timer = time;
 		this.label = label;
 		expired=false;
@@ -21,7 +22,7 @@ public class TargetTime implements Lose{
 		expired=false;
 	}
 	
-	public CGTLabel getLabel(){
+	public Label getLabel(){
 		return label;
 	}
 	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import cgt.CGTGameWorld;
 import cgt.HUD.CGTButton;
+import cgt.HUD.HUDComponent;
 import cgt.HUD.LifeBar;
 import cgt.lose.Lose;
 import cgt.lose.TargetTime;
@@ -65,38 +66,23 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	}
 
 	private void getActorsFromWorld(){
-
-		for (CGTButton button : world.getButtons()){
-			this.addActor(button);
-			button.autosize();
+		for(HUDComponent component : world.getHUD()){
+			this.addActor(component);
+			component.autosize();
 		}
-
-		for (LifeBar lifebar : world.getLifeBars()){
-			this.addActor(lifebar);
-			lifebar.autosize();
-		}
-
-		for (Lose lose : world.getLoseCriteria()){
-			if(lose instanceof TargetTime){
-				TargetTime targetTime = (TargetTime)lose;
-				if(targetTime.hasLabel()){
-					this.addActor(targetTime.getLabel());
-					targetTime.getLabel().autosize();
-				}
-			}
-		}
-
-
 	}
 
 	public void buttonHandler(){
-		for(CGTButton button : world.getButtons()){
-			if(button.isActive()){
-				pressHandler(button);
-			}
-			else if(button.isReleased()){
-				releaseHandler(button);
-				button.setReleased(false);
+		for(HUDComponent component : world.getHUD()){
+			if(component instanceof CGTButton){
+				CGTButton button = (CGTButton)component;
+				if(button.isActive()){
+					pressHandler(button);
+				}
+				else if(button.isReleased()){
+					releaseHandler(button);
+					button.setReleased(false);
+				}
 			}
 		}
 
@@ -255,16 +241,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		if(dialog.getCloseButton()!=null){
 			addActor(dialog.getCloseButton());
 		}
-	}
-
-	private void removeDialog(CGTDialog dialog){
-		getActors().indexOf(dialog, false);
-
-		for(CGTButton button : dialog.getButtons()){
-			addActor(button);
-		}
-
-		addActor(dialog.getCloseButton());
 	}
 
 	@Override

@@ -10,16 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 
-public class CGTButton extends Actor {
+public class CGTButton extends HUDComponent {
 	private InputPolicy input; 
 	private boolean active;
 	private boolean released;
 	private Texture textureUp;
 	private Texture textureDown;
-	private float relativeX;
-	private float relativeY;
-	private float relativeWidth;
-	private float relativeHeight;
 
 	public CGTButton(){
 		super();
@@ -27,10 +23,6 @@ public class CGTButton extends Actor {
 		released=false;
 		setTouchable(Touchable.enabled);
 		setInputListener();
-		relativeX=0.5f;
-		relativeY=0.5f;
-		relativeWidth=0.2f;
-		relativeHeight=0.2f;
 	}
 
 	private void setInputListener(){
@@ -55,14 +47,6 @@ public class CGTButton extends Actor {
 				setReleased(true);
 			}
 		});
-	}
-	
-	public void autosize(){
-			setWidth(getStage().getWidth()*relativeWidth);
-			setHeight(getStage().getHeight()*relativeHeight);
-
-			setX(getStage().getWidth()*relativeX);
-			setY(getStage().getHeight()*relativeY);
 	}
 	
 	@Override
@@ -114,38 +98,6 @@ public class CGTButton extends Actor {
 
 	public void setReleased(boolean released) {
 		this.released = released;
-	}
-
-	public float getRelativeX() {
-		return relativeX;
-	}
-
-	public void setRelativeX(float relativeX) {
-		this.relativeX = relativeX;
-	}
-
-	public float getRelativeY() {
-		return relativeY;
-	}
-
-	public void setRelativeY(float relativeY) {
-		this.relativeY = relativeY;
-	}
-
-	public float getRelativeWidth() {
-		return relativeWidth;
-	}
-
-	public void setRelativeWidth(float relativeWidth) {
-		this.relativeWidth = relativeWidth;
-	}
-
-	public float getRelativeHeight() {
-		return relativeHeight;
-	}
-
-	public void setRelativeHeight(float relativeHeight) {
-		this.relativeHeight = relativeHeight;
 	}
 
 }
