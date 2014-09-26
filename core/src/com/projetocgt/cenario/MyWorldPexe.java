@@ -8,6 +8,8 @@ import cgt.CGTGame;
 import cgt.CGTGameWorld;
 import cgt.HUD.AmmoDisplay;
 import cgt.HUD.CGTButton;
+import cgt.HUD.CGTButtonScreen;
+import cgt.HUD.CGTControllerButton;
 import cgt.HUD.CGTLabel;
 import cgt.HUD.EnemyGroupLifeBar;
 import cgt.HUD.IndividualLifeBar;
@@ -22,15 +24,17 @@ import cgt.core.CGTOpposite;
 import cgt.core.CGTProjectile;
 import cgt.lose.LifeDepleted;
 import cgt.lose.TargetTime;
+import cgt.policy.ActionFirePolicy;
+import cgt.policy.ActionMovePolicy;
 import cgt.policy.BonusPolicy;
 import cgt.policy.DirectionPolicy;
 import cgt.policy.FadePolicy;
 import cgt.policy.InputPolicy;
 import cgt.policy.MovementPolicy;
 import cgt.policy.StatePolicy;
-import cgt.screen.CGTButtonScreen;
 import cgt.screen.CGTDialog;
 import cgt.screen.CGTScreen;
+import cgt.unit.Action;
 import cgt.util.CGTAnimation;
 import cgt.util.CGTSound;
 import cgt.util.CGTSpriteSheet;
@@ -643,6 +647,16 @@ public class MyWorldPexe {
 		world.setActor(personagemCGTActor);
 	}
 
+	public void configuracaoInputs(){
+		Action walkUp = new Action(ActionMovePolicy.WALK_DOWN, InputPolicy.BTN_UP);
+		Action walkDown = new Action(ActionMovePolicy.WALK_UP, InputPolicy.BTN_DOWN);
+		Action walkLeft = new Action(ActionMovePolicy.WALK_RIGHT, InputPolicy.BTN_LEFT);
+		Action walkRight = new Action(ActionMovePolicy.WALK_LEFT, InputPolicy.BTN_RIGHT);
+		Action fire = new Action(ActionFirePolicy.FIRE, InputPolicy.BTN_1);
+		
+		world.addAction(walkUp, walkDown, walkLeft, walkRight, fire);
+	}
+	
 	public void configuracaoButtonPad(){
 		CGTButton buttonPad = new CGTButton();
 
@@ -657,8 +671,10 @@ public class MyWorldPexe {
 		buttonPad.setRelativeHeight(0.29f);
 		buttonPad.setBounds(0, 0, textureUp.getWidth()/3, textureUp.getHeight()/3);
 
-		CGTButton button = new CGTButton();
+		CGTControllerButton button = new CGTControllerButton();
 		button.setInput(InputPolicy.BTN_UP);
+		
+		System.out.println(button.getInput());
 
 		textureUp = new Texture("data/buttons/bt_up_up.png");
 		button.setTextureUp(textureUp);
@@ -673,9 +689,10 @@ public class MyWorldPexe {
 		button.setBounds(137/3, 184.7f/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 
 
-		CGTButton buttonDown = new CGTButton();
+		CGTControllerButton buttonDown = new CGTControllerButton();
 		buttonDown.setInput(InputPolicy.BTN_DOWN);
 
+		System.out.println(button.getInput());
 		textureUp = new Texture("data/buttons/bt_down_up.png");
 		buttonDown.setTextureUp(textureUp);
 		textureDown = new Texture("data/buttons/bt_down_press.png");
@@ -688,7 +705,7 @@ public class MyWorldPexe {
 		buttonDown.setBounds(137/3, 36/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 
 
-		CGTButton buttonLeft = new CGTButton();
+		CGTControllerButton buttonLeft = new CGTControllerButton();
 		buttonLeft.setInput(InputPolicy.BTN_LEFT);
 
 		textureUp = new Texture("data/buttons/bt_left_up.png");
@@ -704,7 +721,7 @@ public class MyWorldPexe {
 		buttonLeft.setBounds(64/3, 126/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 
 
-		CGTButton buttonRight = new CGTButton();
+		CGTControllerButton buttonRight = new CGTControllerButton();
 		buttonRight.setInput(InputPolicy.BTN_RIGHT);
 
 		textureUp = new Texture("data/buttons/bt_right_up.png");
@@ -718,7 +735,7 @@ public class MyWorldPexe {
 		buttonRight.setRelativeHeight(0.1f);
 		buttonRight.setBounds(183/3, 126/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 
-		CGTButton button1 = new CGTButton();
+		CGTControllerButton button1 = new CGTControllerButton();
 		button1.setInput(InputPolicy.BTN_1);
 
 		textureUp = new Texture("data/buttons/bt_agua_up.png");
@@ -818,21 +835,6 @@ public class MyWorldPexe {
 		world.setBackground(backGround);
 		
 		world.setMusic(new CGTSound("data/AudioDaPexe/temaDaPexe.wav",0.3f));
-/*
-<<<<<<< HEAD
-		// instancias criadaa no método principal pois são compartilhadas por mais de um objeto
-		
-		CGTActor personagemCGTActor = new CGTActor();
-		IndividualLifeBar actorLifeBar = new IndividualLifeBar(personagemCGTActor);
-		configuracaoLifeBar(actorLifeBar);			
-
-		configuracaoActor(actorLifeBar, personagemCGTActor);
-		configuracaoActionActor(personagemCGTActor);
-
-		configuracaoCasasCenario();	
-=======
-*/
-		// instancias criada no mÃ©todo principal pois Ã© compartilhada por mais de um objeto
 
 		CGTActor personagemCGTActor = new CGTActor();
 		
@@ -861,6 +863,8 @@ public class MyWorldPexe {
 		configuracaoButtonPad();
 		
 		configuraTimer();
+		
+		configuracaoInputs();
 		
 
 		CGTTexture t = new CGTTexture("data/dapexe/menuInicial.png");

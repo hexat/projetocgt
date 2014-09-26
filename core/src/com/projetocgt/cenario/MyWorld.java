@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import cgt.CGTGameWorld;
 import cgt.HUD.CGTButton;
+import cgt.HUD.CGTControllerButton;
 import cgt.HUD.EnemyGroupLifeBar;
 import cgt.HUD.IndividualLifeBar;
 import cgt.behaviors.*;
@@ -589,7 +590,7 @@ public class MyWorld {
 		buttonPad.setRelativeHeight(0.29f);
 		buttonPad.setBounds(0, 0, textureUp.getWidth()/3, textureUp.getHeight()/3);
 
-		CGTButton button = new CGTButton();
+		CGTControllerButton button = new CGTControllerButton();
 		button.setInput(InputPolicy.BTN_UP);
 
 		textureUp = new Texture("data/buttons/bt_up_up.png");
@@ -605,7 +606,7 @@ public class MyWorld {
 		button.setBounds(137/3, 184.7f/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 
 
-		CGTButton buttonDown = new CGTButton();
+		CGTControllerButton buttonDown = new CGTControllerButton();
 		buttonDown.setInput(InputPolicy.BTN_DOWN);
 
 		textureUp = new Texture("data/buttons/bt_down_up.png");
@@ -620,7 +621,7 @@ public class MyWorld {
 		buttonDown.setBounds(137/3, 36/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 
 
-		CGTButton buttonLeft = new CGTButton();
+		CGTControllerButton buttonLeft = new CGTControllerButton();
 		buttonLeft.setInput(InputPolicy.BTN_LEFT);
 
 		textureUp = new Texture("data/buttons/bt_left_up.png");
@@ -636,7 +637,7 @@ public class MyWorld {
 		buttonLeft.setBounds(64/3, 126/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 
 
-		CGTButton buttonRight = new CGTButton();
+		CGTControllerButton buttonRight = new CGTControllerButton();
 		buttonRight.setInput(InputPolicy.BTN_RIGHT);
 
 		textureUp = new Texture("data/buttons/bt_right_up.png");
@@ -650,7 +651,7 @@ public class MyWorld {
 		buttonRight.setRelativeHeight(0.1f);
 		buttonRight.setBounds(183/3, 126/3, textureUp.getWidth()/3, textureUp.getHeight()/3);
 
-		CGTButton button1 = new CGTButton();
+		CGTControllerButton button1 = new CGTControllerButton();
 		button1.setInput(InputPolicy.BTN_1);
 
 		textureUp = new Texture("data/buttons/bt_agua_up.png");

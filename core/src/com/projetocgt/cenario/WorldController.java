@@ -10,6 +10,7 @@ import cgt.CGTGameWorld;
 import cgt.core.CGTActor;
 import cgt.core.CGTProjectile;
 import cgt.policy.*;
+import cgt.unit.Action;
 import cgt.util.AnimationHandle;
 
 /**
@@ -21,25 +22,22 @@ public class WorldController {
 
 	private boolean ammoCheck=true;
 	//Possiveis movimentos do personagem
-	enum Keys {
-		LEFT, RIGHT, JUMP, FIRE, UP, DOWN, DAMAGE
-	};
 
 	private CGTGameWorld world;
 	private CGTActor personagem;
 	private AnimationHandle actorAnimation;
 	private WorldRenderer renderer;
-	static Map<Keys, Boolean> keys = new HashMap<Keys, Boolean>();
+	static Map<String, Boolean> keys = new HashMap<String, Boolean>();
 	static {
 		
-		keys.put(Keys.RIGHT, false);
-		keys.put(Keys.LEFT, false);
+		keys.put("WALK_RIGHT", false);
+		keys.put("WALK_LEFT", false);
 
-		keys.put(Keys.UP, false);
-		keys.put(Keys.DOWN, false);
+		keys.put("WALK_UP", false);
+		keys.put("WALK_DOWN", false);
 
-		keys.put(Keys.JUMP, false);
-		keys.put(Keys.FIRE, false);
+		keys.put("JUMP", false);
+		keys.put("FIRE", false);
 	};
 
 	// Este construtor recebe o mundo como parametro
@@ -52,64 +50,30 @@ public class WorldController {
 		releaseAllDirectionKeys();
 	}
 
-	public void activeMoveKey(ActionMovePolicy policy) {
-		keys.put(Keys.LEFT, true);
+	public void activateKey(InputPolicy policy){
+		Action action = world.getActionFromInput(policy);
+		System.out.println(action);
+		keys.put(action.getActionPolicy(),true);
 	}
-
-	public void leftPressed() {
-		releaseAllDirectionKeys();
-
-		keys.get(keys.put(Keys.LEFT, true));
+	
+	public void deactivateKey(InputPolicy policy){
+		Action action = world.getActionFromInput(policy);
+		keys.put(action.getActionPolicy(),false);
+		actorAnimation.stopAni();
 	}
+	
 
-	public void rightPressed() {
-		releaseAllDirectionKeys();
-		
-		keys.get(keys.put(Keys.RIGHT, true));
-	}
-
-	public void upPressed() {
-		releaseAllDirectionKeys();
-		keys.get(keys.put(Keys.UP, true));
-	}
-
-	public void downPressed() {
-		releaseAllDirectionKeys();
-
-		keys.get(keys.put(Keys.DOWN, true));
-	}
-
-	public void jumpPressed() {
-		keys.get(keys.put(Keys.JUMP, true));
-		//Habilita o loop da animacao
-	}
-
-	public void damegePressed() {
-		keys.get(keys.put(Keys.DAMAGE, true));
-	}
-
-	public void firePressedTouch() {
-		keys.get(keys.put(Keys.FIRE, true));
-		for(int i=0;i<world.getActor().getProjectiles().size();i++){
-			//TODO
-			//if(world.getListaDeProjectili().get(i).getActionFire().getInputs().get(0) == InputPolicy.GO_TAP){
-				//world.getPersonagem().getListaDeProjectiles().get(i).setPosition(personagem.getPosition());
+	public void fire(){
+		if(keys.get("FIRE")){
 				world.getActor().setFireDefault(0);
 				ammoDowner(world.getActor().getProjectiles().get(0));
-				
-				//world.getActor().getProjectiles().get(i).setState(personagem.getState());
-//				world.getActor().getProjectiles().get(i).setFlagAtivar(true);	
-			//world.getPersonagem().getListaDeProjectiles().get(i).setPosition(personagem.getPosition());
-			//world.getActor().setFireDefault(0);
-			//world.getActor().getProjectiles().get(i).setState(personagem.getState());
-			//				world.getActor().getProjectiles().get(i).setFlagAtivar(true);	
-			//}
 		}
-
+		else if(ammoCheck)
+			world.getActor().setFireDefault(-1);
 	}
 	
 	public void ammoDowner(final CGTProjectile projectile){
-		if(ammoCheck){
+		if(ammoCheck && personagem.getProjectiles().get(0).getAmmo()>0){
 			ammoCheck=false;
 			Timer.schedule(new Task() {
 				@Override
@@ -122,68 +86,10 @@ public class WorldController {
 	}
 
 	private void releaseAllDirectionKeys() {
-		keys.put(Keys.LEFT, false);
-		keys.put(Keys.RIGHT, false);
-		keys.put(Keys.UP, false);
-		keys.put(Keys.DOWN, false);
-	}
-	
-	// Funciona na subida do botao
-	public void leftReleased() {
-		keys.get(keys.put(Keys.LEFT, false));
-		//Desabilita o loop da animacao
-		//actorAnimation.setLoop(false);
-		actorAnimation.stopAni();
-	}
-
-	public void rightReleased() {
-		keys.get(keys.put(Keys.RIGHT, false));
-		//Desabilita o loop da animacao
-		//actorAnimation.setLoop(false);
-		actorAnimation.stopAni();
-	}
-
-	public void upReleased() {
-		keys.get(keys.put(Keys.UP, false));	
-		//Desabilita o loop da animacao
-		//actorAnimation.setLoop(false);
-		actorAnimation.stopAni();
-	}
-
-	public void downReleased() {
-		keys.get(keys.put(Keys.DOWN, false));
-		//Desabilita o loop da animacao
-		//actorAnimation.setLoop(false);
-		actorAnimation.stopAni();
-	}
-
-	public void jumpReleased() {
-		keys.get(keys.put(Keys.JUMP, false));
-		//Desabilita o loop da animacao
-		//actorAnimation.setLoop(false);
-		actorAnimation.stopAni();
-	}
-
-	public void damegeReleased() {
-		keys.get(keys.put(Keys.DAMAGE, false));
-		//Desabilita o loop da animacao
-		//actorAnimation.setLoop(false);
-		actorAnimation.stopAni();
-	}
-
-	public void fireReleasedTouch() {
-		keys.get(keys.put(Keys.FIRE, false));
-		//Desabilita o loop da animacao
-		//		for(int i=0;i<world.getActor().getProjectiles().size();i++){
-		//so vai pra falso quem tiver ativo
-		//		if(world.getActor().getProjectiles().get(i).isFlagAtivar()){
-		if (world.getActor().getFireDefault() != -1){
-			//world.getActor().getProjectiles().get(world.getActor().getFireDefault()).ammoDown();
-			world.getActor().setFireDefault(-1);
-			//if(world.getListaDeProjectili().get(i).getAmmo() == 0){
-			//world.getListaDeProjectili().get(i).setFlagAtivar(false);}		
-		}
-		//		}
+		keys.put("WALK_RIGHT", false);
+		keys.put("WALK_LEFT", false);
+		keys.put("WALK_UP", false);
+		keys.put("WALK_DOWN", false);
 	}
 
 
@@ -219,10 +125,8 @@ public class WorldController {
 		}
 	}
 
-	
-	private void processInput() {
-		//movimento();
-		if (keys.get(Keys.UP)) {
+	private void moveKeys(){
+		if (keys.get("WALK_UP")) {
 			//Verifica se o personagem pode andar
 			personagem.setState(StatePolicy.LOOKUP);
 			if( (personagem.getPosition().y + personagem.getBounds().height) < renderer.getWorld().getBackground().getHeight())
@@ -231,7 +135,7 @@ public class WorldController {
 				personagem.getVelocity().y = 0;
 		}
 
-		if (keys.get(Keys.DOWN)) {
+		if (keys.get("WALK_DOWN")) {
 			// O personagem esta olhando para a baixo
 			personagem.setState(StatePolicy.LOOKDOWN);
 			if(personagem.getPosition().y > 0)
@@ -240,7 +144,7 @@ public class WorldController {
 				personagem.getVelocity().y = 0;
 			}
 
-		if (keys.get(Keys.LEFT)) {
+		if (keys.get("WALK_LEFT")) {
 			personagem.setState(StatePolicy.LOOKLEFT);
 			if(personagem.getPosition().x > 0)
 				personagem.getVelocity().x = -personagem.getSpeed();
@@ -249,7 +153,7 @@ public class WorldController {
 				
 		}
 			
-		if (keys.get(Keys.RIGHT)) {
+		if (keys.get("WALK_RIGHT")) {
 			personagem.setState(StatePolicy.LOOKRIGHT);
 			if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackground().getWidth())
 				personagem.getVelocity().x = personagem.getSpeed();
@@ -257,22 +161,23 @@ public class WorldController {
 				personagem.getVelocity().x = 0;			
 		}
 		// Verifica se ambos ou nenhum dos sentidos sao presionados
-		if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT))
-				|| (!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) {
-			//personagem.setState(State.IDLE);
-			// acceleration is 0 on the x
-			// horizontal speed is 0
+		if ((keys.get("WALK_LEFT") && keys.get("WALK_RIGHT"))
+		   ||(!keys.get("WALK_LEFT") && !(keys.get("WALK_RIGHT")))) {
 			personagem.getVelocity().x = 0;
 		}
 		// Verifica se ambos ou nenhum dos sentidos sao presionados
-		if ((keys.get(Keys.UP) && keys.get(Keys.DOWN))
-				|| (!keys.get(Keys.UP) && !(keys.get(Keys.DOWN)))) {
+		if ((keys.get("WALK_UP") && keys.get("WALK_DOWN"))
+				|| (!keys.get("WALK_UP") && !(keys.get("WALK_DOWN")))) {
 			//personagem.setState(State.IDLE);
 			// acceleration is 0 on the y
 			//personagem.getAcceleration().y = 0;
 			// Vertival speed is 0
 			personagem.getVelocity().y = 0;
 		}
+	}
+	private void processInput() {
+		moveKeys();
+		fire();
 	}
 
 

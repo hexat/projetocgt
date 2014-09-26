@@ -1,5 +1,4 @@
 package cgt.policy;
-
 public enum InputPolicy {
 	TAP, 
 	HOLD_TAP, 
