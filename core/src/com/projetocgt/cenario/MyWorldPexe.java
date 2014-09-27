@@ -3,6 +3,7 @@ package com.projetocgt.cenario;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.util.Random;
 
 import cgt.CGTGame;
 import cgt.CGTGameWorld;
@@ -424,6 +425,8 @@ public class MyWorldPexe {
 	}
 
 	public void configuracaoPeixes(){
+		
+		Random random = new Random();
 		Fade fade1 = new Fade(FadePolicy.FADE_IN);
 		fade1.setFadeInTime(0);
 
@@ -437,7 +440,7 @@ public class MyWorldPexe {
 
 		CGTEnemy alertaPeixe = new CGTEnemy();
 
-		Vector2 positionEnemy = world.getOpposites().get(1).getPosition();
+		Vector2 positionEnemy = world.getOpposites().get(random.nextInt(world.getOpposites().size())).getPosition();
 		alertaPeixe.setPosition(positionEnemy);
 
 		Rectangle coliderEnemy = new Rectangle(0, 0, 269, 177);
@@ -476,7 +479,7 @@ public class MyWorldPexe {
 
 		CGTEnemy alertaPeixe2 = new CGTEnemy();
 
-		Vector2 positionEnemy2 = world.getOpposites().get(3).getPosition();
+		Vector2 positionEnemy2 = world.getOpposites().get(random.nextInt(world.getOpposites().size())).getPosition();
 		alertaPeixe2.setPosition(positionEnemy2);
 
 		Rectangle coliderEnemy2 = new Rectangle(0, 0, 269, 177);
