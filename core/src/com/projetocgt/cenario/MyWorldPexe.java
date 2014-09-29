@@ -166,7 +166,7 @@ public class MyWorldPexe {
 		personagemCGTActor.setBounds(tamanhoPersonagem);
 
 		personagemCGTActor.setLife(30);
-		personagemCGTActor.setSpeed(400);
+		personagemCGTActor.setSpeed(300);
 		
 		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet("data/dapexe/sprite_garoto.png"));
 		personagemCGTActor.getSpriteSheet().setRows(5);
@@ -452,7 +452,6 @@ public class MyWorldPexe {
 		alertaPeixe.setDamage(0);
 		alertaPeixe.setSpeed(1);
 		alertaPeixe.setDestroyable(true);
-		//alertaPeixe.addBehavior(fade1);
 		alertaPeixe.addBehavior(sine);
 		alertaPeixe.setLife(50);
 
@@ -473,6 +472,8 @@ public class MyWorldPexe {
 
 		alertaPeixe.getAnimarions().add(moveEnemy);
 		world.getEnemies().add(alertaPeixe);
+		
+		
 
 		CGTEnemy alertaPeixe2 = new CGTEnemy();
 
@@ -519,6 +520,51 @@ public class MyWorldPexe {
 
 		alertaPeixe2.getAnimarions().add(moveEnemy2);
 		world.getEnemies().add(alertaPeixe2);
+		
+		
+		
+		CGTEnemy alertaPeixe3 = new CGTEnemy();
+
+		Vector2 positionEnemy3 = world.getOpposites().get(8).getPosition();
+		alertaPeixe3.setPosition(positionEnemy3);
+
+		Rectangle coliderEnemy3 = new Rectangle(0, 0, 269, 177);
+		alertaPeixe3.setCollision(coliderEnemy3);
+
+		Rectangle tamanhoEnemy3 = new Rectangle(0, 0, 269, 177);
+		alertaPeixe3.setBounds(tamanhoEnemy3);
+		
+		Sine sine3 = new Sine(MovementPolicy.HEIGHT);
+		sine3.setMax(187);
+		sine3.setMin(177);
+		sine3.setAtFirstStep(true);
+
+
+		alertaPeixe3.setState(StatePolicy.IDLEDOWN);
+		alertaPeixe3.setBlock(false);
+		alertaPeixe3.setDamage(0);
+		alertaPeixe3.setSpeed(1);
+		alertaPeixe3.setDestroyable(true);
+		alertaPeixe3.addBehavior(sine3);
+		alertaPeixe3.setLife(50);
+
+		alertaPeixe3.setSpriteSheet(new CGTSpriteSheet("data/dapexe/alert_peixe.png"));
+		alertaPeixe3.getSpriteSheet().setRows(1);
+		alertaPeixe3.getSpriteSheet().setColumns(1);
+		CGTSound somPexeDie3 = new CGTSound("data/AudioDaPexe/caixa_registradora.wav");
+		alertaPeixe3.setSoundDie(somPexeDie3);
+
+
+		
+		CGTAnimation moveEnemy3 = new CGTAnimation(alertaPeixe3);
+		moveEnemy3.setSpriteLine(1);
+		moveEnemy3.addStatePolicy(StatePolicy.IDLEDOWN);
+
+		moveEnemy3.setSpriteVelocity(0.08f);
+		moveEnemy3.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
+
+		alertaPeixe3.getAnimarions().add(moveEnemy3);
+		world.getEnemies().add(alertaPeixe3);
 
 		EnemyGroupLifeBar alerts = new EnemyGroupLifeBar(world.getEnemies());
 		Texture lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
@@ -572,7 +618,7 @@ public class MyWorldPexe {
 		css.setColumns(2);
 		projetilPeixe.setSpriteSheet(css);
 		projetilPeixe.setMaxAmmo(4);
-		projetilPeixe.setAmmo(4);
+		projetilPeixe.setAmmo(2);
 
 		//Action dos projectiles
 		CGTAnimation m = new CGTAnimation(projetilPeixe);
