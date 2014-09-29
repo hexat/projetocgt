@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 
 public class CGTButton extends HUDComponent {
-	private InputPolicy input; 
+	
 	private boolean active;
 	private boolean released;
 	private Texture textureUp;
@@ -82,14 +82,6 @@ public class CGTButton extends HUDComponent {
 
 	public void setTextureDown(Texture textureDown) {
 		this.textureDown = textureDown;
-	}
-
-	public InputPolicy getInput() {
-		return input;
-	}
-
-	public void setInput(InputPolicy input) {
-		this.input = input;
 	}
 
 	public boolean isReleased() {

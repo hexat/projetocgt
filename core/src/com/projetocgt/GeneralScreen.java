@@ -2,7 +2,7 @@ package com.projetocgt;
 
 import cgt.CGTGameWorld;
 import cgt.HUD.CGTButton;
-import cgt.screen.CGTButtonScreen;
+import cgt.HUD.CGTButtonScreen;
 import cgt.screen.CGTScreen;
 import cgt.util.CGTTexture;
 

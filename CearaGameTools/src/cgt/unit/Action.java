@@ -3,7 +3,6 @@ package cgt.unit;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import cgt.core.CGTActor;
 import cgt.policy.ActionFirePolicy;
 import cgt.policy.ActionJumpPolicy;
 import cgt.policy.ActionMovePolicy;
@@ -15,39 +14,25 @@ public class Action implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -6677105553970300995L;
-//	private CGTActor owner;
 	private ArrayList<InputPolicy> inputs;
 	private String actionPolicy;
 
 	private Action(String action, InputPolicy... inputPolicies) {
-//		this.owner = owner;
-//		if (owner.hasAction(action)) {
-//			
-//		}
 		this.actionPolicy = action;
 		inputs = new ArrayList<InputPolicy>();
+		for(int i =0; i<inputPolicies.length; i++){
+			inputs.add(inputPolicies[i]);
+		}
 		
 	}
 
 	public Action(ActionPolicy policy, InputPolicy... inputPolicies) {
 		this(policy.getName(), inputPolicies);
 	}
-		
-//	public Action(ActionMovePolicy movePolicy, InputPolicy... inputPolicies) {
-//		this(movePolicy.name(), inputPolicies);
-//	}
-//
-//	public Action(ActionJumpPolicy jumpPolicy, InputPolicy... inputPolicies) {
-//		this(jumpPolicy.name(), inputPolicies);
-//	}
-//
-//	public Action(ActionFirePolicy firePolicy, InputPolicy... inputPolicies) {
-//		this(firePolicy.name(), inputPolicies);
-//	}
 	
 	public boolean hasInput(InputPolicy input) {
 		for (InputPolicy i : inputs) {
-			if (i == input) {
+			if (i == input){
 				return true;
 			}
 		}
