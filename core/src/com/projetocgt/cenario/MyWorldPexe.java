@@ -3,15 +3,40 @@ package com.projetocgt.cenario;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.util.Random;
 
 import cgt.CGTGame;
 import cgt.CGTGameWorld;
-import cgt.behaviors.*;
-import cgt.core.*;
-import cgt.lose.*;
-import cgt.policy.*;
-import cgt.screen.*;
-import cgt.util.*;
+import cgt.HUD.AmmoDisplay;
+import cgt.HUD.CGTButton;
+import cgt.HUD.CGTLabel;
+import cgt.HUD.EnemyGroupLifeBar;
+import cgt.HUD.IndividualLifeBar;
+import cgt.HUD.LifeBar;
+import cgt.behaviors.Direction;
+import cgt.behaviors.Fade;
+import cgt.behaviors.Sine;
+import cgt.core.CGTActor;
+import cgt.core.CGTBonus;
+import cgt.core.CGTEnemy;
+import cgt.core.CGTOpposite;
+import cgt.core.CGTProjectile;
+import cgt.lose.LifeDepleted;
+import cgt.lose.TargetTime;
+import cgt.policy.BonusPolicy;
+import cgt.policy.DirectionPolicy;
+import cgt.policy.FadePolicy;
+import cgt.policy.InputPolicy;
+import cgt.policy.MovementPolicy;
+import cgt.policy.StatePolicy;
+import cgt.screen.CGTButtonScreen;
+import cgt.screen.CGTDialog;
+import cgt.screen.CGTScreen;
+import cgt.util.CGTAnimation;
+import cgt.util.CGTSound;
+import cgt.util.CGTSpriteSheet;
+import cgt.util.CGTTexture;
+import cgt.util.ProjectileOrientation;
 import cgt.win.KillAllEnemies;
 
 import com.badlogic.gdx.Gdx;
@@ -19,10 +44,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 
 /**
@@ -78,7 +105,7 @@ public class MyWorldPexe {
 		pauseDialog.setCloseButton(voltar);
 		world.setPauseDialog(pauseDialog);
 	}
-	
+
 	public void configuracaoWinDialog(){
 		CGTDialog pauseDialog = new CGTDialog();
 		pauseDialog.setActive(false);
@@ -111,20 +138,26 @@ public class MyWorldPexe {
 		pauseDialog.addButton(voltarMenu);
 		world.setWinDialog(pauseDialog);
 	}
-	
-	public void configuracaoLifeBar(LifeBar actorLifeBar){
+
+	public void configuracaoLifeBar(CGTActor personagemCGTActor){
+		IndividualLifeBar actorLifeBar = new IndividualLifeBar(personagemCGTActor);
 		Texture lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
 		Texture lifeBarBack = new Texture(Gdx.files.internal("data/lifeBar/actorLifeBarBack.png"));
 		actorLifeBar.setOffsetX(0.25f);
 		actorLifeBar.setBar(lifeBar);
 		actorLifeBar.setBackgroundBar(lifeBarBack);
-		actorLifeBar.setRelativeX(0.1f);
-		actorLifeBar.setRelativeY(0.9f);
-		actorLifeBar.setRelativeHeight(0.1f);
-		actorLifeBar.setRelativeWidth(0.25f);
+		actorLifeBar.setRelativeX(0f);
+		actorLifeBar.setRelativeY(0.94f);
+		actorLifeBar.setRelativeHeight(0.05f);
+		actorLifeBar.setRelativeWidth(0.2f);
+		
+		actorLifeBar.setMaxLife(personagemCGTActor.getLife());
+		actorLifeBar.setOwner(personagemCGTActor);
+		
+		world.addLifeBar(actorLifeBar);
 	}
 
-	public void configuracaoActor(IndividualLifeBar actorLifeBar, CGTActor personagemCGTActor){
+	public void configuracaoActor(CGTActor personagemCGTActor){
 		personagemCGTActor.setFireDefault(-1);
 		personagemCGTActor.setPosition(new Vector2(800f,900f));
 		personagemCGTActor.setTimeToRecovery(4);
@@ -134,22 +167,18 @@ public class MyWorldPexe {
 		personagemCGTActor.setBounds(tamanhoPersonagem);
 
 		personagemCGTActor.setLife(30);
-		actorLifeBar.setMaxLife(personagemCGTActor.getLife());
-		actorLifeBar.setOwner(personagemCGTActor);
-		world.addLifeBar(actorLifeBar);
 		personagemCGTActor.setSpeed(400);
 		
-
 		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet("data/dapexe/sprite_garoto.png"));
 		personagemCGTActor.getSpriteSheet().setRows(5);
 		personagemCGTActor.getSpriteSheet().setColumns(3);
-		
+
 		CGTSound somDamagePersonagem =  new CGTSound("data/AudioDaPexe/voz_1.wav");
 		CGTSound somDamagePersonagem1 =  new CGTSound("data/AudioDaPexe/voz_4.wav");
 		personagemCGTActor.setSoundCollision(somDamagePersonagem);
 		personagemCGTActor.setSoundCollision(somDamagePersonagem1);
 
-		
+
 		CGTSound somDiePersonagem = new CGTSound("data/AudioDaPexe/voz_2.wav");
 		CGTSound somDiePersonagem1 =  new CGTSound("data/AudioDaPexe/voz_3.wav");
 
@@ -228,10 +257,27 @@ public class MyWorldPexe {
 				opositorCasa.getAnimarions().add(teste);
 
 
-				world.getOpposites().add(opositorCasa);				
+				world.getOpposites().add(opositorCasa);	
 			}
 			x=0;
 		}
+
+		// ajuste da posicao do lago na tela
+		world.getOpposites().get(6).setSpriteSheet(new CGTSpriteSheet("data/dapexe/casa233-corte.png"));
+		world.getOpposites().get(6).setPosition(new Vector2(590,620));
+		world.getOpposites().get(6).setBounds(new Rectangle(0,0,204,188 ));
+		world.getOpposites().get(6).setCollision(new Rectangle(0,0,204,188 ));
+
+		// ajuste das colisões das casas
+		world.getOpposites().get(0).setCollision(new Rectangle(23,0,125,140));
+		world.getOpposites().get(1).setCollision(new Rectangle(30,0,125,140));
+		world.getOpposites().get(2).setCollision(new Rectangle(0,15,178,130));
+		world.getOpposites().get(4).setCollision(new Rectangle(0,20,178,120));
+		world.getOpposites().get(5).setCollision(new Rectangle(0,20,178,120));
+		world.getOpposites().get(7).setCollision(new Rectangle(0,0,178,140));
+		world.getOpposites().get(9).setCollision(new Rectangle(0,0,178,140));
+		world.getOpposites().get(10).setCollision(new Rectangle(23,0,125,140));
+		world.getOpposites().get(11).setCollision(new Rectangle(0,20,178,120));
 	}
 
 	public void configuracaoMar(){
@@ -239,11 +285,13 @@ public class MyWorldPexe {
 		mar.setPosition(new Vector2(0, 0));
 		Rectangle bounds = new Rectangle(0,0,1200, 240);
 		mar.setBounds(bounds);
+		
 		Rectangle collision = new Rectangle(0,0,1200,120);
 		mar.setCollision(collision);
 		
 		mar.setBlock(true);
-		
+
+
 		mar.setSpriteSheet(new CGTSpriteSheet("data/dapexe/mar2.png"));
 
 		mar.getSpriteSheet().setRows(10);
@@ -251,7 +299,7 @@ public class MyWorldPexe {
 		
 		CGTSound marSound = new CGTSound("data/AudioDaPexe/mar.wav",1);
 		mar.setSound(marSound);
-		
+
 
 		CGTAnimation marAnimation= new CGTAnimation(mar);
 		marAnimation.setSpriteVelocity(0.08f);
@@ -323,10 +371,10 @@ public class MyWorldPexe {
 		moveCarroUp.setSpriteVelocity(0.08f);
 		moveCarroUp.setAnimationPolicy(PlayMode.LOOP);
 		carroCGT.getAnimarions().add(moveCarroUp);
-		
+
 		world.getEnemies().add(carroCGT);
-		
-			
+
+
 		CGTEnemy carroCGT2 = new CGTEnemy();
 
 		Vector2 positionCarro2 = new Vector2(600,560);
@@ -350,6 +398,7 @@ public class MyWorldPexe {
 		carroCGT2.getSpriteSheet().setColumns(2);
 		
 		CGTSound soundCar2 = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.2f);
+
 		carroCGT2.setSound(soundCar2);
 
 		//Action
@@ -376,6 +425,8 @@ public class MyWorldPexe {
 	}
 
 	public void configuracaoPeixes(){
+		
+		Random random = new Random();
 		Fade fade1 = new Fade(FadePolicy.FADE_IN);
 		fade1.setFadeInTime(0);
 
@@ -389,7 +440,7 @@ public class MyWorldPexe {
 
 		CGTEnemy alertaPeixe = new CGTEnemy();
 
-		Vector2 positionEnemy = world.getOpposites().get(1).getPosition();
+		Vector2 positionEnemy = world.getOpposites().get(random.nextInt(world.getOpposites().size())).getPosition();
 		alertaPeixe.setPosition(positionEnemy);
 
 		Rectangle coliderEnemy = new Rectangle(0, 0, 269, 177);
@@ -428,7 +479,7 @@ public class MyWorldPexe {
 
 		CGTEnemy alertaPeixe2 = new CGTEnemy();
 
-		Vector2 positionEnemy2 = world.getOpposites().get(3).getPosition();
+		Vector2 positionEnemy2 = world.getOpposites().get(random.nextInt(world.getOpposites().size())).getPosition();
 		alertaPeixe2.setPosition(positionEnemy2);
 
 		Rectangle coliderEnemy2 = new Rectangle(0, 0, 269, 177);
@@ -455,8 +506,8 @@ public class MyWorldPexe {
 		alertaPeixe2.setSpriteSheet(new CGTSpriteSheet("data/dapexe/alert_peixe.png"));
 		alertaPeixe2.getSpriteSheet().setRows(1);
 		alertaPeixe2.getSpriteSheet().setColumns(1);
-		
-		
+
+
 		CGTSound somPexeDie2 = new CGTSound("data/AudioDaPexe/caixa_registradora.wav");
 		alertaPeixe2.setSoundDie(somPexeDie2);
 
@@ -471,17 +522,17 @@ public class MyWorldPexe {
 
 		alertaPeixe2.getAnimarions().add(moveEnemy2);
 		world.getEnemies().add(alertaPeixe2);
-		
+
 		EnemyGroupLifeBar alerts = new EnemyGroupLifeBar(world.getEnemies());
 		Texture lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
 		Texture lifeBarBack = new Texture(Gdx.files.internal("data/lifeBar/enemyLifeBarBack.png"));
 		alerts.setBar(lifeBar);
 		alerts.setOffsetX(0.25f);
 		alerts.setBackgroundBar(lifeBarBack);
-		alerts.setRelativeX(0.7f);
-		alerts.setRelativeY(0.9f);
-		alerts.setRelativeHeight(0.1f);
-		alerts.setRelativeWidth(0.25f);
+		alerts.setRelativeX(0.78f);
+		alerts.setRelativeY(0.94f);
+		alerts.setRelativeHeight(0.05f);
+		alerts.setRelativeWidth(0.2f);
 		world.addLifeBar(alerts);
 	}
 
@@ -493,16 +544,16 @@ public class MyWorldPexe {
 		jangada.setCollision(new Rectangle(0,0,255,80));
 		jangada.addPolicy(BonusPolicy.ADD_AMMO);
 		jangada.setScore(4);
-	
+
 
 		jangada.setSpriteSheet(new CGTSpriteSheet("data/dapexe/jangada-corte.png"));
 		CGTAnimation animacaoJangada = new CGTAnimation(jangada);
 		animacaoJangada.setSpriteLine(1);
-		
+
 		CGTSound somCollisionJangada = new CGTSound("data/AudioDaPexe/splash.wav");
 		jangada.setSoundCollision(somCollisionJangada);
 
-		
+
 		jangada.getAnimarions().add(animacaoJangada);
 		world.getBonus().add(jangada);
 	}
@@ -591,6 +642,7 @@ public class MyWorldPexe {
 		personagemCGTActor.getProjectiles().add(projetilPeixe);
 
 		personagemCGTActor.addProjectile(projetilPeixe);
+		configuraAmmoCounter(projetilPeixe);
 		world.setActor(personagemCGTActor);
 	}
 
@@ -691,20 +743,52 @@ public class MyWorldPexe {
 		world.addButton(button1);
 	}
 	
-	public CGTLabel configuracaoLabel(){
-		BitmapFont font = new BitmapFont();
-		LabelStyle style = new LabelStyle(font, Color.BLACK);
-		CGTLabel label = new CGTLabel("x", style);
-		label.setRelativeX(0.5f);
-		label.setRelativeY(0.5f);
-		
-		label.setFontScaleX(2);
-		label.setFontScaleY(2);
-		
 
-		world.setLabel(label);
-		return label;
+	private void configuraTimer(){
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.TTF"));
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = 100;
+		BitmapFont font12 = generator.generateFont(parameter); // font size 12 pixels
+		generator.dispose();
+		LabelStyle style = new LabelStyle(font12, Color.BLACK);
+		
+		Label label = new Label("x", style);
+		
+		CGTLabel labelHUD = new CGTLabel(label);
+		
+		labelHUD.setRelativeHeight(0.05f);
+		labelHUD.setRelativeX(0.45f);
+		labelHUD.setRelativeY(0.9f);
+		
+		world.addHUDComponent(labelHUD);
+
+		world.addLoseCriterion(new TargetTime(20, label));
+		world.addLoseCriterion(new LifeDepleted(world.getActor()));
+		world.addWinCriterion(new KillAllEnemies(world.getEnemies()));
+
 	}
+	
+	private void configuraAmmoCounter(CGTProjectile projectile){
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.TTF"));
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = 20;
+		BitmapFont font12 = generator.generateFont(parameter); // font size 12 pixels
+		generator.dispose();
+		LabelStyle style = new LabelStyle(font12, Color.BLACK);
+		
+		Label label = new Label("x", style);
+		
+		Texture texture = new Texture("data/dapexe/ammo.png");
+		
+		AmmoDisplay counter = new AmmoDisplay(texture, projectile, label);
+		counter.setRelativeHeight(0.05f);
+		counter.setRelativeWidth(0.05f);
+		counter.setRelativeX(0.01f);
+		counter.setRelativeY(0.85f);
+		world.addHUDComponent(counter);
+	}
+
+		
 
 	public void oppositeFalesia(){
 		CGTOpposite falesia = new CGTOpposite();
@@ -737,7 +821,8 @@ public class MyWorldPexe {
 		world.setBackground(backGround);
 		
 		world.setMusic(new CGTSound("data/AudioDaPexe/temaDaPexe.wav",0.3f));
-
+/*
+<<<<<<< HEAD
 		// instancias criadaa no m�todo principal pois s�o compartilhadas por mais de um objeto
 		
 		CGTActor personagemCGTActor = new CGTActor();
@@ -748,23 +833,19 @@ public class MyWorldPexe {
 		configuracaoActionActor(personagemCGTActor);
 
 		configuracaoCasasCenario();	
+=======
+*/
+		// instancias criada no método principal pois é compartilhada por mais de um objeto
 
-		// ajuste das colisões das casas
-		world.getOpposites().get(0).setCollision(new Rectangle(23,0,125,140));
-		world.getOpposites().get(1).setCollision(new Rectangle(30,0,125,140));
-		world.getOpposites().get(2).setCollision(new Rectangle(0,15,178,130));
-		world.getOpposites().get(4).setCollision(new Rectangle(0,20,178,120));
-		world.getOpposites().get(5).setCollision(new Rectangle(0,20,178,120));
-		world.getOpposites().get(7).setCollision(new Rectangle(0,0,178,140));
-		world.getOpposites().get(9).setCollision(new Rectangle(0,0,178,140));
-		world.getOpposites().get(10).setCollision(new Rectangle(23,0,125,140));
-		world.getOpposites().get(11).setCollision(new Rectangle(0,20,178,120));
+		CGTActor personagemCGTActor = new CGTActor();
+		
+		configuracaoActor(personagemCGTActor);
+		
+		configuracaoLifeBar(personagemCGTActor);			
 
-		// ajuste da posicao do lago na tela
-		world.getOpposites().get(6).setSpriteSheet(new CGTSpriteSheet("data/dapexe/casa233-corte.png"));
-		world.getOpposites().get(6).setPosition(new Vector2(590,620));
-		world.getOpposites().get(6).setBounds(new Rectangle(0,0,204,188 ));
-		world.getOpposites().get(6).setCollision(new Rectangle(0,0,204,188 ));
+		configuracaoActionActor(personagemCGTActor);
+
+		configuracaoCasasCenario();
 
 		configuracaoMar();
 
@@ -779,12 +860,11 @@ public class MyWorldPexe {
 		configuracaoButtonPad();	
 		
 		oppositeFalesia();
+	
+		configuracaoButtonPad();
 		
-		CGTLabel label = configuracaoLabel();
+		configuraTimer();
 		
-		world.addLoseCriterion(new TargetTime(20, label));
-		world.addLoseCriterion(new LifeDepleted(world.getActor()));
-		world.addWinCriterion(new KillAllEnemies(world.getEnemies()));
 
 		CGTTexture t = new CGTTexture("data/dapexe/menuInicial.png");
 		CGTButtonScreen btn = new CGTButtonScreen();
@@ -824,8 +904,7 @@ public class MyWorldPexe {
 			ex.printStackTrace();
 		}*/
 	}
-	
-	
+
 	public CGTGameWorld getWorld() {
 		return world;
 	}

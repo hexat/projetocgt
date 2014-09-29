@@ -1,18 +1,36 @@
 package cgt.lose;
 
-import cgt.screen.CGTLabel;
+import cgt.HUD.CGTLabel;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;
 
 public class TargetTime implements Lose{
 	public int timer;
-	public CGTLabel label;
+	public Label label;
 	public boolean expired;
 	
-	public TargetTime(int time, CGTLabel label){
+	public TargetTime(int time, Label label){
 		timer = time;
 		this.label = label;
 		expired=false;
+	}
+	
+	public TargetTime(int time){
+		timer = time;
+		this.label = null;
+		expired=false;
+	}
+	
+	public Label getLabel(){
+		return label;
+	}
+	
+	public boolean hasLabel(){
+		if(label==null)
+			return false;
+		else
+			return true;
 	}
 	
 	public void start(){
@@ -38,6 +56,7 @@ public class TargetTime implements Lose{
 				System.out.println(x);
 				if (x <= 0){
 					expired = true;
+					this.cancel();
 				}
 			}
 		}, delay, repete);

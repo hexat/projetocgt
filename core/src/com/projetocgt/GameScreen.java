@@ -3,12 +3,17 @@ package com.projetocgt;
 import java.util.ArrayList;
 
 import cgt.CGTGameWorld;
+import cgt.HUD.CGTButton;
+import cgt.HUD.HUDComponent;
+import cgt.HUD.LifeBar;
+import cgt.lose.Lose;
+import cgt.lose.TargetTime;
 import cgt.policy.InputPolicy;
 import cgt.screen.CGTButtonScreen;
 import cgt.screen.CGTDialog;
-import cgt.util.CGTButton;
+import cgt.HUD.CGTButton;
 import cgt.util.CGTSound;
-import cgt.util.LifeBar;
+import cgt.HUD.LifeBar;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -44,9 +49,8 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	public GameScreen(CGTGameWorld world) {
 		this.world = world;
 		this.music = world.getMusic();
-		
 		Timer.instance().start();
-		
+
 		for (int i = 0; i < world.getWinCriteria().size(); i++){
 			world.getWinCriteria().get(i).start();
 		}
@@ -62,29 +66,23 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	}
 
 	private void getActorsFromWorld(){
-		
-		for (CGTButton button : world.getButtons()){
-			this.addActor(button);
-			button.autosize();
+		for(HUDComponent component : world.getHUD()){
+			this.addActor(component);
+			component.autosize();
 		}
-
-		for (LifeBar lifebar : world.getLifeBars()){
-			this.addActor(lifebar);
-			lifebar.autosize();
-		}
-		
-		this.addActor(world.getLabel());
-		world.getLabel().autosize();
 	}
 
 	public void buttonHandler(){
-		for(CGTButton button : world.getButtons()){
-			if(button.isActive()){
-				pressHandler(button);
-			}
-			else if(button.isReleased()){
-				releaseHandler(button);
-				button.setReleased(false);
+		for(HUDComponent component : world.getHUD()){
+			if(component instanceof CGTButton){
+				CGTButton button = (CGTButton)component;
+				if(button.isActive()){
+					pressHandler(button);
+				}
+				else if(button.isReleased()){
+					releaseHandler(button);
+					button.setReleased(false);
+				}
 			}
 		}
 
@@ -140,11 +138,8 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 
 	public void debug(Actor actor){
-		ShapeRenderer shape = new ShapeRenderer();
-		shape.begin(ShapeType.Line);
-		shape.rect(actor.getX(), actor.getY(), actor.getWidth(), actor.getHeight());
-		shape.end();
 	}
+
 	@Override
 	public void render(float delta) {
 		switch(state){
@@ -182,11 +177,11 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		case PAUSED:
 			if(!world.getPauseDialog().isActive()){
 				world.getPauseDialog().setActive(true);
-				 //Para os behaviors
+				//Para os behaviors
 				//renderer.getSpriteBatch().flush();
 				music.pause();
 				this.getActors().clear();
-				
+
 				addDialog(world.getPauseDialog());
 				world.getPauseDialog().autosize();
 			}
@@ -208,8 +203,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				music.play();
 				break;
 			}
+
 			else{
-				Timer.instance().start();
+				Timer.instance().stop();
 				pause();
 				break;
 			}
@@ -245,16 +241,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		if(dialog.getCloseButton()!=null){
 			addActor(dialog.getCloseButton());
 		}
-	}
-
-	private void removeDialog(CGTDialog dialog){
-		getActors().indexOf(dialog, false);
-
-		for(CGTButton button : dialog.getButtons()){
-			addActor(button);
-		}
-
-		addActor(dialog.getCloseButton());
 	}
 
 	@Override
