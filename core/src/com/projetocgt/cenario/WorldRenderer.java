@@ -103,8 +103,18 @@ public class WorldRenderer {
 		}
 
 		else {
-			world.getActor().getSoundDie();
+			world.getActor().playSoundDie();
 			Timer.instance().clear();
+			for(int index = 0; index < world.getOpposites().size(); index ++){
+				if(world.getOpposites().get(index).isPlayingSound()){
+					world.getOpposites().get(index).stopMusic();
+				}
+			}
+			for(int index = 0; index < world.getEnemies().size(); index ++){
+				if(world.getEnemies().get(index).isPlayingSound()){
+					world.getEnemies().get(index).stopMusic();
+				}
+			}
 			instance = StarAssault.getInstance();
 			instance.setScreen(new GeneralScreen(instance.getMenu()));
 		}
@@ -121,7 +131,7 @@ public class WorldRenderer {
 		// verifica Opposites
 		for(int i = 0; i < world.getOpposites().size(); i++){
 			if (world.getOpposites().get(i).getSound() != null && rectangleCamera.overlaps(world.getOpposites().get(i).getCollision())){
-				if (!world.getOpposites().get(i).isPlayingCollision()){
+				if (!world.getOpposites().get(i).isPlayingSound()){
 					world.getOpposites().get(i).playSound();					
 				}
 
@@ -135,7 +145,7 @@ public class WorldRenderer {
 
 
 			} else {
-				if (world.getOpposites().get(i).isPlayingCollision()){
+				if (world.getOpposites().get(i).isPlayingSound()){
 					world.getOpposites().get(i).stopMusic();
 				}
 			}
@@ -143,7 +153,7 @@ public class WorldRenderer {
 		// verifica Enemies
 		for(int i = 0; i < world.getEnemies().size(); i++){
 			if (world.getEnemies().get(i).getSound() != null && rectangleCamera.overlaps(world.getEnemies().get(i).getCollision())){
-				if (!world.getEnemies().get(i).isPlayingCollision()){
+				if (!world.getEnemies().get(i).isPlayingSound()){
 					world.getEnemies().get(i).playSound();
 				}
 
@@ -157,7 +167,7 @@ public class WorldRenderer {
 
 
 			} else {
-				if (world.getEnemies().get(i).isPlayingCollision()){
+				if (world.getEnemies().get(i).isPlayingSound()){
 					world.getEnemies().get(i).stopMusic();
 				}
 			}

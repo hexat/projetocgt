@@ -95,7 +95,9 @@ public class WorldController {
 			//if(world.getListaDeProjectili().get(i).getActionFire().getInputs().get(0) == InputPolicy.GO_TAP){
 				//world.getPersonagem().getListaDeProjectiles().get(i).setPosition(personagem.getPosition());
 				world.getActor().setFireDefault(0);
-				ammoDowner(world.getActor().getProjectiles().get(0));
+				if (world.getActor().getProjectiles().get(0).getAmmo() > 0){
+					ammoDowner(world.getActor().getProjectiles().get(0));
+				}
 				
 				//world.getActor().getProjectiles().get(i).setState(personagem.getState());
 //				world.getActor().getProjectiles().get(i).setFlagAtivar(true);	

@@ -28,6 +28,7 @@ public abstract class CGTGameObject implements Serializable {
 	private CGTSound sound;
 	private ArrayList<CGTSound> soundDie;
 	private ArrayList<CGTSound> soundCollision;
+	private ArrayList<Vector2> initialPositions;
 	private Vector2 position;
 	private Rectangle bounds; // Size of the game object
 	private Rectangle collision; // Size of the box collider
@@ -96,7 +97,7 @@ public abstract class CGTGameObject implements Serializable {
 		return sound;
 	}
 	
-	public boolean isPlayingCollision(){
+	public boolean isPlayingSound(){
 		if (sound == null){
 			return false;
 		} else{
@@ -166,10 +167,23 @@ public abstract class CGTGameObject implements Serializable {
 			int numeroAleatorio = r.nextInt(getSoundCollision().size());
 			soundCollision.get(numeroAleatorio).getMusic().play();
 		}
+	}	
+
+	public ArrayList<Vector2> getInitialPositions() {
+		return initialPositions;
+	}
+
+	public void setInitialPositions(ArrayList<Vector2> initialPositions) {
+		this.initialPositions = initialPositions;
 	}
 
 	public Vector2 getPosition() {
-		return position;
+		if (position == null){
+			Random random = new Random();
+			return initialPositions.get(random.nextInt(initialPositions.size()));
+		} else {
+			return position;
+		}
 	}
 
 	public void setPosition(Vector2 position) {

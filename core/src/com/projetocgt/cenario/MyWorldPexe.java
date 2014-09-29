@@ -3,6 +3,7 @@ package com.projetocgt.cenario;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Random;
 
 import cgt.CGTGame;
@@ -439,9 +440,24 @@ public class MyWorldPexe {
 		sine.setAtFirstStep(true);
 
 		CGTEnemy alertaPeixe = new CGTEnemy();
+		
+		ArrayList<Vector2> initialPositions = new ArrayList<Vector2>();
+		
+		initialPositions.add(world.getOpposites().get(0).getPosition().cpy());
+		initialPositions.add(world.getOpposites().get(1).getPosition().cpy());
+		initialPositions.add(world.getOpposites().get(2).getPosition().cpy());
+		initialPositions.add(world.getOpposites().get(3).getPosition().cpy());
+		initialPositions.add(world.getOpposites().get(4).getPosition().cpy());
+		initialPositions.add(world.getOpposites().get(5).getPosition().cpy());
+		initialPositions.add(world.getOpposites().get(7).getPosition().cpy());
+		initialPositions.add(world.getOpposites().get(8).getPosition().cpy());
+		initialPositions.add(world.getOpposites().get(9).getPosition().cpy());
+		initialPositions.add(world.getOpposites().get(10).getPosition().cpy());
+		initialPositions.add(world.getOpposites().get(11).getPosition().cpy());
+		
+		alertaPeixe.setInitialPositions(initialPositions);
 
-		Vector2 positionEnemy = world.getOpposites().get(random.nextInt(world.getOpposites().size())).getPosition();
-		alertaPeixe.setPosition(positionEnemy);
+		alertaPeixe.setPosition(alertaPeixe.getPosition());
 
 		Rectangle coliderEnemy = new Rectangle(0, 0, 269, 177);
 		alertaPeixe.setCollision(coliderEnemy);
@@ -480,8 +496,8 @@ public class MyWorldPexe {
 
 		CGTEnemy alertaPeixe2 = new CGTEnemy();
 
-		Vector2 positionEnemy2 = world.getOpposites().get(random.nextInt(world.getOpposites().size())).getPosition();
-		alertaPeixe2.setPosition(positionEnemy2);
+		alertaPeixe2.setInitialPositions(initialPositions);
+		alertaPeixe2.setPosition(alertaPeixe2.getPosition());
 
 		Rectangle coliderEnemy2 = new Rectangle(0, 0, 269, 177);
 		alertaPeixe2.setCollision(coliderEnemy2);
@@ -528,9 +544,10 @@ public class MyWorldPexe {
 		
 		CGTEnemy alertaPeixe3 = new CGTEnemy();
 
-		Vector2 positionEnemy3 = world.getOpposites().get(8).getPosition();
-		alertaPeixe3.setPosition(positionEnemy3);
+		alertaPeixe3.setInitialPositions(initialPositions);
 
+		alertaPeixe3.setPosition(alertaPeixe3.getPosition());
+		
 		Rectangle coliderEnemy3 = new Rectangle(0, 0, 269, 177);
 		alertaPeixe3.setCollision(coliderEnemy3);
 
