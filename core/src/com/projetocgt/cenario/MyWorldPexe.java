@@ -631,14 +631,14 @@ public class MyWorldPexe {
 		Rectangle coliderProjectile = new Rectangle(0,0,30, 30);
 
 		projetilPeixe.setCollision(coliderProjectile);
-		projetilPeixe.setInterval(1);
+		projetilPeixe.setInterval(2);
 
 		CGTSpriteSheet css = new CGTSpriteSheet(("data/dapexe/peixe_entrega.png"));
 		css.setRows(1);
 		css.setColumns(2);
 		projetilPeixe.setSpriteSheet(css);
-		projetilPeixe.setMaxAmmo(4);
-		projetilPeixe.setAmmo(2);
+		projetilPeixe.setMaxAmmo(8);
+		projetilPeixe.setAmmo(8);
 
 		//Action dos projectiles
 		CGTAnimation m = new CGTAnimation(projetilPeixe);

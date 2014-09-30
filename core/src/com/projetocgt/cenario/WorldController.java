@@ -118,6 +118,7 @@ public class WorldController {
 				public void run() {
 					projectile.ammoDown();
 					ammoCheck=true;
+					world.getActor().setFireDefault(-1);
 				}
 			}, projectile.getInterval());
 		}
@@ -172,19 +173,19 @@ public class WorldController {
 		//actorAnimation.setLoop(false);
 		actorAnimation.stopAni();
 	}
-
+	
 	public void fireReleasedTouch() {
 		keys.get(keys.put(Keys.FIRE, false));
 		//Desabilita o loop da animacao
 		//		for(int i=0;i<world.getActor().getProjectiles().size();i++){
 		//so vai pra falso quem tiver ativo
-		//		if(world.getActor().getProjectiles().get(i).isFlagAtivar()){
-		if (world.getActor().getFireDefault() != -1){
+		//		if(world.getActor().getProjectiles().get(i).isFlagAtivar()){l
+		//if (world.getActor().getFireDefault() != -1){
 			//world.getActor().getProjectiles().get(world.getActor().getFireDefault()).ammoDown();
-			world.getActor().setFireDefault(-1);
+			//world.getActor().setFireDefault(-1);
 			//if(world.getListaDeProjectili().get(i).getAmmo() == 0){
 			//world.getListaDeProjectili().get(i).setFlagAtivar(false);}		
-		}
+		//}
 		//		}
 	}
 
