@@ -643,10 +643,10 @@ public class MyWorldPexe {
 	}
 
 	public void configuracaoInputs(){
-		Action walkUp = new Action(ActionMovePolicy.WALK_DOWN, InputPolicy.BTN_UP);
-		Action walkDown = new Action(ActionMovePolicy.WALK_UP, InputPolicy.BTN_DOWN);
-		Action walkLeft = new Action(ActionMovePolicy.WALK_RIGHT, InputPolicy.BTN_LEFT);
-		Action walkRight = new Action(ActionMovePolicy.WALK_LEFT, InputPolicy.BTN_RIGHT);
+		Action walkUp = new Action(ActionMovePolicy.WALK_DOWN, InputPolicy.BTN_DOWN);
+		Action walkDown = new Action(ActionMovePolicy.WALK_UP, InputPolicy.BTN_UP);
+		Action walkLeft = new Action(ActionMovePolicy.WALK_RIGHT, InputPolicy.BTN_RIGHT);
+		Action walkRight = new Action(ActionMovePolicy.WALK_LEFT, InputPolicy.BTN_LEFT);
 		Action fire = new Action(ActionMovePolicy.FIRE, InputPolicy.BTN_1);
 		
 		world.addAction(walkUp, walkDown, walkLeft, walkRight, fire);
