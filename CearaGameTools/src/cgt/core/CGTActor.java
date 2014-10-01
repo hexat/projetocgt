@@ -3,14 +3,11 @@ package cgt.core;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import cgt.policy.ActionFirePolicy;
 import cgt.policy.ActionMovePolicy;
-import cgt.policy.ActionPolicy;
 import cgt.policy.InputPolicy;
 import cgt.policy.StatePolicy;
 import cgt.unit.Action;
 import cgt.unit.LabelID;
-import cgt.util.CGTSound;
 import cgt.util.Jump;
 
 public class CGTActor extends CGTGameObject implements Serializable {
@@ -48,7 +45,7 @@ public class CGTActor extends CGTGameObject implements Serializable {
 		this.invincible=false;
 	}
 	
-	public boolean addAction(InputPolicy inputPolicy, ActionPolicy movePolicy) {
+	public boolean addAction(InputPolicy inputPolicy, ActionMovePolicy movePolicy) {
 		boolean hasInput = false;
 		boolean hasAction = false;
 		for (int i = 0; i < actions.size() && (!hasInput || !hasAction); i++) {
@@ -56,7 +53,7 @@ public class CGTActor extends CGTGameObject implements Serializable {
 				hasInput = true;
 			}
 			
-			if (actions.get(i).getActionPolicy().equals(movePolicy.getName())) {
+			if (actions.get(i).getActionPolicy() == movePolicy) {
 				hasAction = true;
 			}
 		}

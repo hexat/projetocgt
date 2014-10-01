@@ -2,23 +2,19 @@ package cgt.util;
 
 import java.io.Serializable;
 
-import cgt.policy.ActionJumpPolicy;
-import cgt.unit.LabelID;
-
-import com.badlogic.gdx.audio.Music;
-
 public class Jump implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -9139898365201290195L;
-	private ActionJumpPolicy action;
 	private int maxJumpSeq;
 	private CGTSound soundImpact;
 	private CGTSound soundOut;
 
-	public Jump(ActionJumpPolicy action, LabelID labelID){
-		setAction(action);
+	public Jump(){
+		maxJumpSeq = 1;
+		soundImpact = null;
+		soundOut = null;
 	}
 
 	public void setMaxJumpSeq(int max) {
@@ -27,14 +23,6 @@ public class Jump implements Serializable{
 	 
 	public int getMaxJumpSeq() {
 		return maxJumpSeq;
-	}
-	 
-	public ActionJumpPolicy getAction() {
-		return action;
-	}
-	 
-	public void setAction(ActionJumpPolicy action) {
-		this.action = action;
 	}
 	 
 	public void setSoundOut(CGTSound soundOut) {
@@ -55,7 +43,7 @@ public class Jump implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Jump [action=" + action + ", maxJumpSeq=" + maxJumpSeq
+		return "Jump [maxJumpSeq=" + maxJumpSeq
 				+ ", soundImpact=" + soundImpact + ", soundOut=" + soundOut + "]";
 	}
 	

@@ -1,8 +1,6 @@
 package com.projetocgt.cenario;
 
 
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.util.Random;
 
 import cgt.CGTGame;
@@ -14,7 +12,6 @@ import cgt.HUD.CGTControllerButton;
 import cgt.HUD.CGTLabel;
 import cgt.HUD.EnemyGroupLifeBar;
 import cgt.HUD.IndividualLifeBar;
-import cgt.HUD.LifeBar;
 import cgt.behaviors.Direction;
 import cgt.behaviors.Fade;
 import cgt.behaviors.Sine;
@@ -25,7 +22,6 @@ import cgt.core.CGTOpposite;
 import cgt.core.CGTProjectile;
 import cgt.lose.LifeDepleted;
 import cgt.lose.TargetTime;
-import cgt.policy.ActionFirePolicy;
 import cgt.policy.ActionMovePolicy;
 import cgt.policy.BonusPolicy;
 import cgt.policy.DirectionPolicy;
@@ -68,10 +64,6 @@ public class MyWorldPexe {
 	private CGTScreen screen;
 	private CGTGame game;
 	
-	
-	
-	
-
 	public MyWorldPexe() {
 		createWorld();
 	}
@@ -655,7 +647,7 @@ public class MyWorldPexe {
 		Action walkDown = new Action(ActionMovePolicy.WALK_UP, InputPolicy.BTN_DOWN);
 		Action walkLeft = new Action(ActionMovePolicy.WALK_RIGHT, InputPolicy.BTN_LEFT);
 		Action walkRight = new Action(ActionMovePolicy.WALK_LEFT, InputPolicy.BTN_RIGHT);
-		Action fire = new Action(ActionFirePolicy.FIRE, InputPolicy.BTN_1);
+		Action fire = new Action(ActionMovePolicy.FIRE, InputPolicy.BTN_1);
 		
 		world.addAction(walkUp, walkDown, walkLeft, walkRight, fire);
 	}
@@ -902,7 +894,7 @@ public class MyWorldPexe {
 			ObjectOutputStream obj = new ObjectOutputStream(saveConfig);
 			obj.writeObject(game);
 			obj.close();
-			System.out.println("Gravação realizada com sucesso");
+			System.out.println("Gravaï¿½ï¿½o realizada com sucesso");
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();

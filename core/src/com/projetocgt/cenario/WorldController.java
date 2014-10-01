@@ -27,17 +27,16 @@ public class WorldController {
 	private CGTActor personagem;
 	private AnimationHandle actorAnimation;
 	private WorldRenderer renderer;
-	static Map<String, Boolean> keys = new HashMap<String, Boolean>();
+	static Map<ActionMovePolicy, Boolean> keys = new HashMap<ActionMovePolicy, Boolean>();
 	static {
-		
-		keys.put("WALK_RIGHT", false);
-		keys.put("WALK_LEFT", false);
+		keys.put(ActionMovePolicy.WALK_RIGHT, false);
+		keys.put(ActionMovePolicy.WALK_LEFT, false);
 
-		keys.put("WALK_UP", false);
-		keys.put("WALK_DOWN", false);
+		keys.put(ActionMovePolicy.WALK_UP, false);
+		keys.put(ActionMovePolicy.WALK_DOWN, false);
 
-		keys.put("JUMP", false);
-		keys.put("FIRE", false);
+		keys.put(ActionMovePolicy.JUMP, false);
+		keys.put(ActionMovePolicy.FIRE, false);
 	};
 
 	// Este construtor recebe o mundo como parametro
@@ -64,7 +63,7 @@ public class WorldController {
 	
 
 	public void fire(){
-		if(keys.get("FIRE")){
+		if(keys.get(ActionMovePolicy.FIRE)){
 				world.getActor().setFireDefault(0);
 				ammoDowner(world.getActor().getProjectiles().get(0));
 		}
@@ -86,10 +85,10 @@ public class WorldController {
 	}
 
 	private void releaseAllDirectionKeys() {
-		keys.put("WALK_RIGHT", false);
-		keys.put("WALK_LEFT", false);
-		keys.put("WALK_UP", false);
-		keys.put("WALK_DOWN", false);
+		keys.put(ActionMovePolicy.WALK_RIGHT, false);
+		keys.put(ActionMovePolicy.WALK_LEFT, false);
+		keys.put(ActionMovePolicy.WALK_UP, false);
+		keys.put(ActionMovePolicy.WALK_DOWN, false);
 	}
 
 
@@ -126,7 +125,7 @@ public class WorldController {
 	}
 
 	private void moveKeys(){
-		if (keys.get("WALK_UP")) {
+		if (keys.get(ActionMovePolicy.WALK_UP)) {
 			//Verifica se o personagem pode andar
 			personagem.setState(StatePolicy.LOOKUP);
 			if( (personagem.getPosition().y + personagem.getBounds().height) < renderer.getWorld().getBackground().getHeight())
@@ -135,7 +134,7 @@ public class WorldController {
 				personagem.getVelocity().y = 0;
 		}
 
-		if (keys.get("WALK_DOWN")) {
+		if (keys.get(ActionMovePolicy.WALK_DOWN)) {
 			// O personagem esta olhando para a baixo
 			personagem.setState(StatePolicy.LOOKDOWN);
 			if(personagem.getPosition().y > 0)
@@ -144,7 +143,7 @@ public class WorldController {
 				personagem.getVelocity().y = 0;
 			}
 
-		if (keys.get("WALK_LEFT")) {
+		if (keys.get(ActionMovePolicy.WALK_LEFT)) {
 			personagem.setState(StatePolicy.LOOKLEFT);
 			if(personagem.getPosition().x > 0)
 				personagem.getVelocity().x = -personagem.getSpeed();
@@ -153,7 +152,7 @@ public class WorldController {
 				
 		}
 			
-		if (keys.get("WALK_RIGHT")) {
+		if (keys.get(ActionMovePolicy.WALK_RIGHT)) {
 			personagem.setState(StatePolicy.LOOKRIGHT);
 			if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackground().getWidth())
 				personagem.getVelocity().x = personagem.getSpeed();
@@ -161,13 +160,13 @@ public class WorldController {
 				personagem.getVelocity().x = 0;			
 		}
 		// Verifica se ambos ou nenhum dos sentidos sao presionados
-		if ((keys.get("WALK_LEFT") && keys.get("WALK_RIGHT"))
-		   ||(!keys.get("WALK_LEFT") && !(keys.get("WALK_RIGHT")))) {
+		if ((keys.get(ActionMovePolicy.WALK_LEFT) && keys.get(ActionMovePolicy.WALK_RIGHT))
+		   ||(!keys.get(ActionMovePolicy.WALK_LEFT) && !(keys.get(ActionMovePolicy.WALK_RIGHT)))) {
 			personagem.getVelocity().x = 0;
 		}
 		// Verifica se ambos ou nenhum dos sentidos sao presionados
-		if ((keys.get("WALK_UP") && keys.get("WALK_DOWN"))
-				|| (!keys.get("WALK_UP") && !(keys.get("WALK_DOWN")))) {
+		if ((keys.get(ActionMovePolicy.WALK_UP) && keys.get(ActionMovePolicy.WALK_DOWN))
+				|| (!keys.get(ActionMovePolicy.WALK_UP) && !(keys.get(ActionMovePolicy.WALK_DOWN)))) {
 			//personagem.setState(State.IDLE);
 			// acceleration is 0 on the y
 			//personagem.getAcceleration().y = 0;
