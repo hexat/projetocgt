@@ -3,18 +3,18 @@ package com.projetocgt;
 import java.util.ArrayList;
 
 import cgt.CGTGameWorld;
-import cgt.HUD.CGTButton;
-import cgt.HUD.CGTButtonScreen;
-import cgt.HUD.CGTControllerButton;
-import cgt.HUD.HUDComponent;
-import cgt.HUD.LifeBar;
+import cgt.hud.CGTButton;
+import cgt.hud.CGTButtonScreen;
+import cgt.hud.CGTControllerButton;
+import cgt.hud.HUDComponent;
+import cgt.hud.LifeBar;
 import cgt.lose.Lose;
 import cgt.lose.TargetTime;
 import cgt.policy.InputPolicy;
 import cgt.screen.CGTDialog;
-import cgt.HUD.CGTButton;
+import cgt.hud.CGTButton;
 import cgt.util.CGTSound;
-import cgt.HUD.LifeBar;
+import cgt.hud.LifeBar;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;

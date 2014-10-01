@@ -1,4 +1,4 @@
-package cgt.HUD;
+package cgt.hud;
 
 import java.util.ArrayList;
 

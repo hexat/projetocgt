@@ -8,8 +8,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import cgt.HUD.*;
 import cgt.core.*;
+import cgt.hud.*;
 import cgt.lose.Lose;
 import cgt.policy.InputPolicy;
 import cgt.screen.*;
