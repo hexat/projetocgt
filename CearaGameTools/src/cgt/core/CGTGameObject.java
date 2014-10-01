@@ -67,7 +67,7 @@ public abstract class CGTGameObject implements Serializable {
 		velocity = new Vector2();
 		bounds= new Rectangle();
 		collision = new Rectangle();
-		setState(StatePolicy.IDLEDOWN);
+		setState(StatePolicy.IDLE);
 		animations = new ArrayList<CGTAnimation>();
 		animation=null;
 		soundDie = new ArrayList<CGTSound>();
@@ -81,7 +81,7 @@ public abstract class CGTGameObject implements Serializable {
 		posYColider = collision.y;
 		this.bounds = bounds;
 		animations = new ArrayList<CGTAnimation>();
-		setState(StatePolicy.IDLEDOWN);
+		setState(StatePolicy.IDLE);
 		animation=null;
 	}
 	
@@ -196,6 +196,10 @@ public abstract class CGTGameObject implements Serializable {
 
 	public void setLife(int life) {
 		this.life = life;
+	}
+	
+	public void reduceLife(int life){
+		this.life -= life;
 	}
 
 
