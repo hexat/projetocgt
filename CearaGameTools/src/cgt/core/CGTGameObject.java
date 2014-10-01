@@ -53,17 +53,17 @@ public abstract class CGTGameObject implements Serializable {
 	 */
 	public void update(float delta) {
 		setStateTime(getStateTime() + delta);
-		position.add(velocity.cpy().scl(delta));
+		getPosition().add(velocity.cpy().scl(delta));
 		
-		collision.x=this.position.x+posXColider;
-		collision.y=this.position.y+posYColider;
+		collision.x=this.getPosition().x+posXColider;
+		collision.y=this.getPosition().y+posYColider;
 		
-		bounds.x=this.position.x;
-		bounds.y=this.position.y;
+		bounds.x=this.getPosition().x;
+		bounds.y=this.getPosition().y;
 	}
 	
 	public CGTGameObject(){
-		position= new Vector2();
+		position= null;
 		velocity = new Vector2();
 		bounds= new Rectangle();
 		collision = new Rectangle();
@@ -180,10 +180,9 @@ public abstract class CGTGameObject implements Serializable {
 	public Vector2 getPosition() {
 		if (position == null){
 			Random random = new Random();
-			return initialPositions.get(random.nextInt(initialPositions.size()));
-		} else {
-			return position;
+			position = initialPositions.get(random.nextInt(initialPositions.size()));
 		}
+		return position;
 	}
 
 	public void setPosition(Vector2 position) {
