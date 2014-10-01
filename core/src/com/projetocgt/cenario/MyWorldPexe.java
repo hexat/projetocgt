@@ -455,8 +455,9 @@ public class MyWorldPexe {
 		
 		alertaPeixe.setInitialPositions(initialPositions);
 
-		alertaPeixe.setPosition(alertaPeixe.getPosition());
+//		alertaPeixe.setPosition(alertaPeixe.getPosition());
 
+//		System.exit(0);
 		Rectangle coliderEnemy = new Rectangle(0, 0, 269, 177);
 		alertaPeixe.setCollision(coliderEnemy);
 
