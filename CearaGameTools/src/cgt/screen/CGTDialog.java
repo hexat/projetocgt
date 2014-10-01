@@ -2,7 +2,8 @@ package cgt.screen;
 
 import java.util.ArrayList;
 
-import cgt.HUD.CGTButton;
+import cgt.hud.CGTButton;
+import cgt.hud.CGTButtonScreen;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;

@@ -1,6 +1,6 @@
-package cgt.screen;
+package cgt.hud;
 
-import cgt.HUD.CGTButton;
+import cgt.screen.CGTWindow;
 
 public class CGTButtonScreen extends CGTButton {
 	private CGTWindow screenToGo;

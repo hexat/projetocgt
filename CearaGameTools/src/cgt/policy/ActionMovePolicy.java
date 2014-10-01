@@ -1,6 +1,6 @@
 package cgt.policy;
 
-public enum ActionMovePolicy implements ActionPolicy {
+public enum ActionMovePolicy {
 	WALK_LEFT,
 	WALK_UP,
 	WALK_DOWN,
@@ -9,11 +9,8 @@ public enum ActionMovePolicy implements ActionPolicy {
 	RUN_UP,
 	RUN_DOWN,
 	RUN_RIGHT,
-	GET_DOWN;
-
-	@Override
-	public String getName() {
-		return name();
-	}
+	GET_DOWN,
+	JUMP,
+	FIRE;
 }
  

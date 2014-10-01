@@ -1,6 +1,6 @@
 package cgt.lose;
 
-import cgt.HUD.CGTLabel;
+import cgt.hud.CGTLabel;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;

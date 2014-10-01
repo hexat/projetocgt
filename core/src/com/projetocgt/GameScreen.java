@@ -3,17 +3,18 @@ package com.projetocgt;
 import java.util.ArrayList;
 
 import cgt.CGTGameWorld;
-import cgt.HUD.CGTButton;
-import cgt.HUD.HUDComponent;
-import cgt.HUD.LifeBar;
+import cgt.hud.CGTButton;
+import cgt.hud.CGTButtonScreen;
+import cgt.hud.CGTControllerButton;
+import cgt.hud.HUDComponent;
+import cgt.hud.LifeBar;
 import cgt.lose.Lose;
 import cgt.lose.TargetTime;
 import cgt.policy.InputPolicy;
-import cgt.screen.CGTButtonScreen;
 import cgt.screen.CGTDialog;
-import cgt.HUD.CGTButton;
+import cgt.hud.CGTButton;
 import cgt.util.CGTSound;
-import cgt.HUD.LifeBar;
+import cgt.hud.LifeBar;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -74,13 +75,14 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 	public void buttonHandler(){
 		for(HUDComponent component : world.getHUD()){
-			if(component instanceof CGTButton){
-				CGTButton button = (CGTButton)component;
+			if(component instanceof CGTControllerButton){
+				CGTControllerButton button = (CGTControllerButton)component;
 				if(button.isActive()){
-					pressHandler(button);
+					System.out.println("button"+button.getInput());
+					controller.activateKey(button.getInput());
 				}
 				else if(button.isReleased()){
-					releaseHandler(button);
+					controller.deactivateKey(button.getInput());
 					button.setReleased(false);
 				}
 			}
@@ -106,34 +108,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			world.getPauseDialog().setActive(false);
 			resume();
 		}
-	}
-
-	public void pressHandler(CGTButton button){
-		if(button.getInput()==InputPolicy.BTN_1)
-			controller.firePressedTouch();
-		//pause();
-		if(button.getInput()==InputPolicy.BTN_UP)
-			controller.upPressed();
-		else if(button.getInput()==InputPolicy.BTN_DOWN)
-			controller.downPressed();
-		else if(button.getInput()==InputPolicy.BTN_LEFT)
-			controller.leftPressed();
-		else if(button.getInput()==InputPolicy.BTN_RIGHT)
-			controller.rightPressed();
-	}
-
-	public void releaseHandler(CGTButton button){
-		if(button.getInput()==InputPolicy.BTN_1)
-			controller.fireReleasedTouch();
-		//resume();
-		if(button.getInput()==InputPolicy.BTN_UP)
-			controller.upReleased();
-		else if(button.getInput()==InputPolicy.BTN_DOWN)
-			controller.downReleased();
-		else if(button.getInput()==InputPolicy.BTN_LEFT)
-			controller.leftReleased();
-		else if(button.getInput()==InputPolicy.BTN_RIGHT)
-			controller.rightReleased();
 	}
 
 
@@ -167,7 +141,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 					public void run() {
 						flagTouch=false;
 						//verifica se o ammo é zero
-						controller.fireReleasedTouch();
+						controller.deactivateKey(InputPolicy.BTN_1);
 						//Timer.instance().clear();
 					}
 				}, renderer.getCurrentActorProjectile().getInterval());
@@ -287,20 +261,20 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	public boolean keyDown(int keycode) {
 
 		if (keycode == Keys.LEFT ){
-			controller.leftPressed();
+			controller.activateKey(InputPolicy.BTN_LEFT);
 		}
 		if (keycode == Keys.RIGHT){
-			controller.rightPressed();
+			controller.activateKey(InputPolicy.BTN_RIGHT);
 		}
 		if (keycode == Keys.UP){
-			controller.upPressed();
+			controller.activateKey(InputPolicy.BTN_UP);
 		}
 		if (keycode == Keys.DOWN){
-			controller.downPressed();
+			controller.activateKey(InputPolicy.BTN_DOWN);
 		}
 		if (keycode == Keys.A){
-			flagTouch=true;
-			controller.firePressedTouch();
+			
+			controller.activateKey(InputPolicy.BTN_1);
 		}
 		if (keycode == Keys.P){
 			state = State.PAUSED;
@@ -315,23 +289,24 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	public boolean keyUp(int keycode) {
 
 		if (keycode == Keys.LEFT) {
-			controller.leftReleased();
+			controller.deactivateKey(InputPolicy.BTN_LEFT);
 		}
 
 		if (keycode == Keys.RIGHT) {
-			controller.rightReleased();
+			controller.deactivateKey(InputPolicy.BTN_RIGHT);
 		}
 
 		if (keycode == Keys.UP) {
-			controller.upReleased();
+			controller.deactivateKey(InputPolicy.BTN_UP);
 		}
 
 		if (keycode == Keys.DOWN) {
-			controller.downReleased();
+			controller.deactivateKey(InputPolicy.BTN_DOWN);
 		}
 
 		if (keycode == Keys.A) {
 			flagTouch=false;
+			controller.deactivateKey(InputPolicy.BTN_1);
 		}
 		return true;
 	}
