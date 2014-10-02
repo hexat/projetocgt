@@ -55,11 +55,14 @@ public class CGTProjectile extends CGTGameObject implements Serializable{
 		return interval;
 	}
 	
-	public void addAmmo(int ammoRecharge){
+	public int addAmmo(int ammoRecharge){
 		if ((maxAmmo-ammo) <= ammoRecharge){
+			int valueRecharge = maxAmmo - ammo;
 			ammo = ammo + (maxAmmo-ammo);
+			return valueRecharge;
 		} else {
 			ammo = ammoRecharge;
+			return ammoRecharge;
 		}
 	}
 	 

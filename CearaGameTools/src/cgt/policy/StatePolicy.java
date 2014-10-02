@@ -1,12 +1,14 @@
 package cgt.policy;
 
 public enum StatePolicy {
+	IDLE,
 	IDLELEFT,
 	IDLERIGHT,
 	IDLEUP,
 	IDLEDOWN,
 	WALKING,
 	JUMPING,
+	DIE,
 	DYING,
 	LOOKUP,
 	LOOKDOWN,

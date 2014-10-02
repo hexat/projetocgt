@@ -671,22 +671,23 @@ public class WorldRenderer {
 		for (int i = 0; i < world.getBonus().size(); i++) {
 			if (world.getBonus().get(i).getCollision()
 					.overlaps(personagem.getCollision())) {
-				if (world.getBonus().get(i).getPolicies().contains(BonusPolicy.ADD_AMMO)){
-					int ammoCurrent =  world.getActor().getProjectiles().get(0).getAmmo();
-					int maxAmmo = world.getActor().getProjectiles().get(0).getMaxAmmo();
-					if (ammoCurrent < maxAmmo) {
-						world.getActor().getProjectiles().get(0).addAmmo(world.getBonus().get(i).getScore());
-
-						world.getBonus().get(0).playSoundCollision();
-						System.out.println("Aqui");
+				if(world.getBonus().get(i).getLife() > 0){
+					if (world.getBonus().get(i).getPolicies().contains(BonusPolicy.ADD_AMMO)){
+						int ammoCurrent =  world.getActor().getProjectiles().get(0).getAmmo();
+						int maxAmmo = world.getActor().getProjectiles().get(0).getMaxAmmo();
+						if (ammoCurrent < maxAmmo) {
+							int recharge = world.getActor().getProjectiles().get(0).addAmmo(world.getBonus().get(i).getScore());
+							world.getBonus().get(i).reduceLife(recharge);
+							System.out.println(recharge);
+							world.getBonus().get(0).playSoundCollision();
+						}
+	
 					}
-
+				} else {
+					System.out.println("ENTREI AQUI");
+					world.getBonus().get(i).setState(StatePolicy.DIE);
 				}
-				/*for (int j = 0; j < world.getActor().getProjectiles().size(); j++) {
-					world.getActor().getProjectiles().get(j).setAmmo(4);					
-				}*/
 				colision = true;
-
 			}
 		}
 

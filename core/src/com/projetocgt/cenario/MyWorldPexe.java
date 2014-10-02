@@ -605,18 +605,29 @@ public class MyWorldPexe {
 		jangada.setBounds(new Rectangle(0,0,255,224));
 		jangada.setCollision(new Rectangle(0,0,255,80));
 		jangada.addPolicy(BonusPolicy.ADD_AMMO);
+		jangada.setLife(4);
 		jangada.setScore(4);
+		
 
-
-		jangada.setSpriteSheet(new CGTSpriteSheet("data/dapexe/jangada-corte.png"));
-		CGTAnimation animacaoJangada = new CGTAnimation(jangada);
-		animacaoJangada.setSpriteLine(1);
+		CGTSpriteSheet spriteSheet = new CGTSpriteSheet("data/dapexe/jangada.png");
+		spriteSheet.setColumns(1);
+		spriteSheet.setRows(2);
+		jangada.setSpriteSheet(spriteSheet);
+		
+		CGTAnimation idle = new CGTAnimation(jangada);
+		idle.setSpriteLine(1);
+		idle.addStatePolicy(StatePolicy.IDLE);
+		
+		CGTAnimation die = new CGTAnimation(jangada);
+		die.setSpriteLine(2);
+		die.addStatePolicy(StatePolicy.DIE);
 
 		CGTSound somCollisionJangada = new CGTSound("data/AudioDaPexe/splash.wav");
 		jangada.setSoundCollision(somCollisionJangada);
 
 
-		jangada.getAnimarions().add(animacaoJangada);
+		jangada.getAnimarions().add(idle);
+		jangada.getAnimarions().add(die);
 		world.getBonus().add(jangada);
 	}
 
@@ -630,7 +641,7 @@ public class MyWorldPexe {
 		Rectangle coliderProjectile = new Rectangle(0,0,30, 30);
 
 		projetilPeixe.setCollision(coliderProjectile);
-		projetilPeixe.setInterval(2);
+		projetilPeixe.setInterval(1);
 
 		CGTSpriteSheet css = new CGTSpriteSheet(("data/dapexe/peixe_entrega.png"));
 		css.setRows(1);
