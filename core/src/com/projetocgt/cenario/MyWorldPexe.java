@@ -291,7 +291,7 @@ public class MyWorldPexe {
 		mar.setBlock(true);
 
 
-		mar.setSpriteSheet(new CGTSpriteSheet("data/dapexe/mar2.png"));
+		mar.setSpriteSheet(new CGTSpriteSheet("data/dapexe/mar3.png"));
 
 		mar.getSpriteSheet().setRows(10);
 		mar.getSpriteSheet().setColumns(5);
@@ -304,7 +304,7 @@ public class MyWorldPexe {
 		marAnimation.setSpriteVelocity(0.08f);
 		marAnimation.setInitialFrame(new Vector2(0,0));
 		marAnimation.setEndingFrame(new Vector2(4,9));
-		marAnimation.addStatePolicy(StatePolicy.IDLEDOWN);
+		marAnimation.addStatePolicy(StatePolicy.IDLE);
 		marAnimation.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
 		mar.getAnimarions().add(marAnimation);
@@ -425,7 +425,6 @@ public class MyWorldPexe {
 
 	public void configuracaoPeixes(){
 		
-		Random random = new Random();
 		Fade fade1 = new Fade(FadePolicy.FADE_IN);
 		fade1.setFadeInTime(0);
 
@@ -829,7 +828,6 @@ public class MyWorldPexe {
 		world.addButton(button1);
 	}
 	
-
 	private void configuraTimer(){
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.TTF"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
@@ -873,9 +871,7 @@ public class MyWorldPexe {
 		counter.setRelativeY(0.85f);
 		world.addHUDComponent(counter);
 	}
-
 		
-
 	public void oppositeFalesia(){
 		CGTOpposite falesia = new CGTOpposite();
 		
