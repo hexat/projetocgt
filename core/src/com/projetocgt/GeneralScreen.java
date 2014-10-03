@@ -73,7 +73,6 @@ public class GeneralScreen extends Stage implements Screen {
 
 	@Override
 	public void show() {
-        
 	}
 
 	@Override

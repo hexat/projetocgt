@@ -902,7 +902,7 @@ public class MyWorldPexe {
 		backGround = new Texture(Gdx.files.internal("data/dapexe/casas_ceara_cenario.png"));
 		world.setBackground(backGround);
 		
-		world.setMusic(new CGTSound("data/AudioDaPexe/temaDaPexe.wav",0.3f));
+		world.setMusic(new CGTSound("data/AudioDaPexe/temaDaPexe.ogg",0.3f));
 
 		CGTActor personagemCGTActor = new CGTActor();
 		
