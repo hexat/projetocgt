@@ -1,11 +1,12 @@
 package cgt.util;
 
 import java.io.File;
+import java.io.Serializable;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
-public class CGTFile {
+public class CGTFile implements Serializable {
 
 	private File file;
 	private FileHandle fileHandle;

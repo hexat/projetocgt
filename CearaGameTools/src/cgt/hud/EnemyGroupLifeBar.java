@@ -1,10 +1,11 @@
 package cgt.hud;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import cgt.core.CGTEnemy;
 
-public class EnemyGroupLifeBar extends LifeBar{
+public class EnemyGroupLifeBar extends LifeBar implements Serializable{
 	private ArrayList<CGTEnemy> enemiesList;
 	
 	public EnemyGroupLifeBar(ArrayList<CGTEnemy> enemies){

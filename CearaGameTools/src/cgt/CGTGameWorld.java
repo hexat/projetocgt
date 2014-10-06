@@ -19,7 +19,7 @@ import cgt.win.Win;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Texture;
+
 
 public class CGTGameWorld extends CGTWindow implements Serializable {
 	private static final long serialVersionUID = -4678582357160030528L;
@@ -33,7 +33,7 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private CGTDialog pauseDialog;
 	private CGTDialog winDialog;
 	private Camera camera;
-	private Texture background;
+	private CGTTexture background;
 	private ArrayList<Win> winCriteria;
 	private ArrayList<Lose> loseCriteria;
 	private int countdown;
@@ -183,11 +183,11 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 //		this.gridColumn = column;
 //	}
 
-	public Texture getBackground() {
+	public CGTTexture getBackground() {
 		return background;
 	}
 
-	public void setBackground(Texture background) {
+	public void setBackground(CGTTexture background) {
 		this.background = background;
 	}
 

@@ -1,8 +1,10 @@
 package cgt.hud;
 
+import java.io.Serializable;
+
 import cgt.screen.CGTWindow;
 
-public class CGTButtonScreen extends CGTButton {
+public class CGTButtonScreen extends CGTButton implements Serializable{
 	private CGTWindow screenToGo;
 
 	public CGTWindow getScreenToGo() {

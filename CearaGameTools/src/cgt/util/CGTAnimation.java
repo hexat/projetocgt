@@ -1,5 +1,6 @@
 package cgt.util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import cgt.core.CGTGameObject;
@@ -8,7 +9,7 @@ import cgt.policy.StatePolicy;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Vector2;
 
-public class CGTAnimation {
+public class CGTAnimation implements Serializable{
 	private CGTSound sound;
 	private Vector2 initialFrame;
 	private Vector2 endingFrame;

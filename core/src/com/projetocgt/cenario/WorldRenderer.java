@@ -218,7 +218,7 @@ public class WorldRenderer {
 	}
 
 	private void drawBackground(){
-		spriteBatch.draw(world.getBackground(), 0, 0);
+		spriteBatch.draw(world.getBackground().getTextureGDX(), 0, 0);
 	}
 
 	public void draw() {
