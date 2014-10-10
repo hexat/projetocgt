@@ -108,7 +108,7 @@ public class MyWorldPexe {
 	public void configuracaoWinDialog(){
 		CGTDialog pauseDialog = new CGTDialog();
 		pauseDialog.setActive(false);
-		pauseDialog.setWindow(new Texture(Gdx.files.internal("data/dapexe/Ganhou.png")));
+		pauseDialog.setWindow(new Texture(Gdx.files.internal("data/dapexe/win_dialog.png")));
 		pauseDialog.setHorizontalBorderTexture(new Texture(Gdx.files.internal("data/dapexe/borda.png")));
 		pauseDialog.setRightBottomCorner(new Texture(Gdx.files.internal("data/dapexe/canto.png")));
 		pauseDialog.setRelativeX(0.20f);
@@ -136,6 +136,30 @@ public class MyWorldPexe {
 
 		pauseDialog.addButton(voltarMenu);
 		world.setWinDialog(pauseDialog);
+	}
+
+	public void configuracaoLDialog(){
+		CGTDialog loseDialog = new CGTDialog();
+		loseDialog.setActive(false);
+		loseDialog.setWindow(new Texture(Gdx.files.internal("data/dapexe/lose_dialog.png")));
+		loseDialog.setHorizontalBorderTexture(new Texture(Gdx.files.internal("data/dapexe/borda.png")));
+		loseDialog.setRightBottomCorner(new Texture(Gdx.files.internal("data/dapexe/canto.png")));
+		loseDialog.setRelativeX(0.20f);
+		loseDialog.setRelativeY(0.20f);
+		loseDialog.setRelativeWidth(0.6f);
+		loseDialog.setRelativeHeight(0.6f);
+
+		CGTButtonScreen voltarMenu = new CGTButtonScreen();
+		voltarMenu.setScreenToGo(game.getMenu());
+		voltarMenu.setTextureUp(new Texture(Gdx.files.internal("data/dapexe/back_btn.png")));
+		voltarMenu.setTextureDown(new Texture(Gdx.files.internal("data/dapexe/back_btn.png")));
+		voltarMenu.setRelativeX(0.45f);
+		voltarMenu.setRelativeY(0.25f);
+		voltarMenu.setRelativeWidth(0.1f);
+		voltarMenu.setRelativeHeight(0.1f);
+
+		loseDialog.addButton(voltarMenu);
+		world.setLoseDialog(loseDialog);
 	}
 
 	public void configuracaoLifeBar(CGTActor personagemCGTActor){
@@ -956,6 +980,7 @@ public class MyWorldPexe {
 		game.setMenu(screen);
 		configuracaoPauseDialog();
 		configuracaoWinDialog();
+		configuracaoLDialog();
 		
 		
 		

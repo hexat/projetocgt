@@ -103,6 +103,13 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			}
 		}
 
+		for(CGTButtonScreen buttonScreen : world.getLoseDialog().getButtons()){
+			if(buttonScreen.isActive()){
+				buttonScreen.setTouchable(Touchable.disabled);
+				StarAssault.getInstance().setScreen(buttonScreen.getScreenToGo());
+			}
+		}
+
 		CGTButton closeButton = world.getPauseDialog().getCloseButton();
 		if (closeButton.isActive()){
 			world.getPauseDialog().setActive(false);
@@ -122,8 +129,10 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			renderer.render();
 			if(renderer.verifyWin())
 				state = State.WIN;
-			if(renderer.verifyLose())
+			if(renderer.verifyLose()) {
 				music.stop();
+				state = State.LOSE;
+			}
 			buttonHandler();
 			this.act();
 			getSpriteBatch().begin();
@@ -193,6 +202,22 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			this.getActors().clear();
 			addDialog(world.getWinDialog());
 			world.getWinDialog().autosize();
+
+			buttonHandler();
+			this.act();
+			getSpriteBatch().begin();
+			this.draw();
+			getSpriteBatch().end();
+			break;
+
+		case LOSE:
+			//Timer.instance().stop(); //Para os behaviors
+			world.getLoseDialog().setActive(true);
+			renderer.getSpriteBatch().flush();
+			music.pause();
+			this.getActors().clear();
+			addDialog(world.getLoseDialog());
+			world.getLoseDialog().autosize();
 
 			buttonHandler();
 			this.act();

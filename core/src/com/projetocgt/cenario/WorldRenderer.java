@@ -115,8 +115,9 @@ public class WorldRenderer {
 					world.getEnemies().get(index).stopMusic();
 				}
 			}
-			instance = StarAssault.getInstance();
-			instance.setScreen(new GeneralScreen(instance.getMenu()));
+			
+//			instance = StarAssault.getInstance();
+//			instance.setScreen(new GeneralScreen(instance.getMenu()));
 		}
 
 
