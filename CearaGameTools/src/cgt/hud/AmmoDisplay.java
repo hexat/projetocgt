@@ -11,20 +11,20 @@ import cgt.util.CGTTexture;
 
 public class AmmoDisplay extends HUDComponent implements Serializable{
 	CGTTexture icon;
-	Label label;
+	CGTLabel label;
 	CGTProjectile owner;
 	
 	public void autosize(){
 		super.autosize();
-		label.setX(this.getX() + getWidth());
-		label.setY(this.getY());		
+		label.getLabelGDX().setX(this.getX() + getWidth());
+		label.getLabelGDX().setY(this.getY());		
 	}
 	
 	public void act(float delta){
-		label.setText("x "+String.valueOf(owner.getAmmo()));
+		label.getLabelGDX().setText("x "+String.valueOf(owner.getAmmo()));
 	}
 	
-	public AmmoDisplay(CGTTexture icon, CGTProjectile projectile, Label label){
+	public AmmoDisplay(CGTTexture icon, CGTProjectile projectile, CGTLabel label){
 		owner = projectile;
 		this.icon = icon;
 		this.label = label;
@@ -32,6 +32,6 @@ public class AmmoDisplay extends HUDComponent implements Serializable{
 	
 	public void draw(Batch batch, float parentAlpha){
 		batch.draw(icon.getTextureGDX(), getX(), getY(), getWidth(), getHeight());
-		label.draw(batch, parentAlpha);
+		label.getLabelGDX().draw(batch, parentAlpha);
 	}
 }

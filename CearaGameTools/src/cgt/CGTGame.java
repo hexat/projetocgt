@@ -34,27 +34,21 @@ public class CGTGame implements Serializable{
 			obj.writeObject(this);
 			obj.close();
 			System.out.println("Obejto Salvo com Sucesso!");
-		
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		
+
 	}
-	public CGTGame getSavedGame() {
+	public static CGTGame getSavedGame() {
 		CGTGame cgtGame = new CGTGame();
 
 		try {
 			FileInputStream arquivoLeitura = new FileInputStream(
 					"gameConfig.txt");
-
 			ObjectInputStream objLeitura = new ObjectInputStream(arquivoLeitura);
-
 			cgtGame = (CGTGame) objLeitura.readObject();
-			System.out.println("Objeto Encontrado");
-
 			objLeitura.close();
-
 			arquivoLeitura.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -65,3 +59,5 @@ public class CGTGame implements Serializable{
 	}
 	
 }
+
+

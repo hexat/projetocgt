@@ -1,5 +1,6 @@
 package cgt.screen;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import cgt.hud.CGTButton;
@@ -12,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
-public class CGTDialog extends Actor{
+public class CGTDialog extends Actor implements Serializable{
 	private ArrayList<CGTButtonScreen> screenSwitchButtons;
 	private CGTButton closeButton;
 	private boolean active;

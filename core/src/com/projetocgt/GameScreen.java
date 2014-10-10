@@ -68,6 +68,10 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 	private void getActorsFromWorld(){
 		for(HUDComponent component : world.getHUD()){
+			if(component instanceof CGTControllerButton){
+				CGTControllerButton button = (CGTControllerButton)component;
+				button.setInputListener();
+			}
 			this.addActor(component);
 			component.autosize();
 		}
@@ -97,7 +101,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		}
 
 		for(CGTButtonScreen buttonScreen : world.getWinDialog().getButtons()){
-			if(buttonScreen.isActive()){
+			if(buttonScreen.isActive()){	
 				buttonScreen.setTouchable(Touchable.disabled);
 				StarAssault.getInstance().setScreen(buttonScreen.getScreenToGo());
 			}
@@ -211,9 +215,12 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		for(CGTButtonScreen button : dialog.getButtons()){
 			addActor(button);
 			button.autosize();
+			button.setInputListener();
 		}
 		if(dialog.getCloseButton()!=null){
 			addActor(dialog.getCloseButton());
+			dialog.getCloseButton().setInputListener();
+			
 		}
 	}
 

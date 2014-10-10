@@ -1,5 +1,7 @@
 package cgt.hud;
 
+import java.io.Serializable;
+
 import cgt.policy.InputPolicy;
 import cgt.util.CGTTexture;
 
@@ -11,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 
-public class CGTButton extends HUDComponent {
+public class CGTButton extends HUDComponent implements Serializable{
 	
 	private boolean active;
 	private boolean released;
@@ -26,7 +28,7 @@ public class CGTButton extends HUDComponent {
 		setInputListener();
 	}
 
-	private void setInputListener(){
+	public void setInputListener(){
 		addListener(new InputListener() {
 
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

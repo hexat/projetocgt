@@ -64,8 +64,8 @@ public class MyWorldPexe {
 	private CGTGameWorld world;
 	private CGTScreen screen;
 	private CGTGame game;
-
 	public MyWorldPexe() {
+		
 		createWorld();
 	}
 
@@ -102,6 +102,7 @@ public class MyWorldPexe {
 		pauseDialog.addButton(voltarMenu);
 		pauseDialog.setCloseButton(voltar);
 		world.setPauseDialog(pauseDialog);
+
 	}
 
 	public void configuracaoWinDialog() {
@@ -841,19 +842,7 @@ public class MyWorldPexe {
 	}
 
 	private void configuraTimer() {
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(
-				Gdx.files.internal("fonts/myfont.TTF"));
-		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 100;
-		BitmapFont font12 = generator.generateFont(parameter); // font size 12
-																// pixels
-		generator.dispose();
-		
-		LabelStyle style = new LabelStyle(font12, Color.BLACK);
-
-		Label label = new Label("x", style);
-
-		CGTLabel labelHUD = new CGTLabel(label);
+		CGTLabel labelHUD = new CGTLabel("fonts/myfont.TTF","x");
 
 		labelHUD.setRelativeHeight(0.05f);
 		labelHUD.setRelativeX(0.45f);
@@ -861,23 +850,15 @@ public class MyWorldPexe {
 
 		world.addHUDComponent(labelHUD);
 
-		world.addLoseCriterion(new TargetTime(20, label));
+		world.addLoseCriterion(new TargetTime(20, labelHUD));
 		world.addLoseCriterion(new LifeDepleted(world.getActor()));
 		world.addWinCriterion(new KillAllEnemies(world.getEnemies()));
 
 	}
+	
 
 	private void configuraAmmoCounter(CGTProjectile projectile) {
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(
-				Gdx.files.internal("fonts/myfont.TTF"));
-		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 20;
-		BitmapFont font12 = generator.generateFont(parameter); // font size 12
-																// pixels
-		generator.dispose();
-		LabelStyle style = new LabelStyle(font12, Color.BLACK);
-
-		Label label = new Label("x", style);
+		CGTLabel label = new CGTLabel("fonts/myfont.TTF", "x",20);
 
 		CGTTexture texture = new CGTTexture("data/dapexe/ammo.png");
 
@@ -888,6 +869,7 @@ public class MyWorldPexe {
 		counter.setRelativeY(0.85f);
 		world.addHUDComponent(counter);
 	}
+	
 
 	public void oppositeFalesia() {
 		CGTOpposite falesia = new CGTOpposite();
@@ -914,7 +896,7 @@ public class MyWorldPexe {
 	 * Recebe os paramentros do jogos
 	 */
 	private void createWorld() {
-
+		
 		world = new CGTGameWorld();
 		backGround = new CGTTexture("data/dapexe/casas_ceara_cenario.png");
 		world.setBackground(backGround);
@@ -967,21 +949,27 @@ public class MyWorldPexe {
 		// btn.setBounds(new Rectangle(400, 400, 200, 100));
 		screen = new CGTScreen(t);
 		screen.getButtons().add(btn);
+		
 
 		game = new CGTGame();
 		game.setMenu(screen);
 		configuracaoPauseDialog();
 		configuracaoWinDialog();
-		game.saveGame();
+		//game.saveGame();
+		
+		}
 
-	}
+	
 
 	public CGTGameWorld getWorld() {
 		return world;
 	}
 
 	public CGTGame getGame() {
-		return game;
+		
+		return CGTGame.getSavedGame();
+		
+	
 	}
 
 }

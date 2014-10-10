@@ -1,19 +1,22 @@
 package cgt.lose;
 
+import java.io.Serializable;
+
 import cgt.hud.CGTLabel;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;
 
-public class TargetTime implements Lose{
+public class TargetTime implements Lose, Serializable{
 	public int timer;
-	public Label label;
+	public CGTLabel label;
 	public boolean expired;
 	
-	public TargetTime(int time, Label label){
+	public TargetTime(int time, CGTLabel label){
 		timer = time;
 		this.label = label;
 		expired=false;
+		label.setText(""+timer);
 	}
 	
 	public TargetTime(int time){
@@ -22,7 +25,7 @@ public class TargetTime implements Lose{
 		expired=false;
 	}
 	
-	public Label getLabel(){
+	public CGTLabel getLabel(){
 		return label;
 	}
 	
@@ -34,7 +37,7 @@ public class TargetTime implements Lose{
 	}
 	
 	public void start(){
-		label.setText(String.valueOf(timer));
+		label.getLabelGDX().setText(String.valueOf(timer));
 		float delay = 1; // seconds
 		float repete = 1;
 		/*
@@ -50,9 +53,9 @@ public class TargetTime implements Lose{
 			int x;
 			@Override
 			public void run() {
-				x = Integer.parseInt(String.valueOf(label.getText()));
+				x = Integer.parseInt(String.valueOf(label.getLabelGDX().getText()));
 				x -= 1;
-				label.setText(String.valueOf(x));
+				label.getLabelGDX().setText(String.valueOf(x));
 				System.out.println(x);
 				if (x <= 0){
 					expired = true;
