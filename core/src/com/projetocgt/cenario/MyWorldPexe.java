@@ -965,7 +965,7 @@ public class MyWorldPexe {
 		btn.setRelativeY(0.7f);
 		btn.setRelativeWidth(0.20f);
 		btn.setRelativeHeight(0.1f);
-		Texture texture = new Texture("data/dapexe/iniciar.png");
+		Texture texture = new Texture("data/dapexe/iniciar1.png");
 		btn.setTextureDown(texture);
 		btn.setTextureUp(texture);
 		btn.setBounds(0, 0, texture.getWidth(), texture.getHeight());
@@ -975,6 +975,32 @@ public class MyWorldPexe {
 		//		btn.setBounds(new Rectangle(400, 400, 200, 100));
 		screen = new CGTScreen(t);
 		screen.getButtons().add(btn);
+		
+		CGTTexture textureButton = new CGTTexture("data/dapexe/menuTutorial.png");
+		CGTButtonScreen button = new CGTButtonScreen();
+		button.setRelativeX(0.39f);
+		button.setRelativeY(0.58f);
+		button.setRelativeWidth(0.20f);
+		button.setRelativeHeight(0.1f);
+		Texture textureButton2 = new Texture("data/dapexe/tutorial.png");
+		button.setTextureDown(textureButton2);
+		button.setTextureUp(textureButton2);
+		button.setBounds(0, 0, textureButton2.getWidth(), textureButton2.getHeight());
+		CGTScreen screenTutorial = new CGTScreen(textureButton);
+		button.setScreenToGo(screenTutorial);
+		screen.getButtons().add(button);
+		
+		CGTButtonScreen buttonTutorial = new CGTButtonScreen();
+		buttonTutorial.setRelativeX(0.8f);
+		buttonTutorial.setRelativeY(0.8f);
+		buttonTutorial.setRelativeWidth(0.20f);
+		buttonTutorial.setRelativeHeight(0.1f);
+		Texture textureButtonTutorial = new Texture("data/dapexe/back_btn.png");
+		buttonTutorial.setTextureDown(textureButtonTutorial);
+		buttonTutorial.setTextureUp(textureButtonTutorial);
+		buttonTutorial.setBounds(0, 0, textureButton2.getWidth(), textureButton2.getHeight());
+		buttonTutorial.setScreenToGo(screen);
+		screenTutorial.getButtons().add(buttonTutorial);
 
 		game = new CGTGame();
 		game.setMenu(screen);
