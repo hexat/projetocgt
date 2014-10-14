@@ -1,5 +1,6 @@
 package com.projetocgt;
 
+import cgt.CGTGame;
 import cgt.CGTGameWorld;
 import cgt.screen.CGTScreen;
 import cgt.screen.CGTWindow;
@@ -20,21 +21,22 @@ public class StarAssault extends Game {
 		setScreen(new GeneralScreen(new MyWorldPexe().getGame().getMenu()));
 	}
 	
-	public CGTScreen getMenu() {
-		return new MyWorldPexe().getGame().getMenu();
-	}
+//	public CGTScreen getMenu() {
+//		return CGTGame.getSavedGame().;
+//	}
 	
 	public void setScreen(CGTWindow window){
-		if(window instanceof CGTGameWorld){
-			setScreen(new GameScreen(new MyWorldPexe().getWorld()));
-		}
-		else
-			setScreen(new GeneralScreen(new MyWorldPexe().getGame().getMenu()));
+		//TODO
+//		if(window instanceof CGTGameWorld){
+//			setScreen(new GameScreen(CGTGame.getSavedGame().g));
+//		}
+//		else
+		setScreen(new GeneralScreen(CGTGame.getSavedGame().getMenu()));
 
 	}
 	
-	public static StarAssault getInstance(){
-		if (instance == null){
+	public static StarAssault getInstance() {
+		if (instance == null) {
 			instance =	new StarAssault();
 		}
 		return instance;
