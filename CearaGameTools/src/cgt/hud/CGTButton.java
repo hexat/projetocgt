@@ -1,8 +1,11 @@
 package cgt.hud;
 
-import cgt.policy.InputPolicy;
+import java.io.Serializable;
 
-import com.badlogic.gdx.graphics.Texture;
+import cgt.policy.InputPolicy;
+import cgt.util.CGTTexture;
+
+
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -10,12 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 
-public class CGTButton extends HUDComponent {
+public class CGTButton extends HUDComponent implements Serializable{
 	
 	private boolean active;
 	private boolean released;
-	private Texture textureUp;
-	private Texture textureDown;
+	private CGTTexture textureUp;
+	private CGTTexture textureDown;
 
 	public CGTButton(){
 		super();
@@ -25,7 +28,7 @@ public class CGTButton extends HUDComponent {
 		setInputListener();
 	}
 
-	private void setInputListener(){
+	public void setInputListener(){
 		addListener(new InputListener() {
 
 			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -63,24 +66,24 @@ public class CGTButton extends HUDComponent {
 
 	public void draw(Batch batch, float parentAlpha){
 		if(active)
-			batch.draw(textureDown, getX(), getY(), getWidth(), getHeight());
+			batch.draw(textureDown.getTextureGDX(), getX(), getY(), getWidth(), getHeight());
 		else
-			batch.draw(textureUp, getX(), getY(), getWidth(), getHeight());
+			batch.draw(textureUp.getTextureGDX(), getX(), getY(), getWidth(), getHeight());
 	}
 
-	public Texture getTextureUp() {
+	public CGTTexture getTextureUp() {
 		return textureUp;
 	}
 
-	public void setTextureUp(Texture textureUp) {
-		this.textureUp = textureUp;
+	public void setTextureUp(CGTTexture cgtTexture) {
+		this.textureUp = cgtTexture;
 	}
 
-	public Texture getTextureDown() {
+	public CGTTexture getTextureDown() {
 		return textureDown;
 	}
 
-	public void setTextureDown(Texture textureDown) {
+	public void setTextureDown(CGTTexture textureDown) {
 		this.textureDown = textureDown;
 	}
 

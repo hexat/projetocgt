@@ -1,24 +1,25 @@
 package cgt.screen;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import cgt.hud.CGTButton;
 import cgt.hud.CGTButtonScreen;
+import cgt.util.CGTTexture;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
-public class CGTDialog extends Actor{
+public class CGTDialog extends Actor implements Serializable{
 	private ArrayList<CGTButtonScreen> screenSwitchButtons;
 	private CGTButton closeButton;
 	private boolean active;
-	private TextureRegion rightBottomCorner;
-	private TextureRegion horizontalBorderTexture;
-	private Texture window;
+	private CGTTexture rightBottomCorner;
+	private CGTTexture horizontalBorderTexture;
+	private CGTTexture window;
 	private float relativeWidth;
 	private float relativeHeight;
 	private float relativeX;
@@ -48,7 +49,7 @@ public class CGTDialog extends Actor{
 
 	public void draw(Batch batch, float parentAlpha){
 		if(isActive()){
-			batch.draw(window, getX(), getY(), getWidth(), getHeight());
+			batch.draw(window.getTextureGDX(), getX(), getY(), getWidth(), getHeight());
 			drawBorders(batch);
 			if (closeButton != null){
 				closeButton.draw(batch, parentAlpha);
@@ -57,16 +58,16 @@ public class CGTDialog extends Actor{
 	}
 	
 	public void drawBorders(Batch batch){
-		float borderHeight = horizontalBorderTexture.getRegionHeight();
-		float borderWidth = horizontalBorderTexture.getRegionWidth();
+		float borderHeight = horizontalBorderTexture.getTextureRegion().getRegionHeight();
+		float borderWidth = horizontalBorderTexture.getTextureRegion().getRegionWidth();
 		float borderX = this.getX();
 		float borderY = this.getY();
 		float upperBorderY = borderY + this.getHeight()-borderHeight;
 		
 		//Desenho das linhas horizontais
 		while(borderX+borderWidth<this.getX() + this.getWidth()){
-			batch.draw(horizontalBorderTexture, borderX, borderY, borderWidth, borderHeight);
-			batch.draw(horizontalBorderTexture, borderX, upperBorderY, borderWidth, borderHeight);
+			batch.draw(horizontalBorderTexture.getTextureRegion(), borderX, borderY, borderWidth, borderHeight);
+			batch.draw(horizontalBorderTexture.getTextureRegion(), borderX, upperBorderY, borderWidth, borderHeight);
 			borderX+=borderWidth;
 		}
 		
@@ -76,25 +77,25 @@ public class CGTDialog extends Actor{
 		
 		//Desenha linhas verticais
 		while(borderY+borderWidth<this.getY() + this.getHeight()){
-			batch.draw(horizontalBorderTexture, borderX, borderY, 0, 0, borderWidth, borderHeight, 1, 1, 90);
-			batch.draw(horizontalBorderTexture, rightBorderX, borderY, 0, 0, borderWidth, borderHeight, 1, 1, 90);
+			batch.draw(horizontalBorderTexture.getTextureRegion(), borderX, borderY, 0, 0, borderWidth, borderHeight, 1, 1, 90);
+			batch.draw(horizontalBorderTexture.getTextureRegion(), rightBorderX, borderY, 0, 0, borderWidth, borderHeight, 1, 1, 90);
 			borderY+=borderHeight;
 		}
-		float cornerX = this.getX()+this.getWidth()-rightBottomCorner.getRegionWidth();
+		float cornerX = this.getX()+this.getWidth()-rightBottomCorner.getTextureRegion().getRegionWidth();
 		float cornerY = this.getY();
-		float cornerWidth = rightBottomCorner.getRegionWidth();
-		float cornerHeight = rightBottomCorner.getRegionHeight();
+		float cornerWidth = rightBottomCorner.getTextureRegion().getRegionWidth();
+		float cornerHeight = rightBottomCorner.getTextureRegion().getRegionHeight();
 		
-		batch.draw(rightBottomCorner, cornerX, cornerY, 0, 0, cornerWidth, cornerHeight, 1, 1, 0); //direito de baixo
+		batch.draw(rightBottomCorner.getTextureRegion(), cornerX, cornerY, 0, 0, cornerWidth, cornerHeight, 1, 1, 0); //direito de baixo
 		
 		cornerY = this.getY()+this.getHeight()-cornerHeight;
-		batch.draw(rightBottomCorner, cornerX, cornerY, cornerWidth/2, cornerHeight/2, cornerWidth, cornerHeight, 1, 1, 90); // direito de cima
+		batch.draw(rightBottomCorner.getTextureRegion(), cornerX, cornerY, cornerWidth/2, cornerHeight/2, cornerWidth, cornerHeight, 1, 1, 90); // direito de cima
 		
 		cornerX = this.getX();
-		batch.draw(rightBottomCorner, cornerX, cornerY, cornerWidth/2, cornerHeight/2, cornerWidth, cornerHeight, 1, 1, 180); //esquerdo de cima
+		batch.draw(rightBottomCorner.getTextureRegion(), cornerX, cornerY, cornerWidth/2, cornerHeight/2, cornerWidth, cornerHeight, 1, 1, 180); //esquerdo de cima
 		
 		cornerY = this.getY();
-		batch.draw(rightBottomCorner, cornerX, cornerY, cornerWidth/2, cornerHeight/2, cornerWidth, cornerHeight, 1, 1, 270); //esquerdo de baixo
+		batch.draw(rightBottomCorner.getTextureRegion(), cornerX, cornerY, cornerWidth/2, cornerHeight/2, cornerWidth, cornerHeight, 1, 1, 270); //esquerdo de baixo
 		
 		
 	}
@@ -107,11 +108,11 @@ public class CGTDialog extends Actor{
 		this.active = active;
 	}
 
-	public Texture getWindow() {
+	public CGTTexture getWindow() {
 		return window;
 	}
 
-	public void setWindow(Texture window) {
+	public void setWindow(CGTTexture window) {
 		this.window = window;
 	}
 
@@ -165,18 +166,18 @@ public class CGTDialog extends Actor{
 	}
 
 	public TextureRegion getRightBottomCorner() {
-		return rightBottomCorner;
+		return rightBottomCorner.getTextureRegion();
 	}
 
-	public void setRightBottomCorner(Texture rightBottomCorner) {
-		this.rightBottomCorner = new TextureRegion(rightBottomCorner);
+	public void setRightBottomCorner(CGTTexture rightBottomCorner) {
+		this.rightBottomCorner = rightBottomCorner;
 	}
 
 	public TextureRegion getHorizontalBorderTexture() {
-		return horizontalBorderTexture;
+		return horizontalBorderTexture.getTextureRegion();
 	}
 
-	public void setHorizontalBorderTexture(Texture horizontalBorderTexture) {
-		this.horizontalBorderTexture = new TextureRegion(horizontalBorderTexture);
+	public void setHorizontalBorderTexture(CGTTexture horizontalBorderTexture) {
+		this.horizontalBorderTexture = horizontalBorderTexture;
 	}
 }

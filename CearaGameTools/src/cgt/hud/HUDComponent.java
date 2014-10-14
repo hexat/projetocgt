@@ -1,8 +1,10 @@
 package cgt.hud;
 
+import java.io.Serializable;
+
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public abstract class HUDComponent extends Actor {
+public abstract class HUDComponent extends Actor implements Serializable{
 	private float relativeX;
 	private float relativeY;
 	private float relativeWidth;

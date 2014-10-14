@@ -97,6 +97,7 @@ public class WorldRenderer {
 
 			if (verifyWin()) 
 				System.out.println("ganhou");
+				
 			spriteBatch.begin();
 			draw();
 			spriteBatch.end();
@@ -182,14 +183,16 @@ public class WorldRenderer {
 
 		if (world.getActor().getPosition().x - camera.viewportWidth / 2 > 0
 				&& world.getActor().getPosition().x + camera.viewportWidth / 2 < world
-				.getBackground().getWidth()) {
+				.getBackground().getTextureGDX().getWidth()) {
 			camera.position.x = world.getActor().getPosition().x;
+			
 		}
 
 		if (world.getActor().getPosition().y - camera.viewportHeight / 2 > 0
 				&& world.getActor().getPosition().y + camera.viewportHeight / 2 < world
-				.getBackground().getHeight()) {
+				.getBackground().getTextureGDX().getHeight()) {
 			camera.position.y = world.getActor().getPosition().y;
+			
 		}
 	}
 
@@ -208,7 +211,7 @@ public class WorldRenderer {
 			win = world.getWinCriteria().get(index).achieved();
 		}
 
-		return win;
+		return false;
 	}
 
 	/**
@@ -219,7 +222,7 @@ public class WorldRenderer {
 	}
 
 	private void drawBackground(){
-		spriteBatch.draw(world.getBackground(), 0, 0);
+		spriteBatch.draw(world.getBackground().getTextureGDX(), 0, 0);
 	}
 
 	public void draw() {

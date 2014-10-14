@@ -1,11 +1,12 @@
 package cgt.win;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import cgt.core.CGTEnemy;
 import cgt.policy.WinPolicy;
 
-public class KillAllEnemies implements Win{
+public class KillAllEnemies implements Win, Serializable{
 	private ArrayList<CGTEnemy> enemies;
 	private WinPolicy policy;
 

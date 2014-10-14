@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import cgt.unit.LabelID;
 
@@ -24,6 +25,7 @@ public class CGTTexture implements Serializable{
 	private float height;
 	private String filepath;
 	private Texture textureGDX;
+	private TextureRegion textureRegion;
 	
 	
 	public CGTTexture(CGTFile file) {
@@ -41,12 +43,12 @@ public class CGTTexture implements Serializable{
 		file = new CGTFile(filepath);
 	}
 	
-	private void writeObject(java.io.ObjectOutputStream out)throws IOException{
+	/*private void writeObject(java.io.ObjectOutputStream out)throws IOException{
 	    out.writeObject(file);
 	    out.writeObject(width);
 	    out.writeObject(height);
 	    ImageIO.write(image,"png",ImageIO.createImageOutputStream(out));
-	}
+	}*/
 
 	public BufferedImage getBufferedImage (){
 		if (image == null) {
@@ -106,6 +108,15 @@ public class CGTTexture implements Serializable{
 		}
 		
 		return textureGDX;
+	}
+	public TextureRegion getTextureRegion() {
+		if (textureRegion == null) {
+			textureRegion = new TextureRegion(getTextureGDX());
+		}
+		return textureRegion;
+	}
+	public void setTextureRegion( TextureRegion txtRegion ) {
+		textureRegion = txtRegion;
 	}
 }
  

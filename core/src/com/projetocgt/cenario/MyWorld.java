@@ -4,15 +4,29 @@ package com.projetocgt.cenario;
 import java.util.ArrayList;
 
 import cgt.CGTGameWorld;
+import cgt.behaviors.Direction;
+import cgt.behaviors.Fade;
+import cgt.behaviors.Sine;
+import cgt.core.CGTActor;
+import cgt.core.CGTBonus;
+import cgt.core.CGTEnemy;
+import cgt.core.CGTOpposite;
+import cgt.core.CGTProjectile;
 import cgt.hud.CGTButton;
 import cgt.hud.CGTControllerButton;
 import cgt.hud.EnemyGroupLifeBar;
 import cgt.hud.IndividualLifeBar;
-import cgt.behaviors.*;
-import cgt.core.*;
 import cgt.lose.LifeDepleted;
-import cgt.policy.*;
-import cgt.util.*;
+import cgt.policy.DirectionPolicy;
+import cgt.policy.FadePolicy;
+import cgt.policy.InputPolicy;
+import cgt.policy.MovementPolicy;
+import cgt.policy.StatePolicy;
+import cgt.util.CGTAnimation;
+import cgt.util.CGTSound;
+import cgt.util.CGTSpriteSheet;
+import cgt.util.CGTTexture;
+import cgt.util.ProjectileOrientation;
 import cgt.win.KillAllEnemies;
 
 import com.badlogic.gdx.Gdx;
@@ -30,9 +44,9 @@ public class MyWorld {
 
 	//	ArrayList<Action> listaDeAction = new ArrayList<Action>();
 	//	private CGTActor personagemActorLIB;
-	private Texture backGround;
-	//private Texture lifeBar;
-	//private Texture lifeBarCGTEnemy;
+	private CGTTexture backGround;
+	//private CGTTexture lifeBar;
+	//private CGTTexture lifeBarCGTEnemy;
 	//	private WinPolicy winPolicy;
 	//	private LosePolicy losePolicy;
 	//	private int countdown;
@@ -54,7 +68,7 @@ public class MyWorld {
 		world = new CGTGameWorld();
 
 		//world = new CGTGameWorld();
-		backGround = new Texture("data/Cenario/asfalto_grama_sprite_sheet.png");
+		backGround = new CGTTexture("data/Cenario/asfalto_grama_sprite_sheet.png");
 		world.setBackground(backGround);
 
 		
@@ -63,7 +77,7 @@ public class MyWorld {
 		//		world.setPosRelativaLifeBarY(300);
 		//		world.setLifeBar(lifeBar);
 
-		//Texture lifeBarCGTEnemy = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
+		//Texture lifeBarCGTEnemy = new CGTTexture("data/lifeBar/lifeBar.png"));
 		//		world.setPosRelativaLifeBarCGTEnemyX(500);
 		//		world.setPosRelativaLifeBarCGTEnemyY(300);
 		//		world.setLifeBarCGTEnemy(lifeBarCGTEnemy);
@@ -82,8 +96,8 @@ public class MyWorld {
 		personagemCGTActor.setBounds(tamanhoPersonagem);
 		personagemCGTActor.setLife(3);
 
-		Texture lifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
-		Texture lifeBarBack = new Texture(Gdx.files.internal("data/lifeBar/lifeBarBack.png"));
+		CGTTexture lifeBar = new CGTTexture("data/lifeBar/lifeBar.png");
+		CGTTexture lifeBarBack = new CGTTexture("data/lifeBar/lifeBarBack.png");
 		IndividualLifeBar actorLifeBar = new IndividualLifeBar(personagemCGTActor);
 		actorLifeBar.setBar(lifeBar);
 		actorLifeBar.setBackgroundBar(lifeBarBack);
@@ -96,7 +110,6 @@ public class MyWorld {
 		world.addLifeBar(actorLifeBar);
 		personagemCGTActor.setSpeed(280);
 
-		System.out.println(Gdx.files.internal("data/SpriteCGTActor/SpriteSheet_bombeiro2.png").exists());
 		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet("data/SpriteCGTActor/SpriteSheet_bombeiro2.png"));
 		personagemCGTActor.getSpriteSheet().setRows(5);
 		personagemCGTActor.getSpriteSheet().setColumns(3);
@@ -165,10 +178,10 @@ public class MyWorld {
 		//		CGTAnimation spriteSheetActor = new CGTAnimation();
 		//		personagemActorLIB.setSpriteSheet(spriteSheetActor );
 		//		//Adicionando o audio de colisao
-		//		Music soundDamage = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/colisao.wav"));
+		//		Music soundDamage = Gdx.audio.newMusic("data/AudioBombeiro/colisao.wav"));
 		//		personagemActorLIB.setSoundDamage(soundDamage);
 		//		
-		//		Music soundDie = Gdx.audio.newMusic(Gdx.files.internal("data/AudioBombeiro/gameOver.wav"));
+		//		Music soundDie = Gdx.audio.newMusic("data/AudioBombeiro/gameOver.wav"));
 		//		personagemActorLIB.setSoundDie(soundDie);
 		//		
 		//		spriteSheetActor.setLinhaDoSpriteUp(3);
@@ -477,7 +490,7 @@ public class MyWorld {
 		CGTAnimation aniHidrante = new CGTAnimation(hidrate);
 		aniHidrante.setSpriteLine(1);
 		hidrate.getAnimarions().add(aniHidrante);
-		//hidrate.setTexture(new Texture("data/CGTBonus/SpriteSheet_tubo.png"));
+		//hidrate.setTexture(new CGTTexture("data/CGTBonus/SpriteSheet_tubo.png"));
 		world.getBonus().add(hidrate);
 
 		CGTProjectile projetilAguaCGT = new CGTProjectile();
@@ -579,9 +592,9 @@ public class MyWorld {
 
 		CGTButton buttonPad = new CGTButton();
 
-		Texture textureUp = new Texture("data/buttons/base.png");
+		CGTTexture textureUp = new CGTTexture("data/buttons/base.png");
 		buttonPad.setTextureUp(textureUp);
-		Texture textureDown = new Texture("data/buttons/base.png");
+		CGTTexture textureDown = new CGTTexture("data/buttons/base.png");
 		buttonPad.setTextureDown(textureDown);
 
 		buttonPad.setRelativeX(0);
@@ -593,10 +606,10 @@ public class MyWorld {
 		CGTControllerButton button = new CGTControllerButton();
 		button.setInput(InputPolicy.BTN_UP);
 
-		textureUp = new Texture("data/buttons/bt_up_up.png");
+		textureUp = new CGTTexture("data/buttons/bt_up_up.png");
 		button.setTextureUp(textureUp);
 
-		textureDown = new Texture("data/buttons/bt_up_press.png");
+		textureDown = new CGTTexture("data/buttons/bt_up_press.png");
 		button.setTextureDown(textureDown);
 
 		button.setRelativeX(0.095f);
@@ -609,9 +622,9 @@ public class MyWorld {
 		CGTControllerButton buttonDown = new CGTControllerButton();
 		buttonDown.setInput(InputPolicy.BTN_DOWN);
 
-		textureUp = new Texture("data/buttons/bt_down_up.png");
+		textureUp = new CGTTexture("data/buttons/bt_down_up.png");
 		buttonDown.setTextureUp(textureUp);
-		textureDown = new Texture("data/buttons/bt_down_press.png");
+		textureDown = new CGTTexture("data/buttons/bt_down_press.png");
 		buttonDown.setTextureDown(textureDown);
 
 		buttonDown.setRelativeX(0.095f);
@@ -624,10 +637,10 @@ public class MyWorld {
 		CGTControllerButton buttonLeft = new CGTControllerButton();
 		buttonLeft.setInput(InputPolicy.BTN_LEFT);
 
-		textureUp = new Texture("data/buttons/bt_left_up.png");
+		textureUp = new CGTTexture("data/buttons/bt_left_up.png");
 		buttonLeft.setTextureUp(textureUp);
 
-		textureDown = new Texture("data/buttons/bt_left_press.png");
+		textureDown = new CGTTexture("data/buttons/bt_left_press.png");
 		buttonLeft.setTextureDown(textureDown);
 
 		buttonLeft.setRelativeX(0.048f);
@@ -640,9 +653,9 @@ public class MyWorld {
 		CGTControllerButton buttonRight = new CGTControllerButton();
 		buttonRight.setInput(InputPolicy.BTN_RIGHT);
 
-		textureUp = new Texture("data/buttons/bt_right_up.png");
+		textureUp = new CGTTexture("data/buttons/bt_right_up.png");
 		buttonRight.setTextureUp(textureUp);
-		textureDown = new Texture("data/buttons/bt_right_press.png");
+		textureDown = new CGTTexture("data/buttons/bt_right_press.png");
 		buttonRight.setTextureDown(textureDown);
 
 		buttonRight.setRelativeX(0.142f);
@@ -654,9 +667,9 @@ public class MyWorld {
 		CGTControllerButton button1 = new CGTControllerButton();
 		button1.setInput(InputPolicy.BTN_1);
 
-		textureUp = new Texture("data/buttons/bt_agua_up.png");
+		textureUp = new CGTTexture("data/buttons/bt_agua_up.png");
 		button1.setTextureUp(textureUp);
-		textureDown = new Texture("data/buttons/bt_agua_down.png");
+		textureDown = new CGTTexture("data/buttons/bt_agua_down.png");
 		button1.setTextureDown(textureDown);
 
 		button1.setRelativeX(0.9f);
@@ -698,8 +711,8 @@ public class MyWorld {
 
 		
 		EnemyGroupLifeBar alerts = new EnemyGroupLifeBar(world.getEnemies());
-		Texture enemyLifeBar = new Texture(Gdx.files.internal("data/lifeBar/lifeBar.png"));
-		Texture enemyLifeBarBack = new Texture(Gdx.files.internal("data/lifeBar/lifeBarBack.png"));
+		CGTTexture enemyLifeBar = new CGTTexture("data/lifeBar/lifeBar.png");
+		CGTTexture enemyLifeBarBack = new CGTTexture("data/lifeBar/lifeBarBack.png");
 		alerts.setBar(enemyLifeBar);
 		alerts.setBackgroundBar(enemyLifeBarBack);
 		alerts.setRelativeX(0.7f);

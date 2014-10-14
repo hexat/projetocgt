@@ -36,6 +36,7 @@ public class GeneralScreen extends Stage implements Screen {
 		splsh = new Texture(screen.getBackground().getFile().getFileHandle());
         setSpriteBatch(new SpriteBatch());
         for (CGTButton b : screen.getButtons()) {
+        	b.setInputListener();
         	this.addActor(b);
         	b.autosize();
         }
@@ -55,9 +56,9 @@ public class GeneralScreen extends Stage implements Screen {
         this.draw();
         
         for (CGTButtonScreen b : screen.getButtons()) {
+        	
         	if(b.isActive()){
         		b.setActive(false);
-        		//b.setTouchable(Touchable.disabled);
         		if (b.getScreenToGo() instanceof CGTGameWorld) {
         			game.setScreen(new GameScreen((CGTGameWorld) b.getScreenToGo()));
         		} else {

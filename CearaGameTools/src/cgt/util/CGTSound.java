@@ -1,9 +1,12 @@
 package cgt.util;
 
+import java.io.Serializable;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
-public class CGTSound {
+public class CGTSound implements Serializable
+{
 	private CGTFile file;
 	private float volume;
 	

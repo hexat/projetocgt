@@ -140,7 +140,7 @@ public class WorldController {
 		if (keys.get(ActionMovePolicy.WALK_UP)) {
 			//Verifica se o personagem pode andar
 			personagem.setState(StatePolicy.LOOKUP);
-			if( (personagem.getPosition().y + personagem.getBounds().height) < renderer.getWorld().getBackground().getHeight())
+			if( (personagem.getPosition().y + personagem.getBounds().height) < renderer.getWorld().getBackground().getTextureGDX().getHeight())
 				personagem.getVelocity().y = personagem.getSpeed();
 			else
 				personagem.getVelocity().y = 0;
@@ -166,7 +166,7 @@ public class WorldController {
 			
 		if (keys.get(ActionMovePolicy.WALK_RIGHT)) {
 			personagem.setState(StatePolicy.LOOKRIGHT);
-			if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackground().getWidth())
+			if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackground().getTextureGDX().getWidth())
 				personagem.getVelocity().x = personagem.getSpeed();
 			else
 				personagem.getVelocity().x = 0;			

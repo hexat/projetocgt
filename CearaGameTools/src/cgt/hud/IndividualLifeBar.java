@@ -1,8 +1,10 @@
 package cgt.hud;
 
+import java.io.Serializable;
+
 import cgt.core.CGTGameObject;
 
-public class IndividualLifeBar extends LifeBar{
+public class IndividualLifeBar extends LifeBar implements Serializable{
 	private CGTGameObject owner;
 	
 	public IndividualLifeBar(CGTGameObject own){

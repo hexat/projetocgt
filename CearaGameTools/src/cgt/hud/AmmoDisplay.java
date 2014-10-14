@@ -1,5 +1,7 @@
 package cgt.hud;
 
+import java.io.Serializable;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -7,29 +9,29 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import cgt.core.CGTProjectile;
 import cgt.util.CGTTexture;
 
-public class AmmoDisplay extends HUDComponent{
-	Texture icon;
-	Label label;
+public class AmmoDisplay extends HUDComponent implements Serializable{
+	CGTTexture icon;
+	CGTLabel label;
 	CGTProjectile owner;
 	
 	public void autosize(){
 		super.autosize();
-		label.setX(this.getX() + getWidth());
-		label.setY(this.getY());		
+		label.getLabelGDX().setX(this.getX() + getWidth());
+		label.getLabelGDX().setY(this.getY());		
 	}
 	
 	public void act(float delta){
-		label.setText("x "+String.valueOf(owner.getAmmo()));
+		label.getLabelGDX().setText("x "+String.valueOf(owner.getAmmo()));
 	}
 	
-	public AmmoDisplay(Texture icon, CGTProjectile projectile, Label label){
+	public AmmoDisplay(CGTTexture icon, CGTProjectile projectile, CGTLabel label){
 		owner = projectile;
 		this.icon = icon;
 		this.label = label;
 	}
 	
 	public void draw(Batch batch, float parentAlpha){
-		batch.draw(icon, getX(), getY(), getWidth(), getHeight());
-		label.draw(batch, parentAlpha);
+		batch.draw(icon.getTextureGDX(), getX(), getY(), getWidth(), getHeight());
+		label.getLabelGDX().draw(batch, parentAlpha);
 	}
 }
