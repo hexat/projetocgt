@@ -999,8 +999,8 @@ public class MyWorldPexe {
 		configuracaoWinDialog();
 		
 		configuracaoLDialog();
-		//game.saveGame();
-		}
+//		game.saveGame();
+	 }
 
 	
 
@@ -1010,6 +1010,7 @@ public class MyWorldPexe {
 
 	public CGTGame getGame() {
 		
+//		return game;
 		return CGTGame.getSavedGame();
 		
 	
