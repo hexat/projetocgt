@@ -94,7 +94,7 @@ public class WorldRenderer {
 		updateCamera();
 
 		if (!verifyLose()) {
-
+			
 			if (verifyWin()) 
 				System.out.println("ganhou");
 				
@@ -104,8 +104,9 @@ public class WorldRenderer {
 		}
 
 		else {
-			world.getActor().playSoundDie();
+			world.getActor().playSoundDie();	
 			Timer.instance().clear();
+			
 			for(int index = 0; index < world.getOpposites().size(); index ++){
 				if(world.getOpposites().get(index).isPlayingSound()){
 					world.getOpposites().get(index).stopMusic();
@@ -201,7 +202,9 @@ public class WorldRenderer {
 		for (int index = 0; index<world.getLoseCriteria().size() && !lose; index++) {
 			lose = world.getLoseCriteria().get(index).lost();
 		}
+		
 		return lose;
+		
 	}
 
 	public boolean verifyWin(){
@@ -211,7 +214,7 @@ public class WorldRenderer {
 			win = world.getWinCriteria().get(index).achieved();
 		}
 
-		return false;
+		return win;
 	}
 
 	/**

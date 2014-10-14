@@ -23,8 +23,8 @@ public class KillAllEnemies implements Win, Serializable{
 					&& enemies.get(index).getLife() > 0)
 				ganhou = false;
 		}
-
 		return ganhou;
+		
 	}
 	
 	public void start(){

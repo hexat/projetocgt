@@ -29,7 +29,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private ArrayList<CGTEnemy> enemies;
 	private ArrayList<CGTBonus> bonus;
 	private ArrayList<HUDComponent> hud;
-
 	private CGTDialog pauseDialog;
 	private CGTDialog winDialog;
 	private CGTDialog loseDialog;
@@ -41,6 +40,8 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private int scoreTarget;
 	private CGTLabel label;
 	private CGTSound music;
+	private CGTSound soundWin;
+	private CGTSound soundLose;
 //	private int gridLines;
 //	private int gridColumn;
 	
@@ -114,6 +115,40 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 
 	public void setMusic(CGTSound music) {
 		this.music = music;
+	}
+
+	public CGTSound getSoundWin() {
+		return soundWin;
+	}
+
+	public void setSoundWin(CGTSound soundWin) {
+		this.soundWin = soundWin;
+	}
+	
+	public void playSoundWin(){
+		if (soundWin != null){
+			soundWin.getMusic().play();
+		}
+	}
+	
+	public void stopSound(CGTSound sound){
+		sound.getMusic().stop();
+	}
+
+	public CGTSound getSoundLose() {
+		return soundLose;
+	}
+
+	public void setSoundLose(CGTSound soundLose) {
+		this.soundLose = soundLose;
+	}
+	
+	public void playSoundLose(){
+		if (soundLose != null){
+			System.out.println("Tocando música");
+			soundLose.getMusic().play();
+		}
+		System.out.println("O soundLose está null");
 	}
 
 	public void setActor(CGTActor actor) {

@@ -103,6 +103,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		for(CGTButtonScreen buttonScreen : world.getWinDialog().getButtons()){
 			if(buttonScreen.isActive()){	
 				buttonScreen.setTouchable(Touchable.disabled);
+				world.stopSound(world.getSoundWin());
 				StarAssault.getInstance().setScreen(buttonScreen.getScreenToGo());
 			}
 		}
@@ -110,6 +111,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		for(CGTButtonScreen buttonScreen : world.getLoseDialog().getButtons()){
 			if(buttonScreen.isActive()){
 				buttonScreen.setTouchable(Touchable.disabled);
+				world.stopSound(world.getSoundLose());
 				StarAssault.getInstance().setScreen(buttonScreen.getScreenToGo());
 			}
 		}
@@ -131,11 +133,14 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		case PLAYING:
 			controller.update(delta);
 			renderer.render();
-			if(renderer.verifyWin())
+			if(renderer.verifyWin()){
 				state = State.WIN;
+				world.playSoundWin();
+			}
 			if(renderer.verifyLose()) {
 				music.stop();
 				state = State.LOSE;
+				world.playSoundLose();
 			}
 			buttonHandler();
 			this.act();
@@ -183,7 +188,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		case RESUMING:
 			if(!world.getPauseDialog().isActive()){
 				state = State.PLAYING;
-				System.out.println("Entreiaki");
 				Timer.instance().start();
 				this.getActors().clear();
 				getActorsFromWorld();
@@ -216,6 +220,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 		case LOSE:
 			//Timer.instance().stop(); //Para os behaviors
+			
 			world.getLoseDialog().setActive(true);
 			renderer.getSpriteBatch().flush();
 			music.pause();

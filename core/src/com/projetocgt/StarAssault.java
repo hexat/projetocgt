@@ -31,6 +31,8 @@ public class StarAssault extends Game {
 //			setScreen(new GameScreen(CGTGame.getSavedGame().g));
 //		}
 //		else
+		//setScreen(new GeneralScreen(new MyWorldPexe().getGame().getMenu()));
+	
 		setScreen(new GeneralScreen(CGTGame.getSavedGame().getMenu()));
 
 	}
