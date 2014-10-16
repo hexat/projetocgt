@@ -6,6 +6,7 @@ import cgt.screen.CGTScreen;
 import cgt.screen.CGTWindow;
 
 import com.badlogic.gdx.Game;
+import com.projetocgt.cenario.MyWorldChicken;
 import com.projetocgt.cenario.MyWorldPexe;
 
 public class StarAssault extends Game {
@@ -18,7 +19,7 @@ public class StarAssault extends Game {
 
 	@Override
 	public void create() {
-		setScreen(new GeneralScreen(new MyWorldPexe().getGame().getMenu()));
+		setScreen(new GeneralScreen(new MyWorldChicken().getGame().getMenu()));
 	}
 	
 //	public CGTScreen getMenu() {

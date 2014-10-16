@@ -1,0 +1,370 @@
+package com.projetocgt.cenario;
+
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+
+import cgt.CGTGame;
+import cgt.CGTGameWorld;
+import cgt.behaviors.Direction;
+import cgt.core.CGTActor;
+import cgt.core.CGTEnemy;
+import cgt.hud.CGTButton;
+import cgt.hud.CGTButtonScreen;
+import cgt.policy.ActionMovePolicy;
+import cgt.policy.DirectionPolicy;
+import cgt.policy.GameModePolicy;
+import cgt.policy.InputPolicy;
+import cgt.policy.StatePolicy;
+import cgt.screen.CGTDialog;
+import cgt.screen.CGTScreen;
+import cgt.unit.Action;
+import cgt.util.CGTAnimation;
+import cgt.util.CGTSound;
+import cgt.util.CGTSpriteSheet;
+import cgt.util.CGTTexture;
+import cgt.win.CompleteCrossing;
+
+public class MyWorldChicken {
+	private CGTTexture backGround;
+	private CGTGameWorld world;
+	private CGTScreen screen;
+	private CGTGame game;
+	
+	public void configuracaoActor(CGTActor personagemCGTActor) {
+		personagemCGTActor.setFireDefault(-1);
+		personagemCGTActor.setPosition(new Vector2(1f, 600f));
+		personagemCGTActor.setTimeToRecovery(4);
+		personagemCGTActor.setCollision(new Rectangle(10, 10, 40, 45));
+
+		Rectangle tamanhoPersonagem = new Rectangle(0, 0, 60, 60);
+		personagemCGTActor.setBounds(tamanhoPersonagem);
+
+		personagemCGTActor.setLife(30);
+		personagemCGTActor.setSpeed(300);
+
+		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet("data/dapexe/sprite_garoto.png"));
+		personagemCGTActor.getSpriteSheet().setRows(5);
+		personagemCGTActor.getSpriteSheet().setColumns(3);
+
+		CGTSound somDamagePersonagem = new CGTSound("data/AudioDaPexe/voz_1.wav");
+		CGTSound somDamagePersonagem1 = new CGTSound("data/AudioDaPexe/voz_4.wav");
+		personagemCGTActor.setSoundCollision(somDamagePersonagem);
+		personagemCGTActor.setSoundCollision(somDamagePersonagem1);
+
+		CGTSound somDiePersonagem = new CGTSound("data/AudioDaPexe/voz_2.wav");
+		CGTSound somDiePersonagem1 = new CGTSound("data/AudioDaPexe/voz_3.wav");
+
+		personagemCGTActor.setSoundDie(somDiePersonagem);
+		personagemCGTActor.setSoundDie(somDiePersonagem1);
+
+	}
+
+	public void configuracaoActionActor(CGTActor personagemCGTActor) {
+		CGTAnimation moveLEft = new CGTAnimation(personagemCGTActor);
+		moveLEft.setSpriteLine(2);
+		moveLEft.addStatePolicy(StatePolicy.LOOKLEFT);
+		moveLEft.setSpriteVelocity(0.2f);
+		moveLEft.setFlipHorizontal(true);
+		moveLEft.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
+
+		CGTAnimation moveRight = new CGTAnimation(personagemCGTActor);
+		moveRight.setSpriteLine(2);
+		moveRight.addStatePolicy(StatePolicy.LOOKRIGHT);
+		moveRight.setFlipHorizontal(false);
+		moveRight.setSpriteVelocity(0.2f);
+		moveRight.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
+
+		CGTAnimation moveUp = new CGTAnimation(personagemCGTActor);
+		moveUp.setSpriteLine(1);
+		moveUp.addStatePolicy(StatePolicy.LOOKUP);
+		moveUp.setSpriteVelocity(0.2f);
+		moveUp.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
+
+		CGTAnimation moveDown = new CGTAnimation(personagemCGTActor);
+		moveDown.setSpriteLine(3);
+		moveDown.addStatePolicy(StatePolicy.LOOKDOWN);
+		moveDown.setSpriteVelocity(0.2f);
+		moveDown.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
+
+		CGTAnimation animationDamege = new CGTAnimation(personagemCGTActor);
+		animationDamege.setSpriteLine(5);
+		animationDamege.addStatePolicy(StatePolicy.DAMAGE);
+		animationDamege.setSpriteVelocity(0.2f);
+		animationDamege.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
+
+		personagemCGTActor.getAnimarions().add(animationDamege);
+		personagemCGTActor.getAnimarions().add(moveDown);
+		personagemCGTActor.getAnimarions().add(moveLEft);
+		personagemCGTActor.getAnimarions().add(moveRight);
+		personagemCGTActor.getAnimarions().add(moveUp);
+	}
+
+	public void configuracaoCarros() {
+		// inicializando o carro no cenario
+
+		Direction direction = new Direction(DirectionPolicy.LEFT_AND_RIGHT);
+		direction.setMaxX(700);
+		direction.setMinX(20);
+
+		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
+		directionUp.setMaxY(1200);
+		directionUp.setMinY(0);
+
+		Direction directionFour = new Direction(DirectionPolicy.FOUR_DIRECTION);
+		directionFour.setMaxY(600);
+		directionFour.setMinY(400);
+		directionFour.setMaxX(1600);
+		directionFour.setMinX(1130);
+
+		CGTEnemy carroCGT = new CGTEnemy();
+
+		Vector2 positionCarro = new Vector2(780, 600);
+		carroCGT.setPosition(positionCarro);
+
+		Rectangle coliderCarro = new Rectangle(22, 0, 60, 94);
+		carroCGT.setCollision(coliderCarro);
+
+		Rectangle tamanhoCarro = new Rectangle(0, 0, 98, 90);
+		carroCGT.setBounds(tamanhoCarro);
+
+		carroCGT.setBlock(true);
+		carroCGT.setDestroyable(false);
+		carroCGT.setDamage(50);
+		carroCGT.addBehavior(directionUp);
+		carroCGT.setSpeed(200);
+
+		carroCGT.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
+		carroCGT.getSpriteSheet().setRows(3);
+		carroCGT.getSpriteSheet().setColumns(2);
+
+		CGTSound soundCar = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.2f);
+		carroCGT.setSound(soundCar);
+
+		// Action
+		CGTAnimation moveCarroDown = new CGTAnimation(carroCGT);
+		moveCarroDown.setSpriteLine(2);
+		moveCarroDown.addStatePolicy(StatePolicy.LOOKDOWN);
+
+		moveCarroDown.setSpriteVelocity(0.08f);
+		moveCarroDown.setAnimationPolicy(PlayMode.LOOP);
+		carroCGT.getAnimarions().add(moveCarroDown);
+
+		CGTAnimation moveCarroUp = new CGTAnimation(carroCGT);
+		moveCarroUp.setSpriteLine(3);
+		moveCarroUp.addStatePolicy(StatePolicy.LOOKUP);
+
+		moveCarroUp.setSpriteVelocity(0.08f);
+		moveCarroUp.setAnimationPolicy(PlayMode.LOOP);
+		carroCGT.getAnimarions().add(moveCarroUp);
+
+		world.getEnemies().add(carroCGT);
+
+		CGTEnemy carroCGT2 = new CGTEnemy();
+
+		Vector2 positionCarro2 = new Vector2(600, 560);
+		carroCGT2.setPosition(positionCarro2);
+
+		Rectangle coliderCarro2 = new Rectangle(0, 0, 90, 80);
+		carroCGT2.setCollision(coliderCarro2);
+
+		Rectangle tamanhoCarro2 = new Rectangle(0, 0, 98, 90);
+		carroCGT2.setBounds(tamanhoCarro2);
+
+		carroCGT2.setBlock(true);
+		carroCGT2.setDestroyable(false);
+		carroCGT2.setDamage(10);
+		carroCGT2.addBehavior(directionUp);
+		carroCGT2.setSpeed(200);
+
+		carroCGT2.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
+		carroCGT2.getSpriteSheet().setRows(3);
+		carroCGT2.getSpriteSheet().setColumns(2);
+
+		CGTSound soundCar2 = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.2f);
+
+		carroCGT2.setSound(soundCar2);
+
+		// Action
+
+		CGTAnimation moveCarro = new CGTAnimation(carroCGT2);
+		moveCarro.setSpriteLine(2);
+		moveCarro.addStatePolicy(StatePolicy.LOOKDOWN);
+
+		moveCarro.setSpriteVelocity(0.08f);
+		moveCarro.setAnimationPolicy(PlayMode.LOOP);
+		carroCGT2.getAnimarions().add(moveCarro);
+
+		CGTAnimation moveCarroLeft = new CGTAnimation(carroCGT2);
+		moveCarroLeft.setFlipHorizontal(true);
+		moveCarroLeft.setSpriteLine(3);
+		moveCarroLeft.addStatePolicy(StatePolicy.LOOKUP);
+		moveCarroLeft.setSpriteVelocity(0.08f);
+		moveCarroLeft.setAnimationPolicy(PlayMode.LOOP);
+		carroCGT2.getAnimarions().add(moveCarroLeft);
+
+		// Add na lista de enemy
+		world.getEnemies().add(carroCGT2);
+
+	}
+
+	public void configuracaoPauseDialog() {
+		CGTDialog pauseDialog = new CGTDialog();
+		pauseDialog.setActive(false);
+		pauseDialog.setWindow(new CGTTexture("data/dapexe/pause.png"));
+		pauseDialog.setHorizontalBorderTexture(new CGTTexture("data/dapexe/borda.png"));
+		pauseDialog.setRightBottomCorner(new CGTTexture("data/dapexe/canto.png"));
+		pauseDialog.setRelativeX(0.20f);
+		pauseDialog.setRelativeY(0.20f);
+		pauseDialog.setRelativeWidth(0.6f);
+		pauseDialog.setRelativeHeight(0.6f);
+
+		CGTButton voltar = new CGTButtonScreen();
+		voltar.setTextureUp(new CGTTexture("data/dapexe/close_btn.png"));
+		voltar.setTextureDown(new CGTTexture("data/dapexe/close_btn.png"));
+		voltar.setRelativeX(0.65f);
+		voltar.setRelativeY(0.65f);
+		voltar.setRelativeWidth(0.1f);
+		voltar.setRelativeHeight(0.1f);
+
+		CGTButtonScreen voltarMenu = new CGTButtonScreen();
+		voltarMenu.setScreenToGo(game.getMenu());
+		voltarMenu.setTextureUp(new CGTTexture("data/dapexe/back_btn.png"));
+		voltarMenu.setTextureDown(new CGTTexture("data/dapexe/back_btn.png"));
+		voltarMenu.setRelativeX(0.25f);
+		voltarMenu.setRelativeY(0.65f);
+		voltarMenu.setRelativeWidth(0.1f);
+		voltarMenu.setRelativeHeight(0.1f);
+
+		pauseDialog.addButton(voltarMenu);
+		pauseDialog.setCloseButton(voltar);
+		world.setPauseDialog(pauseDialog);
+
+	}
+
+	public void configuracaoWinDialog() {
+		CGTDialog pauseDialog = new CGTDialog();
+		pauseDialog.setActive(false);
+		pauseDialog.setWindow(new CGTTexture("data/dapexe/win_dialog.png"));
+		pauseDialog.setHorizontalBorderTexture(new CGTTexture("data/dapexe/borda.png"));
+		pauseDialog.setRightBottomCorner(new CGTTexture("data/dapexe/canto.png"));
+		pauseDialog.setRelativeX(0.20f);
+		pauseDialog.setRelativeY(0.20f);
+		pauseDialog.setRelativeWidth(0.6f);
+		pauseDialog.setRelativeHeight(0.6f);
+
+		CGTButton voltar = new CGTButtonScreen();
+		voltar.setTextureUp(new CGTTexture("data/dapexe/close_btn.png"));
+		voltar.setTextureDown(new CGTTexture("data/dapexe/close_btn.png"));
+		voltar.setRelativeX(0.65f);
+		voltar.setRelativeY(0.65f);
+		voltar.setRelativeWidth(0.1f);
+		voltar.setRelativeHeight(0.1f);
+
+		CGTButtonScreen voltarMenu = new CGTButtonScreen();
+		voltarMenu.setScreenToGo(game.getMenu());
+		voltarMenu.setTextureUp(new CGTTexture("data/dapexe/back_btn.png"));
+		voltarMenu.setTextureDown(new CGTTexture("data/dapexe/back_btn.png"));
+		voltarMenu.setRelativeX(0.45f);
+		voltarMenu.setRelativeY(0.25f);
+		voltarMenu.setRelativeWidth(0.1f);
+		voltarMenu.setRelativeHeight(0.1f);
+
+		pauseDialog.addButton(voltarMenu);
+		world.setWinDialog(pauseDialog);
+	}
+
+	public void configuracaoLDialog(){
+		CGTDialog loseDialog = new CGTDialog();
+		loseDialog.setActive(false);
+		loseDialog.setWindow(new CGTTexture("data/dapexe/lose_dialog.png"));
+		loseDialog.setHorizontalBorderTexture(new CGTTexture("data/dapexe/borda.png"));
+		loseDialog.setRightBottomCorner(new CGTTexture("data/dapexe/canto.png"));
+		loseDialog.setRelativeX(0.20f);
+		loseDialog.setRelativeY(0.20f);
+		loseDialog.setRelativeWidth(0.6f);
+		loseDialog.setRelativeHeight(0.6f);
+
+		CGTButtonScreen voltarMenu = new CGTButtonScreen();
+		voltarMenu.setScreenToGo(game.getMenu());
+		voltarMenu.setTextureUp(new CGTTexture("data/dapexe/back_btn.png"));
+		voltarMenu.setTextureDown(new CGTTexture("data/dapexe/back_btn.png"));
+		voltarMenu.setRelativeX(0.45f);
+		voltarMenu.setRelativeY(0.25f);
+		voltarMenu.setRelativeWidth(0.1f);
+		voltarMenu.setRelativeHeight(0.1f);
+
+		loseDialog.addButton(voltarMenu);
+		world.setLoseDialog(loseDialog);
+	}
+	
+	public void configuracaoInputs() {
+		Action walkUp = new Action(ActionMovePolicy.WALK_DOWN, InputPolicy.BTN_DOWN);
+		Action walkDown = new Action(ActionMovePolicy.WALK_UP, InputPolicy.BTN_UP);
+		Action walkLeft = new Action(ActionMovePolicy.WALK_RIGHT, InputPolicy.BTN_RIGHT);
+		Action walkRight = new Action(ActionMovePolicy.WALK_LEFT, InputPolicy.BTN_LEFT);
+		Action fire = new Action(ActionMovePolicy.FIRE, InputPolicy.BTN_1);
+
+		world.addAction(walkUp, walkDown, walkLeft, walkRight, fire);
+	}
+
+	public MyWorldChicken() {
+		
+		createWorld();
+	}
+	
+	private void createWorld(){
+		world = new CGTGameWorld();
+		backGround = new CGTTexture("data/dapexe/casas_ceara_cenario.png");
+		world.setBackground(backGround);
+		//world.setMusic(new CGTSound("data/AudioDaPexe/temaDaPexe.ogg",0.3f));
+		world.setModePolicy(GameModePolicy.ONE_SCREEN_WITHOUT_CAMERA);
+		
+		CGTActor personagemCGTActor = new CGTActor();
+		
+		configuracaoActor(personagemCGTActor);
+		
+		configuracaoActionActor(personagemCGTActor);
+		
+		configuracaoCarros();
+		
+		world.setActor(personagemCGTActor);
+		
+		configuracaoInputs();
+		
+		world.addWinCriterion(new CompleteCrossing(personagemCGTActor, world));
+		
+		CGTTexture t = new CGTTexture("data/dapexe/menuInicial.png");
+		CGTButtonScreen btn = new CGTButtonScreen();
+		btn.setRelativeX(0.39f);
+		btn.setRelativeY(0.7f);
+		btn.setRelativeWidth(0.20f);
+		btn.setRelativeHeight(0.1f);
+		CGTTexture texture = new CGTTexture("data/dapexe/iniciar1.png");
+		btn.setTextureDown(texture);
+		btn.setTextureUp(texture);
+		btn.setBounds(0, 0, texture.getWidth(), texture.getHeight());	
+		btn.setScreenToGo(world);
+		screen = new CGTScreen(t);
+		screen.getButtons().add(btn);
+		
+		game = new CGTGame();
+		game.setMenu(screen);
+		configuracaoPauseDialog();
+		configuracaoWinDialog();
+		configuracaoLDialog();
+	}
+	
+	public CGTGameWorld getWorld() {
+		return world;
+	}
+
+	public CGTGame getGame() {
+		
+		return game;
+	//return CGTGame.getSavedGame();
+		
+	
+	}
+
+}

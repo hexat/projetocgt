@@ -27,6 +27,7 @@ import cgt.policy.ActionMovePolicy;
 import cgt.policy.BonusPolicy;
 import cgt.policy.DirectionPolicy;
 import cgt.policy.FadePolicy;
+import cgt.policy.GameModePolicy;
 import cgt.policy.InputPolicy;
 import cgt.policy.MovementPolicy;
 import cgt.policy.StatePolicy;
@@ -872,7 +873,6 @@ public class MyWorldPexe {
 		world.addWinCriterion(new KillAllEnemies(world.getEnemies()));
 
 	}
-	
 
 	private void configuraAmmoCounter(CGTProjectile projectile) {
 		CGTLabel label = new CGTLabel("fonts/myfont.TTF", "x",20);
@@ -918,6 +918,7 @@ public class MyWorldPexe {
 		world.setMusic(new CGTSound("data/AudioDaPexe/temaDaPexe.ogg",0.3f));
 		world.setSoundWin(new CGTSound("data/AudioDaPexe/vitoria.ogg", 0.8f));
 		world.setSoundLose(new CGTSound("data/AudioDaPexe/derrota.ogg",0.8f));
+		world.setModePolicy(GameModePolicy.ONE_SCREEN);
 
 		CGTActor personagemCGTActor = new CGTActor();
 

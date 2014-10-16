@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import cgt.core.*;
 import cgt.hud.*;
 import cgt.lose.Lose;
+import cgt.policy.GameModePolicy;
 import cgt.policy.InputPolicy;
 import cgt.screen.*;
 import cgt.unit.Action;
@@ -42,6 +43,7 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private CGTSound music;
 	private CGTSound soundWin;
 	private CGTSound soundLose;
+	private GameModePolicy modePolicy;
 //	private int gridLines;
 //	private int gridColumn;
 	
@@ -110,7 +112,11 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	}
 	
 	public Music getMusic() {
-		return music.getMusic();
+		if (music != null){
+			return music.getMusic();
+		} else {
+			return null;
+		}
 	}
 
 	public void setMusic(CGTSound music) {
@@ -351,6 +357,14 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		this.actions = actions;
 	}
 	
+	public GameModePolicy getModePolicy() {
+		return modePolicy;
+	}
+
+	public void setModePolicy(GameModePolicy modePolicy) {
+		this.modePolicy = modePolicy;
+	}
+
 	public void addAction(Action... action){
 		for(int i = 0; i<action.length; i++){
 			System.out.println(action[i]);

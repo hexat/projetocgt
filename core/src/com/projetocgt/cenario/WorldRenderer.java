@@ -13,6 +13,7 @@ import cgt.core.CGTEnemy;
 import cgt.core.CGTOpposite;
 import cgt.core.CGTProjectile;
 import cgt.policy.BonusPolicy;
+import cgt.policy.GameModePolicy;
 import cgt.policy.StatePolicy;
 
 import com.badlogic.gdx.Gdx;
@@ -57,20 +58,23 @@ public class WorldRenderer {
 	private StretchViewport viewport;
 	private Rectangle rectangleCamera;
 	private Random random;
-
-
-
 	private Vector2 lastActorPosition;
 
 	public WorldRenderer(CGTGameWorld world) {
 		this.world = world;
-		this.width = Gdx.graphics.getWidth();
+		this.width =  Gdx.graphics.getWidth();
 		this.height = Gdx.graphics.getHeight();
 		this.camera = new OrthographicCamera(width, height);
-		this.viewport = new StretchViewport(800, 480, camera);
+		if(world.getModePolicy().equals(GameModePolicy.ONE_SCREEN)){
+			this.viewport = new StretchViewport(800, 480, camera);
+			this.camera.position.set(world.getActor().getPosition().x, world
+					.getActor().getPosition().y, 0);
+		} else if(world.getModePolicy().equals(GameModePolicy.ONE_SCREEN_WITHOUT_CAMERA)) {
+			this.viewport = new StretchViewport(world.getBackground().getTextureGDX().getWidth(), world.getBackground().getTextureGDX().getHeight(), camera);
+			this.camera.position.set(world.getBackground().getTextureGDX().getWidth()/2, world.getBackground().getTextureGDX().getHeight()/2, 0);
+		}
 		this.debugRenderer = new ShapeRenderer();
-		this.camera.position.set(world.getActor().getPosition().x, world
-				.getActor().getPosition().y, 0);
+		
 		this.lastActorPosition = new Vector2();
 		this.spriteBatch = new SpriteBatch();
 		this.personagem = world.getActor();
@@ -90,7 +94,9 @@ public class WorldRenderer {
 		isColision();
 
 		verifyObjectsOnCamera();
-
+		
+		System.out.println(world.getBackground().getTextureGDX().getHeight());
+		
 		updateCamera();
 
 		if (!verifyLose()) {
