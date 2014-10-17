@@ -322,7 +322,7 @@ public class MyWorldPexe {
 
 		mar.setBlock(true);
 
-		mar.setSpriteSheet(new CGTSpriteSheet("data/dapexe/mar3.png"));
+		mar.setSpriteSheet(new CGTSpriteSheet("data/dapexe/mar4.png"));
 
 		mar.getSpriteSheet().setRows(10);
 		mar.getSpriteSheet().setColumns(5);
@@ -1041,8 +1041,8 @@ public class MyWorldPexe {
 
 	public CGTGame getGame() {
 		
-		//return game;
-	return CGTGame.getSavedGame();
+		return game;
+	// return CGTGame.getSavedGame();
 		
 	
 	}

@@ -237,7 +237,7 @@ public class WorldRenderer {
 		drawEnemies();
 		drawBonus();
 
-		drawDamageActor();
+		//drawDamageActor();
 
 		if (GameScreen.DEBUG) {
 			drawDebug();
@@ -667,14 +667,17 @@ public class WorldRenderer {
 
 		// Verifica se colidiu com algum Enemy
 		for (int i = 0; i < world.getEnemies().size(); i++) {
-			if (world.getEnemies().get(i).getCollision().overlaps(personagem.getCollision())
-					&& world.getEnemies().get(i).isBlock()) {
-				//animationDamege(personagem);
-				colision = true;
-			}
+				if (world.getEnemies().get(i).getCollision().overlaps(personagem.getCollision())) {
+						animationDamage(world.getEnemies().get(i));
+						if (world.getEnemies().get(i).isBlock()) {
+								colision = true;
+						}
+				}
 		}
 
 		// Verifica se colidiu com algum Bonus
+		//TODO bonus so' pode setar colision true se ele for bloqueante
+		//ver possibilidade se mudar esse trecho de codigo pois nao tem o mesmo objetivo da funcao
 		for (int i = 0; i < world.getBonus().size(); i++) {
 			if (world.getBonus().get(i).getCollision()
 					.overlaps(personagem.getCollision())) {
