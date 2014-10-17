@@ -138,7 +138,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				world.playSoundWin();
 			}
 			if(renderer.verifyLose()) {
-				music.stop();
+				if (music != null){
+					music.stop();
+				}
 				state = State.LOSE;
 				world.playSoundLose();
 			}
@@ -171,7 +173,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				world.getPauseDialog().setActive(true);
 				//Para os behaviors
 				//renderer.getSpriteBatch().flush();
-				music.pause();
+				if (music != null){
+					music.pause();
+				}
 				this.getActors().clear();
 
 				addDialog(world.getPauseDialog());
@@ -191,7 +195,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				Timer.instance().start();
 				this.getActors().clear();
 				getActorsFromWorld();
-				music.play();
+				if(music != null){
+					music.play();
+				}
 				break;
 			}
 
@@ -206,7 +212,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			//Timer.instance().stop(); //Para os behaviors
 			world.getWinDialog().setActive(true);
 			renderer.getSpriteBatch().flush();
-			music.pause();
+			if (music != null){
+				music.pause();
+			}
 			this.getActors().clear();
 			addDialog(world.getWinDialog());
 			world.getWinDialog().autosize();
@@ -223,7 +231,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			
 			world.getLoseDialog().setActive(true);
 			renderer.getSpriteBatch().flush();
-			music.pause();
+			if (music != null){
+				music.pause();
+			}
 			this.getActors().clear();
 			addDialog(world.getLoseDialog());
 			world.getLoseDialog().autosize();
@@ -262,8 +272,10 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
-		music.play();
-		music.setLooping(true);
+		if (music != null){
+			music.play();
+			music.setLooping(true);
+		}
 		Gdx.input.setInputProcessor(this);
 
 	}
