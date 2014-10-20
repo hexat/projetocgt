@@ -19,7 +19,7 @@ public class StarAssault extends Game {
 
 	@Override
 	public void create() {
-		setScreen(new GeneralScreen(new MyWorldChicken().getGame().getMenu()));
+		setScreen(new GeneralScreen(new MyWorldPexe().getGame().getMenu()));
 	}
 	
 //	public CGTScreen getMenu() {
@@ -32,9 +32,9 @@ public class StarAssault extends Game {
 //			setScreen(new GameScreen(CGTGame.getSavedGame().g));
 //		}
 //		else
-		//setScreen(new GeneralScreen(new MyWorldPexe().getGame().getMenu()));
+		setScreen(new GeneralScreen(new MyWorldPexe().getGame().getMenu()));
 	
-		setScreen(new GeneralScreen(CGTGame.getSavedGame().getMenu()));
+		//setScreen(new GeneralScreen(CGTGame.getSavedGame().getMenu()));
 
 	}
 	
