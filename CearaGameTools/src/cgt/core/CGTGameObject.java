@@ -14,7 +14,7 @@ import cgt.util.CGTSound;
 import cgt.util.CGTSpriteSheet;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+
 
 /**
  * @author ProjetoCGT

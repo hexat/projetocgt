@@ -32,13 +32,12 @@ public class MyWorldChicken {
 	private CGTGame game;
 	
 	public void configuracaoActor(CGTActor personagemCGTActor) {
-		personagemCGTActor.setFireDefault(-1);
-		personagemCGTActor.setPosition(new Vector2(1f, 600f));
-		personagemCGTActor.setTimeToRecovery(4);
-		personagemCGTActor.setCollision(new Rectangle(10, 10, 40, 45));
+		//personagemCGTActor.setFireDefault(-1);
+		personagemCGTActor.setPosition(new Vector2(1f, 600f)); // obrigatorio
+		//personagemCGTActor.setTimeToRecovery(4);
+		personagemCGTActor.setCollision(new Rectangle(10, 10, 40, 45)); 
 
-		Rectangle tamanhoPersonagem = new Rectangle(0, 0, 60, 60);
-		personagemCGTActor.setBounds(tamanhoPersonagem);
+		personagemCGTActor.setBounds(new Rectangle(0,0,60,60)); // Obrigatorio
 
 		personagemCGTActor.setLife(30);
 		personagemCGTActor.setSpeed(300);
@@ -326,11 +325,11 @@ public class MyWorldChicken {
 		
 		configuracaoActionActor(personagemCGTActor);
 		
-		configuracaoCarros();
+		//configuracaoCarros();
 		
 		world.setActor(personagemCGTActor);
 		
-		configuracaoInputs();
+		//configuracaoInputs();
 		
 		world.addWinCriterion(new CompleteCrossing(personagemCGTActor, world));
 		
@@ -350,7 +349,7 @@ public class MyWorldChicken {
 		
 		game = new CGTGame();
 		game.setMenu(screen);
-		configuracaoPauseDialog();
+		//configuracaoPauseDialog();
 		configuracaoWinDialog();
 		configuracaoLDialog();
 	}

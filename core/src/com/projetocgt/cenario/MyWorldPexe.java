@@ -2,7 +2,7 @@ package com.projetocgt.cenario;
 
 import java.util.ArrayList;
 
-import java.util.Random;
+
 
 import cgt.CGTGame;
 import cgt.CGTGameWorld;
@@ -34,6 +34,7 @@ import cgt.policy.StatePolicy;
 import cgt.screen.CGTDialog;
 import cgt.screen.CGTScreen;
 import cgt.unit.Action;
+import cgt.util.ButtonPad;
 import cgt.util.CGTAnimation;
 import cgt.util.CGTSound;
 import cgt.util.CGTSpriteSheet;
@@ -41,17 +42,10 @@ import cgt.util.CGTTexture;
 import cgt.util.ProjectileOrientation;
 import cgt.win.KillAllEnemies;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+
 
 /**
  * Responsavel por construir o jogo
@@ -860,6 +854,26 @@ public class MyWorldPexe {
 		world.addButton(button1);
 	}
 
+	public void configuracaoButtonFire(){
+		CGTControllerButton button1 = new CGTControllerButton();
+		button1.setInput(InputPolicy.BTN_1);
+
+		CGTTexture textureUp = new CGTTexture("data/buttons/bt_agua_up.png");
+		button1.setTextureUp(textureUp);
+		CGTTexture textureDown = new CGTTexture("data/buttons/bt_agua_down.png");
+		button1.setTextureDown(textureDown);
+
+		button1.setRelativeX(0.9f);
+		button1.setRelativeY(0.1f);
+		button1.setRelativeWidth(0.1f);
+		button1.setRelativeHeight(0.1f);
+		button1.setBounds(0, 0, textureUp.getWidth() / 2,
+				textureUp.getHeight() / 2);
+
+		world.addButton(button1);
+
+	}
+	
 	private void configuraTimer() {
 		CGTLabel labelHUD = new CGTLabel("fonts/myfont.TTF","x");
 		labelHUD.setRelativeHeight(0.05f);
@@ -940,11 +954,15 @@ public class MyWorldPexe {
 
 		configuracaoProjetil(personagemCGTActor);
 
-		configuracaoButtonPad();
+		
+		ButtonPad buttonPad = new ButtonPad(1.2f);
+		world.addButtonPad(buttonPad);
+		
+		configuracaoButtonFire();
 
 		oppositeFalesia();
 
-		configuracaoButtonPad();
+		//configuracaoButtonPad();
 
 		configuraTimer();
 
@@ -1031,7 +1049,7 @@ public class MyWorldPexe {
 		configuracaoWinDialog();
 		
 		configuracaoLDialog();
-		//game.saveGame();
+		game.saveGame();
 	 }
 
 	
@@ -1044,8 +1062,5 @@ public class MyWorldPexe {
 		
 		return game;
 	// return CGTGame.getSavedGame();
-		
-	
 	}
-
 }

@@ -1,7 +1,7 @@
 package com.projetocgt.cenario;
 
 import java.util.Random;
-import java.util.TimerTask;
+
 
 import cgt.CGTGameWorld;
 import cgt.behaviors.Behavior;
@@ -10,7 +10,6 @@ import cgt.behaviors.Fade;
 import cgt.behaviors.Sine;
 import cgt.core.CGTActor;
 import cgt.core.CGTEnemy;
-import cgt.core.CGTOpposite;
 import cgt.core.CGTProjectile;
 import cgt.policy.BonusPolicy;
 import cgt.policy.GameModePolicy;
@@ -19,23 +18,16 @@ import cgt.policy.StatePolicy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Frustum;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.projetocgt.GameScreen;
-import com.projetocgt.GeneralScreen;
-import com.projetocgt.StarAssault;
 
 /**
  * Class utilizada para renderizar imagens do jogo na tela.Isso inclui Actor,
@@ -52,7 +44,6 @@ public class WorldRenderer {
 	private CGTActor personagem;
 	private ShapeRenderer debugRenderer;
 	private SpriteBatch spriteBatch;
-	private StarAssault instance;
 	private int width;
 	private int height;
 	private StretchViewport viewport;

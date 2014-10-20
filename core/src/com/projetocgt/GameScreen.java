@@ -1,20 +1,13 @@
 package com.projetocgt;
 
-import java.util.ArrayList;
-
 import cgt.CGTGameWorld;
 import cgt.hud.CGTButton;
 import cgt.hud.CGTButtonScreen;
 import cgt.hud.CGTControllerButton;
 import cgt.hud.HUDComponent;
-import cgt.hud.LifeBar;
-import cgt.lose.Lose;
-import cgt.lose.TargetTime;
 import cgt.policy.InputPolicy;
 import cgt.screen.CGTDialog;
-import cgt.hud.CGTButton;
-import cgt.util.CGTSound;
-import cgt.hud.LifeBar;
+
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -22,12 +15,11 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.utils.Array;
+
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.projetocgt.cenario.WorldController;

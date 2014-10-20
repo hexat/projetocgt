@@ -89,9 +89,13 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
         }
 	}
 	
-	
-
-	
+	public void addButtonPad(ButtonPad buttonPad){
+		this.addButton(buttonPad.getButtonBase());
+		this.addButton(buttonPad.getButtonUp());
+		this.addButton(buttonPad.getButtonDown());
+		this.addButton(buttonPad.getButtonLeft());
+		this.addButton(buttonPad.getButtonRight());
+	}
 
 	public CGTGameWorld lerStream(String file){
 		CGTGameWorld cgtGameWorld = new CGTGameWorld();
