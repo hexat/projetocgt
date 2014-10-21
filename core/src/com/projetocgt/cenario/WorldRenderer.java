@@ -86,7 +86,7 @@ public class WorldRenderer {
 
 		verifyObjectsOnCamera();
 		
-		System.out.println(world.getBackground().getTextureGDX().getHeight());
+		
 		
 		updateCamera();
 

@@ -33,7 +33,7 @@ public class MyWorldChicken {
 	
 	public void configuracaoActor(CGTActor personagemCGTActor) {
 		//personagemCGTActor.setFireDefault(-1);
-		personagemCGTActor.setPosition(new Vector2(1f, 600f)); // obrigatorio
+		personagemCGTActor.setPosition(new Vector2(600f, 1f)); // obrigatorio
 		//personagemCGTActor.setTimeToRecovery(4);
 		personagemCGTActor.setCollision(new Rectangle(10, 10, 40, 45)); 
 
@@ -46,45 +46,16 @@ public class MyWorldChicken {
 		personagemCGTActor.getSpriteSheet().setRows(5);
 		personagemCGTActor.getSpriteSheet().setColumns(3);
 
-		CGTSound somDamagePersonagem = new CGTSound("data/AudioDaPexe/voz_1.wav");
-		CGTSound somDamagePersonagem1 = new CGTSound("data/AudioDaPexe/voz_4.wav");
-		personagemCGTActor.setSoundCollision(somDamagePersonagem);
-		personagemCGTActor.setSoundCollision(somDamagePersonagem1);
-
-		CGTSound somDiePersonagem = new CGTSound("data/AudioDaPexe/voz_2.wav");
-		CGTSound somDiePersonagem1 = new CGTSound("data/AudioDaPexe/voz_3.wav");
-
-		personagemCGTActor.setSoundDie(somDiePersonagem);
-		personagemCGTActor.setSoundDie(somDiePersonagem1);
-
 	}
 
 	public void configuracaoActionActor(CGTActor personagemCGTActor) {
-		CGTAnimation moveLEft = new CGTAnimation(personagemCGTActor);
-		moveLEft.setSpriteLine(2);
-		moveLEft.addStatePolicy(StatePolicy.LOOKLEFT);
-		moveLEft.setSpriteVelocity(0.2f);
-		moveLEft.setFlipHorizontal(true);
-		moveLEft.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
-
-		CGTAnimation moveRight = new CGTAnimation(personagemCGTActor);
-		moveRight.setSpriteLine(2);
-		moveRight.addStatePolicy(StatePolicy.LOOKRIGHT);
-		moveRight.setFlipHorizontal(false);
-		moveRight.setSpriteVelocity(0.2f);
-		moveRight.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
 		CGTAnimation moveUp = new CGTAnimation(personagemCGTActor);
 		moveUp.setSpriteLine(1);
 		moveUp.addStatePolicy(StatePolicy.LOOKUP);
+		moveUp.setFlipHorizontal(false);
 		moveUp.setSpriteVelocity(0.2f);
 		moveUp.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
-
-		CGTAnimation moveDown = new CGTAnimation(personagemCGTActor);
-		moveDown.setSpriteLine(3);
-		moveDown.addStatePolicy(StatePolicy.LOOKDOWN);
-		moveDown.setSpriteVelocity(0.2f);
-		moveDown.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
 		CGTAnimation animationDamege = new CGTAnimation(personagemCGTActor);
 		animationDamege.setSpriteLine(5);
@@ -93,10 +64,8 @@ public class MyWorldChicken {
 		animationDamege.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
 
 		personagemCGTActor.getAnimarions().add(animationDamege);
-		personagemCGTActor.getAnimarions().add(moveDown);
-		personagemCGTActor.getAnimarions().add(moveLEft);
-		personagemCGTActor.getAnimarions().add(moveRight);
 		personagemCGTActor.getAnimarions().add(moveUp);
+		
 	}
 
 	public void configuracaoCarros() {
@@ -298,13 +267,14 @@ public class MyWorldChicken {
 	}
 	
 	public void configuracaoInputs() {
-		Action walkUp = new Action(ActionMovePolicy.WALK_DOWN, InputPolicy.BTN_DOWN);
-		Action walkDown = new Action(ActionMovePolicy.WALK_UP, InputPolicy.BTN_UP);
-		Action walkLeft = new Action(ActionMovePolicy.WALK_RIGHT, InputPolicy.BTN_RIGHT);
-		Action walkRight = new Action(ActionMovePolicy.WALK_LEFT, InputPolicy.BTN_LEFT);
-		Action fire = new Action(ActionMovePolicy.FIRE, InputPolicy.BTN_1);
+		Action walkUp = new Action(ActionMovePolicy.WALK_UP, InputPolicy.BTN_UP);
+		Action walk = new Action(ActionMovePolicy.RUN_UP, InputPolicy.TAP);
+		//Action walkDown = new Action(ActionMovePolicy.WALK_UP, InputPolicy.BTN_UP);
+		//Action walkLeft = new Action(ActionMovePolicy.WALK_RIGHT, InputPolicy.BTN_RIGHT);
+		//Action walkRight = new Action(ActionMovePolicy.WALK_LEFT, InputPolicy.BTN_LEFT);
+		//Action fire = new Action(ActionMovePolicy.FIRE, InputPolicy.BTN_1);
 
-		world.addAction(walkUp, walkDown, walkLeft, walkRight, fire);
+		world.addAction(walkUp, walk);
 	}
 
 	public MyWorldChicken() {
@@ -329,7 +299,7 @@ public class MyWorldChicken {
 		
 		world.setActor(personagemCGTActor);
 		
-		//configuracaoInputs();
+		configuracaoInputs();
 		
 		world.addWinCriterion(new CompleteCrossing(personagemCGTActor, world));
 		
@@ -349,7 +319,7 @@ public class MyWorldChicken {
 		
 		game = new CGTGame();
 		game.setMenu(screen);
-		//configuracaoPauseDialog();
+		configuracaoPauseDialog();
 		configuracaoWinDialog();
 		configuracaoLDialog();
 	}

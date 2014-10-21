@@ -212,22 +212,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	public int getScoreTarget() {
 		return scoreTarget;
 	}
-	 
-//	public int getGridLines() {
-//		return gridLines;
-//	}
-//	 
-//	public int getGridColumn() {
-//		return gridColumn;
-//	}
-//	 
-//	public void setGridLines(int lines) {
-//		this.gridLines = lines;
-//	}
-//	 
-//	public void setGridColumn(int column) {
-//		this.gridColumn = column;
-//	}
 
 	public CGTTexture getBackground() {
 		return background;
