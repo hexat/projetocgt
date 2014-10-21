@@ -17,6 +17,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
@@ -351,6 +352,23 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		}
 		return true;
 	}
+	
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		controller.activateKey(InputPolicy.TAP);
+		return true;
+	}
+	
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		controller.activateKey(InputPolicy.TAP);
+		return true;
+	}
+	
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		return true;
+	}		
 
 	@Override
 	public boolean keyTyped(char character) {
