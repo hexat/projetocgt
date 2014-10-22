@@ -37,6 +37,9 @@ public class WorldController {
 
 		keys.put(ActionMovePolicy.JUMP, false);
 		keys.put(ActionMovePolicy.FIRE, false);
+		
+		keys.put(ActionMovePolicy.RUN_UP, false);
+		
 	};
 
 	// Este construtor recebe o mundo como parametro
@@ -69,14 +72,6 @@ public class WorldController {
 				if (world.getActor().getProjectiles().get(0).getAmmo() > 0){
 					ammoDowner(world.getActor().getProjectiles().get(0));
 				}
-				
-				//world.getActor().getProjectiles().get(i).setState(personagem.getState());
-//				world.getActor().getProjectiles().get(i).setFlagAtivar(true);	
-			//world.getPersonagem().getListaDeProjectiles().get(i).setPosition(personagem.getPosition());
-			//world.getActor().setFireDefault(0);
-			//world.getActor().getProjectiles().get(i).setState(personagem.getState());
-			//				world.getActor().getProjectiles().get(i).setFlagAtivar(true);	
-			//}
 		}
 		else if(ammoCheck)
 			world.getActor().setFireDefault(-1);
@@ -140,8 +135,21 @@ public class WorldController {
 		if (keys.get(ActionMovePolicy.WALK_UP)) {
 			//Verifica se o personagem pode andar
 			personagem.setState(StatePolicy.LOOKUP);
+			//System.out.println("AQUI");
 			if( (personagem.getPosition().y + personagem.getBounds().height) < renderer.getWorld().getBackground().getTextureGDX().getHeight())
 				personagem.getVelocity().y = personagem.getSpeed();
+			
+			else{
+				personagem.getVelocity().y = 0;
+				System.out.println("Parou de andar");
+			}
+		}
+		
+		if(keys.get(ActionMovePolicy.RUN_UP)){
+			personagem.setState(StatePolicy.LOOKUP);
+			if( (personagem.getPosition().y + personagem.getBounds().height) < renderer.getWorld().getBackground().getTextureGDX().getHeight())
+				personagem.getVelocity().y = personagem.getSpeed();
+			
 			else
 				personagem.getVelocity().y = 0;
 		}
