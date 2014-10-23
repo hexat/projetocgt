@@ -972,7 +972,7 @@ public class MyWorldPexe {
 		CGTTexture t = new CGTTexture("data/dapexe/menuInicial.png");
 		CGTButtonScreen btn = new CGTButtonScreen();
 		btn.setRelativeX(0.39f);
-		btn.setRelativeY(0.7f);
+		btn.setRelativeY(0.78f);
 		btn.setRelativeWidth(0.20f);
 		btn.setRelativeHeight(0.1f);
 		CGTTexture texture = new CGTTexture("data/dapexe/iniciar1.png");
@@ -987,7 +987,7 @@ public class MyWorldPexe {
 		CGTTexture textureTutorial = new CGTTexture("data/dapexe/menuTutorial.png");
 		CGTButtonScreen buttonTutorial = new CGTButtonScreen();
 		buttonTutorial.setRelativeX(0.39f);
-		buttonTutorial.setRelativeY(0.58f);
+		buttonTutorial.setRelativeY(0.45f);
 		buttonTutorial.setRelativeWidth(0.20f);
 		buttonTutorial.setRelativeHeight(0.1f);
 		CGTTexture textureButtonTutorial = new CGTTexture("data/dapexe/tutorial.png");
@@ -1002,7 +1002,7 @@ public class MyWorldPexe {
 		CGTButtonScreen buttonTutorialBack = new CGTButtonScreen();
 		buttonTutorialBack.setRelativeX(0.8f);
 		buttonTutorialBack.setRelativeY(0.8f);
-		buttonTutorialBack.setRelativeWidth(0.20f);
+		buttonTutorialBack.setRelativeWidth(0.17f);
 		buttonTutorialBack.setRelativeHeight(0.1f);
 		CGTTexture textureButtonTutorialBack = new CGTTexture("data/dapexe/back_btn.png");
 		buttonTutorialBack.setTextureDown(textureButtonTutorialBack);
@@ -1015,7 +1015,7 @@ public class MyWorldPexe {
 		CGTTexture textureCreditos = new CGTTexture("data/dapexe/menuCreditos.png");
 		CGTButtonScreen buttonCreditos = new CGTButtonScreen();
 		buttonCreditos.setRelativeX(0.39f);
-		buttonCreditos.setRelativeY(0.46f);
+		buttonCreditos.setRelativeY(0.34f);
 		buttonCreditos.setRelativeWidth(0.20f);
 		buttonCreditos.setRelativeHeight(0.1f);
 		CGTTexture textureCreditosButton = new CGTTexture("data/dapexe/creditos.png");
