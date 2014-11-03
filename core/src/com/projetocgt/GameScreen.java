@@ -1,10 +1,15 @@
 package com.projetocgt;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cgt.CGTGameWorld;
 import cgt.hud.CGTButton;
 import cgt.hud.CGTButtonScreen;
 import cgt.hud.CGTControllerButton;
 import cgt.hud.HUDComponent;
+import cgt.policy.ActionMovePolicy;
+import cgt.policy.GameModePolicy;
 import cgt.policy.InputPolicy;
 import cgt.screen.CGTDialog;
 
@@ -14,10 +19,13 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
@@ -39,8 +47,10 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	private SpriteBatch spriteBatch;
 	private Music music;
 	private boolean flagTouch;
-
+	private InputPolicy currentDragged = null;
+	private Vector2 lastPoint;
 	public GameScreen(CGTGameWorld world) {
+				
 		this.world = world;
 		this.music = world.getMusic();
 		Timer.instance().start();
@@ -57,6 +67,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		renderer = new WorldRenderer(world);
 		setSpriteBatch(new SpriteBatch());
 		controller = new WorldController(world, renderer);
+		lastPoint = world.getActor().getPosition().cpy();
+		
+		 
 	}
 
 	private void getActorsFromWorld(){
@@ -124,6 +137,23 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	public void render(float delta) {
 		switch(state){
 		case PLAYING:
+			
+//			Texture texture = new Texture(Gdx.files.internal("data/dapexe/casa00-corte.png"));
+			 
+//			Actor actor= new Actor();
+//			actor.setVisible(true);
+//			actor.setBounds(world.getActor().getPosition().x, world.getActor().getPosition().y, world.getActor().getBounds().getWidth(), world.getActor().getBounds().getHeight());
+//			actor.addListener(new InputListener() {
+//			    public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+//			        System.out.println("down");
+//			        return true;
+//			    }
+//
+//			    public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+//			        System.out.println("up");
+//			    }
+//			});
+			
 			controller.update(delta);
 			renderer.render();
 			if(renderer.verifyWin()){
@@ -202,6 +232,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 
 		case WIN:
+			Gdx.input.setInputProcessor(this);
 			//Timer.instance().stop(); //Para os behaviors
 			world.getWinDialog().setActive(true);
 			renderer.getSpriteBatch().flush();
@@ -269,8 +300,13 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			music.play();
 			music.setLooping(true);
 		}
-		Gdx.input.setInputProcessor(this);
-
+		if (world.getModePolicy().equals(GameModePolicy.ONE_SCREEN)){
+			Gdx.input.setInputProcessor(this);
+		} else {
+			Gdx.input.setInputProcessor(new TouchInputs(controller, world));
+		}
+		
+		
 	}
 
 	@Override
@@ -353,23 +389,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		return true;
 	}
 	
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		controller.activateKey(InputPolicy.TAP);
-		return true;
-	}
-	
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		controller.activateKey(InputPolicy.TAP);
-		return true;
-	}
-	
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		return true;
-	}		
-
 	@Override
 	public boolean keyTyped(char character) {
 

@@ -33,7 +33,7 @@ public class MyWorldChicken {
 	
 	public void configuracaoActor(CGTActor personagemCGTActor) {
 		//personagemCGTActor.setFireDefault(-1);
-		personagemCGTActor.setPosition(new Vector2(600f, 1f)); // obrigatorio
+		personagemCGTActor.setPosition(new Vector2(1f, 600f)); // obrigatorio
 		//personagemCGTActor.setTimeToRecovery(4);
 		personagemCGTActor.setCollision(new Rectangle(10, 10, 40, 45)); 
 
@@ -51,8 +51,8 @@ public class MyWorldChicken {
 	public void configuracaoActionActor(CGTActor personagemCGTActor) {
 
 		CGTAnimation moveUp = new CGTAnimation(personagemCGTActor);
-		moveUp.setSpriteLine(1);
-		moveUp.addStatePolicy(StatePolicy.LOOKUP);
+		moveUp.setSpriteLine(2);
+		moveUp.addStatePolicy(StatePolicy.LOOKRIGHT);
 		moveUp.setFlipHorizontal(false);
 		moveUp.setSpriteVelocity(0.2f);
 		moveUp.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
@@ -267,15 +267,14 @@ public class MyWorldChicken {
 	}
 	
 	public void configuracaoInputs() {
-		Action walkUp = new Action(ActionMovePolicy.WALK_UP, InputPolicy.BTN_UP);
-		Action walk = new Action(ActionMovePolicy.RUN_UP, InputPolicy.TAP);
-		//Action walkDown = new Action(ActionMovePolicy.WALK_UP, InputPolicy.BTN_UP);
-		//Action walkLeft = new Action(ActionMovePolicy.WALK_RIGHT, InputPolicy.BTN_RIGHT);
-		//Action walkRight = new Action(ActionMovePolicy.WALK_LEFT, InputPolicy.BTN_LEFT);
-		//Action fire = new Action(ActionMovePolicy.FIRE, InputPolicy.BTN_1);
+		Action walkUp = new Action(ActionMovePolicy.WALK_RIGHT, InputPolicy.TAP);
+		Action slideUp = new Action(ActionMovePolicy.WALK_UP, InputPolicy.SLIDE_UP);
+		Action slideDown = new Action(ActionMovePolicy.WALK_DOWN, InputPolicy.SLIDE_DOWN);
+	
 
-		world.addAction(walkUp, walk);
+		world.addAction(walkUp,slideUp,slideDown);
 	}
+	
 
 	public MyWorldChicken() {
 		
@@ -301,7 +300,7 @@ public class MyWorldChicken {
 		
 		configuracaoInputs();
 		
-		world.addWinCriterion(new CompleteCrossing(personagemCGTActor, world));
+		world.addWinCriterion(new CompleteCrossing(world, new Rectangle(world.getBackground().getTextureGDX().getWidth()- 1f/100f*world.getBackground().getTextureGDX().getWidth(), 1, 1f/100f*world.getBackground().getTextureGDX().getWidth(), world.getBackground().getTextureGDX().getHeight())));
 		
 		CGTTexture t = new CGTTexture("data/dapexe/menuInicial.png");
 		CGTButtonScreen btn = new CGTButtonScreen();

@@ -55,6 +55,9 @@ public abstract class CGTGameObject implements Serializable {
 		setStateTime(getStateTime() + delta);
 		getPosition().add(velocity.cpy().scl(delta));
 		
+		//System.out.println(velocity.y);
+		
+		//System.out.println("posYColider: " + posYColider);
 		collision.x=this.getPosition().x+posXColider;
 		collision.y=this.getPosition().y+posYColider;
 		
