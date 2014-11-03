@@ -28,3 +28,4 @@ out/
 gen/
 local.properties
 !gradle/
+gameConfig.txt
