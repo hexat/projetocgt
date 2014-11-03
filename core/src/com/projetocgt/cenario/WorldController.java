@@ -38,8 +38,6 @@ public class WorldController {
 		keys.put(ActionMovePolicy.JUMP, false);
 		keys.put(ActionMovePolicy.FIRE, false);
 		
-		keys.put(ActionMovePolicy.RUN_UP, false);
-		
 	};
 
 	// Este construtor recebe o mundo como parametro
@@ -54,14 +52,19 @@ public class WorldController {
 
 	public void activateKey(InputPolicy policy){
 		Action action = world.getActionFromInput(policy);
-		System.out.println(action);
-		keys.put(action.getActionPolicy(),true);
+		if (action != null){
+			keys.put(action.getActionPolicy(),true);
+		}
 	}
 	
 	public void deactivateKey(InputPolicy policy){
 		Action action = world.getActionFromInput(policy);
-		keys.put(action.getActionPolicy(),false);
-		actorAnimation.stopAni();
+		System.out.println(action);
+		System.out.println(policy);
+		if (action != null){
+			keys.put(action.getActionPolicy(),false);
+			actorAnimation.stopAni();
+		}
 	}
 	
 
@@ -141,17 +144,7 @@ public class WorldController {
 			
 			else{
 				personagem.getVelocity().y = 0;
-				System.out.println("Parou de andar");
 			}
-		}
-		
-		if(keys.get(ActionMovePolicy.RUN_UP)){
-			personagem.setState(StatePolicy.LOOKUP);
-			if( (personagem.getPosition().y + personagem.getBounds().height) < renderer.getWorld().getBackground().getTextureGDX().getHeight())
-				personagem.getVelocity().y = personagem.getSpeed();
-			
-			else
-				personagem.getVelocity().y = 0;
 		}
 
 		if (keys.get(ActionMovePolicy.WALK_DOWN)) {
@@ -165,8 +158,10 @@ public class WorldController {
 
 		if (keys.get(ActionMovePolicy.WALK_LEFT)) {
 			personagem.setState(StatePolicy.LOOKLEFT);
-			if(personagem.getPosition().x > 0)
+			if(personagem.getPosition().x > 0){
+				//System.out.println("andando pra esquerda");
 				personagem.getVelocity().x = -personagem.getSpeed();
+			}
 			else
 				personagem.getVelocity().x = 0;
 				
@@ -174,8 +169,10 @@ public class WorldController {
 			
 		if (keys.get(ActionMovePolicy.WALK_RIGHT)) {
 			personagem.setState(StatePolicy.LOOKRIGHT);
-			if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackground().getTextureGDX().getWidth())
+			if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackground().getTextureGDX().getWidth()){
+				//System.out.println("andando pra direita");
 				personagem.getVelocity().x = personagem.getSpeed();
+			}
 			else
 				personagem.getVelocity().x = 0;			
 		}

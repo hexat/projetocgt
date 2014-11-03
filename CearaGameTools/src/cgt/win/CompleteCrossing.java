@@ -2,30 +2,32 @@ package cgt.win;
 
 import java.io.Serializable;
 
+import com.badlogic.gdx.math.Rectangle;
+
 import cgt.CGTGameWorld;
 import cgt.core.CGTActor;
 import cgt.policy.WinPolicy;
 
 public class CompleteCrossing implements Win, Serializable {
-	private CGTActor actor;
 	private CGTGameWorld world;
+	private Rectangle rectangle;
 	private WinPolicy policy;
 	
-	public CompleteCrossing(CGTActor actor, CGTGameWorld world){
-		this.actor = actor;
+	public CompleteCrossing(CGTGameWorld world, Rectangle rectangle){
 		this.world = world;
+		this.rectangle = rectangle;
 	}
 	
 
 	@Override
 	public boolean achieved() {
 		boolean ganhou = true;
-		
-		if (world.getBackground().getTextureGDX().getWidth() == world.getActor().getPosition().x){
-			return true;
+		if (world.getActor().getCollision().overlaps(rectangle)){
+			ganhou = true;
 		} else{
-			return false;
+			ganhou = false;
 		}
+		return ganhou;
 	}
 
 	@Override

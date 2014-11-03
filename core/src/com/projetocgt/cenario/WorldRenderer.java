@@ -71,6 +71,8 @@ public class WorldRenderer {
 		this.personagem = world.getActor();
 		rectangleCamera = new Rectangle(camera.position.x - camera.viewportWidth/2, camera.position.y - camera.viewportHeight/2, camera.viewportWidth, camera.viewportHeight);
 		random = new Random();
+		
+		
 	}
 
 	public SpriteBatch getSpriteBatch() {

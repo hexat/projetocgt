@@ -142,7 +142,9 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	}
 	
 	public void stopSound(CGTSound sound){
-		sound.getMusic().stop();
+		if (sound != null){
+			sound.getMusic().stop();
+		}
 	}
 
 	public CGTSound getSoundLose() {
