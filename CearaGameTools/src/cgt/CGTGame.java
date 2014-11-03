@@ -26,6 +26,7 @@ public class CGTGame implements Serializable{
 	public void setMenu(CGTScreen menu) {
 		this.menu = menu;
 	}
+
 	public  void saveGame(){
 		try {
 
@@ -38,8 +39,8 @@ public class CGTGame implements Serializable{
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-
 	}
+	
 	public static CGTGame getSavedGame() {
 		CGTGame cgtGame = new CGTGame();
 
@@ -54,10 +55,7 @@ public class CGTGame implements Serializable{
 			e.printStackTrace();
 		}
 		return cgtGame;
-		
-		
 	}
-	
 }
 
 

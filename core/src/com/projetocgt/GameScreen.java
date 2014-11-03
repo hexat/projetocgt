@@ -300,7 +300,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			music.play();
 			music.setLooping(true);
 		}
-		if (world.getModePolicy().equals(GameModePolicy.ONE_SCREEN)){
+		if (world.getCamera().getGameMode().equals(GameModePolicy.ONE_SCREEN)){
 			Gdx.input.setInputProcessor(this);
 		} else {
 			Gdx.input.setInputProcessor(new TouchInputs(controller, world));

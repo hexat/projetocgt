@@ -43,7 +43,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private CGTSound music;
 	private CGTSound soundWin;
 	private CGTSound soundLose;
-	private GameModePolicy modePolicy;
 //	private int gridLines;
 //	private int gridColumn;
 	
@@ -55,7 +54,7 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		winCriteria = new ArrayList<Win>();
 		loseCriteria = new ArrayList<Lose>();
 		actions = new ArrayList<Action>();
-		
+		camera = new Camera(GameModePolicy.ONE_SCREEN);
 	}
 
 	public void salvaStream(String file){
@@ -157,10 +156,10 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	
 	public void playSoundLose(){
 		if (soundLose != null){
-			System.out.println("Tocando música");
+			System.out.println("Tocando mï¿½sica");
 			soundLose.getMusic().play();
 		}
-		System.out.println("O soundLose está null");
+		System.out.println("O soundLose estï¿½ null");
 	}
 
 	public void setActor(CGTActor actor) {
@@ -347,14 +346,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		this.actions = actions;
 	}
 	
-	public GameModePolicy getModePolicy() {
-		return modePolicy;
-	}
-
-	public void setModePolicy(GameModePolicy modePolicy) {
-		this.modePolicy = modePolicy;
-	}
-
 	public void addAction(Action... action){
 		for(int i = 0; i<action.length; i++){
 			System.out.println(action[i]);

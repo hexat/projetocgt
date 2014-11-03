@@ -50,17 +50,20 @@ public class WorldRenderer {
 	private Rectangle rectangleCamera;
 	private Random random;
 	private Vector2 lastActorPosition;
+	
+	private boolean zoomCamera;
 
 	public WorldRenderer(CGTGameWorld world) {
 		this.world = world;
+		zoomCamera = false;
 		this.width =  Gdx.graphics.getWidth();
 		this.height = Gdx.graphics.getHeight();
 		this.camera = new OrthographicCamera(width, height);
-		if(world.getModePolicy().equals(GameModePolicy.ONE_SCREEN)){
+		if(world.getCamera().getGameMode().equals(GameModePolicy.ONE_SCREEN)){
 			this.viewport = new StretchViewport(800, 480, camera);
 			this.camera.position.set(world.getActor().getPosition().x, world
 					.getActor().getPosition().y, 0);
-		} else if(world.getModePolicy().equals(GameModePolicy.ONE_SCREEN_WITHOUT_CAMERA)) {
+		} else if(world.getCamera().getGameMode().equals(GameModePolicy.ONE_SCREEN_WITHOUT_CAMERA)) {
 			this.viewport = new StretchViewport(world.getBackground().getTextureGDX().getWidth(), world.getBackground().getTextureGDX().getHeight(), camera);
 			this.camera.position.set(world.getBackground().getTextureGDX().getWidth()/2, world.getBackground().getTextureGDX().getHeight()/2, 0);
 		}
@@ -87,8 +90,6 @@ public class WorldRenderer {
 		isColision();
 
 		verifyObjectsOnCamera();
-		
-		
 		
 		updateCamera();
 
@@ -177,7 +178,74 @@ public class WorldRenderer {
 
 	}
 
+	public void cameraCloseOnActor() {
+		zoomCamera = true;
+	}
+
+	private void cameraClose() {
+		if (camera.viewportHeight > world.getBackground().getTextureGDX().getHeight() * world.getCamera().getRelativeHeight() 
+				|| camera.viewportWidth > world.getBackground().getTextureGDX().getWidth() * world.getCamera().getRelativeWidth()) {
+			
+			if (camera.viewportHeight > world.getBackground().getTextureGDX().getHeight() * 0.5 ) {
+				camera.viewportHeight -= world.getCamera().getScale();
+			}
+			if (camera.viewportWidth > world.getBackground().getTextureGDX().getWidth() * 0.5){
+				camera.viewportWidth -= world.getCamera().getScale();
+			}
+			
+			float max = world.getBackground().getTextureGDX().getWidth() - camera.viewportWidth / 2;
+			if (world.getActor().getPosition().x > max) {
+				camera.position.x = max;
+			} else {
+				float a = world.getActor().getPosition().x - camera.viewportWidth/ 2;
+				if (a < 0) a = 0;
+				camera.position.x = camera.viewportWidth / 2 + a;
+			}
+//			max = world.getBackground().getTextureGDX().getHeight() - camera.viewportHeight/ 2;
+//			if (world.getActor().getPosition().y > max) {
+//				camera.position.y = max;
+//			} else {
+//				camera.position.y = camera.viewportHeight / 2;
+//			}
+//			System.out.println(camera.position.y);
+		}
+	}
+
+	private void cameraOpen() {
+		if (camera.viewportHeight < world.getBackground().getTextureGDX().getHeight() 
+				|| camera.viewportWidth < world.getBackground().getTextureGDX().getWidth()) {
+			
+			if (camera.viewportHeight < world.getBackground().getTextureGDX().getHeight() * 0.5 ) {
+				camera.viewportHeight += 5;
+			}
+			if (camera.viewportWidth < world.getBackground().getTextureGDX().getWidth() * 0.5){
+				camera.viewportWidth += 5;
+			}
+			
+			float max = world.getBackground().getTextureGDX().getWidth() - camera.viewportWidth / 2;
+			if (world.getActor().getPosition().x > max) {
+				camera.position.x = max;
+			} else {
+				camera.position.x = camera.viewportWidth / 2;
+			}
+//			max = world.getBackground().getTextureGDX().getHeight() - camera.viewportHeight/ 2;
+//			if (world.getActor().getPosition().y > max) {
+//				camera.position.y = max;
+//			} else {
+//				float a = camera.viewportHeight / 2 - world.getActor().getPosition().y;
+//				if (a < 0) a = 0;
+//				camera.position.y = camera.viewportHeight / 2 + a;
+//			}
+		}
+	}
+	
+	
 	private void updateCamera() {
+		
+		if (zoomCamera) {
+			cameraClose();
+		}
+		
 		camera.update();
 		spriteBatch.setProjectionMatrix(camera.combined); // Possibilita a camera acompanhar o personagem
 
@@ -241,7 +309,6 @@ public class WorldRenderer {
 		if (GameScreen.DEBUG) {
 			drawDebug();
 		}
-
 	}
 
 	private void drawBonus() {

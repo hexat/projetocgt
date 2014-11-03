@@ -54,6 +54,9 @@ public class WorldController {
 		Action action = world.getActionFromInput(policy);
 		if (action != null){
 			keys.put(action.getActionPolicy(),true);
+			if (action.getActionPolicy() == ActionMovePolicy.WALK_RIGHT) {
+				renderer.cameraCloseOnActor();
+			}
 		}
 	}
 	

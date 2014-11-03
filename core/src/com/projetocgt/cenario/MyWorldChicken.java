@@ -40,7 +40,7 @@ public class MyWorldChicken {
 		personagemCGTActor.setBounds(new Rectangle(0,0,60,60)); // Obrigatorio
 
 		personagemCGTActor.setLife(30);
-		personagemCGTActor.setSpeed(300);
+		personagemCGTActor.setSpeed(100);
 
 		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet("data/dapexe/sprite_garoto.png"));
 		personagemCGTActor.getSpriteSheet().setRows(5);
@@ -286,7 +286,7 @@ public class MyWorldChicken {
 		backGround = new CGTTexture("data/dapexe/casas_ceara_cenario.png");
 		world.setBackground(backGround);
 		//world.setMusic(new CGTSound("data/AudioDaPexe/temaDaPexe.ogg",0.3f));
-		world.setModePolicy(GameModePolicy.ONE_SCREEN_WITHOUT_CAMERA);
+		world.getCamera().setGameMode(GameModePolicy.ONE_SCREEN_WITHOUT_CAMERA);
 		
 		CGTActor personagemCGTActor = new CGTActor();
 		
