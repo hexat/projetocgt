@@ -86,7 +86,7 @@ public class MyWorldPexe {
 		voltar.setRelativeHeight(0.1f);
 
 		CGTButtonScreen voltarMenu = new CGTButtonScreen();
-		voltarMenu.setScreenToGo(game.getMenu());
+		voltarMenu.setScreenToGo(game.getGame());
 		voltarMenu.setTextureUp(new CGTTexture("data/dapexe/back_btn.png"));
 		voltarMenu.setTextureDown(new CGTTexture("data/dapexe/back_btn.png"));
 		voltarMenu.setRelativeX(0.25f);
@@ -120,7 +120,7 @@ public class MyWorldPexe {
 		voltar.setRelativeHeight(0.1f);
 
 		CGTButtonScreen voltarMenu = new CGTButtonScreen();
-		voltarMenu.setScreenToGo(game.getMenu());
+		voltarMenu.setScreenToGo(game.getGame());
 		voltarMenu.setTextureUp(new CGTTexture("data/dapexe/back_btn.png"));
 		voltarMenu.setTextureDown(new CGTTexture("data/dapexe/back_btn.png"));
 		voltarMenu.setRelativeX(0.45f);
@@ -144,7 +144,7 @@ public class MyWorldPexe {
 		loseDialog.setRelativeHeight(0.6f);
 
 		CGTButtonScreen voltarMenu = new CGTButtonScreen();
-		voltarMenu.setScreenToGo(game.getMenu());
+		voltarMenu.setScreenToGo(game.getGame());
 		voltarMenu.setTextureUp(new CGTTexture("data/dapexe/back_btn.png"));
 		voltarMenu.setTextureDown(new CGTTexture("data/dapexe/back_btn.png"));
 		voltarMenu.setRelativeX(0.45f);
@@ -932,7 +932,10 @@ public class MyWorldPexe {
 		world.setMusic(new CGTSound("data/AudioDaPexe/temaDaPexe.ogg",0.3f));
 		world.setSoundWin(new CGTSound("data/AudioDaPexe/vitoria.ogg", 0.8f));
 		world.setSoundLose(new CGTSound("data/AudioDaPexe/derrota.ogg",0.8f));
-		world.getCamera().setGameMode(GameModePolicy.ONE_SCREEN);
+		world.getCamera().setGameMode(GameModePolicy.JOYSTICK);
+		world.getCamera().setInitialHeight(0.6f);
+		world.getCamera().setInitialWidth(0.6f);
+		
 
 		CGTActor personagemCGTActor = new CGTActor();
 
@@ -1039,10 +1042,6 @@ public class MyWorldPexe {
 		buttonCreditosBack.setScreenToGo(screen);
 		screenCreditos.getButtons().add(buttonCreditosBack);
 		
-		
-		
-		
-
 		game = new CGTGame();
 		game.setMenu(screen);
 		configuracaoPauseDialog();

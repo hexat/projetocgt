@@ -81,6 +81,12 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			this.addActor(component);
 			component.autosize();
 		}
+		if (world.getStartGame() != null) {
+			CGTButton btn = world.getStartGame();
+			btn.setInputListener();
+			this.addActor(btn);
+			btn.autosize();
+		}
 	}
 
 	public void buttonHandler(){
@@ -102,7 +108,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		for(CGTButtonScreen buttonScreen : world.getPauseDialog().getButtons()){
 			if(buttonScreen.isActive()){
 				buttonScreen.setTouchable(Touchable.disabled);
-				StarAssault.getInstance().setScreen(buttonScreen.getScreenToGo());
+				StarAssault.getInstance().restart(buttonScreen.getScreenToGo());
 			}
 		}
 
@@ -110,7 +116,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			if(buttonScreen.isActive()){	
 				buttonScreen.setTouchable(Touchable.disabled);
 				world.stopSound(world.getSoundWin());
-				StarAssault.getInstance().setScreen(buttonScreen.getScreenToGo());
+				StarAssault.getInstance().restart(buttonScreen.getScreenToGo());
 			}
 		}
 
@@ -118,7 +124,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			if(buttonScreen.isActive()){
 				buttonScreen.setTouchable(Touchable.disabled);
 				world.stopSound(world.getSoundLose());
-				StarAssault.getInstance().setScreen(buttonScreen.getScreenToGo());
+				StarAssault.getInstance().restart(buttonScreen.getScreenToGo());
 			}
 		}
 
@@ -126,6 +132,20 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		if (closeButton.isActive()){
 			world.getPauseDialog().setActive(false);
 			resume();
+		}
+		
+		if (world.getStartGame() != null && world.getStartGame().isActive()) {
+			world.getStartGame().setTouchable(Touchable.disabled);
+			world.getStartGame().remove();
+			if (world.getStartGame().isActionCameraClose()) {
+				renderer.cameraCloseOnActor();
+			} else {
+				renderer.cameraFullScreen();
+			}
+			if (world.getCamera().getGameMode() == GameModePolicy.TOUCH) {
+				Gdx.input.setInputProcessor(new TouchInputs(controller, world));
+			}
+			world.setStartGame(null);
 		}
 	}
 
@@ -300,13 +320,11 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			music.play();
 			music.setLooping(true);
 		}
-		if (world.getCamera().getGameMode().equals(GameModePolicy.ONE_SCREEN)){
+		if (world.getCamera().getGameMode() == GameModePolicy.JOYSTICK || world.getStartGame() != null){
 			Gdx.input.setInputProcessor(this);
 		} else {
 			Gdx.input.setInputProcessor(new TouchInputs(controller, world));
-		}
-		
-		
+		}	
 	}
 
 	@Override

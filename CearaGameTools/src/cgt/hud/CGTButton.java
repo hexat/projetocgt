@@ -27,6 +27,14 @@ public class CGTButton extends HUDComponent implements Serializable{
 		setTouchable(Touchable.enabled);
 		setInputListener();
 	}
+	public CGTButton(float x, float y, float relativeWidth, float relativeHeight) {
+		this();
+		setRelativeX(x);
+		setRelativeY(y);
+		setRelativeWidth(relativeWidth);
+		setRelativeHeight(relativeHeight);
+		
+	}
 
 	public void setInputListener(){
 		addListener(new InputListener() {
@@ -65,10 +73,15 @@ public class CGTButton extends HUDComponent implements Serializable{
 	}
 
 	public void draw(Batch batch, float parentAlpha){
-		if(active)
-			batch.draw(textureDown.getTextureGDX(), getX(), getY(), getWidth(), getHeight());
-		else
-			batch.draw(textureUp.getTextureGDX(), getX(), getY(), getWidth(), getHeight());
+		if(active) {
+			if (textureDown != null) {
+				batch.draw(textureDown.getTextureGDX(), getX(), getY(), getWidth(), getHeight());
+			}
+		} else {
+			if (textureUp != null) {
+				batch.draw(textureUp.getTextureGDX(), getX(), getY(), getWidth(), getHeight());
+			}
+		}
 	}
 
 	public CGTTexture getTextureUp() {

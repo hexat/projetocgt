@@ -43,8 +43,7 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private CGTSound music;
 	private CGTSound soundWin;
 	private CGTSound soundLose;
-//	private int gridLines;
-//	private int gridColumn;
+	private CGTButtonStartGame startGame;
 	
 	public CGTGameWorld(){
 		opposites = new ArrayList<CGTOpposite>();
@@ -54,7 +53,8 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		winCriteria = new ArrayList<Win>();
 		loseCriteria = new ArrayList<Lose>();
 		actions = new ArrayList<Action>();
-		camera = new Camera(GameModePolicy.ONE_SCREEN);
+		camera = new Camera(GameModePolicy.TOUCH);
+		startGame = null;
 	}
 
 	public void salvaStream(String file){
@@ -367,6 +367,14 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 
 	public void setLoseDialog(CGTDialog loseDialog) {
 		this.loseDialog = loseDialog;
+	}
+
+	public CGTButtonStartGame getStartGame() {
+		return startGame;
+	}
+
+	public void setStartGame(CGTButtonStartGame startGame) {
+		this.startGame = startGame;
 	}
 		
 	

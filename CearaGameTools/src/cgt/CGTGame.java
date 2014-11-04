@@ -7,9 +7,10 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import cgt.screen.CGTScreen;
+import cgt.screen.CGTWindow;
 
 public class CGTGame implements Serializable{
-	private CGTScreen menu;
+	private CGTWindow menu;
 
 	public CGTGame() {
 		setMenu(null);
@@ -19,11 +20,15 @@ public class CGTGame implements Serializable{
 		this.setMenu(menu);
 	}
 
-	public CGTScreen getMenu() {
+	public CGTWindow getGame() {
 		return menu;
 	}
+	
+	public boolean startWithGame() {
+		return menu instanceof CGTGameWorld;
+	}
 
-	public void setMenu(CGTScreen menu) {
+	public void setMenu(CGTWindow menu) {
 		this.menu = menu;
 	}
 

@@ -11,6 +11,7 @@ import cgt.core.CGTActor;
 import cgt.core.CGTEnemy;
 import cgt.hud.CGTButton;
 import cgt.hud.CGTButtonScreen;
+import cgt.hud.CGTButtonStartGame;
 import cgt.policy.ActionMovePolicy;
 import cgt.policy.DirectionPolicy;
 import cgt.policy.GameModePolicy;
@@ -196,7 +197,7 @@ public class MyWorldChicken {
 		voltar.setRelativeHeight(0.1f);
 
 		CGTButtonScreen voltarMenu = new CGTButtonScreen();
-		voltarMenu.setScreenToGo(game.getMenu());
+		voltarMenu.setScreenToGo(game.getGame());
 		voltarMenu.setTextureUp(new CGTTexture("data/dapexe/back_btn.png"));
 		voltarMenu.setTextureDown(new CGTTexture("data/dapexe/back_btn.png"));
 		voltarMenu.setRelativeX(0.25f);
@@ -230,7 +231,7 @@ public class MyWorldChicken {
 		voltar.setRelativeHeight(0.1f);
 
 		CGTButtonScreen voltarMenu = new CGTButtonScreen();
-		voltarMenu.setScreenToGo(game.getMenu());
+		voltarMenu.setScreenToGo(game.getGame());
 		voltarMenu.setTextureUp(new CGTTexture("data/dapexe/back_btn.png"));
 		voltarMenu.setTextureDown(new CGTTexture("data/dapexe/back_btn.png"));
 		voltarMenu.setRelativeX(0.45f);
@@ -254,7 +255,7 @@ public class MyWorldChicken {
 		loseDialog.setRelativeHeight(0.6f);
 
 		CGTButtonScreen voltarMenu = new CGTButtonScreen();
-		voltarMenu.setScreenToGo(game.getMenu());
+		voltarMenu.setScreenToGo(game.getGame());
 		voltarMenu.setTextureUp(new CGTTexture("data/dapexe/back_btn.png"));
 		voltarMenu.setTextureDown(new CGTTexture("data/dapexe/back_btn.png"));
 		voltarMenu.setRelativeX(0.45f);
@@ -286,7 +287,7 @@ public class MyWorldChicken {
 		backGround = new CGTTexture("data/dapexe/casas_ceara_cenario.png");
 		world.setBackground(backGround);
 		//world.setMusic(new CGTSound("data/AudioDaPexe/temaDaPexe.ogg",0.3f));
-		world.getCamera().setGameMode(GameModePolicy.ONE_SCREEN_WITHOUT_CAMERA);
+		world.getCamera().setGameMode(GameModePolicy.TOUCH);
 		
 		CGTActor personagemCGTActor = new CGTActor();
 		
@@ -301,8 +302,14 @@ public class MyWorldChicken {
 		configuracaoInputs();
 		
 		world.addWinCriterion(new CompleteCrossing(world, new Rectangle(world.getBackground().getTextureGDX().getWidth()- 1f/100f*world.getBackground().getTextureGDX().getWidth(), 1, 1f/100f*world.getBackground().getTextureGDX().getWidth(), world.getBackground().getTextureGDX().getHeight())));
-		
+		CGTButtonStartGame a = new CGTButtonStartGame(0.1f , 0.1f, 0.9f, 0.9f);
 		CGTTexture t = new CGTTexture("data/dapexe/menuInicial.png");
+//		a.setTextureUp(t);
+//		a.setTextureDown(t);
+		world.setStartGame(a);
+		world.getCamera().setInitialHeight(0.5f);
+		world.getCamera().setInitialWidth(0.5f);
+		world.getCamera().setScale(25);;
 		CGTButtonScreen btn = new CGTButtonScreen();
 		btn.setRelativeX(0.39f);
 		btn.setRelativeY(0.7f);
@@ -317,7 +324,7 @@ public class MyWorldChicken {
 		screen.getButtons().add(btn);
 		
 		game = new CGTGame();
-		game.setMenu(screen);
+		game.setMenu(world);
 		configuracaoPauseDialog();
 		configuracaoWinDialog();
 		configuracaoLDialog();

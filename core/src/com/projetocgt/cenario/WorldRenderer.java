@@ -2,7 +2,6 @@ package com.projetocgt.cenario;
 
 import java.util.Random;
 
-
 import cgt.CGTGameWorld;
 import cgt.behaviors.Behavior;
 import cgt.behaviors.Direction;
@@ -23,7 +22,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -44,38 +42,32 @@ public class WorldRenderer {
 	private CGTActor personagem;
 	private ShapeRenderer debugRenderer;
 	private SpriteBatch spriteBatch;
-	private int width;
-	private int height;
+
 	private StretchViewport viewport;
 	private Rectangle rectangleCamera;
 	private Random random;
 	private Vector2 lastActorPosition;
+	private enum CameraStage {INITIAL, FULL, CLOSE, IDLE};
 	
-	private boolean zoomCamera;
+	private CameraStage zoomCamera;
 
 	public WorldRenderer(CGTGameWorld world) {
 		this.world = world;
-		zoomCamera = false;
-		this.width =  Gdx.graphics.getWidth();
-		this.height = Gdx.graphics.getHeight();
+		zoomCamera = CameraStage.IDLE;
+		float width = world.getBackground().getTextureGDX().getWidth() * world.getCamera().getInitialWidth();
+		float height = world.getBackground().getTextureGDX().getHeight() * world.getCamera().getInitialHeight();
 		this.camera = new OrthographicCamera(width, height);
-		if(world.getCamera().getGameMode().equals(GameModePolicy.ONE_SCREEN)){
-			this.viewport = new StretchViewport(800, 480, camera);
-			this.camera.position.set(world.getActor().getPosition().x, world
-					.getActor().getPosition().y, 0);
-		} else if(world.getCamera().getGameMode().equals(GameModePolicy.ONE_SCREEN_WITHOUT_CAMERA)) {
-			this.viewport = new StretchViewport(world.getBackground().getTextureGDX().getWidth(), world.getBackground().getTextureGDX().getHeight(), camera);
-			this.camera.position.set(world.getBackground().getTextureGDX().getWidth()/2, world.getBackground().getTextureGDX().getHeight()/2, 0);
-		}
+		this.viewport = new StretchViewport(width, height, camera);
+
+		setCameraPosition();
 		this.debugRenderer = new ShapeRenderer();
 		
 		this.lastActorPosition = new Vector2();
 		this.spriteBatch = new SpriteBatch();
 		this.personagem = world.getActor();
+
 		rectangleCamera = new Rectangle(camera.position.x - camera.viewportWidth/2, camera.position.y - camera.viewportHeight/2, camera.viewportWidth, camera.viewportHeight);
 		random = new Random();
-		
-		
 	}
 
 	public SpriteBatch getSpriteBatch() {
@@ -179,55 +171,64 @@ public class WorldRenderer {
 	}
 
 	public void cameraCloseOnActor() {
-		zoomCamera = true;
+		zoomCamera = CameraStage.CLOSE;
 	}
 
+	public void cameraFullScreen() {
+		zoomCamera = CameraStage.FULL;
+	}
+
+	private void setCameraPosition() {
+		float max = world.getBackground().getTextureGDX().getWidth() - camera.viewportWidth / 2;
+		if (world.getActor().getPosition().x > max) {
+			camera.position.x = max;
+		} else {
+			float a = world.getActor().getPosition().x - camera.viewportWidth/ 2;
+			if (a < 0) a = 0;
+			camera.position.x = camera.viewportWidth/ 2 + a;
+		}
+
+		float h = world.getBackground().getTextureGDX().getHeight() - camera.viewportHeight / 2;
+		
+		if (world.getActor().getPosition().y > h) {
+			camera.position.y = h;
+		} else {
+			float a = world.getActor().getPosition().y - camera.viewportHeight/ 2;
+			if (a < 0) a = 0;
+			camera.position.y = camera.viewportHeight/ 2 + a;
+		}
+	}
+	
 	private void cameraClose() {
-		if (camera.viewportHeight > world.getBackground().getTextureGDX().getHeight() * world.getCamera().getRelativeHeight() 
-				|| camera.viewportWidth > world.getBackground().getTextureGDX().getWidth() * world.getCamera().getRelativeWidth()) {
+		if (camera.viewportHeight > world.getBackground().getTextureGDX().getHeight() * world.getCamera().getCloseHeight() 
+				|| camera.viewportWidth > world.getBackground().getTextureGDX().getWidth() * world.getCamera().getCloseWidth()) {
 			
-			if (camera.viewportHeight > world.getBackground().getTextureGDX().getHeight() * 0.5 ) {
+			if (camera.viewportHeight > world.getBackground().getTextureGDX().getHeight() * world.getCamera().getCloseHeight() ) {
 				camera.viewportHeight -= world.getCamera().getScale();
 			}
-			if (camera.viewportWidth > world.getBackground().getTextureGDX().getWidth() * 0.5){
+			if (camera.viewportWidth > world.getBackground().getTextureGDX().getWidth() * world.getCamera().getCloseWidth()){
 				camera.viewportWidth -= world.getCamera().getScale();
 			}
 			
-			float max = world.getBackground().getTextureGDX().getWidth() - camera.viewportWidth / 2;
-			if (world.getActor().getPosition().x > max) {
-				camera.position.x = max;
-			} else {
-				float a = world.getActor().getPosition().x - camera.viewportWidth/ 2;
-				if (a < 0) a = 0;
-				camera.position.x = camera.viewportWidth / 2 + a;
-			}
-//			max = world.getBackground().getTextureGDX().getHeight() - camera.viewportHeight/ 2;
-//			if (world.getActor().getPosition().y > max) {
-//				camera.position.y = max;
-//			} else {
-//				camera.position.y = camera.viewportHeight / 2;
-//			}
-//			System.out.println(camera.position.y);
+			setCameraPosition();
+		} else {
+			zoomCamera = CameraStage.IDLE;
 		}
 	}
 
 	private void cameraOpen() {
-		if (camera.viewportHeight < world.getBackground().getTextureGDX().getHeight() 
-				|| camera.viewportWidth < world.getBackground().getTextureGDX().getWidth()) {
+		if (camera.viewportHeight < world.getBackground().getTextureGDX().getHeight() * world.getCamera().getFullHeight()
+				|| camera.viewportWidth < world.getBackground().getTextureGDX().getWidth() * world.getCamera().getFullWidth()) {
 			
-			if (camera.viewportHeight < world.getBackground().getTextureGDX().getHeight() * 0.5 ) {
-				camera.viewportHeight += 5;
-			}
-			if (camera.viewportWidth < world.getBackground().getTextureGDX().getWidth() * 0.5){
-				camera.viewportWidth += 5;
+			if (camera.viewportHeight < world.getBackground().getTextureGDX().getHeight() * world.getCamera().getFullHeight()) {
+				camera.viewportHeight += world.getCamera().getScale();
 			}
 			
-			float max = world.getBackground().getTextureGDX().getWidth() - camera.viewportWidth / 2;
-			if (world.getActor().getPosition().x > max) {
-				camera.position.x = max;
-			} else {
-				camera.position.x = camera.viewportWidth / 2;
+			if (camera.viewportWidth < world.getBackground().getTextureGDX().getWidth() * world.getCamera().getFullWidth()){
+				camera.viewportWidth += world.getCamera().getScale();
 			}
+
+			setCameraPosition();
 //			max = world.getBackground().getTextureGDX().getHeight() - camera.viewportHeight/ 2;
 //			if (world.getActor().getPosition().y > max) {
 //				camera.position.y = max;
@@ -236,14 +237,17 @@ public class WorldRenderer {
 //				if (a < 0) a = 0;
 //				camera.position.y = camera.viewportHeight / 2 + a;
 //			}
+		} else {
+			zoomCamera = CameraStage.IDLE;
 		}
 	}
 	
 	
 	private void updateCamera() {
-		
-		if (zoomCamera) {
+		if (zoomCamera == CameraStage.CLOSE) {
 			cameraClose();
+		} else if (zoomCamera == CameraStage.FULL) {
+			cameraOpen();
 		}
 		
 		camera.update();
@@ -733,12 +737,12 @@ public class WorldRenderer {
 
 		// Verifica se colidiu com algum Enemy
 		for (int i = 0; i < world.getEnemies().size(); i++) {
-				if (world.getEnemies().get(i).getCollision().overlaps(personagem.getCollision())) {
-						animationDamage(world.getEnemies().get(i));
-						if (world.getEnemies().get(i).isBlock()) {
-								colision = true;
-						}
+			if (world.getEnemies().get(i).getCollision().overlaps(personagem.getCollision())) {
+				animationDamage(world.getEnemies().get(i));
+				if (world.getEnemies().get(i).isBlock()) {
+					colision = true;
 				}
+			}
 		}
 
 		// Verifica se colidiu com algum Bonus
@@ -837,20 +841,6 @@ public class WorldRenderer {
 	 */
 	public CGTProjectile getCurrentActorProjectile() {
 		return world.getActor().getProjectiles().get(world.getActor().getFireDefault());
-	}
-
-	/**
-	 * @return the width
-	 */
-	public int getWidth() {
-		return width;
-	}
-
-	/**
-	 * @return the height
-	 */
-	public int getHeight() {
-		return height;
 	}
 
 	/**

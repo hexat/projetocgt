@@ -73,6 +73,7 @@ public class CGTEnemy extends CGTGameObject implements Serializable{
 	public ArrayList<Behavior> getBehaviors(){
 		return behaviors;
 	}
+	
 	public void addBehavior(Behavior behavior) {
 		behaviors.add(behavior);
 	}

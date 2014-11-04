@@ -19,20 +19,26 @@ public class StarAssault extends Game {
 
 	@Override
 	public void create() {
-		setScreen(new GeneralScreen(new MyWorldChicken().getGame().getMenu()));
+//		setScreen(new GeneralScreen(new MyWorldChicken().getGame().getMenu()));
+		restart(null);
 	}
 	
 //	public CGTScreen getMenu() {
 //		return CGTGame.getSavedGame().;
 //	}
-	
-	public void setScreen(CGTWindow window){
+
+	public void restart(CGTWindow window){
 		//TODO
 //		if(window instanceof CGTGameWorld){
 //			setScreen(new GameScreen(CGTGame.getSavedGame().g));
 //		}
 //		else
-		setScreen(new GeneralScreen(new MyWorldChicken().getGame().getMenu()));	
+		CGTGame game = new MyWorldChicken().getGame();
+		if (game.startWithGame()) {
+			setScreen(new GameScreen((CGTGameWorld) game.getGame()));	
+		} else {
+			setScreen(new GeneralScreen((CGTScreen) game.getGame()));
+		}
 	}
 	
 	public static StarAssault getInstance() {
