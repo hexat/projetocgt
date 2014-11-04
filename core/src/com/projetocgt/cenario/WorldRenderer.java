@@ -501,27 +501,57 @@ public class WorldRenderer {
 				Direction direction = (Direction) behavior;
 				int[] angulos = { 0, 180 };
 
-
-				if (random.nextFloat() < 0.0001 * enemy.getSpeed())
-					scheduleDirection(angulos, enemy);
-
-				if (enemy.getPosition().x < direction.getMinX())
-					enemy.getVelocity().x = enemy.getSpeed();
-				if (enemy.getPosition().x > direction.getMaxX())
-					enemy.getVelocity().x = -enemy.getSpeed();
+				if (direction.isInteligenceMoviment()){
+					if (random.nextFloat() < 0.0001 * enemy.getSpeed())
+						scheduleDirection(angulos, enemy);
+	
+					if (enemy.getPosition().x < direction.getMinX())
+						enemy.getVelocity().x = enemy.getSpeed();
+					if (enemy.getPosition().x > direction.getMaxX())
+						enemy.getVelocity().x = -enemy.getSpeed();
+				} else {
+					if(direction.getDistancia() > direction.getMaxX()/2){
+						if (enemy.getPosition().x  < direction.getMaxX()){
+							enemy.getVelocity().x = enemy.getSpeed();
+						} else{
+							direction.setDistancia(direction.getMaxX() - enemy.getPosition().x);
+						}
+					} else {
+						if (enemy.getPosition().x > direction.getMinX()){
+							enemy.getVelocity().x = -enemy.getSpeed();
+						} else{
+							direction.setDistancia(direction.getMaxX() - enemy.getPosition().x);
+						}
+					}
+				}
 			}
 
 			else if (behavior.getBehaviorPolicy().equals("UP_AND_DOWN")) {
 				Direction direction = (Direction) behavior;
 				int[] angulos = { 90, 270 };
-
-				if (random.nextFloat() < 0.0001 * enemy.getSpeed())
-					scheduleDirection(angulos, enemy);
-
-				if (enemy.getPosition().y < direction.getMinY())
-					enemy.getVelocity().y = enemy.getSpeed();
-				if (enemy.getPosition().y > direction.getMaxY())
-					enemy.getVelocity().y = -enemy.getSpeed();
+				if (direction.isInteligenceMoviment()){
+					if (random.nextFloat() < 0.0001 * enemy.getSpeed())
+						scheduleDirection(angulos, enemy);
+	
+					if (enemy.getPosition().y < direction.getMinY())
+						enemy.getVelocity().y = enemy.getSpeed();
+					if (enemy.getPosition().y > direction.getMaxY())
+						enemy.getVelocity().y = -enemy.getSpeed();
+				} else{
+					if(direction.getDistancia() > direction.getMaxY()/2){
+						if (enemy.getPosition().y  < direction.getMaxY()){
+							enemy.getVelocity().y = enemy.getSpeed();
+						} else{
+							direction.setDistancia(direction.getMaxY() - enemy.getPosition().y);
+						}
+					} else {
+						if (enemy.getPosition().y > direction.getMinY()){
+							enemy.getVelocity().y = -enemy.getSpeed();
+						} else{
+							direction.setDistancia(direction.getMaxY() - enemy.getPosition().y);
+						}
+					}
+				}
 			}
 
 			else if (behavior.getBehaviorPolicy().equals("FOUR_DIRECTION")) {
@@ -566,7 +596,7 @@ public class WorldRenderer {
 				Fade fade = (Fade) behavior;
 				scheduleFadeIn(enemy, fade);
 			}
-
+			
 			stateUpdater(enemy);
 
 		}
@@ -690,7 +720,6 @@ public class WorldRenderer {
 	
 					}
 				} else {
-					System.out.println("ENTREI AQUI");
 					world.getBonus().get(i).setState(StatePolicy.DIE);
 				}
 				colision = true;

@@ -47,7 +47,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	private SpriteBatch spriteBatch;
 	private Music music;
 	private boolean flagTouch;
-	private InputPolicy currentDragged = null;
 	private Vector2 lastPoint;
 	public GameScreen(CGTGameWorld world) {
 				

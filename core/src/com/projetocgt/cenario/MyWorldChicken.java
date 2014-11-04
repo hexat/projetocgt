@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import cgt.CGTGame;
 import cgt.CGTGameWorld;
 import cgt.behaviors.Direction;
+import cgt.behaviors.Sine;
 import cgt.core.CGTActor;
 import cgt.core.CGTEnemy;
 import cgt.hud.CGTButton;
@@ -15,6 +16,7 @@ import cgt.policy.ActionMovePolicy;
 import cgt.policy.DirectionPolicy;
 import cgt.policy.GameModePolicy;
 import cgt.policy.InputPolicy;
+import cgt.policy.MovementPolicy;
 import cgt.policy.StatePolicy;
 import cgt.screen.CGTDialog;
 import cgt.screen.CGTScreen;
@@ -72,12 +74,14 @@ public class MyWorldChicken {
 		// inicializando o carro no cenario
 
 		Direction direction = new Direction(DirectionPolicy.LEFT_AND_RIGHT);
-		direction.setMaxX(700);
-		direction.setMinX(20);
+		direction.setMaxX(1200);
+		direction.setMinX(0);
+		direction.setInteligenceMoviment(false);
 
 		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
 		directionUp.setMaxY(1200);
 		directionUp.setMinY(0);
+		directionUp.setInteligenceMoviment(false);
 
 		Direction directionFour = new Direction(DirectionPolicy.FOUR_DIRECTION);
 		directionFour.setMaxY(600);
@@ -141,8 +145,8 @@ public class MyWorldChicken {
 
 		carroCGT2.setBlock(true);
 		carroCGT2.setDestroyable(false);
-		carroCGT2.setDamage(10);
-		carroCGT2.addBehavior(directionUp);
+		carroCGT2.setDamage(50);
+		carroCGT2.addBehavior(direction);
 		carroCGT2.setSpeed(200);
 
 		carroCGT2.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
@@ -156,17 +160,16 @@ public class MyWorldChicken {
 		// Action
 
 		CGTAnimation moveCarro = new CGTAnimation(carroCGT2);
-		moveCarro.setSpriteLine(2);
-		moveCarro.addStatePolicy(StatePolicy.LOOKDOWN);
-
+		moveCarro.setSpriteLine(1);
+		moveCarro.addStatePolicy(StatePolicy.LOOKRIGHT);
 		moveCarro.setSpriteVelocity(0.08f);
 		moveCarro.setAnimationPolicy(PlayMode.LOOP);
 		carroCGT2.getAnimarions().add(moveCarro);
 
 		CGTAnimation moveCarroLeft = new CGTAnimation(carroCGT2);
 		moveCarroLeft.setFlipHorizontal(true);
-		moveCarroLeft.setSpriteLine(3);
-		moveCarroLeft.addStatePolicy(StatePolicy.LOOKUP);
+		moveCarroLeft.setSpriteLine(1);
+		moveCarroLeft.addStatePolicy(StatePolicy.LOOKLEFT);
 		moveCarroLeft.setSpriteVelocity(0.08f);
 		moveCarroLeft.setAnimationPolicy(PlayMode.LOOP);
 		carroCGT2.getAnimarions().add(moveCarroLeft);
@@ -176,6 +179,57 @@ public class MyWorldChicken {
 
 	}
 
+	public void configuracaoPeixes(){
+		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
+		directionUp.setMaxY(200);
+		directionUp.setMinY(0);
+		directionUp.setInteligenceMoviment(false);
+		
+		CGTEnemy peixe = new CGTEnemy();
+		
+		Vector2 positionPeixe = new Vector2(200, 0);
+		peixe.setPosition(positionPeixe);
+
+		Rectangle coliderPeixe = new Rectangle(22, 0, 60, 94);
+		peixe.setCollision(coliderPeixe);
+
+		Rectangle tamanhoPeixe = new Rectangle(0, 0, 98, 90);
+		peixe.setBounds(tamanhoPeixe);
+		
+		peixe.setState(StatePolicy.IDLEDOWN);
+		peixe.setLife(50);
+		peixe.setBlock(true);
+		peixe.setDestroyable(false);
+		peixe.setDamage(50);
+		peixe.addBehavior(directionUp);
+		peixe.setSpeed(100);
+
+		peixe.setSpriteSheet(new CGTSpriteSheet(
+				"data/dapexe/SpriteSheet_carro_jeep.png"));
+		peixe.getSpriteSheet().setRows(3);
+		peixe.getSpriteSheet().setColumns(2);
+		
+		// Action
+		CGTAnimation moveCarroDown = new CGTAnimation(peixe);
+		moveCarroDown.setSpriteLine(2);
+		moveCarroDown.addStatePolicy(StatePolicy.LOOKDOWN);
+
+		moveCarroDown.setSpriteVelocity(0.08f);
+		moveCarroDown.setAnimationPolicy(PlayMode.LOOP);
+		peixe.getAnimarions().add(moveCarroDown);
+
+		CGTAnimation moveCarroUp = new CGTAnimation(peixe);
+		moveCarroUp.setSpriteLine(3);
+		moveCarroUp.addStatePolicy(StatePolicy.LOOKUP);
+
+		moveCarroUp.setSpriteVelocity(0.08f);
+		moveCarroUp.setAnimationPolicy(PlayMode.LOOP);
+		peixe.getAnimarions().add(moveCarroUp);
+
+		peixe.getAnimarions().add(moveCarroUp);
+		world.getEnemies().add(peixe);
+	}
+	
 	public void configuracaoPauseDialog() {
 		CGTDialog pauseDialog = new CGTDialog();
 		pauseDialog.setActive(false);
@@ -294,7 +348,9 @@ public class MyWorldChicken {
 		
 		configuracaoActionActor(personagemCGTActor);
 		
-		//configuracaoCarros();
+		configuracaoCarros();
+		
+		configuracaoPeixes();
 		
 		world.setActor(personagemCGTActor);
 		

@@ -15,6 +15,8 @@ public class Direction implements Behavior, Serializable {
 	private int maxX;
 	private int minY;
 	private int maxY;
+	private boolean inteligenceMoviment;
+	private float distancia;
 	
 	//Comportamento a ser aplicado
 
@@ -22,8 +24,21 @@ public class Direction implements Behavior, Serializable {
 	
 	public Direction(DirectionPolicy directionPolicy){
 		setDirectionPolicy(directionPolicy);
+		distancia = 500;
 	}
 	 
+	public boolean isInteligenceMoviment() {
+		return inteligenceMoviment;
+	}
+
+
+
+	public void setInteligenceMoviment(boolean inteligenceMoviment) {
+		this.inteligenceMoviment = inteligenceMoviment;
+	}
+
+
+
 	public DirectionPolicy getDirectionPolicy() {
 		return directionPolicy;
 	}
@@ -97,7 +112,17 @@ public class Direction implements Behavior, Serializable {
 		this.maxY = maxY;
 	}
 
+	public float getDistancia() {
+		return distancia;
+	}
 
+	public void setDistancia(float distancia) {
+		this.distancia = distancia;
+	}
+
+	public void atualizaDistancia(){
+		
+	}
 	
 	
 	 
