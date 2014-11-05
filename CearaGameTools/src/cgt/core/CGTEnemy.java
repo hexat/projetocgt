@@ -3,7 +3,10 @@ package cgt.core;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.badlogic.gdx.math.Vector2;
+
 import cgt.behaviors.Behavior;
+import cgt.policy.DirectionPolicy;
 import cgt.policy.StatePolicy;
 import cgt.unit.LabelID;
 
@@ -74,8 +77,26 @@ public class CGTEnemy extends CGTGameObject implements Serializable{
 		return behaviors;
 	}
 	public void addBehavior(Behavior behavior) {
+		if(behavior.getBehaviorPolicy().equals("TWO_POINTS_DIRECTION")){
+			cgt.behaviors.Direction direction = (cgt.behaviors.Direction) behavior;
+			this.setPosition(direction.getInitialPosition().cpy());
+		}
 		behaviors.add(behavior);
 	}
+	
+//	@Override
+//	public void setPosition(Vector2 position) {
+//		for(int i = 0; i < this.behaviors.size(); i++){
+//			if (this.behaviors.get(i).equals(DirectionPolicy.TWO_POINTS_DIRECTION)){
+//				cgt.behaviors.Direction direction = (cgt.behaviors.Direction) this.behaviors.get(i);
+//				Vector2 initialPosition = new Vector2(direction.getMinX(), direction.getMinY());
+//				this.setPosition(initialPosition);
+//			} 
+//		}
+//		if (this.getPosition() == null){
+//			this.setPosition(position);
+//		}
+//	}
 	
 	public void removeBehavior(Behavior behavior) {
 		behaviors.remove(behavior);

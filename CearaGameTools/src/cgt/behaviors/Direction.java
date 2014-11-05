@@ -2,6 +2,8 @@ package cgt.behaviors;
 
 import java.io.Serializable;
 
+import com.badlogic.gdx.math.Vector2;
+
 import cgt.policy.DirectionPolicy;
 
 public class Direction implements Behavior, Serializable {
@@ -15,6 +17,8 @@ public class Direction implements Behavior, Serializable {
 	private int maxX;
 	private int minY;
 	private int maxY;
+	private Vector2 initialPosition;
+	private Vector2 finalPosition;
 	private boolean inteligenceMoviment;
 	private float distancia;
 	
@@ -24,6 +28,8 @@ public class Direction implements Behavior, Serializable {
 	
 	public Direction(DirectionPolicy directionPolicy){
 		setDirectionPolicy(directionPolicy);
+		this.initialPosition = new Vector2();
+		this.finalPosition = new Vector2();
 		distancia = 500;
 	}
 	 
@@ -120,9 +126,23 @@ public class Direction implements Behavior, Serializable {
 		this.distancia = distancia;
 	}
 
-	public void atualizaDistancia(){
-		
+	public Vector2 getInitialPosition() {
+		return initialPosition;
 	}
+
+	public void setInitialPosition(Vector2 initialPosition) {
+		this.initialPosition = initialPosition;
+	}
+
+	public Vector2 getFinalPosition() {
+		return finalPosition;
+	}
+
+	public void setFinalPosition(Vector2 finalPosition) {
+		this.finalPosition = finalPosition;
+	}
+
+	
 	
 	
 	 

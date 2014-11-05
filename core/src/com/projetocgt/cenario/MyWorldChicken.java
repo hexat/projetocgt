@@ -74,8 +74,8 @@ public class MyWorldChicken {
 		// inicializando o carro no cenario
 
 		Direction direction = new Direction(DirectionPolicy.LEFT_AND_RIGHT);
-		direction.setMaxX(1200);
-		direction.setMinX(0);
+		direction.setMaxX(1200);	
+		direction.setMinX(0);	
 		direction.setInteligenceMoviment(false);
 
 		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
@@ -88,9 +88,15 @@ public class MyWorldChicken {
 		directionFour.setMinY(400);
 		directionFour.setMaxX(1600);
 		directionFour.setMinX(1130);
+		
+		Direction direction2Points = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
+		direction2Points.setInitialPosition(new Vector2(900,800));
+		direction2Points.setFinalPosition(new Vector2(100,200));
+		
 
 		CGTEnemy carroCGT = new CGTEnemy();
-
+		carroCGT.addBehavior(directionUp);
+		
 		Vector2 positionCarro = new Vector2(780, 600);
 		carroCGT.setPosition(positionCarro);
 
@@ -103,7 +109,7 @@ public class MyWorldChicken {
 		carroCGT.setBlock(true);
 		carroCGT.setDestroyable(false);
 		carroCGT.setDamage(50);
-		carroCGT.addBehavior(directionUp);
+		
 		carroCGT.setSpeed(200);
 
 		carroCGT.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
@@ -133,7 +139,7 @@ public class MyWorldChicken {
 		world.getEnemies().add(carroCGT);
 
 		CGTEnemy carroCGT2 = new CGTEnemy();
-
+		carroCGT2.addBehavior(direction);
 		Vector2 positionCarro2 = new Vector2(600, 560);
 		carroCGT2.setPosition(positionCarro2);
 
@@ -146,7 +152,7 @@ public class MyWorldChicken {
 		carroCGT2.setBlock(true);
 		carroCGT2.setDestroyable(false);
 		carroCGT2.setDamage(50);
-		carroCGT2.addBehavior(direction);
+		
 		carroCGT2.setSpeed(200);
 
 		carroCGT2.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
@@ -176,6 +182,50 @@ public class MyWorldChicken {
 
 		// Add na lista de enemy
 		world.getEnemies().add(carroCGT2);
+		
+		
+		CGTEnemy carroCGT3 = new CGTEnemy();
+		carroCGT3.addBehavior(direction2Points);
+//		Vector2 positionCarro3 = new Vector2(0, 0);
+//		carroCGT3.setPosition(positionCarro3);
+
+		Rectangle coliderCarro3 = new Rectangle(22, 0, 60, 94);
+		carroCGT3.setCollision(coliderCarro3);
+
+		Rectangle tamanhoCarro3 = new Rectangle(0, 0, 98, 90);
+		carroCGT3.setBounds(tamanhoCarro3);
+
+		carroCGT3.setBlock(true);
+		carroCGT3.setDestroyable(false);
+		carroCGT3.setDamage(50);
+		
+		carroCGT3.setSpeed(200);
+
+		carroCGT3.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
+		carroCGT3.getSpriteSheet().setRows(3);
+		carroCGT3.getSpriteSheet().setColumns(2);
+
+		CGTSound soundCar3 = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.2f);
+		carroCGT3.setSound(soundCar3);
+
+		// Action
+		CGTAnimation moveCarroDown3 = new CGTAnimation(carroCGT3);
+		moveCarroDown3.setSpriteLine(2);
+		moveCarroDown3.addStatePolicy(StatePolicy.LOOKDOWN);
+
+		moveCarroDown3.setSpriteVelocity(0.08f);
+		moveCarroDown3.setAnimationPolicy(PlayMode.LOOP);
+		carroCGT3.getAnimarions().add(moveCarroDown3);
+
+//		CGTAnimation moveCarroUp3 = new CGTAnimation(carroCGT3);
+//		moveCarroUp3.setSpriteLine(3);
+//		moveCarroUp3.addStatePolicy(StatePolicy.LOOKUP);
+//
+//		moveCarroUp3.setSpriteVelocity(0.08f);
+//		moveCarroUp3.setAnimationPolicy(PlayMode.LOOP);
+//		carroCGT3.getAnimarions().add(moveCarroUp3);
+
+		world.getEnemies().add(carroCGT3);
 
 	}
 

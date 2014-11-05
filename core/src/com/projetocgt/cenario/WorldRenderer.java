@@ -590,6 +590,32 @@ public class WorldRenderer {
 				if (enemy.getPosition().y > direction.getMaxY())
 					enemy.getVelocity().y = -enemy.getSpeed();
 			}
+			
+			else if(behavior.getBehaviorPolicy().equals("TWO_POINTS_DIRECTION")){
+				Direction direction = (Direction) behavior;
+				Double distanciaTotal = Math.sqrt(Math.pow(direction.getFinalPosition().x - direction.getInitialPosition().x, 2) + Math.pow(direction.getFinalPosition().y - direction.getInitialPosition().y, 2));
+				if (direction.getDistancia() < direction.getFinalPosition().y){
+					// O enemy ta subindo
+					System.out.println(direction.getInitialPosition().x);
+						if (enemy.getPosition().y < direction.getFinalPosition().y){
+							enemy.getVelocity().y = enemy.getSpeed()*(direction.getFinalPosition().y - direction.getInitialPosition().y) / distanciaTotal.floatValue();
+							enemy.getVelocity().x = enemy.getSpeed()*(direction.getFinalPosition().x - direction.getInitialPosition().x)/ distanciaTotal.floatValue();
+						}else {
+							direction.setDistancia(enemy.getPosition().y);
+						}
+				} else { 
+					// O enemy ta descendo
+					//System.out.println(enemy.getPosition().x);
+					//System.out.println(direction.getInitialPosition().x);
+					if (enemy.getPosition().x > direction.getInitialPosition().x){
+						System.out.println("AQUI");
+						enemy.getVelocity().y = enemy.getSpeed()*(direction.getInitialPosition().y - direction.getFinalPosition().y) / distanciaTotal.floatValue();
+						enemy.getVelocity().x = enemy.getSpeed()*(direction.getInitialPosition().x - direction.getFinalPosition().x)/ distanciaTotal.floatValue();
+					} else {
+						direction.setDistancia(enemy.getPosition().y);
+					}
+				}
+			}
 
 			// Fade - Usado para se "apagar" ou fazer um sprite "surgir"
 			else if (behavior.getBehaviorPolicy().equals("FADE_IN")) {
@@ -614,6 +640,14 @@ public class WorldRenderer {
 
 		else if (enemy.getVelocity().y < 0 & enemy.getVelocity().x == 0)
 			enemy.setState(StatePolicy.LOOKDOWN);
+//		else if(enemy.getVelocity().y > 0 && enemy.getVelocity().x > 0)
+//			enemy.setState(StatePolicy.LOOK_RIGHT_AND_UP);
+//		else if(enemy.getVelocity().y < 0 && enemy.getVelocity().x < 0)
+//			enemy.setState(StatePolicy.LOOK_LEFT_AND_DOWN);
+//		else if (enemy.getVelocity().y > 0 && enemy.getVelocity().x < 0)
+//			enemy.setState(StatePolicy.LOOK_LEFT_AND_UP);
+//		else if (enemy.getVelocity().y < 0 && enemy.getVelocity().x > 0)
+//			enemy.setState(StatePolicy.LOOK_RIGHT_AND_DOWN);
 	}
 
 	/**
