@@ -6,6 +6,7 @@ import cgt.screen.CGTWindow;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.cenario.WorldController;
 
@@ -103,10 +104,18 @@ public class TouchInputs implements InputProcessor{
 //		}
 //		
 //		return false;
+
 		contador += 1;
 		if (contador > 5){
 			lastPoint.x = screenX;
 			lastPoint.y = screenY;
+			
+			
+//			System.out.println(world.getActor().getPosition().y);
+//			System.out.println(screenY);
+//			world.getActor().getVelocity().y = world.getActor().getPosition().y - Gdx.input.getY() ;
+			
+			
 			if(Math.abs(firstPoint.x - lastPoint.x) > Math.abs(firstPoint.y-lastPoint.y)){
 				if (firstPoint.x > lastPoint.x){
 					//System.out.println("SLIDE LEFT");

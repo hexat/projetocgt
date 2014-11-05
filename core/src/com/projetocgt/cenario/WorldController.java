@@ -118,6 +118,7 @@ public class WorldController {
 			personagem.getVelocity().x = 0;
 			releaseAllDirectionKeys();
 		}
+
 		personagem.update(delta);
 
 		for (int i=0; i<world.getOpposites().size(); i++) {
@@ -138,6 +139,7 @@ public class WorldController {
 	}
 
 	private void moveKeys(){
+		System.out.println(personagem.getVelocity().y );
 		if (keys.get(ActionMovePolicy.WALK_UP)) {
 			//Verifica se o personagem pode andar
 			personagem.setState(StatePolicy.LOOKUP);
@@ -149,6 +151,7 @@ public class WorldController {
 				personagem.getVelocity().y = 0;
 			}
 		}
+		System.out.println(personagem.getVelocity().y );
 
 		if (keys.get(ActionMovePolicy.WALK_DOWN)) {
 			// O personagem esta olhando para a baixo

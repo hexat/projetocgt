@@ -11,10 +11,15 @@ public class Direction implements Behavior, Serializable {
 	private static final long serialVersionUID = 2118059060366691269L;
 
 	//Demarcadores da area de movimentacao
+	
 	private int minX;
-	private int maxX;
 	private int minY;
+	private int maxX;
 	private int maxY;
+	
+	
+	
+	
 	private boolean inteligenceMoviment;
 	private float distancia;
 	

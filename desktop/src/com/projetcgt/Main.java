@@ -9,8 +9,8 @@ public class Main {
 		
 		LwjglApplicationConfiguration cgf = new LwjglApplicationConfiguration();
 		cgf.vSyncEnabled = true;
-		cgf.width = 640;
-		cgf.height = 480;
+		cgf.width = 960;
+		cgf.height = 640;
 		new LwjglApplication(StarAssault.getInstance(),cgf);
 	}
 }

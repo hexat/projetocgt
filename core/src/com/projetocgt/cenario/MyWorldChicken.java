@@ -45,28 +45,28 @@ public class MyWorldChicken {
 		personagemCGTActor.setLife(30);
 		personagemCGTActor.setSpeed(100);
 
-		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet("data/dapexe/sprite_garoto.png"));
-		personagemCGTActor.getSpriteSheet().setRows(5);
-		personagemCGTActor.getSpriteSheet().setColumns(3);
+		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet("data/chicken/galinha.png"));
+		personagemCGTActor.getSpriteSheet().setRows(8);
+		personagemCGTActor.getSpriteSheet().setColumns(4);
 
 	}
 
 	public void configuracaoActionActor(CGTActor personagemCGTActor) {
 
 		CGTAnimation moveUp = new CGTAnimation(personagemCGTActor);
-		moveUp.setSpriteLine(2);
-		moveUp.addStatePolicy(StatePolicy.LOOKRIGHT);
+		moveUp.setInitialFrame(new Vector2(0, 0));
+		moveUp.setEndingFrame(new Vector2(1, 7));
+		moveUp.addStatePolicy(StatePolicy.IDLE);
 		moveUp.setFlipHorizontal(false);
-		moveUp.setSpriteVelocity(0.2f);
-		moveUp.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
+		moveUp.setSpriteVelocity(0.13f);
 
-		CGTAnimation animationDamege = new CGTAnimation(personagemCGTActor);
-		animationDamege.setSpriteLine(5);
-		animationDamege.addStatePolicy(StatePolicy.DAMAGE);
-		animationDamege.setSpriteVelocity(0.2f);
-		animationDamege.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
-
-		personagemCGTActor.getAnimarions().add(animationDamege);
+//		CGTAnimation animationDamege = new CGTAnimation(personagemCGTActor);
+//		animationDamege.setSpriteLine(5);
+//		animationDamege.addStatePolicy(StatePolicy.DAMAGE);
+//		animationDamege.setSpriteVelocity(0.2f);
+//		animationDamege.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
+//
+//		personagemCGTActor.getAnimarions().add(animationDamege);
 		personagemCGTActor.getAnimarions().add(moveUp);
 		
 	}
@@ -76,7 +76,7 @@ public class MyWorldChicken {
 
 		Direction direction = new Direction(DirectionPolicy.LEFT_AND_RIGHT);
 		direction.setMaxX(1200);
-		direction.setMinX(0);
+		direction.setMinX(500);
 		direction.setInteligenceMoviment(false);
 
 		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
@@ -95,10 +95,10 @@ public class MyWorldChicken {
 		Vector2 positionCarro = new Vector2(780, 600);
 		carroCGT.setPosition(positionCarro);
 
-		Rectangle coliderCarro = new Rectangle(22, 0, 60, 94);
+		Rectangle coliderCarro = new Rectangle(0, 0, 252, 252);
 		carroCGT.setCollision(coliderCarro);
 
-		Rectangle tamanhoCarro = new Rectangle(0, 0, 98, 90);
+		Rectangle tamanhoCarro = new Rectangle(0, 0, 252, 252);
 		carroCGT.setBounds(tamanhoCarro);
 
 		carroCGT.setBlock(true);
@@ -107,29 +107,29 @@ public class MyWorldChicken {
 		carroCGT.addBehavior(directionUp);
 		carroCGT.setSpeed(200);
 
-		carroCGT.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
-		carroCGT.getSpriteSheet().setRows(3);
-		carroCGT.getSpriteSheet().setColumns(2);
+		carroCGT.setSpriteSheet(new CGTSpriteSheet("data/chicken/vaca_spritesheet.png"));
+		carroCGT.getSpriteSheet().setRows(2);
+		carroCGT.getSpriteSheet().setColumns(1);
 
 		CGTSound soundCar = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.2f);
 		carroCGT.setSound(soundCar);
 
 		// Action
 		CGTAnimation moveCarroDown = new CGTAnimation(carroCGT);
-		moveCarroDown.setSpriteLine(2);
-		moveCarroDown.addStatePolicy(StatePolicy.LOOKDOWN);
+		moveCarroDown.setSpriteLine(1);
+//		moveCarroDown.addStatePolicy(StatePolicy.LOOKDOWN);
 
 		moveCarroDown.setSpriteVelocity(0.08f);
 		moveCarroDown.setAnimationPolicy(PlayMode.LOOP);
 		carroCGT.getAnimarions().add(moveCarroDown);
 
-		CGTAnimation moveCarroUp = new CGTAnimation(carroCGT);
-		moveCarroUp.setSpriteLine(3);
-		moveCarroUp.addStatePolicy(StatePolicy.LOOKUP);
-
-		moveCarroUp.setSpriteVelocity(0.08f);
-		moveCarroUp.setAnimationPolicy(PlayMode.LOOP);
-		carroCGT.getAnimarions().add(moveCarroUp);
+//		CGTAnimation moveCarroUp = new CGTAnimation(carroCGT);
+//		moveCarroUp.setSpriteLine(3);
+//		moveCarroUp.addStatePolicy(StatePolicy.LOOKUP);
+//
+//		moveCarroUp.setSpriteVelocity(0.08f);
+//		moveCarroUp.setAnimationPolicy(PlayMode.LOOP);
+//		carroCGT.getAnimarions().add(moveCarroUp);
 
 		world.getEnemies().add(carroCGT);
 
@@ -138,10 +138,10 @@ public class MyWorldChicken {
 		Vector2 positionCarro2 = new Vector2(600, 560);
 		carroCGT2.setPosition(positionCarro2);
 
-		Rectangle coliderCarro2 = new Rectangle(0, 0, 90, 80);
+		Rectangle coliderCarro2 = new Rectangle(0, 0, 252, 252);
 		carroCGT2.setCollision(coliderCarro2);
 
-		Rectangle tamanhoCarro2 = new Rectangle(0, 0, 98, 90);
+		Rectangle tamanhoCarro2 = new Rectangle(0, 0, 252, 252);
 		carroCGT2.setBounds(tamanhoCarro2);
 
 		carroCGT2.setBlock(true);
@@ -150,9 +150,9 @@ public class MyWorldChicken {
 		carroCGT2.addBehavior(direction);
 		carroCGT2.setSpeed(200);
 
-		carroCGT2.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
-		carroCGT2.getSpriteSheet().setRows(3);
-		carroCGT2.getSpriteSheet().setColumns(2);
+		carroCGT2.setSpriteSheet(new CGTSpriteSheet("data/chicken/vaca_spritesheet.png"));
+		carroCGT2.getSpriteSheet().setRows(2);
+		carroCGT2.getSpriteSheet().setColumns(1);
 
 		CGTSound soundCar2 = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.2f);
 
@@ -161,19 +161,10 @@ public class MyWorldChicken {
 		// Action
 
 		CGTAnimation moveCarro = new CGTAnimation(carroCGT2);
-		moveCarro.setSpriteLine(1);
-		moveCarro.addStatePolicy(StatePolicy.LOOKRIGHT);
+		moveCarro.setSpriteLine(2);
 		moveCarro.setSpriteVelocity(0.08f);
 		moveCarro.setAnimationPolicy(PlayMode.LOOP);
 		carroCGT2.getAnimarions().add(moveCarro);
-
-		CGTAnimation moveCarroLeft = new CGTAnimation(carroCGT2);
-		moveCarroLeft.setFlipHorizontal(true);
-		moveCarroLeft.setSpriteLine(1);
-		moveCarroLeft.addStatePolicy(StatePolicy.LOOKLEFT);
-		moveCarroLeft.setSpriteVelocity(0.08f);
-		moveCarroLeft.setAnimationPolicy(PlayMode.LOOP);
-		carroCGT2.getAnimarions().add(moveCarroLeft);
 
 		// Add na lista de enemy
 		world.getEnemies().add(carroCGT2);
@@ -206,28 +197,28 @@ public class MyWorldChicken {
 		peixe.setSpeed(100);
 
 		peixe.setSpriteSheet(new CGTSpriteSheet(
-				"data/dapexe/SpriteSheet_carro_jeep.png"));
-		peixe.getSpriteSheet().setRows(3);
-		peixe.getSpriteSheet().setColumns(2);
+				"data/chicken/peixe_spritesheet.png"));
+		peixe.getSpriteSheet().setRows(4);
+		peixe.getSpriteSheet().setColumns(4);
 		
 		// Action
 		CGTAnimation moveCarroDown = new CGTAnimation(peixe);
-		moveCarroDown.setSpriteLine(2);
-		moveCarroDown.addStatePolicy(StatePolicy.LOOKDOWN);
+		moveCarroDown.setInitialFrame(new Vector2(0, 0));
+		moveCarroDown.setEndingFrame(new Vector2(1, 2));
 
 		moveCarroDown.setSpriteVelocity(0.08f);
 		moveCarroDown.setAnimationPolicy(PlayMode.LOOP);
 		peixe.getAnimarions().add(moveCarroDown);
 
 		CGTAnimation moveCarroUp = new CGTAnimation(peixe);
-		moveCarroUp.setSpriteLine(3);
-		moveCarroUp.addStatePolicy(StatePolicy.LOOKUP);
+		moveCarroUp.setInitialFrame(new Vector2(2, 2));
+		moveCarroUp.setEndingFrame(new Vector2(1, 3));
+		moveCarroUp.addStatePolicy(StatePolicy.DAMAGE);
 
 		moveCarroUp.setSpriteVelocity(0.08f);
 		moveCarroUp.setAnimationPolicy(PlayMode.LOOP);
 		peixe.getAnimarions().add(moveCarroUp);
 
-		peixe.getAnimarions().add(moveCarroUp);
 		world.getEnemies().add(peixe);
 	}
 	
@@ -338,7 +329,7 @@ public class MyWorldChicken {
 	
 	private void createWorld(){
 		world = new CGTGameWorld();
-		backGround = new CGTTexture("data/dapexe/casas_ceara_cenario.png");
+		backGround = new CGTTexture("data/chicken/back.png");
 		world.setBackground(backGround);
 		//world.setMusic(new CGTSound("data/AudioDaPexe/temaDaPexe.ogg",0.3f));
 		world.getCamera().setGameMode(GameModePolicy.TOUCH);
