@@ -75,6 +75,7 @@ public abstract class CGTGameObject implements Serializable {
 		animation=null;
 		soundDie = new ArrayList<CGTSound>();
 		soundCollision = new ArrayList<CGTSound>();
+		initialPositions = new ArrayList<>();
 	}
 	
 	public CGTGameObject(Vector2 position, Rectangle bounds, Rectangle collision){
@@ -86,6 +87,7 @@ public abstract class CGTGameObject implements Serializable {
 		animations = new ArrayList<CGTAnimation>();
 		setState(StatePolicy.IDLE);
 		animation=null;
+		initialPositions = new ArrayList<>();
 	}
 	
 	public LabelID getLabelID() {
@@ -181,7 +183,7 @@ public abstract class CGTGameObject implements Serializable {
 	}
 
 	public Vector2 getPosition() {
-		if (position == null){
+		if (position == null && initialPositions.size() > 0){
 			Random random = new Random();
 			position = initialPositions.get(random.nextInt(initialPositions.size()));
 		}
@@ -189,6 +191,7 @@ public abstract class CGTGameObject implements Serializable {
 	}
 
 	public void setPosition(Vector2 position) {
+		System.out.println(position);
 		this.position = position;
 	}
 

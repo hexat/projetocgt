@@ -62,8 +62,6 @@ public class WorldController {
 	
 	public void deactivateKey(InputPolicy policy){
 		Action action = world.getActionFromInput(policy);
-		System.out.println(action);
-		System.out.println(policy);
 		if (action != null){
 			keys.put(action.getActionPolicy(),false);
 			actorAnimation.stopAni();
@@ -139,11 +137,9 @@ public class WorldController {
 	}
 
 	private void moveKeys(){
-		System.out.println(personagem.getVelocity().y );
 		if (keys.get(ActionMovePolicy.WALK_UP)) {
 			//Verifica se o personagem pode andar
 			personagem.setState(StatePolicy.LOOKUP);
-			//System.out.println("AQUI");
 			if( (personagem.getPosition().y + personagem.getBounds().height) < renderer.getWorld().getBackground().getTextureGDX().getHeight())
 				personagem.getVelocity().y = personagem.getSpeed();
 			
@@ -151,7 +147,6 @@ public class WorldController {
 				personagem.getVelocity().y = 0;
 			}
 		}
-		System.out.println(personagem.getVelocity().y );
 
 		if (keys.get(ActionMovePolicy.WALK_DOWN)) {
 			// O personagem esta olhando para a baixo
