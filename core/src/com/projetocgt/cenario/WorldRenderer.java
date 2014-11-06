@@ -204,10 +204,10 @@ public class WorldRenderer {
 				|| camera.viewportWidth > world.getBackground().getTextureGDX().getWidth() * world.getCamera().getCloseWidth()) {
 			
 			if (camera.viewportHeight > world.getBackground().getTextureGDX().getHeight() * world.getCamera().getCloseHeight() ) {
-				camera.viewportHeight -= world.getCamera().getScale();
+				camera.viewportHeight -= world.getCamera().getScale() * world.getBackground().getTextureGDX().getHeight();
 			}
 			if (camera.viewportWidth > world.getBackground().getTextureGDX().getWidth() * world.getCamera().getCloseWidth()){
-				camera.viewportWidth -= world.getCamera().getScale();
+				camera.viewportWidth -= world.getCamera().getScale() * world.getBackground().getTextureGDX().getWidth();
 			}
 			
 			setCameraPosition();
@@ -221,11 +221,11 @@ public class WorldRenderer {
 				|| camera.viewportWidth < world.getBackground().getTextureGDX().getWidth() * world.getCamera().getFullWidth()) {
 			
 			if (camera.viewportHeight < world.getBackground().getTextureGDX().getHeight() * world.getCamera().getFullHeight()) {
-				camera.viewportHeight += world.getCamera().getScale();
+				camera.viewportHeight += world.getCamera().getScale() * world.getBackground().getTextureGDX().getHeight();
 			}
 			
 			if (camera.viewportWidth < world.getBackground().getTextureGDX().getWidth() * world.getCamera().getFullWidth()){
-				camera.viewportWidth += world.getCamera().getScale();
+				camera.viewportWidth += world.getCamera().getScale() * world.getBackground().getTextureGDX().getWidth();
 			}
 
 			setCameraPosition();
@@ -666,7 +666,11 @@ public class WorldRenderer {
 				Direction direction = (Direction) behavior;
 //				Double distanciaTotal = Math.sqrt(Math.pow(direction.getFinalPosition().x - direction.getInitialPosition().x, 2) + Math.pow(direction.getFinalPosition().y - direction.getInitialPosition().y, 2));
 
-//				if (direction.getActorPosition() == null) {
+				if (direction.getActorPosition() == null) {
+					enemy.getPosition().x = direction.getInitialPosition().x;
+					enemy.getPosition().y = direction.getInitialPosition().y;
+					direction.setActorPosition(enemy.getPosition());
+				}
 //					direction.setActorPosition(enemy.getPosition());
 //				}else if (direction.getActorPosition().y < direction.getFinalPosition().y){
 //					// O enemy ta subindo
@@ -687,15 +691,15 @@ public class WorldRenderer {
 				if (direction.getInitialPosition().y < direction.getFinalPosition().y) {
 					if (direction.getInitialPosition().x < direction.getFinalPosition().x) {
 						// sentido nordeste
-						if (enemy.getPosition().x > direction.getFinalPosition().x && enemy.getPosition().y > direction.getFinalPosition().y) {
+						if (enemy.getPosition().x >= direction.getFinalPosition().x && enemy.getPosition().y >= direction.getFinalPosition().y) {
 							direction.invert();
 						} else {
-							if (enemy.getPosition().x <= direction.getFinalPosition().x) {
+							if (enemy.getPosition().x < direction.getFinalPosition().x) {
 								enemy.getVelocity().x = enemy.getSpeed()*(direction.getFinalPosition().x - direction.getInitialPosition().x)/ direction.getDistance();
 							} else {
 								enemy.getVelocity().x = 0;
 							}
-							if (enemy.getPosition().y <= direction.getFinalPosition().y) {
+							if (enemy.getPosition().y < direction.getFinalPosition().y) {
 								enemy.getVelocity().y = enemy.getSpeed()*(direction.getFinalPosition().y - direction.getInitialPosition().y) / direction.getDistance();
 							} else {
 								enemy.getVelocity().y = 0;
@@ -704,17 +708,18 @@ public class WorldRenderer {
 						}
 					} else {
 						//  sentido noroeste
-						if (enemy.getPosition().x < direction.getFinalPosition().x && enemy.getPosition().y > direction.getFinalPosition().y) {
+						System.out.println("noroeste");
+						if (enemy.getPosition().x <= direction.getFinalPosition().x && enemy.getPosition().y >= direction.getFinalPosition().y) {
 							direction.invert();
 						} else {
-							if (enemy.getPosition().y <= direction.getFinalPosition().y) {
+							if (enemy.getPosition().y < direction.getFinalPosition().y) {
 								enemy.getVelocity().y = enemy.getSpeed()*(direction.getFinalPosition().y - direction.getInitialPosition().y) / direction.getDistance();
 							} else {
 								enemy.getVelocity().y = 0;
 							}
 
-							if (enemy.getPosition().x >= direction.getFinalPosition().x) {
-								enemy.getVelocity().x = enemy.getSpeed()*(direction.getInitialPosition().x - direction.getFinalPosition().x)/ direction.getDistance();
+							if (enemy.getPosition().x > direction.getFinalPosition().x) {
+								enemy.getVelocity().x = enemy.getSpeed()*(direction.getFinalPosition().x - direction.getInitialPosition().x)/ direction.getDistance();
 							} else {
 								enemy.getVelocity().x = 0;
 							}
@@ -723,34 +728,36 @@ public class WorldRenderer {
 					}
 				} else {
 					if (direction.getInitialPosition().x < direction.getFinalPosition().x) {
+						System.out.println("sudeste");
 						//  sentido sudeste
-						if (enemy.getPosition().x > direction.getFinalPosition().x && enemy.getPosition().y < direction.getFinalPosition().y) {
+						if (enemy.getPosition().x >= direction.getFinalPosition().x && enemy.getPosition().y <= direction.getFinalPosition().y) {
 							direction.invert();
 						} else {
-							if (enemy.getPosition().y <= direction.getFinalPosition().y) {
-								enemy.getVelocity().y = enemy.getSpeed()*(direction.getInitialPosition().y - direction.getFinalPosition().y) / direction.getDistance();
-							} else {
-								enemy.getVelocity().y = 0;
-							}
-							
-							if (enemy.getPosition().x >= direction.getFinalPosition().x) {
-								enemy.getVelocity().x = enemy.getSpeed()*(direction.getFinalPosition().x - direction.getInitialPosition().x)/ direction.getDistance();
-							} else {
-								enemy.getVelocity().x = 0;
-							}
-
-						}
-					} else {
-						// sentido sudoeste
-						if (enemy.getPosition().x < direction.getFinalPosition().x && enemy.getPosition().y < direction.getFinalPosition().y) {
-							direction.invert();
-						} else {
-							if (enemy.getPosition().y >= direction.getFinalPosition().y) {
+//							System.out.println(enemy.getPosition().y >= direction.getFinalPosition().y);
+							if (enemy.getPosition().y > direction.getFinalPosition().y) {
 								enemy.getVelocity().y = enemy.getSpeed()*(direction.getFinalPosition().y - direction.getInitialPosition().y) / direction.getDistance();
 							} else {
 								enemy.getVelocity().y = 0;
 							}
-							if (enemy.getPosition().x >= direction.getFinalPosition().x) {
+
+//							System.out.println(enemy.getPosition().x >= direction.getFinalPosition().x);
+							if (enemy.getPosition().x < direction.getFinalPosition().x) {
+								enemy.getVelocity().x = enemy.getSpeed()*(direction.getFinalPosition().x - direction.getInitialPosition().x)/ direction.getDistance();
+							} else {
+								enemy.getVelocity().x = 0;
+							}
+						}
+					} else {
+						// sentido sudoeste
+						if (enemy.getPosition().x <= direction.getFinalPosition().x && enemy.getPosition().y <= direction.getFinalPosition().y) {
+							direction.invert();
+						} else {
+							if (enemy.getPosition().y > direction.getFinalPosition().y) {
+								enemy.getVelocity().y = enemy.getSpeed()*(direction.getFinalPosition().y - direction.getInitialPosition().y) / direction.getDistance();
+							} else {
+								enemy.getVelocity().y = 0;
+							}
+							if (enemy.getPosition().x > direction.getFinalPosition().x) {
 								enemy.getVelocity().x = enemy.getSpeed()*(direction.getFinalPosition().x - direction.getInitialPosition().x)/ direction.getDistance();
 							} else {
 								enemy.getVelocity().x = 0;

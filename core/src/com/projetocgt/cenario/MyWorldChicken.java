@@ -13,6 +13,7 @@ import cgt.core.CGTEnemy;
 import cgt.hud.CGTButton;
 import cgt.hud.CGTButtonScreen;
 import cgt.hud.CGTButtonStartGame;
+import cgt.lose.LifeDepleted;
 import cgt.policy.ActionMovePolicy;
 import cgt.policy.DirectionPolicy;
 import cgt.policy.GameModePolicy;
@@ -42,7 +43,7 @@ public class MyWorldChicken {
 
 		personagemCGTActor.setBounds(new Rectangle(0,0,60,60)); // Obrigatorio
 
-		personagemCGTActor.setLife(30);
+		personagemCGTActor.setLife(1);
 		personagemCGTActor.setSpeed(100);
 
 		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet("data/chicken/galinha.png"));
@@ -91,8 +92,8 @@ public class MyWorldChicken {
 		directionFour.setMinX(1130);
 		
 		Direction direction2Points = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
-		direction2Points.setInitialPosition(new Vector2(500,100));
-		direction2Points.setFinalPosition(new Vector2(100,800));
+		direction2Points.setInitialPosition(new Vector2(100,100));
+		direction2Points.setFinalPosition(new Vector2(50,450));
 		
 
 		CGTEnemy carroCGT = new CGTEnemy();
@@ -379,7 +380,7 @@ public class MyWorldChicken {
 	
 	private void createWorld(){
 		world = new CGTGameWorld();
-		backGround = new CGTTexture("data/chicken/back2.png");
+		backGround = new CGTTexture("data/chicken/background_final2.png");
 		world.setBackground(backGround);
 		//world.setMusic(new CGTSound("data/AudioDaPexe/temaDaPexe.ogg",0.3f));
 		world.getCamera().setGameMode(GameModePolicy.TOUCH);
@@ -406,7 +407,10 @@ public class MyWorldChicken {
 		world.setStartGame(a);
 		world.getCamera().setInitialHeight(0.5f);
 		world.getCamera().setInitialWidth(0.5f);
-		world.getCamera().setScale(25);;
+		world.getCamera().setScale(2);;
+		
+		world.getLoseCriteria().add(new LifeDepleted(personagemCGTActor));
+		
 		CGTButtonScreen btn = new CGTButtonScreen();
 		btn.setRelativeX(0.39f);
 		btn.setRelativeY(0.7f);

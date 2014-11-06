@@ -63,7 +63,7 @@ public class Camera implements Serializable{
 	}
 	
 	public void setScale(float scale) {
-		this.scale = scale;
+		this.scale = scale / 100;
 	}
 	
 	public float getCloseWidth() {
