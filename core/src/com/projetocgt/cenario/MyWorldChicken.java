@@ -75,21 +75,15 @@ public class MyWorldChicken {
 	public void configuracaoCarros() {
 		// inicializando o carro no cenario
 
-		Direction direction = new Direction(DirectionPolicy.LEFT_AND_RIGHT);
-		direction.setMaxX(1200);
-		direction.setMinX(500);
-		direction.setInteligenceMoviment(false);
-
-		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
-		directionUp.setMaxY(1200);
-		directionUp.setMinY(0);
-		directionUp.setInteligenceMoviment(false);
-
-		Direction directionFour = new Direction(DirectionPolicy.FOUR_DIRECTION);
-		directionFour.setMaxY(600);
-		directionFour.setMinY(400);
-		directionFour.setMaxX(1600);
-		directionFour.setMinX(1130);
+//		Direction direction = new Direction(DirectionPolicy.LEFT_AND_RIGHT);
+//		direction.setMaxX(1200);
+//		direction.setMinX(500);
+//		direction.setInteligenceMoviment(false);
+//
+//		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
+//		directionUp.setMaxY(1200);
+//		directionUp.setMinY(0);
+//		directionUp.setInteligenceMoviment(false);
 		
 		Direction direction2Points = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
 		direction2Points.setInitialPosition(new Vector2(100,100));
@@ -97,7 +91,7 @@ public class MyWorldChicken {
 		
 
 		CGTEnemy carroCGT = new CGTEnemy();
-		carroCGT.addBehavior(directionUp);
+//		carroCGT.addBehavior(directionUp);
 		
 		Vector2 positionCarro = new Vector2(780, 600);
 		carroCGT.setPosition(positionCarro);
@@ -141,7 +135,7 @@ public class MyWorldChicken {
 		world.getEnemies().add(carroCGT);
 
 		CGTEnemy carroCGT2 = new CGTEnemy();
-		carroCGT2.addBehavior(direction);
+//		carroCGT2.addBehavior(direction);
 		Vector2 positionCarro2 = new Vector2(600, 560);
 		carroCGT2.setPosition(positionCarro2);
 
@@ -223,10 +217,10 @@ public class MyWorldChicken {
 	}
 
 	public void configuracaoPeixes(){
-		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
-		directionUp.setMaxY(200);
-		directionUp.setMinY(0);
-		directionUp.setInteligenceMoviment(false);
+//		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
+//		directionUp.setMaxY(200);
+//		directionUp.setMinY(0);
+//		directionUp.setInteligenceMoviment(false);
 		
 		CGTEnemy peixe = new CGTEnemy();
 		
@@ -244,7 +238,7 @@ public class MyWorldChicken {
 		peixe.setBlock(true);
 		peixe.setDestroyable(false);
 		peixe.setDamage(50);
-		peixe.addBehavior(directionUp);
+//		peixe.addBehavior(directionUp);
 		peixe.setSpeed(100);
 
 		peixe.setSpriteSheet(new CGTSpriteSheet(

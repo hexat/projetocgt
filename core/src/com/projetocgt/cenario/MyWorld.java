@@ -378,20 +378,16 @@ public class MyWorld {
 		////		enemyFogo3.getSpriteSheet().loadingSpriteSheet("data/CGTOpposite/SpriteSheet_fogo.png", 2, 2);
 		//		listaDeEnemy.add(enemyFogo3);
 		//		
-		Direction direction = new Direction(DirectionPolicy.LEFT_AND_RIGHT);
-		direction.setMaxX(800);
-		direction.setMinX(330);
+//		Direction direction = new Direction(DirectionPolicy.LEFT_AND_RIGHT);
+//		direction.setMaxX(800);
+//		direction.setMinX(330);
 		//		
-		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
-		directionUp.setMaxY(2000);
-		directionUp.setMinY(200);
+		Direction directionUp = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
+		directionUp.setInitialPosition(new Vector2(800, 2000));
+		directionUp.setFinalPosition(new Vector2(800, 200));
 		//		
 		//
-		Direction directionFour = new Direction(DirectionPolicy.FOUR_DIRECTION);
-		directionFour.setMaxY(600);
-		directionFour.setMinY(400);
-		directionFour.setMaxX(1600);
-		directionFour.setMinX(1130);
+
 		//
 		//
 		//		Direction directionEight = new Direction(DirectionPolicy.EIGHT_DIRECTION);

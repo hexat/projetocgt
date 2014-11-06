@@ -633,15 +633,15 @@ public class WorldRenderer {
 				if (random.nextFloat() < 0.00005 * enemy.getSpeed())
 					scheduleDirection(angulos, enemy);
 
-				if (enemy.getPosition().x < direction.getMinX())
-					enemy.getVelocity().x = enemy.getSpeed();
-				if (enemy.getPosition().x > direction.getMaxX())
-					enemy.getVelocity().x = -enemy.getSpeed();
-
-				if (enemy.getPosition().y < direction.getMinY())
-					enemy.getVelocity().y = enemy.getSpeed();
-				if (enemy.getPosition().y > direction.getMaxY())
-					enemy.getVelocity().y = -enemy.getSpeed();
+//				if (enemy.getPosition().x < direction.getMinX())
+//					enemy.getVelocity().x = enemy.getSpeed();
+//				if (enemy.getPosition().x > direction.getMaxX())
+//					enemy.getVelocity().x = -enemy.getSpeed();
+//
+//				if (enemy.getPosition().y < direction.getMinY())
+//					enemy.getVelocity().y = enemy.getSpeed();
+//				if (enemy.getPosition().y > direction.getMaxY())
+//					enemy.getVelocity().y = -enemy.getSpeed();
 			}
 
 			else if (behavior.getBehaviorPolicy().equals("EIGHT_DIRECTION")) {
@@ -651,15 +651,15 @@ public class WorldRenderer {
 				if (random.nextFloat() < 0.0001 * enemy.getSpeed())
 					scheduleDirection(angulos, enemy);
 
-				if (enemy.getPosition().x < direction.getMinX())
-					enemy.getVelocity().x = enemy.getSpeed();
-				if (enemy.getPosition().x > direction.getMaxX())
-					enemy.getVelocity().x = -enemy.getSpeed();
-
-				if (enemy.getPosition().y < direction.getMinY())
-					enemy.getVelocity().y = enemy.getSpeed();
-				if (enemy.getPosition().y > direction.getMaxY())
-					enemy.getVelocity().y = -enemy.getSpeed();
+//				if (enemy.getPosition().x < direction.getMinX())
+//					enemy.getVelocity().x = enemy.getSpeed();
+//				if (enemy.getPosition().x > direction.getMaxX())
+//					enemy.getVelocity().x = -enemy.getSpeed();
+//
+//				if (enemy.getPosition().y < direction.getMinY())
+//					enemy.getVelocity().y = enemy.getSpeed();
+//				if (enemy.getPosition().y > direction.getMaxY())
+//					enemy.getVelocity().y = -enemy.getSpeed();
 			}
 			
 			else if(behavior.getBehaviorPolicy().equals("TWO_POINTS_DIRECTION")){
@@ -688,6 +688,7 @@ public class WorldRenderer {
 //						direction.setActorPosition(enemy.getPosition());
 //					}
 //				}
+				//TODO Movimento inteligente
 				if (direction.getInitialPosition().y < direction.getFinalPosition().y) {
 					if (direction.getInitialPosition().x < direction.getFinalPosition().x) {
 						// sentido nordeste

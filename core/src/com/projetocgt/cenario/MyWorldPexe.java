@@ -339,19 +339,13 @@ public class MyWorldPexe {
 	public void configuracaoCarros() {
 		// inicializando o carro no cenario
 
-		Direction direction = new Direction(DirectionPolicy.LEFT_AND_RIGHT);
-		direction.setMaxX(700);
-		direction.setMinX(20);
+		Direction direction = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
+		direction.setInitialPosition(new Vector2(700, 560));
+		direction.setFinalPosition(new Vector2(20, 560));
 
-		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
-		directionUp.setMaxY(900);
-		directionUp.setMinY(200);
-
-		Direction directionFour = new Direction(DirectionPolicy.FOUR_DIRECTION);
-		directionFour.setMaxY(600);
-		directionFour.setMinY(400);
-		directionFour.setMaxX(1600);
-		directionFour.setMinX(1130);
+		Direction directionUp = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
+		directionUp.setFinalPosition(new Vector2(780, 900));
+		directionUp.setInitialPosition(new Vector2(780, 200));
 
 		CGTEnemy carroCGT = new CGTEnemy();
 

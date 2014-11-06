@@ -13,12 +13,6 @@ public class Direction implements Behavior, Serializable {
 	private static final long serialVersionUID = 2118059060366691269L;
 
 	//Demarcadores da area de movimentacao
-	
-	private int minX;
-	private int minY;
-	private int maxX;
-	private int maxY;
-
 	private Vector2 initialPosition;
 	private Vector2 finalPosition;
 
@@ -67,62 +61,6 @@ public class Direction implements Behavior, Serializable {
 	@Override
 	public String toString() {
 		return "Direction [directionPolicy=" + directionPolicy + "]";
-	}
-
-	/**
-	 * @return the minX
-	 */
-	public int getMinX() {
-		return minX;
-	}
-
-	/**
-	 * @param minX the minX to set
-	 */
-	public void setMinX(int minX) {
-		this.minX = minX;
-	}
-
-	/**
-	 * @return the minY
-	 */
-	public int getMinY() {
-		return minY;
-	}
-
-	/**
-	 * @param minY the minY to set
-	 */
-	public void setMinY(int minY) {
-		this.minY = minY;
-	}
-
-	/**
-	 * @return the maxX
-	 */
-	public int getMaxX() {
-		return maxX;
-	}
-
-	/**
-	 * @param maxX the maxX to set
-	 */
-	public void setMaxX(int maxX) {
-		this.maxX = maxX;
-	}
-
-	/**
-	 * @return the maxY
-	 */
-	public int getMaxY() {
-		return maxY;
-	}
-
-	/**
-	 * @param maxY the maxY to set
-	 */
-	public void setMaxY(int maxY) {
-		this.maxY = maxY;
 	}
 
 	public Vector2 getInitialPosition() {
