@@ -778,14 +778,14 @@ public class WorldRenderer {
 
 		else if (enemy.getVelocity().y < 0 & enemy.getVelocity().x == 0)
 			enemy.setState(StatePolicy.LOOKDOWN);
-//		else if(enemy.getVelocity().y > 0 && enemy.getVelocity().x > 0)
-//			enemy.setState(StatePolicy.LOOK_RIGHT_AND_UP);
-//		else if(enemy.getVelocity().y < 0 && enemy.getVelocity().x < 0)
-//			enemy.setState(StatePolicy.LOOK_LEFT_AND_DOWN);
-//		else if (enemy.getVelocity().y > 0 && enemy.getVelocity().x < 0)
-//			enemy.setState(StatePolicy.LOOK_LEFT_AND_UP);
-//		else if (enemy.getVelocity().y < 0 && enemy.getVelocity().x > 0)
-//			enemy.setState(StatePolicy.LOOK_RIGHT_AND_DOWN);
+		else if(enemy.getVelocity().y > 0 && enemy.getVelocity().x > 0)
+			enemy.setState(StatePolicy.LOOK_RIGHT_AND_UP);
+		else if(enemy.getVelocity().y < 0 && enemy.getVelocity().x < 0)
+			enemy.setState(StatePolicy.LOOK_LEFT_AND_DOWN);
+		else if (enemy.getVelocity().y > 0 && enemy.getVelocity().x < 0)
+			enemy.setState(StatePolicy.LOOK_LEFT_AND_UP);
+		else if (enemy.getVelocity().y < 0 && enemy.getVelocity().x > 0)
+			enemy.setState(StatePolicy.LOOK_RIGHT_AND_DOWN);
 	}
 
 	/**
