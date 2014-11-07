@@ -25,7 +25,6 @@ public class WorldController {
 
 	private CGTGameWorld world;
 	private CGTActor personagem;
-	private AnimationHandle actorAnimation;
 	private WorldRenderer renderer;
 	static Map<ActionMovePolicy, Boolean> keys = new HashMap<ActionMovePolicy, Boolean>();
 	static {
@@ -46,7 +45,7 @@ public class WorldController {
 		this.renderer = render;
 		// Posicao inicial do personagem
 		this.personagem = world.getActor();
-		this.actorAnimation = world.getActor().getCGTAnimation();
+
 		releaseAllDirectionKeys();
 	}
 
@@ -64,10 +63,22 @@ public class WorldController {
 		Action action = world.getActionFromInput(policy);
 		if (action != null){
 			keys.put(action.getActionPolicy(),false);
-			actorAnimation.stopAni();
+			stopAni();
 		}
 	}
 	
+
+	private void stopAni() {
+		if(personagem.getState().equals(StatePolicy.LOOKUP)) {
+			personagem.setState(StatePolicy.IDLEUP);
+		} else if(personagem.getState().equals(StatePolicy.LOOKDOWN)) {
+			personagem.setState(StatePolicy.IDLEDOWN);
+		} else if(personagem.getState().equals(StatePolicy.LOOKLEFT)) {
+			personagem.setState(StatePolicy.IDLELEFT);
+		} else if(personagem.getState().equals(StatePolicy.LOOKRIGHT)) {
+			personagem.setState(StatePolicy.IDLERIGHT);
+		}
+	}
 
 	public void fire(){
 		if(keys.get(ActionMovePolicy.FIRE)){

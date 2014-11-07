@@ -10,6 +10,7 @@ import java.util.Random;
 
 import cgt.policy.StatePolicy;
 import cgt.unit.LabelID;
+import cgt.util.AnimationMap;
 import cgt.util.CGTAnimation;
 import cgt.util.AnimationHandle;
 import cgt.util.CGTSound;
@@ -37,8 +38,7 @@ public abstract class CGTGameObject implements Serializable {
 	private int Speed;
 	private Vector2 velocity;		//Vetor que informa a velocidade do personagem
 	private int life;
-	private CGTSpriteSheet spriteSheet;
-	private ArrayList<CGTAnimation> animations;
+	private ArrayList<AnimationMap> animations;
 	private AnimationHandle animation;
 	private LabelID labelID;
 	private StatePolicy state;
@@ -73,7 +73,7 @@ public abstract class CGTGameObject implements Serializable {
 		bounds= new Rectangle();
 		collision = new Rectangle();
 		setState(StatePolicy.IDLE);
-		animations = new ArrayList<CGTAnimation>();
+		animations = new ArrayList<AnimationMap>();
 		animation=null;
 		soundsDie = new ArrayList<CGTSound>();
 		soundCollision = new ArrayList<CGTSound>();
@@ -86,7 +86,7 @@ public abstract class CGTGameObject implements Serializable {
 		posXColider = collision.x;
 		posYColider = collision.y;
 		this.bounds = bounds;
-		animations = new ArrayList<CGTAnimation>();
+		animations = new ArrayList<AnimationMap>();
 		setState(StatePolicy.IDLE);
 		animation=null;
 		initialPositions = new ArrayList<>();
@@ -279,33 +279,16 @@ public abstract class CGTGameObject implements Serializable {
 	}
 
 	public TextureRegion getAnimation() {
-		if(animation==null){
-			this.animation = new AnimationHandle(spriteSheet);
+		for (AnimationMap a : animations) {
+			if (a.getStatePolicy() == state) {
+				return a.getRandomAnimation();
+			}
 		}
-		return animation.getAnimationFrame();
-	}
-
-	public AnimationHandle getCGTAnimation() {
-		if(animation==null){
-			this.animation = new AnimationHandle(spriteSheet);
+		if (animations.size() > 0) {
+			return animations.get(0).getRandomAnimation();
 		}
-		return animation;
-	}
-
-
-	/**
-	 * @return the spriteSheet
-	 */
-	public CGTSpriteSheet getSpriteSheet() {
-		return spriteSheet;
-	}
-
-	/**
-	 * @param spriteSheet the spriteSheet to set
-	 */
-	public void setSpriteSheet(CGTSpriteSheet spriteSheet) {
-		this.spriteSheet = spriteSheet;
-		this.spriteSheet.setOwner(this);
+		
+		return null;
 	}
 
 	/**
@@ -319,6 +302,7 @@ public abstract class CGTGameObject implements Serializable {
 	 * @param state the state to set
 	 */
 	public void setState(StatePolicy state) {
+		System.out.println(state);
 		this.state = state;
 	}
 
@@ -336,12 +320,14 @@ public abstract class CGTGameObject implements Serializable {
 		this.velocity = velocity;
 	}
 
-	public ArrayList<CGTAnimation> getAnimarions() {
-		return animations;
-	}
-
-	public void setAnimarions(ArrayList<CGTAnimation> animarions) {
-		this.animations = animarions;
+	public void addAnimation(StatePolicy state, CGTAnimation ani) {
+		for (AnimationMap a : animations) {
+			if (a.getStatePolicy() == state) {
+				a.addAnimation(ani);
+				return;
+			}
+		}
+		animations.add(new AnimationMap(state, ani));
 	}
 	
 }

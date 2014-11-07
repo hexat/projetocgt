@@ -16,7 +16,6 @@ public class CGTEnemy extends CGTGameObject implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 5889174566567350080L;
-	private StatePolicy state;
 	private int damage;
 
 	//TODO Criar uma lista de behaviors onde o pai ficara disponivel para todos
@@ -28,7 +27,6 @@ public class CGTEnemy extends CGTGameObject implements Serializable{
 	private boolean vulnerable;
 	
 	public CGTEnemy(){
-		state=StatePolicy.IDLEDOWN;
 		damage=0;
 		behaviors = new ArrayList<Behavior>();
 		block=false;
@@ -44,14 +42,6 @@ public class CGTEnemy extends CGTGameObject implements Serializable{
 		group = "General";
 	}
 
-	public StatePolicy getState() {
-		return state;
-	}
-
-	public void setState(StatePolicy state) {
-		this.state = state;
-	}
-	
 	public int getDamage() {
 		return damage;
 	}
@@ -126,7 +116,7 @@ public class CGTEnemy extends CGTGameObject implements Serializable{
 
 	@Override
 	public String toString() {
-		return super.toString() + "CGTEnemy [state=" + state + ", damage=" + damage
+		return super.toString() + "CGTEnemy [damage=" + damage
 				+ ", behaviors=" + behaviors + ", block=" + block
 				+ ", destroyable=" + destroyable + "]";
 	}

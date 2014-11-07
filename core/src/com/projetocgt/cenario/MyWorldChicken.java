@@ -52,7 +52,7 @@ public class MyWorldChicken {
 		personagemCGTActor.getSpriteSheet().setRows(8);
 		personagemCGTActor.getSpriteSheet().setColumns(4);
 
-		personagemCGTActor.getSoundsDie().add(new CGTSound("data/AudioDaPexe/derrota.ogg",0.3f));
+		personagemCGTActor.getSoundsDie().add(new CGTSound("data/AudioDaPexe/jumento_1.wav",0.3f));
 
 	}
 
