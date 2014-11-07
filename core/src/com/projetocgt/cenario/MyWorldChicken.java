@@ -45,15 +45,13 @@ public class MyWorldChicken {
 		personagemCGTActor.setLife(1);
 		personagemCGTActor.setSpeed(100);
 
-		
-
-		personagemCGTActor.getSoundsDie().add(new CGTSound("data/AudioDaPexe/jumento_1.wav",0.3f));
+		personagemCGTActor.getSoundsDie().add(new CGTSound("data/AudioChicken/jumento_1.wav",0.7f));
 
 	}
 
 	public void configuracaoActionActor(CGTActor personagemCGTActor) {
 		
-		CGTSpriteSheet galinhaSpriteSheet = new CGTSpriteSheet("data/chicken/galinha2.png");
+		CGTSpriteSheet galinhaSpriteSheet = new CGTSpriteSheet("data/chicken/galinha_spritesheet.png");
 		galinhaSpriteSheet.setRows(8);
 		galinhaSpriteSheet.setColumns(4);
 
@@ -65,15 +63,33 @@ public class MyWorldChicken {
 		moveUp.setFlipHorizontal(false);
 		moveUp.setSpriteVelocity(0.13f);
 
-//		CGTAnimation animationDamege = new CGTAnimation(personagemCGTActor);
-//		animationDamege.setSpriteLine(5);
-//		animationDamege.addStatePolicy(StatePolicy.DAMAGE);
-//		animationDamege.setSpriteVelocity(0.2f);
-//		animationDamege.setAnimationPolicy(PlayMode.LOOP_PINGPONG);
-//
-//		personagemCGTActor.getAnimarions().add(animationDamege);
-		personagemCGTActor.addAnimation(StatePolicy.IDLE,moveUp);
+		personagemCGTActor.addAnimation(StatePolicy.IDLE, moveUp);
+
+		CGTAnimation moveVuando = new CGTAnimation(personagemCGTActor, galinhaSpriteSheet);
+		moveVuando.setInitialFrame(new Vector2(2, 6));
+		moveVuando.setEndingFrame(new Vector2(1, 7));
+		//moveUp.addStatePolicy(StatePolicy.IDLE);
+		//moveUp.addStatePolicy(StatePolicy.DYING);
+		moveVuando.setFlipHorizontal(false);
+		moveVuando.setSpriteVelocity(0.03f);
+
+		personagemCGTActor.addAnimation(StatePolicy.LOOKRIGHT, moveVuando);
+		personagemCGTActor.addAnimation(StatePolicy.IDLERIGHT, moveVuando);
+		personagemCGTActor.addAnimation(StatePolicy.IDLEUP, moveVuando);
+		personagemCGTActor.addAnimation(StatePolicy.IDLEDOWN, moveVuando);
+		personagemCGTActor.addAnimation(StatePolicy.LOOKUP, moveVuando);
+		personagemCGTActor.addAnimation(StatePolicy.LOOKDOWN, moveVuando);
 		
+		CGTSpriteSheet penasSpriteSheet = new CGTSpriteSheet("data/chicken/penas_spritesheet.png");
+		penasSpriteSheet.setRows(16);
+		penasSpriteSheet.setColumns(5);
+		
+		CGTAnimation died = new CGTAnimation(personagemCGTActor, penasSpriteSheet);
+		died.setInitialFrame(new Vector2(0, 0));
+		died.setEndingFrame(new Vector2(4, 15));
+		died.setSpriteVelocity(0.035f);
+		
+		personagemCGTActor.addAnimation(StatePolicy.DYING, died);
 	}
 
 	public void configuracaoVacas() {
@@ -106,11 +122,11 @@ public class MyWorldChicken {
 		vaca.setSpeed(100);
 		vaca.setState(StatePolicy.LOOK_RIGHT_AND_UP);
 		
-		CGTSound soundVaca = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.2f);
-		//vaca.setSound(soundVaca);
+		CGTSound soundVaca = new CGTSound("data/AudioChicken/vaca_foguete.wav", 1f);
+		vaca.setSound(soundVaca);
 
 		CGTSpriteSheet vacaSpriteSheet = new CGTSpriteSheet("data/chicken/vaca_1_spritesheet.png");
-		vacaSpriteSheet.setRows(6);
+		vacaSpriteSheet.setRows(3);
 		vacaSpriteSheet.setColumns(4);	
 
 		// Action
@@ -123,8 +139,8 @@ public class MyWorldChicken {
 		
 
 		CGTAnimation moveVacaDown = new CGTAnimation(vaca,vacaSpriteSheet);
-		moveVacaDown.setInitialFrame(new Vector2(1, 2));
-		moveVacaDown.setEndingFrame(new Vector2(2, 3));
+		moveVacaDown.setInitialFrame(new Vector2(2, 1));
+		moveVacaDown.setEndingFrame(new Vector2(3, 2));
 		moveVacaDown.setSpriteVelocity(0.08f);
 		moveVacaDown.setFlipHorizontal(true);
 		moveVacaDown.setAnimationPolicy(PlayMode.LOOP);
@@ -136,6 +152,8 @@ public class MyWorldChicken {
 		
 		
 		CGTEnemy vaca2 = new CGTEnemy();		
+		
+		vaca2.setSound(soundVaca);
 
 		Rectangle coliderCarro2 = new Rectangle(25, 26, 80, 96);
 		vaca2.setCollision(coliderCarro2);
@@ -151,13 +169,8 @@ public class MyWorldChicken {
 		vaca2.setSpeed(200);
 		
 		CGTSpriteSheet vacaSpriteSheet2 = new CGTSpriteSheet("data/chicken/vaca_2_spritesheet.png");
-		vacaSpriteSheet2.setRows(6);
+		vacaSpriteSheet2.setRows(3);
 		vacaSpriteSheet2.setColumns(4);	
-
-		CGTSound soundCar2 = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.2f);
-		//vaca2.setSound(soundCar2);
-
-		// Action
 
 		CGTAnimation moveVacaUp2 = new CGTAnimation(vaca2, vacaSpriteSheet2);
 		moveVacaUp2.setInitialFrame(new Vector2(0, 0));
@@ -168,8 +181,8 @@ public class MyWorldChicken {
 		
 		
 		CGTAnimation moveVacaDown2 = new CGTAnimation(vaca2, vacaSpriteSheet2);
-		moveVacaDown2.setInitialFrame(new Vector2(1, 2));
-		moveVacaDown2.setEndingFrame(new Vector2(2, 2));
+		moveVacaDown2.setInitialFrame(new Vector2(2, 1));
+		moveVacaDown2.setEndingFrame(new Vector2(3, 2));
 		moveVacaDown2.setSpriteVelocity(0.08f);
 		moveVacaDown2.setAnimationPolicy(PlayMode.LOOP);
 				
@@ -374,7 +387,7 @@ public class MyWorldChicken {
 		
 		CGTEnemy jumento = new CGTEnemy();
 
-		Rectangle coliderJumento = new Rectangle(22, 0, 60, 94);
+		Rectangle coliderJumento = new Rectangle(22, 0, 60, 70);
 		jumento.setCollision(coliderJumento);
 
 		Rectangle tamanhoJumento = new Rectangle(0, 0, 98, 90);
@@ -405,7 +418,7 @@ public class MyWorldChicken {
 		
 		CGTEnemy jumento2 = new CGTEnemy();
 
-		Rectangle coliderJumento2 = new Rectangle(22, 0, 60, 94);
+		Rectangle coliderJumento2 = new Rectangle(22, 0, 60, 70);
 		jumento2.setCollision(coliderJumento2);
 
 		Rectangle tamanhoJumento2 = new Rectangle(0, 0, 98, 90);
@@ -576,7 +589,7 @@ public class MyWorldChicken {
 		world = new CGTGameWorld();
 		backGround = new CGTTexture("data/chicken/back.png");
 		world.setBackground(backGround);
-		world.setMusic(new CGTSound("data/AudioChicken/BGMFULL.ogg",1f));
+		world.setMusic(new CGTSound("data/AudioChicken/tema.ogg",1f));
 		world.getCamera().setGameMode(GameModePolicy.TOUCH);
 		
 		CGTActor personagemCGTActor = new CGTActor();

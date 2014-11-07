@@ -194,6 +194,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			break;
 
 		case PAUSED:
+			Gdx.input.setInputProcessor(this);
 			if(!world.getPauseDialog().isActive()){
 				world.getPauseDialog().setActive(true);
 				//Para os behaviors
@@ -253,6 +254,8 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			break;
 
 		case LOSE:
+
+			Gdx.input.setInputProcessor(this);
 			//Timer.instance().stop(); //Para os behaviors
 			
 			world.getLoseDialog().setActive(true);
