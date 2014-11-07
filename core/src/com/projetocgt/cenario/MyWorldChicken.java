@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import cgt.CGTGame;
 import cgt.CGTGameWorld;
 import cgt.behaviors.Direction;
+import cgt.behaviors.Direction.DirectionMode;
 import cgt.behaviors.Sine;
 import cgt.core.CGTActor;
 import cgt.core.CGTEnemy;
@@ -222,24 +223,21 @@ public class MyWorldChicken {
 	
 	public void configuracaoNuvens(){
 		Direction movimentacaoNuvem1 = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
-		movimentacaoNuvem1.setInitialPosition(new Vector2(200,400));
-		movimentacaoNuvem1.setFinalPosition(new Vector2(800,400));
+		movimentacaoNuvem1.setInitialPosition(new Vector2(-300,400));
+		movimentacaoNuvem1.setFinalPosition(new Vector2(1110,400));
 		movimentacaoNuvem1.setInteligenceMoviment(false);
 		
 		Direction movimentacaoNuvem2 = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
-		movimentacaoNuvem2.setInitialPosition(new Vector2(800,400));
-		movimentacaoNuvem2.setFinalPosition(new Vector2(200,400));
+		movimentacaoNuvem2.setInitialPosition(new Vector2(-200,200));
+		movimentacaoNuvem2.setFinalPosition(new Vector2(1050,200));
 		movimentacaoNuvem2.setInteligenceMoviment(false);
 		
 		Direction movimentacaoNuvem3 = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
-		movimentacaoNuvem3.setInitialPosition(new Vector2(1140,550));
-		movimentacaoNuvem3.setFinalPosition(new Vector2(0,550));
+		movimentacaoNuvem3.setInitialPosition(new Vector2(1140,500));
+		movimentacaoNuvem3.setFinalPosition(new Vector2(-280,500));
 		movimentacaoNuvem3.setInteligenceMoviment(false);	
 				
 		CGTEnemy nuvem = new CGTEnemy();
-		
-		Vector2 positionNuvem = new Vector2(200, 300);
-		nuvem.setPosition(positionNuvem);
 
 		Rectangle coliderNuvem = new Rectangle(22, 66, 250, 150);
 		nuvem.setCollision(coliderNuvem);
@@ -353,7 +351,7 @@ public class MyWorldChicken {
 	public void configuracaoJumentos(){
 		Direction movimentacaoJumento = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
 		movimentacaoJumento.setInitialPosition(new Vector2(100,720));
-		movimentacaoJumento.setFinalPosition(new Vector2(100,0));
+		movimentacaoJumento.setFinalPosition(new Vector2(100,-100));
 		movimentacaoJumento.setInteligenceMoviment(false);
 		
 		Direction movimentacaoJumento2 = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
@@ -408,7 +406,7 @@ public class MyWorldChicken {
 		jumento2.setSpeed(100);
 
 		jumento2.setSpriteSheet(new CGTSpriteSheet(
-				"data/chicken/jumento_spritesheet.png"));
+				"data/chicken/jumento_spritesheet.png")); 
 		jumento2.getSpriteSheet().setRows(2);
 		jumento2.getSpriteSheet().setColumns(4);
 		
