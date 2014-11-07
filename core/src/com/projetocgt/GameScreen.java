@@ -156,30 +156,13 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	public void render(float delta) {
 		switch(state){
 		case PLAYING:
-			
-//			Texture texture = new Texture(Gdx.files.internal("data/dapexe/casa00-corte.png"));
-			 
-//			Actor actor= new Actor();
-//			actor.setVisible(true);
-//			actor.setBounds(world.getActor().getPosition().x, world.getActor().getPosition().y, world.getActor().getBounds().getWidth(), world.getActor().getBounds().getHeight());
-//			actor.addListener(new InputListener() {
-//			    public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-//			        System.out.println("down");
-//			        return true;
-//			    }
-//
-//			    public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-//			        System.out.println("up");
-//			    }
-//			});
-			
 			controller.update(delta);
 			renderer.render();
 			if(renderer.verifyWin()){
 				state = State.WIN;
 				world.playSoundWin();
 			}
-			if(renderer.verifyLose()) {
+			if(renderer.lose()) {
 				if (music != null){
 					music.stop();
 				}

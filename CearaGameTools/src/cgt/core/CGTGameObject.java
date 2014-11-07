@@ -1,13 +1,16 @@
 package cgt.core;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
 import cgt.policy.StatePolicy;
 import cgt.unit.LabelID;
+import cgt.util.AnimationMap;
 import cgt.util.CGTAnimation;
 import cgt.util.AnimationHandle;
 import cgt.util.CGTSound;
@@ -26,7 +29,7 @@ public abstract class CGTGameObject implements Serializable {
 	 */
 	private static final long serialVersionUID = -1528830629331653234L;
 	private CGTSound sound;
-	private ArrayList<CGTSound> soundDie;
+	private ArrayList<CGTSound> soundsDie;
 	private ArrayList<CGTSound> soundCollision;
 	private ArrayList<Vector2> initialPositions;
 	private Vector2 position;
@@ -35,8 +38,7 @@ public abstract class CGTGameObject implements Serializable {
 	private int Speed;
 	private Vector2 velocity;		//Vetor que informa a velocidade do personagem
 	private int life;
-	private CGTSpriteSheet spriteSheet;
-	private ArrayList<CGTAnimation> animations;
+	private ArrayList<AnimationMap> animations;
 	private AnimationHandle animation;
 	private LabelID labelID;
 	private StatePolicy state;
@@ -71,9 +73,9 @@ public abstract class CGTGameObject implements Serializable {
 		bounds= new Rectangle();
 		collision = new Rectangle();
 		setState(StatePolicy.IDLE);
-		animations = new ArrayList<CGTAnimation>();
+		animations = new ArrayList<AnimationMap>();
 		animation=null;
-		soundDie = new ArrayList<CGTSound>();
+		soundsDie = new ArrayList<CGTSound>();
 		soundCollision = new ArrayList<CGTSound>();
 		initialPositions = new ArrayList<>();
 	}
@@ -84,7 +86,7 @@ public abstract class CGTGameObject implements Serializable {
 		posXColider = collision.x;
 		posYColider = collision.y;
 		this.bounds = bounds;
-		animations = new ArrayList<CGTAnimation>();
+		animations = new ArrayList<AnimationMap>();
 		setState(StatePolicy.IDLE);
 		animation=null;
 		initialPositions = new ArrayList<>();
@@ -121,8 +123,8 @@ public abstract class CGTGameObject implements Serializable {
 		
 	}
 
-	public ArrayList<CGTSound> getSoundDie(){
-		return soundDie;
+	public ArrayList<CGTSound> getSoundsDie(){
+		return soundsDie;
 	}
 	
 	public void loopMusic(){
@@ -139,19 +141,28 @@ public abstract class CGTGameObject implements Serializable {
 	}
 	
 	public void setSoundDie(ArrayList<CGTSound> listaSoundDie){
-		soundDie = listaSoundDie;
+		soundsDie = listaSoundDie;
 	}
 	
 	public void setSoundDie(CGTSound music){
-		soundDie.add(music);
+		soundsDie.add(music);
 	}
 	
 	public void playSoundDie(){
-		if (soundDie.size() > 0){
+		if (soundsDie.size() > 0){
 			Random r = new Random();
-			int numeroAleatorio = r.nextInt(getSoundDie().size());
-			soundDie.get(numeroAleatorio).getMusic().play();
+			int numeroAleatorio = r.nextInt(getSoundsDie().size());
+			soundsDie.get(numeroAleatorio).getMusic().play();
 		}
+	}
+	
+	public Music getSoundDie(){
+		if (soundsDie.size() > 0){
+			Random r = new Random();
+			int numeroAleatorio = r.nextInt(getSoundsDie().size());
+			return soundsDie.get(numeroAleatorio).getMusic();
+		}
+		return null;
 	}
 
 	public ArrayList<CGTSound> getSoundCollision() {
@@ -225,7 +236,7 @@ public abstract class CGTGameObject implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CGTGameObject [sound=" + sound + ", soundDie=" + soundDie
+		return "CGTGameObject [sound=" + sound + ", soundDie=" + soundsDie
 				+ ", soundCollision=" + soundCollision + ", position="
 				+ position + ", collision=" + collision + ", life=" + life
 				+ ", cGTSpriteSheet=" + animation + ", labelID=" + labelID + "]";
@@ -268,33 +279,16 @@ public abstract class CGTGameObject implements Serializable {
 	}
 
 	public TextureRegion getAnimation() {
-		if(animation==null){
-			this.animation = new AnimationHandle(spriteSheet);
+		for (AnimationMap a : animations) {
+			if (a.getStatePolicy() == state) {
+				return a.getRandomAnimation();
+			}
 		}
-		return animation.getAnimationFrame();
-	}
-
-	public AnimationHandle getCGTAnimation() {
-		if(animation==null){
-			this.animation = new AnimationHandle(spriteSheet);
+		if (animations.size() > 0) {
+			return animations.get(0).getRandomAnimation();
 		}
-		return animation;
-	}
-
-
-	/**
-	 * @return the spriteSheet
-	 */
-	public CGTSpriteSheet getSpriteSheet() {
-		return spriteSheet;
-	}
-
-	/**
-	 * @param spriteSheet the spriteSheet to set
-	 */
-	public void setSpriteSheet(CGTSpriteSheet spriteSheet) {
-		this.spriteSheet = spriteSheet;
-		this.spriteSheet.setOwner(this);
+		
+		return null;
 	}
 
 	/**
@@ -308,6 +302,7 @@ public abstract class CGTGameObject implements Serializable {
 	 * @param state the state to set
 	 */
 	public void setState(StatePolicy state) {
+		System.out.println(state);
 		this.state = state;
 	}
 
@@ -325,12 +320,14 @@ public abstract class CGTGameObject implements Serializable {
 		this.velocity = velocity;
 	}
 
-	public ArrayList<CGTAnimation> getAnimarions() {
-		return animations;
-	}
-
-	public void setAnimarions(ArrayList<CGTAnimation> animarions) {
-		this.animations = animarions;
+	public void addAnimation(StatePolicy state, CGTAnimation ani) {
+		for (AnimationMap a : animations) {
+			if (a.getStatePolicy() == state) {
+				a.addAnimation(ani);
+				return;
+			}
+		}
+		animations.add(new AnimationMap(state, ani));
 	}
 	
 }

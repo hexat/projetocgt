@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import cgt.core.CGTGameObject;
 import cgt.policy.StatePolicy;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Vector2;
 
 public class CGTAnimation implements Serializable{
+	private CGTSpriteSheet spriteSheet;
 	private CGTSound sound;
 	private Vector2 initialFrame;
 	private Vector2 endingFrame;
@@ -18,21 +20,17 @@ public class CGTAnimation implements Serializable{
 	private boolean flipHorizontal;
 	private boolean flipVertical;
 	private PlayMode animationPolicy;
-	private ArrayList<StatePolicy> statePolicies;
+	private AnimationHandle animation;
 
-	public CGTAnimation() {
-		statePolicies = new ArrayList<StatePolicy>();
+	public CGTAnimation(CGTGameObject object, CGTSpriteSheet spriteSheet) {
+		owner = object;
+		this.spriteSheet = spriteSheet;
 		spriteVelocity = 1;
 		flipHorizontal = false;
 		flipVertical = false;
 		animationPolicy = PlayMode.LOOP;
 	}
-
-	public CGTAnimation(CGTGameObject object) {
-		this();
-		this.owner = object;
-	}
-
+	
 	public CGTSound getSound() {
 		return sound;
 	}
@@ -43,7 +41,7 @@ public class CGTAnimation implements Serializable{
 
 	public void setSpriteLine(int spriteLine) {
 		initialFrame = new Vector2(0, spriteLine - 1);
-		endingFrame = new Vector2(owner.getSpriteSheet().getColumns() - 1,
+		endingFrame = new Vector2(getSpriteSheet().getColumns() - 1,
 				spriteLine - 1);
 	}
 
@@ -69,20 +67,6 @@ public class CGTAnimation implements Serializable{
 
 	public void setAnimationPolicy(PlayMode animationPolicy) {
 		this.animationPolicy = animationPolicy;
-	}
-
-	public ArrayList<StatePolicy> getStatePolicies() {
-		return statePolicies;
-	}
-
-	public void setStatePolicies(ArrayList<StatePolicy> statePolicy) {
-		this.statePolicies = statePolicy;
-	}
-
-	public void addStatePolicy(StatePolicy state) {
-		if (!statePolicies.contains(state)) {
-			statePolicies.add(state);
-		}
 	}
 
 	public Vector2 getInitialFrame() {
@@ -115,5 +99,27 @@ public class CGTAnimation implements Serializable{
 
 	public void setFlipHorizontal(boolean flipHorizontal) {
 		this.flipHorizontal = flipHorizontal;
+	}
+
+	public TextureRegion getAnimation() {
+		if(animation==null){
+			this.animation = new AnimationHandle(this);
+		}
+		return animation.getAnimationFrame();
+	}
+
+	public AnimationHandle getCGTAnimation() {
+		if(animation==null){
+			this.animation = new AnimationHandle(this);
+		}
+		return animation;
+	}
+
+	public CGTSpriteSheet getSpriteSheet() {
+		return spriteSheet;
+	}
+
+	public void setSpriteSheet(CGTSpriteSheet spriteSheet) {
+		this.spriteSheet = spriteSheet;
 	}
 }

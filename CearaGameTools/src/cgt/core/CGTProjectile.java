@@ -150,7 +150,7 @@ public class CGTProjectile extends CGTGameObject implements Serializable{
 				+ numFiresForOneInput + ", damage=" + damage + ", interval="
 				+ interval + ", ammo=" + ammo + ", maxAmmo=" + maxAmmo
 				+ ", velocityInitial=" + getSpeed() + ", angle=" + angle
-				+ ", labelID=" + getLabelID() + ", cGTSpriteSheet=" + getSpriteSheet() + ", orientations="
+				+ ", labelID=" + getLabelID() + ", orientations="
 				+ orientations + "]";
 	}
 

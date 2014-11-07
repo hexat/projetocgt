@@ -26,82 +26,63 @@ public class AnimationHandle {
 	private Map<StatePolicy, Animation> mapa;
 
 	private CGTGameObject owner;
+	private Animation animationGDX;
 
-	public AnimationHandle(CGTSpriteSheet spriteSheet) {
-		this.owner = spriteSheet.getOwner();
+	public AnimationHandle(CGTAnimation animation) {
+		this.owner = animation.getOwner();
 		mapa = new HashMap<StatePolicy, Animation>();
-		walkSheet = spriteSheet.getTexture().getTextureGDX();
-		int numberOfColumns = spriteSheet.getColumns();
+		walkSheet = animation.getSpriteSheet().getTexture().getTextureGDX();
+		int numberOfColumns = animation.getSpriteSheet().getColumns();
 		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
-				walkSheet.getWidth() / spriteSheet.getColumns(), walkSheet.getHeight()
-				/ spriteSheet.getRows());
+				walkSheet.getWidth() / animation.getSpriteSheet().getColumns(), walkSheet.getHeight()
+				/ animation.getSpriteSheet().getRows());
 
 		ArrayList<TextureRegion> textureList = new ArrayList<TextureRegion>();
 		TextureRegion texture = null;
-		for (CGTAnimation a : owner.getAnimarions()) {
-			textureList.clear();
-			if (a.getOwner() == owner && a.getStatePolicies() != null) {
-				int initialY = (int)a.getInitialFrame().y;
-				int initialX = (int)a.getInitialFrame().x;
-				int endingY = (int)a.getEndingFrame().y;
-				int endingX = (int)a.getEndingFrame().x;
+//		for (CGTAnimation a : owner.getAnimarions()) {
+//		if (animation.getOwner() == owner) {
+			int initialY = (int)animation.getInitialFrame().y;
+			int initialX = (int)animation.getInitialFrame().x;
+			int endingY = (int)animation.getEndingFrame().y;
+			int endingX = (int)animation.getEndingFrame().x;
 
-				for (int i = initialY; i < endingY; i++) {
-					for(int j = initialX; j < numberOfColumns; j++){
-						texture = new TextureRegion(tmp[i][j]);
-						texture.flip(a.isFlipHorizontal(), a.isFlipVertical());
-						textureList.add(texture);
-					}
-					initialX = 0;
-				}
-
-				for(int j = 0; j <= endingX; j++){
-					texture = new TextureRegion(tmp[endingY][j]);
-					texture.flip(a.isFlipHorizontal(), a.isFlipVertical());
+			for (int i = initialY; i < endingY; i++) {
+				for(int j = initialX; j < numberOfColumns; j++){
+					texture = new TextureRegion(tmp[i][j]);
+					texture.flip(animation.isFlipHorizontal(), animation.isFlipVertical());
 					textureList.add(texture);
 				}
-
-				TextureRegion[] arrayTex = new TextureRegion[0];
-				Animation animation = new Animation(a.getSpriteVelocity(), textureList.toArray(arrayTex));
-				animation.setPlayMode(a.getAnimationPolicy());
-				
-				for(StatePolicy state : a.getStatePolicies()){
-					mapa.put(state, animation);
-				}
+				initialX = 0;
 			}
-		}
+
+			for(int j = 0; j <= endingX; j++){
+				texture = new TextureRegion(tmp[endingY][j]);
+				texture.flip(animation.isFlipHorizontal(), animation.isFlipVertical());
+				textureList.add(texture);
+			}
+
+			TextureRegion[] arrayTex = new TextureRegion[0];
+			animationGDX = new Animation(animation.getSpriteVelocity(), textureList.toArray(arrayTex));
+			animationGDX.setPlayMode(animation.getAnimationPolicy());
 		bobFrame = textureList.get(0);
 	}
 
 	/***
 	 * 
 	 * @param owner
-	 *            O personagem que a funcao ira fazer a animacao
+	 *            O personagem que a funcao bra fazer a animacao
 	 * @return bobFrama o freme do personagem
 	 */
 	public TextureRegion getAnimationFrame(){
 		// animacao inicial do personagem
-		Animation animation = null;
-
-		if(mapa.containsKey(owner.getState())){
-			animation = mapa.get(owner.getState());
-			bobFrame = animation.getKeyFrame(owner.getStateTime());
-		}
-
-		return bobFrame;
-	}
-
-	public void stopAni() {
-
-		if(owner.getState().equals(StatePolicy.LOOKUP)) {
-			owner.setState(StatePolicy.IDLEUP);
-		} else if(owner.getState().equals(StatePolicy.LOOKDOWN)) {
-			owner.setState(StatePolicy.IDLEDOWN);
-		} else if(owner.getState().equals(StatePolicy.LOOKLEFT)) {
-			owner.setState(StatePolicy.IDLELEFT);
-		} else if(owner.getState().equals(StatePolicy.LOOKRIGHT)) {
-			owner.setState(StatePolicy.IDLERIGHT);
-		}
+//		Animation animation = null;
+//
+//		if(mapa.containsKey(owner.getState())){
+//			animation = mapa.get(owner.getState());
+			return animationGDX.getKeyFrame(owner.getStateTime());
+//		}
+//
+//		return bobFrame;
 	}
 
 	/**

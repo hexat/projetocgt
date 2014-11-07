@@ -15,6 +15,7 @@ import cgt.policy.GameModePolicy;
 import cgt.policy.StatePolicy;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -50,9 +51,13 @@ public class WorldRenderer {
 	private enum CameraStage {INITIAL, FULL, CLOSE, IDLE};
 	
 	private CameraStage zoomCamera;
+	private boolean isLose;
+	private Music musicActorLose;
 
 	public WorldRenderer(CGTGameWorld world) {
 		this.world = world;
+		isLose = false;
+		musicActorLose = null;
 		zoomCamera = CameraStage.IDLE;
 		float width = world.getBackground().getTextureGDX().getWidth() * world.getCamera().getInitialWidth();
 		float height = world.getBackground().getTextureGDX().getHeight() * world.getCamera().getInitialHeight();
@@ -99,9 +104,30 @@ public class WorldRenderer {
 		}
 
 		else {
-			world.getActor().playSoundDie();	
-			Timer.instance().clear();
+			// jogo so vai pra tela de perca quando o som de morte do actor acabar
+			if (musicActorLose == null) {
+				musicActorLose = world.getActor().getSoundDie();
+				if (musicActorLose == null) {
+					isLose = true;
+				} else {
+					personagem.setState(StatePolicy.DYING);
+					musicActorLose.setOnCompletionListener(new Music.OnCompletionListener() {
+						@Override
+						public void onCompletion(Music music) {
+							personagem.setState(StatePolicy.DIE);
+							isLose = true;
+						}
+					});
+					musicActorLose.play();
+				}
+			}
+
+			spriteBatch.begin();
+			draw();
+			spriteBatch.end();
 			
+			Timer.instance().clear();
+
 			for(int index = 0; index < world.getOpposites().size(); index ++){
 				if(world.getOpposites().get(index).isPlayingSound()){
 					world.getOpposites().get(index).stopMusic();
@@ -112,13 +138,7 @@ public class WorldRenderer {
 					world.getEnemies().get(index).stopMusic();
 				}
 			}
-			
-//			instance = StarAssault.getInstance();
-//			instance.setScreen(new GeneralScreen(instance.getMenu()));
 		}
-
-
-
 	}
 
 
@@ -392,7 +412,7 @@ public class WorldRenderer {
 	private void drawOpposites() {
 		for (int i = 0; i < world.getOpposites().size(); i++) {
 			if (world.getOpposites().get(i).getLife() >= 0) {
-				if (world.getOpposites().get(i).getSpriteSheet() != null){
+				if (world.getOpposites().get(i).getAnimation() != null){
 				spriteBatch.draw(world.getOpposites().get(i).getAnimation(),
 						world.getOpposites().get(i).getPosition().x, world
 						.getOpposites().get(i).getPosition().y, world
@@ -695,7 +715,6 @@ public class WorldRenderer {
 						}
 					} else {
 						//  sentido noroeste
-						System.out.println("noroeste");
 						if (enemy.getPosition().x <= direction.getFinalPosition().x && enemy.getPosition().y >= direction.getFinalPosition().y) {
 							direction.notifyEnd();
 						} else {
@@ -715,7 +734,6 @@ public class WorldRenderer {
 					}
 				} else {
 					if (direction.getInitialPosition().x < direction.getFinalPosition().x) {
-						System.out.println("sudeste");
 						//  sentido sudeste
 						if (enemy.getPosition().x >= direction.getFinalPosition().x && enemy.getPosition().y <= direction.getFinalPosition().y) {
 							direction.notifyEnd();
@@ -982,5 +1000,9 @@ public class WorldRenderer {
 
 	public StretchViewport getViewport() {
 		return viewport;
+	}
+
+	public boolean lose() {
+		return isLose;
 	}
 }
