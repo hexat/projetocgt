@@ -18,6 +18,7 @@ public class CGTEnemy extends CGTGameObject implements Serializable{
 	private static final long serialVersionUID = 5889174566567350080L;
 	private StatePolicy state;
 	private int damage;
+
 	//TODO Criar uma lista de behaviors onde o pai ficara disponivel para todos
 	private ArrayList<Behavior> behaviors;
 	private boolean block;

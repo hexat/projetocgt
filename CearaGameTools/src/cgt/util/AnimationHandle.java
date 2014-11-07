@@ -76,7 +76,7 @@ public class AnimationHandle {
 	/***
 	 * 
 	 * @param owner
-	 *            O personagem que a funcao ira fazer a animacao
+	 *            O personagem que a funcao bra fazer a animacao
 	 * @return bobFrama o freme do personagem
 	 */
 	public TextureRegion getAnimationFrame(){

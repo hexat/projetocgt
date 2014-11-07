@@ -50,6 +50,8 @@ public class MyWorldChicken {
 		personagemCGTActor.getSpriteSheet().setRows(8);
 		personagemCGTActor.getSpriteSheet().setColumns(4);
 
+		personagemCGTActor.getSoundsDie().add(new CGTSound("data/AudioDaPexe/derrota.ogg",0.3f));
+
 	}
 
 	public void configuracaoActionActor(CGTActor personagemCGTActor) {
@@ -58,6 +60,7 @@ public class MyWorldChicken {
 		moveUp.setInitialFrame(new Vector2(0, 0));
 		moveUp.setEndingFrame(new Vector2(1, 7));
 		moveUp.addStatePolicy(StatePolicy.IDLE);
+		moveUp.addStatePolicy(StatePolicy.DYING);
 		moveUp.setFlipHorizontal(false);
 		moveUp.setSpriteVelocity(0.13f);
 
@@ -376,7 +379,7 @@ public class MyWorldChicken {
 		world = new CGTGameWorld();
 		backGround = new CGTTexture("data/chicken/background_final2.png");
 		world.setBackground(backGround);
-		//world.setMusic(new CGTSound("data/AudioDaPexe/temaDaPexe.ogg",0.3f));
+//		world.setMusic(new CGTSound("data/AudioDaPexe/derrota.ogg",0.3f));
 		world.getCamera().setGameMode(GameModePolicy.TOUCH);
 		
 		CGTActor personagemCGTActor = new CGTActor();

@@ -1,7 +1,9 @@
 package cgt.core;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
@@ -26,7 +28,7 @@ public abstract class CGTGameObject implements Serializable {
 	 */
 	private static final long serialVersionUID = -1528830629331653234L;
 	private CGTSound sound;
-	private ArrayList<CGTSound> soundDie;
+	private ArrayList<CGTSound> soundsDie;
 	private ArrayList<CGTSound> soundCollision;
 	private ArrayList<Vector2> initialPositions;
 	private Vector2 position;
@@ -73,7 +75,7 @@ public abstract class CGTGameObject implements Serializable {
 		setState(StatePolicy.IDLE);
 		animations = new ArrayList<CGTAnimation>();
 		animation=null;
-		soundDie = new ArrayList<CGTSound>();
+		soundsDie = new ArrayList<CGTSound>();
 		soundCollision = new ArrayList<CGTSound>();
 		initialPositions = new ArrayList<>();
 	}
@@ -121,8 +123,8 @@ public abstract class CGTGameObject implements Serializable {
 		
 	}
 
-	public ArrayList<CGTSound> getSoundDie(){
-		return soundDie;
+	public ArrayList<CGTSound> getSoundsDie(){
+		return soundsDie;
 	}
 	
 	public void loopMusic(){
@@ -139,19 +141,28 @@ public abstract class CGTGameObject implements Serializable {
 	}
 	
 	public void setSoundDie(ArrayList<CGTSound> listaSoundDie){
-		soundDie = listaSoundDie;
+		soundsDie = listaSoundDie;
 	}
 	
 	public void setSoundDie(CGTSound music){
-		soundDie.add(music);
+		soundsDie.add(music);
 	}
 	
 	public void playSoundDie(){
-		if (soundDie.size() > 0){
+		if (soundsDie.size() > 0){
 			Random r = new Random();
-			int numeroAleatorio = r.nextInt(getSoundDie().size());
-			soundDie.get(numeroAleatorio).getMusic().play();
+			int numeroAleatorio = r.nextInt(getSoundsDie().size());
+			soundsDie.get(numeroAleatorio).getMusic().play();
 		}
+	}
+	
+	public Music getSoundDie(){
+		if (soundsDie.size() > 0){
+			Random r = new Random();
+			int numeroAleatorio = r.nextInt(getSoundsDie().size());
+			return soundsDie.get(numeroAleatorio).getMusic();
+		}
+		return null;
 	}
 
 	public ArrayList<CGTSound> getSoundCollision() {
@@ -225,7 +236,7 @@ public abstract class CGTGameObject implements Serializable {
 
 	@Override
 	public String toString() {
-		return "CGTGameObject [sound=" + sound + ", soundDie=" + soundDie
+		return "CGTGameObject [sound=" + sound + ", soundDie=" + soundsDie
 				+ ", soundCollision=" + soundCollision + ", position="
 				+ position + ", collision=" + collision + ", life=" + life
 				+ ", cGTSpriteSheet=" + animation + ", labelID=" + labelID + "]";
