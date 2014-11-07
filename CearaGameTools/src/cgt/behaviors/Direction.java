@@ -4,9 +4,17 @@ import java.io.Serializable;
 
 import com.badlogic.gdx.math.Vector2;
 
+import cgt.core.CGTEnemy;
 import cgt.policy.DirectionPolicy;
 
 public class Direction implements Behavior, Serializable {
+	
+	public enum DirectionMode {
+		LOOP,
+		PINGPONG,
+		ONCE
+	}
+	
 	/**
 	 * 
 	 */
@@ -15,6 +23,7 @@ public class Direction implements Behavior, Serializable {
 	//Demarcadores da area de movimentacao
 	private Vector2 initialPosition;
 	private Vector2 finalPosition;
+	private DirectionMode directionMode;
 
 	private boolean inteligenceMoviment;
 	
@@ -25,6 +34,7 @@ public class Direction implements Behavior, Serializable {
 	private float distance;
 	
 	private Vector2 actorPosition;
+	private CGTEnemy owner;
 	
 	public Direction(DirectionPolicy directionPolicy){
 		setDirectionPolicy(directionPolicy);
@@ -32,13 +42,16 @@ public class Direction implements Behavior, Serializable {
 		this.finalPosition = new Vector2();
 		actorPosition = null;
 		distance = 0;
+		setDirectionMode(DirectionMode.LOOP);
 	}
 	 
 	public boolean isInteligenceMoviment() {
 		return inteligenceMoviment;
 	}
 
-
+	public void setOwner(CGTEnemy o) {
+		owner = o;
+	}
 
 	public void setInteligenceMoviment(boolean inteligenceMoviment) {
 		this.inteligenceMoviment = inteligenceMoviment;
@@ -99,10 +112,31 @@ public class Direction implements Behavior, Serializable {
 		this.actorPosition.x = actorPosition.x;
 	}
 
-	public void invert() {
-		Vector2 aux = initialPosition;
-		initialPosition = finalPosition;
-		finalPosition = aux;
+	/**
+	 * Metodo usado somente em GDX, serve para notificar que o movimento acabou,
+	 * ou seja, que o inimigo chegou de um ponto ao outro. O metodo vai verificar 
+	 * a politica de movimento e decidira o que fazer
+	 */
+	public void notifyEnd() {
+		switch (directionMode) {
+		case PINGPONG:
+			Vector2 aux = initialPosition;
+			initialPosition = finalPosition;
+			finalPosition = aux;
+			break;
+		case LOOP:
+			owner.setPosition(initialPosition.cpy());
+		default:
+			break;
+		}
+	}
+
+	public DirectionMode getDirectionMode() {
+		return directionMode;
+	}
+
+	public void setDirectionMode(DirectionMode directionMode) {
+		this.directionMode = directionMode;
 	}
 }
  

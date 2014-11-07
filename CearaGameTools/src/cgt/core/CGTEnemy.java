@@ -2,6 +2,7 @@ package cgt.core;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -17,6 +18,7 @@ public class CGTEnemy extends CGTGameObject implements Serializable{
 	private static final long serialVersionUID = 5889174566567350080L;
 	private StatePolicy state;
 	private int damage;
+	//TODO Criar uma lista de behaviors onde o pai ficara disponivel para todos
 	private ArrayList<Behavior> behaviors;
 	private boolean block;
 	private boolean destroyable;
@@ -73,13 +75,19 @@ public class CGTEnemy extends CGTGameObject implements Serializable{
 		this.destroyable = destroyable;
 	}
 	
-	public ArrayList<Behavior> getBehaviors(){
-		return behaviors;
+	public int getBehaviorsSize(){
+		return behaviors.size();
 	}
 	
+	public Behavior getBehavior(int index) {
+		return behaviors.get(index);
+	}
+	
+	//TODO implementar singleton World 
 	public void addBehavior(Behavior behavior) {
 		if(behavior.getBehaviorPolicy().equals("TWO_POINTS_DIRECTION")){
 			cgt.behaviors.Direction direction = (cgt.behaviors.Direction) behavior;
+			direction.setOwner(this);
 			this.setPosition(direction.getInitialPosition().cpy());
 		}
 		behaviors.add(behavior);

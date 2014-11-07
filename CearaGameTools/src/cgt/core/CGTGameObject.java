@@ -191,8 +191,13 @@ public abstract class CGTGameObject implements Serializable {
 	}
 
 	public void setPosition(Vector2 position) {
-		System.out.println(position);
 		this.position = position;
+
+		collision.x=this.getPosition().x+posXColider;
+		collision.y=this.getPosition().y+posYColider;
+		
+		bounds.x=this.getPosition().x;
+		bounds.y=this.getPosition().y;
 	}
 
 	public int getLife() {

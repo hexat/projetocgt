@@ -484,9 +484,9 @@ public class WorldRenderer {
 	 * Verifica e executa o comportamento da lista de behaviors de um Enemy
 	 */
 	private void configBehavior(CGTEnemy enemy) {
-		for (int indice = 0; indice < enemy.getBehaviors().size(); indice++) {
+		for (int indice = 0; indice < enemy.getBehaviorsSize(); indice++) {
 
-			Behavior behavior = enemy.getBehaviors().get(indice);
+			Behavior behavior = enemy.getBehavior(indice);
 
 			// Sine - movimento de sino, "vai e vem"
 			if (behavior.getBehaviorPolicy().equals("VERTICAL")) {
@@ -664,36 +664,19 @@ public class WorldRenderer {
 			
 			else if(behavior.getBehaviorPolicy().equals("TWO_POINTS_DIRECTION")){
 				Direction direction = (Direction) behavior;
-//				Double distanciaTotal = Math.sqrt(Math.pow(direction.getFinalPosition().x - direction.getInitialPosition().x, 2) + Math.pow(direction.getFinalPosition().y - direction.getInitialPosition().y, 2));
 
 				if (direction.getActorPosition() == null) {
 					enemy.getPosition().x = direction.getInitialPosition().x;
 					enemy.getPosition().y = direction.getInitialPosition().y;
 					direction.setActorPosition(enemy.getPosition());
 				}
-//					direction.setActorPosition(enemy.getPosition());
-//				}else if (direction.getActorPosition().y < direction.getFinalPosition().y){
-//					// O enemy ta subindo
-//						if (enemy.getPosition().y < direction.getFinalPosition().y){
-//							enemy.getVelocity().y = enemy.getSpeed()*(direction.getFinalPosition().y - direction.getInitialPosition().y) / direction.getDistance();
-//							enemy.getVelocity().x = enemy.getSpeed()*(direction.getFinalPosition().x - direction.getInitialPosition().x)/ direction.getDistance();
-//						}else {
-//							direction.setActorPosition(enemy.getPosition());
-//						}
-//				} else { // O enemy ta descendo
-//					if (enemy.getPosition().x > direction.getInitialPosition().x){
-//						enemy.getVelocity().y = enemy.getSpeed()*(direction.getInitialPosition().y - direction.getFinalPosition().y) / direction.getDistance();
-//						enemy.getVelocity().x = enemy.getSpeed()*(direction.getInitialPosition().x - direction.getFinalPosition().x)/ direction.getDistance();
-//					} else {
-//						direction.setActorPosition(enemy.getPosition());
-//					}
-//				}
+
 				//TODO Movimento inteligente
 				if (direction.getInitialPosition().y < direction.getFinalPosition().y) {
 					if (direction.getInitialPosition().x < direction.getFinalPosition().x) {
 						// sentido nordeste
 						if (enemy.getPosition().x >= direction.getFinalPosition().x && enemy.getPosition().y >= direction.getFinalPosition().y) {
-							direction.invert();
+							direction.notifyEnd();
 						} else {
 							if (enemy.getPosition().x < direction.getFinalPosition().x) {
 								enemy.getVelocity().x = enemy.getSpeed()*(direction.getFinalPosition().x - direction.getInitialPosition().x)/ direction.getDistance();
@@ -711,7 +694,7 @@ public class WorldRenderer {
 						//  sentido noroeste
 						System.out.println("noroeste");
 						if (enemy.getPosition().x <= direction.getFinalPosition().x && enemy.getPosition().y >= direction.getFinalPosition().y) {
-							direction.invert();
+							direction.notifyEnd();
 						} else {
 							if (enemy.getPosition().y < direction.getFinalPosition().y) {
 								enemy.getVelocity().y = enemy.getSpeed()*(direction.getFinalPosition().y - direction.getInitialPosition().y) / direction.getDistance();
@@ -732,7 +715,7 @@ public class WorldRenderer {
 						System.out.println("sudeste");
 						//  sentido sudeste
 						if (enemy.getPosition().x >= direction.getFinalPosition().x && enemy.getPosition().y <= direction.getFinalPosition().y) {
-							direction.invert();
+							direction.notifyEnd();
 						} else {
 //							System.out.println(enemy.getPosition().y >= direction.getFinalPosition().y);
 							if (enemy.getPosition().y > direction.getFinalPosition().y) {
@@ -751,7 +734,7 @@ public class WorldRenderer {
 					} else {
 						// sentido sudoeste
 						if (enemy.getPosition().x <= direction.getFinalPosition().x && enemy.getPosition().y <= direction.getFinalPosition().y) {
-							direction.invert();
+							direction.notifyEnd();
 						} else {
 							if (enemy.getPosition().y > direction.getFinalPosition().y) {
 								enemy.getVelocity().y = enemy.getSpeed()*(direction.getFinalPosition().y - direction.getInitialPosition().y) / direction.getDistance();
