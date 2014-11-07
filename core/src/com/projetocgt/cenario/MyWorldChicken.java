@@ -10,6 +10,7 @@ import cgt.behaviors.Direction;
 import cgt.behaviors.Sine;
 import cgt.core.CGTActor;
 import cgt.core.CGTEnemy;
+import cgt.core.CGTOpposite;
 import cgt.hud.CGTButton;
 import cgt.hud.CGTButtonScreen;
 import cgt.hud.CGTButtonStartGame;
@@ -46,7 +47,7 @@ public class MyWorldChicken {
 		personagemCGTActor.setLife(1);
 		personagemCGTActor.setSpeed(100);
 
-		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet("data/chicken/galinha.png"));
+		personagemCGTActor.setSpriteSheet(new CGTSpriteSheet("data/chicken/galinha2.png"));
 		personagemCGTActor.getSpriteSheet().setRows(8);
 		personagemCGTActor.getSpriteSheet().setColumns(4);
 
@@ -72,155 +73,107 @@ public class MyWorldChicken {
 		
 	}
 
-	public void configuracaoCarros() {
+	public void configuracaoVacas() {
 		// inicializando o carro no cenario
-
-//		Direction direction = new Direction(DirectionPolicy.LEFT_AND_RIGHT);
-//		direction.setMaxX(1200);
-//		direction.setMinX(500);
-//		direction.setInteligenceMoviment(false);
-//
-//		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
-//		directionUp.setMaxY(1200);
-//		directionUp.setMinY(0);
-//		directionUp.setInteligenceMoviment(false);
 		
-		Direction direction2Points = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
-		direction2Points.setInitialPosition(new Vector2(100,100));
-		direction2Points.setFinalPosition(new Vector2(50,450));
+		Direction movimentacaoVaca = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
+		movimentacaoVaca.setInitialPosition(new Vector2(100,100));
+		movimentacaoVaca.setFinalPosition(new Vector2(800,600));
+		movimentacaoVaca.setInteligenceMoviment(false);
+		
+		Direction movimentacaoVaca2 = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
+		movimentacaoVaca2.setInitialPosition(new Vector2(200,600));
+		movimentacaoVaca2.setFinalPosition(new Vector2(900,100));
+		movimentacaoVaca2.setInteligenceMoviment(false);
 		
 
-		CGTEnemy carroCGT = new CGTEnemy();
-//		carroCGT.addBehavior(directionUp);
+		CGTEnemy vaca = new CGTEnemy();		
+
+		Rectangle coliderVaca = new Rectangle(0, 0, 252, 252);
+		vaca.setCollision(coliderVaca);
+
+		Rectangle tamanhoVaca = new Rectangle(0, 0, 100, 100);
+		vaca.setBounds(tamanhoVaca);
 		
-		Vector2 positionCarro = new Vector2(780, 600);
-		carroCGT.setPosition(positionCarro);
+		vaca.addBehavior(movimentacaoVaca);
+		vaca.setBlock(true);
+		vaca.setDestroyable(false);
+		vaca.setDamage(50);		
+		vaca.setSpeed(100);
 
-		Rectangle coliderCarro = new Rectangle(0, 0, 252, 252);
-		carroCGT.setCollision(coliderCarro);
-
-		Rectangle tamanhoCarro = new Rectangle(0, 0, 252, 252);
-		carroCGT.setBounds(tamanhoCarro);
-
-		carroCGT.setBlock(true);
-		carroCGT.setDestroyable(false);
-		carroCGT.setDamage(50);
-		
-		carroCGT.setSpeed(200);
-
-		carroCGT.setSpriteSheet(new CGTSpriteSheet("data/chicken/vaca_spritesheet.png"));
-		carroCGT.getSpriteSheet().setRows(2);
-		carroCGT.getSpriteSheet().setColumns(1);
+		vaca.setSpriteSheet(new CGTSpriteSheet("data/chicken/vaca_spritesheet.png"));
+		vaca.getSpriteSheet().setRows(2);
+		vaca.getSpriteSheet().setColumns(1);
 
 		CGTSound soundCar = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.2f);
-		carroCGT.setSound(soundCar);
+		vaca.setSound(soundCar);
 
 		// Action
-		CGTAnimation moveCarroDown = new CGTAnimation(carroCGT);
-		moveCarroDown.setSpriteLine(1);
-//		moveCarroDown.addStatePolicy(StatePolicy.LOOKDOWN);
+		CGTAnimation moveVacaUp = new CGTAnimation(vaca);
+		moveVacaUp.setSpriteLine(1);
+		moveVacaUp.addStatePolicy(StatePolicy.LOOKUP);
+		moveVacaUp.setSpriteVelocity(0.08f);
+		moveVacaUp.setAnimationPolicy(PlayMode.LOOP);
+		vaca.getAnimarions().add(moveVacaUp);
 
-		moveCarroDown.setSpriteVelocity(0.08f);
-		moveCarroDown.setAnimationPolicy(PlayMode.LOOP);
-		carroCGT.getAnimarions().add(moveCarroDown);
+		CGTAnimation moveVacaDown = new CGTAnimation(vaca);
+		moveVacaDown.setSpriteLine(1);
+		moveVacaDown.addStatePolicy(StatePolicy.LOOKDOWN);
+		moveVacaDown.setSpriteVelocity(0.08f);
+		moveVacaDown.setAnimationPolicy(PlayMode.LOOP);
+		vaca.getAnimarions().add(moveVacaDown);
 
-//		CGTAnimation moveCarroUp = new CGTAnimation(carroCGT);
-//		moveCarroUp.setSpriteLine(3);
-//		moveCarroUp.addStatePolicy(StatePolicy.LOOKUP);
-//
-//		moveCarroUp.setSpriteVelocity(0.08f);
-//		moveCarroUp.setAnimationPolicy(PlayMode.LOOP);
-//		carroCGT.getAnimarions().add(moveCarroUp);
+		world.getEnemies().add(vaca);
+		
+		
 
-		world.getEnemies().add(carroCGT);
-
-		CGTEnemy carroCGT2 = new CGTEnemy();
-//		carroCGT2.addBehavior(direction);
-		Vector2 positionCarro2 = new Vector2(600, 560);
-		carroCGT2.setPosition(positionCarro2);
+		CGTEnemy vaca2 = new CGTEnemy();		
 
 		Rectangle coliderCarro2 = new Rectangle(0, 0, 252, 252);
-		carroCGT2.setCollision(coliderCarro2);
+		vaca2.setCollision(coliderCarro2);
 
 		Rectangle tamanhoCarro2 = new Rectangle(0, 0, 252, 252);
-		carroCGT2.setBounds(tamanhoCarro2);
+		vaca2.setBounds(tamanhoCarro2);
 
-		carroCGT2.setBlock(true);
-		carroCGT2.setDestroyable(false);
-		carroCGT2.setDamage(50);
-		
-		carroCGT2.setSpeed(200);
+		vaca2.setBlock(true);
+		vaca2.setDestroyable(false);
+		vaca2.setDamage(50);
+		vaca2.addBehavior(movimentacaoVaca2);
+		vaca2.setSpeed(100);
 
-		carroCGT2.setSpriteSheet(new CGTSpriteSheet("data/chicken/vaca_spritesheet.png"));
-		carroCGT2.getSpriteSheet().setRows(2);
-		carroCGT2.getSpriteSheet().setColumns(1);
+		vaca2.setSpriteSheet(new CGTSpriteSheet("data/chicken/vaca_spritesheet.png"));
+		vaca2.getSpriteSheet().setRows(2);
+		vaca2.getSpriteSheet().setColumns(1);
 
 		CGTSound soundCar2 = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.2f);
-
-		carroCGT2.setSound(soundCar2);
+		vaca2.setSound(soundCar2);
 
 		// Action
 
-		CGTAnimation moveCarro = new CGTAnimation(carroCGT2);
-		moveCarro.setSpriteLine(2);
-		moveCarro.setSpriteVelocity(0.08f);
-		moveCarro.setAnimationPolicy(PlayMode.LOOP);
-		carroCGT2.getAnimarions().add(moveCarro);
+		CGTAnimation moveVacaUp2 = new CGTAnimation(vaca2);
+		moveVacaUp2.setSpriteLine(2);
+		moveVacaUp2.addStatePolicy(StatePolicy.LOOKUP);
+		moveVacaUp2.setSpriteVelocity(0.08f);
+		moveVacaUp2.setAnimationPolicy(PlayMode.LOOP);
+		vaca2.getAnimarions().add(moveVacaUp2);
+		
+		CGTAnimation moveVacaDown2 = new CGTAnimation(vaca2);
+		moveVacaDown2.setSpriteLine(2);
+		moveVacaDown2.addStatePolicy(StatePolicy.LOOKDOWN);
+		moveVacaDown2.setSpriteVelocity(0.08f);
+		moveVacaDown2.setAnimationPolicy(PlayMode.LOOP);
+		vaca2.getAnimarions().add(moveVacaDown2);		
 
 		// Add na lista de enemy
-		world.getEnemies().add(carroCGT2);
-		
-		
-		CGTEnemy carroCGT3 = new CGTEnemy();
-		carroCGT3.addBehavior(direction2Points);
-//		Vector2 positionCarro3 = new Vector2(0, 0);
-//		carroCGT3.setPosition(positionCarro3);
-
-		Rectangle coliderCarro3 = new Rectangle(22, 0, 60, 94);
-		carroCGT3.setCollision(coliderCarro3);
-
-		Rectangle tamanhoCarro3 = new Rectangle(0, 0, 98, 90);
-		carroCGT3.setBounds(tamanhoCarro3);
-
-		carroCGT3.setBlock(true);
-		carroCGT3.setDestroyable(false);
-		carroCGT3.setDamage(50);
-		
-		carroCGT3.setSpeed(500);
-
-		carroCGT3.setSpriteSheet(new CGTSpriteSheet("data/dapexe/SpriteSheet_carro_jeep.png"));
-		carroCGT3.getSpriteSheet().setRows(3);
-		carroCGT3.getSpriteSheet().setColumns(2);
-
-		CGTSound soundCar3 = new CGTSound("data/AudioDaPexe/carro_1.wav", 0.2f);
-		carroCGT3.setSound(soundCar3);
-
-		// Action
-		CGTAnimation moveCarroDown3 = new CGTAnimation(carroCGT3);
-		moveCarroDown3.setSpriteLine(2);
-		moveCarroDown3.addStatePolicy(StatePolicy.LOOKDOWN);
-
-		moveCarroDown3.setSpriteVelocity(0.08f);
-		moveCarroDown3.setAnimationPolicy(PlayMode.LOOP);
-		carroCGT3.getAnimarions().add(moveCarroDown3);
-
-//		CGTAnimation moveCarroUp3 = new CGTAnimation(carroCGT3);
-//		moveCarroUp3.setSpriteLine(3);
-//		moveCarroUp3.addStatePolicy(StatePolicy.LOOKUP);
-//
-//		moveCarroUp3.setSpriteVelocity(0.08f);
-//		moveCarroUp3.setAnimationPolicy(PlayMode.LOOP);
-//		carroCGT3.getAnimarions().add(moveCarroUp3);
-
-		world.getEnemies().add(carroCGT3);
+		world.getEnemies().add(vaca2);
 
 	}
 
 	public void configuracaoPeixes(){
-//		Direction directionUp = new Direction(DirectionPolicy.UP_AND_DOWN);
-//		directionUp.setMaxY(200);
-//		directionUp.setMinY(0);
-//		directionUp.setInteligenceMoviment(false);
+		Direction movimentacaoPeixe = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
+		movimentacaoPeixe.setInitialPosition(new Vector2(200,0));
+		movimentacaoPeixe.setFinalPosition(new Vector2(200,200));
+		movimentacaoPeixe.setInteligenceMoviment(false);
 		
 		CGTEnemy peixe = new CGTEnemy();
 		
@@ -238,7 +191,7 @@ public class MyWorldChicken {
 		peixe.setBlock(true);
 		peixe.setDestroyable(false);
 		peixe.setDamage(50);
-//		peixe.addBehavior(directionUp);
+		peixe.addBehavior(movimentacaoPeixe);
 		peixe.setSpeed(100);
 
 		peixe.setSpriteSheet(new CGTSpriteSheet(
@@ -265,6 +218,225 @@ public class MyWorldChicken {
 		peixe.getAnimarions().add(moveCarroUp);
 
 		world.getEnemies().add(peixe);
+	}
+	
+	public void configuracaoNuvens(){
+		Direction movimentacaoNuvem1 = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
+		movimentacaoNuvem1.setInitialPosition(new Vector2(200,400));
+		movimentacaoNuvem1.setFinalPosition(new Vector2(800,400));
+		movimentacaoNuvem1.setInteligenceMoviment(false);
+		
+		Direction movimentacaoNuvem2 = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
+		movimentacaoNuvem2.setInitialPosition(new Vector2(800,400));
+		movimentacaoNuvem2.setFinalPosition(new Vector2(200,400));
+		movimentacaoNuvem2.setInteligenceMoviment(false);
+		
+		Direction movimentacaoNuvem3 = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
+		movimentacaoNuvem3.setInitialPosition(new Vector2(1140,550));
+		movimentacaoNuvem3.setFinalPosition(new Vector2(0,550));
+		movimentacaoNuvem3.setInteligenceMoviment(false);	
+				
+		CGTEnemy nuvem = new CGTEnemy();
+		
+		Vector2 positionNuvem = new Vector2(200, 300);
+		nuvem.setPosition(positionNuvem);
+
+		Rectangle coliderNuvem = new Rectangle(22, 66, 250, 150);
+		nuvem.setCollision(coliderNuvem);
+
+		Rectangle tamanhoNuvem = new Rectangle(0, 0, 300, 300);
+		nuvem.setBounds(tamanhoNuvem);
+		
+		nuvem.setBlock(false);
+		nuvem.setDestroyable(false);
+		nuvem.setState(StatePolicy.IDLEDOWN);
+		nuvem.addBehavior(movimentacaoNuvem1);
+		nuvem.setSpeed(50);
+		
+		nuvem.setSpriteSheet(new CGTSpriteSheet("data/chicken/nuvem_0000_nuvem10_vectorized.png"));
+		nuvem.getSpriteSheet().setRows(1);
+		nuvem.getSpriteSheet().setColumns(1);		
+		
+		CGTAnimation moveCarroRight = new CGTAnimation(nuvem);
+		moveCarroRight.setSpriteLine(1);
+		moveCarroRight.addStatePolicy(StatePolicy.LOOKLEFT);
+		moveCarroRight.setSpriteVelocity(0.08f);
+		moveCarroRight.setAnimationPolicy(PlayMode.LOOP);
+		nuvem.getAnimarions().add(moveCarroRight);
+
+		CGTAnimation moveCarroLeft = new CGTAnimation(nuvem);
+		moveCarroLeft.setSpriteLine(1);
+		moveCarroLeft.addStatePolicy(StatePolicy.LOOKRIGHT);
+		moveCarroLeft.setSpriteVelocity(0.08f);
+		moveCarroLeft.setAnimationPolicy(PlayMode.LOOP);
+		nuvem.getAnimarions().add(moveCarroLeft);
+		
+		world.getEnemies().add(nuvem);
+		
+		
+		CGTEnemy nuvem2 = new CGTEnemy();
+		
+		Vector2 positionNuvem2 = new Vector2(500, 300);
+		nuvem2.setPosition(positionNuvem2);
+
+		Rectangle coliderNuvem2 = new Rectangle(100, 100, 100, 100);
+		nuvem2.setCollision(coliderNuvem2);
+
+		Rectangle tamanhoNuvem2 = new Rectangle(0, 0, 300, 300);
+		nuvem2.setBounds(tamanhoNuvem2);
+		
+		nuvem2.setBlock(false);
+		nuvem2.setDestroyable(false);
+		nuvem2.setState(StatePolicy.IDLEDOWN);
+		nuvem2.addBehavior(movimentacaoNuvem2);
+		nuvem2.setSpeed(50);
+		
+		nuvem2.setSpriteSheet(new CGTSpriteSheet("data/chicken/nuvem_0001_007_vectorized.png"));
+		nuvem2.getSpriteSheet().setRows(1);
+		nuvem2.getSpriteSheet().setColumns(1);
+				
+		CGTAnimation moveNuvemRight2 = new CGTAnimation(nuvem2);
+		moveNuvemRight2.setSpriteLine(1);
+		moveNuvemRight2.addStatePolicy(StatePolicy.LOOKLEFT);
+		moveNuvemRight2.setSpriteVelocity(0.08f);
+		moveNuvemRight2.setAnimationPolicy(PlayMode.LOOP);
+		nuvem2.getAnimarions().add(moveNuvemRight2);
+
+		CGTAnimation moveNuvemLeft2 = new CGTAnimation(nuvem2);
+		moveNuvemLeft2.setSpriteLine(1);
+		moveNuvemLeft2.addStatePolicy(StatePolicy.LOOKRIGHT);
+		moveNuvemLeft2.setSpriteVelocity(0.08f);
+		moveNuvemLeft2.setAnimationPolicy(PlayMode.LOOP);
+		nuvem2.getAnimarions().add(moveNuvemLeft2);
+		
+		world.getEnemies().add(nuvem2);
+		
+		CGTEnemy nuvem3 = new CGTEnemy();
+		
+		Vector2 positionNuvem3 = new Vector2(200, 300);
+		nuvem3.setPosition(positionNuvem3);
+
+		Rectangle coliderNuvem3 = new Rectangle(22, 66, 250, 150);
+		nuvem3.setCollision(coliderNuvem3);
+
+		Rectangle tamanhoNuvem3 = new Rectangle(0, 0, 300, 300);
+		nuvem3.setBounds(tamanhoNuvem3);
+		
+		nuvem3.setBlock(false);
+		nuvem3.setDestroyable(false);
+		nuvem3.setState(StatePolicy.IDLEDOWN);
+		nuvem3.addBehavior(movimentacaoNuvem3);
+		nuvem3.setSpeed(50);
+		
+		nuvem3.setSpriteSheet(new CGTSpriteSheet("data/chicken/nuvem_0000_nuvem10_vectorized.png"));
+		nuvem3.getSpriteSheet().setRows(1);
+		nuvem3.getSpriteSheet().setColumns(1);		
+		
+		CGTAnimation moveNuvemRight3 = new CGTAnimation(nuvem3);
+		moveNuvemRight3.setSpriteLine(1);
+		moveNuvemRight3.addStatePolicy(StatePolicy.LOOKLEFT);
+		moveNuvemRight3.setSpriteVelocity(0.08f);
+		moveNuvemRight3.setAnimationPolicy(PlayMode.LOOP);
+		nuvem3.getAnimarions().add(moveNuvemRight3);
+
+		CGTAnimation moveNuvemLeft3 = new CGTAnimation(nuvem3);
+		moveNuvemLeft3.setSpriteLine(1);
+		moveNuvemLeft3.addStatePolicy(StatePolicy.LOOKRIGHT);
+		moveNuvemLeft3.setSpriteVelocity(0.08f);
+		moveNuvemLeft3.setAnimationPolicy(PlayMode.LOOP);
+		nuvem3.getAnimarions().add(moveNuvemLeft3);
+		
+		world.getEnemies().add(nuvem3);		
+
+	}
+	
+	public void configuracaoJumentos(){
+		Direction movimentacaoJumento = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
+		movimentacaoJumento.setInitialPosition(new Vector2(100,720));
+		movimentacaoJumento.setFinalPosition(new Vector2(100,0));
+		movimentacaoJumento.setInteligenceMoviment(false);
+		
+		Direction movimentacaoJumento2 = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
+		movimentacaoJumento2.setInitialPosition(new Vector2(500,720));
+		movimentacaoJumento2.setFinalPosition(new Vector2(500,0));
+		movimentacaoJumento2.setInteligenceMoviment(false);
+		
+		CGTEnemy jumento = new CGTEnemy();
+
+		Rectangle coliderJumento = new Rectangle(22, 0, 60, 94);
+		jumento.setCollision(coliderJumento);
+
+		Rectangle tamanhoJumento = new Rectangle(0, 0, 98, 90);
+		jumento.setBounds(tamanhoJumento);
+		
+		jumento.setLife(50);
+		jumento.setBlock(true);
+		jumento.setDestroyable(false);
+		jumento.setDamage(50);
+		jumento.addBehavior(movimentacaoJumento);
+		jumento.setSpeed(100);
+
+		jumento.setSpriteSheet(new CGTSpriteSheet(
+				"data/chicken/jumento_spritesheet.png"));
+		jumento.getSpriteSheet().setRows(2);
+		jumento.getSpriteSheet().setColumns(4);
+		
+		// Action
+		CGTAnimation moveJumentoDown = new CGTAnimation(jumento);
+		moveJumentoDown.setInitialFrame(new Vector2(0, 0));
+		moveJumentoDown.setEndingFrame(new Vector2(1, 1));
+		moveJumentoDown.setSpriteVelocity(0.08f);
+		moveJumentoDown.setAnimationPolicy(PlayMode.LOOP);
+		jumento.getAnimarions().add(moveJumentoDown);
+
+		world.getEnemies().add(jumento);
+		
+		
+		CGTEnemy jumento2 = new CGTEnemy();
+
+		Rectangle coliderJumento2 = new Rectangle(22, 0, 60, 94);
+		jumento2.setCollision(coliderJumento2);
+
+		Rectangle tamanhoJumento2 = new Rectangle(0, 0, 98, 90);
+		jumento2.setBounds(tamanhoJumento2);
+		
+		jumento2.setLife(50);
+		jumento2.setBlock(true);
+		jumento2.setDestroyable(false);
+		jumento2.setDamage(50);
+		jumento2.addBehavior(movimentacaoJumento2);
+		jumento2.setSpeed(100);
+
+		jumento2.setSpriteSheet(new CGTSpriteSheet(
+				"data/chicken/jumento_spritesheet.png"));
+		jumento2.getSpriteSheet().setRows(2);
+		jumento2.getSpriteSheet().setColumns(4);
+		
+		// Action
+		CGTAnimation moveJumentoDown2 = new CGTAnimation(jumento2);
+		moveJumentoDown2.setInitialFrame(new Vector2(0, 0));
+		moveJumentoDown2.setEndingFrame(new Vector2(1, 1));
+		moveJumentoDown2.setSpriteVelocity(0.08f);
+		moveJumentoDown2.setAnimationPolicy(PlayMode.LOOP);
+		jumento2.getAnimarions().add(moveJumentoDown2);
+
+		world.getEnemies().add(jumento2);
+	}
+	
+	public void opositeCalcada(){
+		CGTOpposite calcada = new CGTOpposite();
+
+		Vector2 position = new Vector2(0, 100);
+		calcada.setPosition(position);
+		Rectangle bounds = new Rectangle(0, 0, 76, 65);
+		calcada.setBounds(bounds);
+		calcada.setCollision(bounds);
+
+		calcada.setBlock(true);
+		calcada.setDestroyable(false);
+		calcada.setLife(0);
+		
+		world.getOpposites().add(calcada);
 	}
 	
 	public void configuracaoPauseDialog() {
@@ -385,9 +557,15 @@ public class MyWorldChicken {
 		
 		configuracaoActionActor(personagemCGTActor);
 		
-		configuracaoCarros();
+		configuracaoVacas();
+		
+		configuracaoNuvens();
 		
 		configuracaoPeixes();
+		
+		configuracaoJumentos();
+		
+		opositeCalcada();
 		
 		world.setActor(personagemCGTActor);
 		

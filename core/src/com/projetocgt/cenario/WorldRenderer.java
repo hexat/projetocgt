@@ -93,6 +93,9 @@ public class WorldRenderer {
 			spriteBatch.begin();
 			draw();
 			spriteBatch.end();
+			if (GameScreen.DEBUG) {
+				drawDebug();
+			}
 		}
 
 		else {
@@ -300,19 +303,19 @@ public class WorldRenderer {
 	}
 
 	public void draw() {
-
+		
+		
 		drawBackground();
 		drawCGTActor();
 		drawOpposites();
 		drawProjectiles(); // Chamada de projectiles precisa ser feita antes de Enemies
 		drawEnemies();
 		drawBonus();
-
 		//drawDamageActor();
-
-		if (GameScreen.DEBUG) {
-			drawDebug();
-		}
+//		if (GameScreen.DEBUG) {
+//			drawDebug();
+//		}
+		
 	}
 
 	private void drawBonus() {
