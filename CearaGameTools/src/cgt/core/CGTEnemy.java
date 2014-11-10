@@ -25,6 +25,8 @@ public class CGTEnemy extends CGTGameObject implements Serializable{
 	private String group;
 	private float alpha; //nivel de transparencia
 	private boolean vulnerable;
+	private float timeToRecovery;
+	private boolean attacking;
 	
 	public CGTEnemy(){
 		damage=0;
@@ -34,6 +36,8 @@ public class CGTEnemy extends CGTGameObject implements Serializable{
 		group="";
 		vulnerable=true;
 		alpha = 1;
+		attacking = false;
+		timeToRecovery = 0;
 	}
 	
 	public CGTEnemy(LabelID id){
@@ -142,5 +146,23 @@ public class CGTEnemy extends CGTGameObject implements Serializable{
 	public void setVulnerable(boolean vulnerable) {
 		this.vulnerable = vulnerable;
 	}
+
+	public float getTimeToRecovery() {
+		return timeToRecovery;
+	}
+
+	public void setTimeToRecovery(float timeToRecovery) {
+		this.timeToRecovery = timeToRecovery;
+	}
+
+	public boolean isAttacking() {
+		return attacking;
+	}
+
+	public void setAttacking(boolean attacking) {
+		this.attacking = attacking;
+	}
+	
+	
 	
 }

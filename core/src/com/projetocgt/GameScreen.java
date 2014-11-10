@@ -93,7 +93,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			if(component instanceof CGTControllerButton){
 				CGTControllerButton button = (CGTControllerButton)component;
 				if(button.isActive()){
-					System.out.println("button"+button.getInput());
 					controller.activateKey(button.getInput());
 				}
 				else if(button.isReleased()){

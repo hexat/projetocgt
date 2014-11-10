@@ -201,12 +201,19 @@ public class MyWorldChicken {
 		movimentacaoPeixe.setInteligenceMoviment(false);
 		movimentacaoPeixe.setDirectionMode(DirectionMode.PINGPONG);
 		
+		Direction movimentacaoPeixe2 = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
+		movimentacaoPeixe2.setInitialPosition(new Vector2(500,0));
+		movimentacaoPeixe2.setFinalPosition(new Vector2(500,200));
+		movimentacaoPeixe2.setInteligenceMoviment(false);
+		movimentacaoPeixe2.setDirectionMode(DirectionMode.PINGPONG);
+		
+				
 		CGTEnemy peixe = new CGTEnemy();
 		
 		Vector2 positionPeixe = new Vector2(200, 0);
 		peixe.setPosition(positionPeixe);
 
-		Rectangle coliderPeixe = new Rectangle(22, 0, 60, 94);
+		Rectangle coliderPeixe = new Rectangle(22, 0, 60, 75);
 		peixe.setCollision(coliderPeixe);
 
 		Rectangle tamanhoPeixe = new Rectangle(0, 0, 98, 90);
@@ -219,30 +226,83 @@ public class MyWorldChicken {
 		peixe.setDamage(50);
 		peixe.addBehavior(movimentacaoPeixe);
 		peixe.setSpeed(100);
+		peixe.setTimeToRecovery(0.5f);
 		
-		CGTSpriteSheet peixeSpriteSheet = new CGTSpriteSheet("data/chicken/peixe_spritesheet.png");
-		peixeSpriteSheet.setRows(4);
-		peixeSpriteSheet.setColumns(4);
+		CGTSpriteSheet peixeSpriteSheet = new CGTSpriteSheet("data/chicken/peixe_spritesheet1.png");
+		peixeSpriteSheet.setRows(3);
+		peixeSpriteSheet.setColumns(5);
 		
 		// Action
-		CGTAnimation moveCarroDown = new CGTAnimation(peixe, peixeSpriteSheet);
-		moveCarroDown.setInitialFrame(new Vector2(0, 0));
-		moveCarroDown.setEndingFrame(new Vector2(1, 2));
-		moveCarroDown.setSpriteVelocity(0.08f);
-		moveCarroDown.setAnimationPolicy(PlayMode.LOOP);
+		CGTAnimation movePeixeUp = new CGTAnimation(peixe, peixeSpriteSheet);
+		movePeixeUp.setInitialFrame(new Vector2(0, 0));
+		movePeixeUp.setEndingFrame(new Vector2(1, 1));
+		movePeixeUp.setSpriteVelocity(0.08f);
+		movePeixeUp.setAnimationPolicy(PlayMode.LOOP);
 		
-		peixe.addAnimation(StatePolicy.LOOKUP, moveCarroDown);
+		CGTAnimation movePeixeDown = new CGTAnimation(peixe, peixeSpriteSheet);
+		movePeixeDown.setInitialFrame(new Vector2(0, 0));
+		movePeixeDown.setEndingFrame(new Vector2(1, 1));
+		movePeixeDown.setSpriteVelocity(0.08f);
+		movePeixeDown.setAnimationPolicy(PlayMode.LOOP);
 		
-
-//		CGTAnimation moveCarroUp = new CGTAnimation(peixe, peixeSpriteSheet);
-//		moveCarroUp.setInitialFrame(new Vector2(2, 2));
-//		moveCarroUp.setEndingFrame(new Vector2(1, 3));
-//		moveCarroUp.addStatePolicy(StatePolicy.DAMAGE);
-//		moveCarroUp.setSpriteVelocity(0.08f);
-//		moveCarroUp.setAnimationPolicy(PlayMode.LOOP);
-//		peixe.getAnimarions().add(moveCarroUp);
-
+		CGTAnimation damage = new CGTAnimation(peixe, peixeSpriteSheet);
+		damage.setInitialFrame(new Vector2(1, 2));
+		damage.setEndingFrame(new Vector2(3, 1));
+		damage.setSpriteVelocity(0.08f);
+		damage.setAnimationPolicy(PlayMode.LOOP);
+		
+		peixe.addAnimation(StatePolicy.LOOKUP, movePeixeUp);
+		peixe.addAnimation(StatePolicy.LOOKDOWN, movePeixeDown);
+		peixe.addAnimation(StatePolicy.DAMAGE, damage);
+		
 		world.getEnemies().add(peixe);
+		
+		
+		CGTEnemy peixe2 = new CGTEnemy();
+
+		Rectangle coliderPeixe2 = new Rectangle(22, 0, 60, 75);
+		peixe2.setCollision(coliderPeixe2);
+
+		Rectangle tamanhoPeixe2 = new Rectangle(0, 0, 98, 90);
+		peixe2.setBounds(tamanhoPeixe2);
+		
+		peixe2.setState(StatePolicy.IDLEDOWN);
+		peixe2.setLife(50);
+		peixe2.setBlock(true);
+		peixe2.setDestroyable(false);
+		peixe2.setDamage(50);
+		peixe2.addBehavior(movimentacaoPeixe2);
+		peixe2.setSpeed(100);
+		peixe2.setTimeToRecovery(0.5f);
+		
+		CGTSpriteSheet peixeSpriteSheet2 = new CGTSpriteSheet("data/chicken/peixe_spritesheet2.png");
+		peixeSpriteSheet2.setRows(3);
+		peixeSpriteSheet2.setColumns(5);
+		
+		// Action
+		CGTAnimation movePeixeUp2 = new CGTAnimation(peixe2, peixeSpriteSheet2);
+		movePeixeUp2.setInitialFrame(new Vector2(0, 0));
+		movePeixeUp2.setEndingFrame(new Vector2(1, 1));
+		movePeixeUp2.setSpriteVelocity(0.08f);
+		movePeixeUp2.setAnimationPolicy(PlayMode.LOOP);
+		
+		CGTAnimation movePeixeDown2 = new CGTAnimation(peixe2, peixeSpriteSheet2);
+		movePeixeDown2.setInitialFrame(new Vector2(0, 0));
+		movePeixeDown2.setEndingFrame(new Vector2(1, 1));
+		movePeixeDown2.setSpriteVelocity(0.08f);
+		movePeixeDown2.setAnimationPolicy(PlayMode.LOOP);
+		
+		CGTAnimation damage2 = new CGTAnimation(peixe2, peixeSpriteSheet2);
+		damage2.setInitialFrame(new Vector2(1, 2));
+		damage2.setEndingFrame(new Vector2(3, 1));
+		damage2.setSpriteVelocity(0.08f);
+		damage2.setAnimationPolicy(PlayMode.LOOP);
+		
+		peixe2.addAnimation(StatePolicy.LOOKUP, movePeixeUp2);
+		peixe2.addAnimation(StatePolicy.LOOKDOWN, movePeixeDown2);
+		peixe2.addAnimation(StatePolicy.DAMAGE, damage2);
+		
+		world.getEnemies().add(peixe2);
 	}
 	
 	public void configuracaoNuvens(){
@@ -279,20 +339,18 @@ public class MyWorldChicken {
 		nuvemSpriteSheet.setRows(1);
 		nuvemSpriteSheet.setColumns(1);
 		
-				
-		
-		CGTAnimation moveCarroRight = new CGTAnimation(nuvem,nuvemSpriteSheet);
-		moveCarroRight.setSpriteLine(1);
-		moveCarroRight.setSpriteVelocity(0.08f);
-		moveCarroRight.setAnimationPolicy(PlayMode.LOOP);
+		CGTAnimation moveNuvemLeft = new CGTAnimation(nuvem,nuvemSpriteSheet);
+		moveNuvemLeft.setSpriteLine(1);
+		moveNuvemLeft.setSpriteVelocity(0.08f);
+		moveNuvemLeft.setAnimationPolicy(PlayMode.LOOP);
 
-		CGTAnimation moveCarroLeft = new CGTAnimation(nuvem,nuvemSpriteSheet);
-		moveCarroLeft.setSpriteLine(1);
-		moveCarroLeft.setSpriteVelocity(0.08f);
-		moveCarroLeft.setAnimationPolicy(PlayMode.LOOP);
+		CGTAnimation moveNuvemRight = new CGTAnimation(nuvem,nuvemSpriteSheet);
+		moveNuvemRight.setSpriteLine(1);
+		moveNuvemRight.setSpriteVelocity(0.08f);
+		moveNuvemRight.setAnimationPolicy(PlayMode.LOOP);
 		
-		nuvem.addAnimation(StatePolicy.LOOKLEFT, moveCarroRight);
-		nuvem.addAnimation(StatePolicy.LOOKRIGHT, moveCarroLeft);
+		nuvem.addAnimation(StatePolicy.LOOKLEFT, moveNuvemLeft);
+		nuvem.addAnimation(StatePolicy.LOOKRIGHT, moveNuvemRight);
 			
 		world.getEnemies().add(nuvem);
 		
@@ -320,18 +378,18 @@ public class MyWorldChicken {
 		nuvemSpriteSheet2.setRows(1);
 		nuvemSpriteSheet2.setColumns(1);
 				
-		CGTAnimation moveNuvemRight2 = new CGTAnimation(nuvem2,nuvemSpriteSheet2);
-		moveNuvemRight2.setSpriteLine(1);
-		moveNuvemRight2.setSpriteVelocity(0.08f);
-		moveNuvemRight2.setAnimationPolicy(PlayMode.LOOP);
-
 		CGTAnimation moveNuvemLeft2 = new CGTAnimation(nuvem2,nuvemSpriteSheet2);
 		moveNuvemLeft2.setSpriteLine(1);
 		moveNuvemLeft2.setSpriteVelocity(0.08f);
 		moveNuvemLeft2.setAnimationPolicy(PlayMode.LOOP);
+
+		CGTAnimation moveNuvemRight2 = new CGTAnimation(nuvem2,nuvemSpriteSheet2);
+		moveNuvemRight2.setSpriteLine(1);
+		moveNuvemRight2.setSpriteVelocity(0.08f);
+		moveNuvemRight2.setAnimationPolicy(PlayMode.LOOP);
 		
-		nuvem2.addAnimation(StatePolicy.LOOKLEFT, moveNuvemRight2);
-		nuvem2.addAnimation(StatePolicy.LOOKRIGHT, moveNuvemLeft2);
+		nuvem2.addAnimation(StatePolicy.LOOKLEFT, moveNuvemLeft2);
+		nuvem2.addAnimation(StatePolicy.LOOKRIGHT, moveNuvemRight2);
 		
 		world.getEnemies().add(nuvem2);
 		
