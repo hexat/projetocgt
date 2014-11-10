@@ -12,7 +12,7 @@ import cgt.policy.ActionMovePolicy;
 import cgt.policy.GameModePolicy;
 import cgt.policy.InputPolicy;
 import cgt.screen.CGTDialog;
-
+import cgt.screen.CGTWindow;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -22,13 +22,11 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.projetocgt.cenario.WorldController;
@@ -48,6 +46,8 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	private Music music;
 	private boolean flagTouch;
 	private Vector2 lastPoint;
+	
+	
 	public GameScreen(CGTGameWorld world) {
 				
 		this.world = world;
@@ -404,5 +404,17 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 	public void setSpriteBatch(SpriteBatch spriteBatch) {
 		this.spriteBatch = spriteBatch;
+	}
+	
+	public WorldController getController() {
+		return controller;
+	}
+	
+	public WorldRenderer getRenderer() {
+		return renderer;
+	}
+	
+	public CGTGameWorld getWorld() {
+		return world;
 	}
 }

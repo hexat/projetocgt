@@ -522,11 +522,9 @@ public class WorldRenderer {
 
 				if (enemy.getPosition().y < sine.getMin()) {
 					sine.setAtFirstStep(true);
-					enemy.setState(StatePolicy.LOOKUP);
 				}
 				if (enemy.getPosition().y > sine.getMax()) {
 					sine.setAtFirstStep(false);
-					enemy.setState(StatePolicy.LOOKDOWN);
 				}
 			}
 
@@ -540,11 +538,9 @@ public class WorldRenderer {
 
 				if (enemy.getPosition().x < sine.getMin()) {
 					sine.setAtFirstStep(false);
-					enemy.setState(StatePolicy.LOOKRIGHT);
 				}
 				if (enemy.getPosition().x > sine.getMax()) {
 					sine.setAtFirstStep(true);
-					enemy.setState(StatePolicy.LOOKLEFT);
 				}
 			}
 

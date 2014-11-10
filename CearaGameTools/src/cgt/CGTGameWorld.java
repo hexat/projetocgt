@@ -80,8 +80,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 
             arquivoGrav.close();
 
-            System.out.println("Objeto gravado com sucesso!");
-
         }
         catch( Exception e ){
                 e.printStackTrace( );
@@ -156,10 +154,8 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	
 	public void playSoundLose(){
 		if (soundLose != null){
-			System.out.println("Tocando m�sica");
 			soundLose.getMusic().play();
 		}
-		System.out.println("O soundLose est� null");
 	}
 
 	public void setActor(CGTActor actor) {
@@ -257,14 +253,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	public CGTEnemy removeEnemy(int index){
 		return this.enemies.remove(index);
 	}
-	
-	public static void main(String[] args) {
-		System.out.println("teste");
-		String s = "data/a.png";
-		File f = new FileHandle(s).file();
-		
-		System.out.println(f.getAbsolutePath());
-	}
 
 	public void addButton(CGTButton button){
 		hud.add(button);
@@ -348,7 +336,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	
 	public void addAction(Action... action){
 		for(int i = 0; i<action.length; i++){
-			System.out.println(action[i]);
 			actions.add(action[i]);
 		}
 	}

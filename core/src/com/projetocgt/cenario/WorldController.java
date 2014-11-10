@@ -207,39 +207,4 @@ public class WorldController {
 		moveKeys();
 		fire();
 	}
-
-
-		public void actionDamegeEnemyDown(){
-			//personagem.getPosition().y+=50;
-			//renderer.getCam().position.y+=50;
-			/*personagem.setState(StatePolicy.DAMAGE);
-		damegePressed();
-		Timer.schedule(new Task(){
-			@Override
-			public void run() {
-				damegeReleased();
-				personagem.setState(StatePolicy.LOOKDOWN);
-			}
-		}, 2);*/
-		}
-
-		public void actionDamegeEnemyUp(){
-			//personagem.getPosition().y-=50;
-			//renderer.getCam().position.y-=50;
-			//personagem.setState(StatePolicy.DAMAGE);
-		}
-
-		public void actionDamegeEnemyRight(){
-			//personagem.getPosition().x-=50;
-			//renderer.getCam().position.x-=50;
-			//personagem.setState(StatePolicy.DAMAGE);
-		}
-
-		public void actionDamegeEnemyLeft(){
-			//personagem.getPosition().x+=50;
-			//renderer.getCam().position.x+=50;
-			//personagem.setState(StatePolicy.DAMAGE);
-		}
-
-
-	}
+}

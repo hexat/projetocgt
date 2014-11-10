@@ -747,7 +747,6 @@ public class MyWorldPexe {
 		CGTControllerButton buttonDown = new CGTControllerButton();
 		buttonDown.setInput(InputPolicy.BTN_DOWN);
 
-		System.out.println(button.getInput());
 		textureUp = new CGTTexture("data/buttons/bt_down_up.png");
 		buttonDown.setTextureUp(textureUp);
 		textureDown = new CGTTexture("data/buttons/bt_down_press.png");
