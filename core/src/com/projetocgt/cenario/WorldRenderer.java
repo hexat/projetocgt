@@ -11,10 +11,8 @@ import cgt.core.CGTActor;
 import cgt.core.CGTEnemy;
 import cgt.core.CGTProjectile;
 import cgt.policy.BonusPolicy;
-import cgt.policy.GameModePolicy;
 import cgt.policy.StatePolicy;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -53,6 +51,7 @@ public class WorldRenderer {
 	private CameraStage zoomCamera;
 	private boolean isLose;
 	private Music musicActorLose;
+	private CGTEnemy aaaa = null;
 
 	public WorldRenderer(CGTGameWorld world) {
 		this.world = world;
@@ -85,6 +84,10 @@ public class WorldRenderer {
 	 */
 	public void render() {		
 		isColision();
+		
+		if (aaaa != null){
+			System.out.println(aaaa.isAttacking());
+		}
 
 		verifyObjectsOnCamera();
 		
@@ -116,6 +119,7 @@ public class WorldRenderer {
 						public void onCompletion(Music music) {
 							personagem.setState(StatePolicy.DIE);
 							isLose = true;
+							Timer.instance().clear();
 						}
 					});
 					musicActorLose.play();
@@ -126,7 +130,7 @@ public class WorldRenderer {
 			draw();
 			spriteBatch.end();
 			
-			Timer.instance().clear();
+			
 
 			for(int index = 0; index < world.getOpposites().size(); index ++){
 				if(world.getOpposites().get(index).isPlayingSound()){
@@ -738,14 +742,11 @@ public class WorldRenderer {
 						if (enemy.getPosition().x >= direction.getFinalPosition().x && enemy.getPosition().y <= direction.getFinalPosition().y) {
 							direction.notifyEnd();
 						} else {
-//							System.out.println(enemy.getPosition().y >= direction.getFinalPosition().y);
 							if (enemy.getPosition().y > direction.getFinalPosition().y) {
 								enemy.getVelocity().y = enemy.getSpeed()*(direction.getFinalPosition().y - direction.getInitialPosition().y) / direction.getDistance();
 							} else {
 								enemy.getVelocity().y = 0;
 							}
-
-//							System.out.println(enemy.getPosition().x >= direction.getFinalPosition().x);
 							if (enemy.getPosition().x < direction.getFinalPosition().x) {
 								enemy.getVelocity().x = enemy.getSpeed()*(direction.getFinalPosition().x - direction.getInitialPosition().x)/ direction.getDistance();
 							} else {
@@ -785,25 +786,27 @@ public class WorldRenderer {
 	}
 
 	public void stateUpdater(CGTEnemy enemy) {
-		if (enemy.getVelocity().x > 0 & enemy.getVelocity().y == 0)
-			enemy.setState(StatePolicy.LOOKRIGHT);
-
-		else if (enemy.getVelocity().x < 0 & enemy.getVelocity().y == 0)
-			enemy.setState(StatePolicy.LOOKLEFT);
-
-		else if (enemy.getVelocity().y > 0 & enemy.getVelocity().x == 0)
-			enemy.setState(StatePolicy.LOOKUP);
-
-		else if (enemy.getVelocity().y < 0 & enemy.getVelocity().x == 0)
-			enemy.setState(StatePolicy.LOOKDOWN);
-		else if(enemy.getVelocity().y > 0 && enemy.getVelocity().x > 0)
-			enemy.setState(StatePolicy.LOOK_RIGHT_AND_UP);
-		else if(enemy.getVelocity().y < 0 && enemy.getVelocity().x < 0)
-			enemy.setState(StatePolicy.LOOK_LEFT_AND_DOWN);
-		else if (enemy.getVelocity().y > 0 && enemy.getVelocity().x < 0)
-			enemy.setState(StatePolicy.LOOK_LEFT_AND_UP);
-		else if (enemy.getVelocity().y < 0 && enemy.getVelocity().x > 0)
-			enemy.setState(StatePolicy.LOOK_RIGHT_AND_DOWN);
+		if (!enemy.isAttacking()){
+			if (enemy.getVelocity().x > 0 & enemy.getVelocity().y == 0)
+				enemy.setState(StatePolicy.LOOKRIGHT);
+	
+			else if (enemy.getVelocity().x < 0 & enemy.getVelocity().y == 0)
+				enemy.setState(StatePolicy.LOOKLEFT);
+	
+			else if (enemy.getVelocity().y > 0 & enemy.getVelocity().x == 0)
+				enemy.setState(StatePolicy.LOOKUP);
+	
+			else if (enemy.getVelocity().y < 0 & enemy.getVelocity().x == 0)
+				enemy.setState(StatePolicy.LOOKDOWN);
+			else if(enemy.getVelocity().y > 0 && enemy.getVelocity().x > 0)
+				enemy.setState(StatePolicy.LOOK_RIGHT_AND_UP);
+			else if(enemy.getVelocity().y < 0 && enemy.getVelocity().x < 0)
+				enemy.setState(StatePolicy.LOOK_LEFT_AND_DOWN);
+			else if (enemy.getVelocity().y > 0 && enemy.getVelocity().x < 0)
+				enemy.setState(StatePolicy.LOOK_LEFT_AND_UP);
+			else if (enemy.getVelocity().y < 0 && enemy.getVelocity().x > 0)
+				enemy.setState(StatePolicy.LOOK_RIGHT_AND_DOWN);
+		}
 	}
 
 	/**
@@ -890,6 +893,7 @@ public class WorldRenderer {
 				animationDamage(world.getEnemies().get(i));
 				if (world.getEnemies().get(i).isBlock()) {
 					colision = true;
+					
 				}
 			}
 		}
@@ -907,7 +911,6 @@ public class WorldRenderer {
 						if (ammoCurrent < maxAmmo) {
 							int recharge = world.getActor().getProjectiles().get(0).addAmmo(world.getBonus().get(i).getScore());
 							world.getBonus().get(i).reduceLife(recharge);
-							System.out.println(recharge);
 							world.getBonus().get(0).playSoundCollision();
 						}
 	
@@ -936,12 +939,16 @@ public class WorldRenderer {
 	 * 
 	 * @param personagem
 	 */
-	public void animationDamage(CGTEnemy enemy) {
+	public void animationDamage(final CGTEnemy enemy) {
 
 		if (!personagem.isInvincible() && enemy.isVulnerable() && enemy.getDamage()>0) {
 
 			personagem.setInvincible(true);
 			personagem.setState(StatePolicy.DAMAGE);
+			enemy.setState(StatePolicy.DAMAGE);
+			enemy.setAttacking(true);
+			aaaa = enemy;
+			System.out.println(enemy.isAttacking());
 			personagem.setInputsEnabled(true);
 
 			Timer.schedule(new Task() {
@@ -959,6 +966,15 @@ public class WorldRenderer {
 					personagem.setInvincible(false);
 				}
 			}, personagem.getTimeToRecovery());
+			System.out.println(enemy.getTimeToRecovery());
+			Timer.schedule(new Task() {
+				@Override
+				public void run() {
+					enemy.setAttacking(false);
+					System.out.println("TESTE");
+				}
+			}, enemy.getTimeToRecovery());
+			
 		}
 	}
 

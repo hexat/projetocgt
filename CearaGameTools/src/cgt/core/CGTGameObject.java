@@ -302,7 +302,6 @@ public abstract class CGTGameObject implements Serializable {
 	 * @param state the state to set
 	 */
 	public void setState(StatePolicy state) {
-		System.out.println(state);
 		this.state = state;
 	}
 

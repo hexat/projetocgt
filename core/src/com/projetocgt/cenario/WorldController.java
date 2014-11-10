@@ -171,7 +171,6 @@ public class WorldController {
 		if (keys.get(ActionMovePolicy.WALK_LEFT)) {
 			personagem.setState(StatePolicy.LOOKLEFT);
 			if(personagem.getPosition().x > 0){
-				//System.out.println("andando pra esquerda");
 				personagem.getVelocity().x = -personagem.getSpeed();
 			}
 			else
@@ -182,7 +181,6 @@ public class WorldController {
 		if (keys.get(ActionMovePolicy.WALK_RIGHT)) {
 			personagem.setState(StatePolicy.LOOKRIGHT);
 			if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackground().getTextureGDX().getWidth()){
-				//System.out.println("andando pra direita");
 				personagem.getVelocity().x = personagem.getSpeed();
 			}
 			else
