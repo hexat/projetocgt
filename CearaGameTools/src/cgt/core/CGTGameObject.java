@@ -43,7 +43,10 @@ public abstract class CGTGameObject implements Serializable {
 	private LabelID labelID;
 	private StatePolicy state;
 	private float stateTime = 0;
-	private float posXColider, posYColider; 
+	private float posXColider, posYColider;
+	private boolean isPlayingSound;
+	private int delayPlaySound;
+	private TextureRegion lastAnimation; 
 	
 	public CGTGameObject(LabelID labelID){
 		setLabelID(labelID);
@@ -69,6 +72,7 @@ public abstract class CGTGameObject implements Serializable {
 	
 	public CGTGameObject(){
 		position= null;
+		lastAnimation = null;
 		velocity = new Vector2();
 		bounds= new Rectangle();
 		collision = new Rectangle();
@@ -78,6 +82,8 @@ public abstract class CGTGameObject implements Serializable {
 		soundsDie = new ArrayList<CGTSound>();
 		soundCollision = new ArrayList<CGTSound>();
 		initialPositions = new ArrayList<>();
+		isPlayingSound = false;
+		setDelayPlaySound(0);
 	}
 	
 	public CGTGameObject(Vector2 position, Rectangle bounds, Rectangle collision){
@@ -85,6 +91,7 @@ public abstract class CGTGameObject implements Serializable {
 		this.collision = collision;
 		posXColider = collision.x;
 		posYColider = collision.y;
+		lastAnimation = null;
 		this.bounds = bounds;
 		animations = new ArrayList<AnimationMap>();
 		setState(StatePolicy.IDLE);
@@ -108,7 +115,11 @@ public abstract class CGTGameObject implements Serializable {
 		if (sound == null){
 			return false;
 		} else{
-			return sound.getMusic().isPlaying();
+			if (sound.getMusic().isPlaying()) {
+				return true;
+			} else {
+				return isPlayingSound;
+			}
 		}
 	}
 
@@ -119,8 +130,8 @@ public abstract class CGTGameObject implements Serializable {
 	public void playSound(){
 		if (sound != null){
 			sound.getMusic().play();
+			isPlayingSound = true;
 		}
-		
 	}
 
 	public ArrayList<CGTSound> getSoundsDie(){
@@ -281,14 +292,15 @@ public abstract class CGTGameObject implements Serializable {
 	public TextureRegion getAnimation() {
 		for (AnimationMap a : animations) {
 			if (a.getStatePolicy() == state) {
-				return a.getRandomAnimation();
+				lastAnimation = a.getRandomAnimation();
+				return lastAnimation;
 			}
 		}
-		if (animations.size() > 0) {
-			return animations.get(0).getRandomAnimation();
+		if (lastAnimation == null && animations.size() > 0) {
+			lastAnimation = animations.get(0).getRandomAnimation();
 		}
 		
-		return null;
+		return lastAnimation;
 	}
 
 	/**
@@ -327,6 +339,18 @@ public abstract class CGTGameObject implements Serializable {
 			}
 		}
 		animations.add(new AnimationMap(state, ani));
+	}
+
+	public int getDelayPlaySound() {
+		return delayPlaySound;
+	}
+
+	public void setDelayPlaySound(int delayPlaySound) {
+		this.delayPlaySound = delayPlaySound;
+	}
+
+	public void canPlaySaund() {
+		isPlayingSound = false;
 	}
 	
 }

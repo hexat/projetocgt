@@ -218,7 +218,7 @@ public class MyWorldChicken {
 
 		Rectangle tamanhoPeixe = new Rectangle(0, 0, 98, 90);
 		peixe.setBounds(tamanhoPeixe);
-		
+
 		peixe.setState(StatePolicy.IDLEDOWN);
 		peixe.setLife(50);
 		peixe.setBlock(true);
@@ -265,7 +265,7 @@ public class MyWorldChicken {
 
 		Rectangle tamanhoPeixe2 = new Rectangle(0, 0, 98, 90);
 		peixe2.setBounds(tamanhoPeixe2);
-		
+
 		peixe2.setState(StatePolicy.IDLEDOWN);
 		peixe2.setLife(50);
 		peixe2.setBlock(true);
@@ -679,6 +679,7 @@ public class MyWorldChicken {
 //		a.setTextureDown(t);
 		world.setStartGame(a);
 		world.getCamera().setInitialHeight(0.5f);
+		world.getCamera().setVolumeOnFullCamera(0.1f);
 		world.getCamera().setInitialWidth(0.5f);
 		world.getCamera().setScale(2);;
 		

@@ -9,6 +9,7 @@ import cgt.behaviors.Fade;
 import cgt.behaviors.Sine;
 import cgt.core.CGTActor;
 import cgt.core.CGTEnemy;
+import cgt.core.CGTGameObject;
 import cgt.core.CGTProjectile;
 import cgt.policy.BonusPolicy;
 import cgt.policy.StatePolicy;
@@ -51,10 +52,11 @@ public class WorldRenderer {
 	private CameraStage zoomCamera;
 	private boolean isLose;
 	private Music musicActorLose;
-	private CGTEnemy aaaa = null;
+	private float fatorVolumeObjects;
 
 	public WorldRenderer(CGTGameWorld world) {
 		this.world = world;
+		fatorVolumeObjects = 1f;
 		isLose = false;
 		musicActorLose = null;
 		zoomCamera = CameraStage.IDLE;
@@ -84,10 +86,6 @@ public class WorldRenderer {
 	 */
 	public void render() {		
 		isColision();
-		
-		if (aaaa != null){
-			System.out.println(aaaa.isAttacking());
-		}
 
 		verifyObjectsOnCamera();
 		
@@ -149,17 +147,29 @@ public class WorldRenderer {
 	// executa música caso o objeto esteja visível na camera
 	private void verifyObjectsOnCamera(){		
 		rectangleCamera.set(camera.position.x - camera.viewportWidth/2, camera.position.y - camera.viewportHeight/2, camera.viewportWidth, camera.viewportHeight);
-
+		
 		// verifica Opposites
 		for(int i = 0; i < world.getOpposites().size(); i++){
 			if (world.getOpposites().get(i).getSound() != null && rectangleCamera.overlaps(world.getOpposites().get(i).getCollision())){
 				if (!world.getOpposites().get(i).isPlayingSound()){
-					world.getOpposites().get(i).playSound();					
+					final CGTGameObject cgt = world.getOpposites().get(i);
+					cgt.playSound();
+					if (cgt.getDelayPlaySound() > 0) {
+						Timer.schedule(new Task() {
+							@Override
+							public void run() {
+								cgt.canPlaySaund();
+							}
+						}, cgt.getDelayPlaySound());
+					} else {
+						cgt.canPlaySaund();
+					}
 				}
 
 				float distanciaObjeto = world.getActor().getPosition().dst(world.getOpposites().get(i).getPosition());				
 				float distanciaMaxima = (float) Math.sqrt((double) (Math.pow((double) camera.viewportHeight, 2)) + Math.pow((double) camera.viewportWidth, 2));
 				float volume = (1 - distanciaObjeto/distanciaMaxima)* world.getOpposites().get(i).getSound().getVolume();
+				volume *= fatorVolumeObjects;
 				if (volume <= 0){
 					volume = 0;
 				}
@@ -170,18 +180,32 @@ public class WorldRenderer {
 				if (world.getOpposites().get(i).isPlayingSound()){
 					world.getOpposites().get(i).stopMusic();
 				}
+				world.getOpposites().get(i).canPlaySaund();
 			}
 		}
 		// verifica Enemies
 		for(int i = 0; i < world.getEnemies().size(); i++){
 			if (world.getEnemies().get(i).getSound() != null && rectangleCamera.overlaps(world.getEnemies().get(i).getCollision())){
 				if (!world.getEnemies().get(i).isPlayingSound()){
-					world.getEnemies().get(i).playSound();
+					final CGTGameObject cgt = world.getEnemies().get(i);
+					cgt.playSound();
+					if (cgt.getDelayPlaySound() > 0) {
+						Timer.schedule(new Task() {
+							@Override
+							public void run() {
+								cgt.canPlaySaund();
+							}
+						}, cgt.getDelayPlaySound());
+					} else {
+						cgt.canPlaySaund();
+					}
 				}
 
 				float distanciaObjeto = world.getActor().getPosition().dst(world.getEnemies().get(i).getPosition());
 				float distanciaMaxima = (float) Math.sqrt((double) (Math.pow((double) camera.viewportHeight, 2)) + Math.pow((double) camera.viewportWidth, 2));
 				float volume = (1 - distanciaObjeto/distanciaMaxima)* world.getEnemies().get(i).getSound().getVolume();
+				volume *= fatorVolumeObjects;
+				System.out.println(volume);
 				if (volume <= 0){
 					volume = 0;
 				}
@@ -192,6 +216,7 @@ public class WorldRenderer {
 				if (world.getEnemies().get(i).isPlayingSound()){
 					world.getEnemies().get(i).stopMusic();
 				}
+				world.getEnemies().get(i).canPlaySaund();
 			}
 		}		
 
@@ -272,8 +297,10 @@ public class WorldRenderer {
 	
 	private void updateCamera() {
 		if (zoomCamera == CameraStage.CLOSE) {
+			fatorVolumeObjects = 1f;
 			cameraClose();
 		} else if (zoomCamera == CameraStage.FULL) {
+			fatorVolumeObjects = world.getCamera().getVolumeOnFullCamera();
 			cameraOpen();
 		}
 		
@@ -943,7 +970,6 @@ public class WorldRenderer {
 			personagem.setState(StatePolicy.DAMAGE);
 			enemy.setState(StatePolicy.DAMAGE);
 			enemy.setAttacking(true);
-			aaaa = enemy;
 			System.out.println(enemy.isAttacking());
 			personagem.setInputsEnabled(true);
 
