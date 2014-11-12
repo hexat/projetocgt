@@ -106,6 +106,12 @@ public class MyWorldChicken {
 		movimentacaoVaca2.setFinalPosition(new Vector2(900,100));
 		movimentacaoVaca2.setInteligenceMoviment(false);
 		movimentacaoVaca2.setDirectionMode(DirectionMode.PINGPONG);
+		
+		Direction movimentacaoVaca3 = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
+		movimentacaoVaca3.setInitialPosition(new Vector2(700,100));
+		movimentacaoVaca3.setFinalPosition(new Vector2(-130,500));
+		movimentacaoVaca3.setInteligenceMoviment(false);
+		movimentacaoVaca3.setDirectionMode(DirectionMode.PINGPONG);
 
 		CGTEnemy vaca = new CGTEnemy();		
 
@@ -155,11 +161,11 @@ public class MyWorldChicken {
 		
 		vaca2.setSound(soundVaca);
 
-		Rectangle coliderCarro2 = new Rectangle(25, 26, 80, 96);
-		vaca2.setCollision(coliderCarro2);
+		Rectangle coliderVaca2 = new Rectangle(25, 26, 80, 96);
+		vaca2.setCollision(coliderVaca2);
 
-		Rectangle tamanhoCarro2 = new Rectangle(0, 0, 126, 126);
-		vaca2.setBounds(tamanhoCarro2);
+		Rectangle tamanhoVaca2 = new Rectangle(0, 0, 126, 126);
+		vaca2.setBounds(tamanhoVaca2);
 
 		vaca2.setBlock(true);
 		vaca2.setDestroyable(false);
@@ -191,6 +197,46 @@ public class MyWorldChicken {
 		
 		// Add na lista de enemy
 		world.getEnemies().add(vaca2);
+		
+		CGTEnemy vaca3 = new CGTEnemy();		
+		
+		vaca3.setSound(soundVaca);
+
+		Rectangle coliderVaca3 = new Rectangle(25, 26, 80, 96);
+		vaca3.setCollision(coliderVaca3);
+
+		Rectangle tamanhoVaca3 = new Rectangle(0, 0, 126, 126);
+		vaca3.setBounds(tamanhoVaca3);
+
+		vaca3.setBlock(true);
+		vaca3.setDestroyable(false);
+		vaca3.setDamage(50);
+		vaca3.addBehavior(movimentacaoVaca3);
+		vaca3.setState(StatePolicy.LOOK_RIGHT_AND_DOWN);
+		vaca3.setSpeed(400);
+		
+		CGTSpriteSheet vacaSpriteSheet3 = new CGTSpriteSheet("data/chicken/vaca_3_spritesheet.png");
+		vacaSpriteSheet3.setRows(3);
+		vacaSpriteSheet3.setColumns(4);	
+
+		CGTAnimation moveVacaUp3 = new CGTAnimation(vaca3, vacaSpriteSheet3);
+		moveVacaUp3.setInitialFrame(new Vector2(0, 0));
+		moveVacaUp3.setEndingFrame(new Vector2(1, 1));
+		moveVacaUp3.setSpriteVelocity(0.08f);
+		moveVacaUp3.setAnimationPolicy(PlayMode.LOOP);
+		moveVacaUp3.setFlipHorizontal(true);
+		
+		CGTAnimation moveVacaDown3 = new CGTAnimation(vaca3, vacaSpriteSheet3);
+		moveVacaDown3.setInitialFrame(new Vector2(2, 1));
+		moveVacaDown3.setEndingFrame(new Vector2(3, 2));
+		moveVacaDown3.setSpriteVelocity(0.08f);
+		moveVacaDown3.setAnimationPolicy(PlayMode.LOOP);
+				
+		vaca3.addAnimation(StatePolicy.LOOK_LEFT_AND_UP, moveVacaUp3);
+		vaca3.addAnimation(StatePolicy.LOOK_RIGHT_AND_DOWN, moveVacaDown3);
+		
+		// Add na lista de enemy
+		world.getEnemies().add(vaca3);
 
 	}
 
