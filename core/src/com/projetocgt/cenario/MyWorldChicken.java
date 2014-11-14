@@ -14,6 +14,7 @@ import cgt.core.CGTOpposite;
 import cgt.hud.CGTButton;
 import cgt.hud.CGTButtonScreen;
 import cgt.hud.CGTButtonStartGame;
+import cgt.hud.CGTLabel;
 import cgt.lose.LifeDepleted;
 import cgt.policy.ActionMovePolicy;
 import cgt.policy.DirectionPolicy;
@@ -551,6 +552,18 @@ public class MyWorldChicken {
 		world.getEnemies().add(jumento2);
 	}
 	
+	public void configuracaoPorcentagem(){
+		CGTLabel labelHUD = new CGTLabel("fonts/myfont.TTF","x");
+		labelHUD.setRelativeWidth(0.05f);
+		labelHUD.setRelativeHeight(0.05f);
+		labelHUD.setRelativeX(0.45f);
+		labelHUD.setRelativeY(0.9f);
+
+		world.addHUDComponent(labelHUD);
+		
+		world.addWinCriterion(new CompleteCrossing(world, new Rectangle(world.getBackground().getTextureGDX().getWidth()- 1f/100f*world.getBackground().getTextureGDX().getWidth(), 1, 1f/100f*world.getBackground().getTextureGDX().getWidth(), world.getBackground().getTextureGDX().getHeight()),labelHUD));
+		
+	}
 	public void opositeCalcada(){
 
 		CGTOpposite calcada = new CGTOpposite();
@@ -702,23 +715,24 @@ public class MyWorldChicken {
 		
 		configuracaoActionActor(personagemCGTActor);
 		
-		configuracaoVacas();
+		//configuracaoVacas();
 		
 		configuracaoNuvens();
 		
 		configuracaoPeixes();
 		
-		configuracaoJumentos();
+		//configuracaoJumentos();
 		
 		opositeCalcada();
 		
 		opositeRio();
 		
+		configuracaoPorcentagem();
+		
 		world.setActor(personagemCGTActor);
 		
 		configuracaoInputs();
 		
-		world.addWinCriterion(new CompleteCrossing(world, new Rectangle(world.getBackground().getTextureGDX().getWidth()- 1f/100f*world.getBackground().getTextureGDX().getWidth(), 1, 1f/100f*world.getBackground().getTextureGDX().getWidth(), world.getBackground().getTextureGDX().getHeight())));
 		CGTButtonStartGame a = new CGTButtonStartGame(0.1f , 0.1f, 0.9f, 0.9f);
 		CGTTexture t = new CGTTexture("data/dapexe/menuInicial.png");
 //		a.setTextureUp(t);

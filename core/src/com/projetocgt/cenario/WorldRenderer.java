@@ -10,6 +10,7 @@ import cgt.behaviors.Sine;
 import cgt.core.CGTActor;
 import cgt.core.CGTEnemy;
 import cgt.core.CGTProjectile;
+import cgt.hud.CGTLabel;
 import cgt.policy.BonusPolicy;
 import cgt.policy.StatePolicy;
 
@@ -145,7 +146,7 @@ public class WorldRenderer {
 		}
 	}
 
-
+	
 	// executa música caso o objeto esteja visível na camera
 	private void verifyObjectsOnCamera(){		
 		rectangleCamera.set(camera.position.x - camera.viewportWidth/2, camera.position.y - camera.viewportHeight/2, camera.viewportWidth, camera.viewportHeight);
