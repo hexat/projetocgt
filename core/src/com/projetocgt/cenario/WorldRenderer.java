@@ -205,7 +205,7 @@ public class WorldRenderer {
 				float distanciaMaxima = (float) Math.sqrt((double) (Math.pow((double) camera.viewportHeight, 2)) + Math.pow((double) camera.viewportWidth, 2));
 				float volume = (1 - distanciaObjeto/distanciaMaxima)* world.getEnemies().get(i).getSound().getVolume();
 				volume *= fatorVolumeObjects;
-				System.out.println(volume);
+
 				if (volume <= 0){
 					volume = 0;
 				}

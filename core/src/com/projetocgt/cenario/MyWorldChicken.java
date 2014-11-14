@@ -45,7 +45,7 @@ public class MyWorldChicken {
 		personagemCGTActor.setLife(1);
 		personagemCGTActor.setSpeed(100);
 
-		personagemCGTActor.getSoundsDie().add(new CGTSound("data/AudioChicken/jumento_1.wav",0.7f));
+		personagemCGTActor.getSoundsDie().add(new CGTSound("data/AudioChicken/galinha_derrota_2.wav",0.7f));
 
 	}
 
@@ -81,12 +81,12 @@ public class MyWorldChicken {
 		personagemCGTActor.addAnimation(StatePolicy.LOOKDOWN, moveVuando);
 		
 		CGTSpriteSheet penasSpriteSheet = new CGTSpriteSheet("data/chicken/penas_spritesheet.png");
-		penasSpriteSheet.setRows(16);
+		penasSpriteSheet.setRows(9);
 		penasSpriteSheet.setColumns(5);
 		
 		CGTAnimation died = new CGTAnimation(personagemCGTActor, penasSpriteSheet);
 		died.setInitialFrame(new Vector2(0, 0));
-		died.setEndingFrame(new Vector2(4, 15));
+		died.setEndingFrame(new Vector2(4, 8));
 		died.setSpriteVelocity(0.035f);
 		
 		personagemCGTActor.addAnimation(StatePolicy.DYING, died);

@@ -17,6 +17,7 @@ import cgt.screen.CGTWindow;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
@@ -68,7 +69,12 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		controller = new WorldController(world, renderer);
 		lastPoint = world.getActor().getPosition().cpy();
 		
-		 
+		Preferences prefs = Gdx.app.getPreferences("My Preferences");
+		int vezes = prefs.getInteger("num_vezes", 0);
+		System.out.println("luanjames"+vezes);
+		vezes += 1;
+		prefs.putInteger("num_vezes", vezes);
+		prefs.flush();
 	}
 
 	private void getActorsFromWorld(){
