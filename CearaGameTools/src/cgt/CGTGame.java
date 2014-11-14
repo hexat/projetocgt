@@ -2,11 +2,13 @@ package cgt;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import cgt.screen.CGTScreen;
+import cgt.util.CGTFile;
 
 public class CGTGame implements Serializable{
 	private CGTScreen menu;
@@ -29,7 +31,7 @@ public class CGTGame implements Serializable{
 	public  void saveGame(){
 		try {
 
-			FileOutputStream saveConfig = new FileOutputStream("gameConfig.txt");
+			FileOutputStream saveConfig = new FileOutputStream("data/imagens/gameConfig.cgt");
 			ObjectOutputStream obj = new ObjectOutputStream(saveConfig);
 			obj.writeObject(this);
 			obj.close();
@@ -44,8 +46,8 @@ public class CGTGame implements Serializable{
 		CGTGame cgtGame = new CGTGame();
 
 		try {
-			FileInputStream arquivoLeitura = new FileInputStream(
-					"gameConfig.txt");
+			InputStream arquivoLeitura = new CGTFile(
+					"data/imagens/gameConfig.cgt").getFileHandle().read();
 			ObjectInputStream objLeitura = new ObjectInputStream(arquivoLeitura);
 			cgtGame = (CGTGame) objLeitura.readObject();
 			objLeitura.close();

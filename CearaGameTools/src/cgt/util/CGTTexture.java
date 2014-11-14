@@ -1,18 +1,12 @@
 package cgt.util;
 
-import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-
-
 import java.io.Serializable;
-import javax.imageio.ImageIO;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import cgt.unit.LabelID;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class CGTTexture implements Serializable{
 	/**
@@ -20,7 +14,7 @@ public class CGTTexture implements Serializable{
 	 */
 	private static final long serialVersionUID = 7131290727646321147L;
 	private CGTFile file;
-	private BufferedImage image;
+	
 	private float width;
 	private float height;
 	private String filepath;
@@ -33,13 +27,13 @@ public class CGTTexture implements Serializable{
 	}
 	
 	public CGTTexture(String filepath) {
-		image = null;
+		
 		this.setFilepath(filepath);
 		file = new CGTFile(filepath);
 	}
 	
 	public CGTTexture(String filepath, LabelID label) throws FileNotFoundException {
-		image = null;
+	
 		file = new CGTFile(filepath);
 	}
 	
@@ -50,19 +44,19 @@ public class CGTTexture implements Serializable{
 	    ImageIO.write(image,"png",ImageIO.createImageOutputStream(out));
 	}*/
 
-	public BufferedImage getBufferedImage (){
-		if (image == null) {
-			try {
-				image = ImageIO.read(file.getFile());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			width = getWidth();
-			height = getHeight();
-		}
-		return image;
-	}
+//	public BufferedImage getBufferedImage (){
+//		if (image == null) {
+//			try {
+//				image = ImageIO.read(file.getFile());
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			width = getWidth();
+//			height = getHeight();
+//		}
+//		return image;
+//	}
 	
 	public void setImage(String filepath){
 		file = new CGTFile(filepath);

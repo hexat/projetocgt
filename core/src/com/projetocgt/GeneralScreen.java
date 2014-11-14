@@ -33,6 +33,7 @@ public class GeneralScreen extends Stage implements Screen {
 	public GeneralScreen(CGTScreen screen) {
 		super(new ScreenViewport());
 		this.screen = screen;
+		System.out.println(screen.getBackground());
 		splsh = new Texture(screen.getBackground().getFile().getFileHandle());
         setSpriteBatch(new SpriteBatch());
         for (CGTButton b : screen.getButtons()) {

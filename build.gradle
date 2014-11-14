@@ -29,6 +29,14 @@ project(":CearaGameTools") {
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
     }
 }
+project(":CGTFerramenta") {
+    apply plugin: "java"
+    apply plugin: "application"
+	
+    dependencies {
+        compile project(":CearaGameTools")
+    }
+}
 
 project(":core") {
     apply plugin: "java"
