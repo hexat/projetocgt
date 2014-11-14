@@ -7,6 +7,7 @@ import cgt.behaviors.Behavior;
 import cgt.behaviors.Direction;
 import cgt.behaviors.Fade;
 import cgt.behaviors.Sine;
+import cgt.behaviors.SineWave;
 import cgt.core.CGTActor;
 import cgt.core.CGTEnemy;
 import cgt.core.CGTGameObject;
@@ -87,6 +88,7 @@ public class WorldRenderer {
 	 */
 	public void render() {		
 		isColision();
+
 
 		verifyObjectsOnCamera();
 		
@@ -802,6 +804,23 @@ public class WorldRenderer {
 			else if (behavior.getBehaviorPolicy().equals("FADE_IN")) {
 				Fade fade = (Fade) behavior;
 				scheduleFadeIn(enemy, fade);
+			}
+			
+			else if(behavior.getBehaviorPolicy().equals("SineWave")){
+				SineWave sineWave = (SineWave) behavior;
+				
+				if(sineWave.getEnemyPosition() == null){
+					sineWave.setEnemyPosition(enemy.getPosition().cpy());
+				}
+				
+				float point = (float) (sineWave.getAmplitude()*(Math.sin(2*sineWave.getFrequency()*Math.PI*enemy.getPosition().x + sineWave.getPhase())));
+				enemy.getVelocity().y = point;
+				enemy.getVelocity().x = -enemy.getSpeed();
+				
+				if (enemy.getPosition().x > sineWave.getMaxX()){
+					enemy.getPosition().x = sineWave.getEnemyPosition().x;
+					enemy.getPosition().y = sineWave.getEnemyPosition().y;
+				}
 			}
 			
 			stateUpdater(enemy);
