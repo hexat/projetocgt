@@ -33,7 +33,7 @@ public class StarAssault extends Game {
 //			setScreen(new GameScreen(CGTGame.getSavedGame().g));
 //		}
 //		else
-		CGTGame game = new MyWorldChicken().getGame();
+		CGTGame game = new MyWorldPexe().getGame();
 		if (game.startWithGame()) {
 			setScreen(new GameScreen((CGTGameWorld) game.getGame()));	
 		} else {

@@ -7,6 +7,7 @@ import cgt.behaviors.Behavior;
 import cgt.behaviors.Direction;
 import cgt.behaviors.Fade;
 import cgt.behaviors.Sine;
+import cgt.behaviors.SineWave;
 import cgt.core.CGTActor;
 import cgt.core.CGTEnemy;
 import cgt.core.CGTProjectile;
@@ -51,7 +52,6 @@ public class WorldRenderer {
 	private CameraStage zoomCamera;
 	private boolean isLose;
 	private Music musicActorLose;
-	private CGTEnemy aaaa = null;
 
 	public WorldRenderer(CGTGameWorld world) {
 		this.world = world;
@@ -85,9 +85,7 @@ public class WorldRenderer {
 	public void render() {		
 		isColision();
 		
-		if (aaaa != null){
-			System.out.println(aaaa.isAttacking());
-		}
+		
 
 		verifyObjectsOnCamera();
 		
@@ -780,6 +778,27 @@ public class WorldRenderer {
 				scheduleFadeIn(enemy, fade);
 			}
 			
+			else if(behavior.getBehaviorPolicy().equals("SineWave")){
+				SineWave sineWave = (SineWave) behavior;
+				
+				if(sineWave.getEnemyPosition() == null){
+					sineWave.getEnemyPosition().x = enemy.getPosition().x;
+					sineWave.getEnemyPosition().y = enemy.getPosition().y;
+				}
+				
+				System.out.println(Math.sin((2*sineWave.getFrequency()*Math.PI*enemy.getPosition().x + sineWave.getPhase())) + "Posição: " + enemy.getPosition().y);
+				//System.out.println((sineWave.getAmplitude()*(Math.sin((double) (2*sineWave.getFrequency()*Math.PI*aaaa + sineWave.getPhase())))));
+				float point = (float) (sineWave.getAmplitude()*(Math.sin(2*sineWave.getFrequency()*Math.PI*enemy.getPosition().x + sineWave.getPhase())));
+				//System.out.println(point - enemy.getPosition().y);
+				enemy.getVelocity().y = point;
+				enemy.getVelocity().x = -enemy.getSpeed();
+				
+				if (enemy.getPosition().x > sineWave.getMaxX()){
+					enemy.getPosition().x = sineWave.getEnemyPosition().x;
+					enemy.getPosition().y = sineWave.getEnemyPosition().y;
+				}
+			}
+			
 			stateUpdater(enemy);
 
 		}
@@ -947,7 +966,6 @@ public class WorldRenderer {
 			personagem.setState(StatePolicy.DAMAGE);
 			enemy.setState(StatePolicy.DAMAGE);
 			enemy.setAttacking(true);
-			aaaa = enemy;
 			System.out.println(enemy.isAttacking());
 			personagem.setInputsEnabled(true);
 

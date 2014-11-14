@@ -8,6 +8,7 @@ import cgt.CGTGame;
 import cgt.CGTGameWorld;
 import cgt.behaviors.Direction;
 import cgt.behaviors.Direction.DirectionMode;
+import cgt.behaviors.SineWave;
 import cgt.core.CGTActor;
 import cgt.core.CGTEnemy;
 import cgt.core.CGTOpposite;
@@ -253,10 +254,13 @@ public class MyWorldChicken {
 		movimentacaoPeixe2.setInteligenceMoviment(false);
 		movimentacaoPeixe2.setDirectionMode(DirectionMode.PINGPONG);
 		
+		SineWave sineWave = new SineWave(600, 0.05, 2);
+		sineWave.setMaxX(1300);
+		
 				
 		CGTEnemy peixe = new CGTEnemy();
 		
-		Vector2 positionPeixe = new Vector2(200, 0);
+		Vector2 positionPeixe = new Vector2(800, 150);
 		peixe.setPosition(positionPeixe);
 
 		Rectangle coliderPeixe = new Rectangle(22, 0, 60, 75);
@@ -270,7 +274,7 @@ public class MyWorldChicken {
 		peixe.setBlock(true);
 		peixe.setDestroyable(false);
 		peixe.setDamage(50);
-		peixe.addBehavior(movimentacaoPeixe);
+		peixe.addBehavior(sineWave);
 		peixe.setSpeed(100);
 		peixe.setTimeToRecovery(0.5f);
 		
