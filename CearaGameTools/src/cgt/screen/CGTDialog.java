@@ -49,7 +49,9 @@ public class CGTDialog extends Actor implements Serializable{
 
 	public void draw(Batch batch, float parentAlpha){
 		if(isActive()){
-			batch.draw(window.getTextureGDX(), getX(), getY(), getWidth(), getHeight());
+			if(window != null){
+				batch.draw(window.getTextureGDX(), getX(), getY(), getWidth(), getHeight());
+			}
 			drawBorders(batch);
 			if (closeButton != null){
 				closeButton.draw(batch, parentAlpha);
@@ -58,28 +60,30 @@ public class CGTDialog extends Actor implements Serializable{
 	}
 	
 	public void drawBorders(Batch batch){
-		float borderHeight = horizontalBorderTexture.getTextureRegion().getRegionHeight();
-		float borderWidth = horizontalBorderTexture.getTextureRegion().getRegionWidth();
-		float borderX = this.getX();
-		float borderY = this.getY();
-		float upperBorderY = borderY + this.getHeight()-borderHeight;
-		
-		//Desenho das linhas horizontais
-		while(borderX+borderWidth<this.getX() + this.getWidth()){
-			batch.draw(horizontalBorderTexture.getTextureRegion(), borderX, borderY, borderWidth, borderHeight);
-			batch.draw(horizontalBorderTexture.getTextureRegion(), borderX, upperBorderY, borderWidth, borderHeight);
-			borderX+=borderWidth;
-		}
-		
-		borderX = this.getX()+borderHeight;
-		borderY = this.getY();
-		float rightBorderX = borderX + this.getWidth()-borderHeight;
-		
-		//Desenha linhas verticais
-		while(borderY+borderWidth<this.getY() + this.getHeight()){
-			batch.draw(horizontalBorderTexture.getTextureRegion(), borderX, borderY, 0, 0, borderWidth, borderHeight, 1, 1, 90);
-			batch.draw(horizontalBorderTexture.getTextureRegion(), rightBorderX, borderY, 0, 0, borderWidth, borderHeight, 1, 1, 90);
-			borderY+=borderHeight;
+		if(horizontalBorderTexture != null){
+			float borderHeight = horizontalBorderTexture.getTextureRegion().getRegionHeight();
+			float borderWidth = horizontalBorderTexture.getTextureRegion().getRegionWidth();
+			float borderX = this.getX();
+			float borderY = this.getY();
+			float upperBorderY = borderY + this.getHeight()-borderHeight;
+			
+			//Desenho das linhas horizontais
+			while(borderX+borderWidth<this.getX() + this.getWidth()){
+				batch.draw(horizontalBorderTexture.getTextureRegion(), borderX, borderY, borderWidth, borderHeight);
+				batch.draw(horizontalBorderTexture.getTextureRegion(), borderX, upperBorderY, borderWidth, borderHeight);
+				borderX+=borderWidth;
+			}
+			
+			borderX = this.getX()+borderHeight;
+			borderY = this.getY();
+			float rightBorderX = borderX + this.getWidth()-borderHeight;
+			
+			//Desenha linhas verticais
+			while(borderY+borderWidth<this.getY() + this.getHeight()){
+				batch.draw(horizontalBorderTexture.getTextureRegion(), borderX, borderY, 0, 0, borderWidth, borderHeight, 1, 1, 90);
+				batch.draw(horizontalBorderTexture.getTextureRegion(), rightBorderX, borderY, 0, 0, borderWidth, borderHeight, 1, 1, 90);
+				borderY+=borderHeight;
+			}
 		}
 		float cornerX = this.getX()+this.getWidth()-rightBottomCorner.getTextureRegion().getRegionWidth();
 		float cornerY = this.getY();

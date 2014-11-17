@@ -600,91 +600,116 @@ public class MyWorldChicken {
 	public void configuracaoPauseDialog() {
 		CGTDialog pauseDialog = new CGTDialog();
 		pauseDialog.setActive(false);
-		pauseDialog.setWindow(new CGTTexture("data/dapexe/pause.png"));
-		pauseDialog.setHorizontalBorderTexture(new CGTTexture("data/dapexe/borda.png"));
-		pauseDialog.setRightBottomCorner(new CGTTexture("data/dapexe/canto.png"));
+		//pauseDialog.setWindow(new CGTTexture("data/dapexe/pause.png"));
+		//pauseDialog.setHorizontalBorderTexture(new CGTTexture("data/dapexe/borda.png"));
+		pauseDialog.setRightBottomCorner(new CGTTexture("data/chicken/base_di_ba.png"));
 		pauseDialog.setRelativeX(0.20f);
 		pauseDialog.setRelativeY(0.20f);
 		pauseDialog.setRelativeWidth(0.6f);
 		pauseDialog.setRelativeHeight(0.6f);
 
 		CGTButton voltar = new CGTButtonScreen();
-		voltar.setTextureUp(new CGTTexture("data/dapexe/close_btn.png"));
-		voltar.setTextureDown(new CGTTexture("data/dapexe/close_btn.png"));
-		voltar.setRelativeX(0.65f);
-		voltar.setRelativeY(0.65f);
+		voltar.setTextureUp(new CGTTexture("data/chicken/play.png"));
+		voltar.setTextureDown(new CGTTexture("data/chicken/play.png"));
+		voltar.setRelativeX(0.25f);
+		voltar.setRelativeY(0.3f);
 		voltar.setRelativeWidth(0.1f);
 		voltar.setRelativeHeight(0.1f);
-
+		
+//		CGTButton audio = new CGTButton();
+//		audio.setTextureUp(new CGTTexture("data/dapexe/back_btn.png"));
+//		audio.setTextureDown(new CGTTexture("data/dapexe/back_btn.png"));
+//		audio.setRelativeX(0.3f);
+//		audio.setRelativeY(0.3f);
+//		audio.setRelativeWidth(0.1f);
+//		audio.setRelativeHeight(0.1f);
+		
 		CGTButtonScreen voltarMenu = new CGTButtonScreen();
 		voltarMenu.setScreenToGo(game.getGame());
-		voltarMenu.setTextureUp(new CGTTexture("data/dapexe/back_btn.png"));
-		voltarMenu.setTextureDown(new CGTTexture("data/dapexe/back_btn.png"));
-		voltarMenu.setRelativeX(0.25f);
-		voltarMenu.setRelativeY(0.65f);
+		voltarMenu.setTextureUp(new CGTTexture("data/chicken/backButton.png"));
+		voltarMenu.setTextureDown(new CGTTexture("data/chicken/backButton.png"));
+		voltarMenu.setRelativeX(0.35f);
+		voltarMenu.setRelativeY(0.3f);
 		voltarMenu.setRelativeWidth(0.1f);
 		voltarMenu.setRelativeHeight(0.1f);
 
 		pauseDialog.addButton(voltarMenu);
 		pauseDialog.setCloseButton(voltar);
+		//pauseDialog.addButton(audio);
 		world.setPauseDialog(pauseDialog);
 
 	}
 
 	public void configuracaoWinDialog() {
-		CGTDialog pauseDialog = new CGTDialog();
-		pauseDialog.setActive(false);
-		pauseDialog.setWindow(new CGTTexture("data/dapexe/win_dialog.png"));
-		pauseDialog.setHorizontalBorderTexture(new CGTTexture("data/dapexe/borda.png"));
-		pauseDialog.setRightBottomCorner(new CGTTexture("data/dapexe/canto.png"));
-		pauseDialog.setRelativeX(0.20f);
-		pauseDialog.setRelativeY(0.20f);
-		pauseDialog.setRelativeWidth(0.6f);
-		pauseDialog.setRelativeHeight(0.6f);
+		CGTDialog winDialog = new CGTDialog();
+		winDialog.setActive(false);
+		//pauseDialog.setWindow(new CGTTexture("data/dapexe/win_dialog.png"));
+		//pauseDialog.setHorizontalBorderTexture(new CGTTexture("data/dapexe/borda.png"));
+		winDialog.setRightBottomCorner(new CGTTexture("data/chicken/base_di_ba.png"));
+		winDialog.setRelativeX(0.20f);
+		winDialog.setRelativeY(0.20f);
+		winDialog.setRelativeWidth(0.6f);
+		winDialog.setRelativeHeight(0.6f);
 
-		CGTButton voltar = new CGTButtonScreen();
-		voltar.setTextureUp(new CGTTexture("data/dapexe/close_btn.png"));
-		voltar.setTextureDown(new CGTTexture("data/dapexe/close_btn.png"));
-		voltar.setRelativeX(0.65f);
-		voltar.setRelativeY(0.65f);
-		voltar.setRelativeWidth(0.1f);
-		voltar.setRelativeHeight(0.1f);
+		CGTButtonScreen tryAgain = new CGTButtonScreen();
+		tryAgain.setScreenToGo(game.getGame());
+		tryAgain.setTextureUp(new CGTTexture("data/chicken/layout_perda_0000_Layer-2.png"));
+		tryAgain.setTextureDown(new CGTTexture("data/chicken/layout_perda_0000_Layer-2.png"));
+		tryAgain.setRelativeX(0.35f);
+		tryAgain.setRelativeY(0.55f);
+		tryAgain.setRelativeWidth(0.3f);
+		tryAgain.setRelativeHeight(0.15f);
+		winDialog.addButton(tryAgain);
+		world.setLoseDialog(winDialog);
 
-		CGTButtonScreen voltarMenu = new CGTButtonScreen();
-		voltarMenu.setScreenToGo(game.getGame());
-		voltarMenu.setTextureUp(new CGTTexture("data/dapexe/back_btn.png"));
-		voltarMenu.setTextureDown(new CGTTexture("data/dapexe/back_btn.png"));
-		voltarMenu.setRelativeX(0.45f);
-		voltarMenu.setRelativeY(0.25f);
-		voltarMenu.setRelativeWidth(0.1f);
-		voltarMenu.setRelativeHeight(0.1f);
+		CGTButtonScreen sair = new CGTButtonScreen();
+		sair.setScreenToGo(game.getGame());
+		sair.setTextureUp(new CGTTexture("data/chicken/layout_perda_0002_Tentar-novamente-Menu-Sair.png"));
+		sair.setTextureDown(new CGTTexture("data/chicken/layout_perda_0002_Tentar-novamente-Menu-Sair.png"));
+		sair.setRelativeX(0.4f);
+		sair.setRelativeY(0.30f);
+		sair.setRelativeWidth(0.15f);
+		sair.setRelativeHeight(0.1f);
+		winDialog.addButton(sair);
+		world.setLoseDialog(winDialog);
 
-		pauseDialog.addButton(voltarMenu);
-		world.setWinDialog(pauseDialog);
+		world.setWinDialog(winDialog);
 	}
 
 	public void configuracaoLDialog(){
 		CGTDialog loseDialog = new CGTDialog();
 		loseDialog.setActive(false);
-		loseDialog.setWindow(new CGTTexture("data/dapexe/lose_dialog.png"));
-		loseDialog.setHorizontalBorderTexture(new CGTTexture("data/dapexe/borda.png"));
-		loseDialog.setRightBottomCorner(new CGTTexture("data/dapexe/canto.png"));
+		//loseDialog.setWindow(new CGTTexture("data/dapexe/lose_dialog.png"));
+		//loseDialog.setHorizontalBorderTexture(new CGTTexture("data/dapexe/borda.png"));
+		loseDialog.setRightBottomCorner(new CGTTexture("data/chicken/base_di_ba.png"));
 		loseDialog.setRelativeX(0.20f);
 		loseDialog.setRelativeY(0.20f);
 		loseDialog.setRelativeWidth(0.6f);
 		loseDialog.setRelativeHeight(0.6f);
 
-		CGTButtonScreen voltarMenu = new CGTButtonScreen();
-		voltarMenu.setScreenToGo(game.getGame());
-		voltarMenu.setTextureUp(new CGTTexture("data/dapexe/back_btn.png"));
-		voltarMenu.setTextureDown(new CGTTexture("data/dapexe/back_btn.png"));
-		voltarMenu.setRelativeX(0.45f);
-		voltarMenu.setRelativeY(0.25f);
-		voltarMenu.setRelativeWidth(0.1f);
-		voltarMenu.setRelativeHeight(0.1f);
-
-		loseDialog.addButton(voltarMenu);
+		CGTButtonScreen tryAgain = new CGTButtonScreen();
+		tryAgain.setScreenToGo(game.getGame());
+		tryAgain.setTextureUp(new CGTTexture("data/chicken/layout_perda_0000_Layer-2.png"));
+		tryAgain.setTextureDown(new CGTTexture("data/chicken/layout_perda_0000_Layer-2.png"));
+		tryAgain.setRelativeX(0.35f);
+		tryAgain.setRelativeY(0.55f);
+		tryAgain.setRelativeWidth(0.3f);
+		tryAgain.setRelativeHeight(0.15f);
+		loseDialog.addButton(tryAgain);
 		world.setLoseDialog(loseDialog);
+		
+		CGTButtonScreen sair = new CGTButtonScreen();
+		sair.setScreenToGo(game.getGame());
+		sair.setTextureUp(new CGTTexture("data/chicken/layout_perda_0002_Tentar-novamente-Menu-Sair.png"));
+		sair.setTextureDown(new CGTTexture("data/chicken/layout_perda_0002_Tentar-novamente-Menu-Sair.png"));
+		sair.setRelativeX(0.4f);
+		sair.setRelativeY(0.30f);
+		sair.setRelativeWidth(0.15f);
+		sair.setRelativeHeight(0.1f);
+		loseDialog.addButton(sair);
+		world.setLoseDialog(loseDialog);
+		
+		
 	}
 	
 	public void configuracaoInputs() {
@@ -734,9 +759,10 @@ public class MyWorldChicken {
 		configuracaoInputs();
 		
 		CGTButtonStartGame a = new CGTButtonStartGame(0.1f , 0.1f, 0.9f, 0.9f);
-		CGTTexture t = new CGTTexture("data/dapexe/menuInicial.png");
-//		a.setTextureUp(t);
-//		a.setTextureDown(t);
+		CGTTexture t = new CGTTexture("data/chicken/teste.png");
+		
+		a.setTextureUp(t);
+		a.setTextureDown(t);
 		world.setStartGame(a);
 		world.getCamera().setInitialHeight(0.5f);
 		world.getCamera().setInitialWidth(0.5f);
@@ -744,18 +770,18 @@ public class MyWorldChicken {
 		
 		world.getLoseCriteria().add(new LifeDepleted(personagemCGTActor));
 		
-		CGTButtonScreen btn = new CGTButtonScreen();
-		btn.setRelativeX(0.39f);
-		btn.setRelativeY(0.7f);
-		btn.setRelativeWidth(0.20f);
-		btn.setRelativeHeight(0.1f);
-		CGTTexture texture = new CGTTexture("data/dapexe/iniciar1.png");
-		btn.setTextureDown(texture);
-		btn.setTextureUp(texture);
-		btn.setBounds(0, 0, texture.getWidth(), texture.getHeight());	
-		btn.setScreenToGo(world);
-		screen = new CGTScreen(t);
-		screen.getButtons().add(btn);
+		
+		// Button tutorial
+//		CGTButtonScreen buttonTutorial = new CGTButtonScreen();
+//		buttonTutorial.setRelativeX(0.5f);
+//		buttonTutorial.setRelativeY(0.8f);
+//		buttonTutorial.setRelativeWidth(0.20f);
+//		buttonTutorial.setRelativeHeight(0.1f);
+//		CGTTexture textureButtonTutorial = new CGTTexture("data/chicken/layout_principal_0000_Layer-3.png");
+//		buttonTutorial.setTextureDown(textureButtonTutorial);
+//		buttonTutorial.setTextureUp(textureButtonTutorial);
+//		buttonTutorial.setBounds(0, 0, textureButtonTutorial.getWidth(), textureButtonTutorial.getHeight());
+//		screen.getButtons().add(buttonTutorial);
 		
 		game = new CGTGame();
 		game.setMenu(world);
