@@ -1,5 +1,9 @@
 package com.projetcgt;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -17,6 +21,7 @@ public class MainActivity extends AndroidApplication {
         //config.useAccelerometer = true;
         //cfg.useCompass = false;
         //cfg.useWakelock = true;
+        
         initialize(StarAssault.getInstance(), config);
     }
 }

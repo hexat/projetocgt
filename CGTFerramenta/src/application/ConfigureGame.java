@@ -1,4 +1,4 @@
- package application;
+package application;
 
 import java.util.ArrayList;
 
@@ -902,132 +902,135 @@ public class ConfigureGame {
 	 */
 	private void createWorld() {
 		world = new CGTGameWorld();
-//		backGround = new CGTTexture("data/imagens/background.png");
-//		world.setBackground(backGround);
-//		world.setMusic(new CGTSound("data/AudioDaPexe/temaDaPexe.ogg", 0.3f));
-//		world.setSoundWin(new CGTSound("data/AudioDaPexe/vitoria.ogg", 0.8f));
-//		world.setSoundLose(new CGTSound("data/AudioDaPexe/derrota.ogg", 0.8f));
-//
-//		CGTActor personagemCGTActor = new CGTActor();
-//
-//		configuracaoActor(personagemCGTActor);
-//
-//		configuracaoLifeBar(personagemCGTActor);
-//
-//		configuracaoActionActor(personagemCGTActor);
-//
-//		configuracaoCasasCenario();
-//
-//		configuracaoMar();
-//
-//		configuracaoPeixes();
-//
-//		configuracaoCarros();
-//
-//		configuracaoJangada();
-//
-//		configuracaoProjetil(personagemCGTActor);
-//
-//		configuracaoButtonPad();
-//
-//		oppositeFalesia();
-//
-//		configuracaoButtonPad();
-//
-//		configuraTimer();
-//
-//		configuracaoInputs();
-//
-//		// Button iniciar
+		// backGround = new CGTTexture("data/imagens/background.png");
+		// world.setBackground(backGround);
+		// world.setMusic(new CGTSound("data/AudioDaPexe/temaDaPexe.ogg",
+		// 0.3f));
+		// world.setSoundWin(new CGTSound("data/AudioDaPexe/vitoria.ogg",
+		// 0.8f));
+		// world.setSoundLose(new CGTSound("data/AudioDaPexe/derrota.ogg",
+		// 0.8f));
+		//
+		// CGTActor personagemCGTActor = new CGTActor();
+		//
+		// configuracaoActor(personagemCGTActor);
+		//
+		// configuracaoLifeBar(personagemCGTActor);
+		//
+		// configuracaoActionActor(personagemCGTActor);
+		//
+		// configuracaoCasasCenario();
+		//
+		// configuracaoMar();
+		//
+		// configuracaoPeixes();
+		//
+		// configuracaoCarros();
+		//
+		// configuracaoJangada();
+		//
+		// configuracaoProjetil(personagemCGTActor);
+		//
+		// configuracaoButtonPad();
+		//
+		// oppositeFalesia();
+		//
+		// configuracaoButtonPad();
+		//
+		// configuraTimer();
+		//
+		// configuracaoInputs();
+		//
+		// // Button iniciar
 		CGTTexture t = new CGTTexture("data/imagens/background.png");
-//		CGTButtonScreen btn = new CGTButtonScreen();
-//		btn.setRelativeX(0.39f);
-//		btn.setRelativeY(0.7f);
-//		btn.setRelativeWidth(0.20f);
-//		btn.setRelativeHeight(0.1f);
-//		CGTTexture texture = new CGTTexture("data/dapexe/iniciar1.png");
-//		btn.setTextureDown(texture);
-//		btn.setTextureUp(texture);
-//		btn.setBounds(0, 0, texture.getWidth(), texture.getHeight());
-//		btn.setScreenToGo(world);
+		// CGTButtonScreen btn = new CGTButtonScreen();
+		// btn.setRelativeX(0.39f);
+		// btn.setRelativeY(0.7f);
+		// btn.setRelativeWidth(0.20f);
+		// btn.setRelativeHeight(0.1f);
+		// CGTTexture texture = new CGTTexture("data/dapexe/iniciar1.png");
+		// btn.setTextureDown(texture);
+		// btn.setTextureUp(texture);
+		// btn.setBounds(0, 0, texture.getWidth(), texture.getHeight());
+		// btn.setScreenToGo(world);
 		screen = new CGTScreen(t);
-	//	screen.getButtons().add(btn);
-//
-//		// Button tutorial
-//		CGTTexture textureTutorial = new CGTTexture(
-//				"data/dapexe/menuTutorial.png");
-//		CGTButtonScreen buttonTutorial = new CGTButtonScreen();
-//		buttonTutorial.setRelativeX(0.39f);
-//		buttonTutorial.setRelativeY(0.58f);
-//		buttonTutorial.setRelativeWidth(0.20f);
-//		buttonTutorial.setRelativeHeight(0.1f);
-//		CGTTexture textureButtonTutorial = new CGTTexture(
-//				"data/dapexe/tutorial.png");
-//		buttonTutorial.setTextureDown(textureButtonTutorial);
-//		buttonTutorial.setTextureUp(textureButtonTutorial);
-//		buttonTutorial.setBounds(0, 0, textureButtonTutorial.getWidth(),
-//				textureButtonTutorial.getHeight());
-//		CGTScreen screenTutorial = new CGTScreen(textureTutorial);
-//		buttonTutorial.setScreenToGo(screenTutorial);
-//		screen.getButtons().add(buttonTutorial);
-//
-//		// Button voltar na tela do tutorial
-//		CGTButtonScreen buttonTutorialBack = new CGTButtonScreen();
-//		buttonTutorialBack.setRelativeX(0.8f);
-//		buttonTutorialBack.setRelativeY(0.8f);
-//		buttonTutorialBack.setRelativeWidth(0.20f);
-//		buttonTutorialBack.setRelativeHeight(0.1f);
-//		CGTTexture textureButtonTutorialBack = new CGTTexture(
-//				"data/dapexe/back_btn.png");
-//		buttonTutorialBack.setTextureDown(textureButtonTutorialBack);
-//		buttonTutorialBack.setTextureUp(textureButtonTutorialBack);
-//		buttonTutorialBack.setBounds(0, 0,
-//				textureButtonTutorialBack.getWidth(),
-//				textureButtonTutorialBack.getHeight());
-//		buttonTutorialBack.setScreenToGo(screen);
-//		screenTutorial.getButtons().add(buttonTutorialBack);
-//
-//		// Button Creditos
-//		CGTTexture textureCreditos = new CGTTexture(
-//				"data/dapexe/menuCreditos.png");
-//		CGTButtonScreen buttonCreditos = new CGTButtonScreen();
-//		buttonCreditos.setRelativeX(0.39f);
-//		buttonCreditos.setRelativeY(0.46f);
-//		buttonCreditos.setRelativeWidth(0.20f);
-//		buttonCreditos.setRelativeHeight(0.1f);
-//		CGTTexture textureCreditosButton = new CGTTexture(
-//				"data/dapexe/creditos.png");
-//		buttonCreditos.setTextureDown(textureCreditosButton);
-//		buttonCreditos.setTextureUp(textureCreditosButton);
-//		buttonCreditos.setBounds(0, 0, textureCreditosButton.getWidth(),
-//				textureCreditosButton.getHeight());
-//		CGTScreen screenCreditos = new CGTScreen(textureCreditos);
-//		buttonCreditos.setScreenToGo(screenCreditos);
-//		screen.getButtons().add(buttonCreditos);
-//
-//		// Button voltar na tela do tutorial
-//		CGTButtonScreen buttonCreditosBack = new CGTButtonScreen();
-//		buttonCreditosBack.setRelativeX(0.8f);
-//		buttonCreditosBack.setRelativeY(0.8f);
-//		buttonCreditosBack.setRelativeWidth(0.20f);
-//		buttonCreditosBack.setRelativeHeight(0.1f);
-//		CGTTexture textureButtonCreditosBack = new CGTTexture(
-//				"data/dapexe/back_btn.png");
-//		buttonCreditosBack.setTextureDown(textureButtonCreditosBack);
-//		buttonCreditosBack.setTextureUp(textureButtonCreditosBack);
-//		buttonCreditosBack.setBounds(0, 0,
-//				textureButtonCreditosBack.getWidth(),
-//				textureButtonCreditosBack.getHeight());
-//		buttonCreditosBack.setScreenToGo(screen);
-//		screenCreditos.getButtons().add(buttonCreditosBack);
-		//new File("cgt/data/imagens/").mkdirs();
+		// screen.getButtons().add(btn);
+		//
+		// // Button tutorial
+		// CGTTexture textureTutorial = new CGTTexture(
+		// "data/dapexe/menuTutorial.png");
+		// CGTButtonScreen buttonTutorial = new CGTButtonScreen();
+		// buttonTutorial.setRelativeX(0.39f);
+		// buttonTutorial.setRelativeY(0.58f);
+		// buttonTutorial.setRelativeWidth(0.20f);
+		// buttonTutorial.setRelativeHeight(0.1f);
+		// CGTTexture textureButtonTutorial = new CGTTexture(
+		// "data/dapexe/tutorial.png");
+		// buttonTutorial.setTextureDown(textureButtonTutorial);
+		// buttonTutorial.setTextureUp(textureButtonTutorial);
+		// buttonTutorial.setBounds(0, 0, textureButtonTutorial.getWidth(),
+		// textureButtonTutorial.getHeight());
+		// CGTScreen screenTutorial = new CGTScreen(textureTutorial);
+		// buttonTutorial.setScreenToGo(screenTutorial);
+		// screen.getButtons().add(buttonTutorial);
+		//
+		// // Button voltar na tela do tutorial
+		// CGTButtonScreen buttonTutorialBack = new CGTButtonScreen();
+		// buttonTutorialBack.setRelativeX(0.8f);
+		// buttonTutorialBack.setRelativeY(0.8f);
+		// buttonTutorialBack.setRelativeWidth(0.20f);
+		// buttonTutorialBack.setRelativeHeight(0.1f);
+		// CGTTexture textureButtonTutorialBack = new CGTTexture(
+		// "data/dapexe/back_btn.png");
+		// buttonTutorialBack.setTextureDown(textureButtonTutorialBack);
+		// buttonTutorialBack.setTextureUp(textureButtonTutorialBack);
+		// buttonTutorialBack.setBounds(0, 0,
+		// textureButtonTutorialBack.getWidth(),
+		// textureButtonTutorialBack.getHeight());
+		// buttonTutorialBack.setScreenToGo(screen);
+		// screenTutorial.getButtons().add(buttonTutorialBack);
+		//
+		// // Button Creditos
+		// CGTTexture textureCreditos = new CGTTexture(
+		// "data/dapexe/menuCreditos.png");
+		// CGTButtonScreen buttonCreditos = new CGTButtonScreen();
+		// buttonCreditos.setRelativeX(0.39f);
+		// buttonCreditos.setRelativeY(0.46f);
+		// buttonCreditos.setRelativeWidth(0.20f);
+		// buttonCreditos.setRelativeHeight(0.1f);
+		// CGTTexture textureCreditosButton = new CGTTexture(
+		// "data/dapexe/creditos.png");
+		// buttonCreditos.setTextureDown(textureCreditosButton);
+		// buttonCreditos.setTextureUp(textureCreditosButton);
+		// buttonCreditos.setBounds(0, 0, textureCreditosButton.getWidth(),
+		// textureCreditosButton.getHeight());
+		// CGTScreen screenCreditos = new CGTScreen(textureCreditos);
+		// buttonCreditos.setScreenToGo(screenCreditos);
+		// screen.getButtons().add(buttonCreditos);
+		//
+		// // Button voltar na tela do tutorial
+		// CGTButtonScreen buttonCreditosBack = new CGTButtonScreen();
+		// buttonCreditosBack.setRelativeX(0.8f);
+		// buttonCreditosBack.setRelativeY(0.8f);
+		// buttonCreditosBack.setRelativeWidth(0.20f);
+		// buttonCreditosBack.setRelativeHeight(0.1f);
+		// CGTTexture textureButtonCreditosBack = new CGTTexture(
+		// "data/dapexe/back_btn.png");
+		// buttonCreditosBack.setTextureDown(textureButtonCreditosBack);
+		// buttonCreditosBack.setTextureUp(textureButtonCreditosBack);
+		// buttonCreditosBack.setBounds(0, 0,
+		// textureButtonCreditosBack.getWidth(),
+		// textureButtonCreditosBack.getHeight());
+		// buttonCreditosBack.setScreenToGo(screen);
+		// screenCreditos.getButtons().add(buttonCreditosBack);
+		// new File("cgt/data/imagens/").mkdirs();
 		game = new CGTGame();
 		game.setMenu(screen);
-//		configuracaoPauseDialog();
-//		configuracaoWinDialog();
-//
-//		configuracaoLDialog();
-		 game.saveGame();
+		// configuracaoPauseDialog();
+		// configuracaoWinDialog();
+		//
+		// configuracaoLDialog();
+		game.saveGame();
 	}
 
 	public CGTGameWorld getWorld() {

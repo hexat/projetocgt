@@ -1,41 +1,66 @@
 package application;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
-import cgt.CGTGame;
-import cgt.CGTGameWorld;
-import cgt.screen.CGTScreen;
-import cgt.util.CGTTexture;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
-public class SampleController {
-	//@FXML private ListView<String> listaConfig;
+public class SampleController  implements Initializable{
+	@FXML private  ListView<String> listaConfig;
 	@FXML private TextField txtProcurar;
 	private Path projeto =  Paths.get("data/imagens/"); // pasta onde todos os arquivos do projeto serão salvos
 	//private Path resources =  Paths.get(projeto.toString()+"/resources"); //parte da estrutura da pasta. Possui os recursos usados, como sons e imagens.
+	private static final ObservableList<String> obs = FXCollections.observableArrayList("Cenário, Personagem, Inimigos, Sons");
 	
 	
-	 
-//
+	
+
 //	@Override
 //	public void initialize(URL location, ResourceBundle resources) {
 //
-//		ObservableList<String> obs = FXCollections.observableArrayList("Cenário, Personagem, Inimigos, Sons");
-//		listaConfig.setItems(obs);
+//		
 //		
 //	}
 	@FXML public void gerar() throws IOException{
-		String[] array = {"../gradlew.bat","android:assembleDebug"};
-		Process p = Runtime.getRuntime().exec(array);
-		System.out.println(p.getInputStream());
+		
+		String line;
+//		String[] array = {"../gradlew.bat"};
+//		Process p = Runtime.getRuntime().exec(array);
+		List<String> commands = new ArrayList<String>();
+		commands.add("../gradlew.bat");
+		commands.add(" android:tasks");
+		 ProcessBuilder pb = new ProcessBuilder(commands);
+
+	    Process p = pb.start();
+	   // Process p = new ProcessBuilder("../gradlew.bat", "assembleDebug").start();
+		
+		
+		 BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream(), "UTF-8"));  
+		while((line = reader.readLine())!=null){
+			
+			System.out.println(line);
+			
+			
+		}
+		
+		
 //    CGTFileZip zip = new CGTFileZip("C:/Users/wendel/teste.cgt", pastaParaSerCompactada.toString());
 //    zip.zipar();
 	
@@ -126,6 +151,15 @@ public class SampleController {
 		
 		ConfigureGame game = new ConfigureGame();
 		
+		
+	}
+
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		listaConfig = new ListView<String>(obs);
+		 listaConfig.setEditable(true);
+		 listaConfig.setItems(obs);
 		
 	}
 }
