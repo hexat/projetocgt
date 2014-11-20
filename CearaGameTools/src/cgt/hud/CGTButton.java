@@ -60,10 +60,6 @@ public class CGTButton extends HUDComponent implements Serializable{
 		});
 	}
 	
-	@Override
-	public void act(float delta){
-	}
-
 	public boolean isActive() {
 		return active;
 	}

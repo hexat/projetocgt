@@ -89,8 +89,8 @@ public class MyWorldPexe {
 		voltarMenu.setScreenToGo(game.getGame());
 		voltarMenu.setTextureUp(new CGTTexture("data/dapexe/back_btn.png"));
 		voltarMenu.setTextureDown(new CGTTexture("data/dapexe/back_btn.png"));
-		voltarMenu.setRelativeX(0.25f);
-		voltarMenu.setRelativeY(0.65f);
+		voltarMenu.setRelativeX(0.5f);
+		voltarMenu.setRelativeY(0.5f);
 		voltarMenu.setRelativeWidth(0.1f);
 		voltarMenu.setRelativeHeight(0.1f);
 
