@@ -212,11 +212,11 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				world.getPauseDialog().autosize();
 				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				MoveToAction actionDialogPause = new MoveToAction();
-				actionDialogPause.setPosition(192, 200);
+				actionDialogPause.setPosition(0.2f, 0.3f);
 				actionDialogPause.setDuration(0.15f);
 				
 				MoveToAction actionDialogPause2 = new MoveToAction();
-				actionDialogPause2.setPosition(192, 180);
+				actionDialogPause2.setPosition(0.2f, 0.25f);
 				actionDialogPause2.setDuration(0.15f);
 				
 				SequenceAction sequencePause = new SequenceAction(actionDialogPause,actionDialogPause2);
@@ -268,11 +268,11 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				world.getWinDialog().autosize();
 				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				MoveToAction actionDialogWin = new MoveToAction();
-				actionDialogWin.setPosition(192, 200);
+				actionDialogWin.setPosition(0.2f, 0.3f);
 				actionDialogWin.setDuration(0.15f);
 				
 				MoveToAction actionDialogWin2 = new MoveToAction();
-				actionDialogWin2.setPosition(192, 180);
+				actionDialogWin2.setPosition(0.2f, 0.25f);
 				actionDialogWin2.setDuration(0.15f);
 				
 				SequenceAction sequenceWin = new SequenceAction(actionDialogWin,actionDialogWin2);
@@ -305,11 +305,11 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				world.getLoseDialog().autosize();
 				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				MoveToAction actionDialogLose = new MoveToAction();
-				actionDialogLose.setPosition(192, 200);
+				actionDialogLose.setPosition(0.2f, 0.3f);
 				actionDialogLose.setDuration(0.15f);
 				
 				MoveToAction actionDialogLose2 = new MoveToAction();
-				actionDialogLose2.setPosition(192, 180);
+				actionDialogLose2.setPosition(0.2f, 0.25f);
 				actionDialogLose2.setDuration(0.15f);
 				
 				SequenceAction sequenceLose = new SequenceAction(actionDialogLose,actionDialogLose2);

@@ -613,31 +613,31 @@ public class MyWorldChicken {
 		CGTButton fechar = new CGTButtonScreen();
 		fechar.setTextureUp(new CGTTexture("data/chicken/play.png"));
 		fechar.setTextureDown(new CGTTexture("data/chicken/play.png"));
-		fechar.setRelativeX(0.25f);
+		fechar.setRelativeX(0.15f);
 		fechar.setRelativeY(0.2f);
 		fechar.setRelativeWidth(0.2f);
 		fechar.setRelativeHeight(0.2f);
 		
-//		CGTButton audio = new CGTButton();
-//		audio.setTextureUp(new CGTTexture("data/dapexe/back_btn.png"));
-//		audio.setTextureDown(new CGTTexture("data/dapexe/back_btn.png"));
-//		audio.setRelativeX(0.3f);
-//		audio.setRelativeY(0.3f);
-//		audio.setRelativeWidth(0.1f);
-//		audio.setRelativeHeight(0.1f);
+		CGTButtonScreen menu = new CGTButtonScreen();
+		menu.setTextureUp(new CGTTexture("data/chicken/menu.png"));
+		menu.setTextureDown(new CGTTexture("data/chicken/menu.png"));
+		menu.setRelativeX(0.55f);
+		menu.setRelativeY(0.2f);
+		menu.setRelativeWidth(0.2f);
+		menu.setRelativeHeight(0.2f);
 		
-		CGTButtonScreen voltarMenu = new CGTButtonScreen();
-		voltarMenu.setScreenToGo(game.getGame());
-		voltarMenu.setTextureUp(new CGTTexture("data/chicken/backButton.png"));
-		voltarMenu.setTextureDown(new CGTTexture("data/chicken/backButton.png"));
-		voltarMenu.setRelativeX(0.48f);
-		voltarMenu.setRelativeY(0.2f);
-		voltarMenu.setRelativeWidth(0.2f);
-		voltarMenu.setRelativeHeight(0.2f);
+		CGTButtonScreen reiniciar = new CGTButtonScreen();
+		reiniciar.setScreenToGo(game.getGame());
+		reiniciar.setTextureUp(new CGTTexture("data/chicken/backButton.png"));
+		reiniciar.setTextureDown(new CGTTexture("data/chicken/backButton.png"));
+		reiniciar.setRelativeX(0.35f);
+		reiniciar.setRelativeY(0.2f);
+		reiniciar.setRelativeWidth(0.2f);
+		reiniciar.setRelativeHeight(0.2f);
 
-		pauseDialog.addButton(voltarMenu);
+		pauseDialog.addButton(reiniciar);
 		pauseDialog.setCloseButton(fechar);
-		//pauseDialog.addButton(audio);
+		pauseDialog.addButton(menu);
 		
 		world.setPauseDialog(pauseDialog);
 		
@@ -704,8 +704,8 @@ public class MyWorldChicken {
 		
 		CGTButtonScreen sair = new CGTButtonScreen();
 		sair.setScreenToGo(game.getGame());
-		sair.setTextureUp(new CGTTexture("data/chicken/layout_perda_0002_Tentar-novamente-Menu-Sair.png"));
-		sair.setTextureDown(new CGTTexture("data/chicken/layout_perda_0002_Tentar-novamente-Menu-Sair.png"));
+		sair.setTextureUp(new CGTTexture("data/chicken/layout_perda_0001_Layer-3.png"));
+		sair.setTextureDown(new CGTTexture("data/chicken/layout_perda_0001_Layer-3.png"));
 		sair.setRelativeX(0.4f);
 		sair.setRelativeY(0.30f);
 		sair.setRelativeWidth(0.15f);

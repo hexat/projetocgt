@@ -65,7 +65,7 @@ public class CGTDialog extends Actor implements Serializable{
 	@Override
 	public void addAction(Action action) {
 		SequenceAction sequence = (SequenceAction) action;
-		
+		SequenceAction sequenceDialog = new SequenceAction();
 		
 		for(int i = 0; i < screenSwitchButtons.size(); i++){
 			SequenceAction sequenceButtons = new SequenceAction();
@@ -73,9 +73,13 @@ public class CGTDialog extends Actor implements Serializable{
 			for(int j = 0; j < sequence.getActions().size; j++){
 				MoveToAction actionMove = (MoveToAction) sequence.getActions().get(j);
 				MoveToAction actionMoveButtons = new MoveToAction();
-				actionMoveButtons.setPosition(screenSwitchButtons.get(i).getX()-this.getX()+ actionMove.getX(),screenSwitchButtons.get(i).getY()-this.getY()+ actionMove.getY());
+				actionMoveButtons.setPosition(screenSwitchButtons.get(i).getX()-this.getX()+ (getStage().getWidth()*actionMove.getX()),screenSwitchButtons.get(i).getY()-this.getY()+ (getStage().getHeight()*actionMove.getY()));
 				actionMoveButtons.setDuration(actionMove.getDuration());
 				sequenceButtons.addAction(actionMoveButtons);
+				MoveToAction moveDialog = new MoveToAction();
+				moveDialog.setPosition(getStage().getWidth()*actionMove.getX(),getStage().getHeight()*actionMove.getY() );
+				moveDialog.setDuration(actionMove.getDuration());
+				sequenceDialog.addAction(moveDialog);
 			}
 			screenSwitchButtons.get(i).addAction(sequenceButtons);
 		}
@@ -86,14 +90,16 @@ public class CGTDialog extends Actor implements Serializable{
 			for(int j = 0; j < sequence.getActions().size; j++){
 				MoveToAction actionMove = (MoveToAction) sequence.getActions().get(j);
 				MoveToAction actionMoveButtons = new MoveToAction();
-				actionMoveButtons.setPosition(closeButton.getX()-this.getX()+ actionMove.getX(),closeButton.getY()-this.getY()+ actionMove.getY());
+				actionMoveButtons.setPosition(closeButton.getX()-this.getX()+ (getStage().getWidth()*actionMove.getX()),closeButton.getY()-this.getY()+ (getStage().getHeight()*actionMove.getY()));
 				actionMoveButtons.setDuration(actionMove.getDuration());
 				sequenceButtons.addAction(actionMoveButtons);
 			}
 			closeButton.addAction(sequenceButtons);
 		}
 		
-		super.addAction(action);
+		
+		
+		super.addAction(sequenceDialog);
 	}
 
 	public void draw(Batch batch, float parentAlpha){
