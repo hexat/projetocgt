@@ -244,20 +244,20 @@ public class MyWorldChicken {
 	}
 
 	public void configuracaoPeixes(){
-		Direction movimentacaoPeixe = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
-		movimentacaoPeixe.setInitialPosition(new Vector2(200,0));
-		movimentacaoPeixe.setFinalPosition(new Vector2(200,200));
-		movimentacaoPeixe.setInteligenceMoviment(false);
-		movimentacaoPeixe.setDirectionMode(DirectionMode.PINGPONG);
-		
-		Direction movimentacaoPeixe2 = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
-		movimentacaoPeixe2.setInitialPosition(new Vector2(500,0));
-		movimentacaoPeixe2.setFinalPosition(new Vector2(500,200));
-		movimentacaoPeixe2.setInteligenceMoviment(false);
-		movimentacaoPeixe2.setDirectionMode(DirectionMode.PINGPONG);
+//		Direction movimentacaoPeixe = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
+//		movimentacaoPeixe.setInitialPosition(new Vector2(200,0));
+//		movimentacaoPeixe.setFinalPosition(new Vector2(200,200));
+//		movimentacaoPeixe.setInteligenceMoviment(false);
+//		movimentacaoPeixe.setDirectionMode(DirectionMode.PINGPONG);
+//		
+//		Direction movimentacaoPeixe2 = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
+//		movimentacaoPeixe2.setInitialPosition(new Vector2(500,0));
+//		movimentacaoPeixe2.setFinalPosition(new Vector2(500,200));
+//		movimentacaoPeixe2.setInteligenceMoviment(false);
+//		movimentacaoPeixe2.setDirectionMode(DirectionMode.PINGPONG);
 		
 		SineWave sineWave = new SineWave(300, 0.005, 2);
-		sineWave.setMaxX(1300);
+		sineWave.setMaxX(70);
 		
 				
 		CGTEnemy peixe = new CGTEnemy();
@@ -277,7 +277,7 @@ public class MyWorldChicken {
 		peixe.setDestroyable(false);
 		peixe.setDamage(50);
 		peixe.addBehavior(sineWave);
-		peixe.setSpeed(100);
+		peixe.setSpeed(-100);
 		peixe.setTimeToRecovery(0.5f);
 		
 		peixe.setColideObject(criarAguaEfeito());
@@ -326,9 +326,13 @@ public class MyWorldChicken {
 		peixe2.setBlock(true);
 		peixe2.setDestroyable(false);
 		peixe2.setDamage(50);
-		peixe2.addBehavior(movimentacaoPeixe2);
-		peixe2.setSpeed(100);
+		peixe2.setPosition(new Vector2(800, 50));
+		SineWave sineWave2 = new SineWave(300, 0.005, 2);
+		sineWave.setMaxX(70);
+		peixe2.addBehavior(sineWave2 );
+		peixe2.setSpeed(500);
 		peixe2.setTimeToRecovery(0.5f);
+		peixe2.setColideObject(criarAguaEfeito());
 		
 		CGTSpriteSheet peixeSpriteSheet2 = new CGTSpriteSheet("data/chicken/peixe_spritesheet2.png");
 		peixeSpriteSheet2.setRows(3);
@@ -357,7 +361,7 @@ public class MyWorldChicken {
 		peixe2.addAnimation(StatePolicy.LOOKDOWN, movePeixeDown2);
 		peixe2.addAnimation(StatePolicy.DAMAGE, damage2);
 		
-		world.getEnemies().add(peixe2);
+//		world.getEnemies().add(peixe2);
 	}
 	
 	public void configuracaoNuvens(){
@@ -512,6 +516,7 @@ public class MyWorldChicken {
 		jumento.setDamage(50);
 		jumento.addBehavior(movimentacaoJumento);
 		jumento.setSpeed(100);
+		jumento.setColideObject(criarAguaEfeito());
 
 		CGTSpriteSheet jumentoSheet = new CGTSpriteSheet("data/chicken/jegue_1_sprite_sheet.png");
 		jumentoSheet.setRows(2);
@@ -544,6 +549,7 @@ public class MyWorldChicken {
 		jumento2.addBehavior(movimentacaoJumento2);
 		jumento2.setSpeed(200);
 
+		jumento2.setColideObject(criarAguaEfeito());
 		CGTSpriteSheet jumentoSheet2 = new CGTSpriteSheet("data/chicken/jegue_2_sprite_sheet.png");
 		jumentoSheet2.setRows(2);
 		jumentoSheet2.setColumns(4);
@@ -616,7 +622,7 @@ public class MyWorldChicken {
 		Rectangle boundsagua = new Rectangle(0, 0, 245, 169);
 		agua.setBounds(boundsagua);
 		agua.setCollision(boundsagua);
-		agua.setPositionRelativeToParent(new Vector2(-90, 0));
+		agua.setPositionRelativeToParent(new Vector2(-100, 0));
 
 		agua.setLife(0);
 
@@ -767,15 +773,15 @@ public class MyWorldChicken {
 		
 		configuracaoActionActor(personagemCGTActor);
 		
-//		configuracaoVacas();
+		configuracaoVacas();
 		
-//		configuracaoNuvens();
+		configuracaoNuvens();
 
 		opositeRio();
 		
 		configuracaoPeixes();
 		
-//		configuracaoJumentos();
+		configuracaoJumentos();
 		
 		opositeCalcada();
 		

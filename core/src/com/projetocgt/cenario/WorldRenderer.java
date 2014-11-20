@@ -1,7 +1,6 @@
 package com.projetocgt.cenario;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Random;
 
 import cgt.CGTGameWorld;
@@ -16,18 +15,13 @@ import cgt.core.CGTEnemy;
 import cgt.core.CGTGameObject;
 import cgt.core.CGTOpposite;
 import cgt.core.CGTProjectile;
-import cgt.hud.CGTLabel;
-import cgt.policy.ActionMovePolicy;
 import cgt.policy.BonusPolicy;
 import cgt.policy.StatePolicy;
-import cgt.util.CGTAnimation;
-import cgt.util.CGTSpriteSheet;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
@@ -420,9 +414,10 @@ public class WorldRenderer {
 			if (world.getEnemies().get(i).getLife() >= 0) {
 				configBehavior(world.getEnemies().get(i));
 				
-				for (CGTGameObject o : world.getEnemies().get(i).getObjectsToCollide()) {
-					if (o.getCollision().overlaps(world.getEnemies().get(i).getCollision())) {
-						if (!world.getEnemies().get(i).getCollideAnimation().isDrawing()) {
+//				for (CGTGameObject o : world.getEnemies().get(i).getObjectsToCollide()) {
+//					world.getEnemies().get(i).getCollideAnimation().setActive(o.getCollision().overlaps(world.getEnemies().get(i).getCollision()));
+//					if (o.getCollision().overlaps(world.getEnemies().get(i).getCollision())) {
+						if (transparencia > 0 && world.getEnemies().get(i).getCollideAnimation()!=null && world.getEnemies().get(i).getPosition().y > 90 && world.getEnemies().get(i).getPosition().y < 95) {
 							world.getEnemies().get(i).getCollideAnimation().setActive(true);
 							CGTAddOn a = world.getEnemies().get(i).getCollideAnimation().clone();
 							a.setPosition(world.getEnemies().get(i).getPosition().cpy());
@@ -434,8 +429,8 @@ public class WorldRenderer {
 							a.getCollision().y += a.getPositionRelativeToParent().y;
 							addons.add(a);
 						}
-					}
-				}
+//					}
+//				}
 
 				spriteBatch.draw(world.getEnemies().get(i).getAnimation(),
 						world.getEnemies().get(i).getPosition().x, world
@@ -865,14 +860,20 @@ public class WorldRenderer {
 				if(sineWave.getEnemyPosition() == null){
 					sineWave.setEnemyPosition(enemy.getPosition().cpy());
 				}
-				
+
 				float point = (float) (sineWave.getAmplitude()*(Math.sin(2*sineWave.getFrequency()*Math.PI*enemy.getPosition().x + sineWave.getPhase())));
 				enemy.getVelocity().y = point;
-				enemy.getVelocity().x = -enemy.getSpeed();
-				
-				if (enemy.getPosition().x > sineWave.getMaxX()){
-					enemy.getPosition().x = sineWave.getEnemyPosition().x;
-					enemy.getPosition().y = sineWave.getEnemyPosition().y;
+				enemy.getVelocity().x = enemy.getSpeed();
+				if (enemy.getSpeed() > 0) {
+					if (enemy.getPosition().x > sineWave.getMaxX()){
+						enemy.getPosition().x = sineWave.getEnemyPosition().x;
+						enemy.getPosition().y = sineWave.getEnemyPosition().y;
+					}
+				} else {
+					if (enemy.getPosition().x < sineWave.getMaxX()){
+						enemy.getPosition().x = sineWave.getEnemyPosition().x;
+						enemy.getPosition().y = sineWave.getEnemyPosition().y;
+					}
 				}
 			}
 			

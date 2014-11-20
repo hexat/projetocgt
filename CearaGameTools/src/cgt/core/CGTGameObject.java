@@ -317,7 +317,7 @@ public abstract class CGTGameObject implements Serializable {
 	}
 
 	public void setSpeed(int speed) {
-		speed = speed;
+		this.speed = speed;
 	}
 
 	/**

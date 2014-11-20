@@ -11,11 +11,16 @@ public class CGTAddOn extends CGTGameObject implements Serializable{
 	private static final long serialVersionUID = -9137532188758222763L;
 	private Vector2 positionRelativeToParent;
 	
+	private CGTGameObject objectA;
+	private CGTGameObject objectB;
+	
 	private boolean active;
 
 	public CGTAddOn(){
 		super();
 		active = false;
+		objectA = null;
+		objectB = null;
 	}
 	
 	public CGTAddOn(CGTAddOn clone){
@@ -43,7 +48,7 @@ public class CGTAddOn extends CGTGameObject implements Serializable{
 //		if (f) {
 			setPosition(null);
 //		}
-		active = f;
+		active ^= f;
 	}
 	
 	public boolean getActive() {
@@ -53,6 +58,22 @@ public class CGTAddOn extends CGTGameObject implements Serializable{
 	public CGTAddOn clone() {
 		CGTAddOn res = new CGTAddOn(this);
 		return res;
+	}
+
+	public CGTGameObject getObjectB() {
+		return objectB;
+	}
+
+	public void setObjectB(CGTGameObject objectB) {
+		this.objectB = objectB;
+	}
+
+	public CGTGameObject getObjectA() {
+		return objectA;
+	}
+
+	public void setObjectA(CGTGameObject objectA) {
+		this.objectA = objectA;
 	}
 }
  
