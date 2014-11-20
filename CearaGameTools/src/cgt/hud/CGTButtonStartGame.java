@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 
 public class CGTButtonStartGame extends CGTButton implements Serializable{
-	
+		
 	private boolean actionCamera;
 
 	public CGTButtonStartGame(float x, float y, float relativeWidth, float relativeHeight) {

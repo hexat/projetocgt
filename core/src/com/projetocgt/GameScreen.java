@@ -269,6 +269,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				music.pause();
 			}
 			this.getActors().clear();
+			
 			addDialog(world.getLoseDialog());
 			world.getLoseDialog().autosize();
 

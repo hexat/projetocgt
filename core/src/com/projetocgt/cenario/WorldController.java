@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Timer.Task;
 
 import cgt.CGTGameWorld;
 import cgt.core.CGTActor;
+import cgt.core.CGTAddOn;
 import cgt.core.CGTProjectile;
 import cgt.policy.*;
 import cgt.unit.Action;
@@ -144,6 +145,9 @@ public class WorldController {
 
 		for (int i=0; i<world.getEnemies().size(); i++) {
 			world.getEnemies().get(i).update(delta);
+			if (world.getEnemies().get(i).getCollideAnimation() != null) {
+				world.getEnemies().get(i).getCollideAnimation().update(delta);
+			}
 		}
 	}
 

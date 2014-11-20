@@ -363,8 +363,15 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	public void setStartGame(CGTButtonStartGame startGame) {
 		this.startGame = startGame;
 	}
-		
-	
+
+	public CGTGameObject getObjectByLabel(String label) {
+		for (CGTOpposite o : opposites) {
+			if (o.getLabel() != null && o.getLabel().equals(label)) {
+				return o;
+			}
+		}
+		return null;
+	}
 	
 }
  

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import cgt.core.CGTAddOn;
 import cgt.core.CGTGameObject;
 import cgt.policy.AnimationPolicy;
 import cgt.policy.StatePolicy;
@@ -62,27 +63,21 @@ public class AnimationHandle {
 			}
 
 			TextureRegion[] arrayTex = new TextureRegion[0];
+
 			animationGDX = new Animation(animation.getSpriteVelocity(), textureList.toArray(arrayTex));
 			animationGDX.setPlayMode(animation.getAnimationPolicy());
+
 		bobFrame = textureList.get(0);
 	}
 
 	/***
-	 * 
+	 * A animacao e setada a partir do delta da LibGDX
 	 * @param owner
 	 *            O personagem que a funcao bra fazer a animacao
 	 * @return bobFrama o freme do personagem
 	 */
 	public TextureRegion getAnimationFrame(){
-		// animacao inicial do personagem
-//		Animation animation = null;
-//
-//		if(mapa.containsKey(owner.getState())){
-//			animation = mapa.get(owner.getState());
-			return animationGDX.getKeyFrame(owner.getStateTime());
-//		}
-//
-//		return bobFrame;
+		return animationGDX.getKeyFrame(owner.getStateTime());
 	}
 
 	/**
@@ -97,5 +92,13 @@ public class AnimationHandle {
 	 */
 	public void setPolicy(AnimationPolicy policy) {
 		this.policy = policy;
+	}
+	
+	public Animation getAnimationGDX() {
+		return animationGDX;
+	}
+	
+	public boolean isDrawing() {
+		return animationGDX.isAnimationFinished(owner.getStateTime());
 	}
 }

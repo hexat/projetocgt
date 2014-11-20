@@ -14,7 +14,6 @@ import cgt.util.AnimationMap;
 import cgt.util.CGTAnimation;
 import cgt.util.AnimationHandle;
 import cgt.util.CGTSound;
-import cgt.util.CGTSpriteSheet;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -35,21 +34,84 @@ public abstract class CGTGameObject implements Serializable {
 	private Vector2 position;
 	private Rectangle bounds; // Size of the game object
 	private Rectangle collision; // Size of the box collider
-	private int Speed;
+	private int speed;
 	private Vector2 velocity;		//Vetor que informa a velocidade do personagem
 	private int life;
 	private ArrayList<AnimationMap> animations;
-	private AnimationHandle animation;
 	private LabelID labelID;
 	private StatePolicy state;
 	private float stateTime = 0;
 	private float posXColider, posYColider;
 	private boolean isPlayingSound;
 	private int delayPlaySound;
-	private TextureRegion lastAnimation; 
+	private CGTAnimation lastAnimation; 
+	
+	private CGTAddOn whenCollide;
+	private ArrayList<CGTGameObject> objectsToCollide;
 	
 	public CGTGameObject(LabelID labelID){
 		setLabelID(labelID);
+	}
+	
+	public CGTGameObject(CGTGameObject clone) {
+		if (clone.getSound() != null) {
+			sound = clone.getSound().clone();
+		} else {
+			sound = null;
+		}
+		soundsDie = new ArrayList<CGTSound>();
+		for (CGTSound s : clone.getSoundsDie()) {
+			soundsDie.add(s.clone());
+		}
+		soundCollision = new ArrayList<CGTSound>();
+		for (CGTSound s : clone.getSoundCollision()) {
+			soundCollision.add(s.clone());
+		}
+		initialPositions = new ArrayList<Vector2>();
+		for (Vector2 v : clone.getInitialPositions()) {
+			initialPositions.add(v.cpy());
+		}
+		if (clone.getPosition() != null) {
+			position = clone.getPosition().cpy();
+		} else {
+			position = null;
+		}
+		bounds = new Rectangle();
+		bounds.height = clone.getBounds().height;
+		bounds.width = clone.getBounds().width;
+		bounds.x = clone.getBounds().x;
+		bounds.y = clone.getBounds().y;
+		
+		collision = new Rectangle();
+		collision.height = clone.getCollision().height;
+		collision.width = clone.getCollision().width;
+		collision.x = clone.getCollision().x;
+		collision.y = clone.getCollision().y;
+		
+		speed = clone.getSpeed();
+		velocity = clone.getVelocity().cpy();
+		life = clone.getLife();
+		animations = new ArrayList<AnimationMap>();
+		for (AnimationMap a : clone.animations) {
+			CGTAnimation newAnis[] = new CGTAnimation[a.getAnimations().size()];
+			for (int i = 0; i < a.getAnimations().size(); i++) {
+				CGTAnimation novo = new CGTAnimation(this, a.getAnimations().get(i).getSpriteSheet());
+				novo.setAnimationPolicy(a.getAnimations().get(i).getAnimationPolicy());
+				novo.setEndingFrame(a.getAnimations().get(i).getEndingFrame());
+				novo.setFlipHorizontal(a.getAnimations().get(i).isFlipHorizontal());
+				novo.setFlipVertical(a.getAnimations().get(i).isFlipVertical());
+				novo.setInitialFrame(a.getAnimations().get(i).getInitialFrame());
+				novo.setSpriteSheet(a.getAnimations().get(i).getSpriteSheet());
+				novo.setSpriteVelocity(a.getAnimations().get(i).getSpriteVelocity());
+				newAnis[i] = novo;
+			}
+			animations.add(new AnimationMap(a.getStatePolicy(), newAnis));
+		}
+		state = clone.getState();
+		stateTime = 0;
+		delayPlaySound = clone.getDelayPlaySound();
+		whenCollide = null; //TODO
+		objectsToCollide = new ArrayList<CGTGameObject>();
 	}
 	
 	/**
@@ -58,16 +120,16 @@ public abstract class CGTGameObject implements Serializable {
 	 */
 	public void update(float delta) {
 		setStateTime(getStateTime() + delta);
-		getPosition().add(velocity.cpy().scl(delta));
 		
-		//System.out.println(velocity.y);
-		
-		//System.out.println("posYColider: " + posYColider);
-		collision.x=this.getPosition().x+posXColider;
-		collision.y=this.getPosition().y+posYColider;
-		
-		bounds.x=this.getPosition().x;
-		bounds.y=this.getPosition().y;
+		if (getPosition() != null) {
+			getPosition().add(velocity.cpy().scl(delta));
+			
+			collision.x=this.getPosition().x+posXColider;
+			collision.y=this.getPosition().y+posYColider;
+			
+			bounds.x=this.getPosition().x;
+			bounds.y=this.getPosition().y;
+		}
 	}
 	
 	public CGTGameObject(){
@@ -78,25 +140,22 @@ public abstract class CGTGameObject implements Serializable {
 		collision = new Rectangle();
 		setState(StatePolicy.IDLE);
 		animations = new ArrayList<AnimationMap>();
-		animation=null;
 		soundsDie = new ArrayList<CGTSound>();
 		soundCollision = new ArrayList<CGTSound>();
 		initialPositions = new ArrayList<>();
+		objectsToCollide =  new ArrayList<CGTGameObject>();
 		isPlayingSound = false;
 		setDelayPlaySound(0);
+		whenCollide = null;
 	}
 	
 	public CGTGameObject(Vector2 position, Rectangle bounds, Rectangle collision){
+		this();
 		this.position = position;
 		this.collision = collision;
 		posXColider = collision.x;
 		posYColider = collision.y;
-		lastAnimation = null;
 		this.bounds = bounds;
-		animations = new ArrayList<AnimationMap>();
-		setState(StatePolicy.IDLE);
-		animation=null;
-		initialPositions = new ArrayList<>();
 	}
 	
 	public LabelID getLabelID() {
@@ -215,11 +274,11 @@ public abstract class CGTGameObject implements Serializable {
 	public void setPosition(Vector2 position) {
 		this.position = position;
 
-		collision.x=this.getPosition().x+posXColider;
-		collision.y=this.getPosition().y+posYColider;
-		
-		bounds.x=this.getPosition().x;
-		bounds.y=this.getPosition().y;
+//		collision.x=this.getPosition().x+posXColider;
+//		collision.y=this.getPosition().y+posYColider;
+//		
+//		bounds.x=this.getPosition().x;
+//		bounds.y=this.getPosition().y;
 	}
 
 	public int getLife() {
@@ -250,15 +309,15 @@ public abstract class CGTGameObject implements Serializable {
 		return "CGTGameObject [sound=" + sound + ", soundDie=" + soundsDie
 				+ ", soundCollision=" + soundCollision + ", position="
 				+ position + ", collision=" + collision + ", life=" + life
-				+ ", cGTSpriteSheet=" + animation + ", labelID=" + labelID + "]";
+				+ ", labelID=" + labelID + "]";
 	}
 
 	public int getSpeed() {
-		return Speed;
+		return speed;
 	}
 
 	public void setSpeed(int speed) {
-		Speed = speed;
+		speed = speed;
 	}
 
 	/**
@@ -293,14 +352,16 @@ public abstract class CGTGameObject implements Serializable {
 		for (AnimationMap a : animations) {
 			if (a.getStatePolicy() == state) {
 				lastAnimation = a.getRandomAnimation();
-				return lastAnimation;
+				return lastAnimation.getAnimation();
 			}
 		}
 		if (lastAnimation == null && animations.size() > 0) {
 			lastAnimation = animations.get(0).getRandomAnimation();
 		}
-		
-		return lastAnimation;
+		if (lastAnimation != null) {
+			return lastAnimation.getAnimation();
+		}
+		return null;
 	}
 
 	/**
@@ -353,5 +414,20 @@ public abstract class CGTGameObject implements Serializable {
 		isPlayingSound = false;
 	}
 	
+	public ArrayList<CGTGameObject> getObjectsToCollide() {
+		return objectsToCollide;
+	}
+	
+	public void setColideObject(CGTAddOn obj) {
+		this.whenCollide = obj;
+	}
+	
+	public CGTAddOn getCollideAnimation() {
+		return whenCollide;
+	}
+	
+	public boolean isDrawing() {
+		return lastAnimation != null && lastAnimation.getCGTAnimation().isDrawing();
+	}
 }
  

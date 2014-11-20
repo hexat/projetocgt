@@ -12,10 +12,12 @@ public class AnimationMap implements Serializable {
 	private StatePolicy statePolicy;
 	private ArrayList<CGTAnimation> animations;
 	
-	public AnimationMap(StatePolicy statePolicy, CGTAnimation animation) {
+	public AnimationMap(StatePolicy statePolicy, CGTAnimation... anis) {
 		setStatePolicy(statePolicy);
 		setAnimations(new ArrayList<CGTAnimation>());
-		addAnimation(animation);;
+		for (int i = 0; i < anis.length; i++) {
+			addAnimation(anis[i]);
+		}
 	}
 
 	public StatePolicy getStatePolicy() {
@@ -34,8 +36,8 @@ public class AnimationMap implements Serializable {
 		this.animations = animations;
 	}
 
-	public TextureRegion getRandomAnimation() {
-		return animations.get(new Random().nextInt(animations.size())).getAnimation();
+	public CGTAnimation getRandomAnimation() {
+		return animations.get(new Random().nextInt(animations.size()));
 	}
 
 	public void addAnimation(CGTAnimation animation) {

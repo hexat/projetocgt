@@ -10,6 +10,7 @@ import cgt.behaviors.Direction;
 import cgt.behaviors.Direction.DirectionMode;
 import cgt.behaviors.SineWave;
 import cgt.core.CGTActor;
+import cgt.core.CGTAddOn;
 import cgt.core.CGTEnemy;
 import cgt.core.CGTOpposite;
 import cgt.hud.CGTButton;
@@ -26,6 +27,7 @@ import cgt.screen.CGTDialog;
 import cgt.screen.CGTScreen;
 import cgt.unit.Action;
 import cgt.util.CGTAnimation;
+import cgt.util.CGTFile;
 import cgt.util.CGTSound;
 import cgt.util.CGTSpriteSheet;
 import cgt.util.CGTTexture;
@@ -111,7 +113,7 @@ public class MyWorldChicken {
 		
 		Direction movimentacaoVaca3 = new Direction(DirectionPolicy.TWO_POINTS_DIRECTION);
 		movimentacaoVaca3.setInitialPosition(new Vector2(700,100));
-		movimentacaoVaca3.setFinalPosition(new Vector2(-130,500));
+		movimentacaoVaca3.setFinalPosition(new Vector2(130,500));
 		movimentacaoVaca3.setInteligenceMoviment(false);
 		movimentacaoVaca3.setDirectionMode(DirectionMode.PINGPONG);
 
@@ -145,7 +147,6 @@ public class MyWorldChicken {
 		moveVacaUp.setSpriteVelocity(0.08f);		
 		moveVacaUp.setAnimationPolicy(PlayMode.LOOP);	
 		
-
 		CGTAnimation moveVacaDown = new CGTAnimation(vaca,vacaSpriteSheet);
 		moveVacaDown.setInitialFrame(new Vector2(2, 1));
 		moveVacaDown.setEndingFrame(new Vector2(3, 2));
@@ -278,6 +279,9 @@ public class MyWorldChicken {
 		peixe.addBehavior(sineWave);
 		peixe.setSpeed(100);
 		peixe.setTimeToRecovery(0.5f);
+		
+		peixe.setColideObject(criarAguaEfeito());
+		peixe.getObjectsToCollide().add(world.getObjectByLabel("rio"));
 		
 		CGTSpriteSheet peixeSpriteSheet = new CGTSpriteSheet("data/chicken/peixe_spritesheet1.png");
 		peixeSpriteSheet.setRows(3);
@@ -584,21 +588,65 @@ public class MyWorldChicken {
 		
 		world.getOpposites().add(calcada);
 	}
-	
+
 	public void opositeRio(){
 		CGTOpposite rio = new CGTOpposite();
 
-		Vector2 position = new Vector2(0, 0);
+		Vector2 position = new Vector2(0, 80);
 		rio.setPosition(position);
-		Rectangle bounds = new Rectangle(0, 0, 1140, 94);
+		Rectangle bounds = new Rectangle(0, 0, 1140, 1);
 		rio.setBounds(bounds);
 		rio.setCollision(bounds);
 
 		rio.setBlock(true);
 		rio.setDestroyable(false);
 		rio.setLife(0);
+		rio.setLabel("rio");
 		
 		world.getOpposites().add(rio);
+
+	}
+	
+	public CGTAddOn criarAguaEfeito() {
+
+		CGTAddOn agua = new CGTAddOn();
+
+		Vector2 positionagua = new Vector2(100, 80);
+		agua.setPosition(positionagua);
+		Rectangle boundsagua = new Rectangle(0, 0, 245, 169);
+		agua.setBounds(boundsagua);
+		agua.setCollision(boundsagua);
+		agua.setPositionRelativeToParent(new Vector2(-90, 0));
+
+		agua.setLife(0);
+
+		CGTSpriteSheet aguaSheet = new CGTSpriteSheet("data/chicken/agua_spritesheet.png");
+		aguaSheet.setRows(5);
+		aguaSheet.setColumns(4);
+		
+		// Action
+		CGTAnimation moveJumentoDown = new CGTAnimation(agua,aguaSheet);
+		moveJumentoDown.setInitialFrame(new Vector2(0, 0));
+		moveJumentoDown.setEndingFrame(new Vector2(1, 4));
+		moveJumentoDown.setSpriteVelocity(0.08f);
+		moveJumentoDown.setAnimationPolicy(PlayMode.NORMAL);
+			
+		agua.addAnimation(StatePolicy.IDLE, moveJumentoDown);
+
+		return agua;
+	}
+
+	public void opositePinosCalcada() {
+		CGTOpposite pinos = new CGTOpposite();
+		pinos.setPosition(new Vector2(0, 0));
+		pinos.setBounds(new Rectangle(0, 0, 1140, 720));
+		CGTSpriteSheet spritePino = new CGTSpriteSheet(new CGTFile("data/chicken/parte_cima.png"));
+		spritePino.setRows(1);
+		spritePino.setColumns(1);
+		CGTAnimation animation = new CGTAnimation(pinos, spritePino);
+		animation.setSpriteLine(1);
+		pinos.addAnimation(StatePolicy.IDLE, animation);
+		world.addOpposite(pinos);
 	}
 	
 	public void configuracaoPauseDialog() {
@@ -632,7 +680,6 @@ public class MyWorldChicken {
 		pauseDialog.addButton(voltarMenu);
 		pauseDialog.setCloseButton(voltar);
 		world.setPauseDialog(pauseDialog);
-
 	}
 
 	public void configuracaoWinDialog() {
@@ -713,24 +760,26 @@ public class MyWorldChicken {
 		world.setMusic(new CGTSound("data/AudioChicken/tema.ogg",1f));
 		world.getCamera().setGameMode(GameModePolicy.TOUCH);
 		
+		
 		CGTActor personagemCGTActor = new CGTActor();
 		
 		configuracaoActor(personagemCGTActor);
 		
 		configuracaoActionActor(personagemCGTActor);
 		
-		//configuracaoVacas();
+//		configuracaoVacas();
 		
-		configuracaoNuvens();
+//		configuracaoNuvens();
+
+		opositeRio();
 		
 		configuracaoPeixes();
 		
-		//configuracaoJumentos();
+//		configuracaoJumentos();
 		
 		opositeCalcada();
 		
-		opositeRio();
-		
+		opositePinosCalcada();
 		configuracaoPorcentagem();
 		
 		world.setActor(personagemCGTActor);
@@ -745,7 +794,7 @@ public class MyWorldChicken {
 		world.getCamera().setInitialHeight(0.5f);
 		world.getCamera().setVolumeOnFullCamera(0.1f);
 		world.getCamera().setInitialWidth(0.5f);
-		world.getCamera().setScale(2);;
+		world.getCamera().setScale(2);
 		
 		world.getLoseCriteria().add(new LifeDepleted(personagemCGTActor));
 		

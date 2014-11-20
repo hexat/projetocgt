@@ -3,6 +3,7 @@ package cgt.util;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import cgt.core.CGTAddOn;
 import cgt.core.CGTGameObject;
 import cgt.policy.StatePolicy;
 
@@ -12,7 +13,6 @@ import com.badlogic.gdx.math.Vector2;
 
 public class CGTAnimation implements Serializable{
 	private CGTSpriteSheet spriteSheet;
-	private CGTSound sound;
 	private Vector2 initialFrame;
 	private Vector2 endingFrame;
 	private CGTGameObject owner;
@@ -31,14 +31,6 @@ public class CGTAnimation implements Serializable{
 		animationPolicy = PlayMode.LOOP;
 	}
 	
-	public CGTSound getSound() {
-		return sound;
-	}
-
-	public void setSound(CGTSound sound) {
-		this.sound = sound;
-	}
-
 	public void setSpriteLine(int spriteLine) {
 		initialFrame = new Vector2(0, spriteLine - 1);
 		endingFrame = new Vector2(getSpriteSheet().getColumns() - 1,

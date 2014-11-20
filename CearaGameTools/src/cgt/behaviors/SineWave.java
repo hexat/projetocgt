@@ -64,9 +64,4 @@ public class SineWave implements Behavior,Serializable {
 	public void setEnemyPosition(Vector2 enemyPosition) {
 		this.enemyPosition = enemyPosition;
 	}
-	
-	
-	
-	
-
 }

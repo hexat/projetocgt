@@ -1,5 +1,6 @@
 package com.projetocgt.cenario;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import cgt.CGTGameWorld;
@@ -9,17 +10,22 @@ import cgt.behaviors.Fade;
 import cgt.behaviors.Sine;
 import cgt.behaviors.SineWave;
 import cgt.core.CGTActor;
+import cgt.core.CGTAddOn;
 import cgt.core.CGTEnemy;
 import cgt.core.CGTGameObject;
+import cgt.core.CGTOpposite;
 import cgt.core.CGTProjectile;
 import cgt.hud.CGTLabel;
 import cgt.policy.BonusPolicy;
 import cgt.policy.StatePolicy;
+import cgt.util.CGTAnimation;
+import cgt.util.CGTSpriteSheet;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
@@ -55,11 +61,19 @@ public class WorldRenderer {
 	private boolean isLose;
 	private Music musicActorLose;
 	private float fatorVolumeObjects;
+	private float transparencia;
+	private CGTOpposite rio;
+	private CGTOpposite aguaAnimation;
+	
+	private ArrayList<CGTAddOn> addons;
 
 	public WorldRenderer(CGTGameWorld world) {
 		this.world = world;
+		addons = new  ArrayList<CGTAddOn>();
 		fatorVolumeObjects = 1f;
+		transparencia = 0f;
 		isLose = false;
+		rio = (CGTOpposite) world.getObjectByLabel("rio");
 		musicActorLose = null;
 		zoomCamera = CameraStage.IDLE;
 		float width = world.getBackground().getTextureGDX().getWidth() * world.getCamera().getInitialWidth();
@@ -76,6 +90,7 @@ public class WorldRenderer {
 
 		rectangleCamera = new Rectangle(camera.position.x - camera.viewportWidth/2, camera.position.y - camera.viewportHeight/2, camera.viewportWidth, camera.viewportHeight);
 		random = new Random();
+
 	}
 
 	public SpriteBatch getSpriteBatch() {
@@ -148,7 +163,7 @@ public class WorldRenderer {
 
 	
 	// executa música caso o objeto esteja visível na camera
-	private void verifyObjectsOnCamera(){		
+	private void verifyObjectsOnCamera(){
 		rectangleCamera.set(camera.position.x - camera.viewportWidth/2, camera.position.y - camera.viewportHeight/2, camera.viewportWidth, camera.viewportHeight);
 		
 		// verifica Opposites
@@ -283,6 +298,8 @@ public class WorldRenderer {
 				camera.viewportWidth += world.getCamera().getScale() * world.getBackground().getTextureGDX().getWidth();
 			}
 
+			transparencia = camera.viewportWidth / world.getBackground().getTextureGDX().getWidth() * world.getCamera().getFullWidth();
+
 			setCameraPosition();
 //			max = world.getBackground().getTextureGDX().getHeight() - camera.viewportHeight/ 2;
 //			if (world.getActor().getPosition().y > max) {
@@ -294,6 +311,7 @@ public class WorldRenderer {
 //			}
 		} else {
 			zoomCamera = CameraStage.IDLE;
+			transparencia = 1.0f;
 		}
 	}
 	
@@ -361,15 +379,25 @@ public class WorldRenderer {
 		
 		drawBackground();
 		drawCGTActor();
-		drawOpposites();
 		drawProjectiles(); // Chamada de projectiles precisa ser feita antes de Enemies
 		drawEnemies();
+		drawOpposites();
 		drawBonus();
-		//drawDamageActor();
-//		if (GameScreen.DEBUG) {
-//			drawDebug();
-//		}
-		
+		drawAddOn();
+	}
+
+	private void drawAddOn() {
+		for (CGTAddOn object : addons) {
+				spriteBatch.draw(object.getAnimation(),
+						object.getPosition().x,
+						object.getPosition().y,
+						object.getBounds().width, 
+						object.getBounds().height);
+				
+				if (object.isDrawing()) {
+					object.setActive(false);
+				}
+		}
 	}
 
 	private void drawBonus() {
@@ -383,12 +411,28 @@ public class WorldRenderer {
 	}
 
 	private void drawEnemies() {
+		spriteBatch.setColor(1.0f, 1.0f, 1.0f, transparencia);
+
 		for (int i = 0; i < world.getEnemies().size(); i++) {
 			if (world.getEnemies().get(i).getLife() >= 0) {
 				configBehavior(world.getEnemies().get(i));
-
-				spriteBatch.setColor(1.0f, 1.0f, 1.0f, world.getEnemies()
-						.get(i).getAlpha());
+				
+				for (CGTGameObject o : world.getEnemies().get(i).getObjectsToCollide()) {
+					if (o.getCollision().overlaps(world.getEnemies().get(i).getCollision())) {
+						if (!world.getEnemies().get(i).getCollideAnimation().isDrawing()) {
+							world.getEnemies().get(i).getCollideAnimation().setActive(true);
+							CGTAddOn a = world.getEnemies().get(i).getCollideAnimation().clone();
+							a.setPosition(world.getEnemies().get(i).getPosition().cpy());
+							a.getPosition().x += a.getPositionRelativeToParent().x;
+							a.getPosition().y += a.getPositionRelativeToParent().y;
+							a.getBounds().x += a.getPositionRelativeToParent().x;
+							a.getBounds().y += a.getPositionRelativeToParent().y;
+							a.getCollision().x += a.getPositionRelativeToParent().x;
+							a.getCollision().y += a.getPositionRelativeToParent().y;
+							addons.add(a);
+						}
+					}
+				}
 
 				spriteBatch.draw(world.getEnemies().get(i).getAnimation(),
 						world.getEnemies().get(i).getPosition().x, world
@@ -413,6 +457,7 @@ public class WorldRenderer {
 			}
 		}
 
+		spriteBatch.setColor(1.0f, 1.0f, 1.0f, 1);
 	}
 
 	private void drawProjectiles() {
@@ -455,6 +500,11 @@ public class WorldRenderer {
 				}
 			}
 		}
+	}
+
+	private void drawCollisions() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/***
@@ -869,12 +919,10 @@ public class WorldRenderer {
 			public void run() {
 				tempo++;
 				if(tempo >= fade.getFadeInTime()){
-					System.out.println(enemy.getGroup()+": FADE ATIVADO");
 					enemy.setAlpha(1);
 					enemy.setVulnerable(true);
 					this.cancel();
 				}
-				System.out.println("Fade : "+ tempo);
 			}
 		}, 1, 1);
 	}
@@ -990,7 +1038,7 @@ public class WorldRenderer {
 			personagem.setState(StatePolicy.DAMAGE);
 			enemy.setState(StatePolicy.DAMAGE);
 			enemy.setAttacking(true);
-			System.out.println(enemy.isAttacking());
+
 			personagem.setInputsEnabled(true);
 
 			Timer.schedule(new Task() {
@@ -1008,12 +1056,11 @@ public class WorldRenderer {
 					personagem.setInvincible(false);
 				}
 			}, personagem.getTimeToRecovery());
-			System.out.println(enemy.getTimeToRecovery());
+
 			Timer.schedule(new Task() {
 				@Override
 				public void run() {
 					enemy.setAttacking(false);
-					System.out.println("TESTE");
 				}
 			}, enemy.getTimeToRecovery());
 			

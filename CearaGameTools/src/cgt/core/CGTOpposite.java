@@ -14,10 +14,12 @@ public class CGTOpposite extends CGTGameObject implements Serializable{
 	private boolean block;
 	private boolean destroyable;
 	private ArrayList<Behavior> behaviors;
+	private String label;
 	
 	
 	public CGTOpposite(){
 		super();
+		label = null;
 		behaviors = new ArrayList<Behavior>();
 	}
 	
@@ -62,6 +64,13 @@ public class CGTOpposite extends CGTGameObject implements Serializable{
 		return super.toString() + "CGTOpposite [block=" + block + ", destroyable=" + destroyable
 				+ ", behaviors=" + behaviors + "]";
 	}
+
+	public void setLabel(String string) {
+		this.label = string;
+	}
 	
+	public String getLabel() {
+		return label;
+	}
 }
  
