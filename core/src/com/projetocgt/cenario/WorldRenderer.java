@@ -1,6 +1,7 @@
 package com.projetocgt.cenario;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 
 import cgt.CGTGameWorld;
@@ -16,6 +17,7 @@ import cgt.core.CGTGameObject;
 import cgt.core.CGTOpposite;
 import cgt.core.CGTProjectile;
 import cgt.hud.CGTLabel;
+import cgt.policy.ActionMovePolicy;
 import cgt.policy.BonusPolicy;
 import cgt.policy.StatePolicy;
 import cgt.util.CGTAnimation;
@@ -387,15 +389,16 @@ public class WorldRenderer {
 	}
 
 	private void drawAddOn() {
-		for (CGTAddOn object : addons) {
-				spriteBatch.draw(object.getAnimation(),
-						object.getPosition().x,
-						object.getPosition().y,
-						object.getBounds().width, 
-						object.getBounds().height);
+		for (int i = 0; i < addons.size(); i++) {
+				spriteBatch.draw(addons.get(i).getAnimation(),
+						addons.get(i).getPosition().x,
+						addons.get(i).getPosition().y,
+						addons.get(i).getBounds().width, 
+						addons.get(i).getBounds().height);
 				
-				if (object.isDrawing()) {
-					object.setActive(false);
+				if (addons.get(i).isDrawing()) {
+					addons.get(i).setActive(false);
+					addons.remove(i);
 				}
 		}
 	}
@@ -1109,5 +1112,9 @@ public class WorldRenderer {
 
 	public boolean lose() {
 		return isLose;
+	}
+
+	public ArrayList<CGTAddOn> getAddOns() {
+		return addons;
 	}
 }

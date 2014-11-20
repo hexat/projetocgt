@@ -149,6 +149,9 @@ public class WorldController {
 				world.getEnemies().get(i).getCollideAnimation().update(delta);
 			}
 		}
+		for (int i=0; i<renderer.getAddOns().size(); i++) {
+			renderer.getAddOns().get(i).update(delta);
+		}
 	}
 
 	private void moveKeys(){
