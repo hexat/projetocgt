@@ -2,6 +2,8 @@ package cgt.hud;
 
 import java.io.Serializable;
 
+import cgt.unit.Action;
+
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public abstract class HUDComponent extends Actor implements Serializable{
@@ -22,7 +24,7 @@ public abstract class HUDComponent extends Actor implements Serializable{
 		System.out.println(getX());
 		System.out.println(getY());
 	}
-
+	
 	public float getRelativeX() {
 		return relativeX;
 	}

@@ -3,6 +3,8 @@ package com.projetocgt.cenario;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
 import cgt.CGTGame;
 import cgt.CGTGameWorld;
@@ -604,17 +606,17 @@ public class MyWorldChicken {
 		//pauseDialog.setHorizontalBorderTexture(new CGTTexture("data/dapexe/borda.png"));
 		pauseDialog.setRightBottomCorner(new CGTTexture("data/chicken/base_di_ba.png"));
 		pauseDialog.setRelativeX(0.20f);
-		pauseDialog.setRelativeY(0.20f);
+		pauseDialog.setRelativeY(-0.60f);
 		pauseDialog.setRelativeWidth(0.6f);
 		pauseDialog.setRelativeHeight(0.6f);
 
-		CGTButton voltar = new CGTButtonScreen();
-		voltar.setTextureUp(new CGTTexture("data/chicken/play.png"));
-		voltar.setTextureDown(new CGTTexture("data/chicken/play.png"));
-		voltar.setRelativeX(0.25f);
-		voltar.setRelativeY(0.3f);
-		voltar.setRelativeWidth(0.1f);
-		voltar.setRelativeHeight(0.1f);
+		CGTButton fechar = new CGTButtonScreen();
+		fechar.setTextureUp(new CGTTexture("data/chicken/play.png"));
+		fechar.setTextureDown(new CGTTexture("data/chicken/play.png"));
+		fechar.setRelativeX(0.25f);
+		fechar.setRelativeY(0.2f);
+		fechar.setRelativeWidth(0.2f);
+		fechar.setRelativeHeight(0.2f);
 		
 //		CGTButton audio = new CGTButton();
 //		audio.setTextureUp(new CGTTexture("data/dapexe/back_btn.png"));
@@ -628,15 +630,17 @@ public class MyWorldChicken {
 		voltarMenu.setScreenToGo(game.getGame());
 		voltarMenu.setTextureUp(new CGTTexture("data/chicken/backButton.png"));
 		voltarMenu.setTextureDown(new CGTTexture("data/chicken/backButton.png"));
-		voltarMenu.setRelativeX(0.35f);
-		voltarMenu.setRelativeY(0.3f);
-		voltarMenu.setRelativeWidth(0.1f);
-		voltarMenu.setRelativeHeight(0.1f);
+		voltarMenu.setRelativeX(0.48f);
+		voltarMenu.setRelativeY(0.2f);
+		voltarMenu.setRelativeWidth(0.2f);
+		voltarMenu.setRelativeHeight(0.2f);
 
 		pauseDialog.addButton(voltarMenu);
-		pauseDialog.setCloseButton(voltar);
+		pauseDialog.setCloseButton(fechar);
 		//pauseDialog.addButton(audio);
+		
 		world.setPauseDialog(pauseDialog);
+		
 
 	}
 
@@ -647,7 +651,7 @@ public class MyWorldChicken {
 		//pauseDialog.setHorizontalBorderTexture(new CGTTexture("data/dapexe/borda.png"));
 		winDialog.setRightBottomCorner(new CGTTexture("data/chicken/base_di_ba.png"));
 		winDialog.setRelativeX(0.20f);
-		winDialog.setRelativeY(0.20f);
+		winDialog.setRelativeY(-0.60f);
 		winDialog.setRelativeWidth(0.6f);
 		winDialog.setRelativeHeight(0.6f);
 
@@ -683,7 +687,7 @@ public class MyWorldChicken {
 		//loseDialog.setHorizontalBorderTexture(new CGTTexture("data/dapexe/borda.png"));
 		loseDialog.setRightBottomCorner(new CGTTexture("data/chicken/base_di_ba.png"));
 		loseDialog.setRelativeX(0.20f);
-		loseDialog.setRelativeY(0.20f);
+		loseDialog.setRelativeY(-0.60f);
 		loseDialog.setRelativeWidth(0.6f);
 		loseDialog.setRelativeHeight(0.6f);
 
@@ -707,6 +711,7 @@ public class MyWorldChicken {
 		sair.setRelativeWidth(0.15f);
 		sair.setRelativeHeight(0.1f);
 		loseDialog.addButton(sair);
+		
 		world.setLoseDialog(loseDialog);
 		
 		

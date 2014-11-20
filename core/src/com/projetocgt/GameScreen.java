@@ -28,6 +28,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
@@ -193,7 +195,10 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			break;
 
 		case PAUSED:
-			Gdx.input.setInputProcessor(this);
+			Gdx.input.setInputProcessor(this);		
+			renderer.getSpriteBatch().begin();
+			renderer.draw();
+			renderer.getSpriteBatch().end();		
 			if(!world.getPauseDialog().isActive()){
 				world.getPauseDialog().setActive(true);
 				//Para os behaviors
@@ -205,6 +210,19 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 				addDialog(world.getPauseDialog());
 				world.getPauseDialog().autosize();
+				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				MoveToAction actionDialogPause = new MoveToAction();
+				actionDialogPause.setPosition(192, 200);
+				actionDialogPause.setDuration(0.15f);
+				
+				MoveToAction actionDialogPause2 = new MoveToAction();
+				actionDialogPause2.setPosition(192, 180);
+				actionDialogPause2.setDuration(0.15f);
+				
+				SequenceAction sequencePause = new SequenceAction(actionDialogPause,actionDialogPause2);
+				
+				world.getPauseDialog().addAction(sequencePause);
+				///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			}
 
 			buttonHandler();
@@ -236,15 +254,32 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		case WIN:
 			Gdx.input.setInputProcessor(this);
 			//Timer.instance().stop(); //Para os behaviors
-			world.getWinDialog().setActive(true);
-			renderer.getSpriteBatch().flush();
-			if (music != null){
-				music.pause();
+			renderer.getSpriteBatch().begin();
+			renderer.draw();
+			renderer.getSpriteBatch().end();
+			if(!world.getWinDialog().isActive()){
+				world.getWinDialog().setActive(true);
+				renderer.getSpriteBatch().flush();
+				if (music != null){
+					music.pause();
+				}
+				this.getActors().clear();
+				addDialog(world.getWinDialog());
+				world.getWinDialog().autosize();
+				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				MoveToAction actionDialogWin = new MoveToAction();
+				actionDialogWin.setPosition(192, 200);
+				actionDialogWin.setDuration(0.15f);
+				
+				MoveToAction actionDialogWin2 = new MoveToAction();
+				actionDialogWin2.setPosition(192, 180);
+				actionDialogWin2.setDuration(0.15f);
+				
+				SequenceAction sequenceWin = new SequenceAction(actionDialogWin,actionDialogWin2);
+				
+				world.getWinDialog().addAction(sequenceWin);
+				///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			}
-			this.getActors().clear();
-			addDialog(world.getWinDialog());
-			world.getWinDialog().autosize();
-
 			buttonHandler();
 			this.act();
 			getSpriteBatch().begin();
@@ -253,19 +288,35 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			break;
 
 		case LOSE:
-
 			Gdx.input.setInputProcessor(this);
-			//Timer.instance().stop(); //Para os behaviors
-			
-			world.getLoseDialog().setActive(true);
-			renderer.getSpriteBatch().flush();
-			if (music != null){
-				music.pause();
+			renderer.getSpriteBatch().begin();
+			renderer.draw();
+			renderer.getSpriteBatch().end();
+			if(!world.getLoseDialog().isActive()){
+				world.getLoseDialog().setActive(true);
+				
+				renderer.getSpriteBatch().flush();
+				if (music != null){
+					music.pause();
+				}
+				this.getActors().clear();
+				
+				addDialog(world.getLoseDialog());
+				world.getLoseDialog().autosize();
+				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				MoveToAction actionDialogLose = new MoveToAction();
+				actionDialogLose.setPosition(192, 200);
+				actionDialogLose.setDuration(0.15f);
+				
+				MoveToAction actionDialogLose2 = new MoveToAction();
+				actionDialogLose2.setPosition(192, 180);
+				actionDialogLose2.setDuration(0.15f);
+				
+				SequenceAction sequenceLose = new SequenceAction(actionDialogLose,actionDialogLose2);
+				
+				world.getLoseDialog().addAction(sequenceLose);
+				///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			}
-			this.getActors().clear();
-			addDialog(world.getLoseDialog());
-			world.getLoseDialog().autosize();
-
 			buttonHandler();
 			this.act();
 			getSpriteBatch().begin();
