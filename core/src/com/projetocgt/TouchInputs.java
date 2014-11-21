@@ -2,6 +2,7 @@ package com.projetocgt;
 
 import cgt.CGTGameWorld;
 import cgt.policy.InputPolicy;
+import cgt.policy.StatePolicy;
 import cgt.screen.CGTWindow;
 
 import com.badlogic.gdx.Gdx;
@@ -17,20 +18,22 @@ public class TouchInputs implements InputProcessor{
 	private int contador;
 	private InputPolicy currentDragged;
 	private WorldController controller;
+	private GameScreen game;
 	private boolean ready;
 	private CGTGameWorld world;
 	private float xRelative;
 	private float yRelative;
 	private boolean touchPerson;
 	
-	public TouchInputs(WorldController controller, CGTGameWorld world){
+	public TouchInputs(GameScreen gameScreen){
+		game = gameScreen;
 		lastPoint = new Vector2();
 		firstPoint = new Vector2();
 		contador = 0;
 		currentDragged = null;
 		ready = false;
-		this.controller = controller;
-		this.world = world;
+		this.controller = gameScreen.getController();
+		this.world = gameScreen.getWorld();
 		xRelative = 0;
 		yRelative = 0;
 		touchPerson = false;
@@ -104,7 +107,12 @@ public class TouchInputs implements InputProcessor{
 //		}
 //		
 //		return false;
-
+////////////////////////////////////////////////////////////////////////////
+		if (world.getActor().getState() != StatePolicy.LOOKRIGHT) {
+			world.getActor().setState(StatePolicy.IDLERIGHT);
+			world.getActor().getPosition().y = (game.getHeight()-screenY)*(world.getBackground().getTextureGDX().getHeight()-150)/game.getHeight() + 100;
+		}
+////////////////////////////////////////////////////////////////////////////
 		contador += 1;
 		if (contador > 5){
 			lastPoint.x = screenX;
@@ -113,7 +121,6 @@ public class TouchInputs implements InputProcessor{
 			
 //			System.out.println(world.getActor().getPosition().y);
 //			System.out.println(screenY);
-//			world.getActor().getVelocity().y = world.getActor().getPosition().y - Gdx.input.getY() ;
 			
 			
 			if(Math.abs(firstPoint.x - lastPoint.x) > Math.abs(firstPoint.y-lastPoint.y)){

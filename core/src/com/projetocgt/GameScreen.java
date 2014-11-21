@@ -1,18 +1,13 @@
 package com.projetocgt;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import cgt.CGTGameWorld;
 import cgt.hud.CGTButton;
 import cgt.hud.CGTButtonScreen;
 import cgt.hud.CGTControllerButton;
 import cgt.hud.HUDComponent;
-import cgt.policy.ActionMovePolicy;
 import cgt.policy.GameModePolicy;
 import cgt.policy.InputPolicy;
 import cgt.screen.CGTDialog;
-import cgt.screen.CGTWindow;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -20,18 +15,13 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.projetocgt.cenario.WorldController;
@@ -72,7 +62,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		setSpriteBatch(new SpriteBatch());
 		controller = new WorldController(world, renderer);
 		lastPoint = world.getActor().getPosition().cpy();
-		
+///////////////////////////////////////////////////////////////////////////////////////
 		Preferences prefs = Gdx.app.getPreferences("My Preferences");
 		int vezes = prefs.getInteger("num_vezes", 0);
 		System.out.println("luanjames"+vezes);
@@ -151,7 +141,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				renderer.cameraFullScreen();
 			}
 			if (world.getCamera().getGameMode() == GameModePolicy.TOUCH) {
-				Gdx.input.setInputProcessor(new TouchInputs(controller, world));
+				Gdx.input.setInputProcessor(new TouchInputs(this));
 			}
 			world.setStartGame(null);
 		}
@@ -366,7 +356,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		if (world.getCamera().getGameMode() == GameModePolicy.JOYSTICK || world.getStartGame() != null){
 			Gdx.input.setInputProcessor(this);
 		} else {
-			Gdx.input.setInputProcessor(new TouchInputs(controller, world));
+			Gdx.input.setInputProcessor(new TouchInputs(this));
 		}	
 	}
 

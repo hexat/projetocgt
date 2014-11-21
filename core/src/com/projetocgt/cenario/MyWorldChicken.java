@@ -258,13 +258,13 @@ public class MyWorldChicken {
 //		movimentacaoPeixe2.setInteligenceMoviment(false);
 //		movimentacaoPeixe2.setDirectionMode(DirectionMode.PINGPONG);
 		
-		SineWave sineWave = new SineWave(300, 0.005, 2);
+		SineWave sineWave = new SineWave(500, 0.005, 2);
 		sineWave.setMaxX(70);
 		
 				
 		CGTEnemy peixe = new CGTEnemy();
 		
-		Vector2 positionPeixe = new Vector2(800, 50);
+		Vector2 positionPeixe = new Vector2(800, 60);
 		peixe.setPosition(positionPeixe);
 
 		Rectangle coliderPeixe = new Rectangle(22, 0, 60, 75);
@@ -779,7 +779,7 @@ public class MyWorldChicken {
 		Action slideDown = new Action(ActionMovePolicy.WALK_DOWN, InputPolicy.SLIDE_DOWN);
 	
 
-		world.addAction(walkUp,slideUp,slideDown);
+		world.addAction(walkUp);
 	}
 	
 

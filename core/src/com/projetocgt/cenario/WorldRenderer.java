@@ -18,6 +18,7 @@ import cgt.core.CGTProjectile;
 import cgt.policy.BonusPolicy;
 import cgt.policy.StatePolicy;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -142,7 +143,7 @@ public class WorldRenderer {
 			draw();
 			spriteBatch.end();
 			
-			
+			Gdx.input.setInputProcessor(null);
 
 			for(int index = 0; index < world.getOpposites().size(); index ++){
 				if(world.getOpposites().get(index).isPlayingSound()){
@@ -862,17 +863,23 @@ public class WorldRenderer {
 				}
 
 				float point = (float) (sineWave.getAmplitude()*(Math.sin(2*sineWave.getFrequency()*Math.PI*enemy.getPosition().x + sineWave.getPhase())));
+
 				enemy.getVelocity().y = point;
 				enemy.getVelocity().x = enemy.getSpeed();
+				
 				if (enemy.getSpeed() > 0) {
 					if (enemy.getPosition().x > sineWave.getMaxX()){
 						enemy.getPosition().x = sineWave.getEnemyPosition().x;
 						enemy.getPosition().y = sineWave.getEnemyPosition().y;
+						enemy.getVelocity().y = 0;
+						enemy.getVelocity().x = 0;
 					}
 				} else {
 					if (enemy.getPosition().x < sineWave.getMaxX()){
 						enemy.getPosition().x = sineWave.getEnemyPosition().x;
 						enemy.getPosition().y = sineWave.getEnemyPosition().y;
+						enemy.getVelocity().y = 0;
+						enemy.getVelocity().x = 0;
 					}
 				}
 			}
