@@ -1,1 +1,1 @@
-include "CearaGameTools", "core", "desktop", "android"
+include "CearaGameTools", "core", "desktop", "android", "ios"

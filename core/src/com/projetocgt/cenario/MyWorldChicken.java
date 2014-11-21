@@ -258,7 +258,7 @@ public class MyWorldChicken {
 //		movimentacaoPeixe2.setInteligenceMoviment(false);
 //		movimentacaoPeixe2.setDirectionMode(DirectionMode.PINGPONG);
 		
-		SineWave sineWave = new SineWave(500, 0.005, 2);
+		SineWave sineWave = new SineWave(300, 0.005, 2);
 		sineWave.setMaxX(70);
 		
 				

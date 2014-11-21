@@ -1,25 +1,24 @@
 package com.projetcgt;
 
-import org.robovm.cocoatouch.foundation.NSAutoreleasePool;
-import org.robovm.cocoatouch.uikit.UIApplication;
+import org.robovm.apple.foundation.NSAutoreleasePool;
+import org.robovm.apple.uikit.UIApplication;
 
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication;
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration;
-import com.projetocgt.ProjetoCGT;
 import com.projetocgt.StarAssault;
 
-public class RobovmLauncher extends IOSApplication.Delegate {
+public class IOSLauncher extends IOSApplication.Delegate {
 	@Override
 	protected IOSApplication createApplication() {
 		IOSApplicationConfiguration config = new IOSApplicationConfiguration();
 		config.orientationLandscape = true;
 		config.orientationPortrait = false;
-		return new IOSApplication(new StarAssault(), config);
+		return new IOSApplication(StarAssault.getInstance(), config);
 	}
 
 	public static void main(String[] argv) {
 		NSAutoreleasePool pool = new NSAutoreleasePool();
-		UIApplication.main(argv, null, RobovmLauncher.class);
-		pool.drain();
+		UIApplication.main(argv, null, IOSLauncher.class);
+		pool.close();
 	}
 }
