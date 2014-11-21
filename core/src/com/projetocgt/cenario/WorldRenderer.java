@@ -860,13 +860,13 @@ public class WorldRenderer {
 				
 				if(sineWave.getEnemyPosition() == null){
 					sineWave.setEnemyPosition(enemy.getPosition().cpy());
+					System.out.println(enemy.getPosition().cpy());
 				}
-
+				System.out.println(enemy.getPosition());
 				float point = (float) (sineWave.getAmplitude()*(Math.sin(2*sineWave.getFrequency()*Math.PI*enemy.getPosition().x + sineWave.getPhase())));
-
-				enemy.getVelocity().y = point;
+				enemy.getPosition().y = point;
 				enemy.getVelocity().x = enemy.getSpeed();
-				
+
 				if (enemy.getSpeed() > 0) {
 					if (enemy.getPosition().x > sineWave.getMaxX()){
 						enemy.getPosition().x = sineWave.getEnemyPosition().x;
