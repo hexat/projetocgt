@@ -802,7 +802,7 @@ public class MyWorldChicken {
 		
 		configuracaoActionActor(personagemCGTActor);
 		
-		configuracaoVacas();
+		//configuracaoVacas();
 		
 		configuracaoNuvens();
 
@@ -810,7 +810,7 @@ public class MyWorldChicken {
 		
 		configuracaoPeixes();
 		
-		configuracaoJumentos();
+		//configuracaoJumentos();
 		
 		opositeCalcada();
 		

@@ -40,7 +40,7 @@ import com.projetocgt.cenario.WorldRenderer;
 
 public class GameScreen extends Stage implements Screen, InputProcessor {
 
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = true;
 
 	private enum State{PAUSED, RESUMING, PLAYING, WIN, LOSE;};
 	private State state = State.PLAYING;

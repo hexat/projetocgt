@@ -859,11 +859,13 @@ public class WorldRenderer {
 				
 				if(sineWave.getEnemyPosition() == null){
 					sineWave.setEnemyPosition(enemy.getPosition().cpy());
+					System.out.println(enemy.getPosition().cpy());
 				}
-
+				System.out.println(enemy.getPosition());
 				float point = (float) (sineWave.getAmplitude()*(Math.sin(2*sineWave.getFrequency()*Math.PI*enemy.getPosition().x + sineWave.getPhase())));
-				enemy.getVelocity().y = point;
+				enemy.getPosition().y = point;
 				enemy.getVelocity().x = enemy.getSpeed();
+				System.out.println("X enemy: "+enemy.getPosition().x);
 				if (enemy.getSpeed() > 0) {
 					if (enemy.getPosition().x > sineWave.getMaxX()){
 						enemy.getPosition().x = sineWave.getEnemyPosition().x;
@@ -871,8 +873,12 @@ public class WorldRenderer {
 					}
 				} else {
 					if (enemy.getPosition().x < sineWave.getMaxX()){
+						System.out.println("ACABOU");
 						enemy.getPosition().x = sineWave.getEnemyPosition().x;
 						enemy.getPosition().y = sineWave.getEnemyPosition().y;
+						enemy.getVelocity().y = 0;
+						enemy.getVelocity().x = 0;
+						System.out.println(enemy.getPosition());
 					}
 				}
 			}
