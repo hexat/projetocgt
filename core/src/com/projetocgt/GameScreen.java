@@ -80,11 +80,12 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			this.addActor(component);
 			component.autosize();
 		}
-		if (world.getStartGame() != null) {
-			CGTButton btn = world.getStartGame();
-			btn.setInputListener();
-			this.addActor(btn);
-			btn.autosize();
+		if (world.getInitialDialog() != null) {
+			world.getInitialDialog().setActive(true);
+			addDialog(world.getInitialDialog());
+			world.getInitialDialog().autosize();
+//			this.addActor(btn);
+//			btn.autosize();
 		}
 	}
 
@@ -104,6 +105,13 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 
 		for(CGTButtonScreen buttonScreen : world.getPauseDialog().getButtons()){
+			if(buttonScreen.isActive()){
+				buttonScreen.setTouchable(Touchable.disabled);
+				StarAssault.getInstance().restart(buttonScreen.getScreenToGo());
+			}
+		}
+		
+		for(CGTButtonScreen buttonScreen : world.getInitialDialog().getButtons()){
 			if(buttonScreen.isActive()){
 				buttonScreen.setTouchable(Touchable.disabled);
 				StarAssault.getInstance().restart(buttonScreen.getScreenToGo());
@@ -131,6 +139,27 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			world.getPauseDialog().setActive(false);
 			resume();
 		}
+		
+		CGTButton closeButtonInitialDialog = world.getInitialDialog().getCloseButton();
+		if (closeButtonInitialDialog.isActive()){
+			world.getInitialDialog().setActive(false);
+			world.getInitialDialog().setTouchable(Touchable.disabled);
+			world.getInitialDialog().remove();
+			for(int i = 0; i < world.getInitialDialog().getButtons().size();i++){
+				world.getInitialDialog().getButtons().get(i).remove();
+			}
+			
+			closeButtonInitialDialog.remove();
+			
+				renderer.cameraFullScreen();
+			
+			if (world.getCamera().getGameMode() == GameModePolicy.TOUCH) {
+				Gdx.input.setInputProcessor(new TouchInputs(this));
+			}
+			world.setStartGame(null);
+			
+		}
+		
 		
 		if (world.getStartGame() != null && world.getStartGame().isActive()) {
 			world.getStartGame().setTouchable(Touchable.disabled);
