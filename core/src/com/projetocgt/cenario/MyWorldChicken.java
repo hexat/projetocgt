@@ -258,7 +258,7 @@ public class MyWorldChicken {
 //		movimentacaoPeixe2.setInteligenceMoviment(false);
 //		movimentacaoPeixe2.setDirectionMode(DirectionMode.PINGPONG);
 		
-		SineWave sineWave = new SineWave(300, 0.005, 2);
+		SineWave sineWave = new SineWave(200, 0.005, 2);
 		sineWave.setMaxX(70);
 		
 				
@@ -773,6 +773,47 @@ public class MyWorldChicken {
 		
 	}
 	
+	public void configuracaoDialogInicial(){
+		CGTDialog inicialDialog = new CGTDialog();
+		inicialDialog.setActive(false);
+		inicialDialog.setWindow(new CGTTexture("data/chicken/teste.png"));
+		//loseDialog.setHorizontalBorderTexture(new CGTTexture("data/dapexe/borda.png"));
+		inicialDialog.setRightBottomCorner(new CGTTexture("data/chicken/base_di_ba.png"));
+		inicialDialog.setRelativeX(0.1f);
+		inicialDialog.setRelativeY(0.1f);
+		inicialDialog.setRelativeWidth(0.8f);
+		inicialDialog.setRelativeHeight(0.8f);
+		
+		// Button iniciar
+		CGTButton btn = new CGTButtonScreen();
+		btn.setRelativeX(0.39f);
+		btn.setRelativeY(0.50f);
+		btn.setRelativeWidth(0.20f);
+		btn.setRelativeHeight(0.1f);
+		CGTTexture texture = new CGTTexture("data/chicken/layout_principal_0001_Layer-4.png");
+		btn.setTextureDown(texture);
+		btn.setTextureUp(texture);
+		btn.setBounds(0, 0, texture.getWidth(), texture.getHeight());	
+		//btn.setScreenToGo(world);
+		inicialDialog.setCloseButton(btn);
+		
+		// Button tutorial
+		CGTButtonScreen buttonTutorial = new CGTButtonScreen();
+		buttonTutorial.setRelativeX(0.39f);
+		buttonTutorial.setRelativeY(0.35f);
+		buttonTutorial.setRelativeWidth(0.20f);
+		buttonTutorial.setRelativeHeight(0.1f);
+		CGTTexture textureButtonTutorial = new CGTTexture("data/chicken/layout_principal_0003_Layer-6.png");
+		buttonTutorial.setTextureDown(textureButtonTutorial);
+		buttonTutorial.setTextureUp(textureButtonTutorial);
+		//buttonTutorial.setScreenToGo(screenTutorial);
+		inicialDialog.addButton(buttonTutorial);
+			
+		world.setInitialDialog(inicialDialog);
+		
+		
+	}
+	
 	public void configuracaoInputs() {
 		Action walkUp = new Action(ActionMovePolicy.WALK_RIGHT, InputPolicy.TAP);
 		Action slideUp = new Action(ActionMovePolicy.WALK_UP, InputPolicy.SLIDE_UP);
@@ -802,7 +843,7 @@ public class MyWorldChicken {
 		
 		configuracaoActionActor(personagemCGTActor);
 		
-		//configuracaoVacas();
+		configuracaoVacas();
 		
 		configuracaoNuvens();
 
@@ -810,7 +851,7 @@ public class MyWorldChicken {
 		
 		configuracaoPeixes();
 		
-		//configuracaoJumentos();
+		configuracaoJumentos();
 		
 		opositeCalcada();
 		
@@ -834,24 +875,51 @@ public class MyWorldChicken {
 		
 		world.getLoseCriteria().add(new LifeDepleted(personagemCGTActor));
 		
-		
-		// Button tutorial
+//		
+//		// Button iniciar
+//		CGTTexture menuInicial = new CGTTexture("data/dapexe/menuInicial.png");
+//		CGTButtonScreen btn = new CGTButtonScreen();
+//		btn.setRelativeX(0.39f);
+//		btn.setRelativeY(0.50f);
+//		btn.setRelativeWidth(0.20f);
+//		btn.setRelativeHeight(0.1f);
+//		CGTTexture texture = new CGTTexture("data/chicken/layout_principal_0001_Layer-4.png");
+//		btn.setTextureDown(texture);
+//		btn.setTextureUp(texture);
+//		btn.setBounds(0, 0, texture.getWidth(), texture.getHeight());	
+//		//btn.setScreenToGo(world);
+//		screen = new CGTScreen(menuInicial);
+//		screen.getButtons().add(btn);
+//		
+//		// Button tutorial
+//		CGTTexture textureTutorial = new CGTTexture("data/dapexe/menuTutorial.png");
 //		CGTButtonScreen buttonTutorial = new CGTButtonScreen();
-//		buttonTutorial.setRelativeX(0.5f);
-//		buttonTutorial.setRelativeY(0.8f);
+//		buttonTutorial.setRelativeX(0.39f);
+//		buttonTutorial.setRelativeY(0.45f);
 //		buttonTutorial.setRelativeWidth(0.20f);
 //		buttonTutorial.setRelativeHeight(0.1f);
-//		CGTTexture textureButtonTutorial = new CGTTexture("data/chicken/layout_principal_0000_Layer-3.png");
+//		CGTTexture textureButtonTutorial = new CGTTexture("data/chicken/layout_principal_0003_Layer-6.png");
 //		buttonTutorial.setTextureDown(textureButtonTutorial);
 //		buttonTutorial.setTextureUp(textureButtonTutorial);
 //		buttonTutorial.setBounds(0, 0, textureButtonTutorial.getWidth(), textureButtonTutorial.getHeight());
+//		CGTScreen screenTutorial = new CGTScreen(textureTutorial);
+//		buttonTutorial.setScreenToGo(screenTutorial);
 //		screen.getButtons().add(buttonTutorial);
+//		
+//		// Label
+//		CGTLabel label = new CGTLabel("data/chicken/layout_principal_0000_Layer-3", "");
+//		label.setRelativeX(0.39f);
+//		label.setRelativeY(0.78f);
+//		label.setRelativeWidth(0.20f);
+//		label.setRelativeHeight(0.1f);
+//		screen.getLabels().add(label);
 		
 		game = new CGTGame();
 		game.setMenu(world);
 		configuracaoPauseDialog();
 		configuracaoWinDialog();
 		configuracaoLDialog();
+		configuracaoDialogInicial();
 	}
 	
 	public CGTGameWorld getWorld() {

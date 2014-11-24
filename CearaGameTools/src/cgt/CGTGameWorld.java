@@ -33,6 +33,7 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private CGTDialog pauseDialog;
 	private CGTDialog winDialog;
 	private CGTDialog loseDialog;
+	private CGTDialog initialDialog;
 	private Camera camera;
 	private CGTTexture background;
 	private ArrayList<Win> winCriteria;
@@ -362,6 +363,14 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 
 	public void setStartGame(CGTButtonStartGame startGame) {
 		this.startGame = startGame;
+	}
+
+	public CGTDialog getInitialDialog() {
+		return initialDialog;
+	}
+
+	public void setInitialDialog(CGTDialog initialDialog) {
+		this.initialDialog = initialDialog;
 	}
 
 	public CGTGameObject getObjectByLabel(String label) {
