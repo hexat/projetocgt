@@ -30,7 +30,7 @@ import com.projetocgt.cenario.WorldRenderer;
 
 public class GameScreen extends Stage implements Screen, InputProcessor {
 
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 
 	private enum State{PAUSED, RESUMING, PLAYING, WIN, LOSE;};
 	private State state = State.PLAYING;
@@ -129,6 +129,8 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		CGTButton closeButton = world.getPauseDialog().getCloseButton();
 		if (closeButton.isActive()){
 			world.getPauseDialog().setActive(false);
+
+			Gdx.input.setInputProcessor(new TouchInputs(this));
 			resume();
 		}
 		
@@ -408,7 +410,11 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		if (keycode == Keys.P){
 			state = State.PAUSED;
 		}
-		return true;
+		if(keycode == Keys.BACK){
+			state = State.PAUSED;
+	        }
+		return false;
+//		return true;
 	}
 
 

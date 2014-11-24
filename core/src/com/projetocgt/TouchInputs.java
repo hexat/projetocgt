@@ -109,8 +109,11 @@ public class TouchInputs implements InputProcessor{
 //		return false;
 ////////////////////////////////////////////////////////////////////////////
 		if (world.getActor().getState() != StatePolicy.LOOKRIGHT) {
-			world.getActor().setState(StatePolicy.IDLERIGHT);
-			world.getActor().getPosition().y = (game.getHeight()-screenY)*(world.getBackground().getTextureGDX().getHeight()-150)/game.getHeight() + 100;
+			float pos = (game.getHeight()-screenY)*(world.getBackground().getTextureGDX().getHeight())/game.getHeight();
+			if (Math.abs(pos - world.getActor().getPosition().y) < 100) {
+				world.getActor().setState(StatePolicy.IDLERIGHT);
+				world.getActor().getPosition().y = (game.getHeight()-screenY)*(world.getBackground().getTextureGDX().getHeight()-150)/game.getHeight() + 100;
+			}
 		}
 ////////////////////////////////////////////////////////////////////////////
 		contador += 1;

@@ -4,6 +4,7 @@ import cgt.CGTGame;
 import cgt.CGTGameWorld;
 import cgt.screen.CGTScreen;
 import cgt.screen.CGTWindow;
+import cgt.util.ScreenHandleInterface;
 
 import com.badlogic.gdx.Game;
 import com.projetocgt.cenario.MyWorldChicken;
@@ -12,6 +13,7 @@ import com.projetocgt.cenario.MyWorldPexe;
 public class StarAssault extends Game {
 	private static StarAssault instance =  null;
 	private CGTScreen menu;
+	private ScreenHandleInterface screenHandle;
 	
 	private StarAssault(){
 		
@@ -48,5 +50,13 @@ public class StarAssault extends Game {
 			instance =	new StarAssault();
 		}
 		return instance;
+	}
+
+	public void setScreenHandle(ScreenHandleInterface mainActivity) {
+		this.screenHandle = mainActivity;
+	}
+	
+	public ScreenHandleInterface getScreenHandle() {
+		return screenHandle;
 	}
 }
