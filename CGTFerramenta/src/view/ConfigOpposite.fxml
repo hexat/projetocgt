@@ -146,21 +146,18 @@
 				</ScrollPane>
 			</content>
 		</TitledPane>
-		<TitledPane animated="false" prefHeight="375.0" prefWidth="327.0" text="Configuração Personagem">
+		<TitledPane animated="false" prefHeight="375.0" prefWidth="327.0" text="Configuração Opposite">
          <content>
             <ScrollPane hbarPolicy="NEVER" prefHeight="385.0" prefWidth="417.0">
                <content>
-                  <AnchorPane prefHeight="225.0" prefWidth="413.0">
+                  <AnchorPane prefHeight="328.0" prefWidth="413.0">
                      <children>
-                        <Label layoutX="14.0" layoutY="14.0" text="State" />
-                        <ChoiceBox layoutX="57.0" layoutY="10.0" prefWidth="150.0" />
-                        <Label layoutX="14.0" layoutY="52.0" text="Action" />
-                        <ChoiceBox layoutX="57.0" layoutY="48.0" prefWidth="150.0" />
-                        <Button layoutX="221.0" layoutY="48.0" mnemonicParsing="false" text="+" />
-                        <Label layoutX="10.0" layoutY="86.0" text="Projectile" />
-                        <ChoiceBox layoutX="62.0" layoutY="83.0" prefWidth="150.0" />
-                        <Label layoutX="9.0" layoutY="122.0" text="timeToRecovery" />
-                        <TextField layoutX="106.0" layoutY="118.0" prefHeight="25.0" prefWidth="27.0" />
+                        <Label layoutX="5.0" layoutY="25.0" text="Block" />
+                        <CheckBox layoutX="63.0" layoutY="24.0" mnemonicParsing="false" />
+                        <Label layoutX="3.0" layoutY="67.0" text="Destruivel" />
+                        <CheckBox layoutX="63.0" layoutY="68.0" mnemonicParsing="false" />
+                        <Label layoutX="5.0" layoutY="113.0" text="Behavior" />
+                        <Button layoutX="61.0" layoutY="111.0" mnemonicParsing="false" text="+" />
                      </children>
                   </AnchorPane>
                </content>
