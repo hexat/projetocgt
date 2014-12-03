@@ -1,0 +1,559 @@
+package view
+
+import javafx.scene.text.*
+import javafx.scene.effect.*
+import javafx.scene.image.*
+import javafx.scene.*
+import java.lang.*
+import javafx.scene.control.*
+import javafx.scene.layout.*
+import javafx.scene.layout.AnchorPane
+
+component ConfigPersonagem controlledby cgt.controller.ConfigPersonagemController {
+	Accordion {
+	maxHeight : -Infinity
+	,maxWidth : -Infinity
+	,minHeight : -Infinity
+	,minWidth : -Infinity
+	,prefHeight : 621.0
+	,prefWidth : 419.0
+	,panes : TitledPane {
+	animated : false
+	,prefHeight : 596.0
+	,prefWidth : 444.0
+	,text : "Configuração Game Object"
+	,content : ScrollPane {
+	hbarPolicy : "NEVER"
+	,hmax : 0.0
+	,prefHeight : 570.0
+	,prefWidth : 443.0
+	,vbarPolicy : "ALWAYS"
+	,vmax : 1.1
+	,content : GridPane {
+	gridLinesVisible : true
+	,prefHeight : 552.0
+	,prefWidth : 400.0
+	,columnConstraints : ColumnConstraints {
+	fillWidth : false
+	,hgrow : "SOMETIMES"
+	,minWidth : 10.0
+	,prefWidth : 100.0
+		}
+	,rowConstraints : RowConstraints {
+	maxHeight : 112.0
+	,minHeight : 6.0
+	,prefHeight : 48.0
+	,vgrow : "SOMETIMES"
+		}
+	,rowConstraints : RowConstraints {
+	maxHeight : 355.0
+	,minHeight : 10.0
+	,prefHeight : 118.0
+	,vgrow : "SOMETIMES"
+		}
+	,rowConstraints : RowConstraints {
+	maxHeight : 418.0
+	,minHeight : 10.0
+	,prefHeight : 97.0
+	,vgrow : "SOMETIMES"
+		}
+	,rowConstraints : RowConstraints {
+	maxHeight : 418.0
+	,minHeight : 0.0
+	,prefHeight : 81.0
+	,vgrow : "SOMETIMES"
+		}
+	,rowConstraints : RowConstraints {
+	maxHeight : 418.0
+	,minHeight : 10.0
+	,prefHeight : 55.0
+	,vgrow : "SOMETIMES"
+		}
+	,rowConstraints : RowConstraints {
+	maxHeight : 418.0
+	,minHeight : 10.0
+	,prefHeight : 159.0
+	,vgrow : "SOMETIMES"
+		}
+		,children : [
+	AnchorPane {
+	prefHeight : 54.0
+	,prefWidth : 489.0
+		,children : [
+	Label {
+	layoutX : 6.0
+	,layoutY : 11.0
+	,text : "Sprite Sheet"
+		}
+	,TextField {
+	layoutX : 88.0
+	,layoutY : 7.0
+		}
+	,Button {
+	layoutX : 244.0
+	,layoutY : 6.0
+	,mnemonicParsing : false
+	,text : "Procurar"
+		}
+		]
+		}
+	,ScrollPane {
+	prefHeight : 121.0
+	,prefWidth : 394.0
+	,vbarPolicy : "ALWAYS"
+	,call GridPane#rowIndex : 1
+	,content : AnchorPane id anchorSom {
+	minHeight : 0.0
+	,minWidth : 0.0
+	,prefHeight : 121.0
+	,prefWidth : 381.0
+		,children : [
+	Label {
+	layoutX : 7.0
+	,layoutY : 14.0
+	,text : "Som"
+		}
+	,TextField {
+	layoutX : 88.0
+	,layoutY : 10.0
+		}
+	,Button {
+	layoutX : 244.0
+	,layoutY : 9.0
+	,mnemonicParsing : false
+	,text : "Procurar"
+		}
+	,Label {
+	layoutX : 6.0
+	,layoutY : 45.0
+	,text : "Som de colisao"
+		}
+	,TextField id txtSomDeColisao {
+	layoutX : 88.0
+	,layoutY : 41.0
+		}
+	,Button id btnProcurarSomColisao {
+	layoutX : 244.0
+	,layoutY : 41.0
+	,mnemonicParsing : false
+	,text : "Procurar"
+		}
+	,Label id lblSomDeMorte {
+	layoutX : 6.0
+	,layoutY : 77.0
+	,text : "Som de morte"
+		}
+	,TextField id txtSomDeMorte {
+	layoutX : 88.0
+	,layoutY : 73.0
+	,style : "yhrh: hrtfh; fhh: hfhj;"
+		}
+	,Button id btnProcurarSomDeMorte {
+	layoutX : 243.0
+	,layoutY : 74.0
+	,mnemonicParsing : false
+	,text : "Procurar"
+		}
+	,Button id btnAddSomDeMorte {
+	layoutX : 314.0
+	,layoutY : 73.0
+	,mnemonicParsing : false
+	,text : "+"
+		}
+	,Button id btnExcluirSom {
+	layoutX : 345.0
+	,layoutY : 37.0
+	,mnemonicParsing : false
+	,text : "-"
+		}
+	,Button id btnRemoveSomDeMorte {
+	layoutX : 346.0
+	,layoutY : 73.0
+	,mnemonicParsing : false
+	,text : "-"
+		}
+	,Button id btnNovoSomColisao {
+	layoutX : 315.0
+	,layoutY : 38.0
+	,mnemonicParsing : false
+	,onAction : controllermethod addNovoSomColisao
+	,text : "+"
+		}
+		]
+		}
+		}
+	,ScrollPane {
+	prefHeight : 145.0
+	,prefWidth : 402.0
+	,vbarPolicy : "ALWAYS"
+	,vmax : 1.5
+	,call GridPane#rowIndex : 2
+	,content : AnchorPane {
+	maxHeight : 300.0
+	,minHeight : 0.0
+	,minWidth : 0.0
+	,prefHeight : 265.0
+	,prefWidth : 391.0
+		,children : [
+	Label {
+	layoutX : 9.0
+	,layoutY : 7.0
+	,text : "Animation"
+	,font : Font {
+	name : "System Bold"
+	,size : 12.0
+		}
+		}
+	,Label {
+	layoutX : 14.0
+	,layoutY : 33.0
+	,text : "Som"
+		}
+	,TextField {
+	layoutX : 86.0
+	,layoutY : 28.0
+		}
+	,TextField {
+	layoutX : 86.0
+	,layoutY : 58.0
+	,prefHeight : 25.0
+	,prefWidth : 31.0
+		}
+	,Button {
+	layoutX : 240.0
+	,layoutY : 28.0
+	,mnemonicParsing : false
+	,text : "Procurar"
+		}
+	,Label {
+	layoutX : 12.0
+	,layoutY : 63.0
+	,text : "Frame inicial"
+		}
+	,TextField {
+	layoutX : 126.0
+	,layoutY : 59.0
+	,prefHeight : 25.0
+	,prefWidth : 31.0
+		}
+	,Label {
+	layoutX : 119.0
+	,layoutY : 63.0
+	,text : "-"
+		}
+	,Label {
+	layoutX : 11.0
+	,layoutY : 93.0
+	,text : "Frame final"
+		}
+	,TextField {
+	layoutX : 85.0
+	,layoutY : 88.0
+	,prefHeight : 25.0
+	,prefWidth : 31.0
+		}
+	,Label {
+	layoutX : 118.0
+	,layoutY : 90.0
+	,text : "-"
+		}
+	,TextField {
+	layoutX : 126.0
+	,layoutY : 89.0
+	,prefHeight : 25.0
+	,prefWidth : 31.0
+		}
+	,Label {
+	layoutX : 12.0
+	,layoutY : 120.0
+	,text : "Velocidade"
+		}
+	,TextField {
+	layoutX : 85.0
+	,layoutY : 116.0
+	,prefHeight : 25.0
+	,prefWidth : 31.0
+		}
+	,Label {
+	layoutX : 11.0
+	,layoutY : 148.0
+	,text : "Flip horizontal"
+		}
+	,CheckBox {
+	layoutX : 93.0
+	,layoutY : 148.0
+	,mnemonicParsing : false
+	,prefHeight : 17.0
+	,prefWidth : 3.0
+		}
+	,Label {
+	layoutX : 11.0
+	,layoutY : 170.0
+	,text : "Flip vertical"
+		}
+	,CheckBox {
+	layoutX : 93.0
+	,layoutY : 170.0
+	,mnemonicParsing : false
+	,prefHeight : 17.0
+	,prefWidth : 3.0
+		}
+	,Label {
+	layoutX : 12.0
+	,layoutY : 194.0
+	,text : "PlayMode"
+		}
+	,Label {
+	layoutX : 12.0
+	,layoutY : 218.0
+	,text : "State police"
+		}
+	,ChoiceBox {
+	layoutX : 82.0
+	,layoutY : 214.0
+	,prefHeight : 0.0
+	,prefWidth : 150.0
+		}
+		]
+		}
+		}
+	,ScrollPane {
+	prefHeight : 129.0
+	,prefWidth : 399.0
+	,call GridPane#rowIndex : 3
+	,content : AnchorPane {
+	minHeight : 0.0
+	,minWidth : 0.0
+	,prefHeight : 217.0
+	,prefWidth : 397.0
+		,children : [
+	Label {
+	layoutX : 3.0
+	,layoutY : 14.0
+	,text : "Posições iniciais"
+		}
+	,TextField {
+	layoutX : 88.0
+	,layoutY : 9.0
+	,prefHeight : 25.0
+	,prefWidth : 31.0
+		}
+	,Label {
+	layoutX : 122.0
+	,layoutY : 12.0
+	,text : "-"
+		}
+	,TextField {
+	layoutX : 129.0
+	,layoutY : 9.0
+	,prefHeight : 25.0
+	,prefWidth : 31.0
+		}
+	,Button id btnNovoSomColisao1 {
+	layoutX : 167.0
+	,layoutY : 10.0
+	,mnemonicParsing : false
+	,onAction : controllermethod addNovoSomColisao
+	,text : "+"
+		}
+	,Label {
+	layoutX : 3.0
+	,layoutY : 40.0
+	,text : "Posição"
+		}
+	,TextField {
+	layoutX : 88.0
+	,layoutY : 39.0
+	,prefHeight : 25.0
+	,prefWidth : 31.0
+		}
+	,Label {
+	layoutX : 121.0
+	,layoutY : 42.0
+	,text : "-"
+		}
+	,TextField {
+	layoutX : 128.0
+	,layoutY : 40.0
+	,prefHeight : 25.0
+	,prefWidth : 31.0
+		}
+	,Label {
+	layoutX : 4.0
+	,layoutY : 65.0
+	,text : "Bounds"
+		}
+	,Label {
+	layoutX : 4.0
+	,layoutY : 89.0
+	,text : "Colission"
+		}
+	,Label {
+	layoutX : 3.0
+	,layoutY : 109.0
+	,text : "Velocidade"
+		}
+	,TextField {
+	layoutX : 85.0
+	,layoutY : 105.0
+	,prefHeight : 25.0
+	,prefWidth : 31.0
+		}
+	,TextField {
+	layoutX : 125.0
+	,layoutY : 105.0
+	,prefHeight : 25.0
+	,prefWidth : 31.0
+		}
+	,Label {
+	layoutX : 118.0
+	,layoutY : 109.0
+	,text : "-"
+		}
+		]
+		}
+		}
+	,ScrollPane {
+	prefHeight : 131.0
+	,prefWidth : 400.0
+	,call GridPane#rowIndex : 4
+	,content : AnchorPane {
+	minHeight : 0.0
+	,minWidth : 0.0
+	,prefHeight : 60.0
+	,prefWidth : 381.0
+		,children : [
+	Label {
+	layoutX : 3.0
+	,layoutY : 11.0
+	,text : "Animations"
+		}
+	,TextField {
+	layoutX : 68.0
+	,layoutY : 7.0
+		}
+	,Button id btnNovoSomColisao11 {
+	layoutX : 228.0
+	,layoutY : 6.0
+	,mnemonicParsing : false
+	,onAction : controllermethod addNovoSomColisao
+	,text : "+"
+		}
+		]
+		}
+		}
+	,ScrollPane {
+	prefHeight : 194.0
+	,prefWidth : 405.0
+	,call GridPane#rowIndex : 5
+	,content : AnchorPane {
+	minHeight : 0.0
+	,minWidth : 0.0
+	,prefHeight : 200.0
+	,prefWidth : 386.0
+		,children : [
+	Label {
+	layoutX : 20.0
+	,layoutY : 21.0
+	,text : "LabelId"
+		}
+	,Label {
+	layoutX : 26.0
+	,layoutY : 49.0
+	,text : "stateTime"
+		}
+	,Label {
+	layoutX : 26.0
+	,layoutY : 83.0
+	,text : "posXColider"
+		}
+	,TextField {
+	layoutX : 95.0
+	,layoutY : 76.0
+	,prefHeight : 25.0
+	,prefWidth : 31.0
+		}
+	,Label {
+	layoutX : 31.0
+	,layoutY : 111.0
+	,text : "posYColider"
+		}
+	,TextField {
+	layoutX : 93.0
+	,layoutY : 110.0
+	,prefHeight : 25.0
+	,prefWidth : 31.0
+		}
+		]
+		}
+		}
+		]
+		}
+		}
+		}
+	,panes : TitledPane {
+	animated : false
+	,prefHeight : 375.0
+	,prefWidth : 327.0
+	,text : "Configuração Personagem"
+	,content : ScrollPane {
+	hbarPolicy : "NEVER"
+	,prefHeight : 385.0
+	,prefWidth : 417.0
+	,content : AnchorPane {
+	prefHeight : 225.0
+	,prefWidth : 413.0
+		,children : [
+	Label {
+	layoutX : 14.0
+	,layoutY : 14.0
+	,text : "State"
+		}
+	,ChoiceBox {
+	layoutX : 57.0
+	,layoutY : 10.0
+	,prefWidth : 150.0
+		}
+	,Label {
+	layoutX : 14.0
+	,layoutY : 52.0
+	,text : "Action"
+		}
+	,ChoiceBox {
+	layoutX : 57.0
+	,layoutY : 48.0
+	,prefWidth : 150.0
+		}
+	,Button {
+	layoutX : 221.0
+	,layoutY : 48.0
+	,mnemonicParsing : false
+	,text : "+"
+		}
+	,Label {
+	layoutX : 10.0
+	,layoutY : 86.0
+	,text : "Projectile"
+		}
+	,ChoiceBox {
+	layoutX : 62.0
+	,layoutY : 83.0
+	,prefWidth : 150.0
+		}
+	,Label {
+	layoutX : 9.0
+	,layoutY : 122.0
+	,text : "timeToRecovery"
+		}
+	,TextField {
+	layoutX : 106.0
+	,layoutY : 118.0
+	,prefHeight : 25.0
+	,prefWidth : 27.0
+		}
+		]
+		}
+		}
+		}
+		}
+}
