@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import cgt.core.*;
 import cgt.hud.*;
 import cgt.lose.Lose;
+import cgt.policy.GameModePolicy;
 import cgt.policy.InputPolicy;
 import cgt.screen.*;
 import cgt.unit.Action;
@@ -32,6 +33,7 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private CGTDialog pauseDialog;
 	private CGTDialog winDialog;
 	private CGTDialog loseDialog;
+	private CGTDialog initialDialog;
 	private Camera camera;
 	private CGTTexture background;
 	private ArrayList<Win> winCriteria;
@@ -42,8 +44,7 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private CGTSound music;
 	private CGTSound soundWin;
 	private CGTSound soundLose;
-//	private int gridLines;
-//	private int gridColumn;
+	private CGTButtonStartGame startGame;
 	
 	public CGTGameWorld(){
 		opposites = new ArrayList<CGTOpposite>();
@@ -53,7 +54,8 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		winCriteria = new ArrayList<Win>();
 		loseCriteria = new ArrayList<Lose>();
 		actions = new ArrayList<Action>();
-		
+		camera = new Camera(GameModePolicy.TOUCH);
+		startGame = null;
 	}
 
 	public void salvaStream(String file){
@@ -79,17 +81,19 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 
             arquivoGrav.close();
 
-            System.out.println("Objeto gravado com sucesso!");
-
         }
         catch( Exception e ){
                 e.printStackTrace( );
         }
 	}
 	
-	
-
-	
+	public void addButtonPad(ButtonPad buttonPad){
+		this.addButton(buttonPad.getButtonBase());
+		this.addButton(buttonPad.getButtonUp());
+		this.addButton(buttonPad.getButtonDown());
+		this.addButton(buttonPad.getButtonLeft());
+		this.addButton(buttonPad.getButtonRight());
+	}
 
 	public CGTGameWorld lerStream(String file){
 		CGTGameWorld cgtGameWorld = new CGTGameWorld();
@@ -110,7 +114,11 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	}
 	
 	public Music getMusic() {
-		return music.getMusic();
+		if (music != null){
+			return music.getMusic();
+		} else {
+			return null;
+		}
 	}
 
 	public void setMusic(CGTSound music) {
@@ -132,7 +140,9 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	}
 	
 	public void stopSound(CGTSound sound){
-		sound.getMusic().stop();
+		if (sound != null){
+			sound.getMusic().stop();
+		}
 	}
 
 	public CGTSound getSoundLose() {
@@ -145,10 +155,8 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	
 	public void playSoundLose(){
 		if (soundLose != null){
-			System.out.println("Tocando música");
 			soundLose.getMusic().play();
 		}
-		System.out.println("O soundLose está null");
 	}
 
 	public void setActor(CGTActor actor) {
@@ -202,22 +210,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	public int getScoreTarget() {
 		return scoreTarget;
 	}
-	 
-//	public int getGridLines() {
-//		return gridLines;
-//	}
-//	 
-//	public int getGridColumn() {
-//		return gridColumn;
-//	}
-//	 
-//	public void setGridLines(int lines) {
-//		this.gridLines = lines;
-//	}
-//	 
-//	public void setGridColumn(int column) {
-//		this.gridColumn = column;
-//	}
 
 	public CGTTexture getBackground() {
 		return background;
@@ -261,14 +253,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	
 	public CGTEnemy removeEnemy(int index){
 		return this.enemies.remove(index);
-	}
-	
-	public static void main(String[] args) {
-		System.out.println("teste");
-		String s = "data/a.png";
-		File f = new FileHandle(s).file();
-		
-		System.out.println(f.getAbsolutePath());
 	}
 
 	public void addButton(CGTButton button){
@@ -353,7 +337,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	
 	public void addAction(Action... action){
 		for(int i = 0; i<action.length; i++){
-			System.out.println(action[i]);
 			actions.add(action[i]);
 		}
 	}
@@ -373,8 +356,31 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	public void setLoseDialog(CGTDialog loseDialog) {
 		this.loseDialog = loseDialog;
 	}
-		
-	
+
+	public CGTButtonStartGame getStartGame() {
+		return startGame;
+	}
+
+	public void setStartGame(CGTButtonStartGame startGame) {
+		this.startGame = startGame;
+	}
+
+	public CGTDialog getInitialDialog() {
+		return initialDialog;
+	}
+
+	public void setInitialDialog(CGTDialog initialDialog) {
+		this.initialDialog = initialDialog;
+	}
+
+	public CGTGameObject getObjectByLabel(String label) {
+		for (CGTOpposite o : opposites) {
+			if (o.getLabel() != null && o.getLabel().equals(label)) {
+				return o;
+			}
+		}
+		return null;
+	}
 	
 }
  

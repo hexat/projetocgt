@@ -10,8 +10,12 @@ import cgt.util.CGTTexture;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
 public class CGTDialog extends Actor implements Serializable{
 	private ArrayList<CGTButtonScreen> screenSwitchButtons;
@@ -24,6 +28,7 @@ public class CGTDialog extends Actor implements Serializable{
 	private float relativeHeight;
 	private float relativeX;
 	private float relativeY;
+	private SequenceAction sequence;
 
 	public CGTDialog(){
 		screenSwitchButtons = new ArrayList<CGTButtonScreen>();
@@ -37,19 +42,71 @@ public class CGTDialog extends Actor implements Serializable{
 		setX(getStage().getWidth()*relativeX);
 		setY(getStage().getHeight()*relativeY);
 		if (closeButton != null){
-			closeButton.autosize();
+			closeButton.setWidth(this.getWidth()*closeButton.getRelativeWidth());
+			closeButton.setHeight(this.getHeight()*closeButton.getRelativeHeight());
+			closeButton.setX(this.getX()+ this.getWidth()*closeButton.getRelativeX());
+			closeButton.setY(this.getY()+ this.getHeight()*closeButton.getRelativeY());
 		}
-
+		
+		for(int i = 0; i < screenSwitchButtons.size(); i++){
+			screenSwitchButtons.get(i).setWidth(this.getWidth()*screenSwitchButtons.get(i).getRelativeWidth());
+			screenSwitchButtons.get(i).setHeight(this.getHeight()*screenSwitchButtons.get(i).getRelativeHeight());
+			screenSwitchButtons.get(i).setX(this.getX()+this.getWidth()*screenSwitchButtons.get(i).getRelativeX());
+			screenSwitchButtons.get(i).setY(this.getY()+this.getHeight()*screenSwitchButtons.get(i).getRelativeY());
+		}
+		
+		
 	}
 
 	public void act(float delta){
 		super.act(delta);
 	}
 
+	@Override
+	public void addAction(Action action) {
+		SequenceAction sequence = (SequenceAction) action;
+		SequenceAction sequenceDialog = new SequenceAction();
+		
+		for(int i = 0; i < screenSwitchButtons.size(); i++){
+			SequenceAction sequenceButtons = new SequenceAction();
+			
+			for(int j = 0; j < sequence.getActions().size; j++){
+				MoveToAction actionMove = (MoveToAction) sequence.getActions().get(j);
+				MoveToAction actionMoveButtons = new MoveToAction();
+				actionMoveButtons.setPosition(screenSwitchButtons.get(i).getX()-this.getX()+ (getStage().getWidth()*actionMove.getX()),screenSwitchButtons.get(i).getY()-this.getY()+ (getStage().getHeight()*actionMove.getY()));
+				actionMoveButtons.setDuration(actionMove.getDuration());
+				sequenceButtons.addAction(actionMoveButtons);
+				MoveToAction moveDialog = new MoveToAction();
+				moveDialog.setPosition(getStage().getWidth()*actionMove.getX(),getStage().getHeight()*actionMove.getY() );
+				moveDialog.setDuration(actionMove.getDuration());
+				sequenceDialog.addAction(moveDialog);
+			}
+			screenSwitchButtons.get(i).addAction(sequenceButtons);
+		}
+		
+		if(closeButton != null){
+			SequenceAction sequenceButtons = new SequenceAction();
+			
+			for(int j = 0; j < sequence.getActions().size; j++){
+				MoveToAction actionMove = (MoveToAction) sequence.getActions().get(j);
+				MoveToAction actionMoveButtons = new MoveToAction();
+				actionMoveButtons.setPosition(closeButton.getX()-this.getX()+ (getStage().getWidth()*actionMove.getX()),closeButton.getY()-this.getY()+ (getStage().getHeight()*actionMove.getY()));
+				actionMoveButtons.setDuration(actionMove.getDuration());
+				sequenceButtons.addAction(actionMoveButtons);
+			}
+			closeButton.addAction(sequenceButtons);
+		}
+		
+		
+		
+		super.addAction(sequenceDialog);
+	}
 
 	public void draw(Batch batch, float parentAlpha){
 		if(isActive()){
-			batch.draw(window.getTextureGDX(), getX(), getY(), getWidth(), getHeight());
+			if(window != null){
+				batch.draw(window.getTextureGDX(), getX(), getY(), getWidth(), getHeight());
+			}
 			drawBorders(batch);
 			if (closeButton != null){
 				closeButton.draw(batch, parentAlpha);
@@ -58,28 +115,30 @@ public class CGTDialog extends Actor implements Serializable{
 	}
 	
 	public void drawBorders(Batch batch){
-		float borderHeight = horizontalBorderTexture.getTextureRegion().getRegionHeight();
-		float borderWidth = horizontalBorderTexture.getTextureRegion().getRegionWidth();
-		float borderX = this.getX();
-		float borderY = this.getY();
-		float upperBorderY = borderY + this.getHeight()-borderHeight;
-		
-		//Desenho das linhas horizontais
-		while(borderX+borderWidth<this.getX() + this.getWidth()){
-			batch.draw(horizontalBorderTexture.getTextureRegion(), borderX, borderY, borderWidth, borderHeight);
-			batch.draw(horizontalBorderTexture.getTextureRegion(), borderX, upperBorderY, borderWidth, borderHeight);
-			borderX+=borderWidth;
-		}
-		
-		borderX = this.getX()+borderHeight;
-		borderY = this.getY();
-		float rightBorderX = borderX + this.getWidth()-borderHeight;
-		
-		//Desenha linhas verticais
-		while(borderY+borderWidth<this.getY() + this.getHeight()){
-			batch.draw(horizontalBorderTexture.getTextureRegion(), borderX, borderY, 0, 0, borderWidth, borderHeight, 1, 1, 90);
-			batch.draw(horizontalBorderTexture.getTextureRegion(), rightBorderX, borderY, 0, 0, borderWidth, borderHeight, 1, 1, 90);
-			borderY+=borderHeight;
+		if(horizontalBorderTexture != null){
+			float borderHeight = horizontalBorderTexture.getTextureRegion().getRegionHeight();
+			float borderWidth = horizontalBorderTexture.getTextureRegion().getRegionWidth();
+			float borderX = this.getX();
+			float borderY = this.getY();
+			float upperBorderY = borderY + this.getHeight()-borderHeight;
+			
+			//Desenho das linhas horizontais
+			while(borderX+borderWidth<this.getX() + this.getWidth()){
+				batch.draw(horizontalBorderTexture.getTextureRegion(), borderX, borderY, borderWidth, borderHeight);
+				batch.draw(horizontalBorderTexture.getTextureRegion(), borderX, upperBorderY, borderWidth, borderHeight);
+				borderX+=borderWidth;
+			}
+			
+			borderX = this.getX()+borderHeight;
+			borderY = this.getY();
+			float rightBorderX = borderX + this.getWidth()-borderHeight;
+			
+			//Desenha linhas verticais
+			while(borderY+borderWidth<this.getY() + this.getHeight()){
+				batch.draw(horizontalBorderTexture.getTextureRegion(), borderX, borderY, 0, 0, borderWidth, borderHeight, 1, 1, 90);
+				batch.draw(horizontalBorderTexture.getTextureRegion(), rightBorderX, borderY, 0, 0, borderWidth, borderHeight, 1, 1, 90);
+				borderY+=borderHeight;
+			}
 		}
 		float cornerX = this.getX()+this.getWidth()-rightBottomCorner.getTextureRegion().getRegionWidth();
 		float cornerY = this.getY();
@@ -180,4 +239,15 @@ public class CGTDialog extends Actor implements Serializable{
 	public void setHorizontalBorderTexture(CGTTexture horizontalBorderTexture) {
 		this.horizontalBorderTexture = horizontalBorderTexture;
 	}
+
+	public SequenceAction getSequence() {
+		return sequence;
+	}
+
+	public void setSequence(SequenceAction sequence) {
+		this.sequence = sequence;
+	}
+	
+	
+	
 }

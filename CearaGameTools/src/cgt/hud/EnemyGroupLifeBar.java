@@ -16,7 +16,6 @@ public class EnemyGroupLifeBar extends LifeBar implements Serializable{
 			if(enemy.isDestroyable())
 				maxLife++;
 		}
-		System.out.println(maxLife);
 		setMaxLife(maxLife);
 	}
 	

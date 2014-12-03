@@ -107,7 +107,7 @@ public class SampleController  implements Initializable{
 		File imagem = new File(projeto.toString()+"/background.png");
 		copyFile(chosenFile, imagem );
 		// gerar config.cgt
-		gerarConfig();
+	//	gerarConfig();
 		new File("../android/assets/data").mkdirs();
 		CGTFileZip zip = new CGTFileZip("projeto", "data");
 		zip.zipar();
@@ -147,12 +147,12 @@ public class SampleController  implements Initializable{
 	    }  
 	}
 
-	public void gerarConfig(){
-		
-		ConfigureGame game = new ConfigureGame();
-		
-		
-	}
+//	public void gerarConfig(){
+//		
+//		ConfigureGame game = new ConfigureGame();
+//		
+//		
+//	}
 
 
 	@Override

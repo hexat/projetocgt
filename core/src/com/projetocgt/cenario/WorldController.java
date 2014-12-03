@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Timer.Task;
 
 import cgt.CGTGameWorld;
 import cgt.core.CGTActor;
+import cgt.core.CGTAddOn;
 import cgt.core.CGTProjectile;
 import cgt.policy.*;
 import cgt.unit.Action;
@@ -25,7 +26,6 @@ public class WorldController {
 
 	private CGTGameWorld world;
 	private CGTActor personagem;
-	private AnimationHandle actorAnimation;
 	private WorldRenderer renderer;
 	static Map<ActionMovePolicy, Boolean> keys = new HashMap<ActionMovePolicy, Boolean>();
 	static {
@@ -37,6 +37,7 @@ public class WorldController {
 
 		keys.put(ActionMovePolicy.JUMP, false);
 		keys.put(ActionMovePolicy.FIRE, false);
+		
 	};
 
 	// Este construtor recebe o mundo como parametro
@@ -45,22 +46,40 @@ public class WorldController {
 		this.renderer = render;
 		// Posicao inicial do personagem
 		this.personagem = world.getActor();
-		this.actorAnimation = world.getActor().getCGTAnimation();
+
 		releaseAllDirectionKeys();
 	}
 
 	public void activateKey(InputPolicy policy){
 		Action action = world.getActionFromInput(policy);
-		System.out.println(action);
-		keys.put(action.getActionPolicy(),true);
+		if (action != null){
+			keys.put(action.getActionPolicy(),true);
+			if (action.getActionPolicy() == ActionMovePolicy.WALK_RIGHT) {
+				renderer.cameraCloseOnActor();
+			}
+		}
 	}
 	
 	public void deactivateKey(InputPolicy policy){
 		Action action = world.getActionFromInput(policy);
-		keys.put(action.getActionPolicy(),false);
-		actorAnimation.stopAni();
+		if (action != null){
+			keys.put(action.getActionPolicy(),false);
+			stopAni();
+		}
 	}
 	
+
+	private void stopAni() {
+		if(personagem.getState().equals(StatePolicy.LOOKUP)) {
+			personagem.setState(StatePolicy.IDLEUP);
+		} else if(personagem.getState().equals(StatePolicy.LOOKDOWN)) {
+			personagem.setState(StatePolicy.IDLEDOWN);
+		} else if(personagem.getState().equals(StatePolicy.LOOKLEFT)) {
+			personagem.setState(StatePolicy.IDLELEFT);
+		} else if(personagem.getState().equals(StatePolicy.LOOKRIGHT)) {
+			personagem.setState(StatePolicy.IDLERIGHT);
+		}
+	}
 
 	public void fire(){
 		if(keys.get(ActionMovePolicy.FIRE)){
@@ -69,14 +88,6 @@ public class WorldController {
 				if (world.getActor().getProjectiles().get(0).getAmmo() > 0){
 					ammoDowner(world.getActor().getProjectiles().get(0));
 				}
-				
-				//world.getActor().getProjectiles().get(i).setState(personagem.getState());
-//				world.getActor().getProjectiles().get(i).setFlagAtivar(true);	
-			//world.getPersonagem().getListaDeProjectiles().get(i).setPosition(personagem.getPosition());
-			//world.getActor().setFireDefault(0);
-			//world.getActor().getProjectiles().get(i).setState(personagem.getState());
-			//				world.getActor().getProjectiles().get(i).setFlagAtivar(true);	
-			//}
 		}
 		else if(ammoCheck)
 			world.getActor().setFireDefault(-1);
@@ -117,6 +128,7 @@ public class WorldController {
 			personagem.getVelocity().x = 0;
 			releaseAllDirectionKeys();
 		}
+
 		personagem.update(delta);
 
 		for (int i=0; i<world.getOpposites().size(); i++) {
@@ -133,6 +145,12 @@ public class WorldController {
 
 		for (int i=0; i<world.getEnemies().size(); i++) {
 			world.getEnemies().get(i).update(delta);
+			if (world.getEnemies().get(i).getCollideAnimation() != null) {
+				world.getEnemies().get(i).getCollideAnimation().update(delta);
+			}
+		}
+		for (int i=0; i<renderer.getAddOns().size(); i++) {
+			renderer.getAddOns().get(i).update(delta);
 		}
 	}
 
@@ -142,8 +160,10 @@ public class WorldController {
 			personagem.setState(StatePolicy.LOOKUP);
 			if( (personagem.getPosition().y + personagem.getBounds().height) < renderer.getWorld().getBackground().getTextureGDX().getHeight())
 				personagem.getVelocity().y = personagem.getSpeed();
-			else
+			
+			else{
 				personagem.getVelocity().y = 0;
+			}
 		}
 
 		if (keys.get(ActionMovePolicy.WALK_DOWN)) {
@@ -157,8 +177,9 @@ public class WorldController {
 
 		if (keys.get(ActionMovePolicy.WALK_LEFT)) {
 			personagem.setState(StatePolicy.LOOKLEFT);
-			if(personagem.getPosition().x > 0)
+			if(personagem.getPosition().x > 0){
 				personagem.getVelocity().x = -personagem.getSpeed();
+			}
 			else
 				personagem.getVelocity().x = 0;
 				
@@ -166,8 +187,9 @@ public class WorldController {
 			
 		if (keys.get(ActionMovePolicy.WALK_RIGHT)) {
 			personagem.setState(StatePolicy.LOOKRIGHT);
-			if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackground().getTextureGDX().getWidth())
+			if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackground().getTextureGDX().getWidth()){
 				personagem.getVelocity().x = personagem.getSpeed();
+			}
 			else
 				personagem.getVelocity().x = 0;			
 		}
@@ -190,39 +212,4 @@ public class WorldController {
 		moveKeys();
 		fire();
 	}
-
-
-		public void actionDamegeEnemyDown(){
-			//personagem.getPosition().y+=50;
-			//renderer.getCam().position.y+=50;
-			/*personagem.setState(StatePolicy.DAMAGE);
-		damegePressed();
-		Timer.schedule(new Task(){
-			@Override
-			public void run() {
-				damegeReleased();
-				personagem.setState(StatePolicy.LOOKDOWN);
-			}
-		}, 2);*/
-		}
-
-		public void actionDamegeEnemyUp(){
-			//personagem.getPosition().y-=50;
-			//renderer.getCam().position.y-=50;
-			//personagem.setState(StatePolicy.DAMAGE);
-		}
-
-		public void actionDamegeEnemyRight(){
-			//personagem.getPosition().x-=50;
-			//renderer.getCam().position.x-=50;
-			//personagem.setState(StatePolicy.DAMAGE);
-		}
-
-		public void actionDamegeEnemyLeft(){
-			//personagem.getPosition().x+=50;
-			//renderer.getCam().position.x+=50;
-			//personagem.setState(StatePolicy.DAMAGE);
-		}
-
-
-	}
+}

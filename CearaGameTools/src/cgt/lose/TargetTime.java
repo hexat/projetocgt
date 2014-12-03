@@ -56,7 +56,6 @@ public class TargetTime implements Lose, Serializable{
 				x = Integer.parseInt(String.valueOf(label.getLabelGDX().getText()));
 				x -= 1;
 				label.getLabelGDX().setText(String.valueOf(x));
-				System.out.println(x);
 				if (x <= 0){
 					expired = true;
 					this.cancel();

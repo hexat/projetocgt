@@ -8,9 +8,9 @@ public class Main {
 	public static void main(String[] args) {
 		
 		LwjglApplicationConfiguration cgf = new LwjglApplicationConfiguration();
-		//cgf.vSyncEnabled = true;
-//		cgf.width = 480;
-//		cgf.height = 320;
+		cgf.vSyncEnabled = true;
+		cgf.width = 960;
+		cgf.height = 640;
 		new LwjglApplication(StarAssault.getInstance(),cgf);
 	}
 }

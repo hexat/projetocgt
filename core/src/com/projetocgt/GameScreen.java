@@ -1,33 +1,27 @@
 package com.projetocgt;
 
-import java.util.ArrayList;
-
 import cgt.CGTGameWorld;
 import cgt.hud.CGTButton;
 import cgt.hud.CGTButtonScreen;
 import cgt.hud.CGTControllerButton;
 import cgt.hud.HUDComponent;
-import cgt.hud.LifeBar;
-import cgt.lose.Lose;
-import cgt.lose.TargetTime;
+import cgt.policy.GameModePolicy;
 import cgt.policy.InputPolicy;
 import cgt.screen.CGTDialog;
-import cgt.hud.CGTButton;
-import cgt.util.CGTSound;
-import cgt.hud.LifeBar;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.projetocgt.cenario.WorldController;
@@ -46,8 +40,11 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	private SpriteBatch spriteBatch;
 	private Music music;
 	private boolean flagTouch;
-
+	private Vector2 lastPoint;
+	
+	
 	public GameScreen(CGTGameWorld world) {
+				
 		this.world = world;
 		this.music = world.getMusic();
 		Timer.instance().start();
@@ -64,6 +61,14 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		renderer = new WorldRenderer(world);
 		setSpriteBatch(new SpriteBatch());
 		controller = new WorldController(world, renderer);
+		lastPoint = world.getActor().getPosition().cpy();
+///////////////////////////////////////////////////////////////////////////////////////
+		Preferences prefs = Gdx.app.getPreferences("My Preferences");
+		int vezes = prefs.getInteger("num_vezes", 0);
+		System.out.println("luanjames"+vezes);
+		vezes += 1;
+		prefs.putInteger("num_vezes", vezes);
+		prefs.flush();
 	}
 
 	private void getActorsFromWorld(){
@@ -75,6 +80,13 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			this.addActor(component);
 			component.autosize();
 		}
+		if (world.getInitialDialog() != null) {
+			world.getInitialDialog().setActive(true);
+			addDialog(world.getInitialDialog());
+			world.getInitialDialog().autosize();
+//			this.addActor(btn);
+//			btn.autosize();
+		}
 	}
 
 	public void buttonHandler(){
@@ -82,7 +94,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			if(component instanceof CGTControllerButton){
 				CGTControllerButton button = (CGTControllerButton)component;
 				if(button.isActive()){
-					System.out.println("button"+button.getInput());
 					controller.activateKey(button.getInput());
 				}
 				else if(button.isReleased()){
@@ -96,7 +107,14 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		for(CGTButtonScreen buttonScreen : world.getPauseDialog().getButtons()){
 			if(buttonScreen.isActive()){
 				buttonScreen.setTouchable(Touchable.disabled);
-				StarAssault.getInstance().setScreen(buttonScreen.getScreenToGo());
+				StarAssault.getInstance().restart(buttonScreen.getScreenToGo());
+			}
+		}
+		
+		for(CGTButtonScreen buttonScreen : world.getInitialDialog().getButtons()){
+			if(buttonScreen.isActive()){
+				buttonScreen.setTouchable(Touchable.disabled);
+				StarAssault.getInstance().restart(buttonScreen.getScreenToGo());
 			}
 		}
 
@@ -104,7 +122,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			if(buttonScreen.isActive()){	
 				buttonScreen.setTouchable(Touchable.disabled);
 				world.stopSound(world.getSoundWin());
-				StarAssault.getInstance().setScreen(buttonScreen.getScreenToGo());
+				StarAssault.getInstance().restart(buttonScreen.getScreenToGo());
 			}
 		}
 
@@ -112,14 +130,51 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			if(buttonScreen.isActive()){
 				buttonScreen.setTouchable(Touchable.disabled);
 				world.stopSound(world.getSoundLose());
-				StarAssault.getInstance().setScreen(buttonScreen.getScreenToGo());
+				StarAssault.getInstance().restart(buttonScreen.getScreenToGo());
 			}
 		}
 
 		CGTButton closeButton = world.getPauseDialog().getCloseButton();
 		if (closeButton.isActive()){
 			world.getPauseDialog().setActive(false);
+
+			Gdx.input.setInputProcessor(new TouchInputs(this));
 			resume();
+		}
+		
+		CGTButton closeButtonInitialDialog = world.getInitialDialog().getCloseButton();
+		if (closeButtonInitialDialog.isActive()){
+			world.getInitialDialog().setActive(false);
+			world.getInitialDialog().setTouchable(Touchable.disabled);
+			world.getInitialDialog().remove();
+			for(int i = 0; i < world.getInitialDialog().getButtons().size();i++){
+				world.getInitialDialog().getButtons().get(i).remove();
+			}
+			
+			closeButtonInitialDialog.remove();
+			
+				renderer.cameraFullScreen();
+			
+			if (world.getCamera().getGameMode() == GameModePolicy.TOUCH) {
+				Gdx.input.setInputProcessor(new TouchInputs(this));
+			}
+			world.setStartGame(null);
+			
+		}
+		
+		
+		if (world.getStartGame() != null && world.getStartGame().isActive()) {
+			world.getStartGame().setTouchable(Touchable.disabled);
+			world.getStartGame().remove();
+			if (world.getStartGame().isActionCameraClose()) {
+				renderer.cameraCloseOnActor();
+			} else {
+				renderer.cameraFullScreen();
+			}
+			if (world.getCamera().getGameMode() == GameModePolicy.TOUCH) {
+				Gdx.input.setInputProcessor(new TouchInputs(this));
+			}
+			world.setStartGame(null);
 		}
 	}
 
@@ -137,8 +192,10 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				state = State.WIN;
 				world.playSoundWin();
 			}
-			if(renderer.verifyLose()) {
-				music.stop();
+			if(renderer.lose()) {
+				if (music != null){
+					music.stop();
+				}
 				state = State.LOSE;
 				world.playSoundLose();
 			}
@@ -167,15 +224,34 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			break;
 
 		case PAUSED:
+			Gdx.input.setInputProcessor(this);		
+			renderer.getSpriteBatch().begin();
+			renderer.draw();
+			renderer.getSpriteBatch().end();		
 			if(!world.getPauseDialog().isActive()){
 				world.getPauseDialog().setActive(true);
 				//Para os behaviors
 				//renderer.getSpriteBatch().flush();
-				music.pause();
+				if (music != null){
+					music.pause();
+				}
 				this.getActors().clear();
 
 				addDialog(world.getPauseDialog());
 				world.getPauseDialog().autosize();
+				/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				MoveToAction actionDialogPause = new MoveToAction();
+				actionDialogPause.setPosition(0.2f, 0.3f);
+				actionDialogPause.setDuration(0.15f);
+				
+				MoveToAction actionDialogPause2 = new MoveToAction();
+				actionDialogPause2.setPosition(0.2f, 0.25f);
+				actionDialogPause2.setDuration(0.15f);
+				
+				SequenceAction sequencePause = new SequenceAction(actionDialogPause,actionDialogPause2);
+				
+				world.getPauseDialog().addAction(sequencePause);
+				///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			}
 
 			buttonHandler();
@@ -191,7 +267,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				Timer.instance().start();
 				this.getActors().clear();
 				getActorsFromWorld();
-				music.play();
+				if(music != null){
+					music.play();
+				}
 				break;
 			}
 
@@ -203,14 +281,34 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 
 		case WIN:
+			Gdx.input.setInputProcessor(this);
 			//Timer.instance().stop(); //Para os behaviors
-			world.getWinDialog().setActive(true);
-			renderer.getSpriteBatch().flush();
-			music.pause();
-			this.getActors().clear();
-			addDialog(world.getWinDialog());
-			world.getWinDialog().autosize();
-
+			renderer.getSpriteBatch().begin();
+			renderer.draw();
+			renderer.getSpriteBatch().end();
+			if(!world.getWinDialog().isActive()){
+				world.getWinDialog().setActive(true);
+				renderer.getSpriteBatch().flush();
+				if (music != null){
+					music.pause();
+				}
+				this.getActors().clear();
+				addDialog(world.getWinDialog());
+				world.getWinDialog().autosize();
+				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				MoveToAction actionDialogWin = new MoveToAction();
+				actionDialogWin.setPosition(0.2f, 0.3f);
+				actionDialogWin.setDuration(0.15f);
+				
+				MoveToAction actionDialogWin2 = new MoveToAction();
+				actionDialogWin2.setPosition(0.2f, 0.25f);
+				actionDialogWin2.setDuration(0.15f);
+				
+				SequenceAction sequenceWin = new SequenceAction(actionDialogWin,actionDialogWin2);
+				
+				world.getWinDialog().addAction(sequenceWin);
+				///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			}
 			buttonHandler();
 			this.act();
 			getSpriteBatch().begin();
@@ -219,15 +317,35 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			break;
 
 		case LOSE:
-			//Timer.instance().stop(); //Para os behaviors
-			
-			world.getLoseDialog().setActive(true);
-			renderer.getSpriteBatch().flush();
-			music.pause();
-			this.getActors().clear();
-			addDialog(world.getLoseDialog());
-			world.getLoseDialog().autosize();
-
+			Gdx.input.setInputProcessor(this);
+			renderer.getSpriteBatch().begin();
+			renderer.draw();
+			renderer.getSpriteBatch().end();
+			if(!world.getLoseDialog().isActive()){
+				world.getLoseDialog().setActive(true);
+				
+				renderer.getSpriteBatch().flush();
+				if (music != null){
+					music.pause();
+				}
+				this.getActors().clear();
+				
+				addDialog(world.getLoseDialog());
+				world.getLoseDialog().autosize();
+				////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				MoveToAction actionDialogLose = new MoveToAction();
+				actionDialogLose.setPosition(0.2f, 0.3f);
+				actionDialogLose.setDuration(0.15f);
+				
+				MoveToAction actionDialogLose2 = new MoveToAction();
+				actionDialogLose2.setPosition(0.2f, 0.25f);
+				actionDialogLose2.setDuration(0.15f);
+				
+				SequenceAction sequenceLose = new SequenceAction(actionDialogLose,actionDialogLose2);
+				
+				world.getLoseDialog().addAction(sequenceLose);
+				///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			}
 			buttonHandler();
 			this.act();
 			getSpriteBatch().begin();
@@ -262,10 +380,15 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
-		music.play();
-		music.setLooping(true);
-		Gdx.input.setInputProcessor(this);
-
+		if (music != null){
+			music.play();
+			music.setLooping(true);
+		}
+		if (world.getCamera().getGameMode() == GameModePolicy.JOYSTICK || world.getStartGame() != null){
+			Gdx.input.setInputProcessor(this);
+		} else {
+			Gdx.input.setInputProcessor(new TouchInputs(this));
+		}	
 	}
 
 	@Override
@@ -316,7 +439,11 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		if (keycode == Keys.P){
 			state = State.PAUSED;
 		}
-		return true;
+		if(keycode == Keys.BACK){
+			state = State.PAUSED;
+	        }
+		return false;
+//		return true;
 	}
 
 
@@ -347,7 +474,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		}
 		return true;
 	}
-
+	
 	@Override
 	public boolean keyTyped(char character) {
 
@@ -360,5 +487,17 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 	public void setSpriteBatch(SpriteBatch spriteBatch) {
 		this.spriteBatch = spriteBatch;
+	}
+	
+	public WorldController getController() {
+		return controller;
+	}
+	
+	public WorldRenderer getRenderer() {
+		return renderer;
+	}
+	
+	public CGTGameWorld getWorld() {
+		return world;
 	}
 }

@@ -13,7 +13,6 @@ public class CGTSpriteSheet implements Serializable{
 	 */
 	private static final long serialVersionUID = -6320820212756348146L;
 	private CGTTexture texture;
-	private CGTGameObject owner;
 	private int columns;
 	private float velocity;
 	private int rows;
@@ -25,7 +24,6 @@ public class CGTSpriteSheet implements Serializable{
 	 * @param owner
 	 */
 	public CGTSpriteSheet(CGTTexture texture) {
-		this.owner=null;
 		setTexture(texture);
 		this.columns = 1;
 		this.velocity = 1;
@@ -33,7 +31,6 @@ public class CGTSpriteSheet implements Serializable{
 	}
 
 	public CGTSpriteSheet(CGTFile file) {
-		this.owner=null;
 		setTexture(new CGTTexture(file));
 		this.columns = 1;
 		this.velocity = 1;
@@ -81,20 +78,5 @@ public class CGTSpriteSheet implements Serializable{
 		return "CGTSpriteSheet [texture=" + texture + ", columns=" + columns
 				+ ", velocity=" + velocity + ", rows=" + rows + "]";
 	}
-
-	/**
-	 * @return the owner
-	 */
-	public CGTGameObject getOwner() {
-		return owner;
-	}
-
-	/**
-	 * @param owner the owner to set
-	 */
-	public void setOwner(CGTGameObject owner) {
-		this.owner = owner;
-	}
-	
 }
  

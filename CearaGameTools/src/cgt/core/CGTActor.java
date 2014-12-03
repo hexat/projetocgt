@@ -16,7 +16,6 @@ public class CGTActor extends CGTGameObject implements Serializable {
 	 */
 	private static final long serialVersionUID = 1967794799880980169L;
 
-	private StatePolicy state;
 	private ArrayList<Jump> jumps;
 	private ArrayList<Action> actions;
 	private ArrayList<CGTProjectile> projectiles;
@@ -83,18 +82,11 @@ public class CGTActor extends CGTGameObject implements Serializable {
 		return false;
 	}
 	
-	public StatePolicy getState() {
-		return state;
-	}
-
 	public void updateProjectiles(){
 		for(int i=0; i < projectiles.size(); i++){
 			projectiles.get(i).setPosition(getPosition());
 		}
 		
-	}
-	public void setState(StatePolicy state) {
-		this.state = state;
 	}
 
 	public ArrayList<Jump> getJumps(){
@@ -152,7 +144,7 @@ public class CGTActor extends CGTGameObject implements Serializable {
 
 	@Override
 	public String toString() {
-		return super.toString() + "CGTActor [state=" + state + ", jumps="
+		return super.toString() + "CGTActor [jumps="
 				+ jumps + ", projectiles=" + projectiles + ", jumpDefault="
 				+ jumpDefault + ", fireDefault=" + fireDefault + "]";
 	}

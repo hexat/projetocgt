@@ -48,5 +48,9 @@ public class CGTSound implements Serializable
  		this.volume = volume;
  	}
  	
- 	
+ 	public CGTSound clone() {
+ 		CGTSound res = new CGTSound(file);
+ 		res.setVolume(volume);
+ 		return res;
+ 	}
 }
