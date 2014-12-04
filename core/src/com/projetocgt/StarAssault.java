@@ -7,6 +7,7 @@ import cgt.screen.CGTWindow;
 import cgt.util.ScreenHandleInterface;
 
 import com.badlogic.gdx.Game;
+import com.projetocgt.cenario.MyWorldChicken;
 
 public class StarAssault extends Game {
 	private static StarAssault instance =  null;

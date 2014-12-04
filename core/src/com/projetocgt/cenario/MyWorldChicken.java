@@ -1,3 +1,6 @@
+
+
+
 package com.projetocgt.cenario;
 
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
