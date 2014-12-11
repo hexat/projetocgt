@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Accordion maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="419.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.ConfigPersonagemController">
+	<panes>
+		<TitledPane animated="false" prefHeight="495.0" prefWidth="419.0" text="Configuração Personagem">
+         <content>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="22.0" text="Personagem" />
+                  <ChoiceBox layoutX="90.0" layoutY="18.0" prefWidth="150.0" />
+               </children>
+            </AnchorPane>
+         </content></TitledPane>
+		<TitledPane animated="false" prefHeight="375.0" prefWidth="327.0" text="Configuração Window">
+         <content>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="29.0" text="screenSwitchButtons" />
+                  <Button layoutX="137.0" layoutY="25.0" mnemonicParsing="false" text="+" />
+                  <Label layoutX="14.0" layoutY="63.0" text="Botão fechar" />
+                  <Label layoutX="14.0" layoutY="93.0" text="Ativo" />
+                  <CheckBox layoutX="143.0" layoutY="95.0" mnemonicParsing="false" />
+                  <Label layoutX="14.0" layoutY="130.0" text="rightBottomCorner" />
+                  <Label layoutX="14.0" layoutY="174.0" text="horizontalBorderTexture" />
+                  <Label layoutX="14.0" layoutY="213.0" text="window" />
+                  <Label layoutX="14.0" layoutY="255.0" text="relativeWidth" />
+                  <TextField layoutX="143.0" layoutY="248.0" prefHeight="25.0" prefWidth="25.0" />
+                  <Label layoutX="14.0" layoutY="296.0" text="relativeHeight" />
+                  <Label layoutX="16.0" layoutY="336.0" text="relativeX" />
+                  <Label layoutX="18.0" layoutY="376.0" text="relativeY" />
+                  <TextField layoutX="143.0" layoutY="288.0" prefHeight="25.0" prefWidth="25.0" />
+                  <TextField layoutX="144.0" layoutY="328.0" prefHeight="25.0" prefWidth="25.0" />
+                  <TextField layoutX="144.0" layoutY="372.0" prefHeight="25.0" prefWidth="25.0" />
+                  <Label layoutX="21.0" layoutY="417.0" text="sequence" />
+               </children>
+            </AnchorPane>
+         </content></TitledPane>
+	</panes>
+</Accordion>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TitledPane animated="false" prefHeight="596.0" prefWidth="444.0" text="Configuração Game Object"  >
+			<content>
+				<ScrollPane hbarPolicy="NEVER" hmax="0.0" prefHeight="570.0" prefWidth="443.0" vbarPolicy="ALWAYS" vmax="1.1">
+					<content>
+						<GridPane gridLinesVisible="true" prefHeight="552.0" prefWidth="400.0">
+							<columnConstraints>
+								<ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+							</columnConstraints>
+							<rowConstraints>
+								<RowConstraints maxHeight="355.0" minHeight="10.0" prefHeight="118.0" vgrow="SOMETIMES" />
+								<RowConstraints maxHeight="418.0" minHeight="10.0" prefHeight="121.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="418.0" minHeight="0.0" prefHeight="94.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="418.0" minHeight="0.0" prefHeight="47.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="418.0" minHeight="10.0" prefHeight="171.0" vgrow="SOMETIMES" />
+							</rowConstraints>
+							<children>
+                        <ScrollPane prefHeight="121.0" prefWidth="394.0" vbarPolicy="ALWAYS">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="121.0" prefWidth="381.0">
+                            <children>
+                             <Label layoutX="7.0" layoutY="14.0" text="Som" />
+                              <TextField layoutX="88.0" layoutY="10.0" />
+                              <Button layoutX="244.0" layoutY="9.0" mnemonicParsing="false" text="Procurar" />
+                              <Label layoutX="6.0" layoutY="45.0" text="Som de colisao" />
+                              <TextField layoutX="88.0" layoutY="41.0" />
+                              <Button  layoutX="244.0" layoutY="41.0" mnemonicParsing="false" text="Procurar" />
+                              <Label  layoutX="6.0" layoutY="77.0" text="Som de morte" />
+                              <TextField  layoutX="88.0" layoutY="73.0" style="yhrh: hrtfh; fhh: hfhj;" />
+                              <Button  layoutX="243.0" layoutY="74.0" mnemonicParsing="false" text="Procurar" />
+                                    <Button  layoutX="314.0" layoutY="73.0" mnemonicParsing="false" text="+" />
+                                    <Button layoutX="345.0" layoutY="37.0" mnemonicParsing="false" text="-" />
+                                    <Button  layoutX="346.0" layoutY="73.0" mnemonicParsing="false" text="-" />
+                                    <Button  layoutX="315.0" layoutY="38.0" mnemonicParsing="false" onAction="#addNovoSomColisao" text="+" />
+                            
+                                  
+                            </children>
+                            </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                        <ScrollPane prefHeight="147.0" prefWidth="400.0" vbarPolicy="ALWAYS" vmax="1.5" GridPane.rowIndex="1">
+                          <content>
+                            <AnchorPane maxHeight="300.0" minHeight="0.0" minWidth="0.0" prefHeight="265.0" prefWidth="391.0">
+                                 <children>
+                                    <Label layoutX="9.0" layoutY="7.0" text="Animation">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="11.0" layoutY="33.0" text="SpriteSheet" />
+                                    <TextField layoutX="86.0" layoutY="28.0" />
+                                    <TextField layoutX="86.0" layoutY="58.0" prefHeight="25.0" prefWidth="31.0" />
+                                    <Button layoutX="240.0" layoutY="28.0" mnemonicParsing="false" text="Procurar" />
+                                    <Label layoutX="11.0" layoutY="63.0" text="Frame inicial" />
+                                    <TextField layoutX="126.0" layoutY="59.0" prefHeight="25.0" prefWidth="31.0" />
+                                    <Label layoutX="119.0" layoutY="63.0" text="-" />
+                                    <Label layoutX="11.0" layoutY="93.0" text="Frame final" />
+                                    <TextField layoutX="85.0" layoutY="88.0" prefHeight="25.0" prefWidth="31.0" />
+                                    <Label layoutX="118.0" layoutY="90.0" text="-" />
+                                    <TextField layoutX="126.0" layoutY="89.0" prefHeight="25.0" prefWidth="31.0" />
+                                    <Label layoutX="12.0" layoutY="120.0" prefHeight="17.0" prefWidth="72.0" text="Velocidade do sprite" />
+                                    <TextField layoutX="85.0" layoutY="116.0" prefHeight="25.0" prefWidth="31.0" />
+                                    <Label layoutX="11.0" layoutY="148.0" text="Flip horizontal" />
+                                    <CheckBox layoutX="93.0" layoutY="148.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="3.0" />
+                                    <Label layoutX="11.0" layoutY="170.0" text="Flip vertical" />
+                                    <CheckBox layoutX="93.0" layoutY="170.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="3.0" />
+                                    <Label layoutX="12.0" layoutY="196.0" prefHeight="17.0" prefWidth="78.0" text="Animation Policy" />
+                                    <ChoiceBox layoutX="90.0" layoutY="195.0" prefHeight="0.0" prefWidth="150.0" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                        <ScrollPane prefHeight="129.0" prefWidth="399.0" GridPane.rowIndex="2">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="217.0" prefWidth="397.0">
+                                 <children>
+                                    <Label layoutX="3.0" layoutY="14.0" text="Posições iniciais" />
+                                    <TextField layoutX="88.0" layoutY="9.0" prefHeight="25.0" prefWidth="31.0" />
+                                    <Label layoutX="122.0" layoutY="12.0" text="-" />
+                                    <TextField layoutX="129.0" layoutY="9.0" prefHeight="25.0" prefWidth="31.0" />
+                                    <Button  layoutX="167.0" layoutY="10.0" mnemonicParsing="false" onAction="#addNovoSomColisao" text="+" />
+                                    <Label layoutX="3.0" layoutY="40.0" text="Posição" />
+                                    <TextField layoutX="88.0" layoutY="39.0" prefHeight="25.0" prefWidth="31.0" />
+                                    <Label layoutX="121.0" layoutY="42.0" text="-" />
+                                    <TextField layoutX="128.0" layoutY="40.0" prefHeight="25.0" prefWidth="31.0" />
+                                    <Label layoutX="4.0" layoutY="65.0" text="Bounds" />
+                                    <Label layoutX="4.0" layoutY="89.0" text="Colission" />
+                                    <Label layoutX="3.0" layoutY="109.0" text="Velocidade" />
+                                    <TextField layoutX="85.0" layoutY="105.0" prefHeight="25.0" prefWidth="31.0" />
+                                    <TextField layoutX="125.0" layoutY="105.0" prefHeight="25.0" prefWidth="31.0" />
+                                    <Label layoutX="118.0" layoutY="109.0" text="-" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                        <ScrollPane prefHeight="131.0" prefWidth="400.0" GridPane.rowIndex="3">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="381.0">
+                                 <children>
+                                    <Label layoutX="3.0" layoutY="11.0" text="Animations" />
+                                    <TextField layoutX="68.0" layoutY="7.0" />
+                                    <Button  layoutX="228.0" layoutY="6.0" mnemonicParsing="false" onAction="#addNovoSomColisao" text="+" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                        <ScrollPane prefHeight="194.0" prefWidth="405.0" GridPane.rowIndex="4">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="386.0">
+                                 <children>
+                                    <Label layoutX="16.0" layoutY="21.0" text="LabelId" />
+                                    <Label layoutX="13.0" layoutY="54.0" text="posXColider" />
+                                    <TextField layoutX="93.0" layoutY="51.0" prefHeight="25.0" prefWidth="31.0" />
+                                    <Label layoutX="14.0" layoutY="88.0" text="posYColider" />
+                                    <TextField layoutX="93.0" layoutY="84.0" prefHeight="25.0" prefWidth="31.0" />
+                                    <Label layoutX="9.0" layoutY="125.0" text="Animação Final" />
+                                    <TextField layoutX="93.0" layoutY="15.0" prefHeight="25.0" prefWidth="31.0" />
+                                    <TextField layoutX="103.0" layoutY="121.0" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+							</children>
+						</GridPane>
+					</content>
+				</ScrollPane>
+			</content>
+		</TitledPane>

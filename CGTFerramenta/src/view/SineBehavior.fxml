@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="259.0" prefWidth="336.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <Label layoutX="23.0" layoutY="30.0" text="movementPolicy" />
+      <ChoiceBox layoutX="119.0" layoutY="26.0" prefWidth="150.0" />
+      <Label layoutX="23.0" layoutY="62.0" text="Min" />
+      <Label layoutX="23.0" layoutY="96.0" text="Max" />
+      <TextField layoutX="119.0" layoutY="62.0" prefHeight="25.0" prefWidth="23.0" />
+      <TextField layoutX="119.0" layoutY="93.0" prefHeight="25.0" prefWidth="23.0" />
+      <Label layoutX="21.0" layoutY="130.0" text="atFirstStep" />
+      <CheckBox layoutX="119.0" layoutY="130.0" mnemonicParsing="false" />
+   </children>
+</AnchorPane>
