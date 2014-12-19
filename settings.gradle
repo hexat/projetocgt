@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-include "CearaGameTools", "core", "desktop", "android", "CGTFerramenta"
-=======
-include "CearaGameTools", "core", "desktop", "android", "ios"
->>>>>>> 5532406b9797a803997b6e6f9552fd0246604d39
+
+include "CearaGameTools", "core", "desktop", "android", "ios", "CGTFerramenta"
+
+

@@ -66,7 +66,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="573.0" prefWidth="569.0">
              <children>
-              <fx:include fx:id="GameObj" source="ConfigPersonagem.fxml" />
+              <fx:include  source="ConfigPersonagem.fxml" />
              </children>
           </AnchorPane>
          

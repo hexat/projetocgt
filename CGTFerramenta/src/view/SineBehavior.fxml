@@ -5,16 +5,25 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="259.0" prefWidth="336.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="244.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="296.0" minWidth="10.0" prefWidth="135.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="482.0" minWidth="10.0" prefWidth="465.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="86.0" minHeight="10.0" prefHeight="76.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="105.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="76.0" minHeight="0.0" prefHeight="54.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="75.0" vgrow="SOMETIMES" />
+  </rowConstraints>
    <children>
-      <Label layoutX="23.0" layoutY="30.0" text="movementPolicy" />
-      <ChoiceBox layoutX="119.0" layoutY="26.0" prefWidth="150.0" />
-      <Label layoutX="23.0" layoutY="62.0" text="Min" />
-      <Label layoutX="23.0" layoutY="96.0" text="Max" />
-      <TextField layoutX="119.0" layoutY="62.0" prefHeight="25.0" prefWidth="23.0" />
-      <TextField layoutX="119.0" layoutY="93.0" prefHeight="25.0" prefWidth="23.0" />
-      <Label layoutX="21.0" layoutY="130.0" text="atFirstStep" />
-      <CheckBox layoutX="119.0" layoutY="130.0" mnemonicParsing="false" />
+      <Label text="movimentPolice" />
+      <Label text="Min" GridPane.rowIndex="1" />
+      <Label text="Max" GridPane.rowIndex="2" />
+      <Label text="atFirstStep" GridPane.rowIndex="3" />
+      <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" />
+      <CheckBox mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
    </children>
-</AnchorPane>
+</GridPane>
