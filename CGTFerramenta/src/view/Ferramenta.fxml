@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.Accordion?>
 
-<VBox prefHeight="600.0" prefWidth="1191.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.FerramentaController">
+<VBox prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.FerramentaController">
   <children>
     <MenuBar prefHeight="25.0" prefWidth="922.0" VBox.vgrow="NEVER">
       <menus>
@@ -51,22 +51,23 @@
         </Menu>
       </menus>
     </MenuBar>
-      <SplitPane dividerPositions="0.39444911690496215" prefHeight="575.0" prefWidth="1227.0">
+      <SplitPane dividerPositions="0.4344919786096257" prefHeight="575.0" prefWidth="1227.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="573.0" prefWidth="606.0">
                <children>
                   <ToolBar layoutX="2.0" prefHeight="40.0" prefWidth="598.0">
                     <items>
-                      <Button fx:id="click" mnemonicParsing="false" text="Personagem" />
+                      <Button fx:id="clickPersonagem" mnemonicParsing="false" text="Personagem" />
                         <Button mnemonicParsing="false" text="Inimigo" />
                         <Button mnemonicParsing="false" text="Oposites" />
                     </items>
                   </ToolBar>
+                  <Button fx:id="btnMyWorld" layoutX="78.0" layoutY="215.0" mnemonicParsing="false" onAction="#clickMyWorld" prefHeight="47.0" prefWidth="116.0" text="Meu Mundo" />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="573.0" prefWidth="569.0">
+          <AnchorPane fx:id="anchorConfig" minHeight="0.0" minWidth="0.0" prefHeight="569.0" prefWidth="375.0">
              <children>
-              <fx:include  source="ConfigPersonagem.fxml" />
+              <fx:include source="ConfigPersonagem.fxml" />
              </children>
           </AnchorPane>
          

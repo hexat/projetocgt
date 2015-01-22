@@ -24,6 +24,7 @@ import com.badlogic.gdx.files.FileHandle;
 
 public class CGTGameWorld extends CGTWindow implements Serializable {
 	private static final long serialVersionUID = -4678582357160030528L;
+	private static CGTGameWorld instance;
 	private CGTActor actor;
 	private ArrayList<Action> actions;
 	private ArrayList<CGTOpposite> opposites;
@@ -381,6 +382,13 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		}
 		return null;
 	}
-	
+	public static synchronized CGTGameWorld getInstance(){
+		if(instance == null){
+			instance = new CGTGameWorld();
+		}
+		
+		return instance;
+				
+	}
 }
  

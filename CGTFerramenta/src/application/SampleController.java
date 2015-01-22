@@ -25,9 +25,9 @@ import javafx.stage.FileChooser;
 public class SampleController  implements Initializable{
 	@FXML private  ListView<String> listaConfig;
 	@FXML private TextField txtProcurar;
-	private Path projeto =  Paths.get("data/imagens/"); // pasta onde todos os arquivos do projeto serão salvos
+	private Path projeto =  Paths.get("data/imagens/"); // pasta onde todos os arquivos do projeto serï¿½o salvos
 	//private Path resources =  Paths.get(projeto.toString()+"/resources"); //parte da estrutura da pasta. Possui os recursos usados, como sons e imagens.
-	private static final ObservableList<String> obs = FXCollections.observableArrayList("Cenário, Personagem, Inimigos, Sons");
+	private static final ObservableList<String> obs = FXCollections.observableArrayList("Cenï¿½rio, Personagem, Inimigos, Sons");
 	
 	
 	
@@ -112,7 +112,7 @@ public class SampleController  implements Initializable{
 		CGTFileZip zip = new CGTFileZip("projeto", "data");
 		zip.zipar();
 		File source = new File("projeto.pcgt");
-		File destination = new File("../android/assets/config.pcgt");
+		File destination = new File("../android/assets/config.cgt");
 		copyFile(source, destination);
 		zip.unzip(destination.toString(), "../android/assets/data/");
 		
