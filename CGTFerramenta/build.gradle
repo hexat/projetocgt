@@ -9,7 +9,8 @@ mainClassName = "application.Main"
 sourceSets.main.java.srcDirs = ['src/']
 
 
-sourceSets.main.resources.srcDirs = [file("../android/assets").getAbsolutePath()]
+//sourceSets.main.resources.srcDirs = [file("../android/assets").getAbsolutePath()]
+sourceSets.main.resources.srcDirs = ['src/']
 
 eclipse.project {
     name = "CGTFerramenta"
