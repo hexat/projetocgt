@@ -14,7 +14,7 @@ public class ConfigGameObjectController {
 	@FXML private TextField txtProcuraSom;
 	@FXML private TableView<String> tableSomColisao;
 	private ObservableList<String> listaSomColisao;
-	@FXML TableColumn tableColumn;
+	
 	
 	
 	public ConfigGameObjectController() {
@@ -48,7 +48,7 @@ public class ConfigGameObjectController {
 		
 	}
 	@FXML public void btnProcurarSomColisao(){
-		 tableColumn = new TableColumn();
+		
 		FileChooser fileChooser = new FileChooser();							
 		fileChooser.setTitle("Selecione o Background");
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo WAV (*.wav)", "*.wav");
@@ -72,6 +72,7 @@ public class ConfigGameObjectController {
 		
 		listaSomColisao.add(path);
 		tableSomColisao.setEditable(true);
+		tableSomColisao.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		tableSomColisao.setItems(listaSomColisao);
 		
 		

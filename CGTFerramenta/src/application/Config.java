@@ -1,3 +1,4 @@
+package application;
 import cgt.CGTGameWorld;
 import cgt.controller.ConfigGameObjectController;
 import cgt.controller.ConfigPersonagemController;

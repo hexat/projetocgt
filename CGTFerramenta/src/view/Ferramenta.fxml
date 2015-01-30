@@ -57,12 +57,26 @@
                <children>
                   <ToolBar layoutX="2.0" prefHeight="40.0" prefWidth="598.0">
                     <items>
-                      <Button fx:id="clickPersonagem" mnemonicParsing="false" text="Personagem" />
-                        <Button mnemonicParsing="false" text="Inimigo" />
-                        <Button mnemonicParsing="false" text="Oposites" />
+                      <Button fx:id="btnPersonagem" mnemonicParsing="false" onAction="#addActorInWorld" text="Personagem" />
+                        <Button fx:id="btnInimigo" mnemonicParsing="false" onAction="#addEnemyInWorld" text="Inimigo" />
+                        <Button fx:id="btnOposite" mnemonicParsing="false" onAction="#addOpositeInWorld" text="Oposites" />
                     </items>
                   </ToolBar>
-                  <Button fx:id="btnMyWorld" layoutX="78.0" layoutY="215.0" mnemonicParsing="false" onAction="#clickMyWorld" prefHeight="47.0" prefWidth="116.0" text="Meu Mundo" />
+                  <GridPane fx:id="gridMundo" layoutX="2.0" layoutY="37.0" prefHeight="531.0" prefWidth="321.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
                </children>
             </AnchorPane>
           <AnchorPane fx:id="anchorConfig" minHeight="0.0" minWidth="0.0" prefHeight="569.0" prefWidth="375.0">
