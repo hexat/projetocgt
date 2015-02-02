@@ -5,8 +5,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<TitledPane animated="false" prefHeight="600.0" prefWidth="421.0" text="Configuração Game Object" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.ConfigGameObjectController">
-			<content>
+<Accordion maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.ConfigGameObjectController">
+  <panes>
+    <TitledPane animated="false" text="Configuração Game Object">
+    <content>
 				<ScrollPane hbarPolicy="NEVER" hmax="0.0" prefHeight="601.0" prefWidth="419.0" vbarPolicy="ALWAYS" vmax="1.1">
 					<content>
 						<GridPane gridLinesVisible="true" prefHeight="570.0" prefWidth="400.0">
@@ -139,4 +141,8 @@
 					</content>
 				</ScrollPane>
 			</content>
-		</TitledPane>
+    
+    
+    </TitledPane>
+  </panes>
+</Accordion>
