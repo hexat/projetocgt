@@ -1,7 +1,8 @@
-package application;
+package util;
 
 import java.io.File;
 
+import application.Main;
 import javafx.stage.FileChooser;
 
 public class FileUtils {

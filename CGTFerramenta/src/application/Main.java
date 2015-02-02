@@ -16,7 +16,6 @@ public class Main extends Application {
 		try {
 			VBox root = (VBox) FXMLLoader.load(getClass().getResource("/view/Ferramenta.fxml"));
 			Scene scene = new Scene(root,900,600);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
@@ -27,7 +26,7 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	public static Stage getApp() {
 		return app;
 	}
