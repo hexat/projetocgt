@@ -1,5 +1,7 @@
 package application;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -84,6 +86,16 @@ public class Config {
     }
 
     public static boolean export() {
+
+        File configWorld = new File(BASE+"config.cgt");
+        getWorld().salvaStream(configWorld);
+
+        try {
+            FileUtils.copyDirectory(new File(BASE), new File("../android/assets/"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Runtime runtime = Runtime.getRuntime();
         try {
             Process p1 = runtime.exec("sh "+GRADLE_PATH+"gradlew tasks");
