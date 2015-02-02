@@ -49,15 +49,10 @@ public class SampleController  implements Initializable{
 		 ProcessBuilder pb = new ProcessBuilder(commands);
 
 	    Process p = pb.start();
-	   // Process p = new ProcessBuilder("../gradlew.bat", "assembleDebug").start();
-		
-		
-		 BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream(), "UTF-8"));  
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream(), "UTF-8"));
 		while((line = reader.readLine())!=null){
-			
 			System.out.println(line);
-			
-			
 		}
 		
 		

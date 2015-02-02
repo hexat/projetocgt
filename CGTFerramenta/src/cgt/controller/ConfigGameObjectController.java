@@ -1,7 +1,11 @@
 package cgt.controller;
 
 import java.io.File;
+import java.io.IOException;
 
+import application.Config;
+import util.FileUtils;
+import cgt.util.CGTSound;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,6 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import util.Dialogs;
 
 public class ConfigGameObjectController {
 	@FXML private TextField txtProcuraSom;
@@ -16,50 +21,41 @@ public class ConfigGameObjectController {
 	private ObservableList<String> listaSomColisao;
 	
 	
-	
 	public ConfigGameObjectController() {
 		listaSomColisao = FXCollections.observableArrayList();
 		tableSomColisao = new TableView<String>();
-		
 	}
 	
 	@FXML public void btnProcurarSom(){
-		FileChooser fileChooser = new FileChooser();							
-		fileChooser.setTitle("Selecione o Background");
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo WAV (*.wav)", "*.wav");
 		FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("Arquivo OGG (*.ogg)", "*.ogg");
-		fileChooser.getExtensionFilters().add(extFilter);
-		fileChooser.getExtensionFilters().add(extFilter2);
-		//fileChooser.showOpenDialog(stage);
-		
-		//Choose the file
-		File chosenFile = fileChooser.showOpenDialog(null);
-		//Make sure a file was selected, if not return default
+
+		File chosenFile = FileUtils.showOpenDialog("Som de Colisão", extFilter, extFilter2);
 		String path;
 		if(chosenFile != null) {
 		    path = chosenFile.getPath();
-		} else {
-		    //default return value
+//            try {
+//                Config.getWorld().setSoundLose(new CGTSound(Config.createAudio(chosenFile)));
+//            } catch (IOException e) {
+//                Dialogs.showErrorDialog();
+//                e.printStackTrace();
+//            }
+        } else {
 		    path = null;
 		}
-		
-		
+
 		txtProcuraSom.setText(path);
-		
 	}
 	@FXML public void btnProcurarSomColisao(){
+
 		
 		FileChooser fileChooser = new FileChooser();							
 		fileChooser.setTitle("Selecione o Background");
+
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo WAV (*.wav)", "*.wav");
 		FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("Arquivo OGG (*.ogg)", "*.ogg");
-		fileChooser.getExtensionFilters().add(extFilter);
-		fileChooser.getExtensionFilters().add(extFilter2);
 
-		
-		//Choose the file
-		File chosenFile = fileChooser.showOpenDialog(null);
-		//Make sure a file was selected, if not return default
+		File chosenFile = FileUtils.showOpenDialog("Selecione o som de colisão", extFilter, extFilter2);
 		String path;
 		if(chosenFile != null) {
 		    path = chosenFile.getPath();
@@ -67,20 +63,11 @@ public class ConfigGameObjectController {
 		    //default return value
 		    path = null;
 		}
-		
-		//tableColumn.setMinWidth(100);
 		
 		listaSomColisao.add(path);
 		tableSomColisao.setEditable(true);
 		tableSomColisao.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		tableSomColisao.setItems(listaSomColisao);
-		
-		
-		
-		
-		
-		
-		
 	}
 	
 }
