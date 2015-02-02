@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.channels.FileChannel;
 
 import cgt.CGTGameWorld;
@@ -12,6 +13,9 @@ import util.Dialogs;
 
 public class Config {
     private static CGTGameWorld instance = null;
+
+    private final static String GRADLE_PATH = "/Users/infolev/src/projetocgt/";
+
     private final static String BASE = System.getProperty("user.home") + "/.cgt/";
     private final static String BASE_IMG = "data/img/";
     private final static String BASE_AUDIO = "data/audio/";
@@ -23,14 +27,14 @@ public class Config {
     public static CGTGameWorld getWorld() {
         if (instance == null) {
             instance = new CGTGameWorld();
+            File file = new File(BASE);
+            if (file.exists()) {
+                file.delete();
+            }
+
+            file.mkdirs();
         }
 
-        File file = new File(BASE);
-        if (file.exists()) {
-            file.delete();
-        }
-
-        file.mkdirs();
         return instance;
     }
 
@@ -77,5 +81,20 @@ public class Config {
             if (destinationChannel != null && destinationChannel.isOpen())
                 destinationChannel.close();
         }
+    }
+
+    public static boolean export() {
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process p1 = runtime.exec("sh "+GRADLE_PATH+"gradlew tasks");
+            InputStream is = p1.getInputStream();
+            int i = 0;
+            while( (i = is.read() ) != -1) {
+                System.out.print((char)i);
+            }
+        } catch(IOException ioException) {
+            System.out.println(ioException.getMessage() );
+        }
+        return false;
     }
 }

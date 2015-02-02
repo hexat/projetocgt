@@ -382,13 +382,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		}
 		return null;
 	}
-	public static synchronized CGTGameWorld getInstance(){
-		if(instance == null){
-			instance = new CGTGameWorld();
-		}
-		
-		return instance;
-				
-	}
+
 }
  

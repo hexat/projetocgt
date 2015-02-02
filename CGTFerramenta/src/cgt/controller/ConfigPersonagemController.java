@@ -17,8 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 public class ConfigPersonagemController {
-	
-	
 	@FXML private ScrollBar scroll;
 	@FXML private Label lblSomDeMorte;
 	@FXML private TextField txtSomDeMorte;
