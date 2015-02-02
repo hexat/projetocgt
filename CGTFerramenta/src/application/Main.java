@@ -14,7 +14,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		app = primaryStage;
 		try {
-			VBox root = (VBox) FXMLLoader.load(getClass().getResource("/view/Ferramenta.fxml"));
+			VBox root = FXMLLoader.load(getClass().getResource("/view/Ferramenta.fxml"));
 			Scene scene = new Scene(root,900,600);
 			primaryStage.setScene(scene);
 			primaryStage.show();

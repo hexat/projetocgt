@@ -79,11 +79,11 @@
                   </GridPane>
                </children>
             </AnchorPane>
-          <AnchorPane fx:id="anchorConfig" minHeight="0.0" minWidth="0.0" prefHeight="569.0" prefWidth="375.0">
+          <VBox fx:id="anchorConfig" minHeight="0.0" minWidth="0.0" prefHeight="569.0" prefWidth="375.0">
              <children>
               <fx:include source="ConfigPersonagem.fxml" />
              </children>
-          </AnchorPane>
+          </VBox>
          
          
         </items>

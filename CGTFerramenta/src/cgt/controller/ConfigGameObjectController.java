@@ -2,8 +2,15 @@ package cgt.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import application.Config;
+import application.Main;
+import cgt.core.CGTGameObject;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import util.FileUtils;
 import cgt.util.CGTSound;
 import javafx.collections.FXCollections;
@@ -15,16 +22,32 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import util.Dialogs;
 
-public class ConfigGameObjectController {
+public class ConfigGameObjectController implements Initializable {
 	@FXML private TextField txtProcuraSom;
 	@FXML private TableView<String> tableSomColisao;
 	private ObservableList<String> listaSomColisao;
 	
-	
-	public ConfigGameObjectController() {
-		listaSomColisao = FXCollections.observableArrayList();
-		tableSomColisao = new TableView<String>();
-	}
+	private CGTGameObject gameObject;
+
+    public static Parent getNode(CGTGameObject object) {
+        FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigGameObject.fxml"));
+        Parent el = null;
+        try {
+            el = xml.load();
+            ConfigGameObjectController controller = xml.getController();
+            controller.setGameObject(object);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return el;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        listaSomColisao = FXCollections.observableArrayList();
+        tableSomColisao = new TableView<String>();
+    }
 	
 	@FXML public void btnProcurarSom(){
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo WAV (*.wav)", "*.wav");
@@ -69,5 +92,13 @@ public class ConfigGameObjectController {
 		tableSomColisao.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		tableSomColisao.setItems(listaSomColisao);
 	}
-	
+
+    public void setGameObject(CGTGameObject gameObject) {
+        this.gameObject = gameObject;
+    }
+
+    public CGTGameObject getGameObject() {
+        return gameObject;
+    }
+
 }

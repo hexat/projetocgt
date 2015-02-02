@@ -22,11 +22,11 @@ public class CGTOpposite extends CGTGameObject implements Serializable{
 		label = null;
 		behaviors = new ArrayList<Behavior>();
 	}
-	
-	public CGTOpposite(LabelID id){
-		super(id);
-		behaviors = new ArrayList<Behavior>();
-	}
+
+    public CGTOpposite(String label) {
+        this();
+        setLabel(label);
+    }
 	
 	public void setBlock(boolean block) {
 		this.block = block;

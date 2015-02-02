@@ -38,7 +38,7 @@ public abstract class CGTGameObject implements Serializable {
 	private Vector2 velocity;		//Vetor que informa a velocidade do personagem
 	private int life;
 	private ArrayList<AnimationMap> animations;
-	private LabelID labelID;
+	private String label;
 	private StatePolicy state;
 	private float stateTime = 0;
 	private float posXColider, posYColider;
@@ -49,8 +49,8 @@ public abstract class CGTGameObject implements Serializable {
 	private CGTAddOn whenCollide;
 	private ArrayList<CGTGameObject> objectsToCollide;
 	
-	public CGTGameObject(LabelID labelID){
-		setLabelID(labelID);
+	public CGTGameObject(String label){
+		setLabel(label);
 	}
 	
 	public CGTGameObject(CGTGameObject clone) {
@@ -142,7 +142,7 @@ public abstract class CGTGameObject implements Serializable {
 		animations = new ArrayList<AnimationMap>();
 		soundsDie = new ArrayList<CGTSound>();
 		soundCollision = new ArrayList<CGTSound>();
-		initialPositions = new ArrayList<>();
+		initialPositions = new ArrayList<Vector2>();
 		objectsToCollide =  new ArrayList<CGTGameObject>();
 		isPlayingSound = false;
 		setDelayPlaySound(0);
@@ -158,12 +158,12 @@ public abstract class CGTGameObject implements Serializable {
 		this.bounds = bounds;
 	}
 	
-	public LabelID getLabelID() {
-		return labelID;
+	public String getLabel() {
+		return label;
 	}
 
-	public void setLabelID(LabelID labelID) {
-		this.labelID = labelID;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	public CGTSound getSound() {
@@ -309,7 +309,7 @@ public abstract class CGTGameObject implements Serializable {
 		return "CGTGameObject [sound=" + sound + ", soundDie=" + soundsDie
 				+ ", soundCollision=" + soundCollision + ", position="
 				+ position + ", collision=" + collision + ", life=" + life
-				+ ", labelID=" + labelID + "]";
+				+ ", labelID=" + label + "]";
 	}
 
 	public int getSpeed() {

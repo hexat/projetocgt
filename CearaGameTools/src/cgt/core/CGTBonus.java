@@ -16,12 +16,7 @@ public class CGTBonus extends CGTGameObject implements Serializable{
 	private int lifetime;
 	private ArrayList<BonusPolicy> policies;
 
-	public CGTBonus(LabelID labelID){
-		super(labelID);
-		policies = new ArrayList<BonusPolicy>();
-	}
-	
-	public CGTBonus(){
+    public CGTBonus(){
 		policies = new ArrayList<BonusPolicy>();
 	}
 	

@@ -32,14 +32,8 @@ public class CGTProjectile extends CGTGameObject implements Serializable{
 		groups = new ArrayList<String>();
 		groups.add("General");
 	}
-	
-	public CGTProjectile(LabelID labelID){
-		super(labelID);
-		orientations = new ArrayList<ProjectileOrientation>();
-		groups = new ArrayList<String>();
-		groups.add("General");
-	}
-	public void setDamage(int damage) {
+
+    public void setDamage(int damage) {
 		this.damage = damage;
 	}
 	 
@@ -150,7 +144,7 @@ public class CGTProjectile extends CGTGameObject implements Serializable{
 				+ numFiresForOneInput + ", damage=" + damage + ", interval="
 				+ interval + ", ammo=" + ammo + ", maxAmmo=" + maxAmmo
 				+ ", velocityInitial=" + getSpeed() + ", angle=" + angle
-				+ ", labelID=" + getLabelID() + ", orientations="
+				+ ", labelID=" + getLabel() + ", orientations="
 				+ orientations + "]";
 	}
 

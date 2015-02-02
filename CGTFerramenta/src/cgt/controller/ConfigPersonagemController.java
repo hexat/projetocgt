@@ -2,7 +2,14 @@ package cgt.controller;
 
 import com.sun.javafx.collections.SetListenerHelper;
 
+import java.io.IOException;
+
+import application.Main;
+import cgt.core.CGTActor;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
@@ -51,7 +58,6 @@ public class ConfigPersonagemController {
 //	    anchorSom.setLeftAnchor(txtNovoSom, 10.0);
 //	    anchorSom.setRightAnchor(txtNovoSom,10.0);
 	     anchorSom.getChildren().addAll(btnAdd,btnRemove,txtNovoSom, btnProcurar);
-	     //altera a posição dos controles abaixo
 	     txtSomDeMorte.setLayoutY(txtSomDeMorte.getLayoutY() + 32.0);
 	     lblSomDeMorte.setLayoutY(lblSomDeMorte.getLayoutY() + 32.0);
 	     btnProcurarSomDeMorte.setLayoutY(btnProcurarSomDeMorte.getLayoutY() + 32.0);
@@ -61,9 +67,27 @@ public class ConfigPersonagemController {
 		
 		
 	}
-	
-	
-	
-	
 
+    private CGTActor actor;
+
+    public void setActor(CGTActor actor) {
+        this.actor = actor;
+    }
+
+    public CGTActor getActor() {
+        return actor;
+    }
+
+    public static Parent getNode(CGTActor object) {
+        FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigPersonagem.fxml"));
+        Parent el = null;
+        try {
+            el = xml.load();
+            ConfigPersonagemController controller = xml.getController();
+            controller.setActor(object);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return el;
+    }
 }

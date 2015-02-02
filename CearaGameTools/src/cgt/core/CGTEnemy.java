@@ -29,6 +29,7 @@ public class CGTEnemy extends CGTGameObject implements Serializable{
 	private boolean attacking;
 	
 	public CGTEnemy(){
+        super();
 		damage=0;
 		behaviors = new ArrayList<Behavior>();
 		block=false;
@@ -39,12 +40,11 @@ public class CGTEnemy extends CGTGameObject implements Serializable{
 		attacking = false;
 		timeToRecovery = 0;
 	}
-	
-	public CGTEnemy(LabelID id){
-		super(id);
-		behaviors = new ArrayList<Behavior>(); 
-		group = "General";
-	}
+
+    public CGTEnemy(String label) {
+        this();
+        setLabel(label);
+    }
 
 	public int getDamage() {
 		return damage;

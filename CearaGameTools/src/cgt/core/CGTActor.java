@@ -25,17 +25,8 @@ public class CGTActor extends CGTGameObject implements Serializable {
 	private int timeToEnableInputs;
 	private boolean invincible;
 	private boolean inputsEnabled;
-	
-	public CGTActor(LabelID id){
-		super(id);
-		timeToRecovery = 1;
-		timeToEnableInputs = 1;
-		jumps = new ArrayList<Jump>();
-		projectiles = new ArrayList<CGTProjectile>();
-		this.invincible=false;
-	}
-	
-	public CGTActor(){
+
+    public CGTActor(){
 		super();
 		jumps = new ArrayList<Jump>();
 		projectiles = new ArrayList<CGTProjectile>();
@@ -43,6 +34,11 @@ public class CGTActor extends CGTGameObject implements Serializable {
 		timeToEnableInputs = 1;
 		this.invincible=false;
 	}
+
+    public CGTActor(String label) {
+        this();
+        setLabel(label);
+    }
 	
 	public boolean addAction(InputPolicy inputPolicy, ActionMovePolicy movePolicy) {
 		boolean hasInput = false;
