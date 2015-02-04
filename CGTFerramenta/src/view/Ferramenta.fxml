@@ -13,29 +13,20 @@
 <VBox prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.FerramentaController">
   <children>
   <fx:include fx:id="menu" source="MenuBar.fxml" />
-      <SplitPane dividerPositions="0.4344919786096257" prefHeight="575.0" prefWidth="1227.0">
+      <SplitPane dividerPositions="0.5" prefHeight="575.0" prefWidth="1227.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="573.0" prefWidth="606.0">
-               <children>
-                  <TabPane layoutX="2.0" layoutY="4.0" prefHeight="569.0" prefWidth="315.0" tabClosingPolicy="UNAVAILABLE">
-                    <tabs>
-                      <Tab text="CGT Game">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <TabPane prefHeight="569.0" prefWidth="315.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="CGT Game">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 
                           </AnchorPane>
-                        </content>
-                      </Tab>
-                    </tabs>
-                  </TabPane>
-               </children></AnchorPane>
-          <VBox fx:id="anchorConfig" minHeight="0.0" minWidth="0.0" prefHeight="569.0" prefWidth="375.0">
-             <children>
-              <fx:include source="ConfigPersonagem.fxml" />
-             </children>
-          </VBox>
-         
-         
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+            <Accordion />
         </items>
       </SplitPane>
   </children>
