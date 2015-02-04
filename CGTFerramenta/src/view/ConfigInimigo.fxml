@@ -9,10 +9,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Accordion maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="419.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.ConfigInimigoController">
-	<panes>
-		<TitledPane animated="false" prefHeight="375.0" prefWidth="327.0" text="Configuração Inimigo">
-         <content>
+<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="Configuração Inimigo" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.ConfigInimigoController">
+ <content>
             <ScrollPane hbarPolicy="NEVER" prefHeight="385.0" prefWidth="417.0">
                <content>
                   <AnchorPane prefHeight="328.0" prefWidth="413.0">
@@ -55,6 +53,4 @@
                </content>
             </ScrollPane>
          </content>
-		</TitledPane>
-	</panes>
-</Accordion>
+</TitledPane>
