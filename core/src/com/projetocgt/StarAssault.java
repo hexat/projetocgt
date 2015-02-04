@@ -4,10 +4,15 @@ import cgt.CGTGame;
 import cgt.CGTGameWorld;
 import cgt.screen.CGTScreen;
 import cgt.screen.CGTWindow;
+import cgt.util.CGTFile;
 import cgt.util.ScreenHandleInterface;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.projetocgt.cenario.MyWorldChicken;
+
+import java.io.File;
+import java.io.InputStream;
 
 public class StarAssault extends Game {
 	private static StarAssault instance =  null;
@@ -20,30 +25,18 @@ public class StarAssault extends Game {
 
 	@Override
 	public void create() {
-
-		
-
-//		setScreen(new GeneralScreen(new MyWorldChicken().getGame().getMenu()));
-		restart(null);	}
-	
-//	public CGTScreen getMenu() {
-//		return CGTGame.getSavedGame().;
-//	}
+		restart(null);
+    }
 
 	public void restart(CGTWindow window){
-		//TODO
-//		if(window instanceof CGTGameWorld){
-//			setScreen(new SplashScreen());
-//		}
-//		else
-
-		CGTGame game = new MyWorldChicken().getGame();
-		GameScreen a = new GameScreen((CGTGameWorld) game.getGame());
-		if (game.startWithGame()) {
-			setScreen(a);	
-		} else {
-			setScreen(new GeneralScreen((CGTScreen) game.getGame())); 
-		}
+        InputStream io = Gdx.files.internal("config.cgt").read();
+        if (window == null) {
+            setScreen(new GameScreen(CGTGameWorld.lerStream(io)));
+        } else if(window instanceof CGTGameWorld) {
+            setScreen(new GameScreen((CGTGameWorld) window));
+        } else {
+            setScreen(new GeneralScreen((CGTScreen) window));
+        }
 	}
 	
 	public static StarAssault getInstance() {

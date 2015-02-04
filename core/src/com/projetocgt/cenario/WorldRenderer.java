@@ -246,7 +246,7 @@ public class WorldRenderer {
 	}
 
 	private void setCameraPosition() {
-		float max = world.getBackground().getTextureGDX().getWidth() - camera.viewportWidth / 2;
+        float max = world.getBackground().getTextureGDX().getWidth() - camera.viewportWidth / 2;
 		if (world.getActor().getPosition().x > max) {
 			camera.position.x = max;
 		} else {

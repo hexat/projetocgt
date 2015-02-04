@@ -90,15 +90,22 @@ public class Config {
         File configWorld = new File(BASE+"config.cgt");
         getWorld().salvaStream(configWorld);
 
+        File out = new File("../android/assets/");
         try {
-            FileUtils.copyDirectory(new File(BASE), new File("../android/assets/"));
+            FileUtils.deleteDirectory(out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        out.mkdir();
+        try {
+            FileUtils.copyDirectory(new File(BASE), out);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         Runtime runtime = Runtime.getRuntime();
         try {
-            Process p1 = runtime.exec("sh "+GRADLE_PATH+"gradlew tasks");
+            Process p1 = runtime.exec("sh "+GRADLE_PATH+"gradlew desktop:run");
             InputStream is = p1.getInputStream();
             int i = 0;
             while( (i = is.read() ) != -1) {

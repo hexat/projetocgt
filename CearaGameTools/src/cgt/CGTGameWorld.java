@@ -1,25 +1,36 @@
 package cgt;
 
+import com.badlogic.gdx.audio.Music;
+
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import cgt.core.*;
-import cgt.hud.*;
+import cgt.core.CGTActor;
+import cgt.core.CGTBonus;
+import cgt.core.CGTEnemy;
+import cgt.core.CGTGameObject;
+import cgt.core.CGTOpposite;
+import cgt.hud.CGTButton;
+import cgt.hud.CGTButtonStartGame;
+import cgt.hud.CGTLabel;
+import cgt.hud.HUDComponent;
+import cgt.hud.LifeBar;
 import cgt.lose.Lose;
 import cgt.policy.GameModePolicy;
 import cgt.policy.InputPolicy;
-import cgt.screen.*;
+import cgt.screen.CGTDialog;
+import cgt.screen.CGTWindow;
 import cgt.unit.Action;
-import cgt.util.*;
+import cgt.util.ButtonPad;
+import cgt.util.CGTSound;
+import cgt.util.CGTTexture;
+import cgt.util.Camera;
 import cgt.win.Win;
-
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.files.FileHandle;
 
 
 public class CGTGameWorld extends CGTWindow implements Serializable {
@@ -96,19 +107,17 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		this.addButton(buttonPad.getButtonRight());
 	}
 
-	public CGTGameWorld lerStream(String file){
+	public static CGTGameWorld lerStream(InputStream io){
 		CGTGameWorld cgtGameWorld = new CGTGameWorld();
 		try {
-            FileInputStream arquivoLeitura = new FileInputStream(file + ".cgt");
-
-            ObjectInputStream objLeitura = new ObjectInputStream(arquivoLeitura);
+            ObjectInputStream objLeitura = new ObjectInputStream(io);
 
             cgtGameWorld = (CGTGameWorld) objLeitura.readObject();
             
             objLeitura.close();
 
-            arquivoLeitura.close();
-		} catch (Exception e){
+            io.close();
+		} catch (Exception e) {
 			e.printStackTrace( );
         }
 		return cgtGameWorld; 
