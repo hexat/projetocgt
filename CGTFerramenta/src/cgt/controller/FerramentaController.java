@@ -1,6 +1,7 @@
 package cgt.controller;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ import application.ObjectButton;
 import cgt.core.CGTActor;
 import cgt.core.CGTEnemy;
 import cgt.core.CGTOpposite;
+import cgt.screen.CGTScreen;
+import cgt.util.CGTTexture;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,8 +25,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import util.Dialogs;
 
-public class FerramentaController //implements Initializable 
+public class FerramentaController implements Initializable
 {
   
    
@@ -34,8 +38,8 @@ public class FerramentaController //implements Initializable
     @FXML
     private MenuItem menuExportar;
 
-//    @Override
-//    public void initialize(URL location, ResourceBundle resources) {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 //        menuExportar.setOnAction(new EventHandler<ActionEvent>() {
 //            @Override
 //            public void handle(ActionEvent event) {
@@ -43,13 +47,7 @@ public class FerramentaController //implements Initializable
 //                System.out.println("Tetstet ");
 //            }
 //        });
-//        gridMundo.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                clickMyWorld();
-//            }
-//        });
-//    }
+    }
 
     @FXML
     public void clickMyWorld() {
@@ -72,6 +70,13 @@ public class FerramentaController //implements Initializable
         System.out.println("ok");
     }
 
+    @FXML public void testeBackGame() {
+        File back = Dialogs.showOpenDialog("Escolha background");
+        Config.getGame().setMenu(new CGTScreen(new CGTTexture(Config.createImg(back))));
+        System.out.println(Config.getGame());
+
+        Config.export();
+    }
     @FXML
     public void click() {
 

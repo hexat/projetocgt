@@ -25,14 +25,13 @@ public class StarAssault extends Game {
 
 	@Override
 	public void create() {
-		restart(null);
+        InputStream io = Gdx.files.internal("config.cgt").read();
+        CGTGame game = CGTGame.getSavedGame(io);
+        restart(game.getGame());
     }
 
 	public void restart(CGTWindow window){
-        InputStream io = Gdx.files.internal("config.cgt").read();
-        if (window == null) {
-            setScreen(new GameScreen(CGTGameWorld.lerStream(io)));
-        } else if(window instanceof CGTGameWorld) {
+		if(window instanceof CGTGameWorld) {
             setScreen(new GameScreen((CGTGameWorld) window));
         } else {
             setScreen(new GeneralScreen((CGTScreen) window));

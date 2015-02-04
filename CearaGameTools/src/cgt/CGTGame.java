@@ -1,5 +1,9 @@
 package cgt;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -34,30 +38,25 @@ public class CGTGame implements Serializable{
 		this.menu = menu;
 	}
 
-	public  void saveGame(){
+	public  void saveGame(File file){
 		try {
 
-			FileOutputStream saveConfig = new FileOutputStream("data/imagens/gameConfig.cgt");
+			FileOutputStream saveConfig = new FileOutputStream(file);
 			ObjectOutputStream obj = new ObjectOutputStream(saveConfig);
 			obj.writeObject(this);
 			obj.close();
-			System.out.println("Obejto Salvo com Sucesso!");
-
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 	
-	public static CGTGame getSavedGame() {
+	public static CGTGame getSavedGame(InputStream io) {
 		CGTGame cgtGame = new CGTGame();
 
 		try {
-			InputStream arquivoLeitura = new CGTFile(
-					"data/imagens/gameConfig.cgt").getFileHandle().read();
-			ObjectInputStream objLeitura = new ObjectInputStream(arquivoLeitura);
+			ObjectInputStream objLeitura = new ObjectInputStream(io);
 			cgtGame = (CGTGame) objLeitura.readObject();
 			objLeitura.close();
-			arquivoLeitura.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

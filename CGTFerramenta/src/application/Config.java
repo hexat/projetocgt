@@ -8,8 +8,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
+import java.util.List;
 
+import cgt.CGTGame;
 import cgt.CGTGameWorld;
+import cgt.screen.CGTScreen;
 import cgt.util.CGTFile;
 import util.Dialogs;
 
@@ -21,6 +25,8 @@ public class Config {
     private final static String BASE = System.getProperty("user.home") + "/.cgt/";
     private final static String BASE_IMG = "data/img/";
     private final static String BASE_AUDIO = "data/audio/";
+    private static CGTGame instanceGame = null;
+    private static List<CGTScreen> screens = null;
 
     private Config() {
         instance = new CGTGameWorld();
@@ -30,9 +36,11 @@ public class Config {
         if (instance == null) {
             instance = new CGTGameWorld();
             File file = new File(BASE);
-            if (file.exists()) {
-                file.delete();
-            }
+            try {
+				FileUtils.deleteDirectory(file);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
             file.mkdirs();
         }
@@ -45,7 +53,7 @@ public class Config {
         if (src != null && src.exists()) {
             try {
                 String filename = System.currentTimeMillis() + ".png";
-                copyFile(src, new File(BASE + BASE_IMG + filename));
+                FileUtils.copyFile(src, new File(BASE + BASE_IMG + filename));
                 res = new CGTFile(BASE_IMG + filename);
             } catch (IOException e) {
                 Dialogs.showErrorDialog();
@@ -58,37 +66,14 @@ public class Config {
     public static CGTFile createAudio(File src) throws IOException {
         CGTFile res = null;
         String filename = System.currentTimeMillis() + ".wav";
-        copyFile(src, new File(BASE + BASE_AUDIO + filename));
+        FileUtils.copyFile(src, new File(BASE + BASE_AUDIO + filename));
         res = new CGTFile(BASE_AUDIO + filename);
         return res;
     }
 
-
-    private static void copyFile(File source, File destination) throws IOException {
-        if (destination.exists()) {
-            destination.delete();
-        }
-
-        destination.getParentFile().mkdirs();
-        FileChannel sourceChannel = null;
-        FileChannel destinationChannel = null;
-        try {
-            sourceChannel = new FileInputStream(source).getChannel();
-            destinationChannel = new FileOutputStream(destination).getChannel();
-            sourceChannel.transferTo(0, sourceChannel.size(),
-                    destinationChannel);
-        } finally {
-            if (sourceChannel != null && sourceChannel.isOpen())
-                sourceChannel.close();
-            if (destinationChannel != null && destinationChannel.isOpen())
-                destinationChannel.close();
-        }
-    }
-
     public static boolean export() {
-
         File configWorld = new File(BASE+"config.cgt");
-        getWorld().salvaStream(configWorld);
+        getGame().saveGame(configWorld);
 
         File out = new File("../android/assets/");
         try {
@@ -105,15 +90,30 @@ public class Config {
 
         Runtime runtime = Runtime.getRuntime();
         try {
-            Process p1 = runtime.exec("sh "+GRADLE_PATH+"gradlew desktop:run");
+            Process p1 = runtime.exec("sh "+GRADLE_PATH+"run");
             InputStream is = p1.getInputStream();
             int i = 0;
             while( (i = is.read() ) != -1) {
                 System.out.print((char)i);
             }
-        } catch(IOException ioException) {
-            System.out.println(ioException.getMessage() );
+        } catch(IOException e) {
+        	e.printStackTrace();
         }
         return false;
+    }
+
+    public static CGTGame getGame() {
+        if (instanceGame == null) {
+            instanceGame = new CGTGame();
+        }
+        return instanceGame;
+    }
+
+    public static List<CGTScreen> getScreens() {
+        if (screens == null) {
+            screens = new ArrayList<CGTScreen>();
+
+        }
+        return screens;
     }
 }
