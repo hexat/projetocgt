@@ -18,12 +18,11 @@
       <TextField GridPane.columnIndex="2" GridPane.rowIndex="2" />
       <TextField GridPane.columnIndex="2" GridPane.rowIndex="3" />
       <Label text="Sprite Sheet" GridPane.rowIndex="1" />
-      <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="84.0" text="Procurar" GridPane.columnIndex="2" GridPane.rowIndex="1" />
       <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
       <CheckBox mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
       <CheckBox mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
       <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+      <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    </children>
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="131.0" minWidth="10.0" prefWidth="90.0" />
