@@ -59,12 +59,12 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		startGame = null;
 	}
 
-	public void salvaStream(String file){
+	public void salvaStream(File file){
 		try
         {
             //Gera o arquivo para armazenar o objeto
 
-            FileOutputStream arquivoGrav = new FileOutputStream(file+".cgt");
+            FileOutputStream arquivoGrav = new FileOutputStream(file);
 
             //Classe responsavel por inserir os objetos
 

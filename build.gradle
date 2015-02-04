@@ -39,6 +39,7 @@ project(":CGTFerramenta") {
 	
     dependencies {
         compile project(":CearaGameTools")
+        compile group: 'commons-io', name: 'commons-io', version: '2.4'
     }
 }
 

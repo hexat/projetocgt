@@ -11,7 +11,6 @@ import cgt.core.CGTGameObject;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import util.FileUtils;
 import cgt.util.CGTSound;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,7 +52,7 @@ public class ConfigGameObjectController implements Initializable {
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo WAV (*.wav)", "*.wav");
 		FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("Arquivo OGG (*.ogg)", "*.ogg");
 
-		File chosenFile = FileUtils.showOpenDialog("Som de Colisão", extFilter, extFilter2);
+		File chosenFile = Dialogs.showOpenDialog("Som de Colisão", extFilter, extFilter2);
 		String path;
 		if(chosenFile != null) {
 		    path = chosenFile.getPath();
@@ -78,7 +77,7 @@ public class ConfigGameObjectController implements Initializable {
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo WAV (*.wav)", "*.wav");
 		FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("Arquivo OGG (*.ogg)", "*.ogg");
 
-		File chosenFile = FileUtils.showOpenDialog("Selecione o som de colisão", extFilter, extFilter2);
+		File chosenFile = Dialogs.showOpenDialog("Selecione o som de colisão", extFilter, extFilter2);
 		String path;
 		if(chosenFile != null) {
 		    path = chosenFile.getPath();

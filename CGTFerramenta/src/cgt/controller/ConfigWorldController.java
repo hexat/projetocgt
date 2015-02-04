@@ -3,12 +3,12 @@ package cgt.controller;
 import java.io.File;
 
 import application.Config;
-import util.FileUtils;
 import cgt.util.CGTTexture;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import util.Dialogs;
 
 public class ConfigWorldController {
 	@FXML private Button btnPesquisaBack;
@@ -21,7 +21,7 @@ public class ConfigWorldController {
 	public void pesquisarBackground(){
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo PNG (*.png)", "*.png");
 
-		File chosenFile = FileUtils.showOpenDialog("Selecionar background", extFilter);
+		File chosenFile = Dialogs.showOpenDialog("Selecionar background", extFilter);
 
         Config.getWorld().setBackground(new CGTTexture(Config.createImg(chosenFile)));
 		String path = null;
