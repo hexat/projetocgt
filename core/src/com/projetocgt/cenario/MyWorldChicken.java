@@ -598,7 +598,7 @@ public class MyWorldChicken {
 
 		world.addHUDComponent(labelHUD);
 
-		world.addWinCriterion(new CompleteCrossing(world, new Rectangle(world
+		world.addWinCriterion(new CompleteCrossing(world.getId(), new Rectangle(world
 				.getBackground().getTextureGDX().getWidth()
 				- 1f / 100f * world.getBackground().getTextureGDX().getWidth(),
 				1,
@@ -716,7 +716,7 @@ public class MyWorldChicken {
 		menu.setRelativeHeight(0.2f);
 
 		CGTButtonScreen reiniciar = new CGTButtonScreen();
-		reiniciar.setScreenToGo(game.getGame());
+		reiniciar.setScreenToGo(world.getId());
 		reiniciar.setTextureUp(new CGTTexture("data/chicken/backButton.png"));
 		reiniciar.setTextureDown(new CGTTexture("data/chicken/backButton.png"));
 		reiniciar.setRelativeX(0.35f);
@@ -745,7 +745,7 @@ public class MyWorldChicken {
 		winDialog.setRelativeHeight(0.6f);
 
 		CGTButtonScreen tryAgain = new CGTButtonScreen();
-		tryAgain.setScreenToGo(game.getGame());
+		tryAgain.setScreenToGo(world.getId());
 		tryAgain.setTextureUp(new CGTTexture(
 				"data/chicken/layout_perda_0000_Layer-2.png"));
 		tryAgain.setTextureDown(new CGTTexture(
@@ -758,7 +758,7 @@ public class MyWorldChicken {
 		world.setLoseDialog(winDialog);
 
 		CGTButtonScreen sair = new CGTButtonScreen();
-		sair.setScreenToGo(game.getGame());
+		sair.setScreenToGo(world.getId());
 		sair.setTextureUp(new CGTTexture(
 				"data/chicken/layout_perda_0002_Tentar-novamente-Menu-Sair.png"));
 		sair.setTextureDown(new CGTTexture(
@@ -787,7 +787,7 @@ public class MyWorldChicken {
 		loseDialog.setRelativeHeight(0.6f);
 
 		CGTButtonScreen tryAgain = new CGTButtonScreen();
-		tryAgain.setScreenToGo(game.getGame());
+		tryAgain.setScreenToGo(world.getId());
 		tryAgain.setTextureUp(new CGTTexture(
 				"data/chicken/layout_perda_0000_Layer-2.png"));
 		tryAgain.setTextureDown(new CGTTexture(
@@ -800,7 +800,7 @@ public class MyWorldChicken {
 		world.setLoseDialog(loseDialog);
 
 		CGTButtonScreen sair = new CGTButtonScreen();
-		sair.setScreenToGo(game.getGame());
+		sair.setScreenToGo("mundoGalinha");
 		sair.setTextureUp(new CGTTexture(
 				"data/chicken/layout_perda_0001_Layer-3.png"));
 		sair.setTextureDown(new CGTTexture(
@@ -875,7 +875,8 @@ public class MyWorldChicken {
 	}
 
 	private void createWorld() {
-		world = new CGTGameWorld();
+        game = CGTGame.get();
+		world = game.createWorld("mundoGalinha");
 		backGround = new CGTTexture("data/chicken/back.png");
 		world.setBackground(backGround);
 		world.setMusic(new CGTSound("data/AudioChicken/tema.ogg", 1f));
@@ -964,8 +965,7 @@ public class MyWorldChicken {
 		// label.setRelativeHeight(0.1f);
 		// screen.getLabels().add(label);
 
-		game = new CGTGame();
-		game.setMenu(world);
+		game.setStartWindowId(world.getId());
 		configuracaoPauseDialog();
 		configuracaoWinDialog();
 		configuracaoLDialog();

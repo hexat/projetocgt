@@ -2,6 +2,7 @@ package cgt.controller;
 
 import java.io.IOException;
 
+import application.Config;
 import cgt.util.CGTSpriteSheet;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +27,10 @@ public class MenuBarController {
 	public void salvar() {
 
 	}
+
+    @FXML public void export() {
+        Config.export();
+    }
 
 	@FXML
 	public void addSpriteSheet() {

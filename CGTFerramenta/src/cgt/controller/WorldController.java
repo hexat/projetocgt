@@ -1,8 +1,13 @@
 package cgt.controller;
 
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.Main;
@@ -12,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
@@ -38,14 +44,41 @@ public class WorldController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    }
 
+    @FXML public void btnConfigWorld() {
+        Accordion configAccordion = (Accordion) Main.getApp().getScene().lookup("#configAccordion");
+        configAccordion.getPanes().clear();
+        configAccordion.getPanes().add(ConfigWorldController.getNode(world));
     }
 
     @FXML
     public void addActorInWorld() {
-        CGTActor actor = new CGTActor("Actor");
-        ObjectButton<CGTActor> btn = new ObjectButton<CGTActor>(actor);
-        gridMundo.add(btn, 0, 1);
+        if (world.getActor() != null) {
+            Action response = Dialogs.create()
+                    .owner(Main.getApp())
+                    .title("Confirm Dialog")
+                    .masthead("Look, a Confirm Dialog")
+                    .message("Do you want to continue?")
+                    .showConfirm();
+
+            if (response != Dialog.ACTION_OK) {
+                return;
+            }
+        }
+
+        Optional<String> response = Dialogs.create()
+                .owner(Main.getApp())
+                .title("Nome para o ator")
+                .message("Digite um nome para o ator:")
+                .showTextInput("Ator");
+
+        if (response.isPresent()) {
+            CGTActor actor = new CGTActor(response.get());
+            world.setActor(actor);
+            ObjectButton<CGTActor> btn = new ObjectButton<CGTActor>(actor);
+            gridMundo.add(btn, 0, 1);
+        }
     }
 
     @FXML

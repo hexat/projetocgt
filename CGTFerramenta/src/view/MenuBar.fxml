@@ -18,7 +18,7 @@
 						<MenuItem mnemonicParsing="false" text="Close" />
 						<MenuItem fx:id="save" mnemonicParsing="false" onAction="#salvar" text="Salvar" />
 						<MenuItem mnemonicParsing="false" text="Save As…" />
-						<MenuItem mnemonicParsing="false" text="Revert" />
+						<MenuItem mnemonicParsing="false" text="Exportar" onAction="#export"/>
 						<SeparatorMenuItem mnemonicParsing="false" />
 						<MenuItem mnemonicParsing="false" text="Preferences…" />
 						<SeparatorMenuItem mnemonicParsing="false" />

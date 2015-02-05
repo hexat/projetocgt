@@ -9,7 +9,7 @@ public class CGTButtonScreen extends CGTButton implements Serializable{
 	private String windowId;
 
 	public CGTWindow getScreenToGo() {
-		return CGTGame.getScreen(windowId);
+		return CGTGame.get().getScreen(windowId);
 	}
 
 	public void setScreenToGo(String screenToGo) {

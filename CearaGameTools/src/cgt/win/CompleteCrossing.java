@@ -55,7 +55,7 @@ public class CompleteCrossing implements Win, Serializable {
 
     public CGTGameWorld getWorld() {
         if (world == null) {
-            world = CGTGame.getWorld(worldId);
+            world = CGTGame.get().getWorld(worldId);
         }
         return world;
     }

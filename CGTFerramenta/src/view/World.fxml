@@ -8,8 +8,9 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.WorldController">
     <children>
-        <ToolBar layoutX="1.0" prefHeight="0.0" prefWidth="491.0">
+        <ToolBar layoutX="1.0" prefWidth="Infinity">
             <items>
+                <Button mnemonicParsing="false" onAction="#btnConfigWorld" text="Configurarar Mundo" />
                 <Button fx:id="btnPersonagem" mnemonicParsing="false" onAction="#addActorInWorld" text="Personagem" />
                 <Button fx:id="btnInimigo" mnemonicParsing="false" onAction="#addEnemyInWorld" text="Inimigo" />
                 <Button fx:id="btnOposite" mnemonicParsing="false" onAction="#addOpositeInWorld" text="Oposites" />

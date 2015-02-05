@@ -13,28 +13,32 @@ import cgt.screen.CGTWindow;
 
 
 public class CGTGame implements Serializable {
-    private static List<CGTScreen> screens = new ArrayList<CGTScreen>();
-    private static List<CGTGameWorld> worlds = new ArrayList<CGTGameWorld>();
+    private static CGTGame instance = null;
 
+    private List<CGTScreen> screens = new ArrayList<CGTScreen>();
+    private List<CGTGameWorld> worlds = new ArrayList<CGTGameWorld>();
 	private String startWindowId;
 
-	public CGTGame() {
-		setStartWindowId(null);
+	private CGTGame() {
+        setStartWindowId(null);
 	}
 
-	public CGTGame(CGTScreen menu) {
-		this.setStartWindowId(menu.getId());
-	}
+    public static CGTGame get() {
+        if (instance == null) {
+            instance = new CGTGame();
+        }
+        return instance;
+    }
 
 	public CGTWindow getStartWindow() {
 		return getWindow(startWindowId);
 	}
 
-    private void setStartWindowId(String startWindowId) {
+    public void setStartWindowId(String startWindowId) {
         this.startWindowId = startWindowId;
     }
 
-    public static CGTScreen createScreen(String id) {
+    public CGTScreen createScreen(String id) {
         if (id == null) return null;
         boolean ok = true;
         for (int i = 0; i < screens.size() && ok; i++) {
@@ -45,12 +49,13 @@ public class CGTGame implements Serializable {
         if (ok) {
             CGTScreen screen = new CGTScreen();
             screen.setId(id);
+            screens.add(screen);
             return screen;
         }
         return null;
     }
 
-    public static CGTGameWorld createWorld(String id) {
+    public CGTGameWorld createWorld(String id) {
         if (id == null) return null;
         boolean ok = true;
 
@@ -63,12 +68,13 @@ public class CGTGame implements Serializable {
         if (ok) {
             CGTGameWorld world = new CGTGameWorld();
             world.setId(id);
+            worlds.add(world);
             return world;
         }
         return null;
     }
 
-    public static CGTScreen getScreen(String id) {
+    public CGTScreen getScreen(String id) {
         if (id == null) return null;
         for (CGTScreen s : screens) {
             if (s.getId().equals(id)) {
@@ -79,7 +85,7 @@ public class CGTGame implements Serializable {
         return null;
     }
 
-    public static CGTGameWorld getWorld(String id) {
+    public CGTGameWorld getWorld(String id) {
         if (id == null) return null;
         for (CGTGameWorld w : worlds) {
             if (w.getId().equals(id)) {
@@ -89,14 +95,14 @@ public class CGTGame implements Serializable {
         return null;
     }
 
-    public static CGTWindow getWindow(String id) {
+    public CGTWindow getWindow(String id) {
         if (id == null) return null;
         CGTWindow res = getWorld(id);
         if (res == null) res = getScreen(id);
         return res;
     }
 
-	public  void saveGame(File file){
+	public void saveGame(File file){
 		try {
 
 			FileOutputStream saveConfig = new FileOutputStream(file);

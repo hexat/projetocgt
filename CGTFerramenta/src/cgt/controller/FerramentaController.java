@@ -29,7 +29,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
 import util.DialogsUtil;
-import util.F;
 
 public class FerramentaController implements Initializable
 {
@@ -71,9 +70,6 @@ public class FerramentaController implements Initializable
     }
 
     @FXML public void createWorld() {
-        CGTGameWorld world = CGTGame.createWorld("teste");
-
-
         Optional<String> response = Dialogs.create()
                 .owner(Main.getApp())
                 .title("Nome para o mundo")
@@ -81,31 +77,45 @@ public class FerramentaController implements Initializable
                 .showTextInput("Mundo ");
 
         if (response.isPresent()) {
-            Tab aba = new Tab(response.get());
-            aba.setOnCloseRequest(new EventHandler<Event>() {
-                @Override
-                public void handle(Event event) {
-                    Action response = Dialogs.create()
-                            .owner(Main.getApp())
-                            .title("Excluir mundo")
-                            .masthead("Ao fechar esta aba você esterá removendo este mundo do jogo.")
-                            .message("Tem certeza que deseja fazer isso?")
-                            .actions(Dialog.ACTION_OK, Dialog.ACTION_CANCEL)
-                            .showConfirm();
+            String id = response.get().trim();
+            CGTGameWorld world = Config.getGame().createWorld(id);
+            if (world != null) {
+                Tab aba = new Tab(response.get());
+                aba.setOnCloseRequest(new EventHandler<Event>() {
+                    @Override
+                    public void handle(Event event) {
+                        Action response = Dialogs.create()
+                                .owner(Main.getApp())
+                                .title("Excluir mundo")
+                                .masthead("Ao fechar esta aba você esterá removendo este mundo do jogo.")
+                                .message("Tem certeza que deseja fazer isso?")
+                                .actions(Dialog.ACTION_OK, Dialog.ACTION_CANCEL)
+                                .showConfirm();
 
-                    if (response == Dialog.ACTION_OK) {
-                        if( tabFerramenta.getTabs().contains( event.getSource() ) ) {
-                            tabFerramenta.getTabs().remove(event.getSource());
+                        if (response == Dialog.ACTION_OK) {
+                            if (tabFerramenta.getTabs().contains(event.getSource())) {
+                                tabFerramenta.getTabs().remove(event.getSource());
+                            }
+                        } else {
+
                         }
-                    } else {
-
+                        event.consume();
                     }
-                    event.consume();
-                }
-            });
-            aba.setContent(WorldController.getNode(world));
-            tabFerramenta.getTabs().add(aba);
+                });
+                aba.setContent(WorldController.getNode(world));
+                tabFerramenta.getTabs().add(aba);
+            } else {
+                Dialogs.create()
+                        .owner(Main.getApp())
+                        .title("Atenção")
+                        .message("Já existe uma janela com este ID!")
+                        .showWarning();
+            }
         }
+    }
+
+    @FXML public void createScreen() {
+
     }
     
     @FXML

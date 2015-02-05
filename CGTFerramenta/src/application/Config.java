@@ -6,19 +6,35 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import cgt.CGTGame;
 import cgt.CGTGameWorld;
 import cgt.util.CGTFile;
 import util.DialogsUtil;
-import util.F;
 
 public class Config {
-    private static CGTGameWorld instance = null;
-
     private final static String GRADLE_PATH = "/Users/infolev/src/projetocgt/";
 
     public final static String BASE = System.getProperty("user.home") + "/.cgt/";
     public final static String BASE_IMG = "data/img/";
     public final static String BASE_AUDIO = "data/audio/";
+
+    private static CGTGame instance = null;
+
+    public static CGTGame getGame() {
+        if (instance == null) {
+            instance = CGTGame.get();
+            File file = new File(Config.BASE);
+            try {
+                FileUtils.deleteDirectory(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            file.mkdirs();
+        }
+
+        return instance;
+    }
 
     public static CGTFile createImg(File src) {
         CGTFile res = null;
@@ -45,7 +61,7 @@ public class Config {
 
     public static boolean export() {
         File configWorld = new File(BASE+"config.cgt");
-        F.getGame().saveGame(configWorld);
+        getGame().saveGame(configWorld);
 
         File out = new File("../android/assets/");
         try {

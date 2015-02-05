@@ -27,13 +27,10 @@ public class ConfigPersonagemController {
 	@FXML private Button btnRemoveSomDeMorte;
 	@FXML private TextField txtSomDeColisao;
 	@FXML private Button btnExcluirSom;
-	
-	
+
 	@FXML private Button btnNovoSomColisao;
 	@FXML private AnchorPane anchorSom;
 
-
-	
 	@FXML public void addNovoSomColisao(){
 		
 		Button btnAdd = new Button("+");
