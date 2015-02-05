@@ -3,7 +3,7 @@ package com.projetocgt;
 import cgt.CGTGameWorld;
 import cgt.hud.CGTButton;
 import cgt.hud.CGTButtonScreen;
-import cgt.screen.CGTScreen;
+import cgt.CGTScreen;
 
 
 import com.badlogic.gdx.Gdx;

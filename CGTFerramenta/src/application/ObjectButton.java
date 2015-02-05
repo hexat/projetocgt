@@ -14,20 +14,22 @@ import cgt.hud.CGTButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 
 /**
  * Created by infolev on 02/02/15.
  */
 public class ObjectButton<T extends CGTGameObject> extends Button {
-    private final VBox paneConfig;
+    private final Accordion configAccordion;
     private T object;
 
     public ObjectButton(final T object) {
         super(object.getLabel());
         this.object = object;
-        paneConfig = (VBox) Main.getApp().getScene().lookup("#anchorConfig");
+        configAccordion = (Accordion) Main.getApp().getScene().lookup("#configAccordion");
 
         setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -35,24 +37,24 @@ public class ObjectButton<T extends CGTGameObject> extends Button {
                 clearAndAddGameObject();
 
                 if (object instanceof CGTEnemy) {
-                    paneConfig.getChildren().add(ConfigInimigoController.getNode((CGTEnemy) object));
+                    configAccordion.getPanes().add(ConfigInimigoController.getNode((CGTEnemy) object));
                 } else if (object instanceof CGTOpposite) {
-                    paneConfig.getChildren().add(ConfigOppositeController.getNode((CGTOpposite) object));
+                    configAccordion.getPanes().add(ConfigOppositeController.getNode((CGTOpposite) object));
                 } else if (object instanceof CGTBonus) {
-                    paneConfig.getChildren().add(ConfigBonusController.getNode((CGTBonus) object));
+                    configAccordion.getPanes().add(ConfigBonusController.getNode((CGTBonus) object));
                 } else if (object instanceof CGTActor) {
-                    paneConfig.getChildren().add(ConfigPersonagemController.getNode((CGTActor) object));
+                    configAccordion.getPanes().add(ConfigPersonagemController.getNode((CGTActor) object));
                 }
             }
         });
     }
 
     private void clearAndAddGameObject() {
-        paneConfig.getChildren().clear();
+        configAccordion.getPanes().clear();
 
-        Parent e = ConfigGameObjectController.getNode(object);
+        TitledPane e = ConfigGameObjectController.getNode(object);
         if (e != null) {
-            paneConfig.getChildren().add(e);
+            configAccordion.getPanes().add(e);
         }
     }
 

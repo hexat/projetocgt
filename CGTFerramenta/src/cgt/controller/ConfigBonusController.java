@@ -9,6 +9,7 @@ import cgt.core.CGTBonus;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.TitledPane;
 
 /**
  * Created by infolev on 02/02/15.
@@ -16,9 +17,9 @@ import javafx.scene.Parent;
 public class ConfigBonusController implements Initializable {
     private CGTBonus bonus;
 
-    public static Parent getNode(CGTBonus object) {
+    public static TitledPane getNode(CGTBonus object) {
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigBonus.fxml"));
-        Parent el = null;
+        TitledPane el = null;
         try {
             el = xml.load();
             ConfigBonusController controller = xml.getController();

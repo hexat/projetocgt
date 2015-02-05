@@ -1,42 +1,100 @@
 package cgt;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import cgt.screen.CGTScreen;
 import cgt.screen.CGTWindow;
-import cgt.util.CGTFile;
 
 
-public class CGTGame implements Serializable{
-	private CGTWindow menu;
+public class CGTGame implements Serializable {
+    private static List<CGTScreen> screens = new ArrayList<CGTScreen>();
+    private static List<CGTGameWorld> worlds = new ArrayList<CGTGameWorld>();
+
+	private String startWindowId;
 
 	public CGTGame() {
-		setMenu(null);
+		setStartWindowId(null);
 	}
-	
+
 	public CGTGame(CGTScreen menu) {
-		this.setMenu(menu);
+		this.setStartWindowId(menu.getId());
 	}
 
-	public CGTWindow getGame() {
-		return menu;
-	}
-	
-	public boolean startWithGame() {
-		return menu instanceof CGTGameWorld;
+	public CGTWindow getStartWindow() {
+		return getWindow(startWindowId);
 	}
 
-	public void setMenu(CGTWindow menu) {
-		this.menu = menu;
-	}
+    private void setStartWindowId(String startWindowId) {
+        this.startWindowId = startWindowId;
+    }
+
+    public static CGTScreen createScreen(String id) {
+        if (id == null) return null;
+        boolean ok = true;
+        for (int i = 0; i < screens.size() && ok; i++) {
+            if (screens.get(i).getId().equals(id)) {
+                ok = false;
+            }
+        }
+        if (ok) {
+            CGTScreen screen = new CGTScreen();
+            screen.setId(id);
+            return screen;
+        }
+        return null;
+    }
+
+    public static CGTGameWorld createWorld(String id) {
+        if (id == null) return null;
+        boolean ok = true;
+
+        for (int i = 0; i < worlds.size() && ok; i++) {
+            if (worlds.get(i).getId().equals(id)) {
+                ok = false;
+            }
+        }
+
+        if (ok) {
+            CGTGameWorld world = new CGTGameWorld();
+            world.setId(id);
+            return world;
+        }
+        return null;
+    }
+
+    public static CGTScreen getScreen(String id) {
+        if (id == null) return null;
+        for (CGTScreen s : screens) {
+            if (s.getId().equals(id)) {
+                return s;
+            }
+            return s;
+        }
+        return null;
+    }
+
+    public static CGTGameWorld getWorld(String id) {
+        if (id == null) return null;
+        for (CGTGameWorld w : worlds) {
+            if (w.getId().equals(id)) {
+                return w;
+            }
+        }
+        return null;
+    }
+
+    public static CGTWindow getWindow(String id) {
+        if (id == null) return null;
+        CGTWindow res = getWorld(id);
+        if (res == null) res = getScreen(id);
+        return res;
+    }
 
 	public  void saveGame(File file){
 		try {

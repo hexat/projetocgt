@@ -58,7 +58,7 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private CGTSound soundLose;
 	private CGTButtonStartGame startGame;
 	
-	public CGTGameWorld(){
+	protected CGTGameWorld(){
 		opposites = new ArrayList<CGTOpposite>();
 		bonus = new ArrayList<CGTBonus>();
 		enemies = new ArrayList<CGTEnemy>();

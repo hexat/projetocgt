@@ -2,16 +2,17 @@ package cgt.hud;
 
 import java.io.Serializable;
 
+import cgt.CGTGame;
 import cgt.screen.CGTWindow;
 
 public class CGTButtonScreen extends CGTButton implements Serializable{
-	private CGTWindow screenToGo;
+	private String windowId;
 
 	public CGTWindow getScreenToGo() {
-		return screenToGo;
+		return CGTGame.getScreen(windowId);
 	}
 
-	public void setScreenToGo(CGTWindow screenToGo) {
-		this.screenToGo = screenToGo;
+	public void setScreenToGo(String screenToGo) {
+		this.windowId = screenToGo;
 	}
 }

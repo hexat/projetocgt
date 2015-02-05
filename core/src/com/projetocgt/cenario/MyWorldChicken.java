@@ -3,8 +3,6 @@ package com.projetocgt.cenario;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
 import cgt.CGTGame;
 import cgt.CGTGameWorld;
@@ -26,7 +24,7 @@ import cgt.policy.GameModePolicy;
 import cgt.policy.InputPolicy;
 import cgt.policy.StatePolicy;
 import cgt.screen.CGTDialog;
-import cgt.screen.CGTScreen;
+import cgt.CGTScreen;
 import cgt.unit.Action;
 import cgt.util.CGTAnimation;
 import cgt.util.CGTFile;

@@ -13,23 +13,24 @@
 <VBox prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.FerramentaController">
   <children>
   <fx:include fx:id="menu" source="MenuBar.fxml" />
-      <SplitPane dividerPositions="0.5" prefHeight="575.0" prefWidth="1227.0">
-        <items>
-            <TabPane prefHeight="569.0" prefWidth="315.0" tabClosingPolicy="UNAVAILABLE">
-              <tabs>
-                <Tab text="CGT Game">
-                     <content>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Button mnemonicParsing="false" onAction="#testeBackGame" text="Button" />
-                           </children>
-                        </VBox>
-                     </content>
-                </Tab>
-              </tabs>
-            </TabPane>
-            <Accordion />
-        </items>
-      </SplitPane>
+  <SplitPane dividerPositions="0.5">
+    <items>
+        <TabPane fx:id="tabFerramenta" prefHeight="569.0" prefWidth="315.0">
+          <tabs>
+            <Tab closable="false" text="CGT Game">
+                 <content>
+                    <VBox prefHeight="200.0" prefWidth="100.0">
+                       <children>
+                          <Button mnemonicParsing="false" onAction="#testeBackGame" text="Button" />
+                          <Button mnemonicParsing="false" onAction="#createWorld" text="Criar Mundo" />
+                       </children>
+                    </VBox>
+                 </content>
+            </Tab>
+          </tabs>
+        </TabPane>
+        <Accordion fx:id="configAccordion" />
+    </items>
+  </SplitPane>
   </children>
 </VBox>

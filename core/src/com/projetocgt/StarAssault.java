@@ -2,16 +2,13 @@ package com.projetocgt;
 
 import cgt.CGTGame;
 import cgt.CGTGameWorld;
-import cgt.screen.CGTScreen;
+import cgt.CGTScreen;
 import cgt.screen.CGTWindow;
-import cgt.util.CGTFile;
 import cgt.util.ScreenHandleInterface;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.projetocgt.cenario.MyWorldChicken;
 
-import java.io.File;
 import java.io.InputStream;
 
 public class StarAssault extends Game {

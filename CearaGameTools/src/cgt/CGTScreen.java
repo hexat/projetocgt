@@ -1,10 +1,12 @@
-package cgt.screen;
+package cgt;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import cgt.hud.CGTButtonScreen;
 import cgt.hud.CGTLabel;
+import cgt.screen.CGTImage;
+import cgt.screen.CGTWindow;
 import cgt.util.CGTTexture;
 
 public class CGTScreen extends CGTWindow implements Serializable{
@@ -12,13 +14,18 @@ public class CGTScreen extends CGTWindow implements Serializable{
 	private ArrayList<CGTImage> images;
 	private ArrayList<CGTButtonScreen> buttons;
 	private CGTTexture background;
-	
-	public CGTScreen(CGTTexture texture) {
-		labels = new ArrayList<CGTLabel>();
-		images = new ArrayList<CGTImage>();
-		buttons = new ArrayList<CGTButtonScreen>();
-		background = texture;
-	}
+
+    protected CGTScreen() {
+        labels = new ArrayList<CGTLabel>();
+        images = new ArrayList<CGTImage>();
+        buttons = new ArrayList<CGTButtonScreen>();
+        background = null;
+    }
+
+    protected CGTScreen(CGTTexture texture) {
+        this();
+        background = texture;
+    }
 
 	public ArrayList<CGTLabel> getLabels() {
 		return labels;

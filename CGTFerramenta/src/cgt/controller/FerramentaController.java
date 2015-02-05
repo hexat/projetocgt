@@ -1,20 +1,23 @@
 package cgt.controller;
 
 
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.Config;
-import application.ObjectButton;
-import cgt.core.CGTActor;
-import cgt.core.CGTEnemy;
-import cgt.core.CGTOpposite;
-import cgt.screen.CGTScreen;
+import application.Main;
+import cgt.CGTGame;
+import cgt.CGTGameWorld;
+import cgt.CGTScreen;
 import cgt.util.CGTTexture;
-import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,10 +25,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import util.Dialogs;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TitledPane;
+import util.DialogsUtil;
+import util.F;
 
 public class FerramentaController implements Initializable
 {
@@ -34,9 +38,11 @@ public class FerramentaController implements Initializable
     @FXML
     private Button btnMyWorld;
     @FXML
-    private VBox anchorConfig;
+    private Accordion configAccordion;
     @FXML
     private MenuItem menuExportar;
+
+    @FXML private TabPane tabFerramenta;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -51,8 +57,8 @@ public class FerramentaController implements Initializable
 
     @FXML
     public void clickMyWorld() {
-        anchorConfig.getChildren().clear();
-        Accordion accordion = null;
+        configAccordion.getPanes().clear();
+        TitledPane accordion = null;
 
         try {
             accordion = FXMLLoader.load(getClass().getResource("/view/ConfigWorld.fxml"));
@@ -60,10 +66,47 @@ public class FerramentaController implements Initializable
             e.printStackTrace();
         }
         if (accordion != null) {
-            anchorConfig.getChildren().add(accordion);
+            configAccordion.getPanes().add(accordion);
         }
     }
 
+    @FXML public void createWorld() {
+        CGTGameWorld world = CGTGame.createWorld("teste");
+
+
+        Optional<String> response = Dialogs.create()
+                .owner(Main.getApp())
+                .title("Nome para o mundo")
+                .message("Digite um nome para o mundo:")
+                .showTextInput("Mundo ");
+
+        if (response.isPresent()) {
+            Tab aba = new Tab(response.get());
+            aba.setOnCloseRequest(new EventHandler<Event>() {
+                @Override
+                public void handle(Event event) {
+                    Action response = Dialogs.create()
+                            .owner(Main.getApp())
+                            .title("Excluir mundo")
+                            .masthead("Ao fechar esta aba você esterá removendo este mundo do jogo.")
+                            .message("Tem certeza que deseja fazer isso?")
+                            .actions(Dialog.ACTION_OK, Dialog.ACTION_CANCEL)
+                            .showConfirm();
+
+                    if (response == Dialog.ACTION_OK) {
+                        if( tabFerramenta.getTabs().contains( event.getSource() ) ) {
+                            tabFerramenta.getTabs().remove(event.getSource());
+                        }
+                    } else {
+
+                    }
+                    event.consume();
+                }
+            });
+            aba.setContent(WorldController.getNode(world));
+            tabFerramenta.getTabs().add(aba);
+        }
+    }
     
     @FXML
     public void menuExportarAction() {
@@ -71,9 +114,7 @@ public class FerramentaController implements Initializable
     }
 
     @FXML public void testeBackGame() {
-        File back = Dialogs.showOpenDialog("Escolha background");
-        Config.getGame().setMenu(new CGTScreen(new CGTTexture(Config.createImg(back))));
-        System.out.println(Config.getGame());
+        File back = DialogsUtil.showOpenDialog("Escolha background");
 
         Config.export();
     }

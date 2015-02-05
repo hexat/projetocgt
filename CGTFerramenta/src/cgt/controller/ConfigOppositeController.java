@@ -9,6 +9,7 @@ import cgt.core.CGTOpposite;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.TitledPane;
 
 /**
  * Created by infolev on 02/02/15.
@@ -16,8 +17,8 @@ import javafx.scene.Parent;
 public class ConfigOppositeController implements Initializable {
     private CGTOpposite opposite;
 
-    public static Parent getNode(CGTOpposite object) {
-        Parent res = null;
+    public static TitledPane getNode(CGTOpposite object) {
+        TitledPane res = null;
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigOpposite.fxml"));
         try {
             res = xml.load();

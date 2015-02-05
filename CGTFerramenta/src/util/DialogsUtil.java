@@ -8,7 +8,7 @@ import javafx.stage.FileChooser;
 /**
  * Created by Luan on 29/01/2015.
  */
-public class Dialogs {
+public class DialogsUtil {
 
     private static FileChooser fileChooser = null;
 

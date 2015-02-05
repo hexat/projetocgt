@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 
 public class ConfigPersonagemController {
@@ -76,9 +77,9 @@ public class ConfigPersonagemController {
         return actor;
     }
 
-    public static Parent getNode(CGTActor object) {
+    public static TitledPane getNode(CGTActor object) {
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigPersonagem.fxml"));
-        Parent el = null;
+        TitledPane el = null;
         try {
             el = xml.load();
             ConfigPersonagemController controller = xml.getController();

@@ -5,21 +5,18 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.Config;
 import application.Main;
 import cgt.core.CGTGameObject;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import cgt.util.CGTSound;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.stage.FileChooser;
-import util.Dialogs;
+import util.DialogsUtil;
 
 public class ConfigGameObjectController implements Initializable {
 	@FXML private TextField txtProcuraSom;
@@ -28,9 +25,9 @@ public class ConfigGameObjectController implements Initializable {
 	
 	private CGTGameObject gameObject;
 
-    public static Parent getNode(CGTGameObject object) {
+    public static TitledPane getNode(CGTGameObject object) {
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigGameObject.fxml"));
-        Parent el = null;
+        TitledPane el = null;
         try {
             el = xml.load();
             ConfigGameObjectController controller = xml.getController();
@@ -52,16 +49,10 @@ public class ConfigGameObjectController implements Initializable {
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo WAV (*.wav)", "*.wav");
 		FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("Arquivo OGG (*.ogg)", "*.ogg");
 
-		File chosenFile = Dialogs.showOpenDialog("Som de Colisão", extFilter, extFilter2);
+		File chosenFile = DialogsUtil.showOpenDialog("Som de Colisão", extFilter, extFilter2);
 		String path;
 		if(chosenFile != null) {
 		    path = chosenFile.getPath();
-//            try {
-//                Config.getWorld().setSoundLose(new CGTSound(Config.createAudio(chosenFile)));
-//            } catch (IOException e) {
-//                Dialogs.showErrorDialog();
-//                e.printStackTrace();
-//            }
         } else {
 		    path = null;
 		}
@@ -77,7 +68,7 @@ public class ConfigGameObjectController implements Initializable {
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo WAV (*.wav)", "*.wav");
 		FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("Arquivo OGG (*.ogg)", "*.ogg");
 
-		File chosenFile = Dialogs.showOpenDialog("Selecione o som de colisão", extFilter, extFilter2);
+		File chosenFile = DialogsUtil.showOpenDialog("Selecione o som de colisão", extFilter, extFilter2);
 		String path;
 		if(chosenFile != null) {
 		    path = chosenFile.getPath();

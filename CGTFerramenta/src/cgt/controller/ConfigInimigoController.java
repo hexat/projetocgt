@@ -9,14 +9,15 @@ import cgt.core.CGTEnemy;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.TitledPane;
 
 public class ConfigInimigoController implements Initializable {
 
     private CGTEnemy enemy;
 
-    public static Parent getNode(CGTEnemy object) {
+    public static TitledPane getNode(CGTEnemy object) {
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigInimigo.fxml"));
-        Parent el = null;
+        TitledPane el = null;
         try {
             el = xml.load();
             ConfigInimigoController controller = xml.getController();
