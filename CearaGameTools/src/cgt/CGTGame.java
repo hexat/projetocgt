@@ -126,6 +126,14 @@ public class CGTGame implements Serializable {
 		}
 		return cgtGame;
 	}
+
+    public boolean removeWorld(CGTGameWorld world) {
+        return worlds.remove(world);
+    }
+
+    public boolean removeScreen(CGTScreen screen) {
+        return screens.remove(screen);
+    }
 }
 
 
