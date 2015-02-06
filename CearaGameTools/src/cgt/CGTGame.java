@@ -31,7 +31,7 @@ public class CGTGame implements Serializable {
     }
 
 	public CGTWindow getStartWindow() {
-		return getWindow(startWindowId);
+        return getWindow(startWindowId);
 	}
 
     public void setStartWindowId(String startWindowId) {
@@ -49,6 +49,7 @@ public class CGTGame implements Serializable {
         if (ok) {
             CGTScreen screen = new CGTScreen();
             screen.setId(id);
+            if (startWindowId == null) startWindowId = id;
             screens.add(screen);
             return screen;
         }
@@ -67,6 +68,7 @@ public class CGTGame implements Serializable {
 
         if (ok) {
             CGTGameWorld world = new CGTGameWorld();
+            if (startWindowId == null) startWindowId = id;
             world.setId(id);
             worlds.add(world);
             return world;

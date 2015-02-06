@@ -1,6 +1,8 @@
 package cgt.screen;
 
-public abstract class CGTWindow {
+import java.io.Serializable;
+
+public abstract class CGTWindow implements Serializable {
     private String id;
 
     public void setId(String id) {

@@ -9,6 +9,7 @@ import javafx.stage.FileChooser;
  * Created by Luan on 29/01/2015.
  */
 public class DialogsUtil {
+    public static final FileChooser.ExtensionFilter IMG_FILTER = new FileChooser.ExtensionFilter("Arquivo PNG (*.png)", "*.png");
 
     private static FileChooser fileChooser = null;
 

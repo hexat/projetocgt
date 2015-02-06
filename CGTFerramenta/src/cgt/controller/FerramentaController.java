@@ -103,6 +103,7 @@ public class FerramentaController implements Initializable
                 });
                 aba.setContent(WorldController.getNode(world));
                 tabFerramenta.getTabs().add(aba);
+                tabFerramenta.getSelectionModel().select(aba);
             } else {
                 Dialogs.create()
                         .owner(Main.getApp())
@@ -149,6 +150,7 @@ public class FerramentaController implements Initializable
                 });
                 aba.setContent(ScreenController.getNode(screen));
                 tabFerramenta.getTabs().add(aba);
+                tabFerramenta.getSelectionModel().select(aba);
             } else {
                 Dialogs.create()
                         .owner(Main.getApp())
