@@ -1,4 +1,4 @@
-package cgt;
+package cgt.game;
 
 import java.io.Serializable;
 import java.util.ArrayList;

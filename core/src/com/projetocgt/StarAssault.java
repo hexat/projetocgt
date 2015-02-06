@@ -1,8 +1,8 @@
 package com.projetocgt;
 
-import cgt.CGTGame;
-import cgt.CGTGameWorld;
-import cgt.CGTScreen;
+import cgt.game.CGTGame;
+import cgt.game.CGTGameWorld;
+import cgt.game.CGTScreen;
 import cgt.screen.CGTWindow;
 import cgt.util.ScreenHandleInterface;
 

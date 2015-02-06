@@ -3,7 +3,7 @@ package cgt.controller;
 import java.io.IOException;
 
 import application.Config;
-import cgt.util.CGTSpriteSheet;
+import cgt.game.CGTSpriteSheet;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -37,20 +37,11 @@ public class MenuBarController {
 		
 		GridPane grid = new GridPane();
 		
-		try {
-			grid = FXMLLoader.load(getClass().getResource("/view/SpriteConfig.fxml"));
-			Stage stage = new Stage();
-            stage.setTitle("Configuração Sprite Sheet");
-            stage.setScene(new Scene(grid, 450, 450));
-            stage.show();
-
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-
+        grid = ConfigSpriteController.getNode(null);
+        Stage stage = new Stage();
+        stage.setTitle("Configuração Sprite Sheet");
+        stage.setScene(new Scene(grid, 450, 450));
+        stage.show();
 	}
 	@FXML public void editSpriteSheet(){
 		ListView listaSprites = new ListView<CGTSpriteSheet>();

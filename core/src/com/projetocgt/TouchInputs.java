@@ -1,13 +1,10 @@
 package com.projetocgt;
 
-import cgt.CGTGameWorld;
+import cgt.game.CGTGameWorld;
 import cgt.policy.InputPolicy;
 import cgt.policy.StatePolicy;
-import cgt.screen.CGTWindow;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.cenario.WorldController;
 

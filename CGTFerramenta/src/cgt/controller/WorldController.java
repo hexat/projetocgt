@@ -11,20 +11,16 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.Main;
-import cgt.CGTGameWorld;
+import cgt.game.CGTGameWorld;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
-import application.Config;
 import application.ObjectButton;
 import cgt.core.CGTActor;
-import cgt.core.CGTEnemy;
 import cgt.core.CGTOpposite;
 
 public class WorldController implements Initializable {

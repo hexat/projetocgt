@@ -3,7 +3,7 @@ package com.projetocgt.cenario;
 import java.util.ArrayList;
 import java.util.Random;
 
-import cgt.CGTGameWorld;
+import cgt.game.CGTGameWorld;
 import cgt.behaviors.Behavior;
 import cgt.behaviors.Direction;
 import cgt.behaviors.Fade;

@@ -95,13 +95,12 @@ public abstract class CGTGameObject implements Serializable {
 		for (AnimationMap a : clone.animations) {
 			CGTAnimation newAnis[] = new CGTAnimation[a.getAnimations().size()];
 			for (int i = 0; i < a.getAnimations().size(); i++) {
-				CGTAnimation novo = new CGTAnimation(this, a.getAnimations().get(i).getSpriteSheet());
+				CGTAnimation novo = new CGTAnimation(this, a.getAnimations().get(i).getSpriteSheet().getId());
 				novo.setAnimationPolicy(a.getAnimations().get(i).getAnimationPolicy());
 				novo.setEndingFrame(a.getAnimations().get(i).getEndingFrame());
 				novo.setFlipHorizontal(a.getAnimations().get(i).isFlipHorizontal());
 				novo.setFlipVertical(a.getAnimations().get(i).isFlipVertical());
 				novo.setInitialFrame(a.getAnimations().get(i).getInitialFrame());
-				novo.setSpriteSheet(a.getAnimations().get(i).getSpriteSheet());
 				novo.setSpriteVelocity(a.getAnimations().get(i).getSpriteVelocity());
 				newAnis[i] = novo;
 			}

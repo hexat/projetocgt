@@ -1,4 +1,4 @@
-package cgt;
+package cgt.game;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,12 +15,14 @@ import cgt.screen.CGTWindow;
 public class CGTGame implements Serializable {
     private static CGTGame instance = null;
 
-    private List<CGTScreen> screens = new ArrayList<CGTScreen>();
-    private List<CGTGameWorld> worlds = new ArrayList<CGTGameWorld>();
+    private final SpriteSheetDB spriteDB;
+    private final List<CGTScreen> screens = new ArrayList<CGTScreen>();
+    private final List<CGTGameWorld> worlds = new ArrayList<CGTGameWorld>();
 	private String startWindowId;
 
     private CGTGame() {
         setStartWindowId(null);
+        spriteDB = new SpriteSheetDB();
 	}
 
     public static CGTGame get() {
@@ -148,6 +150,10 @@ public class CGTGame implements Serializable {
         }
 
         return res;
+    }
+
+    public SpriteSheetDB getSpriteDB() {
+        return spriteDB;
     }
 }
 
