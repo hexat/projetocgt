@@ -17,7 +17,7 @@
     <items>
         <TabPane fx:id="tabFerramenta" prefHeight="569.0" prefWidth="315.0">
           <tabs>
-            <Tab closable="false" text="CGT Game">
+            <Tab fx:id="tabGame" closable="false" text="CGT Game">
                  <content>
                     <VBox prefHeight="200.0" prefWidth="100.0">
                        <children>

@@ -43,6 +43,7 @@ public class Config {
                 String filename = System.currentTimeMillis() + ".png";
                 FileUtils.copyFile(src, new File(BASE + BASE_IMG + filename));
                 res = new CGTFile(BASE_IMG + filename);
+                res.setFilename(src.getName());
             } catch (IOException e) {
                 DialogsUtil.showErrorDialog();
                 e.printStackTrace();

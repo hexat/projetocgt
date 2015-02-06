@@ -19,7 +19,7 @@ public class CGTGame implements Serializable {
     private List<CGTGameWorld> worlds = new ArrayList<CGTGameWorld>();
 	private String startWindowId;
 
-	private CGTGame() {
+    private CGTGame() {
         setStartWindowId(null);
 	}
 
@@ -135,6 +135,19 @@ public class CGTGame implements Serializable {
 
     public boolean removeScreen(CGTScreen screen) {
         return screens.remove(screen);
+    }
+
+    public List<String> getIds() {
+        List<String> res = new ArrayList<String>(screens.size()+worlds.size());
+
+        for (CGTScreen s : screens) {
+            res.add(s.getId());
+        }
+        for (CGTGameWorld w : worlds) {
+            res.add(w.getId());
+        }
+
+        return res;
     }
 }
 

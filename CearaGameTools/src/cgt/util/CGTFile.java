@@ -8,15 +8,24 @@ import com.badlogic.gdx.files.FileHandle;
 
 public class CGTFile implements Serializable {
 
+    private String filename;
 	private File file;
 	private FileHandle fileHandle;
 	
-	public CGTFile(String filename) {
-		file = new File(filename);
+	public CGTFile(String filepath) {
+		file = new File(filepath);
 		fileHandle = null;
 	}
-	
-	public File getFile() {
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public File getFile() {
 		return file;
 	}
 	

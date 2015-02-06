@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="509.0" text="Configuração Screen" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="cgt.controller.ConfigScreenController">
+<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="509.0" text="Configuração Screen" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.ConfigScreenController">
   <content>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="67.0" prefWidth="598.0">
          <children>
@@ -24,8 +24,8 @@
                   <Label text="Background" />
                   <Label text="ID" GridPane.rowIndex="1" />
                   <TextField fx:id="txtBackScreen" GridPane.columnIndex="1" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button mnemonicParsing="false" text="Pesquisar" GridPane.columnIndex="3" onAction="#btnChooseBackScreen"/>
+                  <TextField fx:id="txtScreenId" onAction="#teste" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#btnChooseBackScreen" text="Pesquisar" GridPane.columnIndex="3" />
                </children>
             </GridPane>
          </children></AnchorPane>

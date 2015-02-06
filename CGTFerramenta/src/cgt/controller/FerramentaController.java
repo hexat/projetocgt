@@ -39,6 +39,8 @@ public class FerramentaController implements Initializable
     @FXML
     private MenuItem menuExportar;
 
+    @FXML private Tab tabGame;
+
     @FXML private TabPane tabFerramenta;
 
     @Override
@@ -50,6 +52,15 @@ public class FerramentaController implements Initializable
 //                System.out.println("Tetstet ");
 //            }
 //        });
+        tabGame.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                if (tabGame.isSelected()) {
+                    configAccordion.getPanes().clear();
+                    configAccordion.getPanes().add(ConfigGameController.getNode());
+                }
+            }
+        });
     }
 
     @FXML
@@ -78,7 +89,7 @@ public class FerramentaController implements Initializable
             String id = response.get().trim();
             final CGTGameWorld world = Config.getGame().createWorld(id);
             if (world != null) {
-                Tab aba = new Tab(response.get());
+                final Tab aba = new Tab(response.get());
                 aba.setOnCloseRequest(new EventHandler<Event>() {
                     @Override
                     public void handle(Event event) {
@@ -102,6 +113,15 @@ public class FerramentaController implements Initializable
                     }
                 });
                 aba.setContent(WorldController.getNode(world));
+                aba.setOnSelectionChanged(new EventHandler<Event>() {
+                    @Override
+                    public void handle(Event event) {
+                        if (aba.isSelected()) {
+                            configAccordion.getPanes().clear();
+                            configAccordion.getPanes().add(ConfigWorldController.getNode(world));
+                        }
+                    }
+                });
                 tabFerramenta.getTabs().add(aba);
                 tabFerramenta.getSelectionModel().select(aba);
             } else {
@@ -149,6 +169,15 @@ public class FerramentaController implements Initializable
                     }
                 });
                 aba.setContent(ScreenController.getNode(screen));
+                aba.setOnSelectionChanged(new EventHandler<Event>() {
+                    @Override
+                    public void handle(Event event) {
+                        if (((Tab) event.getSource()).isSelected()) {
+                            configAccordion.getPanes().clear();
+                            configAccordion.getPanes().add(ConfigScreenController.getNode(screen));
+                        }
+                    }
+                });
                 tabFerramenta.getTabs().add(aba);
                 tabFerramenta.getSelectionModel().select(aba);
             } else {

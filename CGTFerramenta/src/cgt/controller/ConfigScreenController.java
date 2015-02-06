@@ -22,12 +22,12 @@ import util.DialogsUtil;
  */
 public class ConfigScreenController implements Initializable {
     @FXML private TextField txtBackScreen;
+    @FXML private TextField txtScreenId;
 
     private CGTScreen screen;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
 
     @FXML public void btnChooseBackScreen() {
@@ -40,6 +40,15 @@ public class ConfigScreenController implements Initializable {
 
     public void setScreen(CGTScreen screen) {
         this.screen = screen;
+        txtScreenId.setText(screen.getId());
+        if (screen.getBackground() != null) {
+            txtBackScreen.setText(screen.getBackground().getFile().getFilename());
+        }
+
+    }
+
+    @FXML public void teste() {
+        System.out.println("teste");
     }
 
     public CGTScreen getScreen() {
