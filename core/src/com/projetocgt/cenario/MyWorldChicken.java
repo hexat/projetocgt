@@ -26,7 +26,7 @@
 //import cgt.screen.CGTDialog;
 //import cgt.game.CGTScreen;
 //import cgt.unit.Action;
-//import cgt.util.CGTAnimation;
+//import cgt.core.CGTAnimation;
 //import cgt.util.CGTFile;
 //import cgt.util.CGTSound;
 //import cgt.game.CGTSpriteSheet;

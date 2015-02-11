@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MenuBarController {
@@ -39,15 +40,17 @@ public class MenuBarController {
 		
         grid = ConfigSpriteController.getNode(null);
         Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Configuração Sprite Sheet");
-        stage.setScene(new Scene(grid, 450, 450));
+            stage.setScene(new Scene(grid, 450, 450));
         stage.show();
 	}
 	@FXML public void editSpriteSheet(){
-		ListView listaSprites = new ListView<CGTSpriteSheet>();
+		ListView listaSprites = null;
 		try {
 			listaSprites = FXMLLoader.load(getClass().getResource("/view/listaSprites.fxml"));
 			Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Editar Sprite Sheet");
             stage.setScene(new Scene(listaSprites, 450, 450));
             stage.show();

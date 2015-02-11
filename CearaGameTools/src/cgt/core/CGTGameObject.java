@@ -9,10 +9,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import cgt.policy.StatePolicy;
-import cgt.unit.LabelID;
 import cgt.util.AnimationMap;
-import cgt.util.CGTAnimation;
-import cgt.util.AnimationHandle;
 import cgt.util.CGTSound;
 
 import com.badlogic.gdx.math.Vector2;
@@ -95,7 +92,8 @@ public abstract class CGTGameObject implements Serializable {
 		for (AnimationMap a : clone.animations) {
 			CGTAnimation newAnis[] = new CGTAnimation[a.getAnimations().size()];
 			for (int i = 0; i < a.getAnimations().size(); i++) {
-				CGTAnimation novo = new CGTAnimation(this, a.getAnimations().get(i).getSpriteSheet().getId());
+				CGTAnimation novo = new CGTAnimation(a.getAnimations().get(i).getSpriteSheet().getId());
+                novo.setOwner(this);
 				novo.setAnimationPolicy(a.getAnimations().get(i).getAnimationPolicy());
 				novo.setEndingFrame(a.getAnimations().get(i).getEndingFrame());
 				novo.setFlipHorizontal(a.getAnimations().get(i).isFlipHorizontal());
@@ -392,6 +390,7 @@ public abstract class CGTGameObject implements Serializable {
 	}
 
 	public void addAnimation(StatePolicy state, CGTAnimation ani) {
+        ani.setOwner(this);
 		for (AnimationMap a : animations) {
 			if (a.getStatePolicy() == state) {
 				a.addAnimation(ani);

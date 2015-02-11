@@ -4,6 +4,7 @@ import java.io.File;
 
 import application.Main;
 import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
 /**
  * Created by Luan on 29/01/2015.
@@ -17,7 +18,7 @@ public class DialogsUtil {
         System.out.println("Error");
     }
 
-    public static File showOpenDialog(String title, FileChooser.ExtensionFilter... filters) {
+    private static File sop(String title, Window owner, FileChooser.ExtensionFilter... filters) {
         init();
 
         fileChooser.setTitle(title);
@@ -26,7 +27,19 @@ public class DialogsUtil {
             fileChooser.getExtensionFilters().add(f);
         }
 
-        return fileChooser.showOpenDialog(Main.getApp());
+        if (owner == null) {
+            return fileChooser.showOpenDialog(Main.getApp());
+        } else {
+            return fileChooser.showOpenDialog(owner);
+        }
+    }
+
+    public static File showOpenDialog(String title, FileChooser.ExtensionFilter... filters) {
+        return sop(title,null,filters);
+    }
+
+    public static File showOpenDialog(String title, Window owner, FileChooser.ExtensionFilter... filters) {
+        return sop(title,owner,filters);
     }
 
     private static void init() {

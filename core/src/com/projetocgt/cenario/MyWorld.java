@@ -21,7 +21,7 @@
 //import cgt.policy.InputPolicy;
 //import cgt.policy.MovementPolicy;
 //import cgt.policy.StatePolicy;
-//import cgt.util.CGTAnimation;
+//import cgt.core.CGTAnimation;
 //import cgt.util.CGTSound;
 //import cgt.util.CGTTexture;
 //import cgt.util.ProjectileOrientation;

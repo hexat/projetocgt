@@ -1,5 +1,7 @@
 package cgt.controller;
 
+import org.controlsfx.dialog.Dialogs;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import util.DialogsUtil;
 
 /**
@@ -22,6 +25,10 @@ import util.DialogsUtil;
  */
 public class ConfigSpriteController implements Initializable {
     private CGTSpriteSheet spriteSheet;
+
+    private Stage stage;
+
+    @FXML private TextField txtImgName;
     @FXML private TextField txtNameSprite;
     @FXML private TextField txtNumLines;
     @FXML private TextField txtNumCol;
@@ -31,7 +38,6 @@ public class ConfigSpriteController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
 
     @FXML public void addNewSprite() {
@@ -46,6 +52,9 @@ public class ConfigSpriteController implements Initializable {
                 spriteSheet.setColumns(Integer.parseInt(txtNumCol.getText()));
                 spriteSheet.setRows(Integer.parseInt(txtNumLines.getText()));
             }
+            ((Stage)txtImgName.getScene().getWindow()).close();
+        } else {
+            Dialogs.create().message("Preencha todos os campos").showError();
         }
     }
 
@@ -56,9 +65,15 @@ public class ConfigSpriteController implements Initializable {
     }
 
     @FXML public void setTextureSprite() {
-        File file = DialogsUtil.showOpenDialog("Selecione o Sprite", DialogsUtil.IMG_FILTER);
+        File file = DialogsUtil.showOpenDialog("Selecione o Sprite", txtImgName.getScene().getWindow(), DialogsUtil.IMG_FILTER);
 
         imgFile = file;
+
+        if (imgFile != null) {
+            txtImgName.setText(imgFile.getName());
+        } else {
+            txtImgName.setText(imgFile.getName());
+        }
     }
 
     public void setSpriteSheet(CGTSpriteSheet spriteSheet) {

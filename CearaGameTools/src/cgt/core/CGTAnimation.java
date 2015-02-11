@@ -1,4 +1,4 @@
-package cgt.util;
+package cgt.core;
 
 import java.io.Serializable;
 
@@ -6,6 +6,7 @@ import cgt.core.CGTGameObject;
 import cgt.game.CGTGame;
 import cgt.game.CGTSpriteSheet;
 import cgt.game.SpriteSheetDB;
+import cgt.util.AnimationHandle;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
@@ -22,8 +23,7 @@ public class CGTAnimation implements Serializable{
 	private PlayMode animationPolicy;
 	private AnimationHandle animation;
 
-	public CGTAnimation(CGTGameObject object, String spriteSheetId) {
-		owner = object;
+	public CGTAnimation(String spriteSheetId) {
 		this.spriteSheetId = spriteSheetId;
 		spriteVelocity = 1;
 		flipHorizontal = false;
@@ -41,7 +41,7 @@ public class CGTAnimation implements Serializable{
 		return owner;
 	}
 
-	public void setOwner(CGTGameObject owner) {
+	protected void setOwner(CGTGameObject owner) {
 		this.owner = owner;
 	}
 

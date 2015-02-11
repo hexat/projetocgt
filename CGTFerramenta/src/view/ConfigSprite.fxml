@@ -23,7 +23,7 @@
       <Label text="Nome" GridPane.rowIndex="1" />
       <Label text="Número de linhas" GridPane.rowIndex="2" />
       <Label text="Número de colunas" GridPane.rowIndex="3" />
-      <TextField GridPane.columnIndex="1" />
+      <TextField fx:id="txtImgName" GridPane.columnIndex="1" />
       <TextField fx:id="txtNameSprite" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <TextField fx:id="txtNumLines" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <TextField fx:id="txtNumCol" GridPane.columnIndex="1" GridPane.rowIndex="3" />

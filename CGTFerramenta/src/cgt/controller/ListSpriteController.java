@@ -3,14 +3,12 @@ package cgt.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javax.swing.text.html.ListView;
-
 import application.Config;
-import cgt.game.CGTSpriteSheet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
 
 /**
  * Created by infolev on 06/02/15.
@@ -21,11 +19,12 @@ public class ListSpriteController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<String> a = FXCollections.observableArrayList();
-
+        System.out.println(Config.getGame().getSpriteDB());
+        System.out.println(Config.getGame().getSpriteDB().findAllId());
         for (String s : Config.getGame().getSpriteDB().findAllId()) {
             a.add(s);
         }
 
-        a.setAll(a);
+        listViewSprites.setItems(a);
     }
 }

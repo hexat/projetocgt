@@ -4,8 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
+import cgt.core.CGTAnimation;
 import cgt.policy.StatePolicy;
 
 public class AnimationMap implements Serializable {

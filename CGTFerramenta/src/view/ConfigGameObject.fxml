@@ -127,7 +127,7 @@
                                  <children>
                                     <Label text="Animation" />
                                     <TextField GridPane.columnIndex="1" />
-                                    <Button mnemonicParsing="false" text="+" GridPane.columnIndex="2" />
+                                    <Button mnemonicParsing="false" onAction="#addAnimation" text="+" GridPane.columnIndex="2" />
                                  </children>
                               </GridPane>
                            </children>

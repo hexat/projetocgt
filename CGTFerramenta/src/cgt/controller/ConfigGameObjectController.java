@@ -12,10 +12,14 @@ import javafx.fxml.Initializable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import util.DialogsUtil;
 
 public class ConfigGameObjectController implements Initializable {
@@ -82,6 +86,12 @@ public class ConfigGameObjectController implements Initializable {
 		tableSomColisao.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		tableSomColisao.setItems(listaSomColisao);
 	}
+
+    public void addAnimation() {
+        ConfigAnimationController dialog = new ConfigAnimationController(gameObject);
+
+        dialog.show();
+    }
 
     public void setGameObject(CGTGameObject gameObject) {
         this.gameObject = gameObject;
