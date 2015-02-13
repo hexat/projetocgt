@@ -44,7 +44,7 @@
                                     <Label text="Som de morte" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <TextField fx:id="txtProcuraSom" prefHeight="26.0" prefWidth="220.0" GridPane.columnIndex="2" />
                                     <Button mnemonicParsing="false" onAction="#btnProcurarSomColisao" text="+" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                    <Button mnemonicParsing="false" text="+" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                    <Button mnemonicParsing="false" onAction="#testeteste" text="+" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                     <Button mnemonicParsing="false" text="-" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                                     <Button mnemonicParsing="false" text="-" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                                     <TableView fx:id="tableSomColisao" prefHeight="44.0" prefWidth="376.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="2">
@@ -52,12 +52,8 @@
                                         <TableColumn fx:id="tableColumn" prefWidth="375.0" text="Som colisão" />
                                       </columns>
                                     </TableView>
-                                    <TableView prefHeight="44.0" prefWidth="376.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="4">
-                                      <columns>
-                                        <TableColumn prefWidth="375.0" text="Som de morte" />
-                                      </columns>
-                                    </TableView>
                                     <Button mnemonicParsing="false" onAction="#btnProcurarSom" text="Procurar" GridPane.columnIndex="4" />
+                                    <ListView fx:id="listTeste" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="4" />
                                  </children>
                               </GridPane>
                            </children>

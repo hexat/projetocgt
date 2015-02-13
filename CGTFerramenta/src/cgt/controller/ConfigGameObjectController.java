@@ -15,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
@@ -28,6 +29,7 @@ public class ConfigGameObjectController implements Initializable {
 	@FXML private TextField txtProcuraSom;
     @FXML private TextField txtPositionX;
     @FXML private TextField txtPositionY;
+    @FXML private ListView<String> listTeste;
 
 	@FXML private TableView<String> tableSomColisao;
 	private ObservableList<String> listaSomColisao;
@@ -52,6 +54,10 @@ public class ConfigGameObjectController implements Initializable {
 
         listaSomColisao = FXCollections.observableArrayList();
         tableSomColisao = new TableView<String>();
+    }
+    
+    @FXML public void testeteste() {
+    	listTeste.getItems().add("teste");
     }
 	
 	@FXML public void btnProcurarSom(){
