@@ -5,141 +5,67 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="421.0" text="Configuração Game Object" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.ConfigGameObjectController">
+<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="421.0" text="Configuração Game Object" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.ConfigGameObjectController">
 <content>
-				<ScrollPane hbarPolicy="NEVER" hmax="0.0" prefHeight="542.0" prefWidth="419.0" vmax="1.1">
+				<ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" hmax="0.0" prefHeight="480.0" prefWidth="419.0" vmax="1.1">
 					<content>
-						<GridPane prefHeight="586.0" prefWidth="422.0">
+						<GridPane prefHeight="438.0" prefWidth="419.0">
 							<columnConstraints>
-								<ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+								<ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="117.0" minWidth="10.0" prefWidth="117.0" />
+                  <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="178.0" minWidth="10.0" prefWidth="112.0" />
+                  <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="220.0" minWidth="10.0" prefWidth="114.0" />
+                  <ColumnConstraints />
 							</columnConstraints>
 							<rowConstraints>
 								<RowConstraints maxHeight="355.0" minHeight="10.0" prefHeight="216.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="418.0" minHeight="0.0" prefHeight="247.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="418.0" minHeight="0.0" prefHeight="118.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="355.0" minHeight="10.0" prefHeight="216.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="355.0" minHeight="10.0" prefHeight="216.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="355.0" minHeight="10.0" prefHeight="216.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="355.0" minHeight="10.0" prefHeight="216.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="355.0" minHeight="10.0" prefHeight="216.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="355.0" minHeight="10.0" prefHeight="216.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="355.0" minHeight="10.0" prefHeight="216.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="355.0" minHeight="10.0" prefHeight="216.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="355.0" minHeight="10.0" prefHeight="216.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="418.0" minHeight="0.0" prefHeight="247.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="418.0" minHeight="10.0" prefHeight="247.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="418.0" minHeight="10.0" prefHeight="247.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="418.0" minHeight="10.0" prefHeight="247.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="418.0" minHeight="0.0" prefHeight="118.0" vgrow="SOMETIMES" />
 							</rowConstraints>
-							<children>
-                        <ScrollPane hbarPolicy="NEVER" prefHeight="216.0" prefWidth="519.0">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="208.0" prefWidth="420.0">
-                           <children>
-                              <GridPane layoutX="-1.0" layoutY="5.0" prefHeight="207.0" prefWidth="421.0" AnchorPane.rightAnchor="0.0">
-                                <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="170.0" minWidth="5.0" prefWidth="7.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="211.0" minWidth="10.0" prefWidth="122.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="289.0" minWidth="10.0" prefWidth="177.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="126.0" minWidth="10.0" prefWidth="16.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="175.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="81.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="82.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="51.0" minHeight="7.0" prefHeight="29.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <Label text="Som" GridPane.columnIndex="1" />
-                                    <Label text="Som de colisão" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Label text="Som de morte" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <TextField fx:id="txtProcuraSom" prefHeight="26.0" prefWidth="220.0" GridPane.columnIndex="2" />
-                                    <Button mnemonicParsing="false" onAction="#btnProcurarSomColisao" text="+" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                    <Button mnemonicParsing="false" onAction="#testeteste" text="+" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                    <Button mnemonicParsing="false" text="-" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                    <Button mnemonicParsing="false" text="-" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                                    <TableView fx:id="tableSomColisao" prefHeight="44.0" prefWidth="376.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="2">
-                                      <columns>
-                                        <TableColumn fx:id="tableColumn" prefWidth="375.0" text="Som colisão" />
-                                      </columns>
-                                    </TableView>
-                                    <Button mnemonicParsing="false" onAction="#btnProcurarSom" text="Procurar" GridPane.columnIndex="4" />
-                                    <ListView fx:id="listTeste" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="4" />
-                                 </children>
-                              </GridPane>
-                           </children>
-                            </AnchorPane>
-                          </content>
-                        </ScrollPane>
-                        <ScrollPane hbarPolicy="NEVER" prefHeight="261.0" prefWidth="499.0" GridPane.rowIndex="1">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="229.0" prefWidth="404.0">
-                           <children>
-                              <GridPane layoutX="1.0" prefHeight="228.0" prefWidth="421.0">
-                                <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="0.0" prefWidth="4.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="237.0" minWidth="10.0" prefWidth="120.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="208.0" minWidth="10.0" prefWidth="104.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="95.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="182.0" minWidth="10.0" prefWidth="175.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="67.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <Label text="Posições iniciais" />
-                                    <Label text="Posição" GridPane.rowIndex="2" />
-                                    <Label text="Bounds" GridPane.rowIndex="3" />
-                                    <Label text="Colisão" GridPane.rowIndex="5" />
-                                    <Label text="Velocidade" GridPane.rowIndex="6" />
-                                    <TextField GridPane.columnIndex="1" />
-                                    <TextField GridPane.columnIndex="2" />
-                                    <TextField fx:id="txtPositionX" onAction="#setPosition" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <TextField fx:id="txtPositionY" onAction="#setPosition" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                    <TextField GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                                    <Button mnemonicParsing="false" text="+" GridPane.columnIndex="3" />
-                                    <TableView prefHeight="53.0" prefWidth="374.0" GridPane.columnSpan="4" GridPane.rowIndex="1">
-                                      <columns>
-                                        <TableColumn prefWidth="373.0" text="Posições" />
-                                      </columns>
-                                    </TableView>
-                                    <Label text="State" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                    <ChoiceBox prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                 </children>
-                              </GridPane>
-                           </children>
-                              </AnchorPane>
-                          </content>
-                        </ScrollPane>
-                        <ScrollPane hbarPolicy="NEVER" prefHeight="78.0" prefWidth="422.0" GridPane.rowIndex="2">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="99.0" prefWidth="403.0">
-                           <children>
-                              <GridPane layoutX="2.0" layoutY="1.0" prefHeight="85.0" prefWidth="401.0">
-                                <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="105.0" minWidth="4.0" prefWidth="6.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="114.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="107.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="264.0" minWidth="10.0" prefWidth="257.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="48.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <Label text="Animation" GridPane.columnIndex="1" />
-                                    <TextField prefHeight="26.0" prefWidth="162.0" GridPane.columnIndex="2" />
-                                    <Button mnemonicParsing="false" onAction="#addAnimation" text="+" GridPane.columnIndex="3" />
-                                    <TableView prefHeight="48.0" prefWidth="438.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
-                                      <columns>
-                                        <TableColumn prefWidth="397.0" text="Animations" />
-                                      </columns>
-                                    </TableView>
-                                 </children>
-                              </GridPane>
-                           </children>
-                              </AnchorPane>
-                          </content>
-                        </ScrollPane>
-							</children>
+               <children>
+                  <Label text="Som" />
+                  <Label text="Som de colisão" GridPane.rowIndex="1" />
+                  <Label text="Som de morte" GridPane.rowIndex="3" />
+                  <Label text="Posições Iniciais" GridPane.rowIndex="5" />
+                  <Label text="Posição" GridPane.rowIndex="7" />
+                  <Label text="Bounds" GridPane.rowIndex="8" />
+                  <Label text="Colisão" GridPane.rowIndex="10" />
+                  <Label text="Velocidade" GridPane.rowIndex="11" />
+                  <Label text="Animation" GridPane.rowIndex="12" />
+                  <TextField prefHeight="26.0" prefWidth="193.0" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" text="Pesquisar" GridPane.columnIndex="2" />
+                  <Button mnemonicParsing="false" text="+" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ListView prefHeight="29.0" prefWidth="420.0" GridPane.columnSpan="4" GridPane.rowIndex="2" />
+                  <Button mnemonicParsing="false" text="+" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <ListView prefHeight="29.0" prefWidth="420.0" GridPane.columnSpan="4" GridPane.rowIndex="4" />
+                  <Button mnemonicParsing="false" text="-" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" text="-" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <TextField promptText="x" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField promptText="y" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                  <ListView prefHeight="29.0" prefWidth="420.0" GridPane.columnSpan="3" GridPane.rowIndex="6" />
+                  <TextField promptText="x" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <TextField promptText="y" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                  <Label text="State" GridPane.rowIndex="9" />
+                  <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                  <TextField promptText="x" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                  <TextField promptText="y" GridPane.columnIndex="2" GridPane.rowIndex="11" />
+                  <TextField prefHeight="26.0" prefWidth="193.0" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                  <Button mnemonicParsing="false" text="+" GridPane.columnIndex="2" GridPane.rowIndex="12" />
+                  <ListView prefHeight="79.0" prefWidth="419.0" GridPane.columnSpan="4" GridPane.rowIndex="13" />
+               </children>
 						</GridPane>
 					</content>
 				</ScrollPane>

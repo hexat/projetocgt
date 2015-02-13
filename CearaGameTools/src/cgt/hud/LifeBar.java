@@ -1,11 +1,8 @@
 package cgt.hud;
 
-import cgt.core.CGTGameObject;
 import cgt.util.CGTTexture;
 
-
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public abstract class LifeBar extends HUDComponent {
 	protected CGTTexture bar;
