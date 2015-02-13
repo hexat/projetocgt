@@ -58,4 +58,9 @@ public class CGTScreen extends CGTWindow implements Serializable{
 	public void setBackground(CGTTexture background) {
 		this.background = background;
 	}
+
+    @Override
+    public boolean validate() {
+        return getBackground() != null;
+    }
 }

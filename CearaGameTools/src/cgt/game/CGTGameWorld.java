@@ -392,5 +392,9 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		return null;
 	}
 
+    @Override
+    public boolean validate() {
+        return getBackground() != null && getActor() != null && getActor().getPosition() != null && getActor().hasAnimation() && getActor().getBounds().width > 0;
+    }
 }
  

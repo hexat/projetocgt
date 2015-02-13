@@ -1,30 +1,72 @@
 package cgt.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import cgt.game.CGTSpriteSheet;
 import application.Config;
+import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * Created by infolev on 06/02/15.
  */
-public class ListSpriteController implements Initializable {
-    @FXML private ListView listViewSprites;
+public class ListSpriteController extends VBox {
+    @FXML private ListView<String> listViewSprites;
+	private Stage stage;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<String> a = FXCollections.observableArrayList();
-        System.out.println(Config.getGame().getSpriteDB());
-        System.out.println(Config.getGame().getSpriteDB().findAllId());
-        for (String s : Config.getGame().getSpriteDB().findAllId()) {
-            a.add(s);
+    public ListSpriteController() {
+    	
+        FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/listaSprites.fxml"));
+        view.setRoot(this);
+        view.setController(this);
+
+        try {
+            view.load();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+        stage = new Stage();
+        stage.setScene(new Scene(this));
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(Main.getApp().getScene().getWindow());
+
+        ObservableList<String> a = FXCollections.observableArrayList(Config.getGame().getSpriteDB().findAllId());
         listViewSprites.setItems(a);
+	}
+    
+    public void editSprite() {
+    	String teste = listViewSprites.getSelectionModel().getSelectedItem();
+    	if (teste != null) {
+    		CGTSpriteSheet sheet = Config.getGame().getSpriteDB().find(teste);
+    		if (sheet != null) {
+    			ConfigSpriteController dialog = new ConfigSpriteController(sheet);
+    			dialog.show();
+    		}
+    	}
     }
+    
+    public void delSprite() {
+    	String teste = listViewSprites.getSelectionModel().getSelectedItem();
+    	if (teste != null) {
+    		if (Config.getGame().getSpriteDB().delete(teste)) {
+    			listViewSprites.getItems().remove(teste);
+    		}
+    	}
+    }
+
+	public void show() {
+		stage.show();
+	}
 }

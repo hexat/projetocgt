@@ -108,6 +108,6 @@ public class CGTAnimation implements Serializable{
 	}
 
 	public CGTSpriteSheet getSpriteSheet() {
-		return CGTGame.get().getSpriteDB().find(spriteSheetId);
+        return CGTGame.get().getSpriteDB().find(spriteSheetId);
 	}
 }

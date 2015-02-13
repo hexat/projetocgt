@@ -12,4 +12,6 @@ public abstract class CGTWindow implements Serializable {
     public String getId() {
         return id;
     }
+
+    public abstract boolean validate();
 }

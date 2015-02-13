@@ -427,5 +427,9 @@ public abstract class CGTGameObject implements Serializable {
 	public boolean isDrawing() {
 		return lastAnimation != null && lastAnimation.getCGTAnimation().isDrawing();
 	}
+	
+	public boolean hasAnimation() {
+		return animations.size() > 0;
+	}
 }
  

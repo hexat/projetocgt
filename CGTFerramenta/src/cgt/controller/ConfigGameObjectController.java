@@ -1,5 +1,7 @@
 package cgt.controller;
 
+import com.badlogic.gdx.math.Vector2;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -24,6 +26,9 @@ import util.DialogsUtil;
 
 public class ConfigGameObjectController implements Initializable {
 	@FXML private TextField txtProcuraSom;
+    @FXML private TextField txtPositionX;
+    @FXML private TextField txtPositionY;
+
 	@FXML private TableView<String> tableSomColisao;
 	private ObservableList<String> listaSomColisao;
 	
@@ -91,6 +96,12 @@ public class ConfigGameObjectController implements Initializable {
         ConfigAnimationController dialog = new ConfigAnimationController(gameObject);
 
         dialog.show();
+    }
+
+    public void setPosition() {
+        int x = txtPositionX.getText().equals("") ? 0 : Integer.parseInt(txtPositionX.getText());
+        int y = txtPositionY.getText().equals("") ? 0 : Integer.parseInt(txtPositionY.getText());
+        gameObject.getInitialPositions().add(new Vector2(x, y));
     }
 
     public void setGameObject(CGTGameObject gameObject) {

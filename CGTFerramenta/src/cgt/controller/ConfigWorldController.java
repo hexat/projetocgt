@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import application.Config;
 import application.Main;
 import cgt.game.CGTGameWorld;
+import cgt.util.CGTTexture;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -48,14 +50,13 @@ public class ConfigWorldController implements Initializable {
 	}
 	
 	public void pesquisarBackground(){
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo PNG (*.png)", "*.png");
+		File chosenFile = DialogsUtil.showOpenDialog("Selecionar background", DialogsUtil.IMG_FILTER);
 
-		File chosenFile = DialogsUtil.showOpenDialog("Selecionar background", extFilter);
-
-		String path = null;
+		String path = "";
 
 		if(chosenFile != null) {
-		    path = chosenFile.getPath();
+            world.setBackground(new CGTTexture(Config.createImg(chosenFile)));
+            path = chosenFile.getName();
 		}
 
 		txtProcuraBack.setText(path);

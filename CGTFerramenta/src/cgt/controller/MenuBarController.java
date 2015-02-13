@@ -1,7 +1,12 @@
 package cgt.controller;
 
+import java.io.File;
 import java.io.IOException;
 
+import application.Main;
+import cgt.screen.CGTWindow;
+import javafx.scene.control.TabPane;
+import util.DialogsUtil;
 import application.Config;
 import cgt.game.CGTSpriteSheet;
 import javafx.fxml.FXML;
@@ -11,6 +16,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import util.ScreenTab;
 
 public class MenuBarController {
 
@@ -21,11 +27,26 @@ public class MenuBarController {
 
 	@FXML
 	public void abrir() {
+        TabPane tabFerramenta = (TabPane) Main.getApp().getScene().lookup("#tabFerramenta");
 
+        File open = DialogsUtil.showOpenDialog("Abrir projeto", DialogsUtil.CGT_FILTER);
+		if (open != null) {
+			Config.unzip(open);
+            for (CGTWindow w : Config.getGame().getWindows()) {
+                ScreenTab tab = new ScreenTab(w);
+
+                tabFerramenta.getTabs().add(tab);
+                tabFerramenta.getSelectionModel().select(tab);
+            }
+		}
 	}
 
 	@FXML
 	public void salvar() {
+		File save = DialogsUtil.showSaveDialog("Salvar projeto");
+		if (save != null) {
+			Config.zip(save);
+		}
 
 	}
 
@@ -35,31 +56,11 @@ public class MenuBarController {
 
 	@FXML
 	public void addSpriteSheet() {
-		
-		GridPane grid = new GridPane();
-		
-        grid = ConfigSpriteController.getNode(null);
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Configuração Sprite Sheet");
-            stage.setScene(new Scene(grid, 450, 450));
-        stage.show();
+		ConfigSpriteController dia =  new ConfigSpriteController(null);
+        dia.show();
 	}
 	@FXML public void editSpriteSheet(){
-		ListView listaSprites = null;
-		try {
-			listaSprites = FXMLLoader.load(getClass().getResource("/view/listaSprites.fxml"));
-			Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Editar Sprite Sheet");
-            stage.setScene(new Scene(listaSprites, 450, 450));
-            stage.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+		new ListSpriteController().show();
 	}
 
 }

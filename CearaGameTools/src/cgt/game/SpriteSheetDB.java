@@ -55,4 +55,8 @@ public class SpriteSheetDB implements Serializable {
         }
         return res;
     }
+
+	public boolean delete(String id) {
+		return spriteSheets.remove(find(id));
+	}
 }

@@ -84,7 +84,6 @@ public class WorldRenderer {
 		this.lastActorPosition = new Vector2();
 		this.spriteBatch = new SpriteBatch();
 		this.personagem = world.getActor();
-
 		rectangleCamera = new Rectangle(camera.position.x - camera.viewportWidth/2, camera.position.y - camera.viewportHeight/2, camera.viewportWidth, camera.viewportHeight);
 		random = new Random();
 
@@ -351,6 +350,7 @@ public class WorldRenderer {
 	}
 
 	public boolean verifyWin(){
+		if (world.getWinCriteria().isEmpty()) return false;
 		boolean win = true;
 
 		for(int index = 0; index<world.getWinCriteria().size() && win; index++){
@@ -511,6 +511,8 @@ public class WorldRenderer {
 	 */
 	private void drawCGTActor() {
 		// Desenha o Actor na cena
+		System.out.println(personagem);
+		System.out.println(personagem.getBounds().height);
 		spriteBatch.setColor(1.0f, 1.0f, 1.0f, 1.0f);
 		spriteBatch.draw(personagem.getAnimation(), personagem.getPosition().x,
 				personagem.getPosition().y, personagem.getBounds().width,

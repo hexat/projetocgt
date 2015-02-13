@@ -7,7 +7,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import cgt.screen.CGTWindow;
 
@@ -128,6 +130,7 @@ public class CGTGame implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+        instance = cgtGame;
 		return cgtGame;
 	}
 
@@ -137,6 +140,22 @@ public class CGTGame implements Serializable {
 
     public boolean removeScreen(CGTScreen screen) {
         return screens.remove(screen);
+    }
+    
+    public boolean remove(CGTWindow window) {
+    	for (CGTGameWorld w : worlds) {
+    		if (w.getId().equals(window.getId())) {
+    			worlds.remove(w);
+    			return true;
+    		}
+    	}
+    	for (CGTScreen s : screens) {
+    		if (s.getId().equals(window.getId())) {
+    			screens.remove(s);
+    			return true;
+    		}
+    	}
+    	return false;
     }
 
     public List<String> getIds() {
@@ -152,9 +171,35 @@ public class CGTGame implements Serializable {
         return res;
     }
 
+    public List<CGTWindow> getWindows() {
+        List<CGTWindow> res = new ArrayList<CGTWindow>();
+        res.addAll(worlds);
+        res.addAll(screens);
+        return res;
+    }
+
     public SpriteSheetDB getSpriteDB() {
         return spriteDB;
     }
+
+    public boolean validate() {
+        for (CGTWindow w : screens) {
+            if (!w.validate()) {
+                return false;
+            }
+        }
+        for (CGTWindow w : worlds) {
+            if (!w.validate()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+	public void removeById(String id) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
 

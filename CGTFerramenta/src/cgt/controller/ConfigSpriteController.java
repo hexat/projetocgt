@@ -1,29 +1,35 @@
 package cgt.controller;
 
-import org.controlsfx.dialog.Dialogs;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import org.controlsfx.dialog.Dialogs;
+
+import util.DialogsUtil;
 import application.Config;
 import application.Main;
 import cgt.game.CGTSpriteSheet;
 import cgt.game.SpriteSheetDB;
 import cgt.util.CGTTexture;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-import util.DialogsUtil;
 
 /**
  * Created by infolev on 06/02/15.
  */
-public class ConfigSpriteController implements Initializable {
+public class ConfigSpriteController extends BorderPane {
     private CGTSpriteSheet spriteSheet;
 
     private Stage stage;
@@ -32,13 +38,36 @@ public class ConfigSpriteController implements Initializable {
     @FXML private TextField txtNameSprite;
     @FXML private TextField txtNumLines;
     @FXML private TextField txtNumCol;
+    @FXML private ImageView imgView;
 
     private File imgFile;
 
+    public ConfigSpriteController(CGTSpriteSheet sheet) {
+    	
+        FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/ConfigSprite.fxml"));
+        view.setRoot(this);
+        view.setController(this);
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-    }
+        try {
+            view.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+
+    	setSpriteSheet(sheet);
+    	txtImgName.setEditable(false);
+        stage = new Stage();
+        stage.setScene(new Scene(this));
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(Main.getApp().getScene().getWindow());
+        getChildren().remove(imgView);
+
+        imgView.fitHeightProperty().bind(stage.heightProperty());
+        imgView.fitWidthProperty().bind(stage.widthProperty());
+        
+        stage.sizeToScene();
+	}
 
     @FXML public void addNewSprite() {
         if (validate()) {
@@ -48,20 +77,27 @@ public class ConfigSpriteController implements Initializable {
                 spriteSheet.setColumns(Integer.parseInt(txtNumCol.getText()));
                 spriteSheet.setRows(Integer.parseInt(txtNumLines.getText()));
             } else {
-                spriteSheet.setTexture(new CGTTexture(Config.createImg(imgFile)));
+            	if (imgFile != null) {
+            		spriteSheet.setTexture(new CGTTexture(Config.createImg(imgFile)));
+            	}
                 spriteSheet.setColumns(Integer.parseInt(txtNumCol.getText()));
                 spriteSheet.setRows(Integer.parseInt(txtNumLines.getText()));
             }
-            ((Stage)txtImgName.getScene().getWindow()).close();
+            stage.close();
         } else {
             Dialogs.create().message("Preencha todos os campos").showError();
         }
     }
 
     private boolean validate() {
-        return (imgFile != null && !txtNameSprite.getText().equals("") && !txtNumCol.getText().equals("")
+    	if (spriteSheet != null) {
+    		return (!txtNumCol.getText().equals("") && !txtNumLines.getText().equals(""));
+    	} else {
+    		return (imgFile != null && !txtNameSprite.getText().equals("") && !txtNumCol.getText().equals("")
                 && !txtNumLines.getText().equals("") && Config.getGame()
                 .getSpriteDB().find(txtNameSprite.getText()) == null);
+    	}
+        
     }
 
     @FXML public void setTextureSprite() {
@@ -71,31 +107,32 @@ public class ConfigSpriteController implements Initializable {
 
         if (imgFile != null) {
             txtImgName.setText(imgFile.getName());
+//          Image image = new Image("file:"+file.getAbsolutePath(), 0, imgView.fitHeightProperty().get(), false, false);
+          Image image = new Image("file:"+file.getAbsolutePath());            
+            imgView.setImage(image);
+            setLeft(imgView);
+            stage.sizeToScene();
         } else {
-            txtImgName.setText(imgFile.getName());
         }
     }
 
+
     public void setSpriteSheet(CGTSpriteSheet spriteSheet) {
         this.spriteSheet = spriteSheet;
+        if (spriteSheet != null) {
+		    txtImgName.setText(spriteSheet.getTexture().getFile().getFilename());
+		    txtNameSprite.setText(spriteSheet.getId());
+		    txtNameSprite.setEditable(false);
+		    txtNumCol.setText(spriteSheet.getColumns()+"");
+		    txtNumLines.setText(spriteSheet.getRows()+"");
+        }
     }
 
     public CGTSpriteSheet getSpriteSheet() {
         return spriteSheet;
     }
 
-    public static GridPane getNode(CGTSpriteSheet o) {
-        GridPane res = null;
-
-        try {
-            FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigSprite.fxml"));
-            res = xml.load();
-            ConfigSpriteController c = xml.getController();
-            c.setSpriteSheet(o);
-        } catch (IOException e) {
-
-        }
-
-        return res;
-    }
+	public void show() {
+		stage.show();
+	}
 }

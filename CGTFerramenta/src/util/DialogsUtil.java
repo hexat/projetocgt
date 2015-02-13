@@ -4,6 +4,7 @@ import java.io.File;
 
 import application.Main;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Window;
 
 /**
@@ -11,6 +12,8 @@ import javafx.stage.Window;
  */
 public class DialogsUtil {
     public static final FileChooser.ExtensionFilter IMG_FILTER = new FileChooser.ExtensionFilter("Arquivo PNG (*.png)", "*.png");
+
+	public static final ExtensionFilter CGT_FILTER = new FileChooser.ExtensionFilter("Projeto CGT (*.pcgt)", "*.pcgt");;
 
     private static FileChooser fileChooser = null;
 
@@ -47,4 +50,11 @@ public class DialogsUtil {
             fileChooser = new FileChooser();
         }
     }
+
+	public static File showSaveDialog(String string) {
+		init();
+        fileChooser.getExtensionFilters().clear();
+        fileChooser.getExtensionFilters().add(CGT_FILTER);
+		return fileChooser.showSaveDialog(Main.getApp());
+	}
 }
