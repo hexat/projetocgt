@@ -3,7 +3,6 @@
 //
 //import java.util.ArrayList;
 //
-//import cgt.CGTGameWorld;
 //import cgt.behaviors.Direction;
 //import cgt.behaviors.Fade;
 //import cgt.behaviors.Sine;
@@ -24,7 +23,6 @@
 //import cgt.policy.StatePolicy;
 //import cgt.util.CGTAnimation;
 //import cgt.util.CGTSound;
-//import cgt.util.CGTSpriteSheet;
 //import cgt.util.CGTTexture;
 //import cgt.util.ProjectileOrientation;
 //import cgt.win.KillAllEnemies;

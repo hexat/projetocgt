@@ -4,9 +4,8 @@ import java.io.Serializable;
 
 import com.badlogic.gdx.math.Rectangle;
 
-import cgt.CGTGame;
-import cgt.CGTGameWorld;
-import cgt.core.CGTActor;
+import cgt.game.CGTGame;
+import cgt.game.CGTGameWorld;
 import cgt.hud.CGTLabel;
 import cgt.policy.WinPolicy;
 

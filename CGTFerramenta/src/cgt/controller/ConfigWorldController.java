@@ -5,10 +5,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import application.Config;
 import application.Main;
-import cgt.CGTGameWorld;
-import cgt.util.CGTTexture;
+import cgt.game.CGTGameWorld;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

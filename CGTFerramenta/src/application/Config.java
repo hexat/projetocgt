@@ -6,8 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import cgt.CGTGame;
-import cgt.CGTGameWorld;
+import cgt.game.CGTGame;
 import cgt.util.CGTFile;
 import util.DialogsUtil;
 

@@ -5,13 +5,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import application.Main;
-import cgt.CGTScreen;
+import cgt.game.CGTScreen;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
-import javafx.scene.control.TitledPane;
 
 /**
  * Created by infolev on 05/02/15.

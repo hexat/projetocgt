@@ -1,4 +1,4 @@
-package cgt;
+package cgt.game;
 
 import com.badlogic.gdx.audio.Music;
 

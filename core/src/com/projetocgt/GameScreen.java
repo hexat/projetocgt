@@ -1,6 +1,6 @@
 package com.projetocgt;
 
-import cgt.CGTGameWorld;
+import cgt.game.CGTGameWorld;
 import cgt.hud.CGTButton;
 import cgt.hud.CGTButtonScreen;
 import cgt.hud.CGTControllerButton;

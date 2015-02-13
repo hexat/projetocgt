@@ -6,13 +6,11 @@ import java.util.Map;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
-import cgt.CGTGameWorld;
+import cgt.game.CGTGameWorld;
 import cgt.core.CGTActor;
-import cgt.core.CGTAddOn;
 import cgt.core.CGTProjectile;
 import cgt.policy.*;
 import cgt.unit.Action;
-import cgt.util.AnimationHandle;
 
 /**
  * Controla os movimentos do mundo e dos personagens

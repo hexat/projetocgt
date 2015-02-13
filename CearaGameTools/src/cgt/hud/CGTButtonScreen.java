@@ -2,7 +2,7 @@ package cgt.hud;
 
 import java.io.Serializable;
 
-import cgt.CGTGame;
+import cgt.game.CGTGame;
 import cgt.screen.CGTWindow;
 
 public class CGTButtonScreen extends CGTButton implements Serializable{

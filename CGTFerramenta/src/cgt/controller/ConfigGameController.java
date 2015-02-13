@@ -6,12 +6,9 @@ import java.util.ResourceBundle;
 
 import application.Config;
 import application.Main;
-import cgt.CGTGame;
-import cgt.screen.CGTWindow;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TitledPane;
 

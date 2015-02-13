@@ -7,12 +7,12 @@ import java.util.ResourceBundle;
 
 import application.Config;
 import application.Main;
-import cgt.CGTScreen;
+import cgt.game.CGTScreen;
 import cgt.util.CGTTexture;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import util.DialogsUtil;
@@ -44,11 +44,17 @@ public class ConfigScreenController implements Initializable {
         if (screen.getBackground() != null) {
             txtBackScreen.setText(screen.getBackground().getFile().getFilename());
         }
-
     }
 
     @FXML public void teste() {
-        System.out.println("teste");
+        String newId = txtScreenId.getText();
+        if (newId != null && !newId.equals("")&& !Config.getGame().getIds().contains(newId)) {
+            screen.setId(newId);
+            ((TabPane)Main.getApp().getScene().lookup("#tabFerramenta")).getSelectionModel().getSelectedItem().setText(newId);
+        } else {
+            txtScreenId.setText(screen.getId());
+        }
+
     }
 
     public CGTScreen getScreen() {

@@ -13,8 +13,8 @@ import java.util.ResourceBundle;
 
 import application.Config;
 import application.Main;
-import cgt.CGTGameWorld;
-import cgt.CGTScreen;
+import cgt.game.CGTGameWorld;
+import cgt.game.CGTScreen;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -28,10 +28,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
 import util.DialogsUtil;
 
-public class FerramentaController implements Initializable
-{
-  
-   
+public class FerramentaController implements Initializable {
     @FXML
     private Button btnMyWorld;
     @FXML

@@ -1,10 +1,9 @@
-package cgt.util;
+package cgt.game;
 
 import java.io.Serializable;
 
 import cgt.core.CGTGameObject;
-
-
+import cgt.util.CGTTexture;
 
 
 public class CGTSpriteSheet implements Serializable{
@@ -12,6 +11,7 @@ public class CGTSpriteSheet implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -6320820212756348146L;
+    private String id;
 	private CGTTexture texture;
 	private int columns;
 	private float velocity;
@@ -20,26 +20,22 @@ public class CGTSpriteSheet implements Serializable{
 	
 	/**
 	 * 
-	 * @param texture - 
-	 * @param owner
+	 * @param texture
 	 */
-	public CGTSpriteSheet(CGTTexture texture) {
+	protected CGTSpriteSheet(CGTTexture texture) {
 		setTexture(texture);
 		this.columns = 1;
 		this.velocity = 1;
 		this.rows = 1;
 	}
 
-	public CGTSpriteSheet(CGTFile file) {
-		setTexture(new CGTTexture(file));
-		this.columns = 1;
-		this.velocity = 1;
-		this.rows = 1;
-	}
-	
-	public CGTSpriteSheet(String filename) {
-		this(new CGTFile(filename));
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
 
 	public void setVelocity(float vel) {
 		velocity = vel;
