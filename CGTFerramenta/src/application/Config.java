@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
 
 import util.DialogsUtil;
@@ -60,6 +62,7 @@ public class Config {
 		String filename = System.currentTimeMillis() + ".wav";
 		FileUtils.copyFile(src, new File(BASE + BASE_AUDIO + filename));
 		res = new CGTFile(BASE_AUDIO + filename);
+		res.setFilename(src.getName());
 		return res;
 	}
 
@@ -114,7 +117,12 @@ public class Config {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		new ZipHelper().extract(inputFile, new File(BASE).getParentFile());
+		try {
+			ZipFile zip = new ZipFile(inputFile);
+			zip.extractAll(new File(BASE).getParentFile().getAbsolutePath());
+		} catch (ZipException e) {
+			e.printStackTrace();
+		}
 		File configWorld = new File(BASE + "config.cgt");
 		if (configWorld.exists()) {
 			System.out.println("okokokok");
@@ -130,4 +138,8 @@ public class Config {
 		}
 	}
 
+	public static void destroy(CGTFile file) {
+		File f = new File(BASE+file.getFile().getPath());
+		f.delete();
+	}
 }

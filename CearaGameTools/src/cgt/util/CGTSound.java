@@ -53,4 +53,8 @@ public class CGTSound implements Serializable
  		res.setVolume(volume);
  		return res;
  	}
+
+	public CGTFile getFile() {
+		return file;
+	}
 }

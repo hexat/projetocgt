@@ -16,6 +16,7 @@ import cgt.core.CGTAnimation;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * Created by infolev on 10/02/15.
@@ -109,6 +111,7 @@ public class ConfigAnimationController extends GridPane {
                 animation.setEndingFrame(new Vector2(Integer.parseInt(txtFrameFinalX.getText()),
                         Integer.parseInt(txtFrameFinalY.getText())));
                 object.addAnimation(boxStates.getValue(), animation);
+                dialogStage.getOnCloseRequest().handle(null);
                 dialogStage.close();
             }
         }
@@ -122,5 +125,9 @@ public class ConfigAnimationController extends GridPane {
 
     public void show() {
         dialogStage.show();
+    }
+
+    public Stage getDialogStage() {
+        return dialogStage;
     }
 }

@@ -12,8 +12,9 @@ import javafx.stage.Window;
  */
 public class DialogsUtil {
     public static final FileChooser.ExtensionFilter IMG_FILTER = new FileChooser.ExtensionFilter("Arquivo PNG (*.png)", "*.png");
+    public static final FileChooser.ExtensionFilter WAV_FILTER = new FileChooser.ExtensionFilter("Arquivo WAV (*.wav)", "*.wav");
 
-	public static final ExtensionFilter CGT_FILTER = new FileChooser.ExtensionFilter("Projeto CGT (*.pcgt)", "*.pcgt");;
+	public static final ExtensionFilter CGT_FILTER = new FileChooser.ExtensionFilter("Projeto CGT (*.pcgt)", "*.pcgt");
 
     private static FileChooser fileChooser = null;
 

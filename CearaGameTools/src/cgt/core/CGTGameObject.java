@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import cgt.policy.StatePolicy;
@@ -28,17 +29,17 @@ public abstract class CGTGameObject implements Serializable {
 	private ArrayList<CGTSound> soundsDie;
 	private ArrayList<CGTSound> soundCollision;
 	private ArrayList<Vector2> initialPositions;
-	private Vector2 position;
+	private Vector2 position; // use in gdx mode
 	private Rectangle bounds; // Size of the game object
 	private Rectangle collision; // Size of the box collider
 	private int speed;
-	private Vector2 velocity;		//Vetor que informa a velocidade do personagem
+	private Vector2 velocity;		// use in gdx mode
 	private int life;
 	private ArrayList<AnimationMap> animations;
 	private String label;
 	private StatePolicy state;
-	private float stateTime = 0;
-	private float posXColider, posYColider;
+	private float stateTime = 0;  //used in gdx mode
+	private float posXColider, posYColider; // used in gdx mode
 	private boolean isPlayingSound;
 	private int delayPlaySound;
 	private CGTAnimation lastAnimation; 
@@ -47,6 +48,7 @@ public abstract class CGTGameObject implements Serializable {
 	private ArrayList<CGTGameObject> objectsToCollide;
 	
 	public CGTGameObject(String label){
+		this();
 		setLabel(label);
 	}
 	
@@ -430,6 +432,20 @@ public abstract class CGTGameObject implements Serializable {
 	
 	public boolean hasAnimation() {
 		return animations.size() > 0;
+	}
+
+	public List<CGTAnimation> getAnimations() {
+		List<CGTAnimation> res = new ArrayList<CGTAnimation>();
+		for (AnimationMap a : animations) {
+			res.addAll(a.getAnimations());
+		}
+		return res;
+	}
+
+	public void removeAnimation(CGTAnimation animation) {
+		for (AnimationMap map : animations) {
+			map.getAnimations().remove(animation);
+		}
 	}
 }
  

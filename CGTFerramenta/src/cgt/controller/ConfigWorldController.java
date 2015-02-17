@@ -26,6 +26,10 @@ public class ConfigWorldController implements Initializable {
 
     public void setWorld(CGTGameWorld world) {
         this.world = world;
+
+        if (world.getBackground() != null) {
+            txtProcuraBack.setText(world.getBackground().getFile().getFilename());
+        }
     }
 
     public CGTGameWorld getWorld() {

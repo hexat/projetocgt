@@ -10,16 +10,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.Accordion?>
 
-<VBox prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.FerramentaController">
-  <children>
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.FerramentaController">
+   <top>
   <fx:include fx:id="menu" source="MenuBar.fxml" />
-  <SplitPane dividerPositions="0.5">
+   </top>
+   <center>
+  <SplitPane dividerPositions="0.65" BorderPane.alignment="CENTER">
     <items>
-        <TabPane fx:id="tabFerramenta" prefHeight="569.0" prefWidth="315.0">
+        <TabPane fx:id="tabFerramenta">
           <tabs>
             <Tab fx:id="tabGame" closable="false" text="CGT Game">
                  <content>
-                    <VBox prefHeight="200.0" prefWidth="100.0">
+                    <VBox>
                        <children>
                           <Button mnemonicParsing="false" onAction="#testeBackGame" text="Button" />
                           <Button mnemonicParsing="false" onAction="#createWorld" text="Criar Mundo" />
@@ -33,5 +35,5 @@
         <Accordion fx:id="configAccordion" />
     </items>
   </SplitPane>
-  </children>
-</VBox>
+   </center>
+</BorderPane>

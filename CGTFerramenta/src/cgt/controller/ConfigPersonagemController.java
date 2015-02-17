@@ -1,11 +1,18 @@
 package cgt.controller;
 
+import cgt.controller.dialogs.ActionDialog;
+import cgt.policy.ActionMovePolicy;
+import cgt.policy.InputPolicy;
+import cgt.unit.Action;
 import com.sun.javafx.collections.SetListenerHelper;
 
 import java.io.IOException;
+import java.util.Map;
 
 import application.Main;
 import cgt.core.CGTActor;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,55 +23,46 @@ import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.WindowEvent;
+import util.ui.ItemViewPane;
 
 public class ConfigPersonagemController {
-	@FXML private ScrollBar scroll;
-	@FXML private Label lblSomDeMorte;
-	@FXML private TextField txtSomDeMorte;
-	@FXML private Button btnProcurarSomColisao;
-	@FXML private Button btnProcurarSomDeMorte;
-	@FXML private Button btnAddSomDeMorte;
-	@FXML private Button btnRemoveSomDeMorte;
-	@FXML private TextField txtSomDeColisao;
-	@FXML private Button btnExcluirSom;
 
-	@FXML private Button btnNovoSomColisao;
-	@FXML private AnchorPane anchorSom;
+	@FXML private VBox panActions;
 
-	@FXML public void addNovoSomColisao(){
-		
-		Button btnAdd = new Button("+");
-		
-		Button btnRemove = new Button("-");
-		Button btnProcurar = new Button("Procurar");
-		TextField txtNovoSom = new TextField();
-		txtNovoSom.setLayoutX(txtSomDeColisao.getLayoutX());
-		txtNovoSom.setLayoutY(txtSomDeColisao.getLayoutY() + 32.0);
-		
-		btnProcurar.setLayoutX(btnProcurarSomColisao.getLayoutX());
-		btnProcurar.setLayoutY(btnProcurarSomColisao.getLayoutY() + 32.0);
-		
-		btnAdd.setLayoutX(btnNovoSomColisao.getLayoutX());
-		btnAdd.setLayoutY(btnNovoSomColisao.getLayoutY() + 32.0);
-		
-		btnRemove.setLayoutX(btnExcluirSom.getLayoutX());
-		btnRemove.setLayoutY(btnExcluirSom.getLayoutY() + 32.0);
-		
-//		anchorSom.setTopAnchor(txtNovoSom,60.0);
-//	    anchorSom.setLeftAnchor(txtNovoSom, 10.0);
-//	    anchorSom.setRightAnchor(txtNovoSom,10.0);
-	     anchorSom.getChildren().addAll(btnAdd,btnRemove,txtNovoSom, btnProcurar);
-	     txtSomDeMorte.setLayoutY(txtSomDeMorte.getLayoutY() + 32.0);
-	     lblSomDeMorte.setLayoutY(lblSomDeMorte.getLayoutY() + 32.0);
-	     btnProcurarSomDeMorte.setLayoutY(btnProcurarSomDeMorte.getLayoutY() + 32.0);
-	     btnAddSomDeMorte.setLayoutY(btnAddSomDeMorte.getLayoutY() +32.0);
-	     btnRemoveSomDeMorte.setLayoutY(btnRemoveSomDeMorte.getLayoutY() + 32.0);		
-		 anchorSom.setPrefHeight(anchorSom.getPrefHeight() + 30);
-		
-		
+	@FXML public void addAction() {
+		ActionDialog dialog = new ActionDialog(actor);
+		dialog.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent event) {
+				updateActions();
+			}
+		});
+		dialog.show();
 	}
 
-    private CGTActor actor;
+	private void updateActions() {
+		panActions.getChildren().clear();
+		final Map<InputPolicy, ActionMovePolicy> actions = actor.getActions();
+		if (actions.size() > 0 ) {
+			for (final InputPolicy input : actions.keySet()) {
+				ItemViewPane pane = new ItemViewPane(input.toString() + " -> " + actions.get(input).toString());
+				pane.getBtnExcluir().setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						actor.removeInputFromAction(input);
+						updateActions();
+					}
+				});
+				panActions.getChildren().add(pane);
+			}
+		} else {
+			panActions.getChildren().add(new Label("Vazio"));
+		}
+	}
+
+	private CGTActor actor;
 
     public void setActor(CGTActor actor) {
         this.actor = actor;

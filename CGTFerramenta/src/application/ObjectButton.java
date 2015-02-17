@@ -22,13 +22,13 @@ import javafx.scene.layout.VBox;
 /**
  * Created by infolev on 02/02/15.
  */
-public class ObjectButton<T extends CGTGameObject> extends Button {
+public class ObjectButton extends Button {
     private final Accordion configAccordion;
-    private T object;
+    private CGTGameObject object;
 
-    public ObjectButton(final T object) {
-        super(object.getLabel());
-        this.object = object;
+    public ObjectButton(CGTGameObject o) {
+        super(o.getLabel());
+        this.object = o;
         configAccordion = (Accordion) Main.getApp().getScene().lookup("#configAccordion");
 
         setOnAction(new EventHandler<ActionEvent>() {
@@ -56,9 +56,5 @@ public class ObjectButton<T extends CGTGameObject> extends Button {
         if (e != null) {
             configAccordion.getPanes().add(e);
         }
-    }
-
-    public Class<?> getObjectClass() {
-        return object.getClass();
     }
 }

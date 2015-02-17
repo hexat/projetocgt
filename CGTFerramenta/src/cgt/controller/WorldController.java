@@ -1,5 +1,9 @@
 package cgt.controller;
 
+import cgt.core.CGTBonus;
+import cgt.core.CGTEnemy;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
@@ -32,7 +36,14 @@ public class WorldController implements Initializable {
     @FXML
     private Button btnOposite;
     @FXML
-    private GridPane gridMundo;
+    private VBox boxActor;
+    @FXML
+    private VBox boxEnemies;
+    @FXML
+    private VBox boxOpposites;
+    @FXML
+    private VBox boxBonus;
+
     private ArrayList<ObjectButton> listaInimigo = new ArrayList<ObjectButton>();
     private ArrayList<ObjectButton> listaOpposite = new ArrayList<ObjectButton>();
 
@@ -72,19 +83,19 @@ public class WorldController implements Initializable {
         if (response.isPresent()) {
             CGTActor actor = new CGTActor(response.get());
             world.setActor(actor);
-            ObjectButton<CGTActor> btn = new ObjectButton<CGTActor>(actor);
-            gridMundo.add(btn, 0, 1);
+            ObjectButton btn = new ObjectButton(actor);
+            boxActor.getChildren().addAll(btn);
         }
     }
 
     @FXML
     public void addEnemyInWorld() {
         if (listaInimigo.size() < 6) {
-//            CGTEnemy e = new CGTEnemy("Inimigo");
-//            Config.getWorld().addEnemy(e);
-//            ObjectButton<CGTEnemy> btn = new ObjectButton<CGTEnemy>(e);
-//            listaInimigo.add(btn);
-//            gridMundo.add(btn, 1, listaInimigo.size() - 1);
+            CGTEnemy e = new CGTEnemy("Inimigo");
+            world.addEnemy(e);
+            ObjectButton btn = new ObjectButton(e);
+            listaInimigo.add(btn);
+            boxEnemies.getChildren().addAll(btn);
         } else {
             System.out.println("Não pode add outro inimigo");
         }
@@ -94,9 +105,9 @@ public class WorldController implements Initializable {
     public void addOpositeInWorld() {
         if (listaOpposite.size() < 6) {
             CGTOpposite o = new CGTOpposite("Opositor");
-            ObjectButton<CGTOpposite> btn = new ObjectButton<CGTOpposite>(o);
+            ObjectButton btn = new ObjectButton(o);
             listaOpposite.add(btn);
-            gridMundo.add(btn, 2, listaInimigo.size() - 1);
+            boxOpposites.getChildren().addAll(btn);
         } else {
 //			Stage dialog = new Stage();
 //			dialog.initStyle(StageStyle.UTILITY);
@@ -109,6 +120,24 @@ public class WorldController implements Initializable {
 
     public void setWorld(CGTGameWorld world) {
         this.world = world;
+        if (world.getActor() != null) {
+            boxActor.getChildren().clear();
+            boxActor.getChildren().add(new ObjectButton(world.getActor()));
+        }
+        boxEnemies.getChildren().clear();
+        for (CGTEnemy enemy : world.getEnemies()) {
+            boxEnemies.getChildren().add(new ObjectButton(enemy));
+        }
+
+        boxOpposites.getChildren().clear();
+        for (CGTOpposite opposite : world.getOpposites()) {
+            boxOpposites.getChildren().add(new ObjectButton(opposite));
+        }
+
+        boxBonus.getChildren().clear();
+        for (CGTBonus bonus : world.getBonus()) {
+            boxBonus.getChildren().add(new ObjectButton(bonus));
+        }
     }
 
     public static Node getNode(CGTGameWorld world) {

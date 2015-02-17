@@ -2,6 +2,8 @@ package cgt.core;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import cgt.policy.ActionMovePolicy;
 import cgt.policy.InputPolicy;
@@ -30,6 +32,7 @@ public class CGTActor extends CGTGameObject implements Serializable {
 		super();
 		jumps = new ArrayList<Jump>();
 		projectiles = new ArrayList<CGTProjectile>();
+		actions = new ArrayList<Action>();
 		timeToRecovery = 1;
 		timeToEnableInputs = 1;
 		this.invincible=false;
@@ -55,14 +58,16 @@ public class CGTActor extends CGTGameObject implements Serializable {
 
 		if (!hasAction && !hasInput) {
 			actions.add(new Action(movePolicy, inputPolicy));
+
+			return true;
+		} else {
+			return false;
 		}
-		
-		return false;
 	}
 	
-	public boolean hasAction(String action) {
+	public boolean hasAction(ActionMovePolicy action) {
 		for (Action a : actions) {
-			if (a.getActionPolicy().equals(action)) {
+			if (a.getActionPolicy() == action) {
 				return true;
 			}
 		}
@@ -188,6 +193,30 @@ public class CGTActor extends CGTGameObject implements Serializable {
 	public void setTimeToEnableInputs(int timeToEnableInputs) {
 		this.timeToEnableInputs = timeToEnableInputs;
 	}
-	
+
+	public Map<InputPolicy, ActionMovePolicy> getActions() {
+		Map<InputPolicy, ActionMovePolicy> res = new HashMap<InputPolicy, ActionMovePolicy>();
+
+		for (Action a : actions) {
+			for (InputPolicy i : a.getInputs()) {
+				res.put(i, a.getActionPolicy());
+			}
+		}
+
+		return  res;
+	}
+
+	public void removeInputFromAction(InputPolicy inputPolicy) {
+		int i = 0;
+		while (i < actions.size()) {
+			actions.get(i).removeInput(inputPolicy);
+			if (actions.get(i).getInputs().isEmpty()) {
+				actions.remove(i);
+				i = 0;
+			} else {
+				i++;
+			}
+		}
+	}
 }
  
