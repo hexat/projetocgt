@@ -5,10 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<fx:root prefWidth="300.0" type="javafx.scene.layout.GridPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" prefWidth="140.0" />
+      <ColumnConstraints hgrow="SOMETIMES" prefWidth="114.0" />
+      <ColumnConstraints hgrow="SOMETIMES" prefWidth="114.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -21,9 +22,9 @@
       <Label text="Relativo Y" GridPane.rowIndex="1" />
       <Label text="Largura relativa" GridPane.rowIndex="2" />
       <Label text="Altura relativa" GridPane.rowIndex="3" />
-      <TextField GridPane.columnIndex="1" />
-      <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <TextField fx:id="txtRelX" GridPane.columnIndex="1" />
+      <TextField fx:id="txtRelY" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="txtWid" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="txtHei" GridPane.columnIndex="1" GridPane.rowIndex="3" />
    </children>
-</GridPane>
+</fx:root>

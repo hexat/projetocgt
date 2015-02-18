@@ -8,6 +8,10 @@ import cgt.screen.CGTWindow;
 public class CGTButtonScreen extends CGTButton implements Serializable{
 	private String windowId;
 
+	public CGTButtonScreen() {
+		windowId = null;
+	}
+
 	public CGTWindow getScreenToGo() {
 		return CGTGame.get().getScreen(windowId);
 	}

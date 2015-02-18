@@ -114,7 +114,7 @@ public class ConfigInimigoController implements Initializable {
         if (enemy.getDamage() > 0) {
             txtDamage.setText(enemy.getDamage() + "");
         }
-        
+
         updateBehaviors();
     }
 
