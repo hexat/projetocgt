@@ -1,9 +1,8 @@
 package cgt.controller;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
+import cgt.controller.dialogs.SpriteSheetDialog;
 import cgt.game.CGTSpriteSheet;
 import application.Config;
 import application.Main;
@@ -11,7 +10,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
@@ -51,7 +49,7 @@ public class ListSpriteController extends VBox {
     	if (teste != null) {
     		CGTSpriteSheet sheet = Config.getGame().getSpriteDB().find(teste);
     		if (sheet != null) {
-    			ConfigSpriteController dialog = new ConfigSpriteController(sheet);
+    			SpriteSheetDialog dialog = new SpriteSheetDialog(sheet);
     			dialog.show();
     		}
     	}

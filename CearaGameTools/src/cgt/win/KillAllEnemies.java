@@ -12,6 +12,7 @@ public class KillAllEnemies implements Win, Serializable{
 
 	public KillAllEnemies(ArrayList<CGTEnemy> enemies){
 		this.enemies = enemies;
+		policy = WinPolicy.KILL_ENEMIES;
 	}
 	
 	@Override
@@ -29,10 +30,6 @@ public class KillAllEnemies implements Win, Serializable{
 	
 	public void start(){
 		
-	}
-
-	public void setPolicy(WinPolicy policy) {
-		this.policy = policy;
 	}
 
 	@Override

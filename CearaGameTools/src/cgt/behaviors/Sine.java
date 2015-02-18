@@ -12,6 +12,8 @@ public class Sine implements Behavior, Serializable {
 	private MovementPolicy movementPolicy;
 	private int min;
 	private int max;
+
+	// used in gdx mode
 	private boolean atFirstStep;
 	
 	public Sine(MovementPolicy movementPolicy){

@@ -1,4 +1,4 @@
-package cgt.controller;
+package cgt.controller.dialogs;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +29,7 @@ import cgt.util.CGTTexture;
 /**
  * Created by infolev on 06/02/15.
  */
-public class ConfigSpriteController extends BorderPane {
+public class SpriteSheetDialog extends HBox {
     private CGTSpriteSheet spriteSheet;
 
     private Stage stage;
@@ -38,11 +38,11 @@ public class ConfigSpriteController extends BorderPane {
     @FXML private TextField txtNameSprite;
     @FXML private TextField txtNumLines;
     @FXML private TextField txtNumCol;
-    @FXML private ImageView imgView;
 
     private File imgFile;
+    private ImageView imgView;
 
-    public ConfigSpriteController(CGTSpriteSheet sheet) {
+    public SpriteSheetDialog(CGTSpriteSheet sheet) {
     	
         FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/ConfigSprite.fxml"));
         view.setRoot(this);
@@ -53,20 +53,16 @@ public class ConfigSpriteController extends BorderPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-
-    	setSpriteSheet(sheet);
-    	txtImgName.setEditable(false);
         stage = new Stage();
         stage.setScene(new Scene(this));
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(Main.getApp().getScene().getWindow());
-        getChildren().remove(imgView);
-
-        imgView.fitHeightProperty().bind(stage.heightProperty());
-        imgView.fitWidthProperty().bind(stage.widthProperty());
-        
         stage.sizeToScene();
+
+
+        imgView = null;
+        setSpriteSheet(sheet);
+        txtImgName.setEditable(false);
 	}
 
     @FXML public void addNewSprite() {
@@ -105,17 +101,27 @@ public class ConfigSpriteController extends BorderPane {
 
         imgFile = file;
 
+        updateImage();
+    }
+
+    public void updateImage() {
         if (imgFile != null) {
             txtImgName.setText(imgFile.getName());
 //          Image image = new Image("file:"+file.getAbsolutePath(), 0, imgView.fitHeightProperty().get(), false, false);
-          Image image = new Image("file:"+file.getAbsolutePath());            
+            Image image = new Image("file:"+imgFile.getAbsolutePath());
+            if (imgView == null) {
+                imgView = new ImageView();
+                imgView.setFitHeight(stage.heightProperty().doubleValue());
+                imgView.setPreserveRatio(true);
+                imgView.setSmooth(true);
+                imgView.setCache(true);
+                this.getChildren().add(0, imgView);
+            }
             imgView.setImage(image);
-            setLeft(imgView);
             stage.sizeToScene();
-        } else {
+            stage.centerOnScreen();
         }
     }
-
 
     public void setSpriteSheet(CGTSpriteSheet spriteSheet) {
         this.spriteSheet = spriteSheet;
@@ -125,6 +131,9 @@ public class ConfigSpriteController extends BorderPane {
 		    txtNameSprite.setEditable(false);
 		    txtNumCol.setText(spriteSheet.getColumns()+"");
 		    txtNumLines.setText(spriteSheet.getRows()+"");
+
+            imgFile = new File(Config.BASE + spriteSheet.getTexture().getFile().getFile().getPath());
+            updateImage();
         }
     }
 

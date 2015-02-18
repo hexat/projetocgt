@@ -396,5 +396,13 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
     public boolean validate() {
         return getBackground() != null && getActor() != null && getActor().getPosition() != null && getActor().hasAnimation() && getActor().getBounds().width > 0;
     }
+
+	public boolean removeWinCriteria(Win win) {
+		return winCriteria.remove(win);
+	}
+
+	public boolean removeLoseCriteria(Lose lose) {
+		return loseCriteria.remove(lose);
+	}
 }
  

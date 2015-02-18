@@ -4,8 +4,10 @@ import java.io.Serializable;
 
 import cgt.hud.CGTLabel;
 
+import cgt.policy.LosePolicy;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 public class TargetTime implements Lose, Serializable{
 	public int timer;
@@ -67,7 +69,12 @@ public class TargetTime implements Lose, Serializable{
 		
 		
 	}
-	
+
+	@Override
+	public LosePolicy getPolicy() {
+		return LosePolicy.TARGET_TIME;
+	}
+
 	public boolean lost(){
 		return expired;
 	}

@@ -1,21 +1,14 @@
 package cgt.controller;
 
 import java.io.File;
-import java.io.IOException;
 
 import application.Main;
+import cgt.controller.dialogs.SpriteSheetDialog;
 import cgt.screen.CGTWindow;
 import javafx.scene.control.TabPane;
 import util.DialogsUtil;
 import application.Config;
-import cgt.game.CGTSpriteSheet;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import util.ScreenTab;
 
 public class MenuBarController {
@@ -56,7 +49,7 @@ public class MenuBarController {
 
 	@FXML
 	public void addSpriteSheet() {
-		ConfigSpriteController dia =  new ConfigSpriteController(null);
+		SpriteSheetDialog dia =  new SpriteSheetDialog(null);
         dia.show();
 	}
 	@FXML public void editSpriteSheet(){

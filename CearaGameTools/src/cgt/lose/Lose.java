@@ -1,6 +1,9 @@
 package cgt.lose;
 
-public interface Lose {	
+import cgt.policy.LosePolicy;
+
+public interface Lose {
 	public boolean lost();
 	public void start();
+	public LosePolicy getPolicy();
 }

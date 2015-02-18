@@ -1,6 +1,6 @@
 package cgt.policy;
 
 public enum LosePolicy {
-	ACTOR_DEAD;
+	ACTOR_DEAD, TARGET_TIME
 }
  

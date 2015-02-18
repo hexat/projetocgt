@@ -25,8 +25,9 @@ public class Direction implements Behavior, Serializable {
 	private Vector2 finalPosition;
 	private DirectionMode directionMode;
 	private boolean inteligenceMoviment;
-	private float distanceStartAccel;
 	private DirectionPolicy directionPolicy;
+
+	// used in gdx mode
 	private float distance;
 	private Vector2 actorPosition;
 	private CGTEnemy owner;
@@ -132,21 +133,6 @@ public class Direction implements Behavior, Serializable {
 
 	public void setDirectionMode(DirectionMode directionMode) {
 		this.directionMode = directionMode;
-	}
-
-	public float getDistanceStartAccel() {
-		return distanceStartAccel;
-	}
-
-	public void setDistanceStartAccel(float distanceStartAccel) {
-		this.distanceStartAccel = distanceStartAccel;
-	}
-	
-	public void calculateAccel() {
-		if (distanceStartAccel > 0) {
-			float dis = owner.getPosition().dst(initialPosition);
-//			return Math.sqrt(owner.gets
-		}
 	}
 }
  

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
@@ -25,9 +26,9 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints vgrow="ALWAYS" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints vgrow="ALWAYS" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
              <children>
@@ -37,12 +38,22 @@
                 <Label text="Background" />
                 <Label text="WinCriteria" GridPane.rowIndex="4" />
                 <TextField fx:id="txtProcuraBack" editable="false" GridPane.columnIndex="1" />
-                <Button mnemonicParsing="false" text="+" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                <Button mnemonicParsing="false" text="+" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                <Button mnemonicParsing="false" onAction="#addWin" text="+" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Button mnemonicParsing="false" onAction="#addLose" text="+" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                 <Label text="LoseCriteria" GridPane.rowIndex="6" />
                 <Label text="Música" GridPane.rowIndex="8" />
                 <TextField GridPane.columnIndex="1" GridPane.rowIndex="8" />
                 <Button fx:id="btnPesquisaBack" mnemonicParsing="false" onAction="#pesquisarBackground" text="Pesquisar" GridPane.columnIndex="2" />
+                  <VBox fx:id="panWins" alignment="CENTER" GridPane.columnSpan="3" GridPane.rowIndex="5">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </VBox>
+                  <VBox fx:id="panLoses" alignment="CENTER" GridPane.columnSpan="3" GridPane.rowIndex="7">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </VBox>
              </children>
           </GridPane>
        </content>
