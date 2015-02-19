@@ -67,12 +67,24 @@
                   <Label text="Botão Fechar" />
                   <Button fx:id="btnClose" mnemonicParsing="false" text="Configurar" GridPane.columnIndex="1" />
                   <Label text="Botões" GridPane.rowIndex="1" />
-                  <Button mnemonicParsing="false" onAction="#addButtonScreen" text="+" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#addButtonScreen" text="+" />
+                        <Button fx:id="btnRemButtonScreen" mnemonicParsing="false" onAction="#removeButtonScreen" text="-">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </HBox>
                </children>
             </GridPane>
          </top>
          <center>
-            <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+            <ListView fx:id="listButtons" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
       <Button defaultButton="true" mnemonicParsing="false" text="Confirmar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />

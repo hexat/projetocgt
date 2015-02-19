@@ -1,153 +1,66 @@
 package application.controller.dialogs;
 
-import application.Config;
 import application.Main;
-import application.controller.panes.ButtonPane;
-import application.controller.panes.HudPane;
+import application.controller.titleds.ButtonScreenTitledPane;
 import cgt.hud.CGTButtonScreen;
-import cgt.util.CGTTexture;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TitledPane;
-import application.util.DialogsUtil;
-
-import java.io.File;
-import java.io.IOException;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
- * Created by Luan on 18/02/2015.
+ * Created by infolev on 19/02/15.
  */
-public class ButtonScreenDialog extends TitledPane {
-    private final CGTButtonScreen buttonScreen;
+public class ButtonScreenDialog {
+    private final Stage stage;
+    private final ButtonScreenTitledPane controller;
 
-    @FXML private ComboBox<String> boxWindows;
+    public CGTButtonScreen buttonScreen;
 
-    @FXML private ButtonPane buttonControl;
-
-    @FXML private HudPane hudControl;
-
-    public ButtonScreenDialog(final CGTButtonScreen buttonScreen) {
+    public ButtonScreenDialog(CGTButtonScreen buttonScreen, Window parent) {
         this.buttonScreen = buttonScreen;
-        FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/ConfigButtonScreen.fxml"));
-        view.setRoot(this);
-        view.setController(this);
-        try {
-            view.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        init();
+        controller = new ButtonScreenTitledPane(buttonScreen);
+        stage = new Stage();
 
-        boxWindows.setOnAction(new EventHandler<ActionEvent>() {
+        VBox box = (VBox) controller.getContent();
+        box.setPadding(new Insets(10,10,10,10));
+        box.setAlignment(Pos.CENTER_RIGHT);
+        Button add = new Button("Adicionar");
+        add.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                buttonScreen.setScreenToGo(boxWindows.getValue());
+                controller.commit();
+                if (controller.getButtonScreen().validate()) {
+                    stage.close();
+                }
             }
         });
+        add.setDefaultButton(true);
+        box.getChildren().add(add);
 
-        hudControl.getTFRelativeX().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                buttonScreen.setRelativeX(hudControl.getRelativeX());
-            }
-        });
+        stage.setScene(new Scene(box));
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(parent);
+        stage.sizeToScene();
 
-        hudControl.getTFRelativeY().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                buttonScreen.setRelativeY(hudControl.getRelativeY());
-            }
-        });
-
-        hudControl.getTFRelativeWidth().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                buttonScreen.setRelativeWidth(hudControl.getRelativeWidth());
-            }
-        });
-
-        hudControl.getTFRelativeHeight().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                buttonScreen.setRelativeHeight(hudControl.getRelativeHeight());
-            }
-        });
-
-        buttonControl.getBtnTextureDown().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setTextureDown();
-            }
-        });
-
-        buttonControl.getBtnTextureUp().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setTextureUp();
-            }
-        });
-    }
-
-    private void init() {
-        boxWindows.getItems().setAll(Config.getGame().getIds());
-
-        if (buttonScreen.getRelativeY() > 0) {
-            hudControl.getTFRelativeY().setText(buttonScreen.getRelativeY() + "");
-        }
-        if (buttonScreen.getRelativeX() > 0) {
-            hudControl.getTFRelativeX().setText(buttonScreen.getRelativeX()+"");
-        }
-
-        if (buttonScreen.getRelativeHeight() > 0) {
-            hudControl.getTFRelativeHeight().setText(buttonScreen.getRelativeHeight()+"");
-        }
-
-        if (buttonScreen.getRelativeWidth() > 0) {
-            hudControl.getTFRelativeWidth().setText(buttonScreen.getRelativeHeight()+"");
-        }
-
-        if (buttonScreen.getScreenToGo() != null) {
-            boxWindows.getSelectionModel().select(buttonScreen.getScreenToGo().getId());
-        }
-
-        if (buttonScreen.getTextureDown() != null) {
-            buttonControl.getTxtTextureDown().setText(buttonScreen.getTextureDown().getFile().getFilename());
-        }
-
-        if (buttonScreen.getTextureUp() != null) {
-            buttonControl.getTxtTextureUp().setText(buttonScreen.getTextureUp().getFile().getFilename());
+        if (buttonScreen != null && buttonScreen.getScreenToGo() != null) {
+            controller.getBoxWindows().getSelectionModel().select(buttonScreen.getScreenToGo().getId());
         }
     }
 
-    public void setTextureUp() {
-        File file = DialogsUtil.showOpenDialog("Selecionar Imagem", DialogsUtil.IMG_FILTER);
-
-        if (file != null) {
-            if (buttonScreen.getTextureUp() != null) {
-                Config.destroy(buttonScreen.getTextureUp().getFile());
-                buttonScreen.setTextureUp(null);
-            }
-            buttonScreen.setTextureUp(new CGTTexture(Config.createImg(file)));
-
-            buttonControl.getTxtTextureUp().setText(file.getName());
-        }
+    public CGTButtonScreen getButtonScreen() {
+        controller.commit();
+        return buttonScreen;
     }
 
-    public void setTextureDown() {
-        File file = DialogsUtil.showOpenDialog("Selecionar Imagem", DialogsUtil.IMG_FILTER);
-
-        if (file != null) {
-            if (buttonScreen.getTextureDown() != null) {
-                Config.destroy(buttonScreen.getTextureDown().getFile());
-                buttonScreen.setTextureDown(null);
-            }
-            buttonScreen.setTextureDown(new CGTTexture(Config.createImg(file)));
-
-            buttonControl.getTxtTextureDown().setText(file.getName());
-        }
+    public void showAndWait() {
+        stage.showAndWait();
     }
 }

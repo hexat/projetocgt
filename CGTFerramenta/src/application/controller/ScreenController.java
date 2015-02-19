@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import application.Main;
-import application.controller.dialogs.ButtonScreenDialog;
+import application.controller.titleds.ButtonScreenTitledPane;
 import application.controller.titleds.ScreenTitledPane;
 import cgt.game.CGTScreen;
 import cgt.hud.CGTButtonScreen;
@@ -91,7 +91,7 @@ public class ScreenController implements Initializable {
                 public void handle(ActionEvent event) {
                     configAccordion.getPanes().clear();
 
-                    configAccordion.getPanes().add(new ButtonScreenDialog(btnScreen));
+                    configAccordion.getPanes().add(new ButtonScreenTitledPane(btnScreen));
                 }
             });
         }

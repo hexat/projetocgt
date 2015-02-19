@@ -26,6 +26,9 @@ public class MenuBarController {
         File open = DialogsUtil.showOpenDialog("Abrir projeto", DialogsUtil.CGT_FILTER);
 		if (open != null) {
 			Config.unzip(open);
+            if (tabFerramenta.getTabs().size() > 1) {
+                tabFerramenta.getTabs().remove(1, tabFerramenta.getTabs().size());
+            }
             for (CGTWindow w : Config.getGame().getWindows()) {
                 ScreenTab tab = new ScreenTab(w);
 

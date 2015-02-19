@@ -104,4 +104,7 @@ public class CGTButton extends HUDComponent implements Serializable{
 		this.released = released;
 	}
 
+    public boolean validate() {
+        return textureUp != null && super.validate();
+    }
 }

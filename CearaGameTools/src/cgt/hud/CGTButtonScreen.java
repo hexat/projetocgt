@@ -13,10 +13,19 @@ public class CGTButtonScreen extends CGTButton implements Serializable{
 	}
 
 	public CGTWindow getScreenToGo() {
-		return CGTGame.get().getScreen(windowId);
+		return CGTGame.get().getWindow(windowId);
 	}
 
 	public void setScreenToGo(String screenToGo) {
 		this.windowId = screenToGo;
 	}
+
+    public boolean validate() {
+        return windowId != null && super.validate();
+    }
+
+    @Override
+    public String toString() {
+        return getTextureUp().getFile().getFilename();
+    }
 }

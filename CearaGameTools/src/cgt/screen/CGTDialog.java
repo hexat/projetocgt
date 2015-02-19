@@ -244,10 +244,12 @@ public class CGTDialog extends Actor implements Serializable{
 		return sequence;
 	}
 
+
 	public void setSequence(SequenceAction sequence) {
 		this.sequence = sequence;
 	}
-	
-	
-	
+
+    public boolean validate() {
+        return rightBottomCorner != null && relativeHeight > 0 && relativeWidth > 0;
+    }
 }

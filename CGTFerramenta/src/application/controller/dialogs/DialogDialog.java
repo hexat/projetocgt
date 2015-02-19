@@ -5,16 +5,26 @@ import java.io.IOException;
 
 import application.Config;
 import application.Main;
+import application.controller.titleds.ButtonScreenTitledPane;
+import cgt.hud.CGTButtonScreen;
 import cgt.screen.CGTDialog;
 import cgt.util.CGTTexture;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.FocusModel;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import application.util.DialogsUtil;
@@ -27,6 +37,7 @@ public class DialogDialog extends GridPane {
     private final Stage stage;
     private CGTDialog dialog;
 
+    @FXML public ListView<CGTButtonScreen> listButtons;
     @FXML private TextField txtRelX;
     @FXML private TextField txtRelY;
     @FXML private TextField txtRelW;
@@ -36,6 +47,8 @@ public class DialogDialog extends GridPane {
     @FXML private Button btnBorder;
     @FXML private Button btnClose;
     @FXML private Button btnBackground;
+
+    @FXML private Button btnRemButtonScreen;
 
     public DialogDialog(CGTDialog dialog) {
         this.dialog = dialog;
@@ -117,6 +130,28 @@ public class DialogDialog extends GridPane {
                 configCorner();
             }
         });
+
+        listButtons.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getClickCount() == 2 && !listButtons.getSelectionModel().isEmpty()) {
+                    ButtonScreenDialog screenDialog = new ButtonScreenDialog(listButtons.getSelectionModel().getSelectedItem(),
+                            stage);
+                    screenDialog.showAndWait();
+                }
+            }
+        });
+
+        listButtons.focusModelProperty().addListener(new ChangeListener<FocusModel<CGTButtonScreen>>() {
+            @Override
+            public void changed(ObservableValue<? extends FocusModel<CGTButtonScreen>> observable, FocusModel<CGTButtonScreen> oldValue, FocusModel<CGTButtonScreen> newValue) {
+                if (listButtons.getSelectionModel().isEmpty()) {
+                    btnRemButtonScreen.setDisable(true);
+                } else {
+                    btnRemButtonScreen.setDisable(false);
+                }
+            }
+        });
     }
 
     private void configCorner() {
@@ -190,16 +225,43 @@ public class DialogDialog extends GridPane {
             if (dialog.getHorizontalBorderTexture() != null) {
                 btnBorder.setText(dialog.getHorizontalBorderTexture().getFile().getFilename());
             }
+
+            for (CGTButtonScreen bs : dialog.getButtons()) {
+                listButtons.getItems().add(bs);
+            }
+
+            btnRemButtonScreen.setDisable(true);
         } else {
             dialog = new CGTDialog();
         }
     }
 
     @FXML private void addButtonScreen() {
-        System.out.println("ok");
+        ButtonScreenDialog screenDialog = new ButtonScreenDialog(new CGTButtonScreen(), stage);
+        screenDialog.showAndWait();
+        if (screenDialog.getButtonScreen().validate()) {
+            dialog.addButton(screenDialog.getButtonScreen());
+            listButtons.getItems().add(screenDialog.getButtonScreen());
+        }
+    }
+
+    @FXML private void removeButtonScreen() {
+        if (!listButtons.getSelectionModel().isEmpty()) {
+            CGTButtonScreen screen = listButtons.getSelectionModel().getSelectedItem();
+            Config.destroy(screen.getTextureUp().getFile());
+            if (screen.getTextureDown() != null) {
+                Config.destroy(screen.getTextureDown().getFile());
+            }
+            dialog.getButtons().remove(screen);
+            listButtons.getItems().remove(screen);
+        }
     }
 
     public void showAndWait() {
         stage.showAndWait();
+    }
+
+    public CGTDialog getDialog() {
+        return dialog;
     }
 }

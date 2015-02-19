@@ -11,7 +11,10 @@ import application.controller.dialogs.DialogDialog;
 import application.controller.dialogs.LoseDialog;
 import application.controller.dialogs.WinDialog;
 import cgt.game.CGTGameWorld;
+import cgt.hud.CGTButton;
+import cgt.hud.CGTButtonScreen;
 import cgt.lose.Lose;
+import cgt.screen.CGTDialog;
 import cgt.util.CGTTexture;
 import cgt.win.Win;
 import javafx.event.ActionEvent;
@@ -32,6 +35,11 @@ public class WorldTitledPane implements Initializable {
 	@FXML private Button btnPesquisaBack;
 	@FXML private TextField txtProcuraBack;
 
+    @FXML private Button btnRemPauseDialog;
+    @FXML private Button btnRemInitialDialog;
+    @FXML private Button btnRemWinDialog;
+    @FXML private Button btnRemLoseDialog;
+
     @FXML private VBox panWins;
     @FXML private VBox panLoses;
 
@@ -45,6 +53,11 @@ public class WorldTitledPane implements Initializable {
         if (world.getBackground() != null) {
             txtProcuraBack.setText(world.getBackground().getFile().getFilename());
         }
+
+        btnRemInitialDialog.setDisable(world.getLoseDialog() == null);
+        btnRemWinDialog.setDisable(world.getLoseDialog() == null);
+        btnRemLoseDialog.setDisable(world.getLoseDialog() == null);
+        btnRemPauseDialog.setDisable(world.getPauseDialog() == null);
     }
 
     public CGTGameWorld getWorld() {
@@ -83,7 +96,79 @@ public class WorldTitledPane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        btnRemLoseDialog.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                removerDialog(world.getLoseDialog());
+            }
+        });
 
+        btnRemPauseDialog.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                removerDialog(world.getPauseDialog());
+            }
+        });
+
+        btnRemWinDialog.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                removerDialog(world.getWinDialog());
+            }
+        });
+
+        btnRemInitialDialog.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                removerDialog(world.getInitialDialog());
+            }
+        });
+    }
+
+    private void removerDialog(CGTDialog dialog) {
+        if (dialog.getHorizontalBorderTexture() != null) {
+            Config.destroy(dialog.getHorizontalBorderTexture().getFile());
+        }
+        if (dialog.getRightBottomCorner() != null) {
+            Config.destroy(dialog.getRightBottomCorner().getFile());
+        }
+        if (dialog.getWindow() != null) {
+            Config.destroy(dialog.getWindow().getFile());
+        }
+        for (CGTButtonScreen bs : dialog.getButtons()) {
+            if (bs.getTextureUp() != null) {
+                Config.destroy(bs.getTextureUp().getFile());
+            }
+            if (bs.getTextureDown() != null) {
+                Config.destroy(bs.getTextureDown().getFile());
+            }
+            bs.setTextureDown(null);
+            bs.setTextureUp(null);
+        }
+        dialog.getButtons().clear();
+
+        if (dialog.getCloseButton() != null) {
+            if (dialog.getCloseButton().getTextureDown() != null) {
+                Config.destroy(dialog.getCloseButton().getTextureDown().getFile());
+                dialog.getCloseButton().setTextureDown(null);
+            }
+
+            if (dialog.getCloseButton().getTextureUp() != null) {
+                Config.destroy(dialog.getCloseButton().getTextureUp().getFile());
+                dialog.getCloseButton().setTextureUp(null);
+            }
+        }
+        dialog.setCloseButton(null);
+
+        if (world.getLoseDialog() == dialog) {
+            world.setLoseDialog(null);
+        } else if (world.getWinDialog() == dialog) {
+            world.setWinDialog(null);
+        } else if (world.getInitialDialog() == dialog) {
+            world.setInitialDialog(null);
+        } else if (world.getPauseDialog() == dialog) {
+            world.setPauseDialog(null);
+        }
     }
 
     public void addWin(ActionEvent actionEvent) {
@@ -148,21 +233,36 @@ public class WorldTitledPane implements Initializable {
     }
 
     public void configPauseDialog() {
+        if (world.getPauseDialog() == null) {
+            world.setPauseDialog(new CGTDialog());
+        }
+
         DialogDialog dialog = new DialogDialog(world.getPauseDialog());
         dialog.showAndWait();
     }
 
     public void configWinDialog() {
+        if (world.getWinDialog() == null) {
+            world.setWinDialog(new CGTDialog());
+        }
+
         DialogDialog dialog = new DialogDialog(world.getWinDialog());
         dialog.showAndWait();
     }
 
     public void configInitialDialog() {
+        if (world.getInitialDialog() == null) {
+            world.setInitialDialog(new CGTDialog());
+        }
+
         DialogDialog dialog = new DialogDialog(world.getInitialDialog());
         dialog.showAndWait();
     }
 
     public void configLoseDialog() {
+        if (world.getLoseDialog() != null) {
+            world.setLoseDialog(new CGTDialog());
+        }
         DialogDialog dialog = new DialogDialog(world.getLoseDialog());
         dialog.showAndWait();
     }

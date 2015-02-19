@@ -51,4 +51,7 @@ public abstract class HUDComponent extends Actor implements Serializable{
 		this.relativeHeight = initialRelativeHeight;
 	}
 
+    public boolean validate() {
+        return relativeHeight > 0 && relativeWidth > 0;
+    }
 }
