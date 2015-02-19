@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TitledPane animated="false" minWidth="300.0" text="Configuração Inimigo" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.ConfigInimigoController">
+<TitledPane animated="false" minWidth="300.0" text="Configuração Inimigo" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.titleds.EnemyTitledPane">
  <content>
             <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="385.0">
                <content>

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TitledPane animated="false" text="Configuração Game Object" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.ConfigBonusController">
+<TitledPane animated="false" text="Configuração Game Object" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.titleds.BonusTitledPane">
 			<content>
 				<ScrollPane hbarPolicy="NEVER" hmax="0.0" prefHeight="570.0" prefWidth="443.0" vbarPolicy="ALWAYS" vmax="1.1">
 					<content>

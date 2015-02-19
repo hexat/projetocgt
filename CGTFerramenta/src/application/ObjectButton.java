@@ -1,23 +1,20 @@
 package application;
 
-import cgt.controller.ConfigBonusController;
-import cgt.controller.ConfigGameObjectController;
-import cgt.controller.ConfigInimigoController;
-import cgt.controller.ConfigOppositeController;
-import cgt.controller.ConfigPersonagemController;
+import application.controller.titleds.BonusTitledPane;
+import application.controller.titleds.GameObjectTitledPane;
+import application.controller.titleds.EnemyTitledPane;
+import application.controller.titleds.OppositeTitledPane;
+import application.controller.titleds.ActorTitledPane;
 import cgt.core.CGTActor;
 import cgt.core.CGTBonus;
 import cgt.core.CGTEnemy;
 import cgt.core.CGTGameObject;
 import cgt.core.CGTOpposite;
-import cgt.hud.CGTButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Parent;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.VBox;
 
 /**
  * Created by infolev on 02/02/15.
@@ -37,13 +34,13 @@ public class ObjectButton extends Button {
                 clearAndAddGameObject();
 
                 if (object instanceof CGTEnemy) {
-                    configAccordion.getPanes().add(ConfigInimigoController.getNode((CGTEnemy) object));
+                    configAccordion.getPanes().add(EnemyTitledPane.getNode((CGTEnemy) object));
                 } else if (object instanceof CGTOpposite) {
-                    configAccordion.getPanes().add(ConfigOppositeController.getNode((CGTOpposite) object));
+                    configAccordion.getPanes().add(OppositeTitledPane.getNode((CGTOpposite) object));
                 } else if (object instanceof CGTBonus) {
-                    configAccordion.getPanes().add(ConfigBonusController.getNode((CGTBonus) object));
+                    configAccordion.getPanes().add(BonusTitledPane.getNode((CGTBonus) object));
                 } else if (object instanceof CGTActor) {
-                    configAccordion.getPanes().add(ConfigPersonagemController.getNode((CGTActor) object));
+                    configAccordion.getPanes().add(ActorTitledPane.getNode((CGTActor) object));
                 }
             }
         });
@@ -52,7 +49,7 @@ public class ObjectButton extends Button {
     private void clearAndAddGameObject() {
         configAccordion.getPanes().clear();
 
-        TitledPane e = ConfigGameObjectController.getNode(object);
+        TitledPane e = GameObjectTitledPane.getNode(object);
         if (e != null) {
             configAccordion.getPanes().add(e);
         }

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TitledPane animated="false" minWidth="300.0" text="Configuração Personagem" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cgt.controller.ConfigPersonagemController">
+<TitledPane animated="false" minWidth="300.0" text="Configuração Personagem" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.titleds.ActorTitledPane">
          <content>
             <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="385.0" prefWidth="300.0">
                <content>

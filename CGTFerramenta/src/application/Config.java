@@ -2,7 +2,6 @@ package application;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -10,8 +9,8 @@ import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
 
-import util.DialogsUtil;
-import util.ZipHelper;
+import application.util.DialogsUtil;
+import application.util.ZipHelper;
 import cgt.game.CGTGame;
 import cgt.util.CGTFile;
 

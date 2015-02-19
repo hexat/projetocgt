@@ -5,8 +5,8 @@
 <?import javafx.scene.control.*?>
 
 
-<?import cgt.controller.screen.HudPane?>
-<?import cgt.controller.screen.ButtonPane?>
+<?import application.controller.panes.HudPane?>
+<?import application.controller.panes.ButtonPane?>
 <fx:root text="Configurações Button Screen" type="javafx.scene.control.TitledPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <VBox prefHeight="200.0">
