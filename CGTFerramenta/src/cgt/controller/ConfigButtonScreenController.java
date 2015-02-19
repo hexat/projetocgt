@@ -2,6 +2,7 @@ package cgt.controller;
 
 import application.Config;
 import application.Main;
+import cgt.controller.screen.ButtonPane;
 import cgt.controller.screen.HudPane;
 import cgt.hud.CGTButtonScreen;
 import cgt.util.CGTTexture;
@@ -22,9 +23,10 @@ import java.io.IOException;
  */
 public class ConfigButtonScreenController extends TitledPane {
     private final CGTButtonScreen buttonScreen;
-    @FXML private TextField txtTextureUp;
-    @FXML private TextField txtTextureDown;
+
     @FXML private ComboBox<String> boxWindows;
+
+    @FXML private ButtonPane buttonControl;
 
     @FXML private HudPane hudControl;
 
@@ -75,6 +77,20 @@ public class ConfigButtonScreenController extends TitledPane {
                 buttonScreen.setRelativeHeight(hudControl.getRelativeHeight());
             }
         });
+
+        buttonControl.getBtnTextureDown().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                setTextureDown();
+            }
+        });
+
+        buttonControl.getBtnTextureUp().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                setTextureUp();
+            }
+        });
     }
 
     private void init() {
@@ -100,11 +116,11 @@ public class ConfigButtonScreenController extends TitledPane {
         }
 
         if (buttonScreen.getTextureDown() != null) {
-            txtTextureDown.setText(buttonScreen.getTextureDown().getFile().getFilename());
+            buttonControl.getTxtTextureDown().setText(buttonScreen.getTextureDown().getFile().getFilename());
         }
 
         if (buttonScreen.getTextureUp() != null) {
-            txtTextureUp.setText(buttonScreen.getTextureUp().getFile().getFilename());
+            buttonControl.getTxtTextureUp().setText(buttonScreen.getTextureUp().getFile().getFilename());
         }
     }
 
@@ -118,7 +134,7 @@ public class ConfigButtonScreenController extends TitledPane {
             }
             buttonScreen.setTextureUp(new CGTTexture(Config.createImg(file)));
 
-            txtTextureUp.setText(file.getName());
+            buttonControl.getTxtTextureUp().setText(file.getName());
         }
     }
 
@@ -132,7 +148,7 @@ public class ConfigButtonScreenController extends TitledPane {
             }
             buttonScreen.setTextureDown(new CGTTexture(Config.createImg(file)));
 
-            txtTextureDown.setText(file.getName());
+            buttonControl.getTxtTextureDown().setText(file.getName());
         }
     }
 }

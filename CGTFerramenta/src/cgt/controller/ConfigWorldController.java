@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import application.Config;
 import application.Main;
+import cgt.controller.dialogs.DialogPopUp;
 import cgt.controller.dialogs.LoseDialog;
 import cgt.controller.dialogs.WinDialog;
 import cgt.game.CGTGameWorld;
@@ -145,5 +146,25 @@ public class ConfigWorldController implements Initializable {
         } else {
             panWins.getChildren().add(new Label("Vazio"));
         }
+    }
+
+    public void configPauseDialog() {
+        DialogPopUp dialog = new DialogPopUp(world.getPauseDialog());
+        dialog.showAndWait();
+    }
+
+    public void configWinDialog() {
+        DialogPopUp dialog = new DialogPopUp(world.getWinDialog());
+        dialog.showAndWait();
+    }
+
+    public void configInitialDialog() {
+        DialogPopUp dialog = new DialogPopUp(world.getInitialDialog());
+        dialog.showAndWait();
+    }
+
+    public void configLoseDialog() {
+        DialogPopUp dialog = new DialogPopUp(world.getLoseDialog());
+        dialog.showAndWait();
     }
 }

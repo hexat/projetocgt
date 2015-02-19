@@ -224,16 +224,16 @@ public class CGTDialog extends Actor implements Serializable{
 		//addActor(closeButton);
 	}
 
-	public TextureRegion getRightBottomCorner() {
-		return rightBottomCorner.getTextureRegion();
+	public CGTTexture getRightBottomCorner() {
+		return rightBottomCorner;
 	}
 
 	public void setRightBottomCorner(CGTTexture rightBottomCorner) {
 		this.rightBottomCorner = rightBottomCorner;
 	}
 
-	public TextureRegion getHorizontalBorderTexture() {
-		return horizontalBorderTexture.getTextureRegion();
+	public CGTTexture getHorizontalBorderTexture() {
+		return horizontalBorderTexture;
 	}
 
 	public void setHorizontalBorderTexture(CGTTexture horizontalBorderTexture) {

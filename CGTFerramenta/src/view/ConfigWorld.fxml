@@ -54,6 +54,9 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </VBox>
+                  <Button mnemonicParsing="false" onAction="#configPauseDialog" text="Configurar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#configWinDialog" text="Configurar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <Button mnemonicParsing="false" onAction="#configInitialDialog" text="Configurar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
              </children>
           </GridPane>
        </content>
