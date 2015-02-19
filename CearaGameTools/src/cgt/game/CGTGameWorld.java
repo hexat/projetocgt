@@ -32,10 +32,7 @@ import cgt.util.CGTTexture;
 import cgt.util.Camera;
 import cgt.win.Win;
 
-
 public class CGTGameWorld extends CGTWindow implements Serializable {
-	private static final long serialVersionUID = -4678582357160030528L;
-	private static CGTGameWorld instance;
 	private CGTActor actor;
 	private ArrayList<Action> actions;
 	private ArrayList<CGTOpposite> opposites;
@@ -70,35 +67,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		startGame = null;
 	}
 
-	public void salvaStream(File file){
-		try
-        {
-            //Gera o arquivo para armazenar o objeto
-
-            FileOutputStream arquivoGrav = new FileOutputStream(file);
-
-            //Classe responsavel por inserir os objetos
-
-            ObjectOutputStream objGravar = new ObjectOutputStream(arquivoGrav);
-
-            //Grava o objeto cliente no arquivo
-
-            objGravar.writeObject(this);
-
-            objGravar.flush();
-
-            objGravar.close();
-
-            arquivoGrav.flush();
-
-            arquivoGrav.close();
-
-        }
-        catch( Exception e ){
-                e.printStackTrace( );
-        }
-	}
-	
 	public void addButtonPad(ButtonPad buttonPad){
 		this.addButton(buttonPad.getButtonBase());
 		this.addButton(buttonPad.getButtonUp());
@@ -107,22 +75,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		this.addButton(buttonPad.getButtonRight());
 	}
 
-	public static CGTGameWorld lerStream(InputStream io){
-		CGTGameWorld cgtGameWorld = new CGTGameWorld();
-		try {
-            ObjectInputStream objLeitura = new ObjectInputStream(io);
-
-            cgtGameWorld = (CGTGameWorld) objLeitura.readObject();
-            
-            objLeitura.close();
-
-            io.close();
-		} catch (Exception e) {
-			e.printStackTrace( );
-        }
-		return cgtGameWorld; 
-	}
-	
 	public Music getMusic() {
 		if (music != null){
 			return music.getMusic();

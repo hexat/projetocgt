@@ -4,9 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import application.Config;
 import application.Main;
@@ -16,10 +14,8 @@ import cgt.core.CGTAnimation;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -27,7 +23,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 /**
  * Created by infolev on 10/02/15.
@@ -54,7 +49,7 @@ public class ConfigAnimationController extends GridPane {
     public ConfigAnimationController(CGTGameObject object) {
         this.object = object;
 
-        FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/ConfAnimation.fxml"));
+        FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/ConfigAnimation.fxml"));
         view.setRoot(this);
         view.setController(this);
 

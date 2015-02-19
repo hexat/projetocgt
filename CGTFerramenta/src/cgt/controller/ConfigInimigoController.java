@@ -27,6 +27,7 @@ public class ConfigInimigoController implements Initializable {
     public CheckBox chkDestroyable;
     public CheckBox chkVulnerable;
     public TextField txtAlpha;
+    public TextField txtTimeRec;
 
     private CGTEnemy enemy;
 
@@ -58,6 +59,13 @@ public class ConfigInimigoController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 enemy.setAlpha(Float.parseFloat(txtAlpha.getText()));
+            }
+        });
+
+        txtTimeRec.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                enemy.setTimeToRecovery(Float.parseFloat(txtTimeRec.getText()));
             }
         });
 
@@ -113,6 +121,10 @@ public class ConfigInimigoController implements Initializable {
         txtAlpha.setText(enemy.getAlpha()+"");
         if (enemy.getDamage() > 0) {
             txtDamage.setText(enemy.getDamage() + "");
+        }
+
+        if (enemy.getTimeToRecovery() > 0) {
+            txtTimeRec.setText(enemy.getTimeToRecovery()+"");
         }
 
         updateBehaviors();

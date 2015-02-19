@@ -111,7 +111,7 @@ public class SpriteSheetDialog extends HBox {
             Image image = new Image("file:"+imgFile.getAbsolutePath());
             if (imgView == null) {
                 imgView = new ImageView();
-                imgView.setFitHeight(stage.heightProperty().doubleValue());
+                imgView.setFitHeight(160);
                 imgView.setPreserveRatio(true);
                 imgView.setSmooth(true);
                 imgView.setCache(true);

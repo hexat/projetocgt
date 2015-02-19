@@ -35,7 +35,7 @@
                         <Label text="Valor de Dano" GridPane.rowIndex="2" />
                         <Label text="Bloqueante" GridPane.rowIndex="3" />
                         <Label text="Destruível" GridPane.rowIndex="4" />
-                        <Label text="Goup" GridPane.rowIndex="5" />
+                        <Label text="Tempo de Recuperação" GridPane.rowIndex="5" />
                         <Label text="Transparencia" GridPane.rowIndex="6" />
                         <Label text="Vuneravél" GridPane.rowIndex="7" />
                         <TextField fx:id="txtDamage" prefHeight="26.0" prefWidth="248.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -49,6 +49,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </VBox>
+                  <TextField fx:id="txtTimeRec" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                      </children>
                   </GridPane>
                </content>
