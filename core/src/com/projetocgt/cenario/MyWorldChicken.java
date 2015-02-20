@@ -27,10 +27,10 @@
 //import cgt.game.CGTScreen;
 //import cgt.unit.Action;
 //import cgt.core.CGTAnimation;
-//import cgt.application.util.CGTFile;
-//import cgt.application.util.CGTSound;
+//import cgt.br.edu.ifce.cgt.application.util.CGTFile;
+//import cgt.br.edu.ifce.cgt.application.util.CGTSound;
 //import cgt.game.CGTSpriteSheet;
-//import cgt.application.util.CGTTexture;
+//import cgt.br.edu.ifce.cgt.application.util.CGTTexture;
 //import cgt.win.CompleteCrossing;
 //
 //public class MyWorldChicken {

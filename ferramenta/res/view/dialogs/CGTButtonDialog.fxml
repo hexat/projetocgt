@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<?import br.edu.ifce.cgt.application.controller.panes.HudPane ?>
+<?import br.edu.ifce.cgt.application.controller.panes.ButtonPane ?>
+
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <HBox alignment="TOP_RIGHT">
+         <children>
+            <Button alignment="CENTER_RIGHT" defaultButton="true" mnemonicParsing="false" onAction="#add" text="Adicionar" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </HBox>
+   </bottom>
+   <center>
+       <VBox>
+           <BorderPane.margin>
+               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+           </BorderPane.margin>
+           <children>
+               <ButtonPane fx:id="buttonControl" />
+               <Separator orientation="HORIZONTAL" />
+               <HudPane fx:id="hudControl"/>
+           </children>
+       </VBox>
+   </center>
+</fx:root>

@@ -7,7 +7,6 @@ import cgt.hud.CGTLabel;
 import cgt.policy.LosePolicy;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 public class TargetTime implements Lose, Serializable{
 	public int timer;

@@ -1,0 +1,27 @@
+sourceCompatibility = 1.7
+
+run {
+    ignoreExitValue = true
+}
+
+mainClassName = "br.edu.ifce.cgt.application.Main"
+
+sourceSets.main.java.srcDirs = ['src/']
+
+
+//sourceSets.main.resources.srcDirs = [file("../android/assets").getAbsolutePath()]
+sourceSets.main.resources.srcDirs = ['res/']
+
+eclipse.project {
+    name = "Ferramenta"
+}
+
+tasks.ideaModule.doFirst {
+    sourceSets.main.resources.srcDirs = []
+}
+
+task uijar(dependsOn: classes, type: Jar) {
+	archiveName = 'cgt-fx-ui.jar' 
+	from sourceSets.main.output.classesDir 
+	include 'br.edu.ifce.cgt.application/controller/ui/**/*'
+}

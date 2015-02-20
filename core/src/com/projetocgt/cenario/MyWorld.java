@@ -1,7 +1,7 @@
 //package com.projetocgt.cenario;
 //
 //
-//import java.application.util.ArrayList;
+//import java.br.edu.ifce.cgt.application.util.ArrayList;
 //
 //import cgt.behaviors.Direction;
 //import cgt.behaviors.Fade;
@@ -22,9 +22,9 @@
 //import cgt.policy.MovementPolicy;
 //import cgt.policy.StatePolicy;
 //import cgt.core.CGTAnimation;
-//import cgt.application.util.CGTSound;
-//import cgt.application.util.CGTTexture;
-//import cgt.application.util.ProjectileOrientation;
+//import cgt.br.edu.ifce.cgt.application.util.CGTSound;
+//import cgt.br.edu.ifce.cgt.application.util.CGTTexture;
+//import cgt.br.edu.ifce.cgt.application.util.ProjectileOrientation;
 //import cgt.win.KillAllEnemies;
 //
 //import com.badlogic.gdx.Gdx;

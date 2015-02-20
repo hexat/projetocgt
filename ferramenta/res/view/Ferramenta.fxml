@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Accordion?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifce.cgt.application.controller.FerramentaController">
+   <top>
+  <fx:include fx:id="menu" source="MenuBar.fxml" />
+   </top>
+   <center>
+  <SplitPane dividerPositions="0.65" BorderPane.alignment="CENTER">
+    <items>
+        <TabPane fx:id="tabFerramenta">
+          <tabs>
+            <Tab fx:id="tabGame" closable="false" text="CGT Game">
+                 <content>
+                    <VBox>
+                       <children>
+                          <Button mnemonicParsing="false" onAction="#testeBackGame" text="Button" />
+                          <Button mnemonicParsing="false" onAction="#createWorld" text="Criar Mundo" />
+                              <Button mnemonicParsing="false" onAction="#createScreen" text="Criar Screen" />
+                       </children>
+                    </VBox>
+                 </content>
+            </Tab>
+          </tabs>
+        </TabPane>
+        <Accordion fx:id="configAccordion" />
+    </items>
+  </SplitPane>
+   </center>
+</BorderPane>
