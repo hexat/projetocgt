@@ -56,7 +56,6 @@ public class ButtonScreenDialog {
     }
 
     public CGTButtonScreen getButtonScreen() {
-        controller.commit();
         return buttonScreen;
     }
 

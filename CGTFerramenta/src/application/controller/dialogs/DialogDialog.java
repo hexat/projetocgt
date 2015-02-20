@@ -142,14 +142,10 @@ public class DialogDialog extends GridPane {
             }
         });
 
-        listButtons.focusModelProperty().addListener(new ChangeListener<FocusModel<CGTButtonScreen>>() {
+        listButtons.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<CGTButtonScreen>() {
             @Override
-            public void changed(ObservableValue<? extends FocusModel<CGTButtonScreen>> observable, FocusModel<CGTButtonScreen> oldValue, FocusModel<CGTButtonScreen> newValue) {
-                if (listButtons.getSelectionModel().isEmpty()) {
-                    btnRemButtonScreen.setDisable(true);
-                } else {
-                    btnRemButtonScreen.setDisable(false);
-                }
+            public void changed(ObservableValue<? extends CGTButtonScreen> observable, CGTButtonScreen oldValue, CGTButtonScreen newValue) {
+                btnRemButtonScreen.setDisable(false);
             }
         });
     }
@@ -263,5 +259,14 @@ public class DialogDialog extends GridPane {
 
     public CGTDialog getDialog() {
         return dialog;
+    }
+
+    public void confirmAction() {
+        dialog.setRelativeY(Float.parseFloat(txtRelY.getText()));
+        dialog.setRelativeX(Float.parseFloat(txtRelX.getText()));
+        dialog.setRelativeWidth(Float.parseFloat(txtRelW.getText()));
+        dialog.setRelativeHeight(Float.parseFloat(txtRelH.getText()));
+
+        stage.close();
     }
 }

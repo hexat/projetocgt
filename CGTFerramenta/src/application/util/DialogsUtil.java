@@ -11,6 +11,7 @@ import javafx.stage.Window;
  * Created by Luan on 29/01/2015.
  */
 public class DialogsUtil {
+    public static File LAST_OPEN_DIR = null;
     public static final FileChooser.ExtensionFilter IMG_FILTER = new FileChooser.ExtensionFilter("Arquivo PNG (*.png)", "*.png");
     public static final FileChooser.ExtensionFilter WAV_FILTER = new FileChooser.ExtensionFilter("Arquivo WAV (*.wav)", "*.wav");
 
@@ -25,17 +26,28 @@ public class DialogsUtil {
     private static File sop(String title, Window owner, FileChooser.ExtensionFilter... filters) {
         init();
 
+        File result = null;
         fileChooser.setTitle(title);
         fileChooser.getExtensionFilters().clear();
         for (FileChooser.ExtensionFilter f : filters) {
             fileChooser.getExtensionFilters().add(f);
         }
 
-        if (owner == null) {
-            return fileChooser.showOpenDialog(Main.getApp());
-        } else {
-            return fileChooser.showOpenDialog(owner);
+        if (LAST_OPEN_DIR != null) {
+            fileChooser.setInitialDirectory(LAST_OPEN_DIR);
         }
+
+        if (owner == null) {
+            result = fileChooser.showOpenDialog(Main.getApp());
+        } else {
+            result = fileChooser.showOpenDialog(owner);
+        }
+
+        if (result != null) {
+            LAST_OPEN_DIR = result.getParentFile();
+        }
+
+        return result;
     }
 
     public static File showOpenDialog(String title, FileChooser.ExtensionFilter... filters) {
