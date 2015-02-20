@@ -19,3 +19,9 @@ eclipse.project {
 tasks.ideaModule.doFirst {
     sourceSets.main.resources.srcDirs = []
 }
+
+task uijar(dependsOn: classes, type: Jar) {
+	archiveName = 'cgt-fx-ui.jar' 
+	from sourceSets.main.output.classesDir 
+	include 'application/controller/ui/**/*'
+}

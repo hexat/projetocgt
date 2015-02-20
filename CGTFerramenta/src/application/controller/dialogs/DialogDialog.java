@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import application.Config;
 import application.Main;
-import application.controller.titleds.ButtonScreenTitledPane;
+import application.util.Util;
 import cgt.hud.CGTButtonScreen;
 import cgt.screen.CGTDialog;
 import cgt.util.CGTTexture;
@@ -15,16 +15,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.FocusModel;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import application.util.DialogsUtil;
@@ -75,6 +71,7 @@ public class DialogDialog extends GridPane {
     }
 
     private void setActions() {
+        Util.integerText(txtRelX);
         txtRelY.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

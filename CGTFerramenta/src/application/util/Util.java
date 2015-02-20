@@ -1,5 +1,9 @@
 package application.util;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.TextField;
+
 import java.awt.*;
 
 /**
@@ -32,5 +36,17 @@ public abstract class Util {
         }
 
         return new Dimension(new_width, new_height);
+    }
+
+    public static void integerText(final TextField txtRelX) {
+        txtRelX.textProperty().addListener(new ChangeListener<String>() {
+            @Override public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue.matches("\\d*")) {
+
+                } else {
+                    txtRelX.setText(oldValue);
+                }
+            }
+        });
     }
 }

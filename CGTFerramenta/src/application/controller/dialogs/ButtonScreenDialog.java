@@ -1,6 +1,5 @@
 package application.controller.dialogs;
 
-import application.Main;
 import application.controller.titleds.ButtonScreenTitledPane;
 import cgt.hud.CGTButtonScreen;
 import javafx.event.ActionEvent;

@@ -11,7 +11,6 @@ import application.controller.dialogs.DialogDialog;
 import application.controller.dialogs.LoseDialog;
 import application.controller.dialogs.WinDialog;
 import cgt.game.CGTGameWorld;
-import cgt.hud.CGTButton;
 import cgt.hud.CGTButtonScreen;
 import cgt.lose.Lose;
 import cgt.screen.CGTDialog;
