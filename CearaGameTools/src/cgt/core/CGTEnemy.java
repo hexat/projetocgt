@@ -11,39 +11,24 @@ import cgt.policy.DirectionPolicy;
 import cgt.policy.StatePolicy;
 import cgt.unit.LabelID;
 
-public class CGTEnemy extends CGTGameObject implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5889174566567350080L;
+public class CGTEnemy extends CGTOpposite implements Serializable {
 	private int damage;
-
-	//TODO Criar uma lista de behaviors onde o pai ficara disponivel para todos
 	private ArrayList<Behavior> behaviors;
-	private boolean block;
-	private boolean destroyable;
 	private String group;
 	private float alpha; //nivel de transparencia
 	private boolean vulnerable;
 	private float timeToRecovery;
 	private boolean attacking;
-	
-	public CGTEnemy(){
-        super();
+
+    public CGTEnemy(String label) {
+		super(label);
 		damage=0;
 		behaviors = new ArrayList<Behavior>();
-		block=false;
-		destroyable=true;
 		group="";
 		vulnerable=true;
 		alpha = 1;
 		attacking = false;
 		timeToRecovery = 0;
-	}
-
-    public CGTEnemy(String label) {
-        this();
-        setLabel(label);
     }
 
 	public int getDamage() {
@@ -54,22 +39,6 @@ public class CGTEnemy extends CGTGameObject implements Serializable{
 		this.damage = damage;
 	}
 
-	public boolean isBlock() {
-		return block;
-	}
-
-	public void setBlock(boolean block) {
-		this.block = block;
-	}
-
-	public boolean isDestroyable() {
-		return destroyable;
-	}
-
-	public void setDestroyable(boolean destroyable) {
-		this.destroyable = destroyable;
-	}
-	
 	public int getBehaviorsSize(){
 		return behaviors.size();
 	}
@@ -87,21 +56,7 @@ public class CGTEnemy extends CGTGameObject implements Serializable{
 		}
 		behaviors.add(behavior);
 	}
-	
-//	@Override
-//	public void setPosition(Vector2 position) {
-//		for(int i = 0; i < this.behaviors.size(); i++){
-//			if (this.behaviors.get(i).equals(DirectionPolicy.TWO_POINTS_DIRECTION)){
-//				cgt.behaviors.Direction direction = (cgt.behaviors.Direction) this.behaviors.get(i);
-//				Vector2 initialPosition = new Vector2(direction.getMinX(), direction.getMinY());
-//				this.setPosition(initialPosition);
-//			} 
-//		}
-//		if (this.getPosition() == null){
-//			this.setPosition(position);
-//		}
-//	}
-	
+
 	public void removeBehavior(Behavior behavior) {
 		behaviors.remove(behavior);
 	}
@@ -121,8 +76,7 @@ public class CGTEnemy extends CGTGameObject implements Serializable{
 	@Override
 	public String toString() {
 		return super.toString() + "CGTEnemy [damage=" + damage
-				+ ", behaviors=" + behaviors + ", block=" + block
-				+ ", destroyable=" + destroyable + "]";
+				+ ", behaviors=" + behaviors + ", block=" + "]";
 	}
 
 	/**

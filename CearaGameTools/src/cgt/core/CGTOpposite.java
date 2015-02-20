@@ -6,25 +6,11 @@ import java.util.ArrayList;
 import cgt.behaviors.Behavior;
 import cgt.unit.LabelID;
 
-public class CGTOpposite extends CGTGameObject implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4153583529054815594L;
+public class CGTOpposite extends CGTGameObject implements Serializable {
 	private boolean block;
 	private boolean destroyable;
-	private ArrayList<Behavior> behaviors;
-	private String label;
-	
-	
-	public CGTOpposite(){
-		super();
-		label = null;
-		behaviors = new ArrayList<Behavior>();
-	}
 
     public CGTOpposite(String label) {
-        this();
         setLabel(label);
     }
 	
@@ -44,33 +30,10 @@ public class CGTOpposite extends CGTGameObject implements Serializable{
 		return destroyable;
 	}
 
-	public ArrayList<Behavior> getBehaviors(){
-		return behaviors;
-	}
-	public void addBehavior(Behavior behavior) {
-		behaviors.add(behavior);
-	}
-	
-	public void removeBehavior(Behavior behavior) {
-		behaviors.remove(behavior);
-	}
-	
-	public void removeBehavior(int index){
-		behaviors.remove(index);
-	}
-
 	@Override
 	public String toString() {
 		return super.toString() + "CGTOpposite [block=" + block + ", destroyable=" + destroyable
-				+ ", behaviors=" + behaviors + "]";
-	}
-
-	public void setLabel(String string) {
-		this.label = string;
-	}
-	
-	public String getLabel() {
-		return label;
+				+ "]";
 	}
 }
  

@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import br.edu.ifce.cgt.application.Config;
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
+import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import br.edu.ifce.cgt.application.util.Util;
 import cgt.hud.CGTButtonScreen;
 import cgt.screen.CGTDialog;
@@ -34,10 +36,10 @@ public class DialogDialog extends GridPane {
     private CGTDialog dialog;
 
     @FXML public ListView<CGTButtonScreen> listButtons;
-    @FXML private TextField txtRelX;
-    @FXML private TextField txtRelY;
-    @FXML private TextField txtRelW;
-    @FXML private TextField txtRelH;
+    @FXML private FloatTextField txtRelX;
+    @FXML private FloatTextField txtRelY;
+    @FXML private FloatTextField txtRelW;
+    @FXML private FloatTextField txtRelH;
 
     @FXML private Button btnCorner;
     @FXML private Button btnBorder;
@@ -71,7 +73,11 @@ public class DialogDialog extends GridPane {
     }
 
     private void setActions() {
-        Util.integerText(txtRelX);
+        txtRelX.setMaxMin(0, 1);
+        txtRelY.setMaxMin(0, 1);
+        txtRelW.setMaxMin(0, 1);
+        txtRelH.setMaxMin(0, 1);
+
         txtRelY.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

@@ -23,5 +23,5 @@ tasks.ideaModule.doFirst {
 task uijar(dependsOn: classes, type: Jar) {
 	archiveName = 'cgt-fx-ui.jar' 
 	from sourceSets.main.output.classesDir 
-	include 'br.edu.ifce.cgt.application/controller/ui/**/*'
+	include 'br/edu/ifce/cgt/application/controller/ui/**/*'
 }
