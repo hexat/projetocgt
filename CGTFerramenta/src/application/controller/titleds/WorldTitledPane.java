@@ -100,6 +100,7 @@ public class WorldTitledPane implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 removerDialog(world.getLoseDialog());
+                btnRemLoseDialog.setDisable(true);
             }
         });
 
@@ -107,6 +108,7 @@ public class WorldTitledPane implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 removerDialog(world.getPauseDialog());
+                btnRemPauseDialog.setDisable(true);
             }
         });
 
@@ -114,6 +116,7 @@ public class WorldTitledPane implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 removerDialog(world.getWinDialog());
+                btnRemWinDialog.setDisable(true);
             }
         });
 
@@ -121,6 +124,7 @@ public class WorldTitledPane implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 removerDialog(world.getInitialDialog());
+                btnRemInitialDialog.setDisable(true);
             }
         });
     }
@@ -235,6 +239,7 @@ public class WorldTitledPane implements Initializable {
     public void configPauseDialog() {
         if (world.getPauseDialog() == null) {
             world.setPauseDialog(new CGTDialog());
+            btnRemPauseDialog.setDisable(false);
         }
 
         DialogDialog dialog = new DialogDialog(world.getPauseDialog());
@@ -244,6 +249,7 @@ public class WorldTitledPane implements Initializable {
     public void configWinDialog() {
         if (world.getWinDialog() == null) {
             world.setWinDialog(new CGTDialog());
+            btnRemWinDialog.setDisable(false);
         }
 
         DialogDialog dialog = new DialogDialog(world.getWinDialog());
@@ -253,6 +259,7 @@ public class WorldTitledPane implements Initializable {
     public void configInitialDialog() {
         if (world.getInitialDialog() == null) {
             world.setInitialDialog(new CGTDialog());
+            btnRemInitialDialog.setDisable(false);
         }
 
         DialogDialog dialog = new DialogDialog(world.getInitialDialog());
@@ -260,8 +267,9 @@ public class WorldTitledPane implements Initializable {
     }
 
     public void configLoseDialog() {
-        if (world.getLoseDialog() != null) {
+        if (world.getLoseDialog() == null) {
             world.setLoseDialog(new CGTDialog());
+            btnRemLoseDialog.setDisable(false);
         }
         DialogDialog dialog = new DialogDialog(world.getLoseDialog());
         dialog.showAndWait();
