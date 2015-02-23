@@ -59,6 +59,7 @@ public class GameObjectTitledPane extends TitledPane {
 	private CGTGameObject gameObject;
 
     public GameObjectTitledPane(CGTGameObject object) {
+        this.gameObject = object;
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigGameObject.fxml"));
         xml.setRoot(this);
         xml.setController(this);
