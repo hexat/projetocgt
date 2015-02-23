@@ -46,6 +46,16 @@ public class FloatTextField extends TextField {
         this.max = max;
     }
 
+    public void setMax(float max) {
+        isMaxMin = true;
+        this.max = max;
+    }
+
+    public void setMin(float min) {
+        isMaxMin = true;
+        this.min = min;
+    }
+
     public float getValue() {
         if (getText().equals("")) return 0;
 

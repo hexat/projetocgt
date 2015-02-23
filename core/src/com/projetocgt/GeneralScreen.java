@@ -30,7 +30,7 @@ public class GeneralScreen extends Stage implements Screen {
         for (CGTButton b : screen.getButtons()) {
         	b.setInputListener();
         	this.addActor(b);
-        	b.autosize();
+        	b.setup();
         }
 		this.game = StarAssault.getInstance();
 	    Gdx.input.setInputProcessor(this);

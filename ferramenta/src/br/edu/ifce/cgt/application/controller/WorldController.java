@@ -1,8 +1,18 @@
 package br.edu.ifce.cgt.application.controller;
 
+import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.controller.titleds.AmmoDisplayTitledPane;
+import br.edu.ifce.cgt.application.controller.titleds.IndividualLifeBarTitledPane;
 import br.edu.ifce.cgt.application.controller.titleds.WorldTitledPane;
 import cgt.core.CGTBonus;
 import cgt.core.CGTEnemy;
+import cgt.hud.AmmoDisplay;
+import cgt.hud.HUDComponent;
+import cgt.hud.IndividualLifeBar;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
@@ -11,6 +21,7 @@ import org.controlsfx.dialog.Dialogs;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -26,7 +37,7 @@ import br.edu.ifce.cgt.application.ObjectButton;
 import cgt.core.CGTActor;
 import cgt.core.CGTOpposite;
 
-public class WorldController implements Initializable {
+public class WorldController extends BorderPane {
     private Button btnGameObject;
     @FXML
     private Button btnPersonagem;
@@ -41,21 +52,35 @@ public class WorldController implements Initializable {
     @FXML
     private VBox boxOpposites;
     @FXML
+    private VBox boxHud;
+    @FXML
     private VBox boxBonus;
 
     private ArrayList<ObjectButton> listaInimigo = new ArrayList<ObjectButton>();
     private ArrayList<ObjectButton> listaOpposite = new ArrayList<ObjectButton>();
 
     private CGTGameWorld world;
+    private Accordion configAccordion;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public WorldController(CGTGameWorld world) {
+        FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/World.fxml"));
+        xml.setRoot(this);
+        xml.setController(this);
+
+        try {
+            xml.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        configAccordion = (Accordion) Main.getApp().getScene().lookup("#configAccordion");
+
+        setWorld(world);
     }
 
     @FXML public void btnConfigWorld() {
-        Accordion configAccordion = (Accordion) Main.getApp().getScene().lookup("#configAccordion");
         configAccordion.getPanes().clear();
         configAccordion.getPanes().add(WorldTitledPane.getNode(world));
+        configAccordion.getPanes().get(0).setExpanded(true);
     }
 
     @FXML
@@ -104,6 +129,7 @@ public class WorldController implements Initializable {
     public void addOpositeInWorld() {
         if (listaOpposite.size() < 6) {
             CGTOpposite o = new CGTOpposite("Opositor");
+            world.addOpposite(o);
             ObjectButton btn = new ObjectButton(o);
             listaOpposite.add(btn);
             boxOpposites.getChildren().addAll(btn);
@@ -115,6 +141,23 @@ public class WorldController implements Initializable {
 //			dialog.show();
             System.out.println("Não pode add outro opposite");
         }
+    }
+
+    public void addAmmoDisplay() {
+        AmmoDisplay ammoDisplay = new AmmoDisplay(world.getId());
+
+        world.addHUDComponent(ammoDisplay);
+        boxHud.getChildren().addAll(new ButtonHud(ammoDisplay));
+    }
+
+
+    public void addEnemiesLifeBar() {
+    }
+
+    public void addObjectLifeBar() {
+        IndividualLifeBar lifeBar = new IndividualLifeBar(world.getId());
+        world.addLifeBar(lifeBar);
+        boxHud.getChildren().addAll(new ButtonHud(lifeBar));
     }
 
     public void setWorld(CGTGameWorld world) {
@@ -137,19 +180,46 @@ public class WorldController implements Initializable {
         for (CGTBonus bonus : world.getBonus()) {
             boxBonus.getChildren().add(new ObjectButton(bonus));
         }
-    }
 
-    public static Node getNode(CGTGameWorld world) {
-        Node res = null;
-        FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/World.fxml"));
-        try {
-            res = xml.load();
-            WorldController controller = xml.getController();
-            controller.setWorld(world);
-        } catch (IOException e) {
-            e.printStackTrace();
+        boxHud.getChildren().clear();
+        for (HUDComponent hud : world.getHUD()) {
+            boxHud.getChildren().add(new ButtonHud(hud));
         }
-        return res;
     }
 
+    public void addBonus(ActionEvent event) {
+        CGTBonus bonus = new CGTBonus("Bonus");
+        world.addBonus(bonus);
+
+        ObjectButton button = new ObjectButton(bonus);
+
+        boxBonus.getChildren().add(button);
+    }
+
+    public void teste(ActionEvent event) {
+        System.out.println("clikei");
+    }
+
+    private class ButtonHud extends Button {
+        private HUDComponent hud;
+        public ButtonHud(HUDComponent hud) {
+            super(hud.getName());
+            this.hud = hud;
+            setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    addPane();
+                }
+            });
+        }
+
+        private void addPane() {
+            configAccordion.getPanes().clear();
+            if (hud instanceof IndividualLifeBar) {
+                configAccordion.getPanes().add(new IndividualLifeBarTitledPane((IndividualLifeBar) hud));
+            } else if (hud instanceof AmmoDisplay) {
+                configAccordion.getPanes().add(new AmmoDisplayTitledPane((AmmoDisplay) hud));
+            }
+        }
+    }
 }

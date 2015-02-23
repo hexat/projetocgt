@@ -34,11 +34,11 @@ public class ObjectButton extends Button {
                 clearAndAddGameObject();
 
                 if (object instanceof CGTEnemy) {
-                    configAccordion.getPanes().add(EnemyTitledPane.getNode((CGTEnemy) object));
+                    configAccordion.getPanes().add(new EnemyTitledPane((CGTEnemy) object));
                 } else if (object instanceof CGTOpposite) {
-                    configAccordion.getPanes().add(OppositeTitledPane.getNode((CGTOpposite) object));
+                    configAccordion.getPanes().add(new OppositeTitledPane((CGTOpposite) object));
                 } else if (object instanceof CGTBonus) {
-                    configAccordion.getPanes().add(BonusTitledPane.getNode((CGTBonus) object));
+                    configAccordion.getPanes().add(new BonusTitledPane((CGTBonus) object));
                 } else if (object instanceof CGTActor) {
                     configAccordion.getPanes().add(ActorTitledPane.getNode((CGTActor) object));
                 }

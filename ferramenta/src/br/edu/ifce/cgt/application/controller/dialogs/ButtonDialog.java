@@ -53,9 +53,9 @@ public class ButtonDialog extends BorderPane {
 
         if (button == null) {
             this.button = new CGTButton();
-        } else {
-            init();
         }
+
+        init();
 
         buttonControl.getBtnTextureDown().setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -73,21 +73,7 @@ public class ButtonDialog extends BorderPane {
     }
 
     private void init() {
-        if (button.getRelativeY() > 0) {
-            hudControl.getTFRelativeY().setText(button.getRelativeY() + "");
-        }
-        if (button.getRelativeX() > 0) {
-            hudControl.getTFRelativeX().setText(button.getRelativeX()+"");
-        }
-
-        if (button.getRelativeHeight() > 0) {
-            hudControl.getTFRelativeHeight().setText(button.getRelativeHeight()+"");
-        }
-
-        if (button.getRelativeWidth() > 0) {
-            hudControl.getTFRelativeWidth().setText(button.getRelativeHeight()+"");
-        }
-
+        hudControl.setHud(button);
         if (button.getTextureDown() != null) {
             buttonControl.getTxtTextureDown().setText(button.getTextureDown().getFile().getFilename());
         }
@@ -98,11 +84,7 @@ public class ButtonDialog extends BorderPane {
     }
 
     public void add() {
-        button.setRelativeX(hudControl.getRelativeX());
-        button.setRelativeY(hudControl.getRelativeY());
-        button.setRelativeWidth(hudControl.getRelativeWidth());
-        button.setRelativeHeight(hudControl.getRelativeHeight());
-
+        hudControl.commit();
         stage.close();
     }
 

@@ -10,39 +10,51 @@ import br.edu.ifce.cgt.application.controller.dialogs.BehaviorDialog;
 import cgt.core.CGTEnemy;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Orientation;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 
-public class EnemyTitledPane implements Initializable {
+public class EnemyTitledPane extends TitledPane {
 
-    public VBox panBehaviors;
-    public TextField txtDamage;
-    public CheckBox chkBlock;
+    @FXML public VBox panBehaviors;
+    @FXML public TextField txtDamage;
+    @FXML public CheckBox chkBlock;
+    @FXML public TextField txtAlpha;
+    @FXML public TextField txtTimeRec;
+    @FXML public VBox boxContent;
+
     public CheckBox chkDestroyable;
     public CheckBox chkVulnerable;
-    public TextField txtAlpha;
-    public TextField txtTimeRec;
 
     private CGTEnemy enemy;
 
-    public static TitledPane getNode(CGTEnemy object) {
+    public EnemyTitledPane(CGTEnemy object) {
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigInimigo.fxml"));
-        TitledPane el = null;
+        xml.setRoot(this);
+        xml.setController(this);
+
         try {
-            el = xml.load();
-            EnemyTitledPane controller = xml.getController();
-            controller.setEnemy(object);
+            xml.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return el;
+        OppositeTitledPane pane = new OppositeTitledPane(object);
+
+        boxContent.getChildren().add(0, pane.getGridOpposite());
+        boxContent.getChildren().add(1, new Separator(Orientation.HORIZONTAL));
+
+        chkBlock = pane.getCheckBlock();
+        chkDestroyable = pane.getCheckDestroyable();
+
+        init();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void init() {
         txtDamage.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -63,20 +75,6 @@ public class EnemyTitledPane implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 enemy.setTimeToRecovery(Float.parseFloat(txtTimeRec.getText()));
-            }
-        });
-
-        chkBlock.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                enemy.setBlock(chkBlock.isSelected());
-            }
-        });
-
-        chkDestroyable.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                enemy.setDestroyable(chkDestroyable.isSelected());
             }
         });
 
@@ -111,9 +109,7 @@ public class EnemyTitledPane implements Initializable {
     public void setEnemy(CGTEnemy enemy) {
         this.enemy = enemy;
 
-        chkDestroyable.setSelected(enemy.isDestroyable());
         chkVulnerable.setSelected(enemy.isVulnerable());
-        chkBlock.setSelected(enemy.isBlock());
 
         txtAlpha.setText(enemy.getAlpha()+"");
         if (enemy.getDamage() > 0) {

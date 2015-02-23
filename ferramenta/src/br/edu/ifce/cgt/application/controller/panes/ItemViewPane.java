@@ -16,7 +16,6 @@ public class ItemViewPane extends GridPane {
         add(new Label(text), 1, 1);
 
         this.btnExcluir = new Button("Excluir");
-
         add(btnExcluir, 2, 1);
     }
 

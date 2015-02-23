@@ -18,7 +18,13 @@ public class CGTLabel extends HUDComponent implements Serializable {
 	private CGTFile file;
 	private int color;
 	private Label label;
-	
+
+	public CGTLabel() {
+		this.file = null;
+		this.text = "";
+		size = 100;
+		color = 255;
+	}
 	
 	public CGTLabel (String file, String text){
 		this.file = new CGTFile(file);
@@ -39,23 +45,25 @@ public class CGTLabel extends HUDComponent implements Serializable {
 		this.text = text;
 		this.size = size;
 		this.color = color;
-		
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Label getLabelGDX(){
 		if(label == null){
-			FreeTypeFontGenerator generator = new FreeTypeFontGenerator(
-				file.getFileHandle());
-			FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-			parameter.size = size;
-			BitmapFont font12 = generator.generateFont(parameter);
-																	
-			generator.dispose();
+			BitmapFont font12;
+			if (file != null) {
+				FreeTypeFontGenerator generator = new FreeTypeFontGenerator(
+						file.getFileHandle());
+				FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+				parameter.size = size;
+				font12 = generator.generateFont(parameter);
+				generator.dispose();
+			} else {
+				font12 = new BitmapFont();
+				font12.setScale(size);
+			}
 			
 			LabelStyle style = new LabelStyle(font12, new Color(color));
 			label = new Label(text,style);
-	//
 		}
 		return label;
 	}
@@ -96,8 +104,8 @@ public class CGTLabel extends HUDComponent implements Serializable {
 		this.label = label;
 	}
 
-	public void autosize(){
-		super.autosize();
+	public void setup(){
+		super.setup();
 		
 		label.setX(this.getX());
 		label.setY(this.getY());

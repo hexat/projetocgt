@@ -51,34 +51,6 @@ public class ButtonScreenTitledPane extends TitledPane {
             }
         });
 
-        hudControl.getTFRelativeX().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                buttonScreen.setRelativeX(hudControl.getRelativeX());
-            }
-        });
-
-        hudControl.getTFRelativeY().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                buttonScreen.setRelativeY(hudControl.getRelativeY());
-            }
-        });
-
-        hudControl.getTFRelativeWidth().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                buttonScreen.setRelativeWidth(hudControl.getRelativeWidth());
-            }
-        });
-
-        hudControl.getTFRelativeHeight().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                buttonScreen.setRelativeHeight(hudControl.getRelativeHeight());
-            }
-        });
-
         buttonControl.getBtnTextureDown().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -97,20 +69,7 @@ public class ButtonScreenTitledPane extends TitledPane {
     private void init() {
         boxWindows.getItems().setAll(Config.getGame().getIds());
 
-        if (buttonScreen.getRelativeY() > 0) {
-            hudControl.getTFRelativeY().setText(buttonScreen.getRelativeY() + "");
-        }
-        if (buttonScreen.getRelativeX() > 0) {
-            hudControl.getTFRelativeX().setText(buttonScreen.getRelativeX()+"");
-        }
-
-        if (buttonScreen.getRelativeHeight() > 0) {
-            hudControl.getTFRelativeHeight().setText(buttonScreen.getRelativeHeight()+"");
-        }
-
-        if (buttonScreen.getRelativeWidth() > 0) {
-            hudControl.getTFRelativeWidth().setText(buttonScreen.getRelativeHeight()+"");
-        }
+        hudControl.setHud(buttonScreen);
 
         if (buttonScreen.getScreenToGo() != null) {
             boxWindows.getSelectionModel().select(buttonScreen.getScreenToGo().getId());
@@ -158,10 +117,7 @@ public class ButtonScreenTitledPane extends TitledPane {
     }
 
     public void commit() {
-        buttonScreen.setRelativeY(hudControl.getRelativeY());
-        buttonScreen.setRelativeWidth(hudControl.getRelativeWidth());
-        buttonScreen.setRelativeHeight(hudControl.getRelativeHeight());
-        buttonScreen.setRelativeX(hudControl.getRelativeX());
+        hudControl.commit();
     }
 
     public ComboBox<String> getBoxWindows() {

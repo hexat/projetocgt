@@ -87,14 +87,14 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				button.setInputListener();
 			}
 			this.addActor(component);
-			component.autosize();
+			component.setup();
 		}
 		if (world.getInitialDialog() != null) {
 			world.getInitialDialog().setActive(true);
 			addDialog(world.getInitialDialog());
 			world.getInitialDialog().autosize();
 			// this.addActor(btn);
-			// btn.autosize();
+			// btn.setup();
 		}
 	}
 
@@ -397,7 +397,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 		for (CGTButtonScreen button : dialog.getButtons()) {
 			addActor(button);
-			button.autosize();
+			button.setup();
 			button.setInputListener();
 		}
 		if (dialog.getCloseButton() != null) {

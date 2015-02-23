@@ -5,15 +5,26 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<BorderPane prefHeight="457.0" prefWidth="482.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifce.cgt.application.controller.WorldController">
+<fx:root type="javafx.scene.layout.BorderPane" prefHeight="457.0" prefWidth="482.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
    <top>
         <ToolBar prefWidth="Infinity" BorderPane.alignment="CENTER">
             <items>
                 <Button mnemonicParsing="false" onAction="#btnConfigWorld" text="Configurarar Mundo" />
                 <Button fx:id="btnPersonagem" mnemonicParsing="false" onAction="#addActorInWorld" text="Personagem" />
-                <Button fx:id="btnInimigo" mnemonicParsing="false" onAction="#addEnemyInWorld" text="Inimigo" />
-                <Button fx:id="btnOposite" mnemonicParsing="false" onAction="#addOpositeInWorld" text="Oposites" />
+                <MenuButton mnemonicParsing="false" text="Add Object">
+                    <items>
+                        <MenuItem onAction="#addEnemyInWorld" mnemonicParsing="false" text="Enemy" />
+                        <MenuItem onAction="#addOpositeInWorld"  mnemonicParsing="false" text="Opposite" />
+                        <MenuItem onAction="#addBonus" mnemonicParsing="false" text="Bonus" />
+                    </items>
+                </MenuButton>
+                <MenuButton mnemonicParsing="false" text="Add HUD">
+                    <items>
+                        <MenuItem onAction="#addAmmoDisplay" mnemonicParsing="false" text="Ammo Display" />
+                        <MenuItem onAction="#addEnemiesLifeBar"  mnemonicParsing="false" text="Enemies LifeBar" />
+                        <MenuItem onAction="#addObjectLifeBar" mnemonicParsing="false" text="Object LifeBar" />
+                    </items>
+                </MenuButton>
             </items>
         </ToolBar>
    </top>
@@ -23,8 +34,9 @@
             <VBox fx:id="boxActor" prefHeight="200.0" prefWidth="100.0" />
             <VBox fx:id="boxEnemies" prefHeight="200.0" prefWidth="100.0" />
             <VBox fx:id="boxOpposites" prefHeight="200.0" prefWidth="100.0" />
-            <VBox fx:id="boxBonus" prefHeight="200.0" prefWidth="100.0" />
+             <VBox fx:id="boxBonus" prefHeight="200.0" prefWidth="100.0" />
+             <VBox fx:id="boxHud" prefHeight="200.0" prefWidth="100.0" />
          </children>
       </HBox>
    </center>
-</BorderPane>
+</fx:root>

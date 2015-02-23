@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 
 
-<TitledPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" text="Configurações do Jogo" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifce.cgt.application.controller.titleds.GameTitledPane">
+<fx:root type="javafx.scene.control.TitledPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" text="Configurações do Jogo" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <GridPane>
         <columnConstraints>
@@ -23,4 +23,4 @@
          </children>
       </GridPane>
    </content>
-</TitledPane>
+</fx:root>

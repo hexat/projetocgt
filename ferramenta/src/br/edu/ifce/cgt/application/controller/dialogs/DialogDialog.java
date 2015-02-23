@@ -208,7 +208,7 @@ public class DialogDialog extends GridPane {
 
     private void init() {
         if (dialog != null) {
-            txtRelH.setText(dialog.getRelativeX()+"");
+            txtRelH.setText(dialog.getRelativeHeight()+"");
             txtRelW.setText(dialog.getRelativeWidth()+"");
             txtRelX.setText(dialog.getRelativeX()+"");
             txtRelY.setText(dialog.getRelativeY()+"");

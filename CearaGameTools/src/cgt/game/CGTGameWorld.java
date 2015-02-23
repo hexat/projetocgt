@@ -1,5 +1,8 @@
 package cgt.game;
 
+import cgt.core.*;
+import cgt.hud.*;
+import cgt.util.*;
 import com.badlogic.gdx.audio.Music;
 
 import java.io.File;
@@ -9,27 +12,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-import cgt.core.CGTActor;
-import cgt.core.CGTBonus;
-import cgt.core.CGTEnemy;
-import cgt.core.CGTGameObject;
-import cgt.core.CGTOpposite;
-import cgt.hud.CGTButton;
-import cgt.hud.CGTButtonStartGame;
-import cgt.hud.CGTLabel;
-import cgt.hud.HUDComponent;
-import cgt.hud.LifeBar;
 import cgt.lose.Lose;
 import cgt.policy.GameModePolicy;
 import cgt.policy.InputPolicy;
 import cgt.screen.CGTDialog;
 import cgt.screen.CGTWindow;
 import cgt.unit.Action;
-import cgt.util.ButtonPad;
-import cgt.util.CGTSound;
-import cgt.util.CGTTexture;
-import cgt.util.Camera;
 import cgt.win.Win;
 
 public class CGTGameWorld extends CGTWindow implements Serializable {
@@ -38,6 +28,7 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private ArrayList<CGTOpposite> opposites;
 	private ArrayList<CGTEnemy> enemies;
 	private ArrayList<CGTBonus> bonus;
+	private ArrayList<CGTProjectile> projectiles;
 	private ArrayList<HUDComponent> hud;
 	private CGTDialog pauseDialog;
 	private CGTDialog winDialog;
@@ -54,7 +45,8 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private CGTSound soundWin;
 	private CGTSound soundLose;
 	private CGTButtonStartGame startGame;
-	
+	private Object projectilesLabels;
+
 	protected CGTGameWorld(){
 		opposites = new ArrayList<CGTOpposite>();
 		bonus = new ArrayList<CGTBonus>();
@@ -344,6 +336,21 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		return null;
 	}
 
+	public List<String> getLabels() {
+		List<String> res = new ArrayList<String>();
+		if (getActor() != null) {
+			res.add(getActor().getLabel());
+		}
+		for (CGTGameObject o : enemies) {
+			res.add(o.getLabel());
+		}
+
+		for (CGTGameObject o : opposites) {
+			res.add(o.getLabel());
+		}
+		return res;
+	}
+
     @Override
     public boolean validate() {
         return getBackground() != null && getActor() != null && getActor().getPosition() != null && getActor().hasAnimation() && getActor().getBounds().width > 0;
@@ -355,6 +362,23 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 
 	public boolean removeLoseCriteria(Lose lose) {
 		return loseCriteria.remove(lose);
+	}
+
+	public CGTProjectile findProjectile(String id) {
+		for (CGTProjectile p : getActor().getProjectiles()) {
+			if (p.getLabel().equals(id)) {
+				return p;
+			}
+		}
+		return null;
+	}
+
+	public List<String> getProjectilesLabels() {
+		List<String> res = new ArrayList<String>();
+		for (CGTProjectile p : getActor().getProjectiles()) {
+			res.add(p.getLabel());
+		}
+		return res;
 	}
 }
  

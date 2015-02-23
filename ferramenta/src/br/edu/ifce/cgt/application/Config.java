@@ -4,7 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
+import javafx.fxml.FXMLLoader;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
@@ -21,6 +25,8 @@ public class Config {
 			+ "/.cgt/";
 	public final static String BASE_IMG = "data/img/";
 	public final static String BASE_AUDIO = "data/audio/";
+
+//	private static ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n.String", new Locale("en", "EN"));
 
 	private static CGTGame instance = null;
 
@@ -141,4 +147,21 @@ public class Config {
 		File f = new File(BASE+file.getFile().getPath());
 		f.delete();
 	}
+
+//	public static void loadView(String pathResource, Object controller) {
+//		FXMLLoader xml = new FXMLLoader(Main.class.getResource(pathResource));
+//		xml.setRoot(controller);
+//		xml.setController(controller);
+//		xml.setResources(resourceBundle);
+//
+//		try {
+//			xml.load();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
+
+//	public static String t(String key) {
+//		return resourceBundle.getString(key);
+//	}
 }

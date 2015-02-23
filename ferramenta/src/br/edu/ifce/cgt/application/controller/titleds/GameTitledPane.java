@@ -15,12 +15,21 @@ import javafx.scene.control.TitledPane;
 /**
  * Created by infolev on 06/02/15.
  */
-public class GameTitledPane implements Initializable {
+public class GameTitledPane extends TitledPane {
 
     @FXML private ComboBox<String> boxWindows;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public GameTitledPane() {
+        FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigGame.fxml"));
+        xml.setRoot(this);
+        xml.setController(this);
+
+        try {
+            xml.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         boxWindows.getItems().clear();
         for (String s : Config.getGame().getIds()) {
             boxWindows.getItems().add(s);
@@ -33,15 +42,5 @@ public class GameTitledPane implements Initializable {
         if (id != null) {
             Config.getGame().setStartWindowId(id);
         }
-    }
-
-    public static TitledPane getNode() {
-        TitledPane res = null;
-        try {
-            res = FXMLLoader.load(Main.class.getResource("/view/ConfigGame.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return res;
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
@@ -9,40 +10,31 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="185.0" prefWidth="419.0" text="Configuração Opposite" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifce.cgt.application.controller.titleds.OppositeTitledPane">
+<fx:root type="javafx.scene.control.TitledPane" animated="false" prefWidth="300.0" text="Configuração Opposite" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
  <content>
-    <ScrollPane hbarPolicy="NEVER" prefHeight="154.0" prefWidth="406.0">
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
        <content>
-          <GridPane prefHeight="155.0" prefWidth="413.0">
+          <GridPane fx:id="gridOpposite">
             <columnConstraints>
-              <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="92.0" />
-              <ColumnConstraints hgrow="SOMETIMES" maxWidth="329.0" minWidth="10.0" prefWidth="118.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="329.0" minWidth="10.0" prefWidth="211.0" />
+              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="90.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="90.0" />
             </columnConstraints>
             <rowConstraints>
-              <RowConstraints maxHeight="51.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
-              <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
-              <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="79.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
              <children>
                 <Label text="Block" />
                 <Label text="Destruível" GridPane.rowIndex="1" />
-                <Label text="Behavior" GridPane.rowIndex="2" />
-                <Label text="Label" GridPane.rowIndex="4" />
-                <CheckBox mnemonicParsing="false" GridPane.columnIndex="1" />
-                <CheckBox mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Button mnemonicParsing="false" text="+" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <TableView prefHeight="28.0" prefWidth="206.0" GridPane.columnSpan="3" GridPane.rowIndex="3">
-                    <columns>
-                      <TableColumn prefWidth="412.0" text="Behavior" />
-                    </columns>
-                  </TableView>
+                <CheckBox fx:id="chkBlock" mnemonicParsing="false" GridPane.columnIndex="1" />
+                <CheckBox fx:id="chkDestroyable" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
              </children>
           </GridPane>
        </content>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
     </ScrollPane>
  </content>
-</TitledPane>
+</fx:root>

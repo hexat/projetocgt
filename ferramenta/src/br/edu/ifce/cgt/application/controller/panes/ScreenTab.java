@@ -52,7 +52,7 @@ public class ScreenTab extends Tab {
         if (screen instanceof CGTScreen) {
             setContent(ScreenController.getNode((CGTScreen) screen));
         } else {
-            setContent(WorldController.getNode((CGTGameWorld) screen));
+            setContent(new WorldController((CGTGameWorld) screen));
         }
         setOnSelectionChanged(new EventHandler<Event>() {
             @Override

@@ -4,15 +4,16 @@ import java.io.Serializable;
 
 import cgt.unit.Action;
 
+import cgt.util.Validator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public abstract class HUDComponent extends Actor implements Serializable{
+public abstract class HUDComponent extends Actor implements Serializable, Validator {
 	private float relativeX;
 	private float relativeY;
 	private float relativeWidth;
 	private float relativeHeight;
 
-	public void autosize(){
+	public void setup(){
 		setWidth(getStage().getWidth()*relativeWidth);
 		setHeight(getStage().getHeight()*relativeHeight);
 		setX(getStage().getWidth()*relativeX);

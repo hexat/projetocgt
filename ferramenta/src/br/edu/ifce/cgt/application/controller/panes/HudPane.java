@@ -1,6 +1,10 @@
 package br.edu.ifce.cgt.application.controller.panes;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
+import cgt.hud.HUDComponent;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
@@ -12,10 +16,12 @@ import java.io.IOException;
  * Created by Luan on 18/02/2015.
  */
 public class HudPane extends GridPane {
-    @FXML private TextField txtRelX;
-    @FXML private TextField txtRelY;
-    @FXML private TextField txtWid;
-    @FXML private TextField txtHei;
+    private HUDComponent hud;
+
+    @FXML private FloatTextField txtRelX;
+    @FXML private FloatTextField txtRelY;
+    @FXML private FloatTextField txtWid;
+    @FXML private FloatTextField txtHei;
 
     public HudPane() {
         FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/ConfigHudComponent.fxml"));
@@ -26,45 +32,68 @@ public class HudPane extends GridPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        setHandler();
     }
 
+    private void setHandler() {
+        txtRelX.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                hud.setRelativeX(txtRelX.getValue());
+            }
+        });
 
-    public TextField getTFRelativeX() {
-        return txtRelX;
+        txtRelY.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                hud.setRelativeY(txtRelY.getValue());
+            }
+        });
+
+        txtWid.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                hud.setRelativeWidth(txtWid.getValue());
+            }
+        });
+
+        txtHei.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                hud.setRelativeHeight(txtHei.getValue());
+            }
+        });
     }
 
-    public TextField getTFRelativeY() {
-        return txtRelY;
-
+    public void commit() {
+        hud.setRelativeX(txtRelX.getValue());
+        hud.setRelativeY(txtRelY.getValue());
+        hud.setRelativeWidth(txtWid.getValue());
+        hud.setRelativeHeight(txtHei.getValue());
     }
 
-    public TextField getTFRelativeWidth() {
-        return txtWid;
+    public void setHud(HUDComponent hud) {
+        this.hud = hud;
+        init();
     }
 
-    public TextField getTFRelativeHeight() {
-        return txtHei;
+    public void init() {
+        if (hud != null) {
+            if (hud.getRelativeY() > 0) {
+                txtRelY.setText(hud.getRelativeY() + "");
+            }
+            if (hud.getRelativeX() > 0) {
+                txtRelX.setText(hud.getRelativeX() + "");
+            }
+
+            if (hud.getRelativeHeight() > 0) {
+                txtHei.setText(hud.getRelativeHeight() + "");
+            }
+
+            if (hud.getRelativeWidth() > 0) {
+                txtWid.setText(hud.getRelativeWidth() + "");
+            }
+        }
     }
-
-    public float getRelativeX() {
-        float res = 0;
-        res = Float.parseFloat(txtRelX.getText());
-        return res;
-    }
-
-    public float getRelativeY() {
-        float res = 0;
-        res = Float.parseFloat(txtRelY.getText());
-        return res;
-
-    }
-
-    public float getRelativeWidth() {
-        return Float.parseFloat(txtWid.getText());
-    }
-
-    public float getRelativeHeight() {
-        return Float.parseFloat(txtHei.getText());
-    }
-
 }

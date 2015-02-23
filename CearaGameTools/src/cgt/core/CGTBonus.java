@@ -7,16 +7,13 @@ import cgt.policy.BonusPolicy;
 import cgt.unit.LabelID;
 
 public class CGTBonus extends CGTGameObject implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4497239857672964461L;
 	private int score;
 	private boolean destroyable;
 	private int lifetime;
 	private ArrayList<BonusPolicy> policies;
 
-    public CGTBonus(){
+    public CGTBonus(String label){
+		super(label);
 		policies = new ArrayList<BonusPolicy>();
 	}
 	

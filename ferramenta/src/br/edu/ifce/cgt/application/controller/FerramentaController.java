@@ -54,7 +54,7 @@ public class FerramentaController implements Initializable {
             public void handle(Event event) {
                 if (tabGame.isSelected()) {
                     configAccordion.getPanes().clear();
-                    configAccordion.getPanes().add(GameTitledPane.getNode());
+                    configAccordion.getPanes().add(new GameTitledPane());
                 }
             }
         });
