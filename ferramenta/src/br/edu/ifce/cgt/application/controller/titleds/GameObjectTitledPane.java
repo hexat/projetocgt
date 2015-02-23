@@ -29,7 +29,7 @@ import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.controller.panes.AnimationViewPane;
 import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 
-public class GameObjectTitledPane implements Initializable {
+public class GameObjectTitledPane extends TitledPane {
     @FXML public VBox boxAnimations;
     @FXML public VBox boxPositions;
     @FXML public VBox boxSoundColision;
@@ -58,21 +58,20 @@ public class GameObjectTitledPane implements Initializable {
 	
 	private CGTGameObject gameObject;
 
-    public static TitledPane getNode(CGTGameObject object) {
+    public GameObjectTitledPane(CGTGameObject object) {
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigGameObject.fxml"));
-        TitledPane el = null;
+        xml.setRoot(this);
+        xml.setController(this);
+
         try {
-            el = xml.load();
-            GameObjectTitledPane controller = xml.getController();
-            controller.setGameObject(object);
+            xml.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return el;
+        init();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void init() {
         btnSetSound.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {

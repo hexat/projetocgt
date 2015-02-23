@@ -15,7 +15,6 @@ public class CGTProjectile extends CGTGameObject implements Serializable{
 	private int ammo;
 	private int maxAmmo;
 	private float angle;
-	private CGTGameObject owner;
 	private ArrayList<ProjectileOrientation> orientations;
 	private ArrayList<String> groups;
 
@@ -72,14 +71,6 @@ public class CGTProjectile extends CGTGameObject implements Serializable{
 
 	public void setMaxAmmo(int maxAmmo) {
 		this.maxAmmo = maxAmmo;
-	}
-	
-	public CGTGameObject getOwner() {
-		return owner;
-	}
-	
-	public void setOwner(CGTGameObject gameObject) {
-		this.owner = gameObject;
 	}
 	
 	public void setAngle(float angle) {

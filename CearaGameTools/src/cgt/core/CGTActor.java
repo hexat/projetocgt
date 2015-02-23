@@ -124,23 +124,13 @@ public class CGTActor extends CGTGameObject implements Serializable {
 	public ArrayList<CGTProjectile> getProjectiles(){
 		return projectiles;
 	}
+
 	public void addProjectile(CGTProjectile projectile) {
-		projectile.setOwner(this);
 		projectiles.add(projectile);
 	}
 
-	public CGTProjectile removeFire(int index) {
-		CGTProjectile projectile = projectiles.remove(index);
-		projectile.setOwner(null);
-		return projectile;
-	}
-	 
 	public boolean removeFire(CGTProjectile fire) {
-		if (projectiles.remove(fire)) {
-			fire.setOwner(null);
-			return true;
-		}
-		return false;
+		return projectiles.remove(fire);
 	}
 
 	@Override

@@ -20,7 +20,8 @@ public class ProjectileOrientation implements Serializable{
 //	private int spriteNumberOfColumns;
 	
 	public ProjectileOrientation() {
-			setStates(new ArrayList<StatePolicy>());
+		setStates(new ArrayList<StatePolicy>());
+        positionRelativeToGameObject = new Vector2();
 	}
 
 //	public int getSpriteLine() {

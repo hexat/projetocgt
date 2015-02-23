@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="300.0" text="Configuração Game Object" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifce.cgt.application.controller.titleds.GameObjectTitledPane">
+<fx:root type="javafx.scene.control.TitledPane" animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="300.0" text="Configuração Game Object" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
 <content>
     <ScrollPane fitToWidth="true" hbarPolicy="NEVER" hmax="0.0" vmax="1.1">
     <content>
@@ -85,4 +85,4 @@
     </content>
     </ScrollPane>
 </content>
-</TitledPane>
+</fx:root>

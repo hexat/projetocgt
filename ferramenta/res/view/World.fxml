@@ -10,12 +10,12 @@
         <ToolBar prefWidth="Infinity" BorderPane.alignment="CENTER">
             <items>
                 <Button mnemonicParsing="false" onAction="#btnConfigWorld" text="Configurarar Mundo" />
-                <Button fx:id="btnPersonagem" mnemonicParsing="false" onAction="#addActorInWorld" text="Personagem" />
                 <MenuButton mnemonicParsing="false" text="Add Object">
                     <items>
                         <MenuItem onAction="#addEnemyInWorld" mnemonicParsing="false" text="Enemy" />
                         <MenuItem onAction="#addOpositeInWorld"  mnemonicParsing="false" text="Opposite" />
                         <MenuItem onAction="#addBonus" mnemonicParsing="false" text="Bonus" />
+                        <MenuItem onAction="#addProjectile" mnemonicParsing="false" text="Projectile" />
                     </items>
                 </MenuButton>
                 <MenuButton mnemonicParsing="false" text="Add HUD">
@@ -31,7 +31,7 @@
    <center>
       <HBox fx:id="boxMundo" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox fx:id="boxActor" prefHeight="200.0" prefWidth="100.0" />
+             <VBox fx:id="boxActor" prefHeight="200.0" prefWidth="100.0" />
             <VBox fx:id="boxEnemies" prefHeight="200.0" prefWidth="100.0" />
             <VBox fx:id="boxOpposites" prefHeight="200.0" prefWidth="100.0" />
              <VBox fx:id="boxBonus" prefHeight="200.0" prefWidth="100.0" />

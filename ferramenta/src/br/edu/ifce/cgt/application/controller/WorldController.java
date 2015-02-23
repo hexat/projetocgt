@@ -2,12 +2,8 @@ package br.edu.ifce.cgt.application.controller;
 
 import br.edu.ifce.cgt.application.Config;
 import br.edu.ifce.cgt.application.controller.panes.LifebarPane;
-import br.edu.ifce.cgt.application.controller.titleds.AmmoDisplayTitledPane;
-import br.edu.ifce.cgt.application.controller.titleds.GroupLifeBarTitledPane;
-import br.edu.ifce.cgt.application.controller.titleds.IndividualLifeBarTitledPane;
-import br.edu.ifce.cgt.application.controller.titleds.WorldTitledPane;
-import cgt.core.CGTBonus;
-import cgt.core.CGTEnemy;
+import br.edu.ifce.cgt.application.controller.titleds.*;
+import cgt.core.*;
 import cgt.hud.AmmoDisplay;
 import cgt.hud.EnemyGroupLifeBar;
 import cgt.hud.HUDComponent;
@@ -37,8 +33,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import br.edu.ifce.cgt.application.ObjectButton;
-import cgt.core.CGTActor;
-import cgt.core.CGTOpposite;
 
 public class WorldController extends BorderPane {
     private Button btnGameObject;
@@ -84,35 +78,6 @@ public class WorldController extends BorderPane {
         configAccordion.getPanes().clear();
         configAccordion.getPanes().add(WorldTitledPane.getNode(world));
         configAccordion.getPanes().get(0).setExpanded(true);
-    }
-
-    @FXML
-    public void addActorInWorld() {
-        if (world.getActor() != null) {
-            Action response = Dialogs.create()
-                    .owner(Main.getApp())
-                    .title("Confirm Dialog")
-                    .masthead("Look, a Confirm Dialog")
-                    .message("Do you want to continue?")
-                    .showConfirm();
-
-            if (response != Dialog.ACTION_OK) {
-                return;
-            }
-        }
-
-        Optional<String> response = Dialogs.create()
-                .owner(Main.getApp())
-                .title("Nome para o ator")
-                .message("Digite um nome para o ator:")
-                .showTextInput("Ator");
-
-        if (response.isPresent()) {
-            CGTActor actor = new CGTActor(response.get());
-            world.setActor(actor);
-            ObjectButton btn = new ObjectButton(actor);
-            boxActor.getChildren().addAll(btn);
-        }
     }
 
     @FXML
@@ -200,6 +165,13 @@ public class WorldController extends BorderPane {
         ObjectButton button = new ObjectButton(bonus);
 
         boxBonus.getChildren().add(button);
+    }
+
+    public void addProjectile(ActionEvent event) {
+        final CGTProjectile projectile = new CGTProjectile();
+
+        world.getActor().addProjectile(projectile);
+        boxActor.getChildren().add(new ObjectButton(projectile));
     }
 
     public void teste(ActionEvent event) {

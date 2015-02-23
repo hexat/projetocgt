@@ -1,15 +1,7 @@
 package br.edu.ifce.cgt.application;
 
-import br.edu.ifce.cgt.application.controller.titleds.BonusTitledPane;
-import br.edu.ifce.cgt.application.controller.titleds.GameObjectTitledPane;
-import br.edu.ifce.cgt.application.controller.titleds.EnemyTitledPane;
-import br.edu.ifce.cgt.application.controller.titleds.OppositeTitledPane;
-import br.edu.ifce.cgt.application.controller.titleds.ActorTitledPane;
-import cgt.core.CGTActor;
-import cgt.core.CGTBonus;
-import cgt.core.CGTEnemy;
-import cgt.core.CGTGameObject;
-import cgt.core.CGTOpposite;
+import br.edu.ifce.cgt.application.controller.titleds.*;
+import cgt.core.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Accordion;
@@ -41,6 +33,8 @@ public class ObjectButton extends Button {
                     configAccordion.getPanes().add(new BonusTitledPane((CGTBonus) object));
                 } else if (object instanceof CGTActor) {
                     configAccordion.getPanes().add(ActorTitledPane.getNode((CGTActor) object));
+                } else if (object instanceof CGTProjectile) {
+                    configAccordion.getPanes().add(new ProjectileTitledPane((CGTProjectile) object));
                 }
             }
         });
@@ -48,10 +42,6 @@ public class ObjectButton extends Button {
 
     private void clearAndAddGameObject() {
         configAccordion.getPanes().clear();
-
-        TitledPane e = GameObjectTitledPane.getNode(object);
-        if (e != null) {
-            configAccordion.getPanes().add(e);
-        }
+        configAccordion.getPanes().add(new GameObjectTitledPane(object));
     }
 }

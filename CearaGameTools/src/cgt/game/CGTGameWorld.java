@@ -48,6 +48,7 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private Object projectilesLabels;
 
 	protected CGTGameWorld(){
+        actor = new CGTActor("Actor");
 		opposites = new ArrayList<CGTOpposite>();
 		bonus = new ArrayList<CGTBonus>();
 		enemies = new ArrayList<CGTEnemy>();
@@ -111,10 +112,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		if (soundLose != null){
 			soundLose.getMusic().play();
 		}
-	}
-
-	public void setActor(CGTActor actor) {
-		this.actor = actor;
 	}
 	 
 	public CGTActor getActor() {
