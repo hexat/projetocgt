@@ -1,12 +1,15 @@
 package br.edu.ifce.cgt.application.controller;
 
 import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.controller.panes.LifebarPane;
 import br.edu.ifce.cgt.application.controller.titleds.AmmoDisplayTitledPane;
+import br.edu.ifce.cgt.application.controller.titleds.GroupLifeBarTitledPane;
 import br.edu.ifce.cgt.application.controller.titleds.IndividualLifeBarTitledPane;
 import br.edu.ifce.cgt.application.controller.titleds.WorldTitledPane;
 import cgt.core.CGTBonus;
 import cgt.core.CGTEnemy;
 import cgt.hud.AmmoDisplay;
+import cgt.hud.EnemyGroupLifeBar;
 import cgt.hud.HUDComponent;
 import cgt.hud.IndividualLifeBar;
 import javafx.event.ActionEvent;
@@ -147,17 +150,20 @@ public class WorldController extends BorderPane {
         AmmoDisplay ammoDisplay = new AmmoDisplay(world.getId());
 
         world.addHUDComponent(ammoDisplay);
-        boxHud.getChildren().addAll(new ButtonHud(ammoDisplay));
+        boxHud.getChildren().add(new ButtonHud(ammoDisplay));
     }
 
 
     public void addEnemiesLifeBar() {
+        EnemyGroupLifeBar bar = new EnemyGroupLifeBar(world.getId());
+        world.addHUDComponent(bar);
+        boxHud.getChildren().add(new ButtonHud(bar));
     }
 
     public void addObjectLifeBar() {
         IndividualLifeBar lifeBar = new IndividualLifeBar(world.getId());
         world.addLifeBar(lifeBar);
-        boxHud.getChildren().addAll(new ButtonHud(lifeBar));
+        boxHud.getChildren().add(new ButtonHud(lifeBar));
     }
 
     public void setWorld(CGTGameWorld world) {
@@ -219,6 +225,8 @@ public class WorldController extends BorderPane {
                 configAccordion.getPanes().add(new IndividualLifeBarTitledPane((IndividualLifeBar) hud));
             } else if (hud instanceof AmmoDisplay) {
                 configAccordion.getPanes().add(new AmmoDisplayTitledPane((AmmoDisplay) hud));
+            } else if (hud instanceof EnemyGroupLifeBar) {
+                configAccordion.getPanes().add(new GroupLifeBarTitledPane((EnemyGroupLifeBar) hud));
             }
         }
     }

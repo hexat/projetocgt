@@ -380,5 +380,22 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		}
 		return res;
 	}
+
+	public CGTEnemy findEnemy(String id) {
+		for (CGTEnemy e : enemies) {
+			if (e.getLabel().equals(id)) {
+				return e;
+			}
+		}
+		return null;
+	}
+
+	public List<String> getEnemyLabels() {
+		List<String> res = new ArrayList<String>();
+		for (CGTEnemy e : enemies) {
+			res.add(e.getLabel());
+		}
+		return res;
+	}
 }
  

@@ -9,11 +9,6 @@ import cgt.util.ProjectileOrientation;
 import com.badlogic.gdx.math.Vector2;
 
 public class CGTProjectile extends CGTGameObject implements Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3500360750161896712L;
 	private int numFiresForOneInput;
 	private int damage;
 	private int interval;
@@ -23,7 +18,6 @@ public class CGTProjectile extends CGTGameObject implements Serializable{
 	private CGTGameObject owner;
 	private ArrayList<ProjectileOrientation> orientations;
 	private ArrayList<String> groups;
-	private Vector2 positionReLativeToGameObject;
 
 	public CGTProjectile(){
 		super();
@@ -133,10 +127,6 @@ public class CGTProjectile extends CGTGameObject implements Serializable{
 	public boolean removeGroup(String group) {
 		return groups.remove(group);
 	}
-	
-	public String removeGroup(int index) {
-		return groups.remove(index);
-	}
 
 	@Override
 	public String toString() {
@@ -147,21 +137,5 @@ public class CGTProjectile extends CGTGameObject implements Serializable{
 				+ ", labelID=" + getLabel() + ", orientations="
 				+ orientations + "]";
 	}
-
-	/**
-	 * @return the positionReLativeToGameObject
-	 */
-	public Vector2 getPositionReLativeToGameObject() {
-		return positionReLativeToGameObject;
-	}
-
-	/**
-	 * @param positionReLativeToGameObject the positionReLativeToGameObject to set
-	 */
-	public void setPositionReLativeToGameObject(
-			Vector2 positionReLativeToGameObject) {
-		this.positionReLativeToGameObject = positionReLativeToGameObject;
-	}
-	
 }
  

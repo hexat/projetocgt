@@ -96,6 +96,10 @@ public class CGTLabel extends HUDComponent implements Serializable {
 		this.color = color;
 	}
 
+	public int getColorValue() {
+		return color;
+	}
+
 	public Label getLabel() {
 		return label;
 	}
@@ -112,9 +116,6 @@ public class CGTLabel extends HUDComponent implements Serializable {
 		
 		label.setWidth(this.getWidth());
 		label.setHeight(this.getHeight());
-		
-		
-
 	}
 	
 	public void draw(Batch batch, float parentAlpha){

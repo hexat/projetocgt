@@ -2,23 +2,32 @@ package cgt.hud;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import cgt.core.CGTEnemy;
+import cgt.game.CGTGame;
+import cgt.game.CGTGameWorld;
 
 public class EnemyGroupLifeBar extends LifeBar implements Serializable{
-	private ArrayList<CGTEnemy> enemiesList;
+	private List<CGTEnemy> enemiesList; //used in gdx mode
+
+	private List<String> enemiesIds;
+	private String worldId;
 	
-	public EnemyGroupLifeBar(ArrayList<CGTEnemy> enemies){
-		enemiesList = enemies;
-		int maxLife = 0;
-		
-		for(CGTEnemy enemy : enemies){
-			if(enemy.isDestroyable())
-				maxLife++;
-		}
-		setMaxLife(maxLife);
+	public EnemyGroupLifeBar(String worldId){
+		this.worldId = worldId;
+		enemiesList = null;
+		enemiesIds = new ArrayList<String>();
 	}
-	
+
+	@Override
+	public void setup() {
+		super.setup();
+		for (String s : enemiesIds) {
+			enemiesList.add(getWorld().findEnemy(s));
+		}
+	}
+
 	public void act(float delta){
 		int enemiesAlive=0;
 		for(CGTEnemy enemy : enemiesList){
@@ -31,4 +40,26 @@ public class EnemyGroupLifeBar extends LifeBar implements Serializable{
 			lifeRate=0;
 	}
 
+	@Override
+	public boolean validate() {
+		return super.validate() && worldId != null && getWorld() != null;
+	}
+
+	public CGTGameWorld getWorld() {
+		return CGTGame.get().getWorld(worldId);
+	}
+
+	public boolean removeEnemy(String id) {
+		return enemiesIds.remove(id);
+	}
+
+	public boolean contains(String label) {
+		return enemiesIds.contains(label);
+	}
+
+	public void addEnemy(String id) {
+		if (!enemiesIds.contains(id)) {
+			enemiesIds.add(id);
+		}
+	}
 }

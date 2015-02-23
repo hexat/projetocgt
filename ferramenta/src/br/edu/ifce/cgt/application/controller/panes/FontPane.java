@@ -77,7 +77,7 @@ public class FontPane extends GridPane {
     public void init() {
         if (font != null) {
             txtText.setText(font.getText());
-            txtColor.setText(font.getColor()+"");
+            txtColor.setText(font.getColorValue()+"");
             txtSize.setText(font.getSize()+"");
         }
     }
