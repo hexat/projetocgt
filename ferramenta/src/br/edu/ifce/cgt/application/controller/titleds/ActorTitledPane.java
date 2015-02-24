@@ -5,7 +5,9 @@ import cgt.policy.ActionMovePolicy;
 import cgt.policy.InputPolicy;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import br.edu.ifce.cgt.application.Main;
 import cgt.core.CGTActor;
@@ -37,9 +39,11 @@ public class ActorTitledPane {
 	private void updateActions() {
 		panActions.getChildren().clear();
 		final Map<InputPolicy, ActionMovePolicy> actions = actor.getActions();
+        ResourceBundle bundle = ResourceBundle.getBundle("i18n.String", new Locale("pt", "PT"));
 		if (actions.size() > 0 ) {
 			for (final InputPolicy input : actions.keySet()) {
-				ItemViewPane pane = new ItemViewPane(input.toString() + " -> " + actions.get(input).toString());
+				ItemViewPane pane = new ItemViewPane(bundle.getString(input.name()) + " -> " +
+                        bundle.getString(actions.get(input).name()));
 				pane.getBtnExcluir().setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {

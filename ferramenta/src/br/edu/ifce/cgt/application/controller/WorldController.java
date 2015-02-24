@@ -8,6 +8,7 @@ import cgt.hud.AmmoDisplay;
 import cgt.hud.EnemyGroupLifeBar;
 import cgt.hud.HUDComponent;
 import cgt.hud.IndividualLifeBar;
+import cgt.policy.InputPolicy;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ChoiceBox;
@@ -19,10 +20,7 @@ import org.controlsfx.dialog.Dialogs;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import br.edu.ifce.cgt.application.Main;
 import cgt.game.CGTGameWorld;

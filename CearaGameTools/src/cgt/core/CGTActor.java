@@ -3,6 +3,7 @@ package cgt.core;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cgt.policy.ActionMovePolicy;
@@ -82,6 +83,17 @@ public class CGTActor extends CGTGameObject implements Serializable {
 		}
 		return false;
 	}
+
+    public List<InputPolicy> getAvailableInputs() {
+        List<InputPolicy> res = new ArrayList<InputPolicy>();
+
+        for (InputPolicy inputPolicy : InputPolicy.values()) {
+            if (!hasInput(inputPolicy)) {
+                res.add(inputPolicy);
+            }
+        }
+        return res;
+    }
 	
 	public void updateProjectiles(){
 		for(int i=0; i < projectiles.size(); i++){

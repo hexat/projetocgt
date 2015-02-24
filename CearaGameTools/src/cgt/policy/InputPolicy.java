@@ -18,6 +18,6 @@ public enum InputPolicy {
 	BTN_LEFT, 
 	BTN_RIGHT, 
 	BTN_1, 
-	BTN_2;
+	BTN_2
 }
  

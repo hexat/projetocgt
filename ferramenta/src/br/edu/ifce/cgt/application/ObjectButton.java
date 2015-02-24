@@ -36,6 +36,7 @@ public class ObjectButton extends Button {
                 } else if (object instanceof CGTProjectile) {
                     configAccordion.getPanes().add(new ProjectileTitledPane((CGTProjectile) object));
                 }
+                configAccordion.getPanes().get(1).setExpanded(true);
             }
         });
     }

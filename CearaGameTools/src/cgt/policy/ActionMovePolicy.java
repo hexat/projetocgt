@@ -11,6 +11,6 @@ public enum ActionMovePolicy {
 	RUN_RIGHT,
 	GET_DOWN,
 	JUMP,
-	FIRE;
+	FIRE
 }
  
