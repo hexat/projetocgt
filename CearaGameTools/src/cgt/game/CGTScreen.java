@@ -1,13 +1,16 @@
 package cgt.game;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
 import cgt.hud.CGTButtonScreen;
 import cgt.hud.CGTLabel;
+import cgt.policy.ErrorValidate;
 import cgt.screen.CGTImage;
 import cgt.screen.CGTWindow;
+import cgt.util.CGTError;
 import cgt.util.CGTTexture;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CGTScreen extends CGTWindow implements Serializable{
 	private ArrayList<CGTLabel> labels;
@@ -60,7 +63,11 @@ public class CGTScreen extends CGTWindow implements Serializable{
 	}
 
     @Override
-    public boolean validate() {
-        return getBackground() != null;
+    public List<CGTError> validate() {
+        List<CGTError> res = new ArrayList<CGTError>();
+        if (getBackground() == null) {
+            res.add(new CGTError(ErrorValidate.SET_BACKGROUND, getId()));
+        }
+        return res;
     }
 }

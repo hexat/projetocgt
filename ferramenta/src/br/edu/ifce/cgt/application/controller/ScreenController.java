@@ -92,6 +92,7 @@ public class ScreenController implements Initializable {
                     configAccordion.getPanes().clear();
 
                     configAccordion.getPanes().add(new ButtonScreenTitledPane(btnScreen));
+                    configAccordion.getPanes().get(0).setExpanded(true);
                 }
             });
         }

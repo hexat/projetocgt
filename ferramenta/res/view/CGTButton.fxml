@@ -15,8 +15,8 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Label text="textureUp"  />
-      <Label text="textureDown" GridPane.rowIndex="1" />
+      <Label text="Textura"  />
+      <Label text="Textura Press." GridPane.rowIndex="1" />
       <TextField fx:id="txtTextureUp" GridPane.columnIndex="1" />
       <TextField fx:id="txtTextureDown" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Button fx:id="btnTextureUp" mnemonicParsing="false" text="Procurar" GridPane.columnIndex="2" />

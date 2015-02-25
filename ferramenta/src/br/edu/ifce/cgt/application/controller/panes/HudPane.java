@@ -3,6 +3,8 @@ package br.edu.ifce.cgt.application.controller.panes;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import cgt.hud.HUDComponent;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -37,40 +39,42 @@ public class HudPane extends GridPane {
     }
 
     private void setHandler() {
-        txtRelX.setOnAction(new EventHandler<ActionEvent>() {
+        txtRelX.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                hud.setRelativeX(txtRelX.getValue());
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    hud.setRelativeX(txtRelX.getValue());
+                }
             }
         });
 
-        txtRelY.setOnAction(new EventHandler<ActionEvent>() {
+
+        txtRelY.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                hud.setRelativeY(txtRelY.getValue());
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    hud.setRelativeY(txtRelY.getValue());
+                }
             }
         });
 
-        txtWid.setOnAction(new EventHandler<ActionEvent>() {
+        txtWid.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                hud.setRelativeWidth(txtWid.getValue());
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    hud.setRelativeWidth(txtWid.getValue());
+                }
             }
         });
 
-        txtHei.setOnAction(new EventHandler<ActionEvent>() {
+        txtHei.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                hud.setRelativeHeight(txtHei.getValue());
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    hud.setRelativeHeight(txtHei.getValue());
+                }
             }
         });
-    }
-
-    public void commit() {
-        hud.setRelativeX(txtRelX.getValue());
-        hud.setRelativeY(txtRelY.getValue());
-        hud.setRelativeWidth(txtWid.getValue());
-        hud.setRelativeHeight(txtHei.getValue());
     }
 
     public void setHud(HUDComponent hud) {

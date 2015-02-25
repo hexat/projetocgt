@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.input.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -12,13 +13,22 @@
 				<Menu mnemonicParsing="false" text="File">
 					<items>
 						<MenuItem fx:id="new" mnemonicParsing="false" onAction="#novo" text="Novo" />
-						<MenuItem fx:id="open" mnemonicParsing="false" onAction="#abrir" text="Abrir" />
+						<MenuItem fx:id="open" mnemonicParsing="false" onAction="#abrir" text="Abrir">
+               <accelerator>
+                  <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator></MenuItem>
 						<Menu mnemonicParsing="false" text="Open Recent" />
 						<SeparatorMenuItem mnemonicParsing="false" />
 						<MenuItem mnemonicParsing="false" text="Close" />
-						<MenuItem fx:id="save" mnemonicParsing="false" onAction="#salvar" text="Salvar" />
+						<MenuItem fx:id="save" mnemonicParsing="false" onAction="#salvar" text="Salvar">
+               <accelerator>
+                  <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator></MenuItem>
 						<MenuItem mnemonicParsing="false" text="Save As…" />
-						<MenuItem mnemonicParsing="false" onAction="#export" text="Exportar" />
+						<MenuItem mnemonicParsing="false" onAction="#export" text="Exportar">
+               <accelerator>
+                  <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator></MenuItem>
 						<SeparatorMenuItem mnemonicParsing="false" />
 						<MenuItem mnemonicParsing="false" text="Preferences…" />
 						<SeparatorMenuItem mnemonicParsing="false" />

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.Locale;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXMLLoader;
@@ -18,13 +19,15 @@ import br.edu.ifce.cgt.application.util.ZipHelper;
 import cgt.game.CGTGame;
 import cgt.util.CGTFile;
 
-public class Config {
-	private final static String GRADLE_PATH = "/Users/infolev/src/projetocgt/";
+public abstract class Config {
+	private final static String GRADLE_PATH = "/Users/luanjames/src/projetocgt/";
 
 	public final static String BASE = System.getProperty("user.home")
 			+ "/.cgt/";
 	public final static String BASE_IMG = "data/img/";
 	public final static String BASE_AUDIO = "data/audio/";
+
+    private static File inputProjectFile = null;
 
 //	private static ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n.String", new Locale("en", "EN"));
 
@@ -71,13 +74,14 @@ public class Config {
 		return res;
 	}
 
-	public static boolean export() {
-		if (getGame().validate()) {
+	public static boolean export(Observer observer) {
+		if (getGame().validate().isEmpty()) {
 			File configWorld = new File(BASE + "config.cgt");
 			getGame().saveGame(configWorld);
 
-			File out = new File("../android/assets/");
-			try {
+			File out = new File("android/assets/");
+            System.out.println(out.getAbsolutePath());
+            try {
 				FileUtils.deleteDirectory(out);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -89,19 +93,30 @@ public class Config {
 				e.printStackTrace();
 			}
 
-			// Runtime runtime = Runtime.getRuntime();
-			// try {
-			// Process p1 = runtime.exec("sh "+GRADLE_PATH+"run");
-			// InputStream is = p1.getInputStream();
-			// int i = 0;
-			// while( (i = is.read() ) != -1) {
-			// System.out.print((char)i);
-			// }
-			// } catch(IOException e) {
-			// e.printStackTrace();
-			// }
+            observer.update(null, "Iniciando...");
+			Runtime runtime = Runtime.getRuntime();
+			try {
+                Process p1 = runtime.exec("sh "+GRADLE_PATH+"run");
+                InputStream is = p1.getInputStream();
+                int i;
+                String res = "";
+                while( (i = is.read() ) != -1) {
+                    if (((char)i) == '\n') {
+                        observer.update(null, res);
+                        res = "";
+                    } else {
+                        res += (char) i;
+                    }
+                }
+                observer.update(null, "Concluido...");
+                } catch(IOException e) {
+                e.printStackTrace();
+			}
+
 			return true;
 		}
+
+        observer.update(null, "Problemas");
 		return false;
 	}
 
@@ -115,6 +130,7 @@ public class Config {
 		}
 	}
 	public static void unzip(File inputFile) {
+        inputProjectFile = inputFile;
 		File o = new File(BASE);
 		try {
 			FileUtils.deleteDirectory(o);
@@ -130,7 +146,6 @@ public class Config {
 		}
 		File configWorld = new File(BASE + "config.cgt");
 		if (configWorld.exists()) {
-			System.out.println("okokokok");
 			try {
 				InputStream io = new FileInputStream(configWorld);
 				instance = CGTGame.getSavedGame(io);
@@ -147,6 +162,14 @@ public class Config {
 		File f = new File(BASE+file.getFile().getPath());
 		f.delete();
 	}
+
+    public static boolean isLoaded() {
+        return inputProjectFile != null;
+    }
+
+    public static File getInputProjectFile() {
+        return inputProjectFile;
+    }
 
 //	public static void loadView(String pathResource, Object controller) {
 //		FXMLLoader xml = new FXMLLoader(Main.class.getResource(pathResource));

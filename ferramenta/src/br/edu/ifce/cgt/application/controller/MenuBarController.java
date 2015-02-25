@@ -1,11 +1,14 @@
 package br.edu.ifce.cgt.application.controller;
 
 import java.io.File;
+import java.util.List;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.controller.dialogs.ExportDialog;
 import br.edu.ifce.cgt.application.controller.dialogs.ListSpriteDialog;
 import br.edu.ifce.cgt.application.controller.dialogs.SpriteSheetDialog;
 import cgt.screen.CGTWindow;
+import cgt.util.CGTError;
 import javafx.scene.control.TabPane;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.Config;
@@ -40,15 +43,24 @@ public class MenuBarController {
 
 	@FXML
 	public void salvar() {
-		File save = DialogsUtil.showSaveDialog("Salvar projeto");
-		if (save != null) {
-			Config.zip(save);
-		}
+        if (Config.isLoaded()) {
+            Config.zip(Config.getInputProjectFile());
+        } else {
+            File save = DialogsUtil.showSaveDialog("Salvar projeto");
+            if (save != null) {
+                Config.zip(save);
+            }
+        }
 
 	}
 
     @FXML public void export() {
-        Config.export();
+        List<CGTError> errors = Config.getGame().validate();
+        if (errors.isEmpty()) {
+            new ExportDialog().show();
+        } else {
+            System.out.println(errors);
+        }
     }
 
 	@FXML

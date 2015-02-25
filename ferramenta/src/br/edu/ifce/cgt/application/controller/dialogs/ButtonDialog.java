@@ -56,64 +56,15 @@ public class ButtonDialog extends BorderPane {
         }
 
         init();
-
-        buttonControl.getBtnTextureDown().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setTextureDown();
-            }
-        });
-
-        buttonControl.getBtnTextureUp().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setTextureUp();
-            }
-        });
     }
 
     private void init() {
         hudControl.setHud(button);
-        if (button.getTextureDown() != null) {
-            buttonControl.getTxtTextureDown().setText(button.getTextureDown().getFile().getFilename());
-        }
-
-        if (button.getTextureUp() != null) {
-            buttonControl.getTxtTextureUp().setText(button.getTextureUp().getFile().getFilename());
-        }
+        buttonControl.setButton(button);
     }
 
     public void add() {
-        hudControl.commit();
         stage.close();
-    }
-
-    public void setTextureUp() {
-        File file = DialogsUtil.showOpenDialog("Selecionar Imagem", DialogsUtil.IMG_FILTER);
-
-        if (file != null) {
-            if (button.getTextureUp() != null) {
-                Config.destroy(button.getTextureUp().getFile());
-                button.setTextureUp(null);
-            }
-            button.setTextureUp(new CGTTexture(Config.createImg(file)));
-
-            buttonControl.getTxtTextureUp().setText(file.getName());
-        }
-    }
-
-    public void setTextureDown() {
-        File file = DialogsUtil.showOpenDialog("Selecionar Imagem", DialogsUtil.IMG_FILTER);
-
-        if (file != null) {
-            if (button.getTextureDown() != null) {
-                Config.destroy(button.getTextureDown().getFile());
-                button.setTextureDown(null);
-            }
-            button.setTextureDown(new CGTTexture(Config.createImg(file)));
-
-            buttonControl.getTxtTextureDown().setText(file.getName());
-        }
     }
 
     public CGTButton getButton() {

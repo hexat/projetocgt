@@ -21,7 +21,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="windowId" />
+                  <Label text="Ir para" />
                   <ComboBox fx:id="boxWindows" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" />
                </children>
             </GridPane>

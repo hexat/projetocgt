@@ -11,7 +11,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import cgt.policy.ErrorValidate;
 import cgt.screen.CGTWindow;
+import cgt.util.CGTError;
 
 
 public class CGTGame implements Serializable {
@@ -86,7 +88,6 @@ public class CGTGame implements Serializable {
             if (s.getId().equals(id)) {
                 return s;
             }
-            return s;
         }
         return null;
     }
@@ -131,7 +132,7 @@ public class CGTGame implements Serializable {
 			e.printStackTrace();
 		}
         instance = cgtGame;
-		return cgtGame;
+		return instance;
 	}
 
     public boolean removeWorld(CGTGameWorld world) {
@@ -182,18 +183,15 @@ public class CGTGame implements Serializable {
         return spriteDB;
     }
 
-    public boolean validate() {
+    public List<CGTError> validate() {
+        List<CGTError> res = new ArrayList<CGTError>();
         for (CGTWindow w : screens) {
-            if (!w.validate()) {
-                return false;
-            }
+            res.addAll(w.validate());
         }
         for (CGTWindow w : worlds) {
-            if (!w.validate()) {
-                return false;
-            }
+            res.addAll(w.validate());
         }
-        return true;
+        return res;
     }
 
 	public void removeById(String id) {

@@ -9,7 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -25,7 +27,8 @@ import cgt.util.CGTTexture;
 /**
  * Created by infolev on 06/02/15.
  */
-public class SpriteSheetDialog extends HBox {
+public class SpriteSheetDialog extends VBox {
+    @FXML public BorderPane boxPane;
     private CGTSpriteSheet spriteSheet;
 
     private Stage stage;
@@ -55,8 +58,8 @@ public class SpriteSheetDialog extends HBox {
         stage.initOwner(Main.getApp().getScene().getWindow());
         stage.sizeToScene();
 
-
         imgView = null;
+
         setSpriteSheet(sheet);
         txtImgName.setEditable(false);
 	}
@@ -97,6 +100,10 @@ public class SpriteSheetDialog extends HBox {
 
         imgFile = file;
 
+        if (file != null && txtNameSprite.getText().equals("")) {
+            txtNameSprite.setText(imgFile.getName().substring(0, imgFile.getName().length()-4));
+        }
+
         updateImage();
     }
 
@@ -107,15 +114,17 @@ public class SpriteSheetDialog extends HBox {
             Image image = new Image("file:"+imgFile.getAbsolutePath());
             if (imgView == null) {
                 imgView = new ImageView();
-                imgView.setFitHeight(160);
+                if (image.getHeight() > 256) {
+                    imgView.setFitHeight(256);
+                } else if (image.getWidth() > 256) {
+                    imgView.setFitWidth(256);
+                }
                 imgView.setPreserveRatio(true);
                 imgView.setSmooth(true);
                 imgView.setCache(true);
-                this.getChildren().add(0, imgView);
+                boxPane.setCenter(imgView);
             }
             imgView.setImage(image);
-            stage.sizeToScene();
-            stage.centerOnScreen();
         }
     }
 

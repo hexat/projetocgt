@@ -162,11 +162,6 @@ public class FerramentaController implements Initializable {
         System.out.println("ok");
     }
 
-    @FXML public void testeBackGame() {
-        File back = DialogsUtil.showOpenDialog("Escolha background");
-
-        Config.export();
-    }
     @FXML
     public void click() {
 

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import cgt.game.CGTGame;
 import cgt.screen.CGTWindow;
 
-public class CGTButtonScreen extends CGTButton implements Serializable{
+public class CGTButtonScreen extends CGTButton implements Serializable {
 	private String windowId;
 
 	public CGTButtonScreen() {

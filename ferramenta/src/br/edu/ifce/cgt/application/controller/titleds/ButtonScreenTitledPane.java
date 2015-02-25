@@ -50,20 +50,6 @@ public class ButtonScreenTitledPane extends TitledPane {
                 buttonScreen.setScreenToGo(boxWindows.getValue());
             }
         });
-
-        buttonControl.getBtnTextureDown().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setTextureDown();
-            }
-        });
-
-        buttonControl.getBtnTextureUp().setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                setTextureUp();
-            }
-        });
     }
 
     private void init() {
@@ -75,49 +61,11 @@ public class ButtonScreenTitledPane extends TitledPane {
             boxWindows.getSelectionModel().select(buttonScreen.getScreenToGo().getId());
         }
 
-        if (buttonScreen.getTextureDown() != null) {
-            buttonControl.getTxtTextureDown().setText(buttonScreen.getTextureDown().getFile().getFilename());
-        }
-
-        if (buttonScreen.getTextureUp() != null) {
-            buttonControl.getTxtTextureUp().setText(buttonScreen.getTextureUp().getFile().getFilename());
-        }
-    }
-
-    public void setTextureUp() {
-        File file = DialogsUtil.showOpenDialog("Selecionar Imagem", DialogsUtil.IMG_FILTER);
-
-        if (file != null) {
-            if (buttonScreen.getTextureUp() != null) {
-                Config.destroy(buttonScreen.getTextureUp().getFile());
-                buttonScreen.setTextureUp(null);
-            }
-            buttonScreen.setTextureUp(new CGTTexture(Config.createImg(file)));
-
-            buttonControl.getTxtTextureUp().setText(file.getName());
-        }
-    }
-
-    public void setTextureDown() {
-        File file = DialogsUtil.showOpenDialog("Selecionar Imagem", DialogsUtil.IMG_FILTER);
-
-        if (file != null) {
-            if (buttonScreen.getTextureDown() != null) {
-                Config.destroy(buttonScreen.getTextureDown().getFile());
-                buttonScreen.setTextureDown(null);
-            }
-            buttonScreen.setTextureDown(new CGTTexture(Config.createImg(file)));
-
-            buttonControl.getTxtTextureDown().setText(file.getName());
-        }
+        buttonControl.setButton(buttonScreen);
     }
 
     public CGTButtonScreen getButtonScreen() {
         return buttonScreen;
-    }
-
-    public void commit() {
-        hudControl.commit();
     }
 
     public ComboBox<String> getBoxWindows() {

@@ -1,8 +1,15 @@
 package br.edu.ifce.cgt.application.controller.panes;
 
+import java.io.File;
 import java.io.IOException;
 
+import br.edu.ifce.cgt.application.Config;
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.util.DialogsUtil;
+import cgt.hud.CGTButton;
+import cgt.util.CGTTexture;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -20,8 +27,11 @@ public class ButtonPane extends GridPane {
     @FXML private Button btnTextureUp;
     @FXML private Button btnTextureDown;
 
+    private CGTButton button;
+
 
     public ButtonPane() {
+        this.button = null;
         FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/CGTButton.fxml"));
         view.setRoot(this);
         view.setController(this);
@@ -30,21 +40,56 @@ public class ButtonPane extends GridPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        setActions();
     }
 
-    public TextField getTxtTextureDown() {
-        return txtTextureDown;
+    public void setButton(CGTButton button) {
+        this.button = button;
+
+        if (button.getTextureDown() != null) {
+            txtTextureDown.setText(button.getTextureDown().getFile().getFilename());
+        }
+
+        if (button.getTextureUp() != null) {
+            txtTextureUp.setText(button.getTextureUp().getFile().getFilename());
+        }
     }
 
-    public TextField getTxtTextureUp() {
-        return txtTextureUp;
-    }
+    private void setActions() {
+        btnTextureUp.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                File file = DialogsUtil.showOpenDialog("Selecionar Imagem", DialogsUtil.IMG_FILTER);
 
-    public Button getBtnTextureDown() {
-        return btnTextureDown;
-    }
+                if (file != null) {
+                    if (button.getTextureUp() != null) {
+                        Config.destroy(button.getTextureUp().getFile());
+                        button.setTextureUp(null);
+                    }
+                    button.setTextureUp(new CGTTexture(Config.createImg(file)));
 
-    public Button getBtnTextureUp() {
-        return btnTextureUp;
+                    txtTextureUp.setText(file.getName());
+                }
+            }
+        });
+
+        btnTextureDown.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                File file = DialogsUtil.showOpenDialog("Selecionar Imagem", DialogsUtil.IMG_FILTER);
+
+                if (file != null) {
+                    if (button.getTextureDown() != null) {
+                        Config.destroy(button.getTextureDown().getFile());
+                        button.setTextureDown(null);
+                    }
+                    button.setTextureDown(new CGTTexture(Config.createImg(file)));
+
+                    txtTextureDown.setText(file.getName());
+                }
+            }
+        });
     }
 }

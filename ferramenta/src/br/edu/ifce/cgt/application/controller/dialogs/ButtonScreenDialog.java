@@ -35,7 +35,6 @@ public class ButtonScreenDialog {
         add.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                controller.commit();
                 if (controller.getButtonScreen().validate()) {
                     stage.close();
                 }

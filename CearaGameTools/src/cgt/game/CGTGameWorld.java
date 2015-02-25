@@ -2,6 +2,7 @@ package cgt.game;
 
 import cgt.core.*;
 import cgt.hud.*;
+import cgt.policy.ErrorValidate;
 import cgt.util.*;
 import com.badlogic.gdx.audio.Music;
 
@@ -349,8 +350,24 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	}
 
     @Override
-    public boolean validate() {
-        return getBackground() != null && getActor() != null && getActor().getPosition() != null && getActor().hasAnimation() && getActor().getBounds().width > 0;
+    public List<CGTError> validate() {
+        List<CGTError> res = new ArrayList<CGTError>();
+        if (getBackground() == null) {
+            res.add(new CGTError(ErrorValidate.SET_BACKGROUND, getId()));
+        }
+        if (getActor() == null) {
+            res.add(new CGTError(ErrorValidate.SET_ACTOR, getId()));
+        }
+        if (getActor().getPosition() == null) {
+            res.add(new CGTError(ErrorValidate.SET_ACTOR_POSITION, getId()));
+        }
+        if (!getActor().hasAnimation()) {
+            res.add(new CGTError(ErrorValidate.ADD_ACTOR_ANIMATION, getId()));
+        }
+        if (getActor().getBounds().width <= 0) {
+            res.add(new CGTError(ErrorValidate.SET_ACTOR_BOUNDS, getId()));
+        }
+        return res;
     }
 
 	public boolean removeWinCriteria(Win win) {

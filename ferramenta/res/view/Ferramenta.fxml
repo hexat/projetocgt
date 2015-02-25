@@ -23,7 +23,6 @@
                  <content>
                     <VBox>
                        <children>
-                          <Button mnemonicParsing="false" onAction="#testeBackGame" text="Button" />
                           <Button mnemonicParsing="false" onAction="#createWorld" text="Criar Mundo" />
                               <Button mnemonicParsing="false" onAction="#createScreen" text="Criar Screen" />
                        </children>
