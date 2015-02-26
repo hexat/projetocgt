@@ -18,5 +18,5 @@ public enum StatePolicy {
 	LOOK_LEFT_AND_DOWN,
 	LOOK_RIGHT_AND_UP,
 	LOOK_RIGHT_AND_DOWN,
-	DAMAGE;
+	DAMAGE
 }

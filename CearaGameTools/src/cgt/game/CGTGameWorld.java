@@ -46,7 +46,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private CGTSound soundWin;
 	private CGTSound soundLose;
 	private CGTButtonStartGame startGame;
-	private Object projectilesLabels;
 
 	protected CGTGameWorld(){
         actor = new CGTActor("Actor");

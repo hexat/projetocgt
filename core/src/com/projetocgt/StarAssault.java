@@ -4,7 +4,6 @@ import cgt.game.CGTGame;
 import cgt.game.CGTGameWorld;
 import cgt.game.CGTScreen;
 import cgt.screen.CGTWindow;
-import cgt.util.ScreenHandleInterface;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -14,8 +13,7 @@ import java.io.InputStream;
 public class StarAssault extends Game {
 	private static StarAssault instance =  null;
 	private CGTScreen menu;
-	private ScreenHandleInterface screenHandle;
-	
+
 	private StarAssault(){
 		
 	}
@@ -40,13 +38,5 @@ public class StarAssault extends Game {
 			instance =	new StarAssault();
 		}
 		return instance;
-	}
-
-	public void setScreenHandle(ScreenHandleInterface mainActivity) {
-		this.screenHandle = mainActivity;
-	}
-	
-	public ScreenHandleInterface getScreenHandle() {
-		return screenHandle;
 	}
 }
