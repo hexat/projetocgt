@@ -12,7 +12,6 @@ import com.badlogic.gdx.math.Vector2;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import br.edu.ifce.cgt.application.Config;
@@ -20,7 +19,6 @@ import br.edu.ifce.cgt.application.Main;
 import cgt.core.CGTGameObject;
 import cgt.policy.StatePolicy;
 import cgt.core.CGTAnimation;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -28,9 +26,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -47,9 +42,9 @@ public class AnimationDialog extends HBox {
     private CGTAnimation animation;
 
     @FXML private FloatTextField txtVel;
-    @FXML private IntegerTextField txtFrameInicialX;
+    @FXML private IntegerTextField txtFrameInitialX;
     @FXML private IntegerTextField txtFrameFinalX;
-    @FXML private IntegerTextField txtFrameInicialY;
+    @FXML private IntegerTextField txtFrameInitialY;
     @FXML private IntegerTextField txtFrameFinalY;
     @FXML private CheckBox chkFlipHor;
     @FXML private CheckBox chkFlipVertical;
@@ -127,8 +122,8 @@ public class AnimationDialog extends HBox {
                 animation.setFlipHorizontal(chkFlipHor.isSelected());
                 animation.setFlipVertical(chkFlipVertical.isSelected());
                 animation.setSpriteVelocity(txtVel.getValue());
-                animation.setInitialFrame(new Vector2(txtFrameInicialX.getValue(),
-                        txtFrameInicialX.getValue()));
+                animation.setInitialFrame(new Vector2(txtFrameInitialX.getValue(),
+                        txtFrameInitialY.getValue()));
                 animation.setEndingFrame(new Vector2(txtFrameFinalX.getValue(),
                         txtFrameFinalY.getValue()));
                 object.addAnimation(boxStates.getValue().getKey(), animation);
@@ -140,8 +135,8 @@ public class AnimationDialog extends HBox {
 
     private boolean validate() {
         return txtVel.getValue() > 0 && txtFrameFinalX.getValue() >= 0 &&
-                txtFrameFinalY.getValue() >= 0 && txtFrameInicialX.getValue() >= 0 &&
-                txtFrameInicialY.getValue() >= 0;
+                txtFrameFinalY.getValue() >= 0 && txtFrameInitialX.getValue() >= 0 &&
+                txtFrameInitialY.getValue() >= 0;
     }
 
     public void show() {

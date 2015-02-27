@@ -25,9 +25,9 @@
             <Label text="Flip horizontal" GridPane.rowIndex="5" />
             <Label text="Flip vertical" GridPane.rowIndex="6" />
             <Label text="Animation Policy" GridPane.rowIndex="7" />
-            <IntegerTextField fx:id="txtFrameInicialX" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <IntegerTextField fx:id="txtFrameFinalX" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <IntegerTextField fx:id="txtFrameInicialY" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <IntegerTextField fx:id="txtFrameInitialX" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <IntegerTextField fx:id="txtFrameInitialY" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <IntegerTextField fx:id="txtFrameFinalX" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <IntegerTextField fx:id="txtFrameFinalY" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <Label text="Sprite Sheet" GridPane.rowIndex="1" />
             <FloatTextField fx:id="txtVel" GridPane.columnIndex="1" GridPane.rowIndex="4" />
