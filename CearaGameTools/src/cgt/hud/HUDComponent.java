@@ -13,6 +13,13 @@ public abstract class HUDComponent extends Actor implements Serializable, Valida
 	private float relativeWidth;
 	private float relativeHeight;
 
+	public HUDComponent() {
+		relativeX = 0;
+		relativeY = 0;
+		relativeWidth = 0.5f;
+		relativeHeight = 0.5f;
+	}
+
 	public void setup(){
 		setWidth(getStage().getWidth()*relativeWidth);
 		setHeight(getStage().getHeight()*relativeHeight);

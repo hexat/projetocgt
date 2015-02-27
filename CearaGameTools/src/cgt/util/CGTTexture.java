@@ -8,16 +8,16 @@ import cgt.unit.LabelID;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class CGTTexture implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7131290727646321147L;
+public class CGTTexture {
 	private CGTFile file;
-	private String filepath;
 	private Texture textureGDX;
 	private TextureRegion textureRegion;
-	
+
+	public CGTTexture() {
+		file = null;
+		textureGDX = null;
+		textureRegion = null;
+	}
 	
 	public CGTTexture(CGTFile file) {
 		this.file = file;
@@ -60,9 +60,6 @@ public class CGTTexture implements Serializable{
 			textureRegion = new TextureRegion(getTextureGDX());
 		}
 		return textureRegion;
-	}
-	public void setTextureRegion( TextureRegion txtRegion ) {
-		textureRegion = txtRegion;
 	}
 }
  

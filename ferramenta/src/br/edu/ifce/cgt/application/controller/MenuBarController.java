@@ -1,6 +1,7 @@
 package br.edu.ifce.cgt.application.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import br.edu.ifce.cgt.application.Main;
@@ -44,15 +45,22 @@ public class MenuBarController {
 
 	@FXML
 	public void salvar() {
+        File save;
         if (Config.isLoaded()) {
-            Config.zip(Config.getInputProjectFile());
+            save = Config.getInputProjectFile();
         } else {
-            File save = DialogsUtil.showSaveDialog("Salvar projeto");
-            if (save != null) {
+            save = DialogsUtil.showSaveDialog("Salvar projeto");
+        }
+
+        if (save != null) {
+            try {
                 Config.zip(save);
+                Dialogs.create().owner(Main.getApp()).message(":)").title("Salvando Projeto").showInformation();
+            } catch (IOException e) {
+                DialogsUtil.showErrorDialog();
+                e.printStackTrace();
             }
         }
-        Dialogs.create().owner(Main.getApp()).message(":)").title("Salvando Projeto").showInformation();
 	}
 
     @FXML public void export() {

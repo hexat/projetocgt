@@ -24,9 +24,15 @@ public class CGTButton extends HUDComponent implements Serializable{
 		super();
 		active=false;
 		released=false;
+	}
+
+	@Override
+	public void setup() {
+		super.setup();
 		setTouchable(Touchable.enabled);
 		setInputListener();
 	}
+
 	public CGTButton(float x, float y, float relativeWidth, float relativeHeight) {
 		this();
 		setRelativeX(x);

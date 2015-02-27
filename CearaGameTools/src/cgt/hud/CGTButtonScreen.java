@@ -9,6 +9,7 @@ public class CGTButtonScreen extends CGTButton implements Serializable {
 	private String windowId;
 
 	public CGTButtonScreen() {
+		super();
 		windowId = null;
 	}
 

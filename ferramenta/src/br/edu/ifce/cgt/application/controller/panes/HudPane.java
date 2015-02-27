@@ -35,6 +35,11 @@ public class HudPane extends GridPane {
             e.printStackTrace();
         }
 
+        txtWid.setMaxMin(0, 1);
+        txtHei.setMaxMin(0, 1);
+        txtRelY.setMaxMin(0, 1);
+        txtRelX.setMaxMin(0, 1);
+
         setHandler();
     }
 
@@ -84,10 +89,10 @@ public class HudPane extends GridPane {
 
     public void init() {
         if (hud != null) {
-            if (hud.getRelativeY() > 0) {
+            if (hud.getRelativeY() >= 0) {
                 txtRelY.setText(hud.getRelativeY() + "");
             }
-            if (hud.getRelativeX() > 0) {
+            if (hud.getRelativeX() >= 0) {
                 txtRelX.setText(hud.getRelativeX() + "");
             }
 

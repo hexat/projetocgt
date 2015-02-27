@@ -9,12 +9,18 @@ import com.badlogic.gdx.files.FileHandle;
 public class CGTFile implements Serializable {
 
     private String filename;
-	private File file;
+	private String fileRelativePath;
 	private FileHandle fileHandle;
-	
-	public CGTFile(String filepath) {
-		file = new File(filepath);
+
+	public CGTFile() {
+		fileRelativePath = null;
+		filename = null;
 		fileHandle = null;
+	}
+
+	public CGTFile(String fileRelativePath) {
+		this();
+		this.fileRelativePath = fileRelativePath;
 	}
 
     public void setFilename(String filename) {
@@ -26,12 +32,12 @@ public class CGTFile implements Serializable {
     }
 
     public File getFile() {
-		return file;
+		return new File(fileRelativePath);
 	}
 	
 	public FileHandle getFileHandle() {
 		if (fileHandle == null) {
-			fileHandle = Gdx.files.internal(file.getPath());
+			fileHandle = Gdx.files.internal(fileRelativePath);
 		}
 		return fileHandle;
 	}
