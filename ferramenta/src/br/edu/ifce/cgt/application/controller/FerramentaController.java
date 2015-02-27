@@ -4,10 +4,10 @@ package br.edu.ifce.cgt.application.controller;
 import br.edu.ifce.cgt.application.controller.titleds.GameTitledPane;
 import org.controlsfx.dialog.Dialogs;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import br.edu.ifce.cgt.application.Config;
@@ -166,4 +166,5 @@ public class FerramentaController implements Initializable {
     public void click() {
 
     }
+
 }

@@ -193,11 +193,6 @@ public class CGTGame implements Serializable {
         }
         return res;
     }
-
-	public void removeById(String id) {
-		// TODO Auto-generated method stub
-		
-	}
 }
 
 

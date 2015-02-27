@@ -6,7 +6,6 @@ import com.projetocgt.StarAssault;
 
 public class Main {
 	public static void main(String[] args) {
-		
 		LwjglApplicationConfiguration cgf = new LwjglApplicationConfiguration();
 		cgf.vSyncEnabled = true;
 		cgf.width = 960;

@@ -1,26 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 
-
-<fx:root type="javafx.scene.control.TitledPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" text="Configurações do Jogo" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" text="Configurações do Jogo" type="javafx.scene.control.TitledPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <content>
-      <GridPane>
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label text="Tela Principal:" />
-            <ComboBox fx:id="boxWindows" prefWidth="150.0" GridPane.columnIndex="1" onAction="#setWindowDefault" />
-         </children>
-      </GridPane>
+      <ScrollPane fitToWidth="true" prefViewportHeight="565.0" prefViewportWidth="278.0">
+         <content>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="75.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Tela Principal:" />
+                  <ComboBox fx:id="boxWindows" onAction="#setWindowDefault" prefWidth="150.0" GridPane.columnIndex="1" />
+                  <Label text="Nome do Jogo" GridPane.rowIndex="1" />
+                  <Label text="Identificador" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtGameName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtGameId" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Versão" GridPane.rowIndex="3" />
+                  <Label text="Código da versão" GridPane.rowIndex="4" />
+                  <TextField fx:id="txtVersion" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="txtVersionCode" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <BorderPane prefHeight="36.0" prefWidth="139.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <center>
+                        <ImageView fx:id="img32" fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+                  <Label text="32x32" GridPane.rowIndex="5" />
+                  <Label text="48x48" GridPane.rowIndex="6" />
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <center>
+                        <ImageView fx:id="img48" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+                  <Label text="72x72" GridPane.rowIndex="7" />
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                     <center>
+                        <ImageView fx:id="img72" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+                  <Label text="96x96" GridPane.rowIndex="8" />
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                     <center>
+                        <ImageView fx:id="img96" fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+                  <Label text="144x144" GridPane.rowIndex="9" />
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                     <center>
+                        <ImageView fx:id="img144" fitHeight="144.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+               </children>
+            </GridPane>
+         </content>
+      </ScrollPane>
    </content>
 </fx:root>

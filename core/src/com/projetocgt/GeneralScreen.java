@@ -53,7 +53,6 @@ public class GeneralScreen extends Stage implements Screen {
         		b.setActive(false);
                 System.out.println(b.getScreenToGo());
                 if (b.getScreenToGo() != null) {
-                    System.out.println(b.getScreenToGo().getId());
                     if (b.getScreenToGo() instanceof CGTGameWorld) {
                         game.setScreen(new GameScreen((CGTGameWorld) b.getScreenToGo()));
                     } else {

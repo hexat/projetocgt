@@ -11,7 +11,6 @@ import javafx.stage.Window;
  * Created by Luan on 29/01/2015.
  */
 public class DialogsUtil {
-    public static File LAST_OPEN_DIR = null;
     public static final FileChooser.ExtensionFilter IMG_FILTER = new FileChooser.ExtensionFilter("Arquivo PNG (*.png)", "*.png");
     public static final FileChooser.ExtensionFilter WAV_FILTER = new FileChooser.ExtensionFilter("Arquivo WAV (*.wav)", "*.wav");
 
@@ -33,8 +32,9 @@ public class DialogsUtil {
             fileChooser.getExtensionFilters().add(f);
         }
 
-        if (LAST_OPEN_DIR != null) {
-            fileChooser.setInitialDirectory(LAST_OPEN_DIR);
+        Pref pref = Pref.load();
+        if (pref.getLastDir() != null) {
+            fileChooser.setInitialDirectory(new File(pref.getLastDir()));
         }
 
         if (owner == null) {
@@ -44,8 +44,10 @@ public class DialogsUtil {
         }
 
         if (result != null) {
-            LAST_OPEN_DIR = result.getParentFile();
+            pref.setLastDir(result.getParent());
+            pref.save();
         }
+
 
         return result;
     }
@@ -68,6 +70,20 @@ public class DialogsUtil {
 		init();
         fileChooser.getExtensionFilters().clear();
         fileChooser.getExtensionFilters().add(CGT_FILTER);
-		return fileChooser.showSaveDialog(Main.getApp());
+        Pref pref = Pref.load();
+
+        if (pref.getLastDir() != null) {
+            fileChooser.setInitialDirectory(new File(pref.getLastDir()));
+        } else {
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        }
+        File res = fileChooser.showSaveDialog(Main.getApp());
+
+        if (res != null) {
+            pref.setLastDir (res.getParent());
+            pref.save();
+        }
+
+		return res;
 	}
 }

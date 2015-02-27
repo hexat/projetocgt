@@ -1,6 +1,28 @@
+
+int VERSION_CODE = 1
+String VERSION_NAME = "1.0.0"
+String APPID = "1.0.0"
+
+Properties props = new Properties()
+File prefsFile = new File("pref.properties")
+if (prefsFile.exists()) {
+    props.load(new FileInputStream(prefsFile))
+    VERSION_NAME = props.getProperty("VERSION_NAME")
+    VERSION_CODE = props.getProperty("VERSION_CODE")
+    APPID = props.getProperty("APPID")
+}
+
 android {
     buildToolsVersion "19.1.0"
     compileSdkVersion 19
+
+      defaultConfig {
+        applicationId APPID
+        minSdkVersion 15
+        targetSdkVersion 19
+        versionCode VERSION_CODE
+        versionName VERSION_NAME
+      }
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -90,3 +112,19 @@ idea {
         }
     }
 }
+
+task teste {
+    String foor = '''<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">#</string>
+</resources>
+'''
+    foor = foor.replace("#", props.getProperty("APK_NAME"))
+
+    File file2 = new File('android/res/values/strings.xml')
+    file2.delete()
+    file2.createNewFile()
+    file2.write(foor)
+}
+
+check.dependsOn(teste)

@@ -27,7 +27,7 @@ public class ButtonPad extends HUDComponent {
 		buttonBase.setRelativeY(0*tamanho);
 		buttonBase.setRelativeWidth(0.22f*tamanho);
 		buttonBase.setRelativeHeight(0.29f*tamanho);
-		buttonBase.setBounds(0*tamanho, 0*tamanho, (textureUp.getWidth() / 3)*tamanho, (textureUp.getHeight() / 3)*tamanho);
+		buttonBase.setBounds(0*tamanho, 0*tamanho, (textureUp.getTextureGDX().getWidth() / 3)*tamanho, (textureUp.getTextureGDX().getHeight() / 3)*tamanho);
 
 		buttonUp = new CGTControllerButton();
 		buttonUp.setInput(InputPolicy.BTN_UP);
@@ -42,7 +42,7 @@ public class ButtonPad extends HUDComponent {
 		buttonUp.setRelativeY(0.145f*tamanho);
 		buttonUp.setRelativeWidth(0.069f*tamanho);
 		buttonUp.setRelativeHeight(0.1f*tamanho);
-		buttonUp.setBounds((137 / 3)*tamanho, (184.7f / 3)*tamanho, (textureUp.getWidth() / 3)*tamanho, (textureUp.getHeight() / 3)*tamanho);
+		buttonUp.setBounds((137 / 3)*tamanho, (184.7f / 3)*tamanho, (textureUp.getTextureGDX().getWidth() / 3)*tamanho, (textureUp.getTextureGDX().getHeight() / 3)*tamanho);
 
 		buttonDown = new CGTControllerButton();
 		buttonDown.setInput(InputPolicy.BTN_DOWN);
@@ -56,7 +56,7 @@ public class ButtonPad extends HUDComponent {
 		buttonDown.setRelativeY(0.028f*tamanho);
 		buttonDown.setRelativeWidth(0.069f*tamanho);
 		buttonDown.setRelativeHeight(0.1f*tamanho);
-		buttonDown.setBounds((137 / 3)*tamanho, (36 / 3)*tamanho, (textureUp.getWidth() / 3)*tamanho, (textureUp.getHeight() / 3)*tamanho);
+		buttonDown.setBounds((137 / 3)*tamanho, (36 / 3)*tamanho, (textureUp.getTextureGDX().getWidth() / 3)*tamanho, (textureUp.getTextureGDX().getHeight() / 3)*tamanho);
 
 		buttonLeft = new CGTControllerButton();
 		buttonLeft.setInput(InputPolicy.BTN_LEFT);
@@ -71,7 +71,7 @@ public class ButtonPad extends HUDComponent {
 		buttonLeft.setRelativeY(0.092f*tamanho);
 		buttonLeft.setRelativeWidth(0.08f*tamanho);
 		buttonLeft.setRelativeHeight(0.087f*tamanho);
-		buttonLeft.setBounds((64 / 3)*tamanho, (126 / 3)*tamanho, (textureUp.getWidth() / 3)*tamanho, (textureUp.getHeight() / 3)*tamanho);
+		buttonLeft.setBounds((64 / 3)*tamanho, (126 / 3)*tamanho, (textureUp.getTextureGDX().getWidth() / 3)*tamanho, (textureUp.getTextureGDX().getHeight() / 3)*tamanho);
 
 		buttonRight = new CGTControllerButton();
 		buttonRight.setInput(InputPolicy.BTN_RIGHT);
@@ -85,7 +85,7 @@ public class ButtonPad extends HUDComponent {
 		buttonRight.setRelativeY(0.09f*tamanho);
 		buttonRight.setRelativeWidth(0.08f*tamanho);
 		buttonRight.setRelativeHeight(0.092f*tamanho);
-		buttonRight.setBounds((183 / 3)*tamanho, (126 / 3)*tamanho, (textureUp.getWidth() / 3)*tamanho, (textureUp.getHeight() / 3)*tamanho);		
+		buttonRight.setBounds((183 / 3)*tamanho, (126 / 3)*tamanho, (textureUp.getTextureGDX().getWidth() / 3)*tamanho, (textureUp.getTextureGDX().getHeight() / 3)*tamanho);
 		
 
 	}
