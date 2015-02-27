@@ -1,5 +1,6 @@
 package br.edu.ifce.cgt.application.controller.panes;
 
+import br.edu.ifce.cgt.application.util.Pref;
 import cgt.core.CGTAnimation;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

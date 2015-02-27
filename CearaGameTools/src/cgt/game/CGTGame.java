@@ -1,11 +1,6 @@
 package cgt.game;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +9,7 @@ import java.util.ListIterator;
 import cgt.policy.ErrorValidate;
 import cgt.screen.CGTWindow;
 import cgt.util.CGTError;
+import com.badlogic.gdx.utils.Json;
 
 
 public class CGTGame implements Serializable {
@@ -120,6 +116,19 @@ public class CGTGame implements Serializable {
 			ex.printStackTrace();
 		}
 	}
+
+    public void saveGameAsJson(File file) {
+        Json json = new Json();
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(file);
+
+            json.toJson(this, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 	
 	public static CGTGame getSavedGame(InputStream io) {
 		CGTGame cgtGame = new CGTGame();

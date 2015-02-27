@@ -53,4 +53,14 @@ public class IntegerTextField extends TextField {
     }
 
 
+    public void enableError() {
+        setStyle(
+                "  -fx-text-box-border: red ;" +
+                "  -fx-focus-color: red ;"
+        );
+    }
+
+    public void disableError() {
+        setStyle(null);
+    }
 }

@@ -61,4 +61,16 @@ public class FloatTextField extends TextField {
 
         return Float.parseFloat(getText());
     }
+
+
+    public void enableError() {
+        setStyle(
+                "  -fx-text-box-border: red ;" +
+                        "  -fx-focus-color: red ;"
+        );
+    }
+
+    public void disableError() {
+        setStyle(null);
+    }
 }
