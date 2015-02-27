@@ -20,7 +20,7 @@ public class CGTButton extends HUDComponent implements Serializable{
 	private CGTTexture textureUp;
 	private CGTTexture textureDown;
 
-	public CGTButton(){
+	public CGTButton() {
 		super();
 		active=false;
 		released=false;
