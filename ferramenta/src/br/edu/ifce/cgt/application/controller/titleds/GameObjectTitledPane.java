@@ -79,8 +79,8 @@ public class GameObjectTitledPane extends TitledPane {
         txtBoundsW.setText(gameObject.getBounds().getWidth()+"");
         txtColisionH.setText(gameObject.getCollision().getHeight()+"");
         txtColisionW.setText(gameObject.getCollision().getWidth()+"");
-        txtColisionX.setText(gameObject.getCollision().x+"");
-        txtColisionY.setText(gameObject.getCollision().y+"");
+        txtColisionX.setText(((int)gameObject.getCollision().x)+"");
+        txtColisionY.setText(((int)gameObject.getCollision().y)+"");
         txtLife.setText(gameObject.getLife()+"");
         txtVelocidade.setText(gameObject.getSpeed()+"");
         updateBoxAnimation();
