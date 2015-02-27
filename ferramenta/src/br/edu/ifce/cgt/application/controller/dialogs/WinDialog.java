@@ -1,6 +1,8 @@
 package br.edu.ifce.cgt.application.controller.dialogs;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.util.Mapa;
+import br.edu.ifce.cgt.application.util.Pref;
 import cgt.game.CGTGameWorld;
 import cgt.policy.WinPolicy;
 import cgt.win.KillAllEnemies;
@@ -16,6 +18,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Created by Luan on 16/02/2015.
@@ -25,7 +30,7 @@ public class WinDialog extends BorderPane {
     private final Stage stage;
     private final CGTGameWorld world;
 
-    @FXML private ComboBox<WinPolicy> boxCriteria;
+    @FXML private ComboBox<Mapa<WinPolicy, String>> boxCriteria;
 
     public WinDialog(CGTGameWorld world) {
         this.world = world;
@@ -45,7 +50,14 @@ public class WinDialog extends BorderPane {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(Main.getApp().getScene().getWindow());
 
-        boxCriteria.getItems().addAll(WinPolicy.values());
+        ResourceBundle bundle = Pref.load().getBundle();
+        List<Mapa<WinPolicy, String>> list = new ArrayList<Mapa<WinPolicy, String>>();
+
+        for (WinPolicy w : WinPolicy.values()) {
+            list.add(new Mapa<WinPolicy, String>(w, bundle.getString(w.name())));
+        }
+
+        boxCriteria.getItems().setAll(list);
         boxCriteria.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -56,7 +68,7 @@ public class WinDialog extends BorderPane {
     }
 
     private void updateContent() {
-        switch (boxCriteria.getValue()) {
+        switch (boxCriteria.getValue().getKey()) {
             case KILL_ENEMIES:
                 try {
                     FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/ConfigKillAllEnemies.fxml"));
@@ -80,7 +92,7 @@ public class WinDialog extends BorderPane {
     }
 
     public void addWin(ActionEvent actionEvent) {
-        switch (boxCriteria.getValue()) {
+        switch (boxCriteria.getValue().getKey()) {
             case KILL_ENEMIES:
                 boolean contem = false;
                 for (int i = 0; i < world.getWinCriteria().size() && !contem; i++) {

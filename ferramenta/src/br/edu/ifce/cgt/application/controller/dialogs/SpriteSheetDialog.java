@@ -3,6 +3,7 @@ package br.edu.ifce.cgt.application.controller.dialogs;
 import java.io.File;
 import java.io.IOException;
 
+import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -35,8 +36,8 @@ public class SpriteSheetDialog extends VBox {
 
     @FXML private TextField txtImgName;
     @FXML private TextField txtNameSprite;
-    @FXML private TextField txtNumLines;
-    @FXML private TextField txtNumCol;
+    @FXML private IntegerTextField txtNumLines;
+    @FXML private IntegerTextField txtNumCol;
 
     private File imgFile;
     private ImageView imgView;
@@ -69,14 +70,14 @@ public class SpriteSheetDialog extends VBox {
             SpriteSheetDB db = Config.getGame().getSpriteDB();
             if (spriteSheet == null) {
                 spriteSheet = db.create(txtNameSprite.getText(), new CGTTexture(Config.createImg(imgFile)));
-                spriteSheet.setColumns(Integer.parseInt(txtNumCol.getText()));
-                spriteSheet.setRows(Integer.parseInt(txtNumLines.getText()));
+                spriteSheet.setColumns(txtNumCol.getValue());
+                spriteSheet.setRows(txtNumLines.getValue());
             } else {
             	if (imgFile != null) {
             		spriteSheet.setTexture(new CGTTexture(Config.createImg(imgFile)));
             	}
-                spriteSheet.setColumns(Integer.parseInt(txtNumCol.getText()));
-                spriteSheet.setRows(Integer.parseInt(txtNumLines.getText()));
+                spriteSheet.setColumns(txtNumCol.getValue());
+                spriteSheet.setRows(txtNumLines.getValue());
             }
             stage.close();
         } else {
