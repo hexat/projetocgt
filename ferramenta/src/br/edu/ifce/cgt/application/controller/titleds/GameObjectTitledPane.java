@@ -2,6 +2,8 @@ package br.edu.ifce.cgt.application.controller.titleds;
 
 import br.edu.ifce.cgt.application.Config;
 import br.edu.ifce.cgt.application.controller.dialogs.AnimationDialog;
+import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
+import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import cgt.core.CGTAnimation;
 import cgt.util.CGTFile;
 import cgt.util.CGTSound;
@@ -9,16 +11,15 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import br.edu.ifce.cgt.application.Main;
 import cgt.core.CGTGameObject;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -35,20 +36,20 @@ public class GameObjectTitledPane extends TitledPane {
     @FXML public VBox boxSoundColision;
     @FXML public VBox boxSoundDie;
 
-    @FXML private TextField txtBoundsW;
-    @FXML private TextField txtBoundsH;
+    @FXML private FloatTextField txtBoundsW;
+    @FXML private FloatTextField txtBoundsH;
 
-    @FXML private TextField txtPositionX;
-    @FXML private TextField txtPositionY;
+    @FXML private IntegerTextField txtPositionX;
+    @FXML private IntegerTextField txtPositionY;
 
-    @FXML private TextField txtColisionX;
-    @FXML private TextField txtColisionY;
-    @FXML private TextField txtColisionW;
-    @FXML private TextField txtColisionH;
+    @FXML private IntegerTextField txtColisionX;
+    @FXML private IntegerTextField txtColisionY;
+    @FXML private FloatTextField txtColisionW;
+    @FXML private FloatTextField txtColisionH;
 
-    @FXML private TextField txtVelocidade;
+    @FXML private IntegerTextField txtVelocidade;
 
-    @FXML private TextField txtLife;
+    @FXML private IntegerTextField txtLife;
 
     @FXML private Button btnSetSound;
     @FXML private VBox listTeste;
@@ -70,9 +71,25 @@ public class GameObjectTitledPane extends TitledPane {
             e.printStackTrace();
         }
         init();
+        setActions();
     }
 
-    public void init() {
+    private void init() {
+        txtBoundsH.setText(gameObject.getBounds().getHeight()+"");
+        txtBoundsW.setText(gameObject.getBounds().getWidth()+"");
+        txtColisionH.setText(gameObject.getCollision().getHeight()+"");
+        txtColisionW.setText(gameObject.getCollision().getWidth()+"");
+        txtColisionX.setText(gameObject.getCollision().x+"");
+        txtColisionY.setText(gameObject.getCollision().y+"");
+        txtLife.setText(gameObject.getLife()+"");
+        txtVelocidade.setText(gameObject.getSpeed()+"");
+        updateBoxAnimation();
+        updateBoxPositions();
+        updateBoxSoundCollision();
+        updateBoxSoundDie();
+    }
+
+    public void setActions() {
         btnSetSound.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -96,66 +113,76 @@ public class GameObjectTitledPane extends TitledPane {
             }
         });
 
-        txtLife.setOnAction(new EventHandler<ActionEvent>() {
+        txtLife.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                gameObject.setLife(Integer.parseInt(txtLife.getText()));
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    gameObject.setLife(txtLife.getValue());
+                }
             }
         });
 
-        txtBoundsH.setOnAction(new EventHandler<ActionEvent>() {
+        txtBoundsH.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                float h = Float.parseFloat(txtBoundsH.getText());
-                gameObject.getBounds().height = h;
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    gameObject.getBounds().height = txtBoundsH.getValue();
+                }
             }
         });
 
-        txtBoundsW.setOnAction(new EventHandler<ActionEvent>() {
+        txtBoundsW.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                float w = Float.parseFloat(txtBoundsW.getText());
-                gameObject.getBounds().width = w;
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    gameObject.getBounds().width = txtBoundsW.getValue();
+                }
             }
         });
 
-        txtColisionX.setOnAction(new EventHandler<ActionEvent>() {
+        txtColisionX.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                float x = Float.parseFloat(txtColisionX.getText());
-                gameObject.getCollision().x = x;
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    gameObject.getCollision().x = txtColisionX.getValue();
+                }
             }
         });
 
-        txtColisionY.setOnAction(new EventHandler<ActionEvent>() {
+        txtColisionY.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                float y = Float.parseFloat(txtColisionY.getText());
-                gameObject.getCollision().y = y;
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    gameObject.getCollision().y = txtColisionY.getValue();
+                }
             }
         });
 
-        txtColisionW.setOnAction(new EventHandler<ActionEvent>() {
+        txtColisionW.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                float w = Float.parseFloat(txtColisionW.getText());
-                gameObject.getCollision().width = w;
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    gameObject.getCollision().width = txtColisionW.getValue();
+                }
 
             }
         });
 
-        txtColisionH.setOnAction(new EventHandler<ActionEvent>() {
+        txtColisionH.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                float h = Float.parseFloat(txtColisionH.getText());
-                gameObject.getCollision().height = h;
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    gameObject.getCollision().height = txtColisionH.getValue();
+                }
             }
         });
 
-        txtVelocidade.setOnAction(new EventHandler<ActionEvent>() {
+        txtVelocidade.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                gameObject.setSpeed(Integer.parseInt(txtVelocidade.getText()));
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    gameObject.setSpeed(txtVelocidade.getValue());
+                }
             }
         });
     }

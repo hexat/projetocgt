@@ -17,10 +17,12 @@ public class IntegerTextField extends TextField {
     public IntegerTextField() {
         textProperty().addListener(new ChangeListener<String>() {
             @Override public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!oldValue.equals("")) {
-                    try {
-                        Integer.parseInt(newValue);
-                    } catch (Exception e) {
+                try {
+                    Integer.parseInt(newValue);
+                } catch (Exception e) {
+                    if (oldValue.equals("")) {
+                        setText(min+"");
+                    } else {
                         setText(oldValue);
                     }
                 }
