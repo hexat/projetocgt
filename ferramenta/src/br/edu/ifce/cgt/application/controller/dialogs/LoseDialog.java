@@ -83,7 +83,7 @@ public class LoseDialog extends BorderPane {
         switch (boxCriteria.getValue()) {
             case ACTOR_DEAD:
                 boolean contem = false;
-                for (int i = 0; i < world.getWinCriteria().size() && !contem; i++) {
+                for (int i = 0; i < world.getLoseCriteria().size() && !contem; i++) {
                     if (world.getLoseCriteria().get(i).getPolicy() == LosePolicy.ACTOR_DEAD) {
                         contem = true;
                     }

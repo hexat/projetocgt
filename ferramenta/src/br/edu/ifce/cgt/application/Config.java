@@ -79,7 +79,7 @@ public abstract class Config {
 			File configWorld = new File(BASE + "config.cgt");
 			getGame().saveGame(configWorld);
 
-			File out = new File("android/assets/");
+			File out = new File("../android/assets/");
             System.out.println(out.getAbsolutePath());
             try {
 				FileUtils.deleteDirectory(out);
@@ -94,24 +94,24 @@ public abstract class Config {
 			}
 
             observer.update(null, "Iniciando...");
-			Runtime runtime = Runtime.getRuntime();
-			try {
-                Process p1 = runtime.exec("sh "+GRADLE_PATH+"run");
-                InputStream is = p1.getInputStream();
-                int i;
-                String res = "";
-                while( (i = is.read() ) != -1) {
-                    if (((char)i) == '\n') {
-                        observer.update(null, res);
-                        res = "";
-                    } else {
-                        res += (char) i;
-                    }
-                }
-                observer.update(null, "Concluido...");
-                } catch(IOException e) {
-                e.printStackTrace();
-			}
+//			Runtime runtime = Runtime.getRuntime();
+//			try {
+//                Process p1 = runtime.exec("sh "+GRADLE_PATH+"run");
+//                InputStream is = p1.getInputStream();
+//                int i;
+//                String res = "";
+//                while( (i = is.read() ) != -1) {
+//                    if (((char)i) == '\n') {
+//                        observer.update(null, res);
+//                        res = "";
+//                    } else {
+//                        res += (char) i;
+//                    }
+//                }
+//                observer.update(null, "Concluido...");
+//                } catch(IOException e) {
+//                e.printStackTrace();
+//			}
 
 			return true;
 		}
