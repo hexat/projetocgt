@@ -139,9 +139,9 @@ public class AnimationDialog extends HBox {
     }
 
     private boolean validate() {
-        return txtVel.getValue() > 0 && txtFrameFinalX.getValue() > 0 &&
-                txtFrameFinalY.getValue() > 0 && txtFrameInicialX.getValue() > 0 &&
-                txtFrameInicialY.getValue() > 0;
+        return txtVel.getValue() > 0 && txtFrameFinalX.getValue() >= 0 &&
+                txtFrameFinalY.getValue() >= 0 && txtFrameInicialX.getValue() >= 0 &&
+                txtFrameInicialY.getValue() >= 0;
     }
 
     public void show() {
