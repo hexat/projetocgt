@@ -10,12 +10,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.ImageView;
 
 /**
  * Created by infolev on 06/02/15.
  */
 public class GameTitledPane extends TitledPane {
+    @FXML private TextField txtVersion;
+    @FXML private TextField txtGameName;
+    @FXML private TextField txtGameId;
+    @FXML private TextField txtVersionCode;
+    @FXML private ImageView img32;
+    @FXML private ImageView img48;
+    @FXML private ImageView img72;
+    @FXML private ImageView img96;
+    @FXML private ImageView img144;
 
     @FXML private ComboBox<String> boxWindows;
 
@@ -30,10 +41,16 @@ public class GameTitledPane extends TitledPane {
             e.printStackTrace();
         }
 
+        init();
+    }
+
+    private void init() {
         boxWindows.getItems().clear();
         for (String s : Config.getGame().getIds()) {
             boxWindows.getItems().add(s);
         }
+
+
     }
 
     @FXML public void setWindowDefault() {

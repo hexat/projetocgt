@@ -14,6 +14,7 @@ import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.Config;
 import javafx.fxml.FXML;
 import br.edu.ifce.cgt.application.controller.panes.ScreenTab;
+import org.controlsfx.dialog.Dialogs;
 
 public class MenuBarController {
 
@@ -51,7 +52,7 @@ public class MenuBarController {
                 Config.zip(save);
             }
         }
-
+        Dialogs.create().owner(Main.getApp()).message(":)").title("Salvando Projeto").showInformation();
 	}
 
     @FXML public void export() {
