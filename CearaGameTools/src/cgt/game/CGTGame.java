@@ -178,6 +178,14 @@ public class CGTGame implements Serializable {
         }
         return res;
     }
+
+    public List<String> objectIds() {
+        List<String> res = new ArrayList<String>();
+        for (CGTGameWorld w : worlds) {
+            res.addAll(w.getObjectIds());
+        }
+        return res;
+    }
 }
 
 

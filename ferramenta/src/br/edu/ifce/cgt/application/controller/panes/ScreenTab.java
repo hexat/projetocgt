@@ -64,6 +64,7 @@ public class ScreenTab extends Tab {
                     } else {
                         configAccordion.getPanes().add(WorldTitledPane.getNode((CGTGameWorld) screen));
                     }
+                    configAccordion.getPanes().get(0).setExpanded(true);
                 }
             }
         });

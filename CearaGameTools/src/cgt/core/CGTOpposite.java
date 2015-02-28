@@ -1,17 +1,17 @@
 package cgt.core;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-
-import cgt.behaviors.Behavior;
-import cgt.unit.LabelID;
 
 public class CGTOpposite extends CGTGameObject implements Serializable {
 	private boolean block;
 	private boolean destroyable;
 
+	public CGTOpposite() {
+		this("Opositor");
+	}
+
     public CGTOpposite(String label) {
-        setLabel(label);
+        setId(label);
     }
 	
 	public void setBlock(boolean block) {

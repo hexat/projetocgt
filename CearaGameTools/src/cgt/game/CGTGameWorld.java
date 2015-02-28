@@ -6,30 +6,20 @@ import cgt.policy.ErrorValidate;
 import cgt.util.*;
 import com.badlogic.gdx.audio.Music;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import cgt.lose.Lose;
 import cgt.policy.GameModePolicy;
-import cgt.policy.InputPolicy;
 import cgt.screen.CGTDialog;
 import cgt.screen.CGTWindow;
-import cgt.unit.Action;
 import cgt.win.Win;
 
-public class CGTGameWorld extends CGTWindow implements Serializable {
+public class CGTGameWorld extends CGTWindow {
 	private CGTActor actor;
-	private ArrayList<Action> actions;
 	private ArrayList<CGTOpposite> opposites;
 	private ArrayList<CGTEnemy> enemies;
 	private ArrayList<CGTBonus> bonus;
-	private ArrayList<CGTProjectile> projectiles;
 	private ArrayList<HUDComponent> hud;
 	private CGTDialog pauseDialog;
 	private CGTDialog winDialog;
@@ -39,9 +29,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	private CGTTexture background;
 	private ArrayList<Win> winCriteria;
 	private ArrayList<Lose> loseCriteria;
-	private int countdown;
-	private int scoreTarget;
-	private CGTLabel label;
 	private CGTSound music;
 	private CGTSound soundWin;
 	private CGTSound soundLose;
@@ -55,7 +42,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		hud = new ArrayList<HUDComponent>();
 		winCriteria = new ArrayList<Win>();
 		loseCriteria = new ArrayList<Lose>();
-		actions = new ArrayList<Action>();
 		camera = new Camera(GameModePolicy.TOUCH);
 		startGame = null;
 	}
@@ -146,22 +132,6 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		return bonus;
 	}
 	 
-	public void setCountdown(int time) {
-		this.countdown = time;
-	}
-	 
-	public int getCountdown() {
-		return countdown;
-	}
-	 
-	public void setScoreTarget(int score) {
-		this.scoreTarget  = score;
-	}
-	 
-	public int getScoreTarget() {
-		return scoreTarget;
-	}
-
 	public CGTTexture getBackground() {
 		return background;
 	}
@@ -198,8 +168,7 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	public String toString() {
 		return "CGTGameWorld [actor=" + actor + "\nopposites=" + opposites
 				+ "\nenemies=" + enemies + "\nbonus=" + bonus + "\ncamera="
-				+ camera + ", background=" + background + ", countdown="
-				+ countdown + ", scoreTarget=" + scoreTarget + "]";
+				+ camera + ", background=" + background + "]";
 	}
 	
 	public CGTEnemy removeEnemy(int index){
@@ -221,9 +190,11 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	public void setWinCriteria(ArrayList<Win> winCriteria) {
 		this.winCriteria = winCriteria;
 	}
-	
-	public void addWinCriterion(Win winCriterion){
-		this.winCriteria.add(winCriterion);
+
+	public void addWinCriterion(WinCriteria criterion){
+		criterion.remove();
+		criterion.setWorld(this);
+		this.winCriteria.add(criterion);
 	}
 
 	public ArrayList<Lose> getLoseCriteria() {
@@ -234,11 +205,15 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		this.loseCriteria = loseCriteria;
 	}
 	
-	public void addLoseCriterion(Lose loseCriterion){
+	public void addLoseCriterion(LoseCriteria loseCriterion){
+		loseCriterion.remove();
+		loseCriterion.setWorld(this);
 		this.loseCriteria.add(loseCriterion);
 	}
 	
 	public void addLifeBar(LifeBar lifeBar){
+		lifeBar.remove();
+		lifeBar.setWorld(this);
 		hud.add(lifeBar);
 	}
 	
@@ -262,42 +237,14 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 		this.winDialog = winDialog;
 	}
 
-	public CGTLabel getLabel() {
-		return label;
-	}
-
-	public void setLabel(CGTLabel label) {
-		this.label = label;
-	}
-	
 	public ArrayList<HUDComponent> getHUD() {
 		return hud;
 	}
-	
-	public void addHUDComponent(HUDComponent component){
-		hud.add(component);
-	}
 
-	public ArrayList<Action> getActions() {
-		return actions;
-	}
-
-	public void setActions(ArrayList<Action> actions) {
-		this.actions = actions;
-	}
-	
-	public void addAction(Action... action){
-		for(int i = 0; i<action.length; i++){
-			actions.add(action[i]);
-		}
-	}
-	
-	public Action getActionFromInput(InputPolicy policy){
-		for(int i =0; i<actions.size(); i++){
-			if(actions.get(i).hasInput(policy))
-				return actions.get(i);
-		}
-		return null;
+	public void addEnemyGroupLifeBar(EnemyGroupLifeBar lifeBar) {
+		lifeBar.remove();
+		lifeBar.setWorld(this);
+		hud.add(lifeBar);
 	}
 
 	public CGTDialog getLoseDialog() {
@@ -326,25 +273,26 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 
 	public CGTGameObject getObjectByLabel(String label) {
 		for (CGTOpposite o : opposites) {
-			if (o.getLabel() != null && o.getLabel().equals(label)) {
+			if (o.getId() != null && o.getId().equals(label)) {
 				return o;
 			}
 		}
 		return null;
 	}
 
-	public List<String> getLabels() {
+	public List<String> getObjectIds() {
 		List<String> res = new ArrayList<String>();
 		if (getActor() != null) {
-			res.add(getActor().getLabel());
+			res.add(getActor().getId());
 		}
 		for (CGTGameObject o : enemies) {
-			res.add(o.getLabel());
+			res.add(o.getId());
 		}
 
 		for (CGTGameObject o : opposites) {
-			res.add(o.getLabel());
+			res.add(o.getId());
 		}
+
 		return res;
 	}
 
@@ -379,7 +327,7 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 
 	public CGTProjectile findProjectile(String id) {
 		for (CGTProjectile p : getActor().getProjectiles()) {
-			if (p.getLabel().equals(id)) {
+			if (p.getId().equals(id)) {
 				return p;
 			}
 		}
@@ -389,14 +337,14 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	public List<String> getProjectilesLabels() {
 		List<String> res = new ArrayList<String>();
 		for (CGTProjectile p : getActor().getProjectiles()) {
-			res.add(p.getLabel());
+			res.add(p.getId());
 		}
 		return res;
 	}
 
 	public CGTEnemy findEnemy(String id) {
 		for (CGTEnemy e : enemies) {
-			if (e.getLabel().equals(id)) {
+			if (e.getId().equals(id)) {
 				return e;
 			}
 		}
@@ -406,7 +354,7 @@ public class CGTGameWorld extends CGTWindow implements Serializable {
 	public List<String> getEnemyLabels() {
 		List<String> res = new ArrayList<String>();
 		for (CGTEnemy e : enemies) {
-			res.add(e.getLabel());
+			res.add(e.getId());
 		}
 		return res;
 	}

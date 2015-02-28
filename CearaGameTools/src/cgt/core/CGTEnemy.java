@@ -20,6 +20,10 @@ public class CGTEnemy extends CGTOpposite implements Serializable {
 	private float timeToRecovery;
 	private boolean attacking;
 
+	public CGTEnemy() {
+		this("Inimigo");
+	}
+
     public CGTEnemy(String label) {
 		super(label);
 		damage=0;

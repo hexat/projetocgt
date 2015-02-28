@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
-import javafx.scene.control.TitledPane;
 
 /**
  * Created by infolev on 02/02/15.
@@ -16,7 +15,7 @@ public class ObjectButton extends Button {
     private CGTGameObject object;
 
     public ObjectButton(CGTGameObject o) {
-        super(o.getLabel());
+        super(o.getId());
         this.object = o;
         configAccordion = (Accordion) Main.getApp().getScene().lookup("#configAccordion");
 

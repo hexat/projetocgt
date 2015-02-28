@@ -101,7 +101,8 @@ public class WinDialog extends BorderPane {
                     }
                 }
                 if (!contem) {
-                    world.addWinCriterion(new KillAllEnemies(world.getEnemies()));
+                    KillAllEnemies kae = new KillAllEnemies();
+                    world.addWinCriterion(kae);
                 }
                 break;
 

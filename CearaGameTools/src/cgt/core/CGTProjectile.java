@@ -3,10 +3,7 @@ package cgt.core;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import cgt.unit.LabelID;
 import cgt.util.ProjectileOrientation;
-
-import com.badlogic.gdx.math.Vector2;
 
 public class CGTProjectile extends CGTGameObject implements Serializable{
 	private int numFiresForOneInput;
@@ -125,7 +122,7 @@ public class CGTProjectile extends CGTGameObject implements Serializable{
 				+ numFiresForOneInput + ", damage=" + damage + ", interval="
 				+ interval + ", ammo=" + ammo + ", maxAmmo=" + maxAmmo
 				+ ", velocityInitial=" + getSpeed() + ", angle=" + angle
-				+ ", labelID=" + getLabel() + ", orientations="
+				+ ", labelID=" + getId() + ", orientations="
 				+ orientations + "]";
 	}
 }

@@ -1,7 +1,5 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
-import br.edu.ifce.cgt.application.Config;
-import br.edu.ifce.cgt.application.controller.panes.HudPane;
 import br.edu.ifce.cgt.application.controller.panes.LifebarPane;
 import cgt.hud.IndividualLifeBar;
 import javafx.event.ActionEvent;
@@ -40,7 +38,7 @@ public class IndividualLifeBarTitledPane extends TitledPane {
         gridPane.add(label, 0, 0);
 
         boxLabelObjects = new ComboBox<String>();
-        boxLabelObjects.getItems().addAll(individualLifeBar.getWorld().getLabels());
+        boxLabelObjects.getItems().addAll(individualLifeBar.getWorld().getObjectIds());
 
         if (individualLifeBar.getOwnerId() != null) {
             boxLabelObjects.getSelectionModel().select(individualLifeBar.getOwnerId());
@@ -49,7 +47,7 @@ public class IndividualLifeBarTitledPane extends TitledPane {
         boxLabelObjects.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                for (String label : individualLifeBar.getWorld().getLabels()) {
+                for (String label : individualLifeBar.getWorld().getObjectIds()) {
                     if (!boxLabelObjects.getItems().contains(label)) {
                         boxLabelObjects.getItems().add(label);
                     }

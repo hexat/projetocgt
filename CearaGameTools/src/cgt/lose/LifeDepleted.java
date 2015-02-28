@@ -3,17 +3,18 @@ package cgt.lose;
 import java.io.Serializable;
 
 import cgt.core.CGTActor;
+import cgt.game.LoseCriteria;
 import cgt.policy.LosePolicy;
 
-public class LifeDepleted implements Lose, Serializable{
+public class LifeDepleted extends LoseCriteria {
 	private CGTActor actor;
 	
-	public LifeDepleted(CGTActor actor){
-		this.actor = actor;
+	public LifeDepleted(){
+		actor = null;
 	}
 	
 	public void start(){
-		
+		actor = getWorld().getActor();
 	}
 
 	@Override

@@ -636,7 +636,7 @@
 //		rio.setBlock(true);
 //		rio.setDestroyable(false);
 //		rio.setLife(0);
-//		rio.setLabel("rio");
+//		rio.setId("rio");
 //
 //		world.getOpposites().add(rio);
 //

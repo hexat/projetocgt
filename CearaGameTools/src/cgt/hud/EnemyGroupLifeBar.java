@@ -7,15 +7,15 @@ import java.util.List;
 import cgt.core.CGTEnemy;
 import cgt.game.CGTGame;
 import cgt.game.CGTGameWorld;
+import cgt.game.LifeBar;
 
-public class EnemyGroupLifeBar extends LifeBar implements Serializable{
+public class EnemyGroupLifeBar extends LifeBar {
 	private List<CGTEnemy> enemiesList; //used in gdx mode
 
 	private List<String> enemiesIds;
-	private String worldId;
-	
-	public EnemyGroupLifeBar(String worldId){
-		this.worldId = worldId;
+
+	public EnemyGroupLifeBar() {
+		this.worldId = null;
 		enemiesList = null;
 		enemiesIds = new ArrayList<String>();
 	}
@@ -43,10 +43,6 @@ public class EnemyGroupLifeBar extends LifeBar implements Serializable{
 	@Override
 	public boolean validate() {
 		return super.validate() && worldId != null && getWorld() != null;
-	}
-
-	public CGTGameWorld getWorld() {
-		return CGTGame.get().getWorld(worldId);
 	}
 
 	public boolean removeEnemy(String id) {

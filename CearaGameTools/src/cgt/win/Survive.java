@@ -1,23 +1,31 @@
 package cgt.win;
 
+import cgt.core.CGTGameObject;
+import cgt.game.CGTGame;
+import cgt.game.CGTGameWorld;
+import cgt.game.WinCriteria;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
 import cgt.core.CGTActor;
 import cgt.policy.WinPolicy;
 
-public class Survive implements Win{
-	private CGTActor actor;
+public class Survive extends WinCriteria {
 	private int timer;
 	private boolean timeEnded;
+	private WinPolicy policy;
+
+	private CGTActor actor;
 	
-	public Survive(CGTActor actor, int time){
-		this.actor = actor;
-		timer = time;
+	public Survive(){
+		actor = null;
+		timer = 10;
 		timeEnded=false;
+		policy = WinPolicy.SURVIVE;
 	}
 	
-	public void start(){
+	public void start() {
+		actor = CGTGame.get().getWorld(worldId).getActor();
 		Timer.schedule(new Task() {
 			@Override
 			public void run() {
@@ -34,11 +42,16 @@ public class Survive implements Win{
 			return false;
 	}
 
+	public void setTimer(int timer) {
+		this.timer = timer;
+	}
+
+	public int getTimer() {
+		return timer;
+	}
+
 	@Override
 	public WinPolicy getPolicy() {
-		// TODO Auto-generated method stub
-		return null;
+		return policy;
 	}
-	
-	
 }

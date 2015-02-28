@@ -2,41 +2,37 @@ package cgt.lose;
 
 import java.io.Serializable;
 
+import cgt.game.LoseCriteria;
 import cgt.hud.CGTLabel;
 
 import cgt.policy.LosePolicy;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;
 
-public class TargetTime implements Lose, Serializable{
+public class TargetTime extends LoseCriteria {
 	public int timer;
 	public CGTLabel label;
 	public boolean expired;
 	
-	public TargetTime(int time, CGTLabel label){
-		timer = time;
-		this.label = label;
+	public TargetTime(){
+		timer = 1000;
+		this.label = new CGTLabel();
 		expired=false;
 		label.setText(""+timer);
 	}
-	
-	public TargetTime(int time){
-		timer = time;
-		this.label = null;
-		expired=false;
-	}
-	
+
 	public CGTLabel getLabel(){
 		return label;
 	}
-	
-	public boolean hasLabel(){
-		if(label==null)
-			return false;
-		else
-			return true;
+
+	public void setLabel(CGTLabel label) {
+		this.label = label;
 	}
-	
+
+	public void setTimer(int timer) {
+		this.timer = timer;
+	}
+
 	public void start(){
 		label.getLabelGDX().setText(String.valueOf(timer));
 		float delay = 1; // seconds

@@ -16,9 +16,9 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label text="Bar Texture" />
-      <Label text="Background Texture" GridPane.rowIndex="1" />
-      <Button fx:id="btnBarTexture" mnemonicParsing="false" text="Select" GridPane.columnIndex="1" />
-      <Button fx:id="btnBarBack" mnemonicParsing="false" text="Select" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label text="Textura da Barra" />
+      <Label text="Textura de Fundo" GridPane.rowIndex="1" />
+      <Button fx:id="btnBarTexture" mnemonicParsing="false" text="Selecionar" GridPane.columnIndex="1" />
+      <Button fx:id="btnBarBack" mnemonicParsing="false" text="Selecionar" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    </children>
 </fx:root>

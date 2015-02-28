@@ -20,10 +20,10 @@ import cgt.unit.Action;
 public class WorldController {
 
 	private boolean ammoCheck=true;
-	//Possiveis movimentos do personagem
+	//Possiveis movimentos do actor
 
 	private CGTGameWorld world;
-	private CGTActor personagem;
+	private CGTActor actor;
 	private WorldRenderer renderer;
 	static Map<ActionMovePolicy, Boolean> keys = new HashMap<ActionMovePolicy, Boolean>();
 	static {
@@ -42,14 +42,14 @@ public class WorldController {
 	public WorldController(CGTGameWorld world,WorldRenderer render) {
 		this.world = world;
 		this.renderer = render;
-		// Posicao inicial do personagem
-		this.personagem = world.getActor();
+		// Posicao inicial do actor
+		this.actor = world.getActor();
 
 		releaseAllDirectionKeys();
 	}
 
 	public void activateKey(InputPolicy policy){
-		Action action = world.getActionFromInput(policy);
+		Action action = actor.getActionFromInput(policy);
 		if (action != null){
 			keys.put(action.getActionPolicy(),true);
 			if (action.getActionPolicy() == ActionMovePolicy.WALK_RIGHT) {
@@ -59,7 +59,7 @@ public class WorldController {
 	}
 	
 	public void deactivateKey(InputPolicy policy){
-		Action action = world.getActionFromInput(policy);
+		Action action = actor.getActionFromInput(policy);
 		if (action != null){
 			keys.put(action.getActionPolicy(),false);
 			stopAni();
@@ -68,14 +68,14 @@ public class WorldController {
 	
 
 	private void stopAni() {
-		if(personagem.getState().equals(StatePolicy.LOOKUP)) {
-			personagem.setState(StatePolicy.IDLEUP);
-		} else if(personagem.getState().equals(StatePolicy.LOOKDOWN)) {
-			personagem.setState(StatePolicy.IDLEDOWN);
-		} else if(personagem.getState().equals(StatePolicy.LOOKLEFT)) {
-			personagem.setState(StatePolicy.IDLELEFT);
-		} else if(personagem.getState().equals(StatePolicy.LOOKRIGHT)) {
-			personagem.setState(StatePolicy.IDLERIGHT);
+		if(actor.getState().equals(StatePolicy.LOOKUP)) {
+			actor.setState(StatePolicy.IDLEUP);
+		} else if(actor.getState().equals(StatePolicy.LOOKDOWN)) {
+			actor.setState(StatePolicy.IDLEDOWN);
+		} else if(actor.getState().equals(StatePolicy.LOOKLEFT)) {
+			actor.setState(StatePolicy.IDLELEFT);
+		} else if(actor.getState().equals(StatePolicy.LOOKRIGHT)) {
+			actor.setState(StatePolicy.IDLERIGHT);
 		}
 	}
 
@@ -92,7 +92,7 @@ public class WorldController {
 	}
 	
 	public void ammoDowner(final CGTProjectile projectile){
-		if(ammoCheck && personagem.getProjectiles().get(0).getAmmo()>0){
+		if(ammoCheck && actor.getProjectiles().get(0).getAmmo()>0){
 			ammoCheck=false;
 			Timer.schedule(new Task() {
 				@Override
@@ -119,15 +119,15 @@ public class WorldController {
 	 */
 	public void update(float delta) {
 		// Processa a entrada de algum parametro
-		if(!personagem.isInputsEnabled()){
+		if(!actor.isInputsEnabled()){
 			processInput();	
 		}else{
-			personagem.getVelocity().y = 0;
-			personagem.getVelocity().x = 0;
+			actor.getVelocity().y = 0;
+			actor.getVelocity().x = 0;
 			releaseAllDirectionKeys();
 		}
 
-		personagem.update(delta);
+		actor.update(delta);
 
 		for (int i=0; i<world.getOpposites().size(); i++) {
 			world.getOpposites().get(i).update(delta);
@@ -154,56 +154,56 @@ public class WorldController {
 
 	private void moveKeys(){
 		if (keys.get(ActionMovePolicy.WALK_UP)) {
-			//Verifica se o personagem pode andar
-			personagem.setState(StatePolicy.LOOKUP);
-			if( (personagem.getPosition().y + personagem.getBounds().height) < renderer.getWorld().getBackground().getTextureGDX().getHeight())
-				personagem.getVelocity().y = personagem.getSpeed();
+			//Verifica se o actor pode andar
+			actor.setState(StatePolicy.LOOKUP);
+			if( (actor.getPosition().y + actor.getBounds().height) < renderer.getWorld().getBackground().getTextureGDX().getHeight())
+				actor.getVelocity().y = actor.getSpeed();
 			
 			else{
-				personagem.getVelocity().y = 0;
+				actor.getVelocity().y = 0;
 			}
 		}
 
 		if (keys.get(ActionMovePolicy.WALK_DOWN)) {
-			// O personagem esta olhando para a baixo
-			personagem.setState(StatePolicy.LOOKDOWN);
-			if(personagem.getPosition().y > 0)
-				personagem.getVelocity().y = -personagem.getSpeed();
+			// O actor esta olhando para a baixo
+			actor.setState(StatePolicy.LOOKDOWN);
+			if(actor.getPosition().y > 0)
+				actor.getVelocity().y = -actor.getSpeed();
 			else
-				personagem.getVelocity().y = 0;
+				actor.getVelocity().y = 0;
 			}
 
 		if (keys.get(ActionMovePolicy.WALK_LEFT)) {
-			personagem.setState(StatePolicy.LOOKLEFT);
-			if(personagem.getPosition().x > 0){
-				personagem.getVelocity().x = -personagem.getSpeed();
+			actor.setState(StatePolicy.LOOKLEFT);
+			if(actor.getPosition().x > 0){
+				actor.getVelocity().x = -actor.getSpeed();
 			}
 			else
-				personagem.getVelocity().x = 0;
+				actor.getVelocity().x = 0;
 				
 		}
 			
 		if (keys.get(ActionMovePolicy.WALK_RIGHT)) {
-			personagem.setState(StatePolicy.LOOKRIGHT);
-			if( (personagem.getPosition().x+personagem.getBounds().width) < renderer.getWorld().getBackground().getTextureGDX().getWidth()){
-				personagem.getVelocity().x = personagem.getSpeed();
+			actor.setState(StatePolicy.LOOKRIGHT);
+			if( (actor.getPosition().x+ actor.getBounds().width) < renderer.getWorld().getBackground().getTextureGDX().getWidth()){
+				actor.getVelocity().x = actor.getSpeed();
 			}
 			else
-				personagem.getVelocity().x = 0;			
+				actor.getVelocity().x = 0;
 		}
 		// Verifica se ambos ou nenhum dos sentidos sao presionados
 		if ((keys.get(ActionMovePolicy.WALK_LEFT) && keys.get(ActionMovePolicy.WALK_RIGHT))
 		   ||(!keys.get(ActionMovePolicy.WALK_LEFT) && !(keys.get(ActionMovePolicy.WALK_RIGHT)))) {
-			personagem.getVelocity().x = 0;
+			actor.getVelocity().x = 0;
 		}
 		// Verifica se ambos ou nenhum dos sentidos sao presionados
 		if ((keys.get(ActionMovePolicy.WALK_UP) && keys.get(ActionMovePolicy.WALK_DOWN))
 				|| (!keys.get(ActionMovePolicy.WALK_UP) && !(keys.get(ActionMovePolicy.WALK_DOWN)))) {
-			//personagem.setState(State.IDLE);
+			//actor.setState(State.IDLE);
 			// acceleration is 0 on the y
-			//personagem.getAcceleration().y = 0;
+			//actor.getAcceleration().y = 0;
 			// Vertival speed is 0
-			personagem.getVelocity().y = 0;
+			actor.getVelocity().y = 0;
 		}
 	}
 	private void processInput() {

@@ -34,6 +34,7 @@ public class EnemyTitledPane extends TitledPane {
     private CGTEnemy enemy;
 
     public EnemyTitledPane(CGTEnemy object) {
+        enemy = object;
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigInimigo.fxml"));
         xml.setRoot(this);
         xml.setController(this);

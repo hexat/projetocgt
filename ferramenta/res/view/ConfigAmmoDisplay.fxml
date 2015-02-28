@@ -7,7 +7,7 @@
 
 <?import br.edu.ifce.cgt.application.controller.panes.HudPane?>
 <?import br.edu.ifce.cgt.application.controller.panes.FontPane?>
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" type="javafx.scene.control.TitledPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root text="Configurações Display de Munição" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" type="javafx.scene.control.TitledPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <ScrollPane fitToWidth="true">
          <content>

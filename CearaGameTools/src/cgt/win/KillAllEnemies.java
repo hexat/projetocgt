@@ -4,14 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import cgt.core.CGTEnemy;
+import cgt.game.CGTGame;
+import cgt.game.CGTGameWorld;
+import cgt.game.WinCriteria;
 import cgt.policy.WinPolicy;
+import cgt.win.Win;
 
-public class KillAllEnemies implements Win, Serializable{
+public class KillAllEnemies extends WinCriteria {
 	private ArrayList<CGTEnemy> enemies;
 	private WinPolicy policy;
 
-	public KillAllEnemies(ArrayList<CGTEnemy> enemies){
-		this.enemies = enemies;
+	public KillAllEnemies(){
+		enemies = null;
 		policy = WinPolicy.KILL_ENEMIES;
 	}
 	
@@ -29,7 +33,7 @@ public class KillAllEnemies implements Win, Serializable{
 	}
 	
 	public void start(){
-		
+		enemies = CGTGame.get().getWorld(worldId).getEnemies();
 	}
 
 	@Override
