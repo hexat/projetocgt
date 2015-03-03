@@ -30,5 +30,6 @@ bin/
 out/
 gen/
 local.properties
+config.properties
 !gradle/
 gameConfig.txt

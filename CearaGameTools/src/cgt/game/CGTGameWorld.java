@@ -42,7 +42,7 @@ public class CGTGameWorld extends CGTWindow {
 		hud = new ArrayList<HUDComponent>();
 		winCriteria = new ArrayList<Win>();
 		loseCriteria = new ArrayList<Lose>();
-		camera = new Camera(GameModePolicy.TOUCH);
+		camera = new Camera();
 		startGame = null;
 	}
 
@@ -272,7 +272,18 @@ public class CGTGameWorld extends CGTWindow {
 	}
 
 	public CGTGameObject getObjectByLabel(String label) {
-		for (CGTOpposite o : opposites) {
+
+        if (getActor() != null && getActor().getId() != null && getActor().getId().equals(label)) {
+            return getActor();
+        }
+
+        for (CGTGameObject o : enemies) {
+            if (o.getId() != null && o.getId().equals(label)) {
+                return o;
+            }
+        }
+
+        for (CGTOpposite o : opposites) {
 			if (o.getId() != null && o.getId().equals(label)) {
 				return o;
 			}

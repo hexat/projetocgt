@@ -16,7 +16,8 @@ public class CGTSpriteSheet implements Serializable{
 	private int columns;
 	private float velocity;
 	private int rows;
-	
+
+    private CGTSpriteSheet() {}
 	
 	/**
 	 * 

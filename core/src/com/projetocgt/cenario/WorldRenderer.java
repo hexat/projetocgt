@@ -1039,7 +1039,6 @@ public class WorldRenderer {
 
 	/**
 	 * 
-	 * @param personagem
 	 */
 	public void animationDamage(final CGTEnemy enemy) {
 
@@ -1086,7 +1085,6 @@ public class WorldRenderer {
 	}
 
 	/**
-	 * @param camera
 	 *            the cam to set
 	 */
 	public void setCam(OrthographicCamera cam) {

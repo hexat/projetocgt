@@ -23,6 +23,8 @@ public class CGTAnimation implements Serializable{
 	private PlayMode animationPolicy;
 	private AnimationHandle animation;
 
+    private CGTAnimation() {}
+
 	public CGTAnimation(String spriteSheetId) {
 		this.spriteSheetId = spriteSheetId;
 		spriteVelocity = 1;
