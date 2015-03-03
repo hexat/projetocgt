@@ -3,7 +3,7 @@ public enum WinPolicy {
     KILL_ENEMIES,
     GET_ALL_BONUS,
     SURVIVE,
-    TARGET_SCORE,
+    TARGET_SCORE, COMPLETE_CROSSING,
 
 }
 

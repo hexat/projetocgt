@@ -73,7 +73,12 @@ public class DialogsUtil {
         Pref pref = Pref.load();
 
         if (pref.getLastDir() != null) {
-            fileChooser.setInitialDirectory(new File(pref.getLastDir()));
+            File file = new File(pref.getLastDir());
+            if (file.exists()) {
+                fileChooser.setInitialDirectory(file);
+            } else {
+                pref.setLastDir(null);
+            }
         } else {
             fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         }

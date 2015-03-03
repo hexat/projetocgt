@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 
 import cgt.core.CGTProjectile;
 import cgt.util.CGTTexture;
-
+//TODO Fazer igual
 public class AmmoDisplay extends HUDComponent implements Serializable{
 	private CGTTexture icon;
 	private CGTLabel label;
@@ -29,14 +29,18 @@ public class AmmoDisplay extends HUDComponent implements Serializable{
 	public void act(float delta){
 		label.getLabelGDX().setText("x "+String.valueOf(owner.getAmmo()));
 	}
-	
-	public AmmoDisplay(String worldId){
-		this.worldId = worldId;
 
+	public AmmoDisplay() {
+		worldId = null;
 		ownerId = null;
 		owner = null;
 		this.icon = null;
 		this.label = new CGTLabel();
+	}
+
+	public AmmoDisplay(String worldId){
+		this();
+		this.worldId = worldId;
 	}
 
 	public void setIcon(CGTTexture icon) {
@@ -75,5 +79,9 @@ public class AmmoDisplay extends HUDComponent implements Serializable{
 
 	public CGTGameWorld getWorld() {
 		return CGTGame.get().getWorld(worldId);
+	}
+
+	protected void setWorld(String id) {
+		this.worldId = id;
 	}
 }

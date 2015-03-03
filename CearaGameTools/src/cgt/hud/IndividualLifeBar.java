@@ -5,17 +5,13 @@ import java.io.Serializable;
 import cgt.core.CGTGameObject;
 import cgt.game.CGTGame;
 import cgt.game.CGTGameWorld;
+import cgt.game.LifeBar;
 
 public class IndividualLifeBar extends LifeBar implements Serializable{
 	private String ownerId;
-	private String worldId;
 
 	private CGTGameObject object;
 
-	public IndividualLifeBar(String worldId){
-		this.worldId = worldId;
-	}
-	
 	public void act(float delta){
 		if (object != null) {
 			currentLife = object.getLife();
@@ -33,9 +29,6 @@ public class IndividualLifeBar extends LifeBar implements Serializable{
 		}
 	}
 
-	public CGTGameWorld getWorld() {
-		return CGTGame.get().getWorld(worldId);
-	}
 
 	public void setOwner(String label) {
 		this.ownerId = label;

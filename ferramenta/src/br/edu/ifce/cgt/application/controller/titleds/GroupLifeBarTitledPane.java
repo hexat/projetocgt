@@ -24,6 +24,8 @@ public class GroupLifeBarTitledPane extends TitledPane {
 
     public GroupLifeBarTitledPane(final EnemyGroupLifeBar enemyGroupLifeBar) {
         this.enemyGroupLifeBar = enemyGroupLifeBar;
+
+        setText("Configurações LifeBar de Inimigos");
         VBox layout = new VBox();
 
         GridPane gridPane = new GridPane();

@@ -89,7 +89,7 @@ public class LoseDialog extends BorderPane {
                     }
                 }
                 if (!contem) {
-                    world.addLoseCriterion(new LifeDepleted(world.getActor()));
+                    world.addLoseCriterion(new LifeDepleted());
                 }
                 break;
 

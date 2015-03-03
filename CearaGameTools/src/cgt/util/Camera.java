@@ -19,8 +19,8 @@ public class Camera implements Serializable{
 	private float scale;
 	private float volumeOnFullCamera;
 
-	public Camera(GameModePolicy gameMode){
-		setGameMode(gameMode);
+	public Camera() {
+		setGameMode(GameModePolicy.TOUCH);
 		setInitialWidth(1f);
 		setInitialHeight(1f);
 		setFullWidth(1f);
@@ -29,6 +29,10 @@ public class Camera implements Serializable{
 		setCloseHeight(0.5f);
 		setVolumeOnFullCamera(1f);
 		setScale(10);
+	}
+
+	public Camera(GameModePolicy gameMode){
+		setGameMode(gameMode);
 	}
 	public GameModePolicy getGameMode() {
 		return gameMode;

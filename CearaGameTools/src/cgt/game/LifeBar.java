@@ -1,10 +1,13 @@
-package cgt.hud;
+package cgt.game;
 
+import cgt.hud.HUDComponent;
 import cgt.util.CGTTexture;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 public abstract class LifeBar extends HUDComponent {
+	protected String worldId;
+
 	protected CGTTexture bar;
 	protected CGTTexture backgroundBar;
 	protected float maxLife;
@@ -51,5 +54,23 @@ public abstract class LifeBar extends HUDComponent {
 	
 	public void setCurrentLife(int currentLife) {
 		this.currentLife = currentLife;
+	}
+
+	protected void setWorld(CGTGameWorld world) {
+		worldId = world.getId();
+	}
+
+	@Override
+	public boolean remove() {
+		super.remove();
+		if (getWorld() != null) {
+			getWorld().getHUD().remove(this);
+		}
+		worldId = null;
+		return false;
+	}
+
+	public CGTGameWorld getWorld() {
+		return CGTGame.get().getWorld(worldId);
 	}
 }

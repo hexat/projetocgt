@@ -120,14 +120,10 @@ public abstract class Config {
 		return false;
 	}
 
-	public static void zip(File outFile) {
+	public static void zip(File outFile) throws IOException {
 		File configWorld = new File(BASE + "config.cgt");
 		getGame().saveGame(configWorld);
-		try {
-			new ZipHelper().zipDir(BASE, outFile.getAbsolutePath());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		new ZipHelper().zipDir(BASE, outFile.getAbsolutePath());
 	}
 	public static void unzip(File inputFile) {
         inputProjectFile = inputFile;

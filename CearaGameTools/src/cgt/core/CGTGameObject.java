@@ -1,5 +1,6 @@
 package cgt.core;
 
+import cgt.game.CGTGame;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -36,7 +37,7 @@ public abstract class CGTGameObject implements Serializable {
 	private Vector2 velocity;		// use in gdx mode
 	private int life;
 	private ArrayList<AnimationMap> animations;
-	private String label;
+	private String id;
 	private StatePolicy state;
 	private float stateTime = 0;  //used in gdx mode
 	private float posXColider, posYColider; // used in gdx mode
@@ -47,9 +48,9 @@ public abstract class CGTGameObject implements Serializable {
 	private CGTAddOn whenCollide;
 	private ArrayList<CGTGameObject> objectsToCollide;
 	
-	public CGTGameObject(String label){
+	public CGTGameObject(String id){
 		this();
-		setLabel(label);
+		setId(id);
 	}
 	
 	public CGTGameObject(CGTGameObject clone) {
@@ -157,12 +158,17 @@ public abstract class CGTGameObject implements Serializable {
 		this.bounds = bounds;
 	}
 	
-	public String getLabel() {
-		return label;
+	public String getId() {
+		return id;
 	}
 
-	public void setLabel(String label) {
-		this.label = label;
+	public void setId(String id) {
+		String newId = id;
+		int count = 1;
+		while (CGTGame.get().objectIds().contains(newId)) {
+			newId = id + count++;
+		}
+		this.id = newId;
 	}
 
 	public CGTSound getSound() {
@@ -308,7 +314,7 @@ public abstract class CGTGameObject implements Serializable {
 		return "CGTGameObject [sound=" + sound + ", soundDie=" + soundsDie
 				+ ", soundCollision=" + soundCollision + ", position="
 				+ position + ", collision=" + collision + ", life=" + life
-				+ ", labelID=" + label + "]";
+				+ ", labelID=" + id + "]";
 	}
 
 	public int getSpeed() {

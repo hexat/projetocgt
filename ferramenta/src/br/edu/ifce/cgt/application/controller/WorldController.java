@@ -1,33 +1,23 @@
 package br.edu.ifce.cgt.application.controller;
 
-import br.edu.ifce.cgt.application.Config;
-import br.edu.ifce.cgt.application.controller.panes.LifebarPane;
 import br.edu.ifce.cgt.application.controller.titleds.*;
 import cgt.core.*;
 import cgt.hud.AmmoDisplay;
 import cgt.hud.EnemyGroupLifeBar;
 import cgt.hud.HUDComponent;
 import cgt.hud.IndividualLifeBar;
-import cgt.policy.InputPolicy;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.Dialogs;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 
 import br.edu.ifce.cgt.application.Main;
 import cgt.game.CGTGameWorld;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import br.edu.ifce.cgt.application.ObjectButton;
@@ -112,19 +102,19 @@ public class WorldController extends BorderPane {
     public void addAmmoDisplay() {
         AmmoDisplay ammoDisplay = new AmmoDisplay(world.getId());
 
-        world.addHUDComponent(ammoDisplay);
+        world.getHUD().add(ammoDisplay);
         boxHud.getChildren().add(new ButtonHud(ammoDisplay));
     }
 
 
     public void addEnemiesLifeBar() {
-        EnemyGroupLifeBar bar = new EnemyGroupLifeBar(world.getId());
-        world.addHUDComponent(bar);
+        EnemyGroupLifeBar bar = new EnemyGroupLifeBar();
+        world.addEnemyGroupLifeBar(bar);
         boxHud.getChildren().add(new ButtonHud(bar));
     }
 
     public void addObjectLifeBar() {
-        IndividualLifeBar lifeBar = new IndividualLifeBar(world.getId());
+        IndividualLifeBar lifeBar = new IndividualLifeBar();
         world.addLifeBar(lifeBar);
         boxHud.getChildren().add(new ButtonHud(lifeBar));
     }
@@ -198,6 +188,7 @@ public class WorldController extends BorderPane {
             } else if (hud instanceof EnemyGroupLifeBar) {
                 configAccordion.getPanes().add(new GroupLifeBarTitledPane((EnemyGroupLifeBar) hud));
             }
+            configAccordion.getPanes().get(0).setExpanded(true);
         }
     }
 }

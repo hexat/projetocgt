@@ -2,6 +2,8 @@ package cgt.win;
 
 import java.io.Serializable;
 
+import cgt.game.WinCriteria;
+import cgt.win.Win;
 import com.badlogic.gdx.math.Rectangle;
 
 import cgt.game.CGTGame;
@@ -9,35 +11,35 @@ import cgt.game.CGTGameWorld;
 import cgt.hud.CGTLabel;
 import cgt.policy.WinPolicy;
 
-public class CompleteCrossing implements Win, Serializable {
-    private CGTGameWorld world;
-    private String worldId;
+public class CompleteCrossing extends WinCriteria {
 	private Rectangle rectangle;
 	private WinPolicy policy; 
 	private CGTLabel label;
-	
-	public CompleteCrossing(String worldId, Rectangle rectangle, CGTLabel label){
-		this.worldId = worldId;
+
+    // in gdx mode
+    private CGTGameWorld world;
+
+	public CompleteCrossing(){
+		this.worldId = null;
         world = null;
-		this.rectangle = rectangle;
-		this.label = label;
-		label.setText("");
+		this.rectangle = null;
+		this.label = new CGTLabel();
+        policy = WinPolicy.COMPLETE_CROSSING;
 	}
-	
 
 	@Override
 	public boolean achieved() {
-		boolean ganhou = false;
-        if (getWorld() != null) {
+		boolean win = false;
+        if (world != null) {
             if (world.getActor().getCollision().overlaps(rectangle)) {
-                ganhou = true;
+                win = true;
             } else {
-                ganhou = false;
+                win = false;
             }
-            int a = (int) ((getWorld().getActor().getPosition().x + getWorld().getActor().getBounds().width) / (getWorld().getBackground().getTextureGDX().getWidth()) * 101);
+            int a = (int) ((world.getActor().getPosition().x + world.getActor().getBounds().width) / (world.getBackground().getTextureGDX().getWidth()) * 101);
             label.getLabelGDX().setText(a + "");
         }
-		return ganhou;
+		return win;
 	}
 
 	@Override
@@ -51,6 +53,12 @@ public class CompleteCrossing implements Win, Serializable {
             label.getLabelGDX().setText(String.valueOf(world.getActor().getPosition().x / world.getBackground().getTextureGDX().getWidth()));
         }
 	}
+
+    @Override
+    public void remove() {
+        super.remove();
+        world = null;
+    }
 
     public CGTGameWorld getWorld() {
         if (world == null) {

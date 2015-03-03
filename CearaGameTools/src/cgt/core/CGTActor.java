@@ -8,17 +8,10 @@ import java.util.Map;
 
 import cgt.policy.ActionMovePolicy;
 import cgt.policy.InputPolicy;
-import cgt.policy.StatePolicy;
 import cgt.unit.Action;
-import cgt.unit.LabelID;
 import cgt.util.Jump;
 
-public class CGTActor extends CGTGameObject implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1967794799880980169L;
-
+public class CGTActor extends CGTGameObject {
 	private ArrayList<Jump> jumps;
 	private ArrayList<Action> actions;
 	private ArrayList<CGTProjectile> projectiles;
@@ -41,7 +34,7 @@ public class CGTActor extends CGTGameObject implements Serializable {
 
     public CGTActor(String label) {
         this();
-        setLabel(label);
+        setId(label);
     }
 	
 	public boolean addAction(InputPolicy inputPolicy, ActionMovePolicy movePolicy) {
@@ -219,6 +212,15 @@ public class CGTActor extends CGTGameObject implements Serializable {
 				i++;
 			}
 		}
+	}
+
+	public Action getActionFromInput(InputPolicy policy) {
+		for (Action action : actions) {
+			if (action.hasInput(policy)) {
+				return action;
+			}
+		}
+		return null;
 	}
 }
  

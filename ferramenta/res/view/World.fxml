@@ -9,20 +9,20 @@
    <top>
         <ToolBar prefWidth="Infinity" BorderPane.alignment="CENTER">
             <items>
-                <Button mnemonicParsing="false" onAction="#btnConfigWorld" text="Configurarar Mundo" />
-                <MenuButton mnemonicParsing="false" text="Add Object">
+                <Button mnemonicParsing="false" onAction="#btnConfigWorld" text="Configurar Mundo" />
+                <MenuButton mnemonicParsing="false" text="Adicionar Objeto">
                     <items>
-                        <MenuItem onAction="#addEnemyInWorld" mnemonicParsing="false" text="Enemy" />
-                        <MenuItem onAction="#addOpositeInWorld"  mnemonicParsing="false" text="Opposite" />
+                        <MenuItem onAction="#addEnemyInWorld" mnemonicParsing="false" text="Inimigo" />
+                        <MenuItem onAction="#addOpositeInWorld"  mnemonicParsing="false" text="Opositor" />
                         <MenuItem onAction="#addBonus" mnemonicParsing="false" text="Bonus" />
-                        <MenuItem onAction="#addProjectile" mnemonicParsing="false" text="Projectile" />
+                        <MenuItem onAction="#addProjectile" mnemonicParsing="false" text="Projétil" />
                     </items>
                 </MenuButton>
-                <MenuButton mnemonicParsing="false" text="Add HUD">
+                <MenuButton mnemonicParsing="false" text="Adicionar HUD">
                     <items>
-                        <MenuItem onAction="#addAmmoDisplay" mnemonicParsing="false" text="Ammo Display" />
-                        <MenuItem onAction="#addEnemiesLifeBar"  mnemonicParsing="false" text="Enemies LifeBar" />
-                        <MenuItem onAction="#addObjectLifeBar" mnemonicParsing="false" text="Object LifeBar" />
+                        <MenuItem onAction="#addAmmoDisplay" mnemonicParsing="false" text="Display de Munição" />
+                        <MenuItem onAction="#addEnemiesLifeBar"  mnemonicParsing="false" text="LifeBar de Inimigos" />
+                        <MenuItem onAction="#addObjectLifeBar" mnemonicParsing="false" text="LifeBar de Objetos" />
                     </items>
                 </MenuButton>
             </items>

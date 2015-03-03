@@ -107,40 +107,16 @@ public class CGTGame implements Serializable {
 
 	public void saveGame(File file){
 		try {
-
-			FileOutputStream saveConfig = new FileOutputStream(file);
-			ObjectOutputStream obj = new ObjectOutputStream(saveConfig);
-			obj.writeObject(this);
+			FileWriter obj = new FileWriter(file);
+			new Json().toJson(this, new FileWriter(file));
 			obj.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-
-    public void saveGameAsJson(File file) {
-        Json json = new Json();
-        FileWriter writer = null;
-        try {
-            writer = new FileWriter(file);
-
-            json.toJson(this, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 	
 	public static CGTGame getSavedGame(InputStream io) {
-		CGTGame cgtGame = new CGTGame();
-
-		try {
-			ObjectInputStream objLeitura = new ObjectInputStream(io);
-			cgtGame = (CGTGame) objLeitura.readObject();
-			objLeitura.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        instance = cgtGame;
+        instance = new Json().fromJson(CGTGame.class, io);
 		return instance;
 	}
 
@@ -199,6 +175,14 @@ public class CGTGame implements Serializable {
         }
         for (CGTWindow w : worlds) {
             res.addAll(w.validate());
+        }
+        return res;
+    }
+
+    public List<String> objectIds() {
+        List<String> res = new ArrayList<String>();
+        for (CGTGameWorld w : worlds) {
+            res.addAll(w.getObjectIds());
         }
         return res;
     }

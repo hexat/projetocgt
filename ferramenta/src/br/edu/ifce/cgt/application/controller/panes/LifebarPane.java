@@ -2,9 +2,8 @@ package br.edu.ifce.cgt.application.controller.panes;
 
 import br.edu.ifce.cgt.application.Config;
 import br.edu.ifce.cgt.application.Main;
-import br.edu.ifce.cgt.application.controller.dialogs.DialogDialog;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
-import cgt.hud.LifeBar;
+import cgt.game.LifeBar;
 import cgt.util.CGTTexture;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
