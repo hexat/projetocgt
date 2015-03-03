@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Random;
 
 import cgt.policy.StatePolicy;
-import cgt.util.AnimationMap;
 import cgt.util.CGTSound;
 
 import com.badlogic.gdx.math.Vector2;
@@ -36,7 +35,7 @@ public abstract class CGTGameObject implements Serializable {
 	private int speed;
 	private Vector2 velocity;		// use in gdx mode
 	private int life;
-	private ArrayList<AnimationMap> animations;
+	private ArrayList<CGTAnimation> animations;
 	private String id;
 	private StatePolicy state;
 	private float stateTime = 0;  //used in gdx mode
@@ -91,21 +90,20 @@ public abstract class CGTGameObject implements Serializable {
 		speed = clone.getSpeed();
 		velocity = clone.getVelocity().cpy();
 		life = clone.getLife();
-		animations = new ArrayList<AnimationMap>();
-		for (AnimationMap a : clone.animations) {
-			CGTAnimation newAnis[] = new CGTAnimation[a.getAnimations().size()];
-			for (int i = 0; i < a.getAnimations().size(); i++) {
-				CGTAnimation novo = new CGTAnimation(a.getAnimations().get(i).getSpriteSheet().getId());
+		animations = new ArrayList<CGTAnimation>();
+		for (CGTAnimation a : clone.animations) {
+			for (int i = 0; i < clone.animations.size(); i++) {
+				CGTAnimation novo = new CGTAnimation(clone.animations.get(i).getSpriteSheet().getId());
                 novo.setOwner(this);
-				novo.setAnimationPolicy(a.getAnimations().get(i).getAnimationPolicy());
-				novo.setEndingFrame(a.getAnimations().get(i).getEndingFrame());
-				novo.setFlipHorizontal(a.getAnimations().get(i).isFlipHorizontal());
-				novo.setFlipVertical(a.getAnimations().get(i).isFlipVertical());
-				novo.setInitialFrame(a.getAnimations().get(i).getInitialFrame());
-				novo.setSpriteVelocity(a.getAnimations().get(i).getSpriteVelocity());
-				newAnis[i] = novo;
+				novo.setAnimationPolicy(clone.animations.get(i).getAnimationPolicy());
+				novo.setEndingFrame(clone.animations.get(i).getEndingFrame());
+				novo.setFlipHorizontal(clone.animations.get(i).isFlipHorizontal());
+				novo.setFlipVertical(clone.animations.get(i).isFlipVertical());
+				novo.setInitialFrame(clone.animations.get(i).getInitialFrame());
+				novo.setSpriteVelocity(clone.animations.get(i).getSpriteVelocity());
+                novo.setActorStage(clone.animations.get(i).getActorStage());
+                animations.add(novo);
 			}
-			animations.add(new AnimationMap(a.getStatePolicy(), newAnis));
 		}
 		state = clone.getState();
 		stateTime = 0;
@@ -139,7 +137,7 @@ public abstract class CGTGameObject implements Serializable {
 		bounds= new Rectangle();
 		collision = new Rectangle();
 		setState(StatePolicy.IDLE);
-		animations = new ArrayList<AnimationMap>();
+		animations = new ArrayList<CGTAnimation>();
 		soundsDie = new ArrayList<CGTSound>();
 		soundCollision = new ArrayList<CGTSound>();
 		initialPositions = new ArrayList<Vector2>();
@@ -354,14 +352,14 @@ public abstract class CGTGameObject implements Serializable {
 	}
 
 	public TextureRegion getAnimation() {
-		for (AnimationMap a : animations) {
-			if (a.getStatePolicy() == state) {
-				lastAnimation = a.getRandomAnimation();
+		for (CGTAnimation a : animations) {
+			if (a.getActorStage() == state) {
+				lastAnimation = a;
 				return lastAnimation.getAnimation();
 			}
 		}
 		if (lastAnimation == null && animations.size() > 0) {
-			lastAnimation = animations.get(0).getRandomAnimation();
+			lastAnimation = animations.get(0);
 		}
 		if (lastAnimation != null) {
 			return lastAnimation.getAnimation();
@@ -397,15 +395,9 @@ public abstract class CGTGameObject implements Serializable {
 		this.velocity = velocity;
 	}
 
-	public void addAnimation(StatePolicy state, CGTAnimation ani) {
+	public void addAnimation(CGTAnimation ani) {
         ani.setOwner(this);
-		for (AnimationMap a : animations) {
-			if (a.getStatePolicy() == state) {
-				a.addAnimation(ani);
-				return;
-			}
-		}
-		animations.add(new AnimationMap(state, ani));
+		animations.add(ani);
 	}
 
 	public int getDelayPlaySound() {
@@ -441,17 +433,11 @@ public abstract class CGTGameObject implements Serializable {
 	}
 
 	public List<CGTAnimation> getAnimations() {
-		List<CGTAnimation> res = new ArrayList<CGTAnimation>();
-		for (AnimationMap a : animations) {
-			res.addAll(a.getAnimations());
-		}
-		return res;
+		return animations;
 	}
 
-	public void removeAnimation(CGTAnimation animation) {
-		for (AnimationMap map : animations) {
-			map.getAnimations().remove(animation);
-		}
+	public boolean removeAnimation(CGTAnimation animation) {
+        return animations.remove(animation);
 	}
 }
  

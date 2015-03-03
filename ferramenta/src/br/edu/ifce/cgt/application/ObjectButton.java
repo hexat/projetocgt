@@ -31,7 +31,7 @@ public class ObjectButton extends Button {
                 } else if (object instanceof CGTBonus) {
                     configAccordion.getPanes().add(new BonusTitledPane((CGTBonus) object));
                 } else if (object instanceof CGTActor) {
-                    configAccordion.getPanes().add(ActorTitledPane.getNode((CGTActor) object));
+                    configAccordion.getPanes().add(new ActorTitledPane((CGTActor) object));
                 } else if (object instanceof CGTProjectile) {
                     configAccordion.getPanes().add(new ProjectileTitledPane((CGTProjectile) object));
                 }
