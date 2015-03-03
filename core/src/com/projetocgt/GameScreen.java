@@ -78,6 +78,8 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		vezes += 1;
 		prefs.putInteger("num_vezes", vezes);
 		prefs.flush();
+		
+		System.out.println(world.getActor().getBounds());
 	}
 
 	private void getActorsFromWorld() {
@@ -455,16 +457,16 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	public boolean keyDown(int keycode) {
 
 		if (keycode == Keys.LEFT) {
-			controller.activateKey(InputPolicy.BTN_LEFT);
+			controller.activateKey(InputPolicy.ACEL_LEFT);
 		}
 		if (keycode == Keys.RIGHT) {
-			controller.activateKey(InputPolicy.BTN_RIGHT);
+			controller.activateKey(InputPolicy.ACEL_RIGHT);
 		}
 		if (keycode == Keys.UP) {
-			controller.activateKey(InputPolicy.BTN_UP);
+			controller.activateKey(InputPolicy.ACEL_UP);
 		}
 		if (keycode == Keys.DOWN) {
-			controller.activateKey(InputPolicy.BTN_DOWN);
+			controller.activateKey(InputPolicy.ACEL_DOWN);
 		}
 		if (keycode == Keys.A) {
 
@@ -485,19 +487,19 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	public boolean keyUp(int keycode) {
 
 		if (keycode == Keys.LEFT) {
-			controller.deactivateKey(InputPolicy.BTN_LEFT);
+			controller.deactivateKey(InputPolicy.ACEL_LEFT);
 		}
 
 		if (keycode == Keys.RIGHT) {
-			controller.deactivateKey(InputPolicy.BTN_RIGHT);
+			controller.deactivateKey(InputPolicy.ACEL_RIGHT);
 		}
 
 		if (keycode == Keys.UP) {
-			controller.deactivateKey(InputPolicy.BTN_UP);
+			controller.deactivateKey(InputPolicy.ACEL_UP);
 		}
 
 		if (keycode == Keys.DOWN) {
-			controller.deactivateKey(InputPolicy.BTN_DOWN);
+			controller.deactivateKey(InputPolicy.ACEL_DOWN);
 		}
 
 		if (keycode == Keys.A) {

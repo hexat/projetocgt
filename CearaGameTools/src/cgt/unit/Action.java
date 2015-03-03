@@ -13,7 +13,8 @@ public class Action implements Serializable{
 	private static final long serialVersionUID = -6677105553970300995L;
 	private ArrayList<InputPolicy> inputs;
 	private ActionMovePolicy actionPolicy;
-
+	
+	public Action() {}
 	public Action(ActionMovePolicy action, InputPolicy... inputPolicies) {
 		this.actionPolicy = action;
 		inputs = new ArrayList<InputPolicy>();
