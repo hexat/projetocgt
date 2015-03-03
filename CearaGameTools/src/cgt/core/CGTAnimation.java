@@ -25,15 +25,16 @@ public class CGTAnimation {
 	private boolean flipVertical;
 	private PlayMode animationPolicy;
 	private AnimationHandle animation;
-
-
     private StatePolicy actorStage;
 
 
-    private CGTAnimation() {}
+    private CGTAnimation() {
+    	actorStage = StatePolicy.IDLE;
+    }
 
 
 	public CGTAnimation(String spriteSheetId) {
+		this();
 		this.spriteSheetId = spriteSheetId;
 		spriteVelocity = 1;
 		flipHorizontal = false;
