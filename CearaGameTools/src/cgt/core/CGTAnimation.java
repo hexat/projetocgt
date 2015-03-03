@@ -22,7 +22,11 @@ public class CGTAnimation implements Serializable{
 	private boolean flipVertical;
 	private PlayMode animationPolicy;
 	private AnimationHandle animation;
-
+	
+	public CGTAnimation(){
+		
+	}
+	
 	public CGTAnimation(String spriteSheetId) {
 		this.spriteSheetId = spriteSheetId;
 		spriteVelocity = 1;
@@ -33,6 +37,7 @@ public class CGTAnimation implements Serializable{
 	
 
 	public CGTGameObject getOwner() {
+		System.out.println("teste"+ownerId);
 		return CGTGame.get().findObject(ownerId);
 	}
 

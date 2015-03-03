@@ -18,6 +18,10 @@ public class CGTSpriteSheet implements Serializable{
 	private int rows;
 	
 	
+	public CGTSpriteSheet(){
+		
+	}
+	
 	/**
 	 * 
 	 * @param texture

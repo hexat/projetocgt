@@ -11,6 +11,9 @@ public class AnimationMap implements Serializable {
 	private StatePolicy statePolicy;
 	private ArrayList<CGTAnimation> animations;
 	
+	public AnimationMap(){
+		
+	}
 	public AnimationMap(StatePolicy statePolicy, CGTAnimation... anis) {
 		setStatePolicy(statePolicy);
 		setAnimations(new ArrayList<CGTAnimation>());
