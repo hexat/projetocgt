@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.WindowEvent;
 import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 
-public class ActorTitledPane {
+public class ActorTitledPane extends TitledPane {
 
 	@FXML private VBox panActions;
 
@@ -68,16 +68,19 @@ public class ActorTitledPane {
         return actor;
     }
 
-    public static TitledPane getNode(CGTActor object) {
+    public ActorTitledPane(CGTActor object) {
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigPersonagem.fxml"));
-        TitledPane el = null;
+        xml.setRoot(this);
+        xml.setController(this);
         try {
-            el = xml.load();
-            ActorTitledPane controller = xml.getController();
-            controller.setActor(object);
+            xml.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return el;
+        init();
+    }
+
+    private void init() {
+        updateActions();
     }
 }

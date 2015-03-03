@@ -1,18 +1,21 @@
 package cgt.core;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import cgt.core.CGTGameObject;
 import cgt.game.CGTGame;
 import cgt.game.CGTSpriteSheet;
 import cgt.game.SpriteSheetDB;
+import cgt.policy.StatePolicy;
 import cgt.util.AnimationHandle;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Vector2;
 
-public class CGTAnimation implements Serializable{
+public class CGTAnimation {
 	private String spriteSheetId;
 	private Vector2 initialFrame;
 	private Vector2 endingFrame;
@@ -23,6 +26,8 @@ public class CGTAnimation implements Serializable{
 	private PlayMode animationPolicy;
 	private AnimationHandle animation;
 
+    private StatePolicy actorStage;
+
     private CGTAnimation() {}
 
 	public CGTAnimation(String spriteSheetId) {
@@ -30,6 +35,7 @@ public class CGTAnimation implements Serializable{
 		spriteVelocity = 1;
 		flipHorizontal = false;
 		flipVertical = false;
+        actorStage = null;
 		animationPolicy = PlayMode.LOOP;
 	}
 	
@@ -95,7 +101,15 @@ public class CGTAnimation implements Serializable{
 		this.flipHorizontal = flipHorizontal;
 	}
 
-	public TextureRegion getAnimation() {
+    public void setActorStage(StatePolicy actorStage) {
+        this.actorStage = actorStage;
+    }
+
+    public StatePolicy getActorStage() {
+        return actorStage;
+    }
+
+    public TextureRegion getAnimation() {
 		if(animation==null){
 			this.animation = new AnimationHandle(this);
 		}

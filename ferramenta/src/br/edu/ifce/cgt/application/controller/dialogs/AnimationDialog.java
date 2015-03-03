@@ -126,7 +126,8 @@ public class AnimationDialog extends HBox {
                         txtFrameInitialY.getValue()));
                 animation.setEndingFrame(new Vector2(txtFrameFinalX.getValue(),
                         txtFrameFinalY.getValue()));
-                object.addAnimation(boxStates.getValue().getKey(), animation);
+                animation.setActorStage(boxStates.getValue().getKey());
+                object.addAnimation(animation);
                 dialogStage.getOnCloseRequest().handle(null);
                 dialogStage.close();
             }
