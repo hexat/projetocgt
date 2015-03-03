@@ -16,7 +16,7 @@ public class CGTAnimation implements Serializable{
 	private String spriteSheetId;
 	private Vector2 initialFrame;
 	private Vector2 endingFrame;
-	private CGTGameObject owner;
+	private String ownerId;
 	private float spriteVelocity;
 	private boolean flipHorizontal;
 	private boolean flipVertical;
@@ -38,11 +38,11 @@ public class CGTAnimation implements Serializable{
 	}
 
 	public CGTGameObject getOwner() {
-		return owner;
+		return CGTGame.get().findObject(ownerId);
 	}
 
 	protected void setOwner(CGTGameObject owner) {
-		this.owner = owner;
+		this.ownerId = owner.getId();
 	}
 
 	public float getSpriteVelocity() {

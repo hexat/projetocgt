@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import cgt.core.CGTGameObject;
 import cgt.policy.ErrorValidate;
 import cgt.screen.CGTWindow;
 import cgt.util.CGTError;
@@ -183,6 +184,17 @@ public class CGTGame implements Serializable {
         List<String> res = new ArrayList<String>();
         for (CGTGameWorld w : worlds) {
             res.addAll(w.getObjectIds());
+        }
+        return res;
+    }
+
+    public CGTGameObject findObject(String id) {
+        CGTGameObject res = null;
+        for (CGTGameWorld w : worlds ) {
+            res = w.getObjectByLabel(id);
+            if (res != null) {
+                return res;
+            }
         }
         return res;
     }
