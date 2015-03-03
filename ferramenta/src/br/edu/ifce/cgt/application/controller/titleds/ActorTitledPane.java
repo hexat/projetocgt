@@ -69,6 +69,7 @@ public class ActorTitledPane extends TitledPane {
     }
 
     public ActorTitledPane(CGTActor object) {
+        this.actor = object;
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigPersonagem.fxml"));
         xml.setRoot(this);
         xml.setController(this);

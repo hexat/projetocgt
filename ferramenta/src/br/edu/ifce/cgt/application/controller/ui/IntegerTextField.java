@@ -60,6 +60,14 @@ public class IntegerTextField extends TextField {
         );
     }
 
+    public void setValue(float value) {
+        setValue(((int)value));
+    }
+
+    public void setValue(int value) {
+        setText((value)+"");
+    }
+
     public void disableError() {
         setStyle(null);
     }

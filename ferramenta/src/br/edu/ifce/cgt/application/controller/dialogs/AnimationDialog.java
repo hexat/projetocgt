@@ -106,6 +106,33 @@ public class AnimationDialog extends HBox {
         boxStates.getSelectionModel().selectFirst();
     }
 
+    public AnimationDialog(CGTAnimation animation) {
+        this(animation.getOwner());
+
+        this.animation = animation;
+        boxSprite.getSelectionModel().select(animation.getSpriteSheet().getId());
+        int i = 0;
+        while (i < boxAnimationPolicy.getItems().size() &&
+                boxAnimationPolicy.getItems().get(i).getKey() != animation.getAnimationPolicy()) i++;
+        if (i < boxAnimationPolicy.getItems().size()) {
+            boxAnimationPolicy.getSelectionModel().select(i);
+        }
+        i = 0;
+        while (i < boxStates.getItems().size() &&
+                boxStates.getItems().get(i).getKey() != animation.getActorStage()) i++;
+        if (i < boxStates.getItems().size()) {
+            boxStates.getSelectionModel().select(i);
+        }
+        txtFrameInitialX.setValue(animation.getInitialFrame().x);
+        txtFrameInitialY.setValue(animation.getInitialFrame().y);
+        txtFrameFinalX.setValue(animation.getEndingFrame().x);
+        txtFrameFinalY.setValue(animation.getEndingFrame().y);
+        txtVel.setValue(animation.getSpriteVelocity());
+
+        chkFlipHor.setSelected(animation.isFlipHorizontal());
+        chkFlipVertical.setSelected(animation.isFlipVertical());
+    }
+
     public void setObject(CGTGameObject object) {
         this.object = object;
     }
