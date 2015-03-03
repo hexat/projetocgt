@@ -22,11 +22,11 @@ public class CGTAnimation implements Serializable{
 	private boolean flipVertical;
 	private PlayMode animationPolicy;
 	private AnimationHandle animation;
-	
-	public CGTAnimation(){
-		
-	}
-	
+
+
+    private CGTAnimation() {}
+
+
 	public CGTAnimation(String spriteSheetId) {
 		this.spriteSheetId = spriteSheetId;
 		spriteVelocity = 1;

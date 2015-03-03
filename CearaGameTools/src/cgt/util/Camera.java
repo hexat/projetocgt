@@ -31,9 +31,6 @@ public class Camera implements Serializable{
 		setScale(10);
 	}
 
-	public Camera(GameModePolicy gameMode){
-		setGameMode(gameMode);
-	}
 	public GameModePolicy getGameMode() {
 		return gameMode;
 	}
