@@ -31,11 +31,6 @@ public class CGTAnimation implements Serializable{
 		animationPolicy = PlayMode.LOOP;
 	}
 	
-	public void setSpriteLine(int spriteLine) {
-		initialFrame = new Vector2(0, spriteLine - 1);
-		endingFrame = new Vector2(getSpriteSheet().getColumns() - 1,
-				spriteLine - 1);
-	}
 
 	public CGTGameObject getOwner() {
 		return owner;

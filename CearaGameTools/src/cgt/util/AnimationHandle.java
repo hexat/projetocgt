@@ -18,6 +18,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * @author roberto.bruno@gmail.com
  */
 public class AnimationHandle {
+	// Animation
+	public static final float RUNNING_FRAME_DURATION = 0.08f;
 	private TextureRegion bobFrame;
 	private Texture walkSheet;
 	private Map<StatePolicy, Animation> mapa;
@@ -36,31 +38,32 @@ public class AnimationHandle {
 
 		ArrayList<TextureRegion> textureList = new ArrayList<TextureRegion>();
 		TextureRegion texture = null;
-
-		int initialY = (int)animation.getInitialFrame().y;
-		int initialX = (int)animation.getInitialFrame().x;
-		int endingY = (int)animation.getEndingFrame().y;
-		int endingX = (int)animation.getEndingFrame().x;
-
-		for (int i = initialY; i < endingY; i++) {
-			for(int j = initialX; j < numberOfColumns; j++){
-				texture = new TextureRegion(tmp[i][j]);
+//		for (CGTAnimation a : owner.getAnimarions()) {
+//		if (animation.getOwner() == owner) {
+			int initialY = (int)animation.getInitialFrame().y;
+			int initialX = (int)animation.getInitialFrame().x;
+			int endingY = (int)animation.getEndingFrame().y;
+			int endingX = (int)animation.getEndingFrame().x;
+			// linhas completas
+			for (int i = initialX; i < endingX; i++) {
+				for(int j = initialY; j < numberOfColumns; j++){
+					texture = new TextureRegion(tmp[i][j]);
+					texture.flip(animation.isFlipHorizontal(), animation.isFlipVertical());
+					textureList.add(texture);
+				}
+				initialX = 0;
+			}
+			// linha incompleta
+			for(int j = 0; j <= endingY; j++){
+				texture = new TextureRegion(tmp[endingX][j]);
 				texture.flip(animation.isFlipHorizontal(), animation.isFlipVertical());
 				textureList.add(texture);
 			}
-			initialX = 0;
-		}
 
-		for(int j = 0; j <= endingX; j++){
-			texture = new TextureRegion(tmp[endingY][j]);
-			texture.flip(animation.isFlipHorizontal(), animation.isFlipVertical());
-			textureList.add(texture);
-		}
+			TextureRegion[] arrayTex = new TextureRegion[0];
 
-		TextureRegion[] arrayTex = new TextureRegion[0];
-
-		animationGDX = new Animation(animation.getSpriteVelocity(), textureList.toArray(arrayTex));
-		animationGDX.setPlayMode(animation.getAnimationPolicy());
+			animationGDX = new Animation(animation.getSpriteVelocity(), textureList.toArray(arrayTex));
+			animationGDX.setPlayMode(animation.getAnimationPolicy());
 
 		bobFrame = textureList.get(0);
 	}
@@ -74,6 +77,10 @@ public class AnimationHandle {
 		return animationGDX.getKeyFrame(owner.getStateTime());
 	}
 
+	public Animation getAnimationGDX() {
+		return animationGDX;
+	}
+	
 	public boolean isDrawing() {
 		return animationGDX.isAnimationFinished(owner.getStateTime());
 	}
