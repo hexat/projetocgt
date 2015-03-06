@@ -57,22 +57,6 @@ public class TouchInputs implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-//		float xRelative;
-//		float yRelative;
-//		
-//		xRelative = world.getBackground().getTextureGDX().getWidth()* screenX/Gdx.graphics.getWidth();
-//		yRelative = world.getBackground().getTextureGDX().getHeight()* screenY/Gdx.graphics.getHeight();
-//		
-//		
-//		
-//		if (xRelative > world.getActor().getPosition().x && xRelative < (world.getActor().getPosition().x + world.getActor().getBounds().width)){
-//			if (yRelative > world.getActor().getPosition().y && yRelative < (world.getActor().getPosition().y + world.getActor().getBounds().height)){
-//				System.out.println("ESTOU TOCANDO NO PERSONAGEM");
-//				world.getActor().getPosition().x = xRelative;
-//				world.getActor().getPosition().y = yRelative;
-//				touchPerson = true;
-//			}
-//		}
 		
 		ready = true;
 		firstPoint.x = screenX;
@@ -82,76 +66,46 @@ public class TouchInputs implements InputProcessor{
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+//		controller.releaseAllDirectionKeys();
+		
 		if (currentDragged == null && ready == true){
+			System.out.println("OIIII");
 			controller.activateKey(InputPolicy.TAP);
 		} else {
 			ready = true;
-			//System.out.println("desabilitando");
-			controller.deactivateKey(InputPolicy.SLIDE_UP);
-			controller.deactivateKey(InputPolicy.SLIDE_DOWN);
-			controller.deactivateKey(InputPolicy.SLIDE_LEFT);
-			controller.deactivateKey(InputPolicy.SLIDE_RIGHT);
 		}
 		currentDragged = null;
+		controller.deactivateKey(InputPolicy.SLIDE_DOWN);
+		controller.deactivateKey(InputPolicy.SLIDE_UP);
+		controller.deactivateKey(InputPolicy.SLIDE_LEFT);
+		controller.deactivateKey(InputPolicy.SLIDE_RIGHT);
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-//		if (touchPerson){
-//			world.getActor().getPosition().x = xRelative;
-//			world.getActor().getPosition().y = yRelative;
-//		}
-//		
-//		return false;
-////////////////////////////////////////////////////////////////////////////
-		if (world.getActor().getState() != StatePolicy.LOOKRIGHT) {
-			float pos = (game.getHeight()-screenY)*(world.getBackground().getTextureGDX().getHeight())/game.getHeight();
-			if (Math.abs(pos - world.getActor().getPosition().y) < 100) {
-				world.getActor().setState(StatePolicy.IDLERIGHT);
-				world.getActor().getPosition().y = (game.getHeight()-screenY)*(world.getBackground().getTextureGDX().getHeight()-150)/game.getHeight() + 100;
-			}
-		}
-////////////////////////////////////////////////////////////////////////////
+
 		contador += 1;
 		if (contador > 5){
 			lastPoint.x = screenX;
 			lastPoint.y = screenY;
 			
-			
-//			System.out.println(world.getActor().getPosition().y);
-//			System.out.println(screenY);
-			
-			
 			if(Math.abs(firstPoint.x - lastPoint.x) > Math.abs(firstPoint.y-lastPoint.y)){
-				if (firstPoint.x > lastPoint.x){
-					//System.out.println("SLIDE LEFT");
-					if (currentDragged == InputPolicy.SLIDE_RIGHT){
-						controller.deactivateKey(InputPolicy.SLIDE_RIGHT);
-					}
+				controller.releaseAllDirectionKeys();
+				if (firstPoint.x > lastPoint.x){		
 					controller.activateKey(InputPolicy.SLIDE_LEFT);
 					currentDragged = InputPolicy.SLIDE_LEFT;
+					
 				} else {
-					if (currentDragged == InputPolicy.SLIDE_LEFT){
-						controller.deactivateKey(InputPolicy.SLIDE_LEFT);
-					}
-					//System.out.println("SLIDE RIGHT");
 					controller.activateKey(InputPolicy.SLIDE_RIGHT);
 					currentDragged = InputPolicy.SLIDE_RIGHT;
 				}
 			} else {
+				controller.releaseAllDirectionKeys();
 				if(firstPoint.y > lastPoint.y){
-					//System.out.println("SLIDE UP");
-					if (currentDragged == InputPolicy.SLIDE_DOWN){
-						controller.deactivateKey(InputPolicy.SLIDE_DOWN);
-					}
 					controller.activateKey(InputPolicy.SLIDE_UP);
 					currentDragged = InputPolicy.SLIDE_UP;
 				} else {
-					//System.out.println("SLIDE DOWN");
-					if (currentDragged == InputPolicy.SLIDE_UP){
-						controller.deactivateKey(InputPolicy.SLIDE_UP);
-					}
 					controller.activateKey(InputPolicy.SLIDE_DOWN);
 					currentDragged = InputPolicy.SLIDE_DOWN;
 				}

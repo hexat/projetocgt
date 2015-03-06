@@ -42,7 +42,7 @@ public abstract class CGTGameObject implements Serializable {
 	private float posXColider, posYColider; // used in gdx mode
 	private boolean isPlayingSound;
 	private int delayPlaySound;
-	private CGTAnimation lastAnimation; 
+	private TextureRegion lastAnimation; 
 	
 	private CGTAddOn whenCollide;
 	private ArrayList<CGTGameObject> objectsToCollide;
@@ -354,15 +354,16 @@ public abstract class CGTGameObject implements Serializable {
 	public TextureRegion getAnimation() {
 		for (CGTAnimation a : animations) {
 			if (a.getActorStage() == state) {
-				lastAnimation = a;
-				return lastAnimation.getAnimation();
+				lastAnimation = a.getAnimation();
+				return lastAnimation;
 			}
 		}
-		if (lastAnimation == null && animations.size() > 0) {
-			lastAnimation = animations.get(0);
+		if (lastAnimation == null && animations.size() > 0) {		
+			lastAnimation = animations.get(0).getAnimation();
 		}
-		if (lastAnimation != null) {
-			return lastAnimation.getAnimation();
+		if (lastAnimation != null) {	
+			return lastAnimation;
+			
 		}
 		return null;
 	}
@@ -424,9 +425,9 @@ public abstract class CGTGameObject implements Serializable {
 		return whenCollide;
 	}
 	
-	public boolean isDrawing() {
-		return lastAnimation != null && lastAnimation.getCGTAnimation().isDrawing();
-	}
+//	public boolean isDrawing() {
+//		return lastAnimation != null && lastAnimation.getCGTAnimation().isDrawing();
+//	}
 	
 	public boolean hasAnimation() {
 		return animations.size() > 0;

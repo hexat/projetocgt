@@ -391,10 +391,10 @@ public class WorldRenderer {
 						addons.get(i).getBounds().width, 
 						addons.get(i).getBounds().height);
 				
-				if (addons.get(i).isDrawing()) {
-					addons.get(i).setActive(false);
-					addons.remove(i);
-				}
+//				if (addons.get(i).isDrawing()) {
+//					addons.get(i).setActive(false);
+//					addons.remove(i);
+//				}
 		}
 	}
 
@@ -511,8 +511,7 @@ public class WorldRenderer {
 	 */
 	private void drawCGTActor() {
 		// Desenha o Actor na cena
-		System.out.println(personagem);
-		System.out.println(personagem.getBounds().height);
+		
 		spriteBatch.setColor(1.0f, 1.0f, 1.0f, 1.0f);
 		spriteBatch.draw(personagem.getAnimation(), personagem.getPosition().x,
 				personagem.getPosition().y, personagem.getBounds().width,

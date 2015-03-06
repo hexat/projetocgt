@@ -1,5 +1,6 @@
 package com.projetocgt.cenario;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,8 +36,8 @@ public class WorldController {
 
 		keys.put(ActionMovePolicy.JUMP, false);
 		keys.put(ActionMovePolicy.FIRE, false);
-		
 	};
+	private ArrayList<ActionMovePolicy> actions;
 
 	// Este construtor recebe o mundo como parametro
 	public WorldController(CGTGameWorld world,WorldRenderer render) {
@@ -46,11 +47,13 @@ public class WorldController {
 		this.actor = world.getActor();
 
 		releaseAllDirectionKeys();
+		actions = new ArrayList<ActionMovePolicy>();
 	}
 
 	public void activateKey(InputPolicy policy){
 		Action action = actor.getActionFromInput(policy);
 		if (action != null){
+			if(policy == InputPolicy.TAP) actions.add(action.getActionPolicy());
 			keys.put(action.getActionPolicy(),true);
 			if (action.getActionPolicy() == ActionMovePolicy.WALK_RIGHT) {
 				renderer.cameraCloseOnActor();
@@ -64,6 +67,18 @@ public class WorldController {
 			keys.put(action.getActionPolicy(),false);
 			stopAni();
 		}
+	}
+	
+	public void desactivateAll(){
+		Map<InputPolicy, ActionMovePolicy> res = world.getActor().getActions();
+		
+		
+		
+//		for (Action action : world.getActor().getActions()) {
+////			if (action.hasInput(policy)) {
+////				return action;
+////			}
+//		}
 	}
 	
 
@@ -105,11 +120,18 @@ public class WorldController {
 		}
 	}
 
-	private void releaseAllDirectionKeys() {
+	public void releaseAllDirectionKeys() {
 		keys.put(ActionMovePolicy.WALK_RIGHT, false);
 		keys.put(ActionMovePolicy.WALK_LEFT, false);
 		keys.put(ActionMovePolicy.WALK_UP, false);
 		keys.put(ActionMovePolicy.WALK_DOWN, false);
+	}
+	
+	public void releaseSlices(){
+		deactivateKey(InputPolicy.SLIDE_DOWN);
+		deactivateKey(InputPolicy.SLIDE_UP);
+		deactivateKey(InputPolicy.SLIDE_LEFT);
+		deactivateKey(InputPolicy.SLIDE_RIGHT);
 	}
 
 
@@ -206,8 +228,19 @@ public class WorldController {
 			actor.getVelocity().y = 0;
 		}
 	}
+	
+	private void verifyActions(){
+		if(actions.size()>0){
+			for (ActionMovePolicy key : keys.keySet()) {
+				if(keys.get(key) && actions.contains(key)){
+					deactivateKey(InputPolicy.TAP);
+				}
+			}
+		}
+	}
 	private void processInput() {
 		moveKeys();
 		fire();
+		verifyActions();
 	}
 }

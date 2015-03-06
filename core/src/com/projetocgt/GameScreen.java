@@ -11,6 +11,7 @@ import cgt.screen.CGTDialog;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
@@ -43,6 +44,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	private Music music;
 	private boolean flagTouch;
 	private Vector2 lastPoint;
+	private TouchInputs touchInput;
+	private Gesture gesture;
+	private InputMultiplexer inputMultiplexer;
 
 	public GameScreen(CGTGameWorld world) {
 
@@ -71,15 +75,19 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		setSpriteBatch(new SpriteBatch());
 		controller = new WorldController(world, renderer);
 		lastPoint = world.getActor().getPosition().cpy();
+//		touchInput = new TouchInputs(this);
+		gesture = new Gesture(this);
+		inputMultiplexer = new InputMultiplexer();
+		inputMultiplexer.addProcessor(gesture.getGd());
 		// /////////////////////////////////////////////////////////////////////////////////////
 		Preferences prefs = Gdx.app.getPreferences("My Preferences");
 		int vezes = prefs.getInteger("num_vezes", 0);
-		System.out.println("luanjames" + vezes);
+		
 		vezes += 1;
 		prefs.putInteger("num_vezes", vezes);
 		prefs.flush();
 		
-		System.out.println(world.getActor().getBounds());
+		
 	}
 
 	private void getActorsFromWorld() {
@@ -213,7 +221,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	public void render(float delta) {
 		switch (state) {
 		case PLAYING:
-			System.out.println("jogando");
+//			System.out.println(world.getActor().getState());
+//			Gdx.input.setInputProcessor(touchInput);
+			Gdx.input.setInputProcessor(gesture.getGd());
 			controller.update(delta);
 			renderer.render();
 			if (renderer.verifyWin()) {
@@ -455,9 +465,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	// Funciona na descida do botao
 	@Override
 	public boolean keyDown(int keycode) {
-
 		if (keycode == Keys.LEFT) {
 			controller.activateKey(InputPolicy.ACEL_LEFT);
+			
 		}
 		if (keycode == Keys.RIGHT) {
 			controller.activateKey(InputPolicy.ACEL_RIGHT);

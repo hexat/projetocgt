@@ -20,7 +20,7 @@ public class StarAssault extends Game {
 
 	@Override
 	public void create() {
-		System.out.println(Gdx.files.getLocalStoragePath());
+		
         InputStream io = Gdx.files.internal("config.cgt").read();
         CGTGame game = CGTGame.getSavedGame(io);
         restart(game.getStartWindow());
