@@ -1,5 +1,6 @@
 package br.edu.ifce.cgt.application.controller.panes;
 
+import br.edu.ifce.cgt.application.controller.titleds.CameraTitledPane;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
@@ -63,6 +64,7 @@ public class ScreenTab extends Tab {
                         configAccordion.getPanes().add(ScreenTitledPane.getNode((CGTScreen) screen));
                     } else {
                         configAccordion.getPanes().add(WorldTitledPane.getNode((CGTGameWorld) screen));
+                        configAccordion.getPanes().add(new CameraTitledPane(((CGTGameWorld) screen).getCamera()));
                     }
                     configAccordion.getPanes().get(0).setExpanded(true);
                 }

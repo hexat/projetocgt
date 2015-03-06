@@ -27,6 +27,7 @@ public class CGTActor extends CGTGameObject {
 		jumps = new ArrayList<Jump>();
 		projectiles = new ArrayList<CGTProjectile>();
 		actions = new ArrayList<Action>();
+        fireDefault = -1;
 		timeToRecovery = 1;
 		timeToEnableInputs = 1;
 		this.invincible=false;
@@ -222,5 +223,21 @@ public class CGTActor extends CGTGameObject {
 		}
 		return null;
 	}
+
+    public CGTProjectile findProjectile(String value) {
+        for (CGTProjectile p : projectiles) {
+            if (p.getId().equals(value)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public CGTProjectile getProjectileDefault() {
+        if (fireDefault >= 0 && fireDefault < projectiles.size()) {
+            return projectiles.get(fireDefault);
+        }
+        return null;
+    }
 }
  

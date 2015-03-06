@@ -7,7 +7,7 @@ import cgt.game.CGTGame;
 import cgt.game.CGTGameWorld;
 import cgt.game.LifeBar;
 
-public class IndividualLifeBar extends LifeBar implements Serializable{
+public class IndividualLifeBar extends LifeBar {
 	private String ownerId;
 
 	private CGTGameObject object;

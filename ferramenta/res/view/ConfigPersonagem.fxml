@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import br.edu.ifce.cgt.application.controller.ui.IntegerTextField?>
 <fx:root type="javafx.scene.control.TitledPane" animated="false" minWidth="300.0" text="Configuração Personagem" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
  <content>
     <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="385.0" prefWidth="300.0">
@@ -30,8 +31,8 @@
                 <Label text="Action" />
                 <Label text="Projétil Padrão" GridPane.rowIndex="2" />
                 <Label text="Tempo de recuperação" GridPane.rowIndex="3" />
-                <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <ComboBox fx:id="boxProjectiles" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <IntegerTextField fx:id="txtTimeToRecovery" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <Button mnemonicParsing="false" onAction="#addAction" text="+" GridPane.columnIndex="1" />
           <VBox fx:id="panActions" alignment="CENTER" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
              <padding>

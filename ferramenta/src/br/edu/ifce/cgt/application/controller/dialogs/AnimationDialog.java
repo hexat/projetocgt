@@ -3,7 +3,7 @@ package br.edu.ifce.cgt.application.controller.dialogs;
 import br.edu.ifce.cgt.application.controller.panes.ImagePane;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
-import br.edu.ifce.cgt.application.util.Mapa;
+import br.edu.ifce.cgt.application.util.EnumMap;
 import br.edu.ifce.cgt.application.util.Pref;
 import cgt.game.CGTSpriteSheet;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -48,9 +48,9 @@ public class AnimationDialog extends HBox {
     @FXML private IntegerTextField txtFrameFinalY;
     @FXML private CheckBox chkFlipHor;
     @FXML private CheckBox chkFlipVertical;
-    @FXML private ComboBox<Mapa<Animation.PlayMode, String>> boxAnimationPolicy;
+    @FXML private ComboBox<EnumMap<Animation.PlayMode>> boxAnimationPolicy;
     @FXML private ComboBox<String> boxSprite;
-    @FXML private ComboBox<Mapa<StatePolicy, String>> boxStates;
+    @FXML private ComboBox<EnumMap<StatePolicy>> boxStates;
 
     public AnimationDialog(CGTGameObject object) {
         this.object = object;
@@ -86,20 +86,20 @@ public class AnimationDialog extends HBox {
 
         ResourceBundle bundle = Pref.load().getBundle();
 
-        List<Mapa<Animation.PlayMode, String>> listModes = new ArrayList<Mapa<Animation.PlayMode, String>>();
+        List<EnumMap<Animation.PlayMode>> listModes = new ArrayList<EnumMap<Animation.PlayMode>>();
 
         for (Animation.PlayMode p : Animation.PlayMode.values()) {
-            listModes.add(new Mapa<Animation.PlayMode, String>(p, bundle.getString(p.name())));
+            listModes.add(new EnumMap<Animation.PlayMode>(p, bundle.getString(p.name())));
         }
 
         boxAnimationPolicy.getItems().setAll(listModes);
         boxAnimationPolicy.getSelectionModel().selectFirst();
 
 
-        List<Mapa<StatePolicy, String>> list = new ArrayList<Mapa<StatePolicy, String>>();
+        List<EnumMap<StatePolicy>> list = new ArrayList<EnumMap<StatePolicy>>();
 
         for (StatePolicy s : StatePolicy.values()) {
-            list.add(new Mapa<StatePolicy, String>(s, bundle.getString(s.name())));
+            list.add(new EnumMap<StatePolicy>(s, bundle.getString(s.name())));
         }
 
         boxStates.getItems().setAll(list);
@@ -144,20 +144,20 @@ public class AnimationDialog extends HBox {
     public void addAnimation() {
         if (validate()) {
             if (animation == null) {
-                animation = new CGTAnimation(boxSprite.getSelectionModel().getSelectedItem());
-                animation.setAnimationPolicy(boxAnimationPolicy.getSelectionModel().getSelectedItem().getKey());
-                animation.setFlipHorizontal(chkFlipHor.isSelected());
-                animation.setFlipVertical(chkFlipVertical.isSelected());
-                animation.setSpriteVelocity(txtVel.getValue());
-                animation.setInitialFrame(new Vector2(txtFrameInitialX.getValue(),
-                        txtFrameInitialY.getValue()));
-                animation.setEndingFrame(new Vector2(txtFrameFinalX.getValue(),
-                        txtFrameFinalY.getValue()));
-                animation.setActorStage(boxStates.getValue().getKey());
-                object.addAnimation(animation);
-                dialogStage.getOnCloseRequest().handle(null);
-                dialogStage.close();
+                animation = new CGTAnimation();
             }
+            animation.setSpriteSheet(boxSprite.getSelectionModel().getSelectedItem());
+            animation.setAnimationPolicy(boxAnimationPolicy.getSelectionModel().getSelectedItem().getKey());
+            animation.setFlipHorizontal(chkFlipHor.isSelected());
+            animation.setFlipVertical(chkFlipVertical.isSelected());
+            animation.setSpriteVelocity(txtVel.getValue());
+            animation.setInitialFrame(new Vector2(txtFrameInitialX.getValue(),
+                    txtFrameInitialY.getValue()));
+            animation.setEndingFrame(new Vector2(txtFrameFinalX.getValue(),
+                    txtFrameFinalY.getValue()));
+            animation.setActorStage(boxStates.getValue().getKey());
+            object.addAnimation(animation);
+            dialogStage.close();
         }
     }
 
@@ -167,8 +167,8 @@ public class AnimationDialog extends HBox {
                 txtFrameInitialY.getValue() >= 0;
     }
 
-    public void show() {
-        dialogStage.show();
+    public void showAndWait() {
+        dialogStage.showAndWait();
     }
 
     public Stage getDialogStage() {

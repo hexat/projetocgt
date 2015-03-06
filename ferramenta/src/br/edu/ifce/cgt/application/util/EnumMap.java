@@ -3,11 +3,11 @@ package br.edu.ifce.cgt.application.util;
 /**
  * Created by luanjames on 24/02/15.
  */
-public class Mapa<K, V> {
+public class EnumMap<K extends Enum> {
     private K key;
-    private V value;
+    private String value;
 
-    public Mapa(K key, V value) {
+    public EnumMap(K key, String value) {
         this.key = key;
         this.value = value;
     }
@@ -16,7 +16,7 @@ public class Mapa<K, V> {
         return key;
     }
 
-    public V getValue() {
+    public String getValue() {
         return value;
     }
 
@@ -24,7 +24,7 @@ public class Mapa<K, V> {
         this.key = key;
     }
 
-    public void setValue(V value) {
+    public void setValue(String value) {
         this.value = value;
     }
 

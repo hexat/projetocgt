@@ -65,6 +65,7 @@ public class WorldController extends BorderPane {
     @FXML public void btnConfigWorld() {
         configAccordion.getPanes().clear();
         configAccordion.getPanes().add(WorldTitledPane.getNode(world));
+        configAccordion.getPanes().add(new CameraTitledPane(world.getCamera()));
         configAccordion.getPanes().get(0).setExpanded(true);
     }
 
@@ -157,7 +158,7 @@ public class WorldController extends BorderPane {
 
     public void addProjectile(ActionEvent event) {
         final CGTProjectile projectile = new CGTProjectile();
-
+        projectile.setId("Projetil");
         world.getActor().addProjectile(projectile);
         boxActor.getChildren().add(new ObjectButton(projectile));
     }
