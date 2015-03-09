@@ -75,8 +75,8 @@ public class LoseDialog extends BorderPane {
         return stage;
     }
 
-    public void show() {
-        stage.show();
+    public void showAndWait() {
+        stage.showAndWait();
     }
 
     public void addWin(ActionEvent actionEvent) {
@@ -94,7 +94,6 @@ public class LoseDialog extends BorderPane {
                 break;
 
         }
-        stage.getOnCloseRequest().handle(null);
         stage.close();
     }
 }

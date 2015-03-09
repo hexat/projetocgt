@@ -1,7 +1,7 @@
 package br.edu.ifce.cgt.application.controller.dialogs;
 
 import br.edu.ifce.cgt.application.Main;
-import br.edu.ifce.cgt.application.util.Mapa;
+import br.edu.ifce.cgt.application.util.EnumMap;
 import cgt.core.CGTActor;
 import cgt.policy.ActionMovePolicy;
 import cgt.policy.InputPolicy;
@@ -25,8 +25,8 @@ public class ActionDialog extends VBox {
     private final Stage stage;
     private final CGTActor actor;
 
-    @FXML private ComboBox<Mapa<InputPolicy, String>> boxInputs;
-    @FXML private ComboBox<Mapa<ActionMovePolicy, String>> boxMoves;
+    @FXML private ComboBox<EnumMap<InputPolicy>> boxInputs;
+    @FXML private ComboBox<EnumMap<ActionMovePolicy>> boxMoves;
     @FXML private VBox panInputs;
 
     public ActionDialog(CGTActor actor) {
@@ -46,19 +46,19 @@ public class ActionDialog extends VBox {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(Main.getApp().getScene().getWindow());
 
-        List<Mapa<InputPolicy, String>> inputs = new ArrayList<Mapa<InputPolicy, String>>();
+        List<EnumMap<InputPolicy>> inputs = new ArrayList<EnumMap<InputPolicy>>();
 
         ResourceBundle bundle = ResourceBundle.getBundle("i18n.String", new Locale("pt", "PT"));
         for (InputPolicy policy : actor.getAvailableInputs()) {
-            inputs.add(new Mapa<InputPolicy, String>(policy, bundle.getString(policy.name())));
+            inputs.add(new EnumMap<InputPolicy>(policy, bundle.getString(policy.name())));
         }
 
         boxInputs.getItems().setAll(inputs);
         boxInputs.getSelectionModel().selectFirst();
 
-        ArrayList<Mapa<ActionMovePolicy, String>> moves = new ArrayList<Mapa<ActionMovePolicy, String>>();
+        ArrayList<EnumMap<ActionMovePolicy>> moves = new ArrayList<EnumMap<ActionMovePolicy>>();
         for (ActionMovePolicy policy : ActionMovePolicy.values()) {
-            moves.add(new Mapa<ActionMovePolicy, String>(policy, bundle.getString(policy.name())));
+            moves.add(new EnumMap<ActionMovePolicy>(policy, bundle.getString(policy.name())));
         }
         boxMoves.getItems().addAll(moves);
         boxMoves.getSelectionModel().selectFirst();
@@ -84,7 +84,6 @@ public class ActionDialog extends VBox {
     @FXML public void addAction() {
         //if (!entradas.isEmpty() && actor.hasAction(boxMoves.getSelectionModel().getSelectedItem())) {
         if (actor.addAction(boxInputs.getValue().getKey(), boxMoves.getValue().getKey())) {
-            stage.getOnCloseRequest().handle(null);
             stage.close();
         } else {
             Dialogs.create().message("Verifique se você adicionou uma entrada ou " +
@@ -96,8 +95,8 @@ public class ActionDialog extends VBox {
         return stage;
     }
 
-    public void show() {
-        stage.show();
+    public void showAndWait() {
+        stage.showAndWait();
     }
 
 }

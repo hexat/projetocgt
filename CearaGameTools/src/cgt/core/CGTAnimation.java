@@ -28,9 +28,11 @@ public class CGTAnimation {
     private StatePolicy actorStage;
 
 
-    private CGTAnimation() {
+
+    public CGTAnimation() {
     	actorStage = StatePolicy.IDLE;
     }
+
 
 
 	public CGTAnimation(String spriteSheetId) {
@@ -123,7 +125,11 @@ public class CGTAnimation {
 		return animation;
 	}
 
-	public CGTSpriteSheet getSpriteSheet() {
+    public void setSpriteSheet(String spriteSheetId) {
+        this.spriteSheetId = spriteSheetId;
+    }
+
+    public CGTSpriteSheet getSpriteSheet() {
         return CGTGame.get().getSpriteDB().find(spriteSheetId);
 	}
 }

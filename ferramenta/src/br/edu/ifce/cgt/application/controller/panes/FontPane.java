@@ -3,6 +3,8 @@ package br.edu.ifce.cgt.application.controller.panes;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import cgt.hud.CGTLabel;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -46,39 +48,39 @@ public class FontPane extends GridPane {
     }
 
     private void setActions() {
-        txtColor.setOnAction(new EventHandler<ActionEvent>() {
+        txtColor.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                font.setColor(txtColor.getValue());
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    font.setColor(txtColor.getValue());
+                }
             }
         });
 
-        txtSize.setOnAction(new EventHandler<ActionEvent>() {
+        txtSize.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                font.setSize(txtSize.getValue());
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    font.setSize(txtSize.getValue());
+                }
             }
         });
 
-        txtText.setOnAction(new EventHandler<ActionEvent>() {
+        txtText.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                font.setText(txtText.getText());
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    font.setText(txtText.getText());
+                }
             }
         });
-    }
-
-    public void commit() {
-        font.setSize(txtSize.getValue());
-        font.setText(txtText.getText());
-        font.setColor(txtColor.getValue());
     }
 
     public void init() {
         if (font != null) {
             txtText.setText(font.getText());
-            txtColor.setText(font.getColorValue()+"");
-            txtSize.setText(font.getSize()+"");
+            txtColor.setValue(font.getColorValue());
+            txtSize.setValue(font.getSize());
         }
     }
 }

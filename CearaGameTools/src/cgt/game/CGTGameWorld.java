@@ -304,6 +304,10 @@ public class CGTGameWorld extends CGTWindow {
 		List<String> res = new ArrayList<String>();
 		if (getActor() != null) {
 			res.add(getActor().getId());
+
+            for (CGTProjectile p : getActor().getProjectiles()) {
+                res.add(p.getId());
+            }
 		}
 		for (CGTGameObject o : enemies) {
 			res.add(o.getId());

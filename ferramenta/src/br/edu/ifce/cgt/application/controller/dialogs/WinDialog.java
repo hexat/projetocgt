@@ -1,7 +1,7 @@
 package br.edu.ifce.cgt.application.controller.dialogs;
 
 import br.edu.ifce.cgt.application.Main;
-import br.edu.ifce.cgt.application.util.Mapa;
+import br.edu.ifce.cgt.application.util.EnumMap;
 import br.edu.ifce.cgt.application.util.Pref;
 import cgt.game.CGTGameWorld;
 import cgt.policy.WinPolicy;
@@ -30,7 +30,7 @@ public class WinDialog extends BorderPane {
     private final Stage stage;
     private final CGTGameWorld world;
 
-    @FXML private ComboBox<Mapa<WinPolicy, String>> boxCriteria;
+    @FXML private ComboBox<EnumMap<WinPolicy>> boxCriteria;
 
     public WinDialog(CGTGameWorld world) {
         this.world = world;
@@ -51,10 +51,10 @@ public class WinDialog extends BorderPane {
         stage.initOwner(Main.getApp().getScene().getWindow());
 
         ResourceBundle bundle = Pref.load().getBundle();
-        List<Mapa<WinPolicy, String>> list = new ArrayList<Mapa<WinPolicy, String>>();
+        List<EnumMap<WinPolicy>> list = new ArrayList<EnumMap<WinPolicy>>();
 
         for (WinPolicy w : WinPolicy.values()) {
-            list.add(new Mapa<WinPolicy, String>(w, bundle.getString(w.name())));
+            list.add(new EnumMap<WinPolicy>(w, bundle.getString(w.name())));
         }
 
         boxCriteria.getItems().setAll(list);
@@ -87,7 +87,7 @@ public class WinDialog extends BorderPane {
         return stage;
     }
 
-    public void show() {
+    public void showAndWait() {
         stage.show();
     }
 
@@ -107,7 +107,6 @@ public class WinDialog extends BorderPane {
                 break;
 
         }
-        stage.getOnCloseRequest().handle(null);
         stage.close();
     }
 }

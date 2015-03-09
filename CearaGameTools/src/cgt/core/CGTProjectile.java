@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import cgt.util.ProjectileOrientation;
 
-public class CGTProjectile extends CGTGameObject implements Serializable{
+public class CGTProjectile extends CGTGameObject {
 	private int numFiresForOneInput;
 	private int damage;
 	private int interval;

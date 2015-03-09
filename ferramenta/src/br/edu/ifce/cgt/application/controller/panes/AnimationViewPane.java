@@ -30,7 +30,7 @@ public class AnimationViewPane extends GridPane {
             @Override
             public void handle(ActionEvent event) {
                 AnimationDialog dialog = new AnimationDialog(animation);
-                dialog.show();
+                dialog.showAndWait();
             }
         });
 

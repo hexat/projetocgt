@@ -4,11 +4,7 @@ import java.io.Serializable;
 
 import cgt.policy.GameModePolicy;
 
-public class Camera implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3012536048841242556L;
+public class Camera {
 	private GameModePolicy gameMode;
 	private float initialWidth;
 	private float initialHeight;

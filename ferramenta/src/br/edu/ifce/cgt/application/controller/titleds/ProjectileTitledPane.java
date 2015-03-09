@@ -21,7 +21,6 @@ import java.io.IOException;
  * Created by infolev on 23/02/15.
  */
 public class ProjectileTitledPane extends TitledPane {
-    public IntegerTextField txtNumFires;
     public IntegerTextField txtDamage;
     public IntegerTextField txtInterval;
     public IntegerTextField txtAmmo;
@@ -48,7 +47,6 @@ public class ProjectileTitledPane extends TitledPane {
     }
 
     private void init() {
-        txtNumFires.setText(projectile.getNumFiresForOneInput()+"");
         txtAmmo.setText(projectile.getAmmo()+"");
         txtAngle.setText(projectile.getAngle()+"");
         txtDamage.setText(projectile.getDamage()+"");
@@ -88,15 +86,6 @@ public class ProjectileTitledPane extends TitledPane {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue) {
                     projectile.setAngle(txtAngle.getValue());
-                }
-            }
-        });
-
-        txtNumFires.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (!newValue) {
-                    projectile.setNumFiresForOneInput(txtNumFires.getValue());
                 }
             }
         });

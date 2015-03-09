@@ -178,24 +178,14 @@ public class WorldTitledPane implements Initializable {
 
     public void addWin(ActionEvent actionEvent) {
         WinDialog win = new WinDialog(world);
-        win.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                updateWin();
-            }
-        });
-        win.show();
+        win.showAndWait();
+        updateWin();
     }
 
     public void addLose(ActionEvent event) {
         LoseDialog loseDialog = new LoseDialog(world);
-        loseDialog.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                updateLose();
-            }
-        });
-        loseDialog.show();
+        loseDialog.showAndWait();
+        updateLose();
 
     }
 

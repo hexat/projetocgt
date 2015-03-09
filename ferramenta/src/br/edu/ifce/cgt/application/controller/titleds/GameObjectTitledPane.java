@@ -306,13 +306,8 @@ public class GameObjectTitledPane extends TitledPane {
 
     public void addAnimation() {
         AnimationDialog dialog = new AnimationDialog(gameObject);
-        dialog.getDialogStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                updateBoxAnimation();
-            }
-        });
-        dialog.show();
+        dialog.showAndWait();
+        updateBoxAnimation();
     }
 
     private void updateBoxAnimation() {

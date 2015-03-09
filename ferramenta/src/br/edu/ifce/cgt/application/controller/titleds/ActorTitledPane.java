@@ -1,39 +1,40 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
 import br.edu.ifce.cgt.application.controller.dialogs.ActionDialog;
+import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
+import cgt.core.CGTProjectile;
 import cgt.policy.ActionMovePolicy;
 import cgt.policy.InputPolicy;
 
 import java.io.IOException;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import br.edu.ifce.cgt.application.Main;
 import cgt.core.CGTActor;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.WindowEvent;
 import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 
 public class ActorTitledPane extends TitledPane {
 
-	@FXML private VBox panActions;
+    @FXML public ComboBox<String> boxProjectiles;
+    @FXML public IntegerTextField txtTimeToRecovery;
+    @FXML private VBox panActions;
 
 	@FXML public void addAction() {
 		ActionDialog dialog = new ActionDialog(actor);
-		dialog.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
-			@Override
-			public void handle(WindowEvent event) {
-				updateActions();
-			}
-		});
-		dialog.show();
+		dialog.showAndWait();
+        updateActions();
 	}
 
 	private void updateActions() {
@@ -79,9 +80,42 @@ public class ActorTitledPane extends TitledPane {
             e.printStackTrace();
         }
         init();
+        setActions();
+    }
+
+    private void setActions() {
+        boxProjectiles.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                List<String> list = new ArrayList<String>();
+                for (CGTProjectile p : actor.getProjectiles()) {
+                    list.add(p.getId());
+                }
+                boxProjectiles.getItems().setAll(list);
+            }
+        });
+
+        boxProjectiles.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                actor.setFireDefault(actor.getProjectiles().indexOf(actor.findProjectile(boxProjectiles.getValue())));
+            }
+        });
     }
 
     private void init() {
+        txtTimeToRecovery.setValue(actor.getTimeToRecovery());
+        txtTimeToRecovery.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    actor.setTimeToRecovery(txtTimeToRecovery.getValue());
+                }
+            }
+        });
         updateActions();
+        if (actor.getProjectileDefault() != null) {
+            boxProjectiles.getSelectionModel().select(actor.getProjectileDefault().getId());
+        }
     }
 }
