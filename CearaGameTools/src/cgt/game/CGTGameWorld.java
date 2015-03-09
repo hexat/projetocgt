@@ -56,7 +56,7 @@ public class CGTGameWorld extends CGTWindow {
 		this.addButton(buttonPad.getButtonRight());
 	}
 
-	public Music getMusic() {
+	public Music getMusicGDX() {
 		if (music != null){
 			return music.getMusic();
 		} else {
@@ -64,7 +64,11 @@ public class CGTGameWorld extends CGTWindow {
 		}
 	}
 
-	public void setMusic(CGTSound music) {
+    public CGTSound getMusic() {
+        return music;
+    }
+
+    public void setMusic(CGTSound music) {
 		this.music = music;
 	}
 

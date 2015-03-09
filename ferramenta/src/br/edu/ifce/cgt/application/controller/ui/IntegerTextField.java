@@ -18,7 +18,9 @@ public class IntegerTextField extends TextField {
         textProperty().addListener(new ChangeListener<String>() {
             @Override public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (newValue.matches("\\d*")) {
-                    Integer.parseInt(newValue);
+//                    try {
+//                        Integer.parseInt(newValue);
+//                    } catch (Exception e) {}
                 } else {
                     setText(oldValue);
                 }

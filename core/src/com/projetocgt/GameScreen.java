@@ -59,7 +59,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		}
 		
 		this.world = world;
-		this.music = world.getMusic();
+		this.music = world.getMusicGDX();
 		Timer.instance().start();
 
 		for (int i = 0; i < world.getWinCriteria().size(); i++) {

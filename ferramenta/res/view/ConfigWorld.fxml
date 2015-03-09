@@ -44,7 +44,7 @@
                 <Button mnemonicParsing="false" onAction="#addLose" text="+" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                 <Label text="Critérios de Derrota" GridPane.rowIndex="7" />
                 <Label text="Música" GridPane.rowIndex="9" />
-                <TextField GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                <TextField fx:id="txtMusic" editable="false" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                 <Button fx:id="btnPesquisaBack" mnemonicParsing="false" onAction="#pesquisarBackground" text="Pesquisar" GridPane.columnIndex="2" />
                   <VBox fx:id="panWins" alignment="CENTER" GridPane.columnSpan="3" GridPane.rowIndex="6">
                      <padding>
@@ -64,6 +64,7 @@
                   <Button fx:id="btnRemInitialDialog" disable="true" mnemonicParsing="false" text="Remover" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                   <Button mnemonicParsing="false" onAction="#configLoseDialog" text="Configurar" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Button fx:id="btnRemLoseDialog" disable="true" mnemonicParsing="false" text="Remover" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Button mnemonicParsing="false" onAction="#setMusic" text="Pesquisar" GridPane.columnIndex="2" GridPane.rowIndex="9" />
              </children>
           </GridPane>
        </content>

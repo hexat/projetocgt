@@ -14,10 +14,10 @@ import br.edu.ifce.cgt.application.util.Pref;
 import cgt.game.CGTGameWorld;
 import cgt.hud.CGTButtonScreen;
 import cgt.lose.Lose;
-import cgt.policy.GameModePolicy;
 import cgt.screen.CGTDialog;
+import cgt.util.CGTFile;
+import cgt.util.CGTSound;
 import cgt.util.CGTTexture;
-import cgt.util.Camera;
 import cgt.win.Win;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -29,13 +29,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.WindowEvent;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 
 public class WorldTitledPane implements Initializable {
 	@FXML private Button btnPesquisaBack;
-	@FXML private TextField txtProcuraBack;
+    @FXML private TextField txtProcuraBack;
+    @FXML private TextField txtMusic;
 
     @FXML private Button btnRemPauseDialog;
     @FXML private Button btnRemInitialDialog;
@@ -54,6 +54,10 @@ public class WorldTitledPane implements Initializable {
         updateLose();
         if (world.getBackground() != null) {
             txtProcuraBack.setText(world.getBackground().getFile().getFilename());
+        }
+
+        if (world.getMusic() != null) {
+            txtMusic.setText(world.getMusic().getFile().getFilename());
         }
 
         btnRemInitialDialog.setDisable(world.getLoseDialog() == null);
@@ -193,8 +197,9 @@ public class WorldTitledPane implements Initializable {
     private void updateLose() {
         panLoses.getChildren().clear();
         if (world.getLoseCriteria().size() > 0) {
+            ResourceBundle bundle = Pref.load().getBundle();
             for (final Lose lose : world.getLoseCriteria()) {
-                ItemViewPane pane = new ItemViewPane(lose.getPolicy().toString());
+                ItemViewPane pane = new ItemViewPane(bundle.getString(lose.getPolicy().name()));
                 pane.getBtnExcluir().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
@@ -266,5 +271,28 @@ public class WorldTitledPane implements Initializable {
         }
         DialogDialog dialog = new DialogDialog(world.getLoseDialog());
         dialog.showAndWait();
+    }
+
+    public void setMusic() {
+        File file = DialogsUtil.showOpenDialog("Selecionar Musica", DialogsUtil.WAV_FILTER);
+
+        if (file != null) {
+            if (world.getMusic() != null) {
+                Config.destroy(world.getMusic().getFile());
+                world.setMusic(null);
+            }
+            try {
+                CGTFile music = Config.createAudio(file);
+
+                world.setMusic(new CGTSound(music));
+
+                txtMusic.setText(music.getFilename());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
     }
 }

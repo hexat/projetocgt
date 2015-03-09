@@ -10,6 +10,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<?import br.edu.ifce.cgt.application.controller.ui.IntegerTextField?>
+<?import br.edu.ifce.cgt.application.controller.ui.FloatTextField?>
 <fx:root animated="false" minWidth="300.0" text="Configuração Inimigo" type="javafx.scene.control.TitledPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
  <content>
             <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="385.0">
@@ -34,18 +36,14 @@
                               <Label text="Comportamento" />
                               <Label text="Valor de Dano" GridPane.rowIndex="2" />
                               <Label text="Tempo de Recuperação" GridPane.rowIndex="3" />
-                              <Label text="Transparencia" GridPane.rowIndex="4" />
-                              <Label text="Vuneravél" GridPane.rowIndex="5" />
-                              <TextField fx:id="txtDamage" prefHeight="26.0" prefWidth="248.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <CheckBox fx:id="chkVulnerable" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <TextField fx:id="txtAlpha" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Button mnemonicParsing="false" onAction="#addBehavior" text="+" GridPane.columnIndex="1" />
+                               <Button mnemonicParsing="false" onAction="#addBehavior" text="+" GridPane.columnIndex="1" />
+                              <IntegerTextField fx:id="txtDamage" prefHeight="26.0" prefWidth="248.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <VBox fx:id="panBehaviors" alignment="CENTER" GridPane.columnSpan="3" GridPane.rowIndex="1">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
                         </VBox>
-                        <TextField fx:id="txtTimeRec" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <FloatTextField fx:id="txtTimeRec" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
                </children>
