@@ -28,7 +28,6 @@ public class EnemyTitledPane extends TitledPane {
     @FXML public VBox panBehaviors;
     @FXML public IntegerTextField txtDamage;
     @FXML public CheckBox chkBlock;
-    @FXML public FloatTextField txtTimeRec;
     @FXML public VBox boxContent;
 
     public CheckBox chkDestroyable;
@@ -66,15 +65,6 @@ public class EnemyTitledPane extends TitledPane {
                 }
             }
         });
-
-        txtTimeRec.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (!newValue) {
-                    enemy.setTimeToRecovery(txtTimeRec.getValue());
-                }
-            }
-        });
     }
 
     public void updateBehaviors() {
@@ -102,10 +92,6 @@ public class EnemyTitledPane extends TitledPane {
 
         if (enemy.getDamage() > 0) {
             txtDamage.setValue(enemy.getDamage());
-        }
-
-        if (enemy.getTimeToRecovery() > 0) {
-            txtTimeRec.setValue(enemy.getTimeToRecovery());
         }
 
         updateBehaviors();

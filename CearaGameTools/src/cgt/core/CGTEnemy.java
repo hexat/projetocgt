@@ -113,6 +113,10 @@ public class CGTEnemy extends CGTOpposite implements Serializable {
 		this.timeToRecovery = timeToRecovery;
 	}
 
+    /**
+     * Metodo usado para atualizar o estado do ator. Eh ativado quando o enemy colide com o ator
+     * @return
+     */
 	public boolean isAttacking() {
 		return attacking;
 	}
