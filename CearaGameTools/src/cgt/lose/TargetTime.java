@@ -17,7 +17,7 @@ public class TargetTime extends LoseCriteria {
 	public TargetTime(){
 		timer = 1000;
 		this.label = new CGTLabel();
-		expired=false;
+		expired = false;
 		label.setText(""+timer);
 	}
 

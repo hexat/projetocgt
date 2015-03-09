@@ -27,7 +27,7 @@
             <Button alignment="CENTER_RIGHT" defaultButton="true" mnemonicParsing="false" onAction="#addWin" text="Adicionar" />
          </children>
          <BorderPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            <Insets />
          </BorderPane.margin>
       </HBox>
    </bottom>
@@ -42,6 +42,12 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
+         <BorderPane.margin>
+            <Insets bottom="5.0" top="5.0" />
+         </BorderPane.margin>
       </GridPane>
    </center>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
 </fx:root>

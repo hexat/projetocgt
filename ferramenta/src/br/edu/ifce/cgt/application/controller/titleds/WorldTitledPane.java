@@ -10,6 +10,7 @@ import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.dialogs.DialogDialog;
 import br.edu.ifce.cgt.application.controller.dialogs.LoseDialog;
 import br.edu.ifce.cgt.application.controller.dialogs.WinDialog;
+import br.edu.ifce.cgt.application.util.Pref;
 import cgt.game.CGTGameWorld;
 import cgt.hud.CGTButtonScreen;
 import cgt.lose.Lose;
@@ -211,8 +212,9 @@ public class WorldTitledPane implements Initializable {
     private void updateWin() {
         panWins.getChildren().clear();
         if (world.getWinCriteria().size() > 0) {
+            ResourceBundle bundle = Pref.load().getBundle();
             for (final Win win : world.getWinCriteria()) {
-                ItemViewPane pane = new ItemViewPane(win.getPolicy().toString());
+                ItemViewPane pane = new ItemViewPane(bundle.getString(win.getPolicy().name()));
                 pane.getBtnExcluir().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {

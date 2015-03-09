@@ -3,6 +3,7 @@ package cgt.game;
 import cgt.core.*;
 import cgt.hud.*;
 import cgt.policy.ErrorValidate;
+import cgt.policy.WinPolicy;
 import cgt.util.*;
 import com.badlogic.gdx.audio.Music;
 
@@ -33,6 +34,7 @@ public class CGTGameWorld extends CGTWindow {
 	private CGTSound soundWin;
 	private CGTSound soundLose;
 	private CGTButtonStartGame startGame;
+    private int score;
 
 	protected CGTGameWorld(){
         actor = new CGTActor("Actor");
@@ -194,7 +196,7 @@ public class CGTGameWorld extends CGTWindow {
 	public void addWinCriterion(WinCriteria criterion){
 		criterion.remove();
 		criterion.setWorld(this);
-		this.winCriteria.add(criterion);
+        this.winCriteria.add(criterion);
 	}
 
 	public ArrayList<Lose> getLoseCriteria() {
@@ -373,5 +375,13 @@ public class CGTGameWorld extends CGTWindow {
 		}
 		return res;
 	}
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 }
  

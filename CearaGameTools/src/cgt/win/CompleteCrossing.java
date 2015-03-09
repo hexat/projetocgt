@@ -22,12 +22,16 @@ public class CompleteCrossing extends WinCriteria {
 	public CompleteCrossing(){
 		this.worldId = null;
         world = null;
-		this.rectangle = null;
+		this.rectangle = new Rectangle();
 		this.label = new CGTLabel();
         policy = WinPolicy.COMPLETE_CROSSING;
 	}
 
-	@Override
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
+    @Override
 	public boolean achieved() {
 		boolean win = false;
         if (world != null) {
