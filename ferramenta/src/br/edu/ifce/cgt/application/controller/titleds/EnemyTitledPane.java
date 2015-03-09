@@ -5,9 +5,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
+import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import cgt.behaviors.Behavior;
 import br.edu.ifce.cgt.application.controller.dialogs.BehaviorDialog;
 import cgt.core.CGTEnemy;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,19 +26,16 @@ import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 public class EnemyTitledPane extends TitledPane {
 
     @FXML public VBox panBehaviors;
-    @FXML public TextField txtDamage;
+    @FXML public IntegerTextField txtDamage;
     @FXML public CheckBox chkBlock;
-    @FXML public TextField txtAlpha;
-    @FXML public TextField txtTimeRec;
+    @FXML public FloatTextField txtTimeRec;
     @FXML public VBox boxContent;
 
     public CheckBox chkDestroyable;
-    public CheckBox chkVulnerable;
 
     private CGTEnemy enemy;
 
     public EnemyTitledPane(CGTEnemy object) {
-        enemy = object;
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigInimigo.fxml"));
         xml.setRoot(this);
         xml.setController(this);
@@ -52,37 +53,26 @@ public class EnemyTitledPane extends TitledPane {
         chkBlock = pane.getCheckBlock();
         chkDestroyable = pane.getCheckDestroyable();
 
+        setEnemy(object);
         init();
     }
 
     public void init() {
-        txtDamage.setOnAction(new EventHandler<ActionEvent>() {
+        txtDamage.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                if (!txtDamage.getText().equals("")) {
-                    enemy.setDamage(Integer.parseInt(txtDamage.getText()));
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    enemy.setDamage(txtDamage.getValue());
                 }
             }
         });
 
-        txtAlpha.setOnAction(new EventHandler<ActionEvent>() {
+        txtTimeRec.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                enemy.setAlpha(Float.parseFloat(txtAlpha.getText()));
-            }
-        });
-
-        txtTimeRec.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                enemy.setTimeToRecovery(Float.parseFloat(txtTimeRec.getText()));
-            }
-        });
-
-        chkVulnerable.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                enemy.setVulnerable(chkVulnerable.isSelected());
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    enemy.setTimeToRecovery(txtTimeRec.getValue());
+                }
             }
         });
     }
@@ -110,15 +100,12 @@ public class EnemyTitledPane extends TitledPane {
     public void setEnemy(CGTEnemy enemy) {
         this.enemy = enemy;
 
-        chkVulnerable.setSelected(enemy.isVulnerable());
-
-        txtAlpha.setText(enemy.getAlpha()+"");
         if (enemy.getDamage() > 0) {
-            txtDamage.setText(enemy.getDamage() + "");
+            txtDamage.setValue(enemy.getDamage());
         }
 
         if (enemy.getTimeToRecovery() > 0) {
-            txtTimeRec.setText(enemy.getTimeToRecovery()+"");
+            txtTimeRec.setValue(enemy.getTimeToRecovery());
         }
 
         updateBehaviors();
