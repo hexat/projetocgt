@@ -13,7 +13,7 @@ import cgt.unit.LabelID;
 
 public class CGTEnemy extends CGTOpposite implements Serializable {
 	private int damage;
-	private ArrayList<Behavior> behaviors;
+	private ArrayList<AbstractBehavior> behaviors;
 	private String group;
 	private float alpha; //nivel de transparencia
 	private boolean vulnerable;
@@ -27,7 +27,7 @@ public class CGTEnemy extends CGTOpposite implements Serializable {
     public CGTEnemy(String label) {
 		super(label);
 		damage=0;
-		behaviors = new ArrayList<Behavior>();
+		behaviors = new ArrayList<AbstractBehavior>();
 		group="";
 		vulnerable=true;
 		alpha = 1;
@@ -52,12 +52,9 @@ public class CGTEnemy extends CGTOpposite implements Serializable {
 	}
 	
 	//TODO implementar singleton World 
-	public void addBehavior(Behavior behavior) {
-		if(behavior.getBehaviorPolicy().equals("TWO_POINTS_DIRECTION")){
-			cgt.behaviors.Direction direction = (cgt.behaviors.Direction) behavior;
-			direction.setOwner(this);
-			this.setPosition(direction.getInitialPosition().cpy());
-		}
+	public void addBehavior(AbstractBehavior behavior) {
+        behavior.remove();
+        behavior.setOwner(this);
 		behaviors.add(behavior);
 	}
 
@@ -113,10 +110,6 @@ public class CGTEnemy extends CGTOpposite implements Serializable {
 		this.timeToRecovery = timeToRecovery;
 	}
 
-    /**
-     * Metodo usado para atualizar o estado do ator. Eh ativado quando o enemy colide com o ator
-     * @return
-     */
 	public boolean isAttacking() {
 		return attacking;
 	}

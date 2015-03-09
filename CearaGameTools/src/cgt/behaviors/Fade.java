@@ -2,14 +2,11 @@ package cgt.behaviors;
 
 import java.io.Serializable;
 
+import cgt.core.AbstractBehavior;
 import cgt.policy.FadePolicy;
+import com.badlogic.gdx.utils.Timer;
 
-public class Fade implements Behavior, Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4876605710575310734L;
-
+public class Fade extends AbstractBehavior {
 	private int fadeInTIme;
 	private boolean started; 
 	private int fadeOutTime;
@@ -48,7 +45,35 @@ public class Fade implements Behavior, Serializable {
 		return fadePolicy.name();
 	}
 
-	@Override
+    @Override
+    public void act() {
+
+        if (fadePolicy ==  FadePolicy.FADE_IN) {
+            getOwner().setAlpha(0);
+            getOwner().setVulnerable(false);
+            remove();
+
+            Timer.schedule(new Timer.Task() {
+                int tempo = 0;
+
+                public void run() {
+                    tempo++;
+                    if (tempo >= getFadeInTime()) {
+                        getOwner().setAlpha(1);
+                        getOwner().setVulnerable(true);
+                        this.cancel();
+                    }
+                }
+            }, 1, 1);
+        }
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
 	public String toString() {
 		return "Fade [fadeInTIme=" + fadeInTIme + ", fadeOutTime="
 				+ fadeOutTime + ", fadePolicy=" + fadePolicy + "]";

@@ -1,24 +1,24 @@
 package cgt.behaviors;
 
 import java.io.Serializable;
+import java.util.Random;
 
+import cgt.core.AbstractBehavior;
+import cgt.policy.StatePolicy;
 import com.badlogic.gdx.math.Vector2;
 
 import cgt.core.CGTEnemy;
 import cgt.policy.DirectionPolicy;
 
-public class Direction implements Behavior, Serializable {
-	
-	public enum DirectionMode {
+public class Direction extends AbstractBehavior {
+
+    private static Random random = new Random();
+
+    public enum DirectionMode {
 		LOOP,
 		PINGPONG,
 		ONCE
 	}
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2118059060366691269L;
 
 	//Demarcadores da area de movimentacao
 	private Vector2 initialPosition;
@@ -30,7 +30,6 @@ public class Direction implements Behavior, Serializable {
 	// used in gdx mode
 	private float distance;
 	private Vector2 actorPosition;
-	private CGTEnemy owner;
 	
 	public Direction(DirectionPolicy directionPolicy){
 		setDirectionPolicy(directionPolicy);
@@ -43,10 +42,6 @@ public class Direction implements Behavior, Serializable {
 	 
 	public boolean isInteligenceMoviment() {
 		return inteligenceMoviment;
-	}
-
-	public void setOwner(CGTEnemy o) {
-		owner = o;
 	}
 
 	public void setInteligenceMoviment(boolean inteligenceMoviment) {
@@ -67,7 +62,130 @@ public class Direction implements Behavior, Serializable {
 	public String getBehaviorPolicy() {
 		return directionPolicy.name();
 	}
-	@Override
+
+    @Override
+    public void act() {
+        if (directionPolicy == DirectionPolicy.FOUR_DIRECTION) {
+            int[] angulos = { 0, 90, 180, 270 };
+
+
+            if (random.nextFloat() < 0.00005 * getOwner().getSpeed())
+                scheduleDirection(angulos);
+
+//				if (enemy.getPosition().x < direction.getMinX())
+//					enemy.getVelocity().x = enemy.getSpeed();
+//				if (enemy.getPosition().x > direction.getMaxX())
+//					enemy.getVelocity().x = -enemy.getSpeed();
+//
+//				if (enemy.getPosition().y < direction.getMinY())
+//					enemy.getVelocity().y = enemy.getSpeed();
+//				if (enemy.getPosition().y > direction.getMaxY())
+//					enemy.getVelocity().y = -enemy.getSpeed();
+        } else if (directionPolicy == DirectionPolicy.EIGHT_DIRECTION) {
+            int[] angulos = { 0, 45, 90, 135, 180, 225, 270, 315 };
+
+            if (random.nextFloat() < 0.0001 * getOwner().getSpeed())
+                scheduleDirection(angulos);
+
+//				if (enemy.getPosition().x < direction.getMinX())
+//					enemy.getVelocity().x = enemy.getSpeed();
+//				if (enemy.getPosition().x > direction.getMaxX())
+//					enemy.getVelocity().x = -enemy.getSpeed();
+//
+//				if (enemy.getPosition().y < direction.getMinY())
+//					enemy.getVelocity().y = enemy.getSpeed();
+//				if (enemy.getPosition().y > direction.getMaxY())
+//					enemy.getVelocity().y = -enemy.getSpeed();
+        } else if(directionPolicy == DirectionPolicy.TWO_POINTS_DIRECTION) {
+            if (getActorPosition() == null) {
+                getOwner().getPosition().x = getInitialPosition().x;
+                getOwner().getPosition().y = getInitialPosition().y;
+                setActorPosition(getOwner().getPosition());
+            }
+
+            //TODO Movimento inteligente
+            if (getInitialPosition().y < getFinalPosition().y) {
+                if (getInitialPosition().x < getFinalPosition().x) {
+                    // sentido nordeste
+                    if (getOwner().getPosition().x >= getFinalPosition().x && getOwner().getPosition().y >= getFinalPosition().y) {
+                        notifyEnd();
+                    } else {
+                        if (getOwner().getPosition().x < getFinalPosition().x) {
+                            getOwner().getVelocity().x = getOwner().getSpeed()*(getFinalPosition().x - getInitialPosition().x)/ getDistance();
+                        } else {
+                            getOwner().getVelocity().x = 0;
+                        }
+                        if (getOwner().getPosition().y < getFinalPosition().y) {
+                            getOwner().getVelocity().y = getOwner().getSpeed()*(getFinalPosition().y - getInitialPosition().y) / getDistance();
+                        } else {
+                            getOwner().getVelocity().y = 0;
+                        }
+
+                    }
+                } else {
+                    //  sentido noroeste
+                    if (getOwner().getPosition().x <= getFinalPosition().x && getOwner().getPosition().y >= getFinalPosition().y) {
+                        notifyEnd();
+                    } else {
+                        if (getOwner().getPosition().y < getFinalPosition().y) {
+                            getOwner().getVelocity().y = getOwner().getSpeed()*(getFinalPosition().y - getInitialPosition().y) / getDistance();
+                        } else {
+                            getOwner().getVelocity().y = 0;
+                        }
+
+                        if (getOwner().getPosition().x > getFinalPosition().x) {
+                            getOwner().getVelocity().x = getOwner().getSpeed()*(getFinalPosition().x - getInitialPosition().x)/ getDistance();
+                        } else {
+                            getOwner().getVelocity().x = 0;
+                        }
+
+                    }
+                }
+            } else {
+                if (getInitialPosition().x < getFinalPosition().x) {
+                    //  sentido sudeste
+                    if (getOwner().getPosition().x >= getFinalPosition().x && getOwner().getPosition().y <= getFinalPosition().y) {
+                        notifyEnd();
+                    } else {
+                        if (getOwner().getPosition().y > getFinalPosition().y) {
+                            getOwner().getVelocity().y = getOwner().getSpeed()*(getFinalPosition().y - getInitialPosition().y) / getDistance();
+                        } else {
+                            getOwner().getVelocity().y = 0;
+                        }
+                        if (getOwner().getPosition().x < getFinalPosition().x) {
+                            getOwner().getVelocity().x = getOwner().getSpeed()*(getFinalPosition().x - getInitialPosition().x)/ getDistance();
+                        } else {
+                            getOwner().getVelocity().x = 0;
+                        }
+                    }
+                } else {
+                    // sentido sudoeste
+                    if (getOwner().getPosition().x <= getFinalPosition().x && getOwner().getPosition().y <= getFinalPosition().y) {
+                        notifyEnd();
+                    } else {
+                        if (getOwner().getPosition().y > getFinalPosition().y) {
+                            getOwner().getVelocity().y = getOwner().getSpeed()*(getFinalPosition().y - getInitialPosition().y) / getDistance();
+                        } else {
+                            getOwner().getVelocity().y = 0;
+                        }
+                        if (getOwner().getPosition().x > getFinalPosition().x) {
+                            getOwner().getVelocity().x = getOwner().getSpeed()*(getFinalPosition().x - getInitialPosition().x)/ getDistance();
+                        } else {
+                            getOwner().getVelocity().x = 0;
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
 	public String toString() {
 		return "Direction [directionPolicy=" + directionPolicy + "]";
 	}
@@ -121,7 +239,7 @@ public class Direction implements Behavior, Serializable {
 			finalPosition = aux;
 			break;
 		case LOOP:
-			owner.setPosition(initialPosition.cpy());
+			getOwner().setPosition(initialPosition.cpy());
 		default:
 			break;
 		}
@@ -134,5 +252,39 @@ public class Direction implements Behavior, Serializable {
 	public void setDirectionMode(DirectionMode directionMode) {
 		this.directionMode = directionMode;
 	}
+
+    // Implementação do comportamento descrito por um behavior Direction
+    private void scheduleDirection(int[] angulos) {
+        getOwner().getVelocity().x = 0;
+        getOwner().getVelocity().y = 0;
+
+        int indice = random.nextInt(angulos.length);
+
+        // Velocidade X no 1º e 4º quadrantes
+        if ((angulos[indice] >= 0 && angulos[indice] < 90)
+                || (angulos[indice] > 270 && angulos[indice] < 360)) {
+            getOwner().getVelocity().x = getOwner().getSpeed();
+
+        }
+
+        // Velocidade X no 2º e 3º quadrantes
+        if (angulos[indice] > 90 && angulos[indice] < 270) {
+            getOwner().getVelocity().x = -getOwner().getSpeed();
+            getOwner().setState(StatePolicy.LOOKLEFT);
+        }
+
+        // Velocidade Y no 1º e 2º quadrantes
+        if (angulos[indice] > 0 && angulos[indice] < 180) {
+            getOwner().getVelocity().y = getOwner().getSpeed();
+
+        }
+
+        // Velocidade Y no 3º e 4º quadrantes
+        if (angulos[indice] > 180 && angulos[indice] < 360) {
+            getOwner().getVelocity().y = -getOwner().getSpeed();
+
+        }
+
+    }
 }
  
