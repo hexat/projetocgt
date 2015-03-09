@@ -68,7 +68,7 @@ public class WorldRenderer {
 		this.world = world;
 		addons = new  ArrayList<CGTAddOn>();
 		fatorVolumeObjects = 1f;
-		transparencia = 0f;
+		transparencia = 1f;
 		isLose = false;
 		rio = (CGTOpposite) world.getObjectByLabel("rio");
 		musicActorLose = null;
@@ -410,7 +410,7 @@ public class WorldRenderer {
 
 	private void drawEnemies() {
 		spriteBatch.setColor(1.0f, 1.0f, 1.0f, transparencia);
-
+		
 		for (int i = 0; i < world.getEnemies().size(); i++) {
 			if (world.getEnemies().get(i).getLife() >= 0) {
 				configBehavior(world.getEnemies().get(i));
