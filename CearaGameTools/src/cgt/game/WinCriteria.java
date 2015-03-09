@@ -12,10 +12,14 @@ public abstract class WinCriteria implements Win {
         worldId = world.getId();
     }
 
+    protected CGTGameWorld getWorld() {
+        return CGTGame.get().getWorld(worldId);
+    }
+
     @Override
     public void remove() {
-        if (worldId != null && CGTGame.get().getWorld(worldId) != null) {
-            CGTGame.get().getWorld(worldId).removeWinCriteria(this);
+        if (worldId != null && getWorld() != null) {
+            getWorld().removeWinCriteria(this);
         }
         worldId = null;
     }

@@ -1,7 +1,13 @@
 package br.edu.ifce.cgt.application.controller.dialogs;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.controller.panes.ActorDeadPane;
+import br.edu.ifce.cgt.application.controller.panes.LoseCriteriaPane;
+import br.edu.ifce.cgt.application.controller.panes.TargetTimePane;
+import br.edu.ifce.cgt.application.util.EnumMap;
+import br.edu.ifce.cgt.application.util.Pref;
 import cgt.game.CGTGameWorld;
+import cgt.game.LoseCriteria;
 import cgt.lose.LifeDepleted;
 import cgt.policy.LosePolicy;
 import javafx.event.ActionEvent;
@@ -16,6 +22,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Created by Luan on 16/02/2015.
@@ -25,7 +34,7 @@ public class LoseDialog extends BorderPane {
     private final Stage stage;
     private final CGTGameWorld world;
 
-    @FXML private ComboBox<LosePolicy> boxCriteria;
+    @FXML private ComboBox<EnumMap<LosePolicy>> boxCriteria;
 
     public LoseDialog(CGTGameWorld world) {
         this.world = world;
@@ -45,7 +54,13 @@ public class LoseDialog extends BorderPane {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(Main.getApp().getScene().getWindow());
 
-        boxCriteria.getItems().addAll(LosePolicy.values());
+        List<EnumMap<LosePolicy>> list = new ArrayList<EnumMap<LosePolicy>>();
+        ResourceBundle bundle = Pref.load().getBundle();
+        for (LosePolicy p : LosePolicy.values()) {
+            list.add(new EnumMap<LosePolicy>(p, bundle.getString(p.name())));
+        }
+
+        boxCriteria.getItems().setAll(list);
         boxCriteria.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -56,16 +71,12 @@ public class LoseDialog extends BorderPane {
     }
 
     private void updateContent() {
-        switch (boxCriteria.getValue()) {
+        switch (boxCriteria.getValue().getKey()) {
             case TARGET_TIME:
-                try {
-                    FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/TargetTime.fxml"));
-                    view.setController(this);
-                    GridPane pane = view.load();
-                    setCenter(pane);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                setCenter(new TargetTimePane());
+                break;
+            case ACTOR_DEAD:
+                setCenter(new ActorDeadPane(world.getActor()));
                 break;
         }
         stage.sizeToScene();
@@ -80,20 +91,9 @@ public class LoseDialog extends BorderPane {
     }
 
     public void addWin(ActionEvent actionEvent) {
-        switch (boxCriteria.getValue()) {
-            case ACTOR_DEAD:
-                boolean contem = false;
-                for (int i = 0; i < world.getLoseCriteria().size() && !contem; i++) {
-                    if (world.getLoseCriteria().get(i).getPolicy() == LosePolicy.ACTOR_DEAD) {
-                        contem = true;
-                    }
-                }
-                if (!contem) {
-                    world.addLoseCriterion(new LifeDepleted());
-                }
-                break;
 
-        }
+        world.addLoseCriterion(((LoseCriteriaPane)getCenter()).getCriteria());
+
         stage.close();
     }
 }

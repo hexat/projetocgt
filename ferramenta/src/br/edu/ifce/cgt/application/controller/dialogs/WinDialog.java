@@ -1,6 +1,7 @@
 package br.edu.ifce.cgt.application.controller.dialogs;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.controller.panes.*;
 import br.edu.ifce.cgt.application.util.EnumMap;
 import br.edu.ifce.cgt.application.util.Pref;
 import cgt.game.CGTGameWorld;
@@ -10,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
@@ -70,16 +72,22 @@ public class WinDialog extends BorderPane {
     private void updateContent() {
         switch (boxCriteria.getValue().getKey()) {
             case KILL_ENEMIES:
-                try {
-                    FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/ConfigKillAllEnemies.fxml"));
-                    view.setController(this);
-                    GridPane pane = view.load();
-                    setCenter(pane);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                setCenter(new KillAllPane(world));
+                break;
+            case SURVIVE:
+                setCenter(new SurvivePane());
+                break;
+            case COMPLETE_CROSSING:
+                setCenter(new CompleteCrossingPane());
+                break;
+            case TARGET_SCORE:
+                setCenter(new TargetScorePane());
+                break;
+            case GET_ALL_BONUS:
+                setCenter(new GetAllBonusPane(world));
                 break;
         }
+        setMargin(getCenter(), new Insets(5, 0, 5, 0));
         stage.sizeToScene();
     }
 
@@ -88,25 +96,11 @@ public class WinDialog extends BorderPane {
     }
 
     public void showAndWait() {
-        stage.show();
+        stage.showAndWait();
     }
 
     public void addWin(ActionEvent actionEvent) {
-        switch (boxCriteria.getValue().getKey()) {
-            case KILL_ENEMIES:
-                boolean contem = false;
-                for (int i = 0; i < world.getWinCriteria().size() && !contem; i++) {
-                    if (world.getWinCriteria().get(i).getPolicy() == WinPolicy.KILL_ENEMIES) {
-                        contem = true;
-                    }
-                }
-                if (!contem) {
-                    KillAllEnemies kae = new KillAllEnemies();
-                    world.addWinCriterion(kae);
-                }
-                break;
-
-        }
+        world.addWinCriterion( ( (WinCriteriaPane) getCenter() ).getCriteria() );
         stage.close();
     }
 }
