@@ -71,6 +71,7 @@ public abstract class LifeBar extends HUDComponent {
 	}
 
 	public CGTGameWorld getWorld() {
+		System.out.println(worldId);
 		return CGTGame.get().getWorld(worldId);
 	}
 }

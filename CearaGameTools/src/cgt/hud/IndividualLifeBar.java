@@ -26,6 +26,7 @@ public class IndividualLifeBar extends LifeBar {
 		super.setup();
 		if (object == null) {
 			object = getWorld().getObjectByLabel(ownerId);
+			
 		}
 	}
 

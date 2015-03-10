@@ -30,6 +30,7 @@ public class EnemyGroupLifeBar extends LifeBar {
 
 	public void act(float delta){
 		int enemiesAlive=0;
+		System.out.println(enemiesList);
 		for(CGTEnemy enemy : enemiesList){
 			if(enemy.isDestroyable() && enemy.getLife()>0)
 				enemiesAlive++;

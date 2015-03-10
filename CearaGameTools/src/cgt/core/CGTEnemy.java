@@ -15,7 +15,7 @@ public class CGTEnemy extends CGTOpposite implements Serializable {
 	private int damage;
 	private ArrayList<Behavior> behaviors;
 	private String group;
-	private float alpha; //nivel de transparencia
+	private float alpha; //nivel de transparencia only gdx mode
 	private boolean vulnerable;
 	private float timeToRecovery;
 	private boolean attacking;
