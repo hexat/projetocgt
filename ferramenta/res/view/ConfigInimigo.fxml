@@ -34,13 +34,14 @@
                           </rowConstraints>
                            <children>
                               <Label text="Comportamento" />
+                              <Label text="Valor de Dano" GridPane.rowIndex="2" />
                                <Button mnemonicParsing="false" onAction="#addBehavior" text="+" GridPane.columnIndex="1" />
+                              <IntegerTextField fx:id="txtDamage" prefHeight="26.0" prefWidth="248.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <VBox fx:id="panBehaviors" alignment="CENTER" GridPane.columnSpan="3" GridPane.rowIndex="1">
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
                         </VBox>
-                        <FloatTextField fx:id="txtTimeRec" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
                </children>
