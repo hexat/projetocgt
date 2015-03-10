@@ -2,9 +2,10 @@ package cgt.behaviors;
 
 import java.io.Serializable;
 
+import cgt.core.AbstractBehavior;
 import com.badlogic.gdx.math.Vector2;
 
-public class SineWave implements Behavior,Serializable {
+public class SineWave extends AbstractBehavior {
 
 	private double amplitude;
 	private double frequency;
@@ -24,8 +25,39 @@ public class SineWave implements Behavior,Serializable {
 	public String getBehaviorPolicy() {
 		return "SineWave";
 	}
-	
-	public int getMaxX() {
+
+    @Override
+    public void act() {
+        if(getEnemyPosition() == null){
+            setEnemyPosition(getOwner().getPosition().cpy());
+        }
+        float point = (float) (getAmplitude()*(Math.sin(2*getFrequency()*Math.PI*getOwner().getPosition().x + getPhase())));
+        getOwner().getPosition().y = point;
+        getOwner().getVelocity().x = getOwner().getSpeed();
+
+        if (getOwner().getSpeed() > 0) {
+            if (getOwner().getPosition().x > getMaxX()){
+                getOwner().getPosition().x = getEnemyPosition().x;
+                getOwner().getPosition().y = getEnemyPosition().y;
+                getOwner().getVelocity().y = 0;
+                getOwner().getVelocity().x = 0;
+            }
+        } else {
+            if (getOwner().getPosition().x < getMaxX()){
+                getOwner().getPosition().x = getEnemyPosition().x;
+                getOwner().getPosition().y = getEnemyPosition().y;
+                getOwner().getVelocity().y = 0;
+                getOwner().getVelocity().x = 0;
+            }
+        }
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    public int getMaxX() {
 		return maxX;
 	}
 

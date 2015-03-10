@@ -3,6 +3,7 @@ package br.edu.ifce.cgt.application.controller.panes.behavior;
 import br.edu.ifce.cgt.application.Main;
 import cgt.behaviors.Behavior;
 import cgt.behaviors.Direction;
+import cgt.core.AbstractBehavior;
 import cgt.policy.DirectionPolicy;
 import com.badlogic.gdx.math.Vector2;
 import javafx.fxml.FXML;
@@ -45,7 +46,7 @@ public class DirectionPane extends GridPane implements BehaviorPane {
     }
 
     @Override
-    public Behavior getBehavior() {
+    public AbstractBehavior getBehavior() {
         Direction res = new Direction(boxPolicies.getValue());
         res.setDirectionMode(boxModes.getValue());
         res.setFinalPosition(new Vector2(Integer.parseInt(txtPosFimX.getText()),
