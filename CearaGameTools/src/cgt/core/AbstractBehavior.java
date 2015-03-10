@@ -11,7 +11,9 @@ public abstract class AbstractBehavior implements Behavior {
     private CGTEnemy enemy = null;
 
     protected void remove() {
+    	if (getOwner() != null){
         getOwner().removeBehavior(this);
+    	}
         enemy = null;
     }
 

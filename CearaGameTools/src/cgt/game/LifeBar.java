@@ -59,10 +59,8 @@ public abstract class LifeBar extends HUDComponent {
 	protected void setWorld(CGTGameWorld world) {
 		worldId = world.getId();
 	}
-
-	@Override
-	public boolean remove() {
-		super.remove();
+	
+	public boolean removeFromWorld() {
 		if (getWorld() != null) {
 			getWorld().getHUD().remove(this);
 		}
@@ -71,6 +69,7 @@ public abstract class LifeBar extends HUDComponent {
 	}
 
 	public CGTGameWorld getWorld() {
+//		System.out.println(worldId);
 		return CGTGame.get().getWorld(worldId);
 	}
 }

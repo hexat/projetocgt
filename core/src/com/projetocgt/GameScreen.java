@@ -221,8 +221,8 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	public void render(float delta) {
 		switch (state) {
 		case PLAYING:
-//			System.out.println(world.getActor().getLife());
-			System.out.println(world.getEnemies().get(0).getDamage());
+			System.out.println(world.getActor().getLife());
+//			System.out.println(world.getEnemies().get(0).getDamage());
 			Gdx.input.setInputProcessor(gesture.getGd());
 			controller.update(delta);
 			renderer.render();

@@ -110,7 +110,7 @@ public class WorldController extends BorderPane {
 
     public void addEnemiesLifeBar() {
         EnemyGroupLifeBar bar = new EnemyGroupLifeBar();
-        world.addEnemyGroupLifeBar(bar);
+        world.addLifeBar(bar);
         boxHud.getChildren().add(new ButtonHud(bar));
     }
 
