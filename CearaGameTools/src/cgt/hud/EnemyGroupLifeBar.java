@@ -23,9 +23,9 @@ public class EnemyGroupLifeBar extends LifeBar {
 	@Override
 	public void setup() {
 		super.setup();
-		for (String s : enemiesIds) {
-			enemiesList.add(getWorld().findEnemy(s));
-		}
+		
+		enemiesList = (getWorld().getEnemies());
+	
 	}
 
 	public void act(float delta){
