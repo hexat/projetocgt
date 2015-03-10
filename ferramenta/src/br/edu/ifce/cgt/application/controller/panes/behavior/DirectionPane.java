@@ -1,6 +1,8 @@
 package br.edu.ifce.cgt.application.controller.panes.behavior;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.util.EnumMap;
+import br.edu.ifce.cgt.application.util.Pref;
 import cgt.behaviors.Behavior;
 import cgt.behaviors.Direction;
 import cgt.core.AbstractBehavior;
@@ -14,13 +16,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Created by Luan on 18/02/2015.
  */
 public class DirectionPane extends GridPane implements BehaviorPane {
-    @FXML private ComboBox<DirectionPolicy> boxPolicies;
-    @FXML private ComboBox<Direction.DirectionMode> boxModes;
+    @FXML private ComboBox<EnumMap<DirectionPolicy>> boxPolicies;
+    @FXML private ComboBox<EnumMap<Direction.DirectionMode>> boxModes;
     @FXML private TextField txtPosIniX;
     @FXML private TextField txtPosIniY;
     @FXML private TextField txtPosFimX;
@@ -36,19 +41,31 @@ public class DirectionPane extends GridPane implements BehaviorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        ResourceBundle bundle = Pref.load().getBundle();
 
-        boxModes.getItems().addAll(Direction.DirectionMode.values());
+        List<EnumMap<Direction.DirectionMode>> listMode = new ArrayList<EnumMap<Direction.DirectionMode>>();
+
+        for (Direction.DirectionMode m : Direction.DirectionMode.values()) {
+            listMode.add(new EnumMap<Direction.DirectionMode>(m, bundle.getString(m.name())));
+        }
+
+        boxModes.getItems().setAll(listMode);
         boxModes.getSelectionModel().selectFirst();
 
-        boxPolicies.getItems().addAll(DirectionPolicy.values());
+        List<EnumMap<DirectionPolicy>> list = new ArrayList<EnumMap<DirectionPolicy>>();
+        for (DirectionPolicy p : DirectionPolicy.values()) {
+            list.add(new EnumMap<DirectionPolicy>(p, bundle.getString(p.name())));
+        }
+
+        boxPolicies.getItems().setAll(list);
         boxPolicies.getSelectionModel().selectFirst();
 
     }
 
     @Override
     public AbstractBehavior getBehavior() {
-        Direction res = new Direction(boxPolicies.getValue());
-        res.setDirectionMode(boxModes.getValue());
+        Direction res = new Direction(boxPolicies.getValue().getKey());
+        res.setDirectionMode(boxModes.getValue().getKey());
         res.setFinalPosition(new Vector2(Integer.parseInt(txtPosFimX.getText()),
                 Integer.parseInt(txtPosFimY.getText())));
         res.setInitialPosition(new Vector2(Integer.parseInt(txtPosIniX.getText()),

@@ -74,6 +74,7 @@ public class BehaviorDialog extends BorderPane {
             case 3:
                 setCenter(new WavePane());
         }
+        stage.sizeToScene();
     }
 
     public void addWin() {
