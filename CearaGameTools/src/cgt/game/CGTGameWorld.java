@@ -218,7 +218,7 @@ public class CGTGameWorld extends CGTWindow {
 	}
 	
 	public void addLifeBar(LifeBar lifeBar){
-		lifeBar.remove();
+		lifeBar.removeFromWorld();
 		lifeBar.setWorld(this);
 		hud.add(lifeBar);
 	}
@@ -245,12 +245,6 @@ public class CGTGameWorld extends CGTWindow {
 
 	public ArrayList<HUDComponent> getHUD() {
 		return hud;
-	}
-
-	public void addEnemyGroupLifeBar(EnemyGroupLifeBar lifeBar) {
-		lifeBar.remove();
-		lifeBar.setWorld(this);
-		hud.add(lifeBar);
 	}
 
 	public CGTDialog getLoseDialog() {
