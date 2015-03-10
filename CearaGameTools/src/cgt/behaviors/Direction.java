@@ -12,6 +12,8 @@ import cgt.policy.DirectionPolicy;
 public class Direction extends AbstractBehavior {
 
     private static Random random = new Random();
+    
+    
 
     public enum DirectionMode {
 		LOOP,
@@ -30,6 +32,10 @@ public class Direction extends AbstractBehavior {
 	private float distance;
 	private Vector2 actorPosition;
 	
+	
+	public Direction(){
+		
+	}
 	public Direction(DirectionPolicy directionPolicy){
 		setDirectionPolicy(directionPolicy);
 		this.initialPosition = new Vector2();
