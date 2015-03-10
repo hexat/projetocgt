@@ -22,6 +22,9 @@ public class IndividualLifeBarTitledPane extends TitledPane {
 
     public IndividualLifeBarTitledPane(final IndividualLifeBar individualLifeBar) {
         this.individualLifeBar = individualLifeBar;
+
+        setText("Configuração LifeBar de Objeto");
+
         VBox layout = new VBox();
 
         GridPane gridPane = new GridPane();

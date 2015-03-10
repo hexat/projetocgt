@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,9 +19,10 @@ import java.io.IOException;
 /**
  * Created by Luan on 21/02/2015.
  */
-public class LifebarPane extends GridPane {
+public class LifebarPane extends VBox {
     @FXML public Button btnBarBack;
     @FXML public Button btnBarTexture;
+    @FXML public HudPane hudPane;
 
     private LifeBar lifeBar;
 
@@ -36,6 +38,8 @@ public class LifebarPane extends GridPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        hudPane.setHud(lifeBar);
 
         init();
 
