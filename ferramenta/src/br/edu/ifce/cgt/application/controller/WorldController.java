@@ -183,6 +183,7 @@ public class WorldController extends BorderPane {
         private void addPane() {
             configAccordion.getPanes().clear();
             if (hud instanceof IndividualLifeBar) {
+                setText("LifeBar de Objeto");
                 configAccordion.getPanes().add(new IndividualLifeBarTitledPane((IndividualLifeBar) hud));
             } else if (hud instanceof AmmoDisplay) {
                 configAccordion.getPanes().add(new AmmoDisplayTitledPane((AmmoDisplay) hud));
