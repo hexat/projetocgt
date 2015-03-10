@@ -7,7 +7,6 @@ import cgt.core.AbstractBehavior;
 import cgt.policy.StatePolicy;
 import com.badlogic.gdx.math.Vector2;
 
-import cgt.core.CGTEnemy;
 import cgt.policy.DirectionPolicy;
 
 public class Direction extends AbstractBehavior {

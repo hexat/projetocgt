@@ -3,6 +3,7 @@ package br.edu.ifce.cgt.application.controller.panes.behavior;
 import br.edu.ifce.cgt.application.Main;
 import cgt.behaviors.Behavior;
 import cgt.behaviors.SineWave;
+import cgt.core.AbstractBehavior;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
@@ -33,7 +34,7 @@ public class WavePane extends GridPane implements BehaviorPane {
     }
 
     @Override
-    public Behavior getBehavior() {
+    public AbstractBehavior getBehavior() {
         double ap = Double.parseDouble(txtAmplitude.getText());
         double fr = Double.parseDouble(txtFreq.getText());
         double ph = Double.parseDouble(txtPhase.getText());

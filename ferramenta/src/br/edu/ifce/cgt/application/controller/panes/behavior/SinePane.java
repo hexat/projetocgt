@@ -3,6 +3,7 @@ package br.edu.ifce.cgt.application.controller.panes.behavior;
 import br.edu.ifce.cgt.application.Main;
 import cgt.behaviors.Behavior;
 import cgt.behaviors.Sine;
+import cgt.core.AbstractBehavior;
 import cgt.policy.MovementPolicy;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,7 +36,7 @@ public class SinePane extends GridPane implements BehaviorPane {
     }
 
     @Override
-    public Behavior getBehavior() {
+    public AbstractBehavior getBehavior() {
         Sine res = new Sine(boxMove.getValue());
         res.setMax(Integer.parseInt(txtMax.getText()));
         res.setMin(Integer.parseInt(txtMin.getText()));

@@ -10,6 +10,7 @@ import cgt.behaviors.Behavior;
 import cgt.policy.DirectionPolicy;
 import cgt.policy.StatePolicy;
 import cgt.unit.LabelID;
+import com.badlogic.gdx.utils.Array;
 
 public class CGTEnemy extends CGTOpposite implements Serializable {
 	private int damage;

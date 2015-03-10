@@ -3,6 +3,7 @@ package br.edu.ifce.cgt.application.controller.panes.behavior;
 import br.edu.ifce.cgt.application.Main;
 import cgt.behaviors.Behavior;
 import cgt.behaviors.Fade;
+import cgt.core.AbstractBehavior;
 import cgt.policy.FadePolicy;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +38,7 @@ public class FadePane extends GridPane implements BehaviorPane {
     }
 
     @Override
-    public Behavior getBehavior() {
+    public AbstractBehavior getBehavior() {
         Fade res = new Fade(boxFadePolice.getValue());
         res.setFadeInTime(Integer.parseInt(txtFadeInTime.getText()));
         res.setFadeOutTime(Integer.parseInt(txtFadeOutTime.getText()));
