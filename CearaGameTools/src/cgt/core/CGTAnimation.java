@@ -2,6 +2,7 @@ package cgt.core;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import cgt.core.CGTGameObject;
@@ -25,12 +26,12 @@ public class CGTAnimation {
 	private boolean flipVertical;
 	private PlayMode animationPolicy;
 	private AnimationHandle animation;
-    private StatePolicy actorStage;
+    private List<StatePolicy> actorStates;
 
 
 
     public CGTAnimation() {
-    	actorStage = StatePolicy.IDLE;
+        actorStates = new ArrayList<StatePolicy>();
     }
 
 
@@ -41,7 +42,7 @@ public class CGTAnimation {
 		spriteVelocity = 1;
 		flipHorizontal = false;
 		flipVertical = false;
-        actorStage = null;
+        actorStates = null;
 		animationPolicy = PlayMode.LOOP;
 	}
 	
@@ -103,12 +104,18 @@ public class CGTAnimation {
 		this.flipHorizontal = flipHorizontal;
 	}
 
-    public void setActorStage(StatePolicy actorStage) {
-        this.actorStage = actorStage;
+    public void addActorState(StatePolicy actorState) {
+        if (!actorStates.contains(actorState)) {
+            actorStates.add(actorState);
+        }
     }
 
-    public StatePolicy getActorStage() {
-        return actorStage;
+    public Iterator<StatePolicy> getStatesIterator() {
+        return actorStates.iterator();
+    }
+
+    public boolean containsState(StatePolicy actorState) {
+        return actorStates.contains(actorState);
     }
 
     public TextureRegion getAnimation() {
@@ -125,6 +132,10 @@ public class CGTAnimation {
 		return animation;
 	}
 
+    public void cleanActorStates() {
+        actorStates.clear();
+    }
+
     public void setSpriteSheet(String spriteSheetId) {
         this.spriteSheetId = spriteSheetId;
     }
@@ -132,4 +143,23 @@ public class CGTAnimation {
     public CGTSpriteSheet getSpriteSheet() {
         return CGTGame.get().getSpriteDB().find(spriteSheetId);
 	}
+
+    @Override
+    public CGTAnimation clone(){
+        CGTAnimation novo = new CGTAnimation(spriteSheetId);
+        novo.setAnimationPolicy(getAnimationPolicy());
+        novo.setEndingFrame(getEndingFrame().cpy());
+        novo.setFlipHorizontal(isFlipHorizontal());
+        novo.setFlipVertical(isFlipVertical());
+        novo.setInitialFrame(getInitialFrame().cpy());
+        novo.setSpriteVelocity(getSpriteVelocity());
+        for (StatePolicy p : actorStates) {
+            novo.addActorState(p);
+        }
+        return novo;
+    }
+
+    public void removeState(StatePolicy key) {
+        actorStates.remove(key);
+    }
 }

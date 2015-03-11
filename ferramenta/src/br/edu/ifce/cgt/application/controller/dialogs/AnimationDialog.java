@@ -1,6 +1,7 @@
 package br.edu.ifce.cgt.application.controller.dialogs;
 
 import br.edu.ifce.cgt.application.controller.panes.ImagePane;
+import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import br.edu.ifce.cgt.application.util.EnumMap;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -26,7 +28,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -51,6 +55,9 @@ public class AnimationDialog extends HBox {
     @FXML private ComboBox<EnumMap<Animation.PlayMode>> boxAnimationPolicy;
     @FXML private ComboBox<String> boxSprite;
     @FXML private ComboBox<EnumMap<StatePolicy>> boxStates;
+    @FXML private VBox panStates;
+
+    private List<EnumMap<StatePolicy>> statePolicies;
 
     public AnimationDialog(CGTGameObject object) {
         this.object = object;
@@ -95,7 +102,7 @@ public class AnimationDialog extends HBox {
         boxAnimationPolicy.getItems().setAll(listModes);
         boxAnimationPolicy.getSelectionModel().selectFirst();
 
-
+        statePolicies = new ArrayList<EnumMap<StatePolicy>>();
 
         boxStates.getItems().setAll(getListActorStates());
         boxStates.getSelectionModel().selectFirst();
@@ -112,12 +119,22 @@ public class AnimationDialog extends HBox {
         if (i < boxAnimationPolicy.getItems().size()) {
             boxAnimationPolicy.getSelectionModel().select(i);
         }
-        i = 0;
-        while (i < boxStates.getItems().size() &&
-                boxStates.getItems().get(i).getKey() != animation.getActorStage()) i++;
-        if (i < boxStates.getItems().size()) {
-            boxStates.getSelectionModel().select(i);
+
+        Iterator<StatePolicy> itr = animation.getStatesIterator();
+        boolean found;
+        while (itr.hasNext()) {
+            StatePolicy item = itr.next();
+            found = false;
+            for (i = 0; i < boxStates.getItems().size() && !found; i++) {
+                if (boxStates.getItems().get(i).getKey() == item) {
+                    found = true;
+                    statePolicies.add(boxStates.getItems().get(i));
+                    boxStates.getItems().remove(i);
+                }
+            }
         }
+        updateStates();
+        animation.cleanActorStates();
         txtFrameInitialX.setValue(animation.getInitialFrame().x);
         txtFrameInitialY.setValue(animation.getInitialFrame().y);
         txtFrameFinalX.setValue(animation.getEndingFrame().x);
@@ -141,6 +158,9 @@ public class AnimationDialog extends HBox {
             if (animation == null) {
                 animation = new CGTAnimation();
             }
+            for (EnumMap<StatePolicy> p : statePolicies) {
+                animation.addActorState(p.getKey());
+            }
             animation.setSpriteSheet(boxSprite.getSelectionModel().getSelectedItem());
             animation.setAnimationPolicy(boxAnimationPolicy.getSelectionModel().getSelectedItem().getKey());
             animation.setFlipHorizontal(chkFlipHor.isSelected());
@@ -150,7 +170,6 @@ public class AnimationDialog extends HBox {
                     txtFrameInitialY.getValue()));
             animation.setEndingFrame(new Vector2(txtFrameFinalX.getValue(),
                     txtFrameFinalY.getValue()));
-            animation.setActorStage(boxStates.getValue().getKey());
             object.addAnimation(animation);
             dialogStage.close();
         }
@@ -159,7 +178,7 @@ public class AnimationDialog extends HBox {
     private boolean validate() {
         return txtVel.getValue() > 0 && txtFrameFinalX.getValue() >= 0 &&
                 txtFrameFinalY.getValue() >= 0 && txtFrameInitialX.getValue() >= 0 &&
-                txtFrameInitialY.getValue() >= 0;
+                txtFrameInitialY.getValue() >= 0 && !boxSprite.getSelectionModel().isEmpty() && !statePolicies.isEmpty();
     }
 
     public void showAndWait() {
@@ -175,5 +194,36 @@ public class AnimationDialog extends HBox {
             list.add(new EnumMap<StatePolicy>(s, bundle.getString(s.name())));
         }
         return list;
+    }
+
+    public void addState() {
+        if (!boxStates.getSelectionModel().isEmpty()) {
+            EnumMap<StatePolicy> el = boxStates.getSelectionModel().getSelectedItem();
+            statePolicies.add(el);
+            boxStates.getItems().remove(el);
+            updateStates();
+            dialogStage.sizeToScene();
+        }
+    }
+
+    private void updateStates() {
+        panStates.getChildren().clear();
+        if (statePolicies.size() > 0) {
+            for (final EnumMap<StatePolicy> s : statePolicies) {
+                ItemViewPane pane = new ItemViewPane(s.getValue());
+                pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        statePolicies.remove(s);
+                        boxStates.getItems().add(s);
+                        updateStates();
+                        dialogStage.sizeToScene();
+                    }
+                });
+                panStates.getChildren().add(pane);
+            }
+        } else {
+            panStates.getChildren().add(new Label("Adicione pelo menos um Estado"));
+        }
     }
 }

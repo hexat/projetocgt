@@ -92,18 +92,9 @@ public abstract class CGTGameObject implements Serializable {
 		life = clone.getLife();
 		animations = new ArrayList<CGTAnimation>();
 		for (CGTAnimation a : clone.animations) {
-			for (int i = 0; i < clone.animations.size(); i++) {
-				CGTAnimation novo = new CGTAnimation(clone.animations.get(i).getSpriteSheet().getId());
-                novo.setOwner(this);
-				novo.setAnimationPolicy(clone.animations.get(i).getAnimationPolicy());
-				novo.setEndingFrame(clone.animations.get(i).getEndingFrame());
-				novo.setFlipHorizontal(clone.animations.get(i).isFlipHorizontal());
-				novo.setFlipVertical(clone.animations.get(i).isFlipVertical());
-				novo.setInitialFrame(clone.animations.get(i).getInitialFrame());
-				novo.setSpriteVelocity(clone.animations.get(i).getSpriteVelocity());
-                novo.setActorStage(clone.animations.get(i).getActorStage());
-                animations.add(novo);
-			}
+            CGTAnimation novo = a.clone();
+            novo.setOwner(this);
+            animations.add(novo);
 		}
 		state = clone.getState();
 		stateTime = 0;
@@ -353,7 +344,7 @@ public abstract class CGTGameObject implements Serializable {
 
 	public TextureRegion getAnimation() {
 		for (CGTAnimation a : animations) {
-			if (a.getActorStage() == state) {
+			if (a.containsState(state)) {
 				lastAnimation = a.getAnimation();
 				return lastAnimation;
 			}
