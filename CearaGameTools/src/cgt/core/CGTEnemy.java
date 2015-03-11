@@ -48,7 +48,7 @@ public class CGTEnemy extends CGTOpposite implements Serializable {
 		return behaviors.size();
 	}
 	
-	public Behavior getBehavior(int index) {
+	public AbstractBehavior getBehavior(int index) {
 		return behaviors.get(index);
 	}
 	

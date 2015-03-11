@@ -68,7 +68,7 @@ public class ActionDialog extends VBox {
 //        final InputPolicy input = boxInputs.getSelectionModel().getSelectedItem();
 //        if (input != null && !actor.hasInput(input) && !entradas.contains(input)) {
 //            final ItemViewPane pane = new ItemViewPane(input.toString());
-//            pane.getBtnExcluir().setOnAction(new EventHandler<ActionEvent>() {
+//            pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
 //                @Override
 //                public void handle(ActionEvent event) {
 //                    entradas.remove(input);

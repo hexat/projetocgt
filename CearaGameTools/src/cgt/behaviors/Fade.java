@@ -11,7 +11,9 @@ public class Fade extends AbstractBehavior {
 	private boolean started; 
 	private int fadeOutTime;
 	private FadePolicy fadePolicy;
-	
+
+    public Fade() {}
+
 	public Fade(FadePolicy fadePolicy){
 		setFadePolicy(fadePolicy);
 	}

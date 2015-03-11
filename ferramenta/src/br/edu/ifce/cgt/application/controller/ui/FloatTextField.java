@@ -77,4 +77,8 @@ public class FloatTextField extends TextField {
     public void setValue(float value) {
         setText(value+"");
     }
+
+    public void setValue(double value) {
+        setText(value+"");
+    }
 }

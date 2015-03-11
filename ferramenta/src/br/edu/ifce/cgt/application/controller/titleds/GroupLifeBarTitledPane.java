@@ -64,7 +64,7 @@ public class GroupLifeBarTitledPane extends TitledPane {
                 if (enemyGroupLifeBar.contains(id)) {
                     enemyGroupLifeBar.addEnemy(id);
                     final ItemViewPane pane = new ItemViewPane(id);
-                    pane.getBtnExcluir().setOnAction(new EventHandler<ActionEvent>() {
+                    pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
                             enemyGroupLifeBar.removeEnemy(id);

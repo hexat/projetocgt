@@ -17,14 +17,14 @@
                <accelerator>
                   <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                </accelerator></MenuItem>
-						<Menu mnemonicParsing="false" text="Open Recent" />
+						<Menu fx:id="menuRecent" mnemonicParsing="false" text="Open Recent" />
 						<SeparatorMenuItem mnemonicParsing="false" />
 						<MenuItem mnemonicParsing="false" text="Close" />
 						<MenuItem fx:id="save" mnemonicParsing="false" onAction="#salvar" text="Salvar">
                <accelerator>
                   <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                </accelerator></MenuItem>
-						<MenuItem mnemonicParsing="false" text="Save As…" />
+						<MenuItem onAction="#saveAs" mnemonicParsing="false" text="Save As…" />
 						<MenuItem mnemonicParsing="false" onAction="#export" text="Exportar">
                <accelerator>
                   <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
@@ -32,7 +32,7 @@
 						<SeparatorMenuItem mnemonicParsing="false" />
 						<MenuItem mnemonicParsing="false" text="Preferences…" />
 						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" text="Quit" />
+						<MenuItem onAction="#exit" mnemonicParsing="false" text="Quit" />
 					</items>
 				</Menu>
 				<Menu mnemonicParsing="false" text="Edit">

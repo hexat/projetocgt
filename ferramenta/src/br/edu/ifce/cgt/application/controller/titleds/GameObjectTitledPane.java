@@ -25,7 +25,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.stage.WindowEvent;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.controller.panes.AnimationViewPane;
 import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
@@ -226,7 +225,7 @@ public class GameObjectTitledPane extends TitledPane {
         if (gameObject.getInitialPositions().size() > 0) {
             for (final Vector2 v : gameObject.getInitialPositions()) {
                 ItemViewPane pane = new ItemViewPane(v.toString());
-                pane.getBtnExcluir().setOnAction(new EventHandler<ActionEvent>() {
+                pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         gameObject.getInitialPositions().remove(v);
@@ -245,7 +244,7 @@ public class GameObjectTitledPane extends TitledPane {
         if (gameObject.getSoundCollision().size() > 0) {
             for (final CGTSound s : gameObject.getSoundCollision()) {
                 ItemViewPane pane = new ItemViewPane(s.getFile().getFilename());
-                pane.getBtnExcluir().setOnAction(new EventHandler<ActionEvent>() {
+                pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         gameObject.getSoundCollision().remove(s);
@@ -265,7 +264,7 @@ public class GameObjectTitledPane extends TitledPane {
         if (gameObject.getSoundsDie().size() > 0) {
             for (final CGTSound s : gameObject.getSoundsDie()) {
                 ItemViewPane pane = new ItemViewPane(s.getFile().getFilename());
-                pane.getBtnExcluir().setOnAction(new EventHandler<ActionEvent>() {
+                pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         gameObject.getSoundsDie().remove(s);

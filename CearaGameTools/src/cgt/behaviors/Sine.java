@@ -12,7 +12,8 @@ public class Sine extends AbstractBehavior {
 
 	// used in gdx mode
 	private boolean atFirstStep;
-	
+
+    public Sine() {}
 	public Sine(MovementPolicy movementPolicy){
 		setMovementPolicy(movementPolicy);
 	}

@@ -12,7 +12,8 @@ public class SineWave extends AbstractBehavior {
 	private double phase;
 	private int maxX;
 	private Vector2 enemyPosition;
-	
+
+    public SineWave() {}
 	
 	public SineWave(double amplitude, double frequency, double phase){
 		this.amplitude = amplitude;

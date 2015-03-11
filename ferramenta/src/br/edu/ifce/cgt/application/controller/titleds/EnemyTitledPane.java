@@ -1,14 +1,15 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ResourceBundle;
 
 import br.edu.ifce.cgt.application.Main;
-import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
+import br.edu.ifce.cgt.application.controller.panes.ItemEditPane;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
+import br.edu.ifce.cgt.application.util.Pref;
 import cgt.behaviors.Behavior;
 import br.edu.ifce.cgt.application.controller.dialogs.BehaviorDialog;
+import cgt.core.AbstractBehavior;
 import cgt.core.CGTEnemy;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -16,10 +17,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 
@@ -70,14 +69,22 @@ public class EnemyTitledPane extends TitledPane {
     public void updateBehaviors() {
         panBehaviors.getChildren().clear();
         if (enemy.getBehaviorsSize() > 0) {
+            ResourceBundle bundle = Pref.load().getBundle();
             for (int i = 0; i < enemy.getBehaviorsSize(); i++) {
-                final Behavior behavior = enemy.getBehavior(i);
-                ItemViewPane pane = new ItemViewPane(behavior.getBehaviorPolicy());
-                pane.getBtnExcluir().setOnAction(new EventHandler<ActionEvent>() {
+                final AbstractBehavior behavior = enemy.getBehavior(i);
+                ItemEditPane pane = new ItemEditPane(bundle.getString(behavior.getBehaviorPolicy()));
+                pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         enemy.removeBehavior(behavior);
                         updateBehaviors();
+                    }
+                });
+                pane.getEditButton().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        BehaviorDialog dialog = new BehaviorDialog(enemy, behavior);
+                        dialog.showAndWait();
                     }
                 });
                 panBehaviors.getChildren().add(pane);

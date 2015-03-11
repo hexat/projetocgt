@@ -1,6 +1,7 @@
 package br.edu.ifce.cgt.application.controller.panes.behavior;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import br.edu.ifce.cgt.application.util.EnumMap;
 import br.edu.ifce.cgt.application.util.Pref;
 import cgt.behaviors.Behavior;
@@ -26,11 +27,12 @@ import java.util.ResourceBundle;
 public class DirectionPane extends GridPane implements BehaviorPane {
     @FXML private ComboBox<EnumMap<DirectionPolicy>> boxPolicies;
     @FXML private ComboBox<EnumMap<Direction.DirectionMode>> boxModes;
-    @FXML private TextField txtPosIniX;
-    @FXML private TextField txtPosIniY;
-    @FXML private TextField txtPosFimX;
-    @FXML private TextField txtPosFimY;
+    @FXML private IntegerTextField txtPosIniX;
+    @FXML private IntegerTextField txtPosIniY;
+    @FXML private IntegerTextField txtPosFimX;
+    @FXML private IntegerTextField txtPosFimY;
     @FXML private CheckBox chkIntel;
+    private Direction result;
 
     public DirectionPane() {
         FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/dialogs/behavior/DirectionBehavior.fxml"));
@@ -59,19 +61,45 @@ public class DirectionPane extends GridPane implements BehaviorPane {
 
         boxPolicies.getItems().setAll(list);
         boxPolicies.getSelectionModel().selectFirst();
-
+        result = null;
     }
 
     @Override
     public AbstractBehavior getBehavior() {
-        Direction res = new Direction(boxPolicies.getValue().getKey());
-        res.setDirectionMode(boxModes.getValue().getKey());
-        res.setFinalPosition(new Vector2(Integer.parseInt(txtPosFimX.getText()),
-                Integer.parseInt(txtPosFimY.getText())));
-        res.setInitialPosition(new Vector2(Integer.parseInt(txtPosIniX.getText()),
-                Integer.parseInt(txtPosIniY.getText())));
-        res.setInteligenceMoviment(chkIntel.isSelected());
+        if (result == null) {
+            result = new Direction();
+        }
+        result.setDirectionPolicy(boxPolicies.getValue().getKey());
+        result.setDirectionMode(boxModes.getValue().getKey());
+        result.setFinalPosition(new Vector2(txtPosFimX.getValue(), txtPosFimY.getValue()));
+        result.setInitialPosition(new Vector2(txtPosIniX.getValue(), txtPosIniY.getValue()));
+        result.setInteligenceMoviment(chkIntel.isSelected());
 
-        return res;
+        return result;
+    }
+
+    @Override
+    public void setBehavior(AbstractBehavior behavior) {
+        result = (Direction) behavior;
+        boolean found = false;
+
+        for (int i = 0; i < boxPolicies.getItems().size() && !found; i++) {
+            if (boxPolicies.getItems().get(i).getKey() == result.getDirectionPolicy()) {
+                found = true;
+                boxPolicies.getSelectionModel().select(i);
+            }
+        }
+        found = false;
+        for (int i = 0; i < boxModes.getItems().size() && !found; i++) {
+            if (boxModes.getItems().get(i).getKey() == result.getDirectionMode()) {
+                found = true;
+                boxModes.getSelectionModel().select(i);
+            }
+        }
+        txtPosFimX.setValue(result.getFinalPosition().x);
+        txtPosFimY.setValue(result.getFinalPosition().y);
+        txtPosIniX.setValue(result.getInitialPosition().x);
+        txtPosIniY.setValue(result.getInitialPosition().y);
+        chkIntel.setSelected(result.isInteligenceMoviment());
     }
 }

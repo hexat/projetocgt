@@ -200,7 +200,7 @@ public class WorldTitledPane implements Initializable {
             ResourceBundle bundle = Pref.load().getBundle();
             for (final Lose lose : world.getLoseCriteria()) {
                 ItemViewPane pane = new ItemViewPane(bundle.getString(lose.getPolicy().name()));
-                pane.getBtnExcluir().setOnAction(new EventHandler<ActionEvent>() {
+                pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         world.removeLoseCriteria(lose);
@@ -220,7 +220,7 @@ public class WorldTitledPane implements Initializable {
             ResourceBundle bundle = Pref.load().getBundle();
             for (final Win win : world.getWinCriteria()) {
                 ItemViewPane pane = new ItemViewPane(bundle.getString(win.getPolicy().name()));
-                pane.getBtnExcluir().setOnAction(new EventHandler<ActionEvent>() {
+                pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         world.removeWinCriteria(win);

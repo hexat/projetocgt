@@ -125,6 +125,10 @@ public class WorldController extends BorderPane {
         if (world.getActor() != null) {
             boxActor.getChildren().clear();
             boxActor.getChildren().add(new ObjectButton(world.getActor()));
+
+            for (CGTProjectile p : world.getActor().getProjectiles()) {
+                boxActor.getChildren().add(new ObjectButton(p));
+            }
         }
         boxEnemies.getChildren().clear();
         for (CGTEnemy enemy : world.getEnemies()) {

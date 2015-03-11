@@ -1,6 +1,7 @@
 package br.edu.ifce.cgt.application.controller.panes.behavior;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import br.edu.ifce.cgt.application.util.EnumMap;
 import br.edu.ifce.cgt.application.util.Pref;
 import cgt.behaviors.Behavior;
@@ -10,6 +11,7 @@ import cgt.policy.FadePolicy;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
@@ -22,9 +24,10 @@ import java.util.ResourceBundle;
  * Created by Luan on 18/02/2015.
  */
 public class FadePane extends GridPane implements BehaviorPane {
-    @FXML public ChoiceBox<EnumMap<FadePolicy>> boxFadePolice;
-    @FXML public TextField txtFadeInTime;
-    @FXML public TextField txtFadeOutTime;
+    @FXML public ComboBox<EnumMap<FadePolicy>> boxFadePolice;
+    @FXML public IntegerTextField txtFadeInTime;
+    @FXML public IntegerTextField txtFadeOutTime;
+    private Fade result;
 
     public FadePane() {
         FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/dialogs/behavior/FadeBehavior.fxml"));
@@ -44,15 +47,33 @@ public class FadePane extends GridPane implements BehaviorPane {
 
         boxFadePolice.getItems().setAll(list);
         boxFadePolice.getSelectionModel().selectFirst();
+        result = null;
     }
 
     @Override
     public AbstractBehavior getBehavior() {
-        Fade res = new Fade(boxFadePolice.getValue().getKey());
-        res.setFadeInTime(Integer.parseInt(txtFadeInTime.getText()));
-        res.setFadeOutTime(Integer.parseInt(txtFadeOutTime.getText()));
+        if (result == null) {
+            result = new Fade();
+        }
+        result.setFadePolicy(boxFadePolice.getValue().getKey());
+        result.setFadeInTime(txtFadeInTime.getValue());
+        result.setFadeOutTime(txtFadeOutTime.getValue());
 
-        return res;
+        return result;
+    }
+
+    @Override
+    public void setBehavior(AbstractBehavior behavior) {
+        result = (Fade) behavior;
+        boolean found = false;
+        for (int i = 0; i < boxFadePolice.getItems().size() && !found; i++) {
+            if (boxFadePolice.getItems().get(i).getKey() == result.getFadePolicy()) {
+                found = true;
+                boxFadePolice.getSelectionModel().select(i);
+            }
+        }
+        txtFadeInTime.setValue(result.getFadeInTime());
+        txtFadeOutTime.setValue(result.getFadeOutTime());
     }
 }
 

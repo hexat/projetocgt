@@ -1,8 +1,9 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.controller.panes.ItemEditPane;
 import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
-import br.edu.ifce.cgt.application.controller.panes.ProjectileOrientationPane;
+import br.edu.ifce.cgt.application.controller.dialogs.ProjectileOrientationDialog;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import cgt.core.CGTProjectile;
@@ -47,11 +48,12 @@ public class ProjectileTitledPane extends TitledPane {
     }
 
     private void init() {
-        txtAmmo.setText(projectile.getAmmo()+"");
-        txtAngle.setText(projectile.getAngle()+"");
-        txtDamage.setText(projectile.getDamage()+"");
-        txtInterval.setText(projectile.getInterval()+"");
-        txtMaxAmmo.setText(projectile.getMaxAmmo()+"");
+        txtAmmo.setValue(projectile.getAmmo());
+        txtAngle.setValue(projectile.getAngle());
+        txtDamage.setValue(projectile.getDamage());
+        txtInterval.setValue(projectile.getInterval());
+        txtMaxAmmo.setValue(projectile.getMaxAmmo());
+        updateOrientations();
 
         txtMaxAmmo.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -92,12 +94,11 @@ public class ProjectileTitledPane extends TitledPane {
     }
 
     public void addOrientation() {
-        ProjectileOrientation o = new ProjectileOrientation();
-        ProjectileOrientationPane dialog = new ProjectileOrientationPane(o);
-        dialog.getStage().showAndWait();
+        ProjectileOrientationDialog dialog = new ProjectileOrientationDialog();
+        dialog.showAndWait();
 
-        if (dialog.isConfirmed()) {
-            projectile.addOrientation(o);
+        if (dialog.getOrientation()!= null) {
+            projectile.addOrientation(dialog.getOrientation());
             updateOrientations();
         }
     }
@@ -110,12 +111,20 @@ public class ProjectileTitledPane extends TitledPane {
     }
 
     private void addOrientationOnPane(final ProjectileOrientation o) {
-        ItemViewPane pane = new ItemViewPane(o.getPositionRelativeToGameObject().toString());
-        pane.getBtnExcluir().setOnAction(new EventHandler<ActionEvent>() {
+        ItemEditPane pane = new ItemEditPane(o.getPositionRelativeToGameObject().toString());
+        pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 projectile.getOrientations().remove(o);
                 updateOrientations();
+            }
+        });
+        pane.getEditButton().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ProjectileOrientationDialog dialog = new ProjectileOrientationDialog();
+                dialog.setOrientation(o);
+                dialog.show();
             }
         });
         panOrientations.getChildren().add(pane);

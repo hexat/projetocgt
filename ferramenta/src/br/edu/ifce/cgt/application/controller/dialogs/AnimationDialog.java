@@ -96,13 +96,8 @@ public class AnimationDialog extends HBox {
         boxAnimationPolicy.getSelectionModel().selectFirst();
 
 
-        List<EnumMap<StatePolicy>> list = new ArrayList<EnumMap<StatePolicy>>();
 
-        for (StatePolicy s : StatePolicy.values()) {
-            list.add(new EnumMap<StatePolicy>(s, bundle.getString(s.name())));
-        }
-
-        boxStates.getItems().setAll(list);
+        boxStates.getItems().setAll(getListActorStates());
         boxStates.getSelectionModel().selectFirst();
     }
 
@@ -171,7 +166,14 @@ public class AnimationDialog extends HBox {
         dialogStage.showAndWait();
     }
 
-    public Stage getDialogStage() {
-        return dialogStage;
+    public static List<EnumMap<StatePolicy>> getListActorStates() {
+        ResourceBundle bundle = Pref.load().getBundle();
+
+        List<EnumMap<StatePolicy>> list = new ArrayList<EnumMap<StatePolicy>>();
+
+        for (StatePolicy s : StatePolicy.values()) {
+            list.add(new EnumMap<StatePolicy>(s, bundle.getString(s.name())));
+        }
+        return list;
     }
 }
