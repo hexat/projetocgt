@@ -7,7 +7,6 @@ import br.edu.ifce.cgt.application.Config;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
-import br.edu.ifce.cgt.application.util.Util;
 import cgt.hud.CGTButtonScreen;
 import cgt.screen.CGTDialog;
 import cgt.util.CGTTexture;
