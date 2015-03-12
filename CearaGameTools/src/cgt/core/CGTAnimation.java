@@ -162,4 +162,8 @@ public class CGTAnimation {
     public void removeState(StatePolicy key) {
         actorStates.remove(key);
     }
+
+    public int getStatesActorSize() {
+        return actorStates.size();
+    }
 }

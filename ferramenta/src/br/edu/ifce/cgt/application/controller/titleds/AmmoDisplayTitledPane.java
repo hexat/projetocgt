@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +25,7 @@ import java.io.IOException;
  */
 public class AmmoDisplayTitledPane extends TitledPane {
     @FXML public HudPane hudControl;
-    @FXML public FontPane fontControl;
+//    @FXML public FontPane fontControl;
 
     public ComboBox boxProjectile;
     public Button btnSelectIcon;
@@ -88,7 +89,7 @@ public class AmmoDisplayTitledPane extends TitledPane {
     }
 
     private void init() {
-        fontControl.setFont(ammoDisplay.getLabel());
+//        fontControl.setFont(ammoDisplay.getLabel());
         hudControl.setHud(ammoDisplay);
         if (ammoDisplay != null) {
             if (ammoDisplay.getIcon() != null) {

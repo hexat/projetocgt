@@ -2,8 +2,10 @@ package br.edu.ifce.cgt.application.controller.titleds;
 
 import br.edu.ifce.cgt.application.Config;
 import br.edu.ifce.cgt.application.controller.dialogs.AnimationDialog;
+import br.edu.ifce.cgt.application.controller.panes.ItemEditPane;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
+import br.edu.ifce.cgt.application.util.Pref;
 import cgt.core.CGTAnimation;
 import cgt.util.CGTFile;
 import cgt.util.CGTSound;
@@ -12,6 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import br.edu.ifce.cgt.application.Main;
 import cgt.core.CGTGameObject;
@@ -26,7 +29,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
-import br.edu.ifce.cgt.application.controller.panes.AnimationViewPane;
 import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 
 public class GameObjectTitledPane extends TitledPane {
@@ -34,25 +36,19 @@ public class GameObjectTitledPane extends TitledPane {
     @FXML public VBox boxPositions;
     @FXML public VBox boxSoundColision;
     @FXML public VBox boxSoundDie;
-
+    @FXML public IntegerTextField txtMaxLife;
     @FXML private FloatTextField txtBoundsW;
     @FXML private FloatTextField txtBoundsH;
-
     @FXML private IntegerTextField txtPositionX;
     @FXML private IntegerTextField txtPositionY;
-
     @FXML private IntegerTextField txtColisionX;
     @FXML private IntegerTextField txtColisionY;
     @FXML private FloatTextField txtColisionW;
     @FXML private FloatTextField txtColisionH;
-
     @FXML private IntegerTextField txtVelocidade;
-
     @FXML private IntegerTextField txtLife;
-
     @FXML private Button btnSetSound;
     @FXML private VBox listTeste;
-
 	@FXML private TableView<String> tableSomColisao;
 	private ObservableList<String> listaSomColisao;
 	
@@ -116,7 +112,20 @@ public class GameObjectTitledPane extends TitledPane {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue) {
-                    gameObject.setLife(txtLife.getValue());
+                    if (txtLife.getValue() > gameObject.getMaxLife()) {
+                        gameObject.setLife(gameObject.getMaxLife());
+                    } else {
+                        gameObject.setLife(txtLife.getValue());
+                    }
+                }
+            }
+        });
+
+        txtMaxLife.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    gameObject.setMaxLife(txtMaxLife.getValue());
                 }
             }
         });
@@ -280,9 +289,7 @@ public class GameObjectTitledPane extends TitledPane {
     }
 
     @FXML public void btnProcurarSomColisao(){
-
-		
-		FileChooser fileChooser = new FileChooser();							
+		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Selecione o Background");
 
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo WAV (*.wav)", "*.wav");
@@ -313,9 +320,23 @@ public class GameObjectTitledPane extends TitledPane {
         boxAnimations.getChildren().clear();
         List<CGTAnimation> lista = gameObject.getAnimations();
         if (lista.size() > 0) {
+            ResourceBundle bundle = Pref.load().getBundle();
             for (final CGTAnimation animation : lista) {
-                AnimationViewPane pane = new AnimationViewPane(animation);
-                pane.getBtnExcluir().setOnAction(new EventHandler<ActionEvent>() {
+                String name = bundle.getString(animation.getStatesIterator().next().name());
+                if (animation.getStatesActorSize() > 1) {
+                    name += "...";
+                }
+
+                ItemEditPane pane = new ItemEditPane(name);
+                pane.getEditButton().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        AnimationDialog dialog = new AnimationDialog(animation);
+                        dialog.showAndWait();
+                        updateBoxAnimation();
+                    }
+                });
+                pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         gameObject.removeAnimation(animation);
