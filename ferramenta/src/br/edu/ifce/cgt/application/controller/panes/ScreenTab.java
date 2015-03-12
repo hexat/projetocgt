@@ -5,7 +5,7 @@ import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 
-import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.titleds.ScreenTitledPane;
 import br.edu.ifce.cgt.application.controller.titleds.WorldTitledPane;
@@ -40,7 +40,7 @@ public class ScreenTab extends Tab {
                         .showConfirm();
 
                 if (response == Dialog.ACTION_OK) {
-                    Config.getGame().remove(screen);
+                    Config.get().getGame().remove(screen);
                     if (ScreenTab.this.getTabPane().getTabs().contains(event.getSource())) {
                     	ScreenTab.this.getTabPane().getTabs().remove(event.getSource());
                     }

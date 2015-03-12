@@ -1,6 +1,6 @@
 package br.edu.ifce.cgt.application.controller.panes;
 
-import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
 import cgt.game.LifeBar;
@@ -10,7 +10,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
@@ -53,10 +52,10 @@ public class LifebarPane extends VBox {
                 File file = DialogsUtil.showOpenDialog("Select Background", DialogsUtil.IMG_FILTER);
                 if (file != null) {
                     if (lifeBar.getBackgroundBar() == null) {
-                        lifeBar.setBackgroundBar(new CGTTexture(Config.createImg(file)));
+                        lifeBar.setBackgroundBar(new CGTTexture(Config.get().createImg(file)));
                         btnBarBack.setText(file.getName());
                     } else {
-                        Config.destroy(lifeBar.getBackgroundBar().getFile());
+                        Config.get().destroy(lifeBar.getBackgroundBar().getFile());
                         lifeBar.setBackgroundBar(null);
                         btnBarBack.setText("Select");
                     }
@@ -70,10 +69,10 @@ public class LifebarPane extends VBox {
                 File file = DialogsUtil.showOpenDialog("Select Bar Texture", DialogsUtil.IMG_FILTER);
                 if (file != null) {
                     if (lifeBar.getBar() == null) {
-                        lifeBar.setBar(new CGTTexture(Config.createImg(file)));
+                        lifeBar.setBar(new CGTTexture(Config.get().createImg(file)));
                         btnBarTexture.setText(file.getName());
                     } else {
-                        Config.destroy(lifeBar.getBar().getFile());
+                        Config.get().destroy(lifeBar.getBar().getFile());
                         lifeBar.setBar(null);
                         btnBarTexture.setText("Select");
                     }

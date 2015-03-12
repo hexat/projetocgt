@@ -17,9 +17,11 @@ public class AppPref {
     private int versionCode;
     private String appId;
 
-    public AppPref() {
+    private File file;
+
+    protected AppPref(File file) {
+        this.file = file;
         Properties prefs = new Properties();
-        File file = new File("prefs.properties");
         if (file.exists()) {
             try {
                 prefs.load(new FileInputStream(file));
@@ -30,6 +32,12 @@ public class AppPref {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else {
+            apkName = "Ceara Game Tools";
+            versionCode = 1;
+            versionName = "1.0";
+            appId = "br.edu.ifce.cearagametools";
+            save();
         }
 
     }
@@ -66,16 +74,16 @@ public class AppPref {
         this.appId = appId;
     }
 
-    private void toProperties() {
+    public void save() {
         Properties prefs = new Properties();
 
         prefs.put(APK_NAME, getApkName());
         prefs.put(VERSION_NAME, getVersionName());
-        prefs.put(VERSION_CODE, getVersionCode());
+        prefs.put(VERSION_CODE, getVersionCode()+"");
         prefs.put(APPID, getAppId());
 
         try {
-            prefs.store(new FileOutputStream(new File("prefs.properties")), null);
+            prefs.store(new FileOutputStream(file), null);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

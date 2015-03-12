@@ -18,7 +18,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
-import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.util.Config;
 import javafx.fxml.FXML;
 import br.edu.ifce.cgt.application.controller.panes.ScreenTab;
 import org.controlsfx.dialog.Dialogs;
@@ -86,11 +86,11 @@ public class MenuBarController implements Initializable {
     private void open(File open) {
         TabPane tabFerramenta = (TabPane) Main.getApp().getScene().lookup("#tabFerramenta");
 
-        Config.unzip(open);
+        Config.get().unzip(open);
         if (tabFerramenta.getTabs().size() > 1) {
             tabFerramenta.getTabs().remove(1, tabFerramenta.getTabs().size());
         }
-        for (CGTWindow w : Config.getGame().getWindows()) {
+        for (CGTWindow w : Config.get().getGame().getWindows()) {
             ScreenTab tab = new ScreenTab(w);
 
             tabFerramenta.getTabs().add(tab);
@@ -101,15 +101,19 @@ public class MenuBarController implements Initializable {
 	@FXML
 	public void salvar() {
         File save;
-        if (Config.isLoaded()) {
-            save = Config.getInputProjectFile();
+        if (Config.get().isLoaded()) {
+            save = Config.get().getInputProjectFile();
         } else {
             save = DialogsUtil.showSaveDialog("Salvar projeto");
         }
 
         if (save != null) {
+
+            Pref.load().addRecentProject(save.getAbsolutePath());
+            Pref.load().save();
+
             try {
-                Config.zip(save);
+                Config.get().zip(save);
                 Dialogs.create().owner(Main.getApp()).message(":)").title("Salvando Projeto").showInformation();
             } catch (IOException e) {
                 DialogsUtil.showErrorDialog();
@@ -119,7 +123,7 @@ public class MenuBarController implements Initializable {
 	}
 
     @FXML public void export() {
-        List<CGTError> errors = Config.getGame().validate();
+        List<CGTError> errors = Config.get().getGame().validate();
         if (errors.isEmpty()) {
             new ExportDialog().show();
         } else {
@@ -144,7 +148,7 @@ public class MenuBarController implements Initializable {
         File save = DialogsUtil.showSaveDialog("Salvar projeto");
         if (save != null) {
             try {
-                Config.zip(save);
+                Config.get().zip(save);
                 Dialogs.create().owner(Main.getApp()).message(":)").title("Salvando Projeto").showInformation();
             } catch (IOException e) {
                 DialogsUtil.showErrorDialog();

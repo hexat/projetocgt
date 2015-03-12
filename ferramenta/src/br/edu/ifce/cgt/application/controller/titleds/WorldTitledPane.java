@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.dialogs.DialogDialog;
 import br.edu.ifce.cgt.application.controller.dialogs.LoseDialog;
@@ -93,7 +93,7 @@ public class WorldTitledPane implements Initializable {
 		String path = "";
 
 		if(chosenFile != null) {
-            world.setBackground(new CGTTexture(Config.createImg(chosenFile)));
+            world.setBackground(new CGTTexture(Config.get().createImg(chosenFile)));
             path = chosenFile.getName();
 		}
 
@@ -137,20 +137,20 @@ public class WorldTitledPane implements Initializable {
 
     private void removerDialog(CGTDialog dialog) {
         if (dialog.getHorizontalBorderTexture() != null) {
-            Config.destroy(dialog.getHorizontalBorderTexture().getFile());
+            Config.get().destroy(dialog.getHorizontalBorderTexture().getFile());
         }
         if (dialog.getRightBottomCorner() != null) {
-            Config.destroy(dialog.getRightBottomCorner().getFile());
+            Config.get().destroy(dialog.getRightBottomCorner().getFile());
         }
         if (dialog.getWindow() != null) {
-            Config.destroy(dialog.getWindow().getFile());
+            Config.get().destroy(dialog.getWindow().getFile());
         }
         for (CGTButtonScreen bs : dialog.getButtons()) {
             if (bs.getTextureUp() != null) {
-                Config.destroy(bs.getTextureUp().getFile());
+                Config.get().destroy(bs.getTextureUp().getFile());
             }
             if (bs.getTextureDown() != null) {
-                Config.destroy(bs.getTextureDown().getFile());
+                Config.get().destroy(bs.getTextureDown().getFile());
             }
             bs.setTextureDown(null);
             bs.setTextureUp(null);
@@ -159,12 +159,12 @@ public class WorldTitledPane implements Initializable {
 
         if (dialog.getCloseButton() != null) {
             if (dialog.getCloseButton().getTextureDown() != null) {
-                Config.destroy(dialog.getCloseButton().getTextureDown().getFile());
+                Config.get().destroy(dialog.getCloseButton().getTextureDown().getFile());
                 dialog.getCloseButton().setTextureDown(null);
             }
 
             if (dialog.getCloseButton().getTextureUp() != null) {
-                Config.destroy(dialog.getCloseButton().getTextureUp().getFile());
+                Config.get().destroy(dialog.getCloseButton().getTextureUp().getFile());
                 dialog.getCloseButton().setTextureUp(null);
             }
         }
@@ -278,11 +278,11 @@ public class WorldTitledPane implements Initializable {
 
         if (file != null) {
             if (world.getMusic() != null) {
-                Config.destroy(world.getMusic().getFile());
+                Config.get().destroy(world.getMusic().getFile());
                 world.setMusic(null);
             }
             try {
-                CGTFile music = Config.createAudio(file);
+                CGTFile music = Config.get().createAudio(file);
 
                 world.setMusic(new CGTSound(music));
 

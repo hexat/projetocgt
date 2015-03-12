@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
 import cgt.game.CGTScreen;
 import cgt.util.CGTTexture;
@@ -33,7 +33,7 @@ public class ScreenTitledPane implements Initializable {
     @FXML public void btnChooseBackScreen() {
         File file = DialogsUtil.showOpenDialog("Escolha uma imagem", DialogsUtil.IMG_FILTER);
         if (file != null) {
-            screen.setBackground(new CGTTexture(Config.createImg(file)));
+            screen.setBackground(new CGTTexture(Config.get().createImg(file)));
             txtBackScreen.setText(file.getName());
         }
     }
@@ -48,7 +48,7 @@ public class ScreenTitledPane implements Initializable {
 
     @FXML public void teste() {
         String newId = txtScreenId.getText();
-        if (newId != null && !newId.equals("")&& !Config.getGame().getIds().contains(newId)) {
+        if (newId != null && !newId.equals("")&& !Config.get().getGame().getIds().contains(newId)) {
             screen.setId(newId);
             ((TabPane)Main.getApp().getScene().lookup("#tabFerramenta")).getSelectionModel().getSelectedItem().setText(newId);
         } else {

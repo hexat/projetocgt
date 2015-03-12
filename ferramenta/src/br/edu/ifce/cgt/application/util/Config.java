@@ -1,55 +1,54 @@
-package br.edu.ifce.cgt.application;
+package br.edu.ifce.cgt.application.util;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.util.Locale;
 import java.util.Observer;
-import java.util.ResourceBundle;
 
-import javafx.fxml.FXMLLoader;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
 
-import br.edu.ifce.cgt.application.util.DialogsUtil;
-import br.edu.ifce.cgt.application.util.ZipHelper;
 import cgt.game.CGTGame;
 import cgt.util.CGTFile;
 
-public abstract class Config {
+public  class Config {
 	private final static String GRADLE_PATH = "/Users/luanjames/src/projetocgt/";
-
-	public final static String BASE = System.getProperty("user.home")
-			+ "/.cgt/";
+	public final static String BASE = System.getProperty("user.home") + "/.cgt/";
 	public final static String BASE_IMG = "data/img/";
-	public final static String BASE_AUDIO = "data/audio/";
+    public final static String BASE_AUDIO = "data/audio/";
+    private File inputProjectFile = null;
 
-    private static File inputProjectFile = null;
+    private static Config instance = null;
+	private CGTGame game = null;
+    private AppPref pref;
 
-//	private static ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n.String", new Locale("en", "EN"));
+    private Config() {
+        game = CGTGame.get();
+        File file = new File(Config.BASE);
+        try {
+            FileUtils.deleteDirectory(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        file.mkdirs();
 
-	private static CGTGame instance = null;
+        pref = new AppPref(new File(BASE+"pref.properties"));
+    }
 
-	public static CGTGame getGame() {
-		if (instance == null) {
-			instance = CGTGame.get();
-			File file = new File(Config.BASE);
-			try {
-				FileUtils.deleteDirectory(file);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+    public static Config get() {
+        if (instance == null) {
+            instance = new Config();
+        }
+        return instance;
+    }
 
-			file.mkdirs();
-		}
-
-		return instance;
+	public CGTGame getGame() {
+		return game;
 	}
 
-	public static CGTFile createImg(File src) {
+	public CGTFile createImg(File src) {
 		CGTFile res = null;
 		if (src != null && src.exists()) {
 			try {
@@ -65,7 +64,18 @@ public abstract class Config {
 		return res;
 	}
 
-	public static CGTFile createAudio(File src) throws IOException {
+    public File createIcon(File src, int size) {
+        File res = new File(BASE + "icons/"+size+".png");
+
+        try {
+            FileUtils.copyFile(src, res);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+	public CGTFile createAudio(File src) throws IOException {
 		CGTFile res = null;
 		String filename = System.currentTimeMillis() + ".wav";
 		FileUtils.copyFile(src, new File(BASE + BASE_AUDIO + filename));
@@ -74,7 +84,7 @@ public abstract class Config {
 		return res;
 	}
 
-	public static boolean export(Observer observer) {
+	public boolean export(Observer observer) {
 		if (getGame().validate().isEmpty()) {
 			File configWorld = new File(BASE + "config.cgt");
 			getGame().saveGame(configWorld);
@@ -120,12 +130,12 @@ public abstract class Config {
 		return false;
 	}
 
-	public static void zip(File outFile) throws IOException {
+	public void zip(File outFile) throws IOException {
 		File configWorld = new File(BASE + "config.cgt");
 		getGame().saveGame(configWorld);
 		new ZipHelper().zipDir(BASE, outFile.getAbsolutePath());
 	}
-	public static void unzip(File inputFile) {
+	public void unzip(File inputFile) {
         inputProjectFile = inputFile;
 		File o = new File(BASE);
 		try {
@@ -144,28 +154,38 @@ public abstract class Config {
 		if (configWorld.exists()) {
 			try {
 				InputStream io = new FileInputStream(configWorld);
-				instance = CGTGame.getSavedGame(io);
+				game = CGTGame.getSavedGame(io);
 				io.close();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
+        pref = new AppPref(new File(BASE+"pref.properties"));
 	}
 
-	public static void destroy(CGTFile file) {
+	public void destroy(CGTFile file) {
 		File f = new File(BASE+file.getFile().getPath());
 		f.delete();
 	}
 
-    public static boolean isLoaded() {
+    public boolean isLoaded() {
         return inputProjectFile != null;
     }
 
-    public static File getInputProjectFile() {
+    public File getInputProjectFile() {
         return inputProjectFile;
     }
+
+    public File getIcon(int size) {
+        return new File(BASE+"icons/"+size+".png");
+    }
+
+    public AppPref getPref() {
+        return pref;
+    }
+
 
 //	public static void loadView(String pathResource, Object controller) {
 //		FXMLLoader xml = new FXMLLoader(Main.class.getResource(pathResource));
