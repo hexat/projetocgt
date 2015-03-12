@@ -38,32 +38,32 @@
                   <Label text="Código da versão" GridPane.rowIndex="4" />
                   <TextField fx:id="txtVersion" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <TextField fx:id="txtVersionCode" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <BorderPane prefHeight="36.0" prefWidth="139.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                  <BorderPane id="32" onMouseClicked="#setImg" prefHeight="36.0" prefWidth="139.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <center>
                         <ImageView fx:id="img32" fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
                      </center>
                   </BorderPane>
                   <Label text="32x32" GridPane.rowIndex="5" />
                   <Label text="48x48" GridPane.rowIndex="6" />
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <BorderPane id="48" onMouseClicked="#setImg" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <center>
                         <ImageView fx:id="img48" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
                      </center>
                   </BorderPane>
                   <Label text="72x72" GridPane.rowIndex="7" />
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                  <BorderPane id="72" onMouseClicked="#setImg" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                      <center>
                         <ImageView fx:id="img72" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
                      </center>
                   </BorderPane>
                   <Label text="96x96" GridPane.rowIndex="8" />
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                  <BorderPane id="96" onMouseClicked="#setImg" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                      <center>
                         <ImageView fx:id="img96" fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
                      </center>
                   </BorderPane>
                   <Label text="144x144" GridPane.rowIndex="9" />
-                  <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                  <BorderPane id="144" onMouseClicked="#setImg" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
                      <center>
                         <ImageView fx:id="img144" fitHeight="144.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
                      </center>

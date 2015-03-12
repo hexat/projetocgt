@@ -33,6 +33,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.controlsfx.dialog.Dialogs;
 
 /**
  * Created by infolev on 10/02/15.
@@ -134,7 +135,6 @@ public class AnimationDialog extends HBox {
             }
         }
         updateStates();
-        animation.cleanActorStates();
         txtFrameInitialX.setValue(animation.getInitialFrame().x);
         txtFrameInitialY.setValue(animation.getInitialFrame().y);
         txtFrameFinalX.setValue(animation.getEndingFrame().x);
@@ -154,10 +154,13 @@ public class AnimationDialog extends HBox {
     }
 
     public void addAnimation() {
-        if (validate()) {
+        List<String> list = validate();
+        if (list.isEmpty()) {
             if (animation == null) {
                 animation = new CGTAnimation();
+                object.addAnimation(animation);
             }
+            animation.cleanActorStates();
             for (EnumMap<StatePolicy> p : statePolicies) {
                 animation.addActorState(p.getKey());
             }
@@ -170,15 +173,49 @@ public class AnimationDialog extends HBox {
                     txtFrameInitialY.getValue()));
             animation.setEndingFrame(new Vector2(txtFrameFinalX.getValue(),
                     txtFrameFinalY.getValue()));
-            object.addAnimation(animation);
             dialogStage.close();
+        } else {
+            String msg = "";
+            for (String s : list) {
+                msg += s + '\n';
+            }
+
+            Dialogs.create().title("Problemas").message(msg).showWarning();
         }
     }
 
-    private boolean validate() {
-        return txtVel.getValue() > 0 && txtFrameFinalX.getValue() >= 0 &&
-                txtFrameFinalY.getValue() >= 0 && txtFrameInitialX.getValue() >= 0 &&
-                txtFrameInitialY.getValue() >= 0 && !boxSprite.getSelectionModel().isEmpty() && !statePolicies.isEmpty();
+    private List<String> validate() {
+        List<String> errors = new ArrayList<String>();
+        ResourceBundle bundle = Pref.load().getBundle();
+        if (txtVel.getValue() <= 0) {
+            errors.add(bundle.getString("vel_not_neg"));
+        }
+
+        if (txtFrameFinalX.getValue() < 0) {
+            errors.add(bundle.getString("frame_final_x_not_neg"));
+        }
+
+        if (txtFrameFinalY.getValue() < 0) {
+            errors.add(bundle.getString("frame_final_y_not_neg"));
+        }
+
+        if (txtFrameInitialX.getValue() < 0) {
+            errors.add(bundle.getString("frame_initial_x_not_neg"));
+        }
+
+        if (txtFrameInitialY.getValue() < 0) {
+            errors.add(bundle.getString("frame_initial_y_not_neg"));
+        }
+
+        if (boxSprite.getSelectionModel().isEmpty()) {
+            errors.add(bundle.getString("sprite_not_void"));
+        }
+
+        if (statePolicies.isEmpty()) {
+            errors.add(bundle.getString("state_actor_not_void"));
+        }
+
+        return errors;
     }
 
     public void showAndWait() {
