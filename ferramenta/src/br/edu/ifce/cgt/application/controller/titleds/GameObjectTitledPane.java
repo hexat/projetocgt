@@ -77,6 +77,7 @@ public class GameObjectTitledPane extends TitledPane {
         txtColisionX.setText(((int)gameObject.getCollision().x)+"");
         txtColisionY.setText(((int)gameObject.getCollision().y)+"");
         txtLife.setText(gameObject.getLife()+"");
+        txtMaxLife.setValue(gameObject.getMaxLife());
         txtVelocidade.setText(gameObject.getSpeed()+"");
         updateBoxAnimation();
         updateBoxPositions();
@@ -114,6 +115,7 @@ public class GameObjectTitledPane extends TitledPane {
                 if (!newValue) {
                     if (txtLife.getValue() > gameObject.getMaxLife()) {
                         gameObject.setLife(gameObject.getMaxLife());
+                        txtLife.setValue(gameObject.getMaxLife());
                     } else {
                         gameObject.setLife(txtLife.getValue());
                     }
