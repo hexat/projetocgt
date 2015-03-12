@@ -49,8 +49,9 @@ public class GameTitledPane extends TitledPane {
         for (String s : Config.getGame().getIds()) {
             boxWindows.getItems().add(s);
         }
-
-
+        if (Config.getGame().getStartWindow() != null) {
+            boxWindows.getSelectionModel().select(Config.getGame().getStartWindow().getId());
+        }
     }
 
     @FXML public void setWindowDefault() {

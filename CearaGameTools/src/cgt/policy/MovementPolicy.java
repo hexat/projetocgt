@@ -6,6 +6,6 @@ public enum MovementPolicy {
 	WIDTH, 
 	HEIGHT, 
 	ANGLE, 
-	OPACITY;
+	OPACITY
 }
  

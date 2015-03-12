@@ -22,7 +22,7 @@ public class AnimationViewPane extends GridPane {
         this.animation = animation;
 
         ResourceBundle bundle = Pref.load().getBundle();
-        add(new Label(bundle.getString(animation.getActorStage().name())), 0, 0);
+        add(new Label(bundle.getString(animation.getAnimationPolicy().name())), 0, 0);
         add(new Label(animation.getInitialFrame().toString() + " - " + animation.getEndingFrame().toString()), 1, 0);
 
         Button btnEditar = new Button("Editar");

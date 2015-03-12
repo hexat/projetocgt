@@ -22,7 +22,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.stage.WindowEvent;
 import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 
 public class ActorTitledPane extends TitledPane {
@@ -45,7 +44,7 @@ public class ActorTitledPane extends TitledPane {
 			for (final InputPolicy input : actions.keySet()) {
 				ItemViewPane pane = new ItemViewPane(bundle.getString(input.name()) + " -> " +
                         bundle.getString(actions.get(input).name()));
-				pane.getBtnExcluir().setOnAction(new EventHandler<ActionEvent>() {
+				pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
 						actor.removeInputFromAction(input);

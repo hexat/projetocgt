@@ -125,6 +125,10 @@ public class WorldController extends BorderPane {
         if (world.getActor() != null) {
             boxActor.getChildren().clear();
             boxActor.getChildren().add(new ObjectButton(world.getActor()));
+
+            for (CGTProjectile p : world.getActor().getProjectiles()) {
+                boxActor.getChildren().add(new ObjectButton(p));
+            }
         }
         boxEnemies.getChildren().clear();
         for (CGTEnemy enemy : world.getEnemies()) {
@@ -168,29 +172,45 @@ public class WorldController extends BorderPane {
     }
 
     private class ButtonHud extends Button {
-        private HUDComponent hud;
+        private HUDComponent hudComponent;
         public ButtonHud(HUDComponent hud) {
             super(hud.getName());
-            this.hud = hud;
-            setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    addPane();
-                }
-            });
-        }
+            this.hudComponent = hud;
 
-        private void addPane() {
-            configAccordion.getPanes().clear();
             if (hud instanceof IndividualLifeBar) {
                 setText("LifeBar de Objeto");
-                configAccordion.getPanes().add(new IndividualLifeBarTitledPane((IndividualLifeBar) hud));
+
+                setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        configAccordion.getPanes().clear();
+                        configAccordion.getPanes().add(new IndividualLifeBarTitledPane((IndividualLifeBar) hudComponent));
+                        configAccordion.getPanes().get(0).setExpanded(true);
+                    }
+                });
             } else if (hud instanceof AmmoDisplay) {
-                configAccordion.getPanes().add(new AmmoDisplayTitledPane((AmmoDisplay) hud));
+                setText("Display de Munição");
+
+                setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        configAccordion.getPanes().clear();
+                        configAccordion.getPanes().add(new AmmoDisplayTitledPane((AmmoDisplay) hudComponent));
+                        configAccordion.getPanes().get(0).setExpanded(true);
+                    }
+                });
             } else if (hud instanceof EnemyGroupLifeBar) {
-                configAccordion.getPanes().add(new GroupLifeBarTitledPane((EnemyGroupLifeBar) hud));
+                setText("LifeBar de Inimigos");
+
+                setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        configAccordion.getPanes().clear();
+                        configAccordion.getPanes().add(new GroupLifeBarTitledPane((EnemyGroupLifeBar) hudComponent));
+                        configAccordion.getPanes().get(0).setExpanded(true);
+                    }
+                });
             }
-            configAccordion.getPanes().get(0).setExpanded(true);
         }
     }
 }

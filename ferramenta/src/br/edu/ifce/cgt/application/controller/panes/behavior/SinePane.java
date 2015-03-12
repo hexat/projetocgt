@@ -1,6 +1,9 @@
 package br.edu.ifce.cgt.application.controller.panes.behavior;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
+import br.edu.ifce.cgt.application.util.EnumMap;
+import br.edu.ifce.cgt.application.util.Pref;
 import cgt.behaviors.Behavior;
 import cgt.behaviors.Sine;
 import cgt.core.AbstractBehavior;
@@ -12,14 +15,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Created by Luan on 18/02/2015.
  */
 public class SinePane extends GridPane implements BehaviorPane {
-    @FXML public TextField txtMin;
-    @FXML public TextField txtMax;
-    @FXML public ComboBox<MovementPolicy> boxMove;
+    @FXML public IntegerTextField txtMin;
+    @FXML public IntegerTextField txtMax;
+    @FXML public ComboBox<EnumMap<MovementPolicy>> boxMove;
+    private Sine result;
 
     public SinePane() {
         FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/dialogs/behavior/SineBehavior.fxml"));
@@ -31,16 +38,42 @@ public class SinePane extends GridPane implements BehaviorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        boxMove.getItems().addAll(MovementPolicy.values());
+
+        ResourceBundle bundle = Pref.load().getBundle();
+        List<EnumMap<MovementPolicy>> list = new ArrayList<EnumMap<MovementPolicy>>();
+        for (MovementPolicy p : MovementPolicy.values()) {
+            list.add(new EnumMap<MovementPolicy>(p, bundle.getString(p.name())));
+        }
+        boxMove.getItems().setAll(list);
         boxMove.getSelectionModel().selectFirst();
+        result = null;
     }
 
     @Override
     public AbstractBehavior getBehavior() {
-        Sine res = new Sine(boxMove.getValue());
-        res.setMax(Integer.parseInt(txtMax.getText()));
-        res.setMin(Integer.parseInt(txtMin.getText()));
+        if (result == null) {
+            result = new Sine();
+        }
+        result.setMovementPolicy(boxMove.getValue().getKey());
+        result.setMax(txtMax.getValue());
+        result.setMin(txtMin.getValue());
 
-        return res;
+        return result;
+    }
+
+    @Override
+    public void setBehavior(AbstractBehavior behavior) {
+        result = (Sine) behavior;
+
+        boolean found = false;
+        for (int i = 0; i < boxMove.getItems().size() && !found; i++) {
+            if (boxMove.getItems().get(i).getKey() == result.getMovementPolicy()) {
+                found = true;
+                boxMove.getSelectionModel().select(i);
+            }
+        }
+
+        txtMax.setValue(result.getMax());
+        txtMin.setValue(result.getMin());
     }
 }

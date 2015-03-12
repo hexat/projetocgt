@@ -1,6 +1,8 @@
 package br.edu.ifce.cgt.application.controller.panes.behavior;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
+import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import cgt.behaviors.Behavior;
 import cgt.behaviors.SineWave;
 import cgt.core.AbstractBehavior;
@@ -15,10 +17,11 @@ import java.io.IOException;
  * Created by Luan on 18/02/2015.
  */
 public class WavePane extends GridPane implements BehaviorPane {
-    @FXML public TextField txtAmplitude;
-    @FXML public TextField txtFreq;
-    @FXML public TextField txtPhase;
-    @FXML public TextField txtMax;
+    @FXML public FloatTextField txtAmplitude;
+    @FXML public FloatTextField txtFreq;
+    @FXML public FloatTextField txtPhase;
+    @FXML public IntegerTextField txtMax;
+    private SineWave result;
 
     public WavePane() {
         FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/dialogs/behavior/SineWaveBehavior.fxml"));
@@ -31,16 +34,33 @@ public class WavePane extends GridPane implements BehaviorPane {
             e.printStackTrace();
         }
 
+        result = null;
     }
 
     @Override
     public AbstractBehavior getBehavior() {
-        double ap = Double.parseDouble(txtAmplitude.getText());
-        double fr = Double.parseDouble(txtFreq.getText());
-        double ph = Double.parseDouble(txtPhase.getText());
-        SineWave res = new SineWave(ap, fr, ph);
-        res.setMaxX(Integer.parseInt(txtMax.getText()));
+        double ap = txtAmplitude.getValue();
+        double fr = txtFreq.getValue();
+        double ph = txtPhase.getValue();
+        if (result == null) {
+            result = new SineWave();
+        }
+        result.setAmplitude(ap);
+        result.setFrequency(fr);
+        result.setPhase(ph);
+        result.setMaxX(txtMax.getValue());
 
-        return res;
+        return result;
+    }
+
+    @Override
+    public void setBehavior(AbstractBehavior behavior) {
+        result = (SineWave) behavior;
+
+        txtAmplitude.setValue(result.getAmplitude());
+        txtFreq.setValue(result.getFrequency());
+        txtMax.setValue(result.getMaxX());
+        txtPhase.setValue(result.getPhase());
+
     }
 }

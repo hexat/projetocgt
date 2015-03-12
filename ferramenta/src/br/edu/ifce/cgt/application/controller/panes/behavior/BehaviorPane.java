@@ -7,4 +7,6 @@ import cgt.core.AbstractBehavior;
  */
 public interface BehaviorPane {
     public AbstractBehavior getBehavior();
+
+    void setBehavior(AbstractBehavior behavior);
 }

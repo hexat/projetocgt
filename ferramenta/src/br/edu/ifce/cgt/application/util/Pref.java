@@ -76,4 +76,13 @@ public class Pref {
     public List<String> getRecentProjects() {
         return recentProjects;
     }
+
+    public void addRecentProject(String absolutePath) {
+        if (!recentProjects.contains(absolutePath)) {
+            recentProjects.add(0, absolutePath);
+            if (recentProjects.size() > 10) {
+                recentProjects.remove(recentProjects.size() - 1);
+            }
+        }
+    }
 }

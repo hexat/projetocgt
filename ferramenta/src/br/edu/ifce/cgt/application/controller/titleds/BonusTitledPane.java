@@ -1,25 +1,20 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import cgt.core.CGTBonus;
-import cgt.hud.CGTButton;
 import cgt.policy.BonusPolicy;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
-import sun.reflect.Reflection;
 
 /**
  * Created by infolev on 02/02/15.
@@ -57,7 +52,7 @@ public class BonusTitledPane extends TitledPane {
 
     public void addPolicyOnPane(final BonusPolicy policy) {
         ItemViewPane pane = new ItemViewPane(policy.toString());
-        pane.getBtnExcluir().setOnAction(new EventHandler<ActionEvent>() {
+        pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 bonus.removePolicy(policy);
