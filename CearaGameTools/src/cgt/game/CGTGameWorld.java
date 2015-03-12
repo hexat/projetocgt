@@ -289,10 +289,7 @@ public class CGTGameWorld extends CGTWindow {
 			}
 		}
 		
-		if (getActor().getId() != null && getActor().getId().equals(label)) {
-			return getActor();
-		}
-		for (CGTGameObject o : enemies) {
+		for (CGTGameObject o : bonus) {
 			if (o.getId() != null && o.getId().equals(label)) {
 				return o;
 			}

@@ -687,12 +687,20 @@ public class WorldRenderer {
 						if (ammoCurrent < maxAmmo) {
 							int recharge = world.getActor().getProjectiles().get(0).addAmmo(world.getBonus().get(i).getScore());
 							world.getBonus().get(i).reduceLife(recharge);
-							world.getBonus().get(0).playSoundCollision();
+							world.getBonus().get(i).playSoundCollision();
 						}
 	
+					} else if(world.getBonus().get(i).getPolicies().contains(BonusPolicy.ADD_LIFE)){
+						world.getActor().addLife(world.getBonus().get(i).getScore());
+						world.getBonus().get(i).reduceLife(world.getBonus().get(i).getScore());
+						
 					}
 				} else {
-					world.getBonus().get(i).setState(StatePolicy.DIE);
+					if(world.getBonus().get(i).hasAnimation(StatePolicy.DIE)){
+						world.getBonus().remove(world.getBonus().get(i));
+					} else {
+						world.getBonus().get(i).setState(StatePolicy.DIE);
+					}
 				}
 				colision = true;
 			}

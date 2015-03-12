@@ -284,7 +284,12 @@ public abstract class CGTGameObject implements Serializable {
 	}
 	
 	public void reduceLife(int life){
-		this.life -= life;
+		if(this.life < life){
+			this.life = 0;
+		} else {
+			this.life -= life;
+		}
+		
 	}
 
 
@@ -422,6 +427,15 @@ public abstract class CGTGameObject implements Serializable {
 	
 	public boolean hasAnimation() {
 		return animations.size() > 0;
+	}
+	
+	public boolean hasAnimation(StatePolicy statePolicy){
+		for (CGTAnimation animation : animations) {
+			if(animation.containsState(statePolicy)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public List<CGTAnimation> getAnimations() {
