@@ -1,12 +1,19 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
+import br.edu.ifce.cgt.application.util.EnumMap;
+import br.edu.ifce.cgt.application.util.Pref;
 import cgt.core.CGTBonus;
 import cgt.policy.BonusPolicy;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,7 +29,7 @@ import javafx.scene.layout.VBox;
 public class BonusTitledPane extends TitledPane {
     @FXML public IntegerTextField txtScore;
     @FXML public IntegerTextField txtLifetime;
-    @FXML public ComboBox<BonusPolicy> boxPolicies;
+    @FXML public ComboBox<EnumMap<BonusPolicy>> boxPolicies;
     @FXML public CheckBox txtDestroyable;
     @FXML public VBox panPolicies;
 
@@ -34,24 +41,67 @@ public class BonusTitledPane extends TitledPane {
         xml.setController(this);
         try {
             xml.load();
-            BonusTitledPane controller = xml.getController();
-            controller.setBonus(object);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        boxPolicies.getItems().setAll(BonusPolicy.values());
+        List<EnumMap<BonusPolicy>> list = new ArrayList<EnumMap<BonusPolicy>>();
+        ResourceBundle bundle = Pref.load().getBundle();
+        for (BonusPolicy b : BonusPolicy.values()) {
+            list.add(new EnumMap<BonusPolicy>(b, bundle.getString(b.name())));
+        }
+
+        boxPolicies.getItems().setAll(list);
+
+        setBonus(object);
+
+        txtDestroyable.setSelected(bonus.isDestroyable());
+        txtLifetime.setValue(bonus.getLifeTime());
+        txtScore.setValue(bonus.getScore());
+
+
+        txtDestroyable.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                bonus.setDestroyable(txtDestroyable.isSelected());
+            }
+        });
+        txtScore.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    bonus.setScore(txtScore.getValue());
+                }
+            }
+        });
+
+        txtLifetime.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    bonus.setLifeTime(txtLifetime.getValue());
+                }
+            }
+        });
     }
 
     public void addPolicy() {
-        if (!boxPolicies.getSelectionModel().isEmpty() && !bonus.getPolicies().contains(boxPolicies.getValue())) {
-            bonus.addPolicy(boxPolicies.getValue());
-            addPolicyOnPane(boxPolicies.getValue());
+        if (!boxPolicies.getSelectionModel().isEmpty() && !bonus.getPolicies().contains(boxPolicies.getValue().getKey())) {
+            bonus.addPolicy(boxPolicies.getValue().getKey());
+            addPolicyOnPane(boxPolicies.getValue().getKey());
         }
     }
 
     public void addPolicyOnPane(final BonusPolicy policy) {
-        ItemViewPane pane = new ItemViewPane(policy.toString());
+        boolean found = false;
+        String item = policy.name();
+        for (int i = 0; i < boxPolicies.getItems().size() && !found; i++) {
+            if (boxPolicies.getItems().get(i).getKey() == policy) {
+                found = true;
+                item = boxPolicies.getItems().get(i).getValue();
+            }
+        }
+        ItemViewPane pane = new ItemViewPane(item);
         pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
