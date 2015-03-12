@@ -39,14 +39,11 @@ public class CGTProjectile extends CGTGameObject {
 		return interval;
 	}
 	
-	public int addAmmo(int ammoRecharge){
-		if ((maxAmmo-ammo) <= ammoRecharge){
-			int valueRecharge = maxAmmo - ammo;
-			ammo = ammo + (maxAmmo-ammo);
-			return valueRecharge;
+	public void addAmmo(int ammoRecharge){
+		if (ammo + ammoRecharge > maxAmmo){
+			ammo = maxAmmo;
 		} else {
 			ammo = ammoRecharge;
-			return ammoRecharge;
 		}
 	}
 	 

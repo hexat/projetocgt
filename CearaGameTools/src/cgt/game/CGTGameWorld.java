@@ -387,5 +387,10 @@ public class CGTGameWorld extends CGTWindow {
     public void setScore(int score) {
         this.score = score;
     }
+
+	public void addScore(int score2) {
+		this.score += score2;
+		
+	}
 }
  

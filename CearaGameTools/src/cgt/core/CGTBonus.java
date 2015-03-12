@@ -11,6 +11,7 @@ public class CGTBonus extends CGTGameObject implements Serializable{
 	private boolean destroyable;
 	private int lifetime;
 	private ArrayList<BonusPolicy> policies;
+	private boolean collide;
 
 	public CGTBonus() {
 		this("Bonus");
@@ -63,7 +64,14 @@ public class CGTBonus extends CGTGameObject implements Serializable{
 	public BonusPolicy removePolicy(int index) {
 		return policies.remove(index);
 	}
+	
+	public boolean isCollide() {
+		return collide;
+	}
 
+	public void setCollide(boolean collide) {
+		this.collide = collide;
+	}
 
 	@Override
 	public String toString() {
