@@ -29,7 +29,6 @@ public class AnimationHandle {
 
 	public AnimationHandle(CGTAnimation animation) {
 		this.owner = animation.getOwner();
-		System.out.println(owner);
 		mapa = new HashMap<StatePolicy, Animation>();
 		walkSheet = animation.getSpriteSheet().getTexture().getTextureGDX();
 		int numberOfColumns = animation.getSpriteSheet().getColumns();

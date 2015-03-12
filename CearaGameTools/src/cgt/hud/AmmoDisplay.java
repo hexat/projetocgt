@@ -19,7 +19,6 @@ public class AmmoDisplay extends HUDComponent implements Serializable{
 
 	public void setup(){
 		super.setup();
-
 		owner = getWorld().findProjectile(ownerId);
 
 		label.getLabelGDX().setX(this.getX() + getWidth());
@@ -27,6 +26,7 @@ public class AmmoDisplay extends HUDComponent implements Serializable{
 	}
 	
 	public void act(float delta){
+		
 		label.getLabelGDX().setText("x "+String.valueOf(owner.getAmmo()));
 	}
 
