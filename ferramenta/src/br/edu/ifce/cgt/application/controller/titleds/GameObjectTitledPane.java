@@ -36,6 +36,7 @@ public class GameObjectTitledPane extends TitledPane {
     @FXML public VBox boxPositions;
     @FXML public VBox boxSoundColision;
     @FXML public VBox boxSoundDie;
+    @FXML public IntegerTextField txtMaxLife;
     @FXML private FloatTextField txtBoundsW;
     @FXML private FloatTextField txtBoundsH;
     @FXML private IntegerTextField txtPositionX;
@@ -111,7 +112,20 @@ public class GameObjectTitledPane extends TitledPane {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue) {
-                    gameObject.setLife(txtLife.getValue());
+                    if (txtLife.getValue() > gameObject.getMaxLife()) {
+                        gameObject.setLife(gameObject.getMaxLife());
+                    } else {
+                        gameObject.setLife(txtLife.getValue());
+                    }
+                }
+            }
+        });
+
+        txtMaxLife.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    gameObject.setMaxLife(txtMaxLife.getValue());
                 }
             }
         });

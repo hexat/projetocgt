@@ -34,7 +34,8 @@ public abstract class CGTGameObject implements Serializable {
 	private Rectangle collision; // Size of the box collider
 	private int speed;
 	private Vector2 velocity;		// use in gdx mode
-	private int life;
+    private int life;
+    private int maxLife;
 	private ArrayList<CGTAnimation> animations;
 	private String id;
 	private StatePolicy state;
@@ -431,5 +432,21 @@ public abstract class CGTGameObject implements Serializable {
 	public boolean removeAnimation(CGTAnimation animation) {
         return animations.remove(animation);
 	}
+
+    public void setMaxLife(int maxLife) {
+        this.maxLife = maxLife;
+    }
+
+    public int getMaxLife() {
+        return maxLife;
+    }
+
+    public void addLife(int life) {
+        if (getLife() + life > getMaxLife()) {
+            setLife(getMaxLife());
+        } else {
+            setLife(getLife() + life);
+        }
+    }
 }
  
