@@ -11,6 +11,7 @@ import cgt.behaviors.Sine;
 import cgt.behaviors.SineWave;
 import cgt.core.CGTActor;
 import cgt.core.CGTAddOn;
+import cgt.core.CGTBonus;
 import cgt.core.CGTEnemy;
 import cgt.core.CGTGameObject;
 import cgt.core.CGTOpposite;
@@ -446,7 +447,7 @@ public class WorldRenderer {
 						&& world.getEnemies().get(i).getCollision().overlaps(getCurrentActorProjectile().getCollision())
 						&& world.getEnemies().get(i).isDestroyable()
 						&& world.getEnemies().get(i).isVulnerable()) {
-					world.getEnemies().get(i).setLife(world.getEnemies().get(i).getLife() - 1);
+					world.getEnemies().get(i).setLife(world.getEnemies().get(i).getLife() - world.getActor().getProjectiles().get(world.getActor().getFireDefault()).getDamage());
 					world.getEnemies().get(i).playSoundCollision();
 					if (world.getEnemies().get(i).getLife() <= 0){
 						world.getEnemies().get(i).playSoundDie();
@@ -464,6 +465,7 @@ public class WorldRenderer {
 		// Verifica se tem alguem ativo pelo fireDefault
 		if (world.getActor().getFireDefault() != -1
 				&& world.getActor().getProjectiles().get(world.getActor().getFireDefault()).getAmmo() > 0) {
+			
 			CGTProjectile pro = getCurrentActorProjectile();
 
 			for (int w = 0; w < pro.getOrientations().size(); w++) {
@@ -582,6 +584,7 @@ public class WorldRenderer {
 	private void drawDamageActor() {
 		for (int i = 0; i < world.getEnemies().size(); i++) {
 			if (world.getEnemies().get(i).getCollision().overlaps(personagem.getCollision())) {
+				
 				animationDamage(world.getEnemies().get(i));
 			}
 		}
@@ -657,66 +660,67 @@ public class WorldRenderer {
 
 		//System.out.println(personagem.getState().name());
 		// Verifica se colidiu com algum Opposite
-		for (int i = 0; i < world.getOpposites().size(); i++) {
-			if (world.getOpposites().get(i).getCollision()
-					.overlaps(personagem.getCollision())
-					&& world.getOpposites().get(i).isBlock())
+		for (CGTOpposite oposite : world.getOpposites()) {
+			if (oposite.getCollision().overlaps(personagem.getCollision()) && oposite.isBlock()){
+				if(!oposite.isCollide()){
+					oposite.playSoundCollision();
+					oposite.setCollide(true);
+				}
 				colision = true;
+			} else {
+				oposite.setCollide(false);
+			}
 		}
+			
+		
 
 		// Verifica se colidiu com algum Enemy
-		for (int i = 0; i < world.getEnemies().size(); i++) {
-			if (world.getEnemies().get(i).getCollision().overlaps(personagem.getCollision())) {
-				animationDamage(world.getEnemies().get(i));
-				if (world.getEnemies().get(i).isBlock()) {
+		for (CGTEnemy enemy : world.getEnemies()) {
+			if (enemy.getCollision().overlaps(personagem.getCollision())) {
+				animationDamage(enemy);
+				if (enemy.isBlock()) {
 					colision = true;
 					
 				}
 			}
 		}
+			
+		
 
 		// Verifica se colidiu com algum Bonus
 		//TODO bonus so' pode setar colision true se ele for bloqueante
 		//ver possibilidade se mudar esse trecho de codigo pois nao tem o mesmo objetivo da funcao
-		for (int i = 0; i < world.getBonus().size(); i++) {
-			if (world.getBonus().get(i).getCollision().overlaps(personagem.getCollision())){				
-				if(world.getBonus().get(i).getLife() > 0){
-					if(!world.getBonus().get(i).isCollide()){
-						if (world.getBonus().get(i).getPolicies().contains(BonusPolicy.ADD_AMMO) && !world.getBonus().get(i).isCollide()){
-							world.getActor().getProjectileDefault().addAmmo(world.getBonus().get(i).getScore());
-							world.getBonus().get(i).reduceLife(world.getBonus().get(i).getScore());
-							world.getBonus().get(i).playSoundCollision();
-							world.getBonus().get(i).setCollide(true);
+		for (CGTBonus bonus : world.getBonus()) {
+			if (bonus.getCollision().overlaps(personagem.getCollision())){				
+				if(bonus.getLife() > 0){
+					if(!bonus.isCollide()){
+						if (bonus.getPolicies().contains(BonusPolicy.ADD_AMMO)){
+							world.getActor().getProjectileDefault().addAmmo(bonus.getScore());
 						}
-						if(world.getBonus().get(i).getPolicies().contains(BonusPolicy.ADD_LIFE)){
-							world.getActor().addLife(world.getBonus().get(i).getScore());
-							world.getBonus().get(i).reduceLife(world.getBonus().get(i).getScore());
-							world.getBonus().get(i).playSoundCollision();
-							world.getBonus().get(i).setCollide(true);
+						if(bonus.getPolicies().contains(BonusPolicy.ADD_LIFE)){
+							world.getActor().addLife(bonus.getScore());
 						}
-						if(world.getBonus().get(i).getPolicies().contains(BonusPolicy.ADD_SCORE)){
-							world.addScore(world.getBonus().get(i).getScore());
-							world.getBonus().get(i).reduceLife(world.getBonus().get(i).getScore());
-							world.getBonus().get(i).playSoundCollision();
-							world.getBonus().get(i).setCollide(true);
+						if(bonus.getPolicies().contains(BonusPolicy.ADD_SCORE)){
+							world.addScore(bonus.getScore());
 						}
+						bonus.reduceLife(bonus.getScore());
+						bonus.playSoundCollision();
+						bonus.setCollide(true);
 					}
 				} else {
-					if(world.getBonus().get(i).hasAnimation(StatePolicy.DIE)){
-						world.getBonus().get(i).setState(StatePolicy.DIE);
+					if(bonus.hasAnimation(StatePolicy.DIE)){
+						bonus.setState(StatePolicy.DIE);
 					} else {	
-						world.getBonus().remove(world.getBonus().get(i));
+						world.getBonus().remove(bonus);
 					}
 				}
-					
-					
-				 
 				colision = true;
 			} else {
 //				System.out.println("DESATIVOU");
-				world.getBonus().get(i).setCollide(false);
-			} 
+				bonus.setCollide(false);
+			}
 		}
+		
 
 		if (!colision) {
 			lastActorPosition.x = personagem.getPosition().x;
@@ -753,6 +757,7 @@ public class WorldRenderer {
 			}, personagem.getTimeToEnableInputs());
 
 			personagem.playSoundCollision();
+			System.out.println("OIIIIIIIIIIIIIII");
 			personagem.setLife(personagem.getLife() - enemy.getDamage());
 			Timer.schedule(new Task() {
 				@Override

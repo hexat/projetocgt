@@ -38,6 +38,7 @@ public class Gesture implements GestureListener{
 			return false;
 		} else{
 			game.getController().activateKey(InputPolicy.TAP);
+			System.out.println("TAP");
 			return true;
 		}
 		

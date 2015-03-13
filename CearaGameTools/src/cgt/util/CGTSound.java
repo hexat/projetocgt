@@ -12,6 +12,7 @@ public class CGTSound implements Serializable
 	
 	private Music musicGDX;
 	
+	private CGTSound(){}
 	public CGTSound(String filename) {
 		this(new CGTFile(filename));
 	}

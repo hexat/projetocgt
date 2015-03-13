@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class CGTOpposite extends CGTGameObject implements Serializable {
 	private boolean block;
 	private boolean destroyable;
+	private boolean collide;
 
 	public CGTOpposite() {
 		this("Opositor");
@@ -28,6 +29,16 @@ public class CGTOpposite extends CGTGameObject implements Serializable {
 	 
 	public boolean isDestroyable() {
 		return destroyable;
+	}
+	
+	
+
+	public boolean isCollide() {
+		return collide;
+	}
+
+	public void setCollide(boolean collide) {
+		this.collide = collide;
 	}
 
 	@Override
