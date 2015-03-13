@@ -30,7 +30,7 @@ import com.projetocgt.cenario.WorldRenderer;
 
 public class GameScreen extends Stage implements Screen, InputProcessor {
 
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = true;
 
 	private enum State {
 		PAUSED, RESUMING, PLAYING, WIN, LOSE;
@@ -221,8 +221,8 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	public void render(float delta) {
 		switch (state) {
 		case PLAYING:
-//			System.out.println(world.getActor().getLife());
-//			System.out.println(world.getEnemies().get(0).getDamage());
+			System.out.println(world.getActor().getLife());
+//			System.out.println(world.getScore());
 			Gdx.input.setInputProcessor(gesture.getGd());
 			controller.update(delta);
 			renderer.render();

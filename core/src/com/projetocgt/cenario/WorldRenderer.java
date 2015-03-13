@@ -679,38 +679,41 @@ public class WorldRenderer {
 		//TODO bonus so' pode setar colision true se ele for bloqueante
 		//ver possibilidade se mudar esse trecho de codigo pois nao tem o mesmo objetivo da funcao
 		for (int i = 0; i < world.getBonus().size(); i++) {
-			if (world.getBonus().get(i).getCollision().overlaps(personagem.getCollision())){
-				if(!world.getBonus().get(i).isCollide()){
-					if(world.getBonus().get(i).getLife() > 0){
+			if (world.getBonus().get(i).getCollision().overlaps(personagem.getCollision())){				
+				if(world.getBonus().get(i).getLife() > 0){
+					if(!world.getBonus().get(i).isCollide()){
 						if (world.getBonus().get(i).getPolicies().contains(BonusPolicy.ADD_AMMO) && !world.getBonus().get(i).isCollide()){
 							world.getActor().getProjectileDefault().addAmmo(world.getBonus().get(i).getScore());
 							world.getBonus().get(i).reduceLife(world.getBonus().get(i).getScore());
 							world.getBonus().get(i).playSoundCollision();
-							
-						} else if(world.getBonus().get(i).getPolicies().contains(BonusPolicy.ADD_LIFE)){
+							world.getBonus().get(i).setCollide(true);
+						}
+						if(world.getBonus().get(i).getPolicies().contains(BonusPolicy.ADD_LIFE)){
 							world.getActor().addLife(world.getBonus().get(i).getScore());
 							world.getBonus().get(i).reduceLife(world.getBonus().get(i).getScore());
 							world.getBonus().get(i).playSoundCollision();
-							System.out.println("OIII");
 							world.getBonus().get(i).setCollide(true);
-						} else if(world.getBonus().get(i).getPolicies().contains(BonusPolicy.ADD_SCORE)){
+						}
+						if(world.getBonus().get(i).getPolicies().contains(BonusPolicy.ADD_SCORE)){
 							world.addScore(world.getBonus().get(i).getScore());
 							world.getBonus().get(i).reduceLife(world.getBonus().get(i).getScore());
 							world.getBonus().get(i).playSoundCollision();
-							
-						}
-					} else {
-						if(world.getBonus().get(i).hasAnimation(StatePolicy.DIE)){
-							world.getBonus().get(i).setState(StatePolicy.DIE);
-						} else {	
-							world.getBonus().remove(world.getBonus().get(i));
+							world.getBonus().get(i).setCollide(true);
 						}
 					}
-					colision = true;
+				} else {
+					if(world.getBonus().get(i).hasAnimation(StatePolicy.DIE)){
+						world.getBonus().get(i).setState(StatePolicy.DIE);
+					} else {	
+						world.getBonus().remove(world.getBonus().get(i));
+					}
+				}
 					
-				} 
+					
+				 
+				colision = true;
 			} else {
-				System.out.println("DESATIVOU");
+//				System.out.println("DESATIVOU");
 				world.getBonus().get(i).setCollide(false);
 			} 
 		}
