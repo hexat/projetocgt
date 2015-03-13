@@ -29,7 +29,7 @@ public class CGTEnemy extends CGTOpposite implements Serializable {
 		super(label);
 		damage=0;
 		behaviors = new ArrayList<AbstractBehavior>();
-		group="";
+		group="General";
 		vulnerable=true;
 		alpha = 1;
 		attacking = false;

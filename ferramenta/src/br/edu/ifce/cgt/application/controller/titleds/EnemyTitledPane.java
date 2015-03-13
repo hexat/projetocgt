@@ -1,11 +1,14 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.panes.ItemEditPane;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.Pref;
 import cgt.behaviors.Behavior;
 import br.edu.ifce.cgt.application.controller.dialogs.BehaviorDialog;
@@ -13,12 +16,14 @@ import cgt.core.AbstractBehavior;
 import cgt.core.CGTEnemy;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 
@@ -28,10 +33,12 @@ public class EnemyTitledPane extends TitledPane {
     @FXML public IntegerTextField txtDamage;
     @FXML public CheckBox chkBlock;
     @FXML public VBox boxContent;
+    @FXML public ComboBox<String> boxGroup;
 
     public CheckBox chkDestroyable;
 
     private CGTEnemy enemy;
+    private ObservableList<String> listGroups;
 
     public EnemyTitledPane(CGTEnemy object) {
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigInimigo.fxml"));
@@ -64,6 +71,27 @@ public class EnemyTitledPane extends TitledPane {
                 }
             }
         });
+
+        listGroups = boxGroup.getItems();
+
+        boxGroup.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                listGroups.setAll(Config.get().getGame().getEnemiesGroup());
+            }
+        });
+
+        boxGroup.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (boxGroup.getValue() != null && !boxGroup.getValue().trim().isEmpty()) {
+                    enemy.setGroup(boxGroup.getValue().trim());
+                } else {
+                    boxGroup.getSelectionModel().select(enemy.getGroup());
+                }
+            }
+        });
+        boxGroup.getSelectionModel().select(enemy.getGroup());
     }
 
     public void updateBehaviors() {
