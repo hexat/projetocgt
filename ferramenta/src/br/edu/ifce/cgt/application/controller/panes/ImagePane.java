@@ -1,6 +1,6 @@
 package br.edu.ifce.cgt.application.controller.panes;
 
-import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.util.Config;
 import cgt.util.CGTTexture;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

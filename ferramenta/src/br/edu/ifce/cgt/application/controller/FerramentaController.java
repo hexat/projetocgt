@@ -7,10 +7,9 @@ import org.controlsfx.dialog.Dialogs;
 import java.io.*;
 import java.net.URL;
 import java.util.Optional;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
-import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
 import cgt.game.CGTGameWorld;
 import cgt.game.CGTScreen;
@@ -25,7 +24,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
-import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.controller.panes.ScreenTab;
 
 public class FerramentaController implements Initializable {
@@ -84,7 +82,7 @@ public class FerramentaController implements Initializable {
 
         if (response.isPresent()) {
             String id = response.get().trim();
-            CGTGameWorld world = Config.getGame().createWorld(id);
+            CGTGameWorld world = Config.get().getGame().createWorld(id);
             if (world != null) {
                 ScreenTab tab = new ScreenTab(world);
                 tabFerramenta.getTabs().add(tab);
@@ -108,7 +106,7 @@ public class FerramentaController implements Initializable {
 
         if (response.isPresent()) {
             String id = response.get().trim();
-            CGTScreen screen = Config.getGame().createScreen(id);
+            CGTScreen screen = Config.get().getGame().createScreen(id);
             if (screen != null) {
 //                Tab aba = new Tab(response.get());
 //                aba.setOnCloseRequest(new EventHandler<Event>() {

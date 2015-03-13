@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
 import cgt.core.CGTGameObject;
 import cgt.policy.StatePolicy;
@@ -80,12 +80,12 @@ public class AnimationDialog extends HBox {
 
         imgPane.setSize(256, 256);
 
-        boxSprite.getItems().setAll(Config.getGame().getSpriteDB().findAllId());
+        boxSprite.getItems().setAll(Config.get().getGame().getSpriteDB().findAllId());
 
         boxSprite.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                CGTSpriteSheet sheet = Config.getGame().getSpriteDB().find(boxSprite.getValue());
+                CGTSpriteSheet sheet = Config.get().getGame().getSpriteDB().find(boxSprite.getValue());
                 imgPane.setTexture(sheet.getTexture());
             }
         });

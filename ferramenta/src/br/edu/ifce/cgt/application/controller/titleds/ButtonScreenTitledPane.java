@@ -1,20 +1,17 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
-import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.panes.ButtonPane;
 import br.edu.ifce.cgt.application.controller.panes.HudPane;
 import cgt.hud.CGTButtonScreen;
-import cgt.util.CGTTexture;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TitledPane;
-import br.edu.ifce.cgt.application.util.DialogsUtil;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -53,7 +50,7 @@ public class ButtonScreenTitledPane extends TitledPane {
     }
 
     private void init() {
-        boxWindows.getItems().setAll(Config.getGame().getIds());
+        boxWindows.getItems().setAll(Config.get().getGame().getIds());
 
         hudControl.setHud(buttonScreen);
 

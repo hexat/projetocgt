@@ -6,6 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 
+<?import br.edu.ifce.cgt.application.controller.ui.IntegerTextField?>
 <fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" text="Configurações do Jogo" type="javafx.scene.control.TitledPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <ScrollPane fitToWidth="true" prefViewportHeight="565.0" prefViewportWidth="278.0">
@@ -37,7 +38,7 @@
                   <Label text="Versão" GridPane.rowIndex="3" />
                   <Label text="Código da versão" GridPane.rowIndex="4" />
                   <TextField fx:id="txtVersion" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField fx:id="txtVersionCode" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <IntegerTextField fx:id="txtVersionCode" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <BorderPane id="32" onMouseClicked="#setImg" prefHeight="36.0" prefWidth="139.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <center>
                         <ImageView fx:id="img32" fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />

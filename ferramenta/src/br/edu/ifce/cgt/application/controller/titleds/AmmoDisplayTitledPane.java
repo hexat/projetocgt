@@ -1,8 +1,7 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
-import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
-import br.edu.ifce.cgt.application.controller.panes.FontPane;
 import br.edu.ifce.cgt.application.controller.panes.HudPane;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
 import cgt.hud.AmmoDisplay;
@@ -15,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,11 +54,11 @@ public class AmmoDisplayTitledPane extends TitledPane {
                 if (ammoDisplay.getIcon() == null) {
                     File file = DialogsUtil.showOpenDialog("Selecionar Icone", DialogsUtil.IMG_FILTER);
                     if (file != null) {
-                        ammoDisplay.setIcon(new CGTTexture(Config.createImg(file)));
+                        ammoDisplay.setIcon(new CGTTexture(Config.get().createImg(file)));
                         btnSelectIcon.setText(file.getName());
                     }
                 } else {
-                    Config.destroy(ammoDisplay.getIcon().getFile());
+                    Config.get().destroy(ammoDisplay.getIcon().getFile());
                     ammoDisplay.setIcon(null);
                     btnSelectIcon.setText("Selecionar");
                 }

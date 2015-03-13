@@ -1,9 +1,8 @@
 package br.edu.ifce.cgt.application.controller.dialogs;
 
-import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -52,6 +51,6 @@ public class ExportDialog extends BorderPane implements Observer {
 
     public void show() {
         stage.show();
-        Config.export(this);
+        Config.get().export(this);
     }
 }

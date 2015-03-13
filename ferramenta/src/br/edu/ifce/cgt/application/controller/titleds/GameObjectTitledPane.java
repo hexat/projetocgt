@@ -1,6 +1,6 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
-import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.controller.dialogs.AnimationDialog;
 import br.edu.ifce.cgt.application.controller.panes.ItemEditPane;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
@@ -70,7 +70,7 @@ public class GameObjectTitledPane extends TitledPane {
     }
 
     private void init() {
-        txtBoundsH.setText(gameObject.getBounds().getHeight()+"");
+        txtBoundsH.setText(gameObject.getBounds().getHeight() + "");
         txtBoundsW.setText(gameObject.getBounds().getWidth()+"");
         txtColisionH.setText(gameObject.getCollision().getHeight()+"");
         txtColisionW.setText(gameObject.getCollision().getWidth()+"");
@@ -93,7 +93,7 @@ public class GameObjectTitledPane extends TitledPane {
                     File audio = DialogsUtil.showOpenDialog("Selecione um audio", DialogsUtil.WAV_FILTER);
                     if (audio != null) {
                         try {
-                            CGTFile som = Config.createAudio(audio);
+                            CGTFile som = Config.get().createAudio(audio);
                             gameObject.setSound(new CGTSound(som));
                             btnSetSound.setText(som.getFilename());
                         } catch (IOException e) {
@@ -102,7 +102,7 @@ public class GameObjectTitledPane extends TitledPane {
                         }
                     }
                 } else {
-                    Config.destroy(gameObject.getSound().getFile());
+                    Config.get().destroy(gameObject.getSound().getFile());
                     gameObject.setSound(null);
                     btnSetSound.setText("Selecionar");
                 }
@@ -259,7 +259,7 @@ public class GameObjectTitledPane extends TitledPane {
                     @Override
                     public void handle(ActionEvent event) {
                         gameObject.getSoundCollision().remove(s);
-                        Config.destroy(s.getFile());
+                        Config.get().destroy(s.getFile());
                         updateBoxSoundCollision();
                     }
                 });
@@ -279,7 +279,7 @@ public class GameObjectTitledPane extends TitledPane {
                     @Override
                     public void handle(ActionEvent event) {
                         gameObject.getSoundsDie().remove(s);
-                        Config.destroy(s.getFile());
+                        Config.get().destroy(s.getFile());
                         updateBoxSoundDie();
                     }
                 });
@@ -357,7 +357,7 @@ public class GameObjectTitledPane extends TitledPane {
 
         if (file != null) {
             try {
-                gameObject.getSoundsDie().add(new CGTSound(Config.createAudio(file)));
+                gameObject.getSoundsDie().add(new CGTSound(Config.get().createAudio(file)));
             } catch (IOException e) {
                 e.printStackTrace();
                 DialogsUtil.showErrorDialog();
@@ -372,7 +372,7 @@ public class GameObjectTitledPane extends TitledPane {
 
         if (file != null) {
             try {
-                gameObject.getSoundCollision().add(new CGTSound(Config.createAudio(file)));
+                gameObject.getSoundCollision().add(new CGTSound(Config.get().createAudio(file)));
             } catch (IOException e) {
                 e.printStackTrace();
                 DialogsUtil.showErrorDialog();

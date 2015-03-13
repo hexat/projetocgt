@@ -11,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -19,7 +18,7 @@ import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
 
 import br.edu.ifce.cgt.application.util.DialogsUtil;
-import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
 import cgt.game.CGTSpriteSheet;
 import cgt.game.SpriteSheetDB;
@@ -67,14 +66,14 @@ public class SpriteSheetDialog extends VBox {
 
     @FXML public void addNewSprite() {
         if (validate()) {
-            SpriteSheetDB db = Config.getGame().getSpriteDB();
+            SpriteSheetDB db = Config.get().getGame().getSpriteDB();
             if (spriteSheet == null) {
-                spriteSheet = db.create(txtNameSprite.getText(), new CGTTexture(Config.createImg(imgFile)));
+                spriteSheet = db.create(txtNameSprite.getText(), new CGTTexture(Config.get().createImg(imgFile)));
                 spriteSheet.setColumns(txtNumCol.getValue());
                 spriteSheet.setRows(txtNumLines.getValue());
             } else {
             	if (imgFile != null) {
-            		spriteSheet.setTexture(new CGTTexture(Config.createImg(imgFile)));
+            		spriteSheet.setTexture(new CGTTexture(Config.get().createImg(imgFile)));
             	}
                 spriteSheet.setColumns(txtNumCol.getValue());
                 spriteSheet.setRows(txtNumLines.getValue());
@@ -90,7 +89,7 @@ public class SpriteSheetDialog extends VBox {
     		return (!txtNumCol.getText().equals("") && !txtNumLines.getText().equals(""));
     	} else {
     		return (imgFile != null && !txtNameSprite.getText().equals("") && !txtNumCol.getText().equals("")
-                && !txtNumLines.getText().equals("") && Config.getGame()
+                && !txtNumLines.getText().equals("") && Config.get().getGame()
                 .getSpriteDB().find(txtNameSprite.getText()) == null);
     	}
         

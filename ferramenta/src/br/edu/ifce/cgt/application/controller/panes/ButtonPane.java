@@ -3,7 +3,7 @@ package br.edu.ifce.cgt.application.controller.panes;
 import java.io.File;
 import java.io.IOException;
 
-import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
 import cgt.hud.CGTButton;
@@ -64,10 +64,10 @@ public class ButtonPane extends GridPane {
 
                 if (file != null) {
                     if (button.getTextureUp() != null) {
-                        Config.destroy(button.getTextureUp().getFile());
+                        Config.get().destroy(button.getTextureUp().getFile());
                         button.setTextureUp(null);
                     }
-                    button.setTextureUp(new CGTTexture(Config.createImg(file)));
+                    button.setTextureUp(new CGTTexture(Config.get().createImg(file)));
 
                     txtTextureUp.setText(file.getName());
                 }
@@ -82,10 +82,10 @@ public class ButtonPane extends GridPane {
 
                 if (file != null) {
                     if (button.getTextureDown() != null) {
-                        Config.destroy(button.getTextureDown().getFile());
+                        Config.get().destroy(button.getTextureDown().getFile());
                         button.setTextureDown(null);
                     }
-                    button.setTextureDown(new CGTTexture(Config.createImg(file)));
+                    button.setTextureDown(new CGTTexture(Config.get().createImg(file)));
 
                     txtTextureDown.setText(file.getName());
                 }

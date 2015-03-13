@@ -1,16 +1,11 @@
 package br.edu.ifce.cgt.application.controller.dialogs;
 
-import java.io.File;
 import java.io.IOException;
 
-import br.edu.ifce.cgt.application.Config;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.panes.ButtonPane;
 import br.edu.ifce.cgt.application.controller.panes.HudPane;
 import cgt.hud.CGTButton;
-import cgt.util.CGTTexture;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,7 +13,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import br.edu.ifce.cgt.application.util.DialogsUtil;
 
 /**
  * Created by infolev on 19/02/15.

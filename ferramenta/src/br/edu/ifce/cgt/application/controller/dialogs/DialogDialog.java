@@ -3,10 +3,9 @@ package br.edu.ifce.cgt.application.controller.dialogs;
 import java.io.File;
 import java.io.IOException;
 
-import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
-import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import cgt.hud.CGTButtonScreen;
 import cgt.screen.CGTDialog;
 import cgt.util.CGTTexture;
@@ -19,7 +18,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
@@ -154,7 +152,7 @@ public class DialogDialog extends GridPane {
 
     private void configCorner() {
         if (dialog.getRightBottomCorner() != null) {
-            Config.destroy(dialog.getRightBottomCorner().getFile());
+            Config.get().destroy(dialog.getRightBottomCorner().getFile());
             dialog.setRightBottomCorner(null);
             btnCorner.setText("Selecionar");
         } else {
@@ -162,7 +160,7 @@ public class DialogDialog extends GridPane {
                     DialogsUtil.IMG_FILTER);
 
             if (file != null) {
-                dialog.setRightBottomCorner(new CGTTexture(Config.createImg(file)));
+                dialog.setRightBottomCorner(new CGTTexture(Config.get().createImg(file)));
                 btnCorner.setText(file.getName());
             }
         }
@@ -177,13 +175,13 @@ public class DialogDialog extends GridPane {
 
     private void configBorder() {
         if (dialog.getHorizontalBorderTexture() != null) {
-            Config.destroy(dialog.getHorizontalBorderTexture().getFile());
+            Config.get().destroy(dialog.getHorizontalBorderTexture().getFile());
             dialog.setHorizontalBorderTexture(null);
             btnBorder.setText("Selecionar");
         } else {
             File file = DialogsUtil.showOpenDialog("Selecionar Borda", DialogsUtil.IMG_FILTER);
             if (file != null) {
-                dialog.setHorizontalBorderTexture(new CGTTexture(Config.createImg(file)));
+                dialog.setHorizontalBorderTexture(new CGTTexture(Config.get().createImg(file)));
                 btnBorder.setText(file.getName());
             }
         }
@@ -192,14 +190,14 @@ public class DialogDialog extends GridPane {
     private void configBackground() {
 
         if (dialog.getWindow() != null) {
-            Config.destroy(dialog.getWindow().getFile());
+            Config.get().destroy(dialog.getWindow().getFile());
             dialog.setWindow(null);
             btnBackground.setText("Selecionar");
         } else {
             File file = DialogsUtil.showOpenDialog("Selecionar background", DialogsUtil.IMG_FILTER);
 
             if (file != null) {
-                dialog.setWindow(new CGTTexture(Config.createImg(file)));
+                dialog.setWindow(new CGTTexture(Config.get().createImg(file)));
                 btnBackground.setText(file.getName());
             }
         }
@@ -246,9 +244,9 @@ public class DialogDialog extends GridPane {
     @FXML private void removeButtonScreen() {
         if (!listButtons.getSelectionModel().isEmpty()) {
             CGTButtonScreen screen = listButtons.getSelectionModel().getSelectedItem();
-            Config.destroy(screen.getTextureUp().getFile());
+            Config.get().destroy(screen.getTextureUp().getFile());
             if (screen.getTextureDown() != null) {
-                Config.destroy(screen.getTextureDown().getFile());
+                Config.get().destroy(screen.getTextureDown().getFile());
             }
             dialog.getButtons().remove(screen);
             listButtons.getItems().remove(screen);

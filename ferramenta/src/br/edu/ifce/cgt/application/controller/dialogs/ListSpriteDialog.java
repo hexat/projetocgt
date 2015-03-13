@@ -3,7 +3,7 @@ package br.edu.ifce.cgt.application.controller.dialogs;
 import java.io.IOException;
 
 import cgt.game.CGTSpriteSheet;
-import br.edu.ifce.cgt.application.Config;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,14 +39,14 @@ public class ListSpriteDialog extends VBox {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(Main.getApp().getScene().getWindow());
 
-        ObservableList<String> a = FXCollections.observableArrayList(Config.getGame().getSpriteDB().findAllId());
+        ObservableList<String> a = FXCollections.observableArrayList(Config.get().getGame().getSpriteDB().findAllId());
         listViewSprites.setItems(a);
 	}
     
     public void editSprite() {
     	String teste = listViewSprites.getSelectionModel().getSelectedItem();
     	if (teste != null) {
-    		CGTSpriteSheet sheet = Config.getGame().getSpriteDB().find(teste);
+    		CGTSpriteSheet sheet = Config.get().getGame().getSpriteDB().find(teste);
     		if (sheet != null) {
     			SpriteSheetDialog dialog = new SpriteSheetDialog(sheet);
     			dialog.show();
@@ -57,7 +57,7 @@ public class ListSpriteDialog extends VBox {
     public void delSprite() {
     	String teste = listViewSprites.getSelectionModel().getSelectedItem();
     	if (teste != null) {
-    		if (Config.getGame().getSpriteDB().delete(teste)) {
+    		if (Config.get().getGame().getSpriteDB().delete(teste)) {
     			listViewSprites.getItems().remove(teste);
     		}
     	}
