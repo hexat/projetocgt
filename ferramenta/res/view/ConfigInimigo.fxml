@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import br.edu.ifce.cgt.application.controller.ui.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.effect.*?>
@@ -9,9 +10,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
-
 <?import br.edu.ifce.cgt.application.controller.ui.IntegerTextField?>
 <?import br.edu.ifce.cgt.application.controller.ui.FloatTextField?>
+
 <fx:root animated="false" minWidth="300.0" text="Configuração Inimigo" type="javafx.scene.control.TitledPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
  <content>
             <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="385.0">
@@ -42,6 +43,8 @@
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                            </padding>
                         </VBox>
+                        <Label text="Grupo" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="boxGroup" editable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
                </children>

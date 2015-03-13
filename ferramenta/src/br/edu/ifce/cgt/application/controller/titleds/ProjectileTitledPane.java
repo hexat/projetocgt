@@ -6,13 +6,17 @@ import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 import br.edu.ifce.cgt.application.controller.dialogs.ProjectileOrientationDialog;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
+import br.edu.ifce.cgt.application.util.Config;
 import cgt.core.CGTProjectile;
 import cgt.util.ProjectileOrientation;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 
@@ -28,8 +32,11 @@ public class ProjectileTitledPane extends TitledPane {
     public IntegerTextField txtMaxAmmo;
     public FloatTextField txtAngle;
     public VBox panOrientations;
+    @FXML public VBox panGroup;
 
     private CGTProjectile projectile;
+
+    @FXML private ComboBox<String> boxGroup;
 
     public ProjectileTitledPane(CGTProjectile projectile) {
         this.projectile = projectile;
@@ -44,6 +51,9 @@ public class ProjectileTitledPane extends TitledPane {
             e.printStackTrace();
         }
 
+        boxGroup.getItems().setAll(Config.get().getGame().getEnemiesGroup());
+        boxGroup.getSelectionModel().selectFirst();
+        updateGroups();
         init();
     }
 
@@ -128,5 +138,35 @@ public class ProjectileTitledPane extends TitledPane {
             }
         });
         panOrientations.getChildren().add(pane);
+    }
+
+    public void addEnemyGroup() {
+        if (boxGroup.getValue() != null) {
+            projectile.addGroup(boxGroup.getValue());
+            updateGroups();
+        }
+    }
+
+    private void addGroupToPane(final String value) {
+        ItemViewPane item = new ItemViewPane(value);
+        item.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                projectile.removeGroup(value);
+                updateGroups();
+            }
+        });
+        panGroup.getChildren().add(item);
+    }
+
+    private void updateGroups() {
+        panGroup.getChildren().clear();
+        if (projectile.getGroups().size() > 0) {
+            for (String s : projectile.getGroups()) {
+                addGroupToPane(s);
+            }
+        } else {
+            panGroup.getChildren().add(new Label("Todos"));
+        }
     }
 }

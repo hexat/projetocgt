@@ -1,6 +1,7 @@
 package cgt.core;
 
 import cgt.game.CGTGame;
+import cgt.game.CGTGameWorld;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -43,7 +44,7 @@ public abstract class CGTGameObject implements Serializable {
 	private float posXColider, posYColider; // used in gdx mode
 	private boolean isPlayingSound;
 	private int delayPlaySound;
-	private TextureRegion lastAnimation; 
+	private TextureRegion lastAnimation;
 	
 	private CGTAddOn whenCollide;
 	private ArrayList<CGTGameObject> objectsToCollide;

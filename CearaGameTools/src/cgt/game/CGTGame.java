@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import cgt.core.CGTEnemy;
 import cgt.core.CGTGameObject;
 import cgt.policy.ErrorValidate;
 import cgt.screen.CGTWindow;
@@ -197,6 +198,20 @@ public class CGTGame implements Serializable {
             }
         }
         return res;
+    }
+
+    public List<String> getEnemiesGroup() {
+        List<String> result = new ArrayList<String>();
+
+        for (CGTGameWorld w : worlds) {
+            for (CGTEnemy e : w.getEnemies()) {
+                if (!result.contains(e.getGroup())) {
+                    result.add(e.getGroup());
+                }
+            }
+        }
+
+        return result;
     }
 }
 
