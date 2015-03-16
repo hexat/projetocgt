@@ -51,7 +51,7 @@ public class ExportDialog extends BorderPane implements Observer {
 
     public void show() {
         stage.show();
-//        Config.get().export(this);
+        Config.get().export(this);
 
         System.out.println(defaultDirectory());
     }
