@@ -17,6 +17,7 @@ public class Main extends Application {
 					"/view/Ferramenta.fxml"));
 			Scene scene = new Scene(root, 900, 650);
 			primaryStage.setScene(scene);
+			primaryStage.setTitle("Ceará Game Tools");
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();

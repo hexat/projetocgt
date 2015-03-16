@@ -18,7 +18,7 @@ public  class Config {
 	public final static String BASE = System.getProperty("user.home") + "/.cgt/";
 	public final static String BASE_IMG = "data/img/";
     public final static String BASE_AUDIO = "data/audio/";
-    private File inputProjectFile = null;
+    private static File inputProjectFile = null;
 
     private static Config instance = null;
 	private CGTGame game = null;
@@ -36,6 +36,11 @@ public  class Config {
 
         pref = new AppPref(new File(BASE+"pref.properties"));
     }
+
+	private Config(CGTGame game, AppPref pref) {
+		this.game = game;
+		this.pref = pref;
+	}
 
     public static Config get() {
         if (instance == null) {
@@ -135,7 +140,7 @@ public  class Config {
 		getGame().saveGame(configWorld);
 		new ZipHelper().zipDir(BASE, outFile.getAbsolutePath());
 	}
-	public void unzip(File inputFile) {
+	public static void unzip(File inputFile) {
         inputProjectFile = inputFile;
 		File o = new File(BASE);
 		try {
@@ -151,6 +156,7 @@ public  class Config {
 			e.printStackTrace();
 		}
 		File configWorld = new File(BASE + "config.cgt");
+		CGTGame game = null;
 		if (configWorld.exists()) {
 			try {
 				InputStream io = new FileInputStream(configWorld);
@@ -162,7 +168,10 @@ public  class Config {
 			}
 
 		}
-        pref = new AppPref(new File(BASE+"pref.properties"));
+        AppPref pref = new AppPref(new File(BASE+"pref.properties"));
+		if (game != null) {
+			instance = new Config(game, pref);
+		}
 	}
 
 	public void destroy(CGTFile file) {

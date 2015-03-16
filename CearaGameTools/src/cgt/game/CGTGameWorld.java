@@ -326,7 +326,7 @@ public class CGTGameWorld extends CGTWindow {
         if (getActor() == null) {
             res.add(new CGTError(ErrorValidate.SET_ACTOR, getId()));
         }
-        if (getActor().getPosition() == null) {
+        if (getActor().getInitialPositions().isEmpty()) {
             res.add(new CGTError(ErrorValidate.SET_ACTOR_POSITION, getId()));
         }
         if (!getActor().hasAnimation()) {

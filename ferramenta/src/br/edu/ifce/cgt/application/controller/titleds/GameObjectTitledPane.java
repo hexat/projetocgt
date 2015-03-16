@@ -50,6 +50,10 @@ public class GameObjectTitledPane extends TitledPane {
     @FXML private Button btnSetSound;
     @FXML private VBox listTeste;
 	@FXML private TableView<String> tableSomColisao;
+
+    @FXML private Label labLife;
+    @FXML private Label labMaxLife;
+
 	private ObservableList<String> listaSomColisao;
 	
 	private CGTGameObject gameObject;
@@ -79,6 +83,12 @@ public class GameObjectTitledPane extends TitledPane {
         txtLife.setText(gameObject.getLife()+"");
         txtMaxLife.setValue(gameObject.getMaxLife());
         txtVelocidade.setText(gameObject.getSpeed()+"");
+
+        if (gameObject instanceof CGTGameObject) {
+            labLife.setText("Munição");
+            labMaxLife.setText("Munição máxima:");
+        }
+
         updateBoxAnimation();
         updateBoxPositions();
         updateBoxSoundCollision();

@@ -28,8 +28,6 @@ import java.io.IOException;
 public class ProjectileTitledPane extends TitledPane {
     public IntegerTextField txtDamage;
     public IntegerTextField txtInterval;
-    public IntegerTextField txtAmmo;
-    public IntegerTextField txtMaxAmmo;
     public FloatTextField txtAngle;
     public VBox panOrientations;
     @FXML public VBox panGroup;
@@ -58,22 +56,10 @@ public class ProjectileTitledPane extends TitledPane {
     }
 
     private void init() {
-        txtAmmo.setValue(projectile.getAmmo());
         txtAngle.setValue(projectile.getAngle());
         txtDamage.setValue(projectile.getDamage());
         txtInterval.setValue(projectile.getInterval());
-        txtMaxAmmo.setValue(projectile.getMaxAmmo());
         updateOrientations();
-
-        txtMaxAmmo.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-
-                if (!newValue) {
-                    projectile.setMaxAmmo(txtMaxAmmo.getValue());
-                }
-            }
-        });
 
         txtInterval.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override

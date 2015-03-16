@@ -102,8 +102,6 @@ public class WorldController {
 					ammoDowner(world.getActor().getProjectiles().get(0));
 				}
 		}
-		else if(ammoCheck)
-			world.getActor().setFireDefault(-1);
 	}
 	
 	public void ammoDowner(final CGTProjectile projectile){

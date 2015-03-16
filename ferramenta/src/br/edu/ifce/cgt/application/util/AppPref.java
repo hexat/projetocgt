@@ -24,11 +24,13 @@ public class AppPref {
         Properties prefs = new Properties();
         if (file.exists()) {
             try {
-                prefs.load(new FileInputStream(file));
+                FileInputStream stream = new FileInputStream(file);
+                prefs.load(stream);
                 apkName = prefs.getProperty(APK_NAME);
                 versionCode = Integer.parseInt(prefs.getProperty(VERSION_CODE));
                 versionName = prefs.getProperty(VERSION_NAME);
                 appId = prefs.getProperty(APPID);
+                stream.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

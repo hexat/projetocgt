@@ -88,13 +88,6 @@ public class CGTActor extends CGTGameObject {
         }
         return res;
     }
-	
-	public void updateProjectiles(){
-		for(int i=0; i < projectiles.size(); i++){
-			projectiles.get(i).setPosition(getPosition());
-		}
-		
-	}
 
 	public ArrayList<Jump> getJumps(){
 		return jumps;
