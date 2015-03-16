@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import cgt.game.CGTGameWorld;
-import cgt.behaviors.Behavior;
-import cgt.behaviors.Direction;
 import cgt.behaviors.Fade;
-import cgt.behaviors.Sine;
-import cgt.behaviors.SineWave;
 import cgt.core.CGTActor;
 import cgt.core.CGTAddOn;
 import cgt.core.CGTBonus;
@@ -465,7 +461,7 @@ public class WorldRenderer {
 	private void drawProjectiles() {
 		// Desenha todos os Projectile
 		// Verifica se tem alguem ativo pelo fireDefault
-		if (world.getActor().getFireDefault() != -1
+		if (world.getActor().isFireActivate()
 				&& world.getActor().getProjectiles().get(world.getActor().getFireDefault()).getAmmo() > 0) {
 			
 			CGTProjectile pro = getCurrentActorProjectile();
@@ -481,6 +477,7 @@ public class WorldRenderer {
 					pro.getBounds().y += pro.getOrientations().get(w).getPositionRelativeToGameObject().y;
 					pro.getCollision().x += pro.getOrientations().get(w).getPositionRelativeToGameObject().x;
 					pro.getCollision().y += pro.getOrientations().get(w).getPositionRelativeToGameObject().y;
+					
 					spriteBatch.draw(pro.getAnimation(),pro.getPosition().x + 
 							pro.getOrientations().get(w).getPositionRelativeToGameObject().x,
 							pro.getPosition().y+ pro.getOrientations().get(w).getPositionRelativeToGameObject().y,
@@ -762,6 +759,7 @@ public class WorldRenderer {
 			}, personagem.getTimeToEnableInputs());
 
 			personagem.playSoundCollision();
+
 			personagem.setLife(personagem.getLife() - enemy.getDamage());
 			Timer.schedule(new Task() {
 				@Override

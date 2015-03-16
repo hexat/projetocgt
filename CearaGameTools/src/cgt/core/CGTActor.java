@@ -21,6 +21,7 @@ public class CGTActor extends CGTGameObject {
 	private int timeToEnableInputs;
 	private boolean invincible;
 	private boolean inputsEnabled;
+	private boolean fireActivate;
 
     public CGTActor(){
 		super();
@@ -31,6 +32,7 @@ public class CGTActor extends CGTGameObject {
 		timeToRecovery = 1;
 		timeToEnableInputs = 1;
 		this.invincible=false;
+		fireActivate = false;
 	}
 
     public CGTActor(String label) {
@@ -158,6 +160,16 @@ public class CGTActor extends CGTGameObject {
 	 */
 	public boolean isInputsEnabled() {
 		return inputsEnabled;
+	}
+	
+	
+
+	public boolean isFireActivate() {
+		return fireActivate;
+	}
+
+	public void setFireActivate(boolean fireActivate) {
+		this.fireActivate = fireActivate;
 	}
 
 	/**

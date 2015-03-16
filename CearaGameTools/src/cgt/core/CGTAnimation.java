@@ -48,7 +48,7 @@ public class CGTAnimation {
 	
 
 	public CGTGameObject getOwner() {
-		System.out.println("teste"+ownerId);
+		
 		return CGTGame.get().findObject(ownerId);
 	}
 

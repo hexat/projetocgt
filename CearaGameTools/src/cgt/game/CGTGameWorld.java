@@ -294,6 +294,12 @@ public class CGTGameWorld extends CGTWindow {
 				return o;
 			}
 		}
+		
+		for(CGTProjectile o: actor.getProjectiles()){
+			if (o.getId() != null && o.getId().equals(label)) {
+				return o;
+			}
+		}
 		return null;
 	}
 
