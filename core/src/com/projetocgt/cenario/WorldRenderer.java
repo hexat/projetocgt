@@ -99,7 +99,7 @@ public class WorldRenderer {
 	 * por desenhar todos os objetos na tela.
 	 */
 	public void render() {		
-		//isColision();
+		isColision();
 
 
 		verifyObjectsOnCamera();

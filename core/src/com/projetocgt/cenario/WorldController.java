@@ -53,8 +53,7 @@ public class WorldController {
 	public void activateKey(InputPolicy policy){
 		Action action = actor.getActionFromInput(policy);
         if (action != null){
-            System.out.println(action);
-            if(policy == InputPolicy.TAP) actions.add(action.getActionPolicy());
+			if(policy == InputPolicy.TAP) actions.add(action.getActionPolicy());
 			keys.put(action.getActionPolicy(),true);
 			if (action.getActionPolicy() == ActionMovePolicy.WALK_RIGHT) {
 				renderer.cameraCloseOnActor();
@@ -143,7 +142,7 @@ public class WorldController {
 	public void update(float delta) {
 		// Processa a entrada de algum parametro
 		if(!actor.isInputsEnabled()){
-			processInput();
+			processInput();	
 		}else{
 			actor.getVelocity().y = 0;
 			actor.getVelocity().x = 0;
@@ -151,6 +150,7 @@ public class WorldController {
 		}
 
         renderer.isColision();
+        System.out.println(actor.getVelocity());
         actor.update(delta);
 
 		for (int i=0; i<world.getOpposites().size(); i++) {
@@ -177,12 +177,6 @@ public class WorldController {
 	}
 
 	private void moveKeys(){
-        if (keys.get(ActionMovePolicy.JUMP)) {
-            actor.setState(StatePolicy.JUMPING);
-            actor.getVelocity().y += 100f;
-
-        }
-
 		if (keys.get(ActionMovePolicy.WALK_UP)) {
 			//Verifica se o actor pode andar
 			actor.setState(StatePolicy.LOOKUP);
@@ -233,9 +227,9 @@ public class WorldController {
 			// acceleration is 0 on the y
 			//actor.getAcceleration().y = 0;
 			// Vertival speed is 0
-//			actor.getVelocity().y = 0;
+			actor.getVelocity().y = 0;
 		}
-    }
+	}
 	
 	private void verifyActions(){
 		if(actions.size()>0){
