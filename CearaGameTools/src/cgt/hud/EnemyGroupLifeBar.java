@@ -25,7 +25,7 @@ public class EnemyGroupLifeBar extends LifeBar {
 		super.setup();
 		
 		enemiesList = (getWorld().getEnemies());
-	
+	    maxLife = enemiesList.size();
 	}
 
 	public void act(float delta){

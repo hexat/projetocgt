@@ -17,12 +17,13 @@ public class IntegerTextField extends TextField {
     public IntegerTextField() {
         textProperty().addListener(new ChangeListener<String>() {
             @Override public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (newValue.matches("\\d*")) {
-//                    try {
-//                        Integer.parseInt(newValue);
-//                    } catch (Exception e) {}
+                if (newValue.isEmpty() || newValue.equals("-")) {
                 } else {
-                    setText(oldValue);
+                    try {
+                        Integer.parseInt(newValue);
+                    } catch (Exception e) {
+                        setText(oldValue);
+                    }
                 }
             }
         });
@@ -49,7 +50,9 @@ public class IntegerTextField extends TextField {
     }
 
     public int getValue() {
-        if (getText().equals("")) return 0;
+        if (getText().equals("") || getText().equals("-")) {
+            setValue(0);
+        }
 
         return Integer.parseInt(getText());
     }

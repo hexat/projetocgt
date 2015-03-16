@@ -69,7 +69,6 @@ public class TouchInputs implements InputProcessor{
 //		controller.releaseAllDirectionKeys();
 		
 		if (currentDragged == null && ready == true){
-			System.out.println("OIIII");
 			controller.activateKey(InputPolicy.TAP);
 		} else {
 			ready = true;

@@ -95,7 +95,7 @@ public class WorldRenderer {
 	 * por desenhar todos os objetos na tela.
 	 */
 	public void render() {		
-		isColision();
+		//isColision();
 
 
 		verifyObjectsOnCamera();
@@ -106,7 +106,7 @@ public class WorldRenderer {
 			
 			if (verifyWin()) 
 				System.out.println("ganhou");
-				
+
 			spriteBatch.begin();
 			draw();
 			spriteBatch.end();
@@ -717,15 +717,16 @@ public class WorldRenderer {
 				bonus.setCollide(false);
 			}
 		}
-		
 
-		if (!colision) {
+
+//        System.out.println(colision);
+        if (!colision) {
 			lastActorPosition.x = personagem.getPosition().x;
 			lastActorPosition.y = personagem.getPosition().y;
 		} else {
-			personagem.getVelocity().x = 0;
+			//personagem.getVelocity().x = 0;
 			personagem.getVelocity().y = 0;
-			personagem.setPosition(lastActorPosition.cpy());
+//			personagem.setPosition(lastActorPosition.cpy());
 			// return colisao;
 			colision = false;
 		}
@@ -754,7 +755,7 @@ public class WorldRenderer {
 			}, personagem.getTimeToEnableInputs());
 
 			personagem.playSoundCollision();
-			
+
 			personagem.setLife(personagem.getLife() - enemy.getDamage());
 			Timer.schedule(new Task() {
 				@Override

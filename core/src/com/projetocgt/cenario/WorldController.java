@@ -60,7 +60,7 @@ public class WorldController {
 	}
 	
 	public void deactivateKey(InputPolicy policy){
-		Action action = actor.getActionFromInput(policy);
+        Action action = actor.getActionFromInput(policy);
 		if (action != null){
 			keys.put(action.getActionPolicy(),false);
 			stopAni();
@@ -122,6 +122,8 @@ public class WorldController {
 		keys.put(ActionMovePolicy.WALK_LEFT, false);
 		keys.put(ActionMovePolicy.WALK_UP, false);
 		keys.put(ActionMovePolicy.WALK_DOWN, false);
+
+        activateKey(InputPolicy.DEFAULT);
 	}
 	
 	public void releaseSlices(){
@@ -146,7 +148,10 @@ public class WorldController {
 			releaseAllDirectionKeys();
 		}
 
-		actor.update(delta);
+        actor.getVelocity().add(0,-98);
+        renderer.isColision();
+        actor.update(delta);
+        System.out.println(actor.getPosition());
 
 		for (int i=0; i<world.getOpposites().size(); i++) {
 			world.getOpposites().get(i).update(delta);
