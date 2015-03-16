@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import cgt.game.CGTGameWorld;
-import cgt.behaviors.Behavior;
-import cgt.behaviors.Direction;
 import cgt.behaviors.Fade;
-import cgt.behaviors.Sine;
-import cgt.behaviors.SineWave;
 import cgt.core.CGTActor;
 import cgt.core.CGTAddOn;
 import cgt.core.CGTBonus;
