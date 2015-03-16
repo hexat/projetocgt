@@ -677,6 +677,7 @@ public class WorldRenderer {
 		for (CGTEnemy enemy : world.getEnemies()) {
 			if (enemy.getCollision().overlaps(personagem.getCollision())) {
 				animationDamage(enemy);
+				enemy.playSoundCollision();
 				if (enemy.isBlock()) {
 					colision = true;
 					
@@ -709,6 +710,7 @@ public class WorldRenderer {
 				} else {
 					if(bonus.hasAnimation(StatePolicy.DIE)){
 						bonus.setState(StatePolicy.DIE);
+						bonus.playSoundDie();
 					} else {	
 						world.getBonus().remove(bonus);
 					}

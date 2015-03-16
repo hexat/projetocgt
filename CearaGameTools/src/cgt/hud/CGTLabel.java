@@ -22,14 +22,14 @@ public class CGTLabel extends HUDComponent implements Serializable {
 	public CGTLabel() {
 		this.file = null;
 		this.text = "";
-		size = 100;
+		size = 10;
 		color = 255;
 	}
 	
 	public CGTLabel (String file, String text){
 		this.file = new CGTFile(file);
 		this.text = text;
-		size = 100;
+		size = 10;
 		color = 255;
 	}
 	
@@ -37,7 +37,7 @@ public class CGTLabel extends HUDComponent implements Serializable {
 		this.file = new CGTFile(file);
 		this.text = text;
 		this.size = size;
-		color = 255;
+		color = 1;
 	}
 	
 	public CGTLabel(String file,String text,int size, int color) {
@@ -54,12 +54,12 @@ public class CGTLabel extends HUDComponent implements Serializable {
 				FreeTypeFontGenerator generator = new FreeTypeFontGenerator(
 						file.getFileHandle());
 				FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-				parameter.size = size;
+				parameter.size = size/10;
 				font12 = generator.generateFont(parameter);
 				generator.dispose();
 			} else {
 				font12 = new BitmapFont();
-				font12.setScale(size);
+				font12.setScale(size/10.0f);
 			}
 			
 			LabelStyle style = new LabelStyle(font12, new Color(color));
