@@ -103,5 +103,9 @@ public class CGTProjectile extends CGTGameObject {
 				+ ", labelID=" + getId() + ", orientations="
 				+ orientations + "]";
 	}
+
+    public boolean containsGroup(String group) {
+        return groups.size() == 0 || groups.contains(group);
+    }
 }
  

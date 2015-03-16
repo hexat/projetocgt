@@ -442,11 +442,13 @@ public class WorldRenderer {
 
 				// verifica se algum Enemy destrutivel esta colindindo com
 				// algum Projectile
-				if (world.getActor().getFireDefault() != -1
-						&& world.getActor().getProjectiles().get(world.getActor().getFireDefault()).getAmmo() > 0
-						&& world.getEnemies().get(i).getCollision().overlaps(getCurrentActorProjectile().getCollision())
+                CGTProjectile pro = world.getActor().getProjectileDefault();
+				if (pro != null
+						&& pro.getAmmo() > 0
+						&& world.getEnemies().get(i).getCollision().overlaps(pro.getCollision())
 						&& world.getEnemies().get(i).isDestroyable()
-						&& world.getEnemies().get(i).isVulnerable()) {
+						&& world.getEnemies().get(i).isVulnerable()
+                        && pro.containsGroup(world.getEnemies().get(i).getGroup())) {
 					world.getEnemies().get(i).setLife(world.getEnemies().get(i).getLife() - world.getActor().getProjectiles().get(world.getActor().getFireDefault()).getDamage());
 					world.getEnemies().get(i).playSoundCollision();
 					if (world.getEnemies().get(i).getLife() <= 0){
@@ -727,9 +729,11 @@ public class WorldRenderer {
 			lastActorPosition.x = personagem.getPosition().x;
 			lastActorPosition.y = personagem.getPosition().y;
 		} else {
-			//personagem.getVelocity().x = 0;
+			personagem.getVelocity().x = 0;
 			personagem.getVelocity().y = 0;
-//			personagem.setPosition(lastActorPosition.cpy());
+//            if (lastActorPosition.x > 0 || lastActorPosition.y > 0) {
+			    personagem.setPosition(lastActorPosition.cpy());
+//            }
 			// return colisao;
 			colision = false;
 		}
