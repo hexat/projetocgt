@@ -53,11 +53,9 @@ public class WorldController {
 	public void activateKey(InputPolicy policy){
 		Action action = actor.getActionFromInput(policy);
 		if (action != null){
+			// colocado para conseguir desativar o tap
 			if(policy == InputPolicy.TAP) actions.add(action.getActionPolicy());
 			keys.put(action.getActionPolicy(),true);
-			if (action.getActionPolicy() == ActionMovePolicy.WALK_RIGHT) {
-				renderer.cameraCloseOnActor();
-			}
 		}
 	}
 	
@@ -96,23 +94,24 @@ public class WorldController {
 
 	public void fire(){
 		if(keys.get(ActionMovePolicy.FIRE)){
-				world.getActor().setFireDefault(0);
-
-				if (world.getActor().getProjectiles().get(0).getAmmo() > 0){
-					ammoDowner(world.getActor().getProjectiles().get(0));
+//				world.getActor().setFireDefault(world.getActor().getFireDefault());
+				world.getActor().setFireActivate(true);
+				if (world.getActor().getProjectileDefault().getAmmo() >= 0){
+					ammoDowner(world.getActor().getProjectileDefault());
 				}
 		}
 	}
 	
 	public void ammoDowner(final CGTProjectile projectile){
-		if(ammoCheck && actor.getProjectiles().get(0).getAmmo()>0){
+		if(ammoCheck){
 			ammoCheck=false;
 			Timer.schedule(new Task() {
 				@Override
 				public void run() {
 					projectile.ammoDown();
 					ammoCheck=true;
-					world.getActor().setFireDefault(-1);
+					world.getActor().setFireActivate(false);
+					world.getActor().getProjectileDefault().setStateTime(0);
 				}
 			}, projectile.getInterval());
 		}
