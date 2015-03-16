@@ -677,6 +677,7 @@ public class WorldRenderer {
 		for (CGTEnemy enemy : world.getEnemies()) {
 			if (enemy.getCollision().overlaps(personagem.getCollision())) {
 				animationDamage(enemy);
+				enemy.playSoundCollision();
 				if (enemy.isBlock()) {
 					colision = true;
 					
@@ -709,6 +710,7 @@ public class WorldRenderer {
 				} else {
 					if(bonus.hasAnimation(StatePolicy.DIE)){
 						bonus.setState(StatePolicy.DIE);
+						bonus.playSoundDie();
 					} else {	
 						world.getBonus().remove(bonus);
 					}
@@ -728,9 +730,9 @@ public class WorldRenderer {
 		} else {
 			personagem.getVelocity().x = 0;
 			personagem.getVelocity().y = 0;
-//            if (lastActorPosition.x > 0 || lastActorPosition.y > 0) {
+            if (lastActorPosition.x > 0 || lastActorPosition.y > 0) {
 			    personagem.setPosition(lastActorPosition.cpy());
-//            }
+            }
 			// return colisao;
 			colision = false;
 		}

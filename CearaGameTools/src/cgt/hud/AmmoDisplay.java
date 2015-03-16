@@ -26,7 +26,6 @@ public class AmmoDisplay extends HUDComponent implements Serializable{
 	}
 	
 	public void act(float delta){
-		
 		label.getLabelGDX().setText("x "+String.valueOf(owner.getAmmo()));
 	}
 
