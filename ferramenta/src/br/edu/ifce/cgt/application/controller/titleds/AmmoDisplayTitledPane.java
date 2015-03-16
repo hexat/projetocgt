@@ -25,7 +25,7 @@ public class AmmoDisplayTitledPane extends TitledPane {
     @FXML public HudPane hudControl;
 //    @FXML public FontPane fontControl;
 
-    public ComboBox boxProjectile;
+    public ComboBox<String> boxProjectile;
     public Button btnSelectIcon;
 
     private AmmoDisplay ammoDisplay;
@@ -69,7 +69,7 @@ public class AmmoDisplayTitledPane extends TitledPane {
             @Override
             public void handle(ActionEvent event) {
                 if (!boxProjectile.getSelectionModel().isEmpty()) {
-                    ammoDisplay.setOwner(boxProjectile.getId());
+                    ammoDisplay.setOwner(boxProjectile.getValue());
                 }
             }
         });
