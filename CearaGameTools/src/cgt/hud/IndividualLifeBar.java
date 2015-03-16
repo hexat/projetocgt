@@ -27,7 +27,7 @@ public class IndividualLifeBar extends LifeBar {
 		if (object == null) {
 			
 			object = getWorld().getObjectByLabel(ownerId);
-			
+			setMaxLife(object.getMaxLife());
 		}
 	}
 

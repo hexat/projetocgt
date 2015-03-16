@@ -111,8 +111,7 @@ public abstract class CGTGameObject implements Serializable {
 	 */
 	public void update(float delta) {
 		setStateTime(getStateTime() + delta);
-		
-		if (getPosition() != null) {
+        if (getPosition() != null) {
 			getPosition().add(velocity.cpy().scl(delta));
 			
 			collision.x=this.getPosition().x+posXColider;

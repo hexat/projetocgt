@@ -7,6 +7,7 @@ import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import br.edu.ifce.cgt.application.util.Pref;
 import cgt.core.CGTAnimation;
+import cgt.core.CGTProjectile;
 import cgt.util.CGTFile;
 import cgt.util.CGTSound;
 import com.badlogic.gdx.math.Vector2;
@@ -84,7 +85,7 @@ public class GameObjectTitledPane extends TitledPane {
         txtMaxLife.setValue(gameObject.getMaxLife());
         txtVelocidade.setText(gameObject.getSpeed()+"");
 
-        if (gameObject instanceof CGTGameObject) {
+        if (gameObject instanceof CGTProjectile) {
             labLife.setText("Munição");
             labMaxLife.setText("Munição máxima:");
         }
