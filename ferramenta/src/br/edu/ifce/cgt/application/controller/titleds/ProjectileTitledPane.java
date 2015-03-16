@@ -120,7 +120,8 @@ public class ProjectileTitledPane extends TitledPane {
             public void handle(ActionEvent event) {
                 ProjectileOrientationDialog dialog = new ProjectileOrientationDialog();
                 dialog.setOrientation(o);
-                dialog.show();
+                dialog.showAndWait();
+                updateOrientations();
             }
         });
         panOrientations.getChildren().add(pane);
