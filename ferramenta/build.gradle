@@ -25,3 +25,11 @@ task uijar(dependsOn: classes, type: Jar) {
 	from sourceSets.main.output.classesDir 
 	include 'br/edu/ifce/cgt/application/controller/ui/**/*'
 }
+
+task createDesktop(dependsOn: ":desktop:installApp", type: Copy) {
+	doLast {
+		println '$build/install/'
+	    from '$build/install/'
+	    into System.getProperty("user.home")
+	}
+}

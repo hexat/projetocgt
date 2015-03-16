@@ -91,9 +91,7 @@ public  class Config {
 
 	public boolean export(Observer observer) {
 		if (getGame().validate().isEmpty()) {
-			File configWorld = new File(BASE + "config.cgt");
-			getGame().saveGame(configWorld);
-
+            saveConfig();
 			File out = new File("../android/assets/");
             System.out.println(out.getAbsolutePath());
             try {
@@ -193,6 +191,15 @@ public  class Config {
 
     public AppPref getPref() {
         return pref;
+    }
+
+    public void saveConfig() {
+        File configWorld = new File(BASE + "config.cgt");
+        getGame().saveGame(configWorld);
+    }
+
+    public File getProjectDir() {
+        return new File(BASE);
     }
 
 

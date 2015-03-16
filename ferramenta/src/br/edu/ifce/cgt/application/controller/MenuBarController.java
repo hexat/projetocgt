@@ -2,6 +2,7 @@ package br.edu.ifce.cgt.application.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -16,11 +17,16 @@ import cgt.util.CGTError;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.util.Config;
 import javafx.fxml.FXML;
 import br.edu.ifce.cgt.application.controller.panes.ScreenTab;
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.model.ZipParameters;
+import org.apache.commons.io.FileUtils;
 import org.controlsfx.dialog.Dialogs;
 
 public class MenuBarController implements Initializable {
@@ -141,7 +147,54 @@ public class MenuBarController implements Initializable {
         }
     }
 
-	@FXML
+    @FXML public void run() {
+        Main.getApp().getScene().setCursor(Cursor.WAIT);
+        Config.get().saveConfig();
+        File base = Config.get().getProjectDir();
+
+        try {
+            ZipFile jar = new ZipFile(defaultDirectory()+"desktop/lib/desktop-1.0.jar");
+            for (File f : base.listFiles()) {
+                if (f.isDirectory()) {
+                    jar.addFolder(f, new ZipParameters());
+                } else {
+                    jar.addFile(f, new ZipParameters());
+                }
+            }
+            runDesktop();
+        } catch (ZipException e) {
+            e.printStackTrace();
+        }
+        Main.getApp().getScene().setCursor(Cursor.DEFAULT);
+    }
+
+    private void runDesktop() {
+        String path = defaultDirectory()+"desktop/bin/desktop";
+        Runtime runtime = Runtime.getRuntime();
+			try {
+                Process p1;
+                if (isWin()) {
+                    p1 = runtime.exec("cmd /c start "+path+".bat");
+                } else {
+                    p1 = runtime.exec("sh "+path);
+                }
+                InputStream is = p1.getInputStream();
+                int i;
+                String res = "";
+                while( (i = is.read() ) != -1) {
+                    System.out.print((char)i);
+                }
+                } catch(IOException e) {
+                e.printStackTrace();
+			}
+    }
+
+    private boolean isWin() {
+        String OS = System.getProperty("os.name").toUpperCase();
+        return OS.contains("WIN");
+    }
+
+    @FXML
 	public void addSpriteSheet() {
 		SpriteSheetDialog dia =  new SpriteSheetDialog(null);
         dia.show();
@@ -165,5 +218,18 @@ public class MenuBarController implements Initializable {
                 e.printStackTrace();
             }
         }
+    }
+
+    static String defaultDirectory() {
+        String path = "";
+
+        String OS = System.getProperty("os.name").toUpperCase();
+        if (OS.contains("WIN")) {
+            path = System.getenv("APPDATA");
+        } else {
+            path = System.getProperty("user.home");
+        }
+        path += "/.cgtapp/";
+        return path;
     }
 }

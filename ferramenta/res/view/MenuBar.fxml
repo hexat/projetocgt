@@ -24,15 +24,15 @@
                <accelerator>
                   <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                </accelerator></MenuItem>
-						<MenuItem onAction="#saveAs" mnemonicParsing="false" text="Save As…" />
+						<MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As…" />
 						<MenuItem mnemonicParsing="false" onAction="#export" text="Exportar">
                <accelerator>
                   <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                </accelerator></MenuItem>
 						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" text="Preferences…" />
+						<MenuItem mnemonicParsing="false" onAction="#run" text="Executar" />
 						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem onAction="#exit" mnemonicParsing="false" text="Quit" />
+						<MenuItem mnemonicParsing="false" onAction="#exit" text="Quit" />
 					</items>
 				</Menu>
 				<Menu mnemonicParsing="false" text="Edit">
