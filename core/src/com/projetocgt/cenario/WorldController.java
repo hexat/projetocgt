@@ -148,8 +148,7 @@ public class WorldController {
 			releaseAllDirectionKeys();
 		}
 
-        renderer.isColision();
-        System.out.println(actor.getVelocity());
+        
         actor.update(delta);
 
 		for (int i=0; i<world.getOpposites().size(); i++) {

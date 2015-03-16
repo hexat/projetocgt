@@ -728,9 +728,9 @@ public class WorldRenderer {
 		} else {
 			personagem.getVelocity().x = 0;
 			personagem.getVelocity().y = 0;
-//            if (lastActorPosition.x > 0 || lastActorPosition.y > 0) {
+            if (lastActorPosition.x > 0 || lastActorPosition.y > 0) {
 			    personagem.setPosition(lastActorPosition.cpy());
-//            }
+            }
 			// return colisao;
 			colision = false;
 		}

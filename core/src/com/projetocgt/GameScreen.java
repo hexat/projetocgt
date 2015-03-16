@@ -222,7 +222,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		switch (state) {
 		case PLAYING:
 //			System.out.println(world.getActor().getPosition());
-//			System.out.println(world.getActor().getLife());
+			System.out.println(world.getActor().getLife());
 //			System.out.println(world.getScore());
 //			System.out.println(world.getActor().getState());
 			Gdx.input.setInputProcessor(gesture.getGd());
