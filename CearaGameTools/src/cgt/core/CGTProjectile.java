@@ -9,8 +9,6 @@ public class CGTProjectile extends CGTGameObject {
 	private int numFiresForOneInput;
 	private int damage;
 	private int interval;
-	private int ammo;
-	private int maxAmmo;
 	private float angle;
 	private ArrayList<ProjectileOrientation> orientations;
 	private ArrayList<String> groups;
@@ -40,33 +38,17 @@ public class CGTProjectile extends CGTGameObject {
 	}
 	
 	public void addAmmo(int ammoRecharge){
-		if (ammo + ammoRecharge > maxAmmo){
-			ammo = maxAmmo;
-		} else {
-			ammo = ammoRecharge;
-		}
-	}
-	 
-	public void setAmmo(int ammo) {
-		this.ammo = ammo;
+		addLife(ammoRecharge);
 	}
 	
 	public void ammoDown() {
-		this.ammo -= 1;
+		setLife(getLife()-1);
 	}
 	 
 	public int getAmmo() {
-		return ammo;
-	}
-	 
-	public int getMaxAmmo() {
-		return maxAmmo;
+		return getLife();
 	}
 
-	public void setMaxAmmo(int maxAmmo) {
-		this.maxAmmo = maxAmmo;
-	}
-	
 	public void setAngle(float angle) {
 		this.angle = angle;
 	}
@@ -117,8 +99,7 @@ public class CGTProjectile extends CGTGameObject {
 	public String toString() {
 		return  "CGTProjectile [numFiresForOneInput="
 				+ numFiresForOneInput + ", damage=" + damage + ", interval="
-				+ interval + ", ammo=" + ammo + ", maxAmmo=" + maxAmmo
-				+ ", velocityInitial=" + getSpeed() + ", angle=" + angle
+				+ interval + ", velocityInitial=" + getSpeed() + ", angle=" + angle
 				+ ", labelID=" + getId() + ", orientations="
 				+ orientations + "]";
 	}

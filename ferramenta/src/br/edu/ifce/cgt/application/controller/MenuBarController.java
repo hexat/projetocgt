@@ -85,8 +85,8 @@ public class MenuBarController implements Initializable {
 
     private void open(File open) {
         TabPane tabFerramenta = (TabPane) Main.getApp().getScene().lookup("#tabFerramenta");
-
-        Config.get().unzip(open);
+        Main.getApp().setTitle(open.getName());
+        Config.unzip(open);
         if (tabFerramenta.getTabs().size() > 1) {
             tabFerramenta.getTabs().remove(1, tabFerramenta.getTabs().size());
         }
@@ -127,7 +127,17 @@ public class MenuBarController implements Initializable {
         if (errors.isEmpty()) {
             new ExportDialog().show();
         } else {
-            System.out.println(errors);
+            String msg = "";
+            ResourceBundle bundle = Pref.load().getBundle();
+            for (CGTError e : errors) {
+                msg += bundle.getString(e.getValidate().name()) + " em " + e.getId() + "." + '\n';
+            }
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+            alert.setHeaderText("Verifique os seguintes itens");
+            alert.setContentText(msg);
+            alert.showAndWait();
         }
     }
 
