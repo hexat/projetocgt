@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
@@ -94,6 +95,7 @@ public class WorldController {
 
 	public void fire(){
 		if(keys.get(ActionMovePolicy.FIRE)){
+            System.out.println(Gdx.input.getX() + " = " +Gdx.input.getY());
 //				world.getActor().setFireDefault(world.getActor().getFireDefault());
 				world.getActor().setFireActivate(true);
 				if (world.getActor().getProjectileDefault().getAmmo() >= 0){
