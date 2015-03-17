@@ -10,6 +10,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.util.Zip4jUtil;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -52,20 +55,5 @@ public class ExportDialog extends BorderPane implements Observer {
     public void show() {
         stage.show();
         Config.get().export(this);
-
-        System.out.println(defaultDirectory());
-    }
-    private static String defaultDirectory()
-    {
-        String path = "";
-
-        String OS = System.getProperty("os.name").toUpperCase();
-        if (OS.contains("WIN")) {
-            path = System.getenv("APPDATA");
-        } else {
-            path = System.getProperty("user.home");
-        }
-        path += "/.cgtapp/";
-        return path;
     }
 }

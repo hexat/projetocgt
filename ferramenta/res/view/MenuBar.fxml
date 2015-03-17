@@ -24,15 +24,13 @@
                <accelerator>
                   <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                </accelerator></MenuItem>
-						<MenuItem onAction="#saveAs" mnemonicParsing="false" text="Save As…" />
+						<MenuItem mnemonicParsing="false" onAction="#saveAs" text="Save As…" />
 						<MenuItem mnemonicParsing="false" onAction="#export" text="Exportar">
                <accelerator>
                   <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                </accelerator></MenuItem>
 						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" text="Preferences…" />
-						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem onAction="#exit" mnemonicParsing="false" text="Quit" />
+						<MenuItem mnemonicParsing="false" onAction="#exit" text="Quit" />
 					</items>
 				</Menu>
 				<Menu mnemonicParsing="false" text="Edit">
@@ -54,6 +52,11 @@
           <MenuItem mnemonicParsing="false" onAction="#addSpriteSheet" text="Adicionar" />
             <MenuItem mnemonicParsing="false" onAction="#editSpriteSheet" text="Editar" />
         </items>
+      </Menu>
+      <Menu mnemonicParsing="false" text="Ferramentas">
+         <items>
+            <MenuItem mnemonicParsing="false" onAction="#run" text="Run" />
+         </items>
       </Menu>
 				<Menu mnemonicParsing="false" text="Help">
 					<items>
