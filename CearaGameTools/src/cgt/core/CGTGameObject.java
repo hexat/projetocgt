@@ -217,7 +217,9 @@ public abstract class CGTGameObject implements Serializable {
 		if (soundsDie.size() > 0){
 			Random r = new Random();
 			int numeroAleatorio = r.nextInt(getSoundsDie().size());
+			if(!soundsDie.get(numeroAleatorio).getMusic().isPlaying()){
 			soundsDie.get(numeroAleatorio).getMusic().play();
+			}
 		}
 	}
 	
@@ -246,7 +248,9 @@ public abstract class CGTGameObject implements Serializable {
 		if (soundCollision.size() > 0){
 			Random r = new Random();
 			int numeroAleatorio = r.nextInt(getSoundCollision().size());
-			soundCollision.get(numeroAleatorio).getMusic().play();
+			if(!soundCollision.get(numeroAleatorio).getMusic().isPlaying()){
+				soundCollision.get(numeroAleatorio).getMusic().play();
+			}
 		}
 	}	
 
