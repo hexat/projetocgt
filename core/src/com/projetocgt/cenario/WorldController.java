@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
@@ -67,19 +68,6 @@ public class WorldController {
 			stopAni();
 		}
 	}
-	
-	public void desactivateAll(){
-		Map<InputPolicy, ActionMovePolicy> res = world.getActor().getActions();
-		
-		
-		
-//		for (Action action : world.getActor().getActions()) {
-////			if (action.hasInput(policy)) {
-////				return action;
-////			}
-//		}
-	}
-	
 
 	private void stopAni() {
 		if(actor.getState().equals(StatePolicy.LOOKUP)) {
@@ -94,13 +82,21 @@ public class WorldController {
 	}
 
 	public void fire(){
-		if(keys.get(ActionMovePolicy.FIRE)){
-            System.out.println(Gdx.input.getX() + " = " +Gdx.input.getY());
-//				world.getActor().setFireDefault(world.getActor().getFireDefault());
-				world.getActor().setFireActivate(true);
-				if (world.getActor().getProjectileDefault().getAmmo() > 0){
-					ammoDowner(world.getActor().getProjectileDefault());
-				}
+		if(keys.get(ActionMovePolicy.FIRE)
+                && world.getActor().getProjectileDefault() != null
+                && world.getActor().getProjectileDefault().hasOrientation(actor.getState())) {
+
+            if (world.getActor().getProjectileDefault().getSpeed() > 0) {
+                System.out.println(Gdx.input.getX() + " = " + Gdx.input.getY());
+                System.out.println(new Vector2(200, 200).scl(Gdx.input.getX(), Gdx.input.getY()));
+                world.getActor().getProjectileDefault().setVelocity(new Vector2(200, 233));
+                world.getActor().getProjectileDefault();
+            }
+
+            world.getActor().setFireActivate(true);
+            if (world.getActor().getProjectileDefault().getAmmo() > 0){
+                ammoDowner(world.getActor().getProjectileDefault());
+            }
 		}
 	}
 	
@@ -143,7 +139,9 @@ public class WorldController {
 	public void update(float delta) {
 		// Processa a entrada de algum parametro
 		if(!actor.isInputsEnabled()){
-			processInput();	
+            moveKeys();
+            fire();
+            verifyActions();
 		}else{
 			actor.getVelocity().y = 0;
 			actor.getVelocity().x = 0;
@@ -239,10 +237,5 @@ public class WorldController {
 				}
 			}
 		}
-	}
-	private void processInput() {
-		moveKeys();
-		fire();
-		verifyActions();
 	}
 }

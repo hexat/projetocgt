@@ -57,7 +57,7 @@ public class ActionDialog extends VBox {
         boxInputs.getSelectionModel().selectFirst();
 
         ArrayList<EnumMap<ActionMovePolicy>> moves = new ArrayList<EnumMap<ActionMovePolicy>>();
-        for (ActionMovePolicy policy : ActionMovePolicy.values()) {
+        for (ActionMovePolicy policy : actor.getAvailableActionsMove()) {
             moves.add(new EnumMap<ActionMovePolicy>(policy, bundle.getString(policy.name())));
         }
         boxMoves.getItems().addAll(moves);

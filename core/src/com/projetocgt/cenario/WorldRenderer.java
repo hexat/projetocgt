@@ -440,6 +440,7 @@ public class WorldRenderer {
 				// algum Projectile
                 CGTProjectile pro = world.getActor().getProjectileDefault();
 				if (pro != null
+                        && world.getActor().isFireActivate()
 						&& pro.getAmmo() > 0
 						&& world.getEnemies().get(i).getCollision().overlaps(pro.getCollision())
 						&& world.getEnemies().get(i).isDestroyable()
@@ -468,8 +469,8 @@ public class WorldRenderer {
 
 			for (int w = 0; w < pro.getOrientations().size(); w++) {
 				if (pro.getOrientations().get(w).getStates().contains(personagem.getState())) {
-					pro.setPosition(personagem.getPosition());
-					//Os desenhos sao feitos de acordo com os States. 
+                    pro.setPosition(personagem.getPosition().cpy());
+					//Os desenhos sao feitos de acordo com os States.
 					pro.setState(personagem.getState());
 
 					// faz um movimento do projectile

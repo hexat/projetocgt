@@ -237,6 +237,7 @@ public class MenuBarController implements Initializable {
         File save = DialogsUtil.showSaveDialog("Salvar projeto");
         if (save != null) {
             try {
+                Main.getApp().setTitle(save.getName());
                 Config.get().zip(save);
                 Dialogs.create().owner(Main.getApp()).message(":)").title("Salvando Projeto").showInformation();
             } catch (IOException e) {

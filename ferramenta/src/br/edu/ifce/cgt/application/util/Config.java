@@ -92,7 +92,7 @@ public  class Config {
 	public boolean export(Observer observer) {
 		if (getGame().validate().isEmpty()) {
             saveConfig();
-			File out = new File("../android/assets/");
+			File out = new File("android/assets/");
             System.out.println(out.getAbsolutePath());
             try {
 				FileUtils.deleteDirectory(out);
@@ -134,6 +134,7 @@ public  class Config {
 	}
 
 	public void zip(File outFile) throws IOException {
+        inputProjectFile = outFile;
 		File configWorld = new File(BASE + "config.cgt");
 		getGame().saveGame(configWorld);
 		new ZipHelper().zipDir(BASE, outFile.getAbsolutePath());

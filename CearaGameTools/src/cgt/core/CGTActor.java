@@ -8,8 +8,10 @@ import java.util.Map;
 
 import cgt.policy.ActionMovePolicy;
 import cgt.policy.InputPolicy;
+import cgt.policy.StatePolicy;
 import cgt.unit.Action;
 import cgt.util.Jump;
+import cgt.util.ProjectileOrientation;
 
 public class CGTActor extends CGTGameObject {
 	private ArrayList<Jump> jumps;
@@ -243,6 +245,18 @@ public class CGTActor extends CGTGameObject {
             return projectiles.get(fireDefault);
         }
         return null;
+    }
+
+    public List<ActionMovePolicy> getAvailableActionsMove() {
+        List<ActionMovePolicy> res = new ArrayList<ActionMovePolicy>();
+
+        for (ActionMovePolicy a : ActionMovePolicy.values()) {
+            if (!hasAction(a)) {
+                res.add(a);
+            }
+        }
+
+        return res;
     }
 }
  
