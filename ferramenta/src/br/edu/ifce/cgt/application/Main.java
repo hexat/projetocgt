@@ -29,23 +29,6 @@ public class Main extends Application {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		URL url = Main.class.getResource("/bin/desktop");
-		if (url == null) {
-			// error - missing folder
-		} else {
-			File file = new File(System.getProperty("user.home")+"/testeteste");
-			file.delete();
-			file.mkdirs();
-			File dir = null;
-			try {
-				dir = new File(url.toURI());
-				FileUtils.copyDirectory(dir, file);
-			} catch (URISyntaxException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 	public static void main(String[] args) {

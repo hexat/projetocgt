@@ -46,8 +46,13 @@ task copyDesktop(dependsOn: ':desktop:installApp') {
 }
 
 task export(dependsOn: ':core:jar') << {
-	copy {
-		from rootProject.project(':core').jar.archivePath, rootProject.project(':CearaGameTools').jar.archivePath
-		into file(sourceSets.main.resources.srcDirs[0].absolutePath + '/bin/desktop/lib')
+	
+	if (!file(sourceSets.main.resources.srcDirs[0].absolutePath + '/bin/').exists()) {
+		copyDesktop.execute()
+	} else {
+		copy {
+			from rootProject.project(':core').jar.archivePath, rootProject.project(':CearaGameTools').jar.archivePath
+			into file(sourceSets.main.resources.srcDirs[0].absolutePath + '/bin/desktop/lib')
+		}
 	}
 }

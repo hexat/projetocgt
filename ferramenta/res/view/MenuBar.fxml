@@ -30,8 +30,6 @@
                   <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                </accelerator></MenuItem>
 						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" onAction="#run" text="Executar" />
-						<SeparatorMenuItem mnemonicParsing="false" />
 						<MenuItem mnemonicParsing="false" onAction="#exit" text="Quit" />
 					</items>
 				</Menu>
@@ -54,6 +52,11 @@
           <MenuItem mnemonicParsing="false" onAction="#addSpriteSheet" text="Adicionar" />
             <MenuItem mnemonicParsing="false" onAction="#editSpriteSheet" text="Editar" />
         </items>
+      </Menu>
+      <Menu mnemonicParsing="false" text="Ferramentas">
+         <items>
+            <MenuItem mnemonicParsing="false" onAction="#run" text="Run" />
+         </items>
       </Menu>
 				<Menu mnemonicParsing="false" text="Help">
 					<items>
