@@ -17,7 +17,7 @@ eclipse.project {
 }
 
 tasks.ideaModule.doFirst {
-    sourceSets.main.resources.srcDirs = []
+    sourceSets.main.resources.srcDirs = ['res/']
 }
 
 task uijar(dependsOn: classes, type: Jar) {
@@ -26,10 +26,28 @@ task uijar(dependsOn: classes, type: Jar) {
 	include 'br/edu/ifce/cgt/application/controller/ui/**/*'
 }
 
-task createDesktop(dependsOn: ":desktop:installApp", type: Copy) {
+task copyDesktop(dependsOn: ':desktop:installApp') {
+	doFirst {
+		ext.input = file(rootProject.project(':desktop').installApp.destinationDir)
+
+		ext.output = file(sourceSets.main.resources.srcDirs[0].absolutePath + '/bin/desktop/')
+		if (output.exists()) {
+			output.delete()
+		}
+		mkdir(output)
+	}
+
 	doLast {
-		println '$build/install/'
-	    from '$build/install/'
-	    into System.getProperty("user.home")
+		copy {
+			from input
+			into output	
+		}
+	}
+}
+
+task export(dependsOn: ':core:jar') << {
+	copy {
+		from rootProject.project(':core').jar.archivePath, rootProject.project(':CearaGameTools').jar.archivePath
+		into file(sourceSets.main.resources.srcDirs[0].absolutePath + '/bin/desktop/lib')
 	}
 }
