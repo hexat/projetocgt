@@ -264,30 +264,33 @@ public class Direction extends AbstractBehavior {
         getOwner().getVelocity().y = 0;
 
         int indice = random.nextInt(angulos.length);
-
-        // Velocidade X no 1º e 4º quadrantes
-        if ((angulos[indice] >= 0 && angulos[indice] < 90)
-                || (angulos[indice] > 270 && angulos[indice] < 360)) {
-            getOwner().getVelocity().x = getOwner().getSpeed();
-
+        
+        switch(angulos[indice]){
+        case 0:
+        	getOwner().getVelocity().x = getOwner().getSpeed();
+        	break;
+        case 90:
+        	getOwner().getVelocity().y = getOwner().getSpeed();
+        	break;
+        case 180:
+        	getOwner().getVelocity().x = -getOwner().getSpeed();
+        	break;
+        case 270:
+        	getOwner().getVelocity().y = -getOwner().getSpeed();
         }
 
-        // Velocidade X no 2º e 3º quadrantes
-        if (angulos[indice] > 90 && angulos[indice] < 270) {
-            getOwner().getVelocity().x = -getOwner().getSpeed();
-            getOwner().setState(StatePolicy.LOOKLEFT);
-        }
-
-        // Velocidade Y no 1º e 2º quadrantes
-        if (angulos[indice] > 0 && angulos[indice] < 180) {
-            getOwner().getVelocity().y = getOwner().getSpeed();
-
-        }
-
-        // Velocidade Y no 3º e 4º quadrantes
-        if (angulos[indice] > 180 && angulos[indice] < 360) {
-            getOwner().getVelocity().y = -getOwner().getSpeed();
-
+        if(getOwner().getPosition().x < initialPosition.x){
+        	getOwner().getVelocity().x = getOwner().getSpeed();
+        	getOwner().getVelocity().y = 0;
+        } else if (getOwner().getPosition().x > initialPosition.y) {
+        	getOwner().getVelocity().x = -getOwner().getSpeed();
+        	getOwner().getVelocity().y = 0;
+        }else if(getOwner().getPosition().y < finalPosition.x){
+        	getOwner().getVelocity().y = getOwner().getSpeed();
+        	getOwner().getVelocity().x = 0;
+        } else if (getOwner().getPosition().y > finalPosition.y) {
+        	getOwner().getVelocity().y = -getOwner().getSpeed();
+        	getOwner().getVelocity().x = 0;
         }
 
     }

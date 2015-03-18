@@ -40,7 +40,6 @@ public class Fade extends AbstractBehavior {
 
     @Override
     public void act() {
-
         if (fadePolicy ==  FadePolicy.FADE_IN) {
         	
             getOwner().setAlpha(0);
@@ -65,6 +64,7 @@ public class Fade extends AbstractBehavior {
                 int tempo = 0;
                 public void run() {
                     tempo++;
+                    System.out.println(tempo);
                     if (tempo >= getTime()) {
                         getOwner().setAlpha(0);
                         getOwner().setVulnerable(false);

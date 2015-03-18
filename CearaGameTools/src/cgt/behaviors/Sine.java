@@ -34,32 +34,7 @@ public class Sine extends AbstractBehavior {
 
     @Override
     public void act() {
-        if (movementPolicy == MovementPolicy.VERTICAL) {
-            if (isAtFirstStep())
-                getOwner().getVelocity().y = getOwner().getSpeed();
-            else
-                getOwner().getVelocity().y = -getOwner().getSpeed();
-
-            if (getOwner().getPosition().y < getMin()) {
-                setAtFirstStep(true);
-            }
-            if (getOwner().getPosition().y > getMax()) {
-                setAtFirstStep(false);
-            }
-        } else if (movementPolicy == MovementPolicy.HORIZONTAL) {
-
-            if (isAtFirstStep())
-                getOwner().getVelocity().x = -getOwner().getSpeed();
-            else
-                getOwner().getVelocity().x = getOwner().getSpeed();
-
-            if (getOwner().getPosition().x < getMin()) {
-                setAtFirstStep(false);
-            }
-            if (getOwner().getPosition().x > getMax()) {
-                setAtFirstStep(true);
-            }
-        } else if (movementPolicy == MovementPolicy.WIDTH) {
+       if (movementPolicy == MovementPolicy.WIDTH) {
             if (isAtFirstStep()) {
                 getOwner().getCollision().width += getOwner().getSpeed();
                 getOwner().getBounds().width += getOwner().getSpeed();

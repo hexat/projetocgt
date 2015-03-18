@@ -623,6 +623,8 @@ public class WorldRenderer {
 		}
 	}
 
+	
+
 	/**
 	 * Utilizado para verificar se o CGTActor colidiu com algum Bloqueante
 	 * 
