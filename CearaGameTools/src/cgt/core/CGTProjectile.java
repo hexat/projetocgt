@@ -3,6 +3,7 @@ package cgt.core;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import cgt.policy.StatePolicy;
 import cgt.util.ProjectileOrientation;
 
 public class CGTProjectile extends CGTGameObject {
@@ -90,8 +91,17 @@ public class CGTProjectile extends CGTGameObject {
 			groups.add(group);
 		}
 	}
-	
-	public boolean removeGroup(String group) {
+
+    public boolean hasOrientation(StatePolicy actorState) {
+        for (ProjectileOrientation o : orientations) {
+            if (o.getStates().contains(actorState)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean removeGroup(String group) {
 		return groups.remove(group);
 	}
 

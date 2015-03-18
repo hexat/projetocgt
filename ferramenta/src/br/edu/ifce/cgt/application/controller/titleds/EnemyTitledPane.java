@@ -113,6 +113,7 @@ public class EnemyTitledPane extends TitledPane {
                     public void handle(ActionEvent event) {
                         BehaviorDialog dialog = new BehaviorDialog(enemy, behavior);
                         dialog.showAndWait();
+                        updateBehaviors();
                     }
                 });
                 panBehaviors.getChildren().add(pane);

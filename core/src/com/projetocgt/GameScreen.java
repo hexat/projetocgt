@@ -222,14 +222,16 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	public void render(float delta) {
 		switch (state) {
 		case PLAYING:
+
 //			System.out.println(world.getActor().getPosition());
 //			System.out.println(world.getActor().getLife());
 //			System.out.println(world.getScore());
 //			System.out.println(world.getActor().getState());
 			
-			acceletometer();
+			accelerometer();
 			
 			Gdx.input.setInputProcessor(gesture.getGd());
+
 			controller.update(delta);
 			renderer.render();
 			if (renderer.verifyWin()) {
@@ -552,7 +554,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		return world;
 	}
 	
-	public void acceletometer(){		
+	public void accelerometer(){		
 		contador++;
 		if(contador >=5){
 			getController().releaseAccelerometer();

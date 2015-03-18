@@ -439,6 +439,7 @@ public class WorldRenderer {
 				// algum Projectile
                 CGTProjectile pro = world.getActor().getProjectileDefault();
 				if (pro != null
+                        && world.getActor().isFireActivate()
 						&& pro.getAmmo() > 0
 						&& world.getEnemies().get(i).getCollision().overlaps(pro.getCollision())
 						&& world.getEnemies().get(i).isDestroyable()
@@ -467,8 +468,8 @@ public class WorldRenderer {
 
 			for (int w = 0; w < pro.getOrientations().size(); w++) {
 				if (pro.getOrientations().get(w).getStates().contains(personagem.getState())) {
-					pro.setPosition(personagem.getPosition());
-					//Os desenhos sao feitos de acordo com os States. 
+                    pro.setPosition(personagem.getPosition().cpy());
+					//Os desenhos sao feitos de acordo com os States.
 					pro.setState(personagem.getState());
 
 					// faz um movimento do projectile
@@ -620,31 +621,6 @@ public class WorldRenderer {
 			else if (enemy.getVelocity().y < 0 && enemy.getVelocity().x > 0)
 				enemy.setState(StatePolicy.LOOK_RIGHT_AND_DOWN);
 		}
-	}
-
-	/**
-	 * Implementação do comportamento descrito por um behavior Fade
-	 * @param enemy
-	 * @param fade
-	 */
-	private void scheduleFadeIn(final CGTEnemy enemy, final Fade fade) {
-		// Desativa-se as interacoes do enemy com o actor e retira-se o behavior
-		// para que ocorra apenas uma vez
-		enemy.setAlpha(0);
-		enemy.setVulnerable(false);
-		enemy.removeBehavior(fade);
-		
-		Timer.schedule(new Timer.Task() {
-			int tempo = 0;
-			public void run() {
-				tempo++;
-				if(tempo >= fade.getFadeInTime()){
-					enemy.setAlpha(1);
-					enemy.setVulnerable(true);
-					this.cancel();
-				}
-			}
-		}, 1, 1);
 	}
 
 	/**

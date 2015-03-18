@@ -25,8 +25,7 @@ import java.util.ResourceBundle;
  */
 public class FadePane extends GridPane implements BehaviorPane {
     @FXML public ComboBox<EnumMap<FadePolicy>> boxFadePolice;
-    @FXML public IntegerTextField txtFadeInTime;
-    @FXML public IntegerTextField txtFadeOutTime;
+    @FXML public IntegerTextField txtTime;
     private Fade result;
 
     public FadePane() {
@@ -56,8 +55,7 @@ public class FadePane extends GridPane implements BehaviorPane {
             result = new Fade();
         }
         result.setFadePolicy(boxFadePolice.getValue().getKey());
-        result.setFadeInTime(txtFadeInTime.getValue());
-        result.setFadeOutTime(txtFadeOutTime.getValue());
+        result.setTime(txtTime.getValue());
 
         return result;
     }
@@ -72,8 +70,7 @@ public class FadePane extends GridPane implements BehaviorPane {
                 boxFadePolice.getSelectionModel().select(i);
             }
         }
-        txtFadeInTime.setValue(result.getFadeInTime());
-        txtFadeOutTime.setValue(result.getFadeOutTime());
+        txtTime.setValue(result.getTime());
     }
 }
 
