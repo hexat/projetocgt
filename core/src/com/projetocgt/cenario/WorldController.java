@@ -95,7 +95,7 @@ public class WorldController {
 
 	public void fire(){
 		if(keys.get(ActionMovePolicy.FIRE)){
-            System.out.println(Gdx.input.getX() + " = " +Gdx.input.getY());
+//            System.out.println(Gdx.input.getX() + " = " +Gdx.input.getY());
 //				world.getActor().setFireDefault(world.getActor().getFireDefault());
 				world.getActor().setFireActivate(true);
 				if (world.getActor().getProjectileDefault().getAmmo() > 0){
@@ -134,6 +134,13 @@ public class WorldController {
 		deactivateKey(InputPolicy.SLIDE_LEFT);
 		deactivateKey(InputPolicy.SLIDE_RIGHT);
 	}
+	
+	public void releaseAccelerometer(){
+		deactivateKey(InputPolicy.ACEL_DOWN);
+		deactivateKey(InputPolicy.ACEL_UP);
+		deactivateKey(InputPolicy.ACEL_LEFT);
+		deactivateKey(InputPolicy.ACEL_RIGHT);
+	}
 
 
 	/***
@@ -150,7 +157,10 @@ public class WorldController {
 			releaseAllDirectionKeys();
 		}
 
-        
+		
+	    
+	    
+	    
         actor.update(delta);
 
 		for (int i=0; i<world.getOpposites().size(); i++) {

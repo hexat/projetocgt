@@ -51,6 +51,7 @@ public class Fade extends AbstractBehavior {
     public void act() {
 
         if (fadePolicy ==  FadePolicy.FADE_IN) {
+        	
             getOwner().setAlpha(0);
             getOwner().setVulnerable(false);
             remove();
@@ -60,9 +61,25 @@ public class Fade extends AbstractBehavior {
 
                 public void run() {
                     tempo++;
+                    
                     if (tempo >= getFadeInTime()) {
                         getOwner().setAlpha(1);
                         getOwner().setVulnerable(true);
+                        this.cancel();
+                    }
+                }
+            }, 1, 1);
+        } else if(fadePolicy ==  FadePolicy.FADE_AND_DIE){
+        	Timer.schedule(new Timer.Task() {
+                int tempo = 0;
+
+                public void run() {
+                    tempo++;
+                    System.out.println(tempo);
+                    if (tempo >= getFadeOutTime()) {
+                        getOwner().setAlpha(0);
+                        getOwner().setVulnerable(false);
+                        getOwner().setDestroyable(false);
                         this.cancel();
                     }
                 }

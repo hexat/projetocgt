@@ -55,7 +55,7 @@ public class WorldRenderer {
 	private boolean isLose;
 	private Music musicActorLose;
 	private float fatorVolumeObjects;
-	private float transparencia;
+	
 	private CGTOpposite rio;
 	private CGTOpposite aguaAnimation;
 	
@@ -65,7 +65,7 @@ public class WorldRenderer {
 		this.world = world;
 		addons = new  ArrayList<CGTAddOn>();
 		fatorVolumeObjects = 1f;
-		transparencia = 1f;
+		
 		isLose = false;
 		rio = (CGTOpposite) world.getObjectByLabel("rio");
 		musicActorLose = null;
@@ -291,8 +291,7 @@ public class WorldRenderer {
 				camera.viewportWidth += world.getCamera().getScale() * world.getBackground().getTextureGDX().getWidth();
 			}
 
-			transparencia = camera.viewportWidth / world.getBackground().getTextureGDX().getWidth() * world.getCamera().getFullWidth();
-
+			
 			setCameraPosition();
 //			max = world.getBackground().getTextureGDX().getHeight() - camera.viewportHeight/ 2;
 //			if (world.getActor().getPosition().y > max) {
@@ -304,7 +303,7 @@ public class WorldRenderer {
 //			}
 		} else {
 			zoomCamera = CameraStage.IDLE;
-			transparencia = 1.0f;
+			
 		}
 	}
 	
@@ -406,16 +405,16 @@ public class WorldRenderer {
 	}
 
 	private void drawEnemies() {
-		spriteBatch.setColor(1.0f, 1.0f, 1.0f, transparencia);
+		
 		
 		for (int i = 0; i < world.getEnemies().size(); i++) {
 			if (world.getEnemies().get(i).getLife() >= 0) {
 				configBehavior(world.getEnemies().get(i));
-				
+				spriteBatch.setColor(1.0f, 1.0f, 1.0f, world.getEnemies().get(i).getAlpha());
 //				for (CGTGameObject o : world.getEnemies().get(i).getObjectsToCollide()) {
 //					world.getEnemies().get(i).getCollideAnimation().setActive(o.getCollision().overlaps(world.getEnemies().get(i).getCollision()));
 //					if (o.getCollision().overlaps(world.getEnemies().get(i).getCollision())) {
-						if (transparencia > 0 && world.getEnemies().get(i).getCollideAnimation()!=null && world.getEnemies().get(i).getPosition().y > 90 && world.getEnemies().get(i).getPosition().y < 95) {
+						if (world.getEnemies().get(i).getCollideAnimation()!=null && world.getEnemies().get(i).getPosition().y > 90 && world.getEnemies().get(i).getPosition().y < 95) {
 							world.getEnemies().get(i).getCollideAnimation().setActive(true);
 							CGTAddOn a = world.getEnemies().get(i).getCollideAnimation().clone();
 							a.setPosition(world.getEnemies().get(i).getPosition().cpy());
@@ -634,7 +633,7 @@ public class WorldRenderer {
 		enemy.setAlpha(0);
 		enemy.setVulnerable(false);
 		enemy.removeBehavior(fade);
-
+		
 		Timer.schedule(new Timer.Task() {
 			int tempo = 0;
 			public void run() {

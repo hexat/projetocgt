@@ -47,6 +47,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	private TouchInputs touchInput;
 	private Gesture gesture;
 	private InputMultiplexer inputMultiplexer;
+	private int contador;
 
 	public GameScreen(CGTGameWorld world) {
 
@@ -86,7 +87,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		vezes += 1;
 		prefs.putInteger("num_vezes", vezes);
 		prefs.flush();
-		
+		contador = 0;
 		
 	}
 
@@ -225,6 +226,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 //			System.out.println(world.getActor().getLife());
 //			System.out.println(world.getScore());
 //			System.out.println(world.getActor().getState());
+			
+			acceletometer();
+			
 			Gdx.input.setInputProcessor(gesture.getGd());
 			controller.update(delta);
 			renderer.render();
@@ -546,5 +550,45 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 	public CGTGameWorld getWorld() {
 		return world;
+	}
+	
+	public void acceletometer(){		
+		contador++;
+		if(contador >=5){
+			getController().releaseAccelerometer();
+	    contador = 0;
+		}
+//	    System.out.println("X: "+ Gdx.input.getAccelerometerX());
+//	    System.out.println("Y: "+ Gdx.input.getAccelerometerY());
+		if(Math.abs(Gdx.input.getAccelerometerX()) > Math.abs(Gdx.input.getAccelerometerY())){				
+			
+			if(Gdx.input.getAccelerometerX() > 0){
+				controller.activateKey(InputPolicy.ACEL_DOWN);
+//				controller.deactivateKey(InputPolicy.ACEL_UP);
+//				controller.deactivateKey(InputPolicy.ACEL_LEFT);
+//				controller.deactivateKey(InputPolicy.ACEL_RIGHT);
+			} else {
+				controller.activateKey(InputPolicy.ACEL_UP);
+//				controller.deactivateKey(InputPolicy.ACEL_DOWN);
+//				controller.deactivateKey(InputPolicy.ACEL_RIGHT);
+//				controller.deactivateKey(InputPolicy.ACEL_LEFT);
+			} 
+		} else{
+			if(Gdx.input.getAccelerometerY() > 0){
+				controller.activateKey(InputPolicy.ACEL_RIGHT);
+				
+//				controller.deactivateKey(InputPolicy.ACEL_LEFT);
+//				controller.deactivateKey(InputPolicy.ACEL_UP);
+//				controller.deactivateKey(InputPolicy.ACEL_DOWN);
+			} else {
+				controller.activateKey(InputPolicy.ACEL_LEFT);
+				
+//				controller.deactivateKey(InputPolicy.ACEL_RIGHT);
+//				controller.deactivateKey(InputPolicy.ACEL_UP);
+//				controller.deactivateKey(InputPolicy.ACEL_DOWN);
+			} 
+			
+		}
+		
 	}
 }
