@@ -3,6 +3,7 @@ package br.edu.ifce.cgt.application;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import net.lingala.zip4j.core.ZipFile;
@@ -25,6 +26,9 @@ public class Main extends Application {
 			Scene scene = new Scene(root, 900, 650);
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Ceará Game Tools");
+			primaryStage.getIcons().add(
+					new Image(
+							Main.class.getResourceAsStream( "/logo.png" )));
 			primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
