@@ -269,14 +269,32 @@ public class Direction extends AbstractBehavior {
         case 0:
         	getOwner().getVelocity().x = getOwner().getSpeed();
         	break;
+        case 45:
+        	getOwner().getVelocity().x = getOwner().getSpeed();
+        	getOwner().getVelocity().y = getOwner().getSpeed();
+        	break;
         case 90:
+        	getOwner().getVelocity().y = getOwner().getSpeed();
+        	break;
+        case 135:
+        	getOwner().getVelocity().x = -getOwner().getSpeed();
         	getOwner().getVelocity().y = getOwner().getSpeed();
         	break;
         case 180:
         	getOwner().getVelocity().x = -getOwner().getSpeed();
         	break;
+        case 225:
+        	getOwner().getVelocity().x = -getOwner().getSpeed();
+        	getOwner().getVelocity().y = -getOwner().getSpeed();
+        	break;
         case 270:
         	getOwner().getVelocity().y = -getOwner().getSpeed();
+        	break;
+        case 315:
+        	getOwner().getVelocity().x = getOwner().getSpeed();
+        	getOwner().getVelocity().y = -getOwner().getSpeed();
+        	break;
+        	
         }
 
         if(getOwner().getPosition().x < initialPosition.x){
