@@ -101,7 +101,7 @@ public class AnimationDialog extends HBox {
         }
 
         boxAnimationPolicy.getItems().setAll(listModes);
-        boxAnimationPolicy.getSelectionModel().selectFirst();
+        boxAnimationPolicy.getSelectionModel().select(2);
 
         statePolicies = new ArrayList<EnumMap<StatePolicy>>();
 

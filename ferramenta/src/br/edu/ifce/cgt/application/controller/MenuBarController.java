@@ -273,7 +273,6 @@ public class MenuBarController implements Initializable {
 
             zipFile.extractAll(file.getParent());
 
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ZipException e) {
