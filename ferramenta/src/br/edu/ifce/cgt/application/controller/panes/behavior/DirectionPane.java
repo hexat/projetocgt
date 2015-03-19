@@ -9,10 +9,13 @@ import cgt.behaviors.Direction;
 import cgt.core.AbstractBehavior;
 import cgt.policy.DirectionPolicy;
 import com.badlogic.gdx.math.Vector2;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
@@ -25,6 +28,8 @@ import java.util.ResourceBundle;
  * Created by Luan on 18/02/2015.
  */
 public class DirectionPane extends GridPane implements BehaviorPane {
+    @FXML public Label labFirst;
+    @FXML public Label labLast;
     @FXML private ComboBox<EnumMap<DirectionPolicy>> boxPolicies;
     @FXML private ComboBox<EnumMap<Direction.DirectionMode>> boxModes;
     @FXML private IntegerTextField txtPosIniX;
@@ -60,6 +65,26 @@ public class DirectionPane extends GridPane implements BehaviorPane {
         }
 
         boxPolicies.getItems().setAll(list);
+        boxPolicies.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (boxPolicies.getSelectionModel().getSelectedItem().getKey() == DirectionPolicy.TWO_POINTS_DIRECTION) {
+                    labFirst.setText("Posição inicial");
+                    labLast.setText("Posição final");
+                    txtPosIniX.setPromptText("X");
+                    txtPosIniY.setPromptText("Y");
+                    txtPosFimX.setPromptText("X");
+                    txtPosFimY.setPromptText("Y");
+                } else {
+                    labFirst.setText("X");
+                    labLast.setText("Y");
+                    txtPosIniX.setPromptText("Mínimo");
+                    txtPosIniY.setPromptText("Máximo");
+                    txtPosFimX.setPromptText("Mínimo");
+                    txtPosFimY.setPromptText("Máximo");
+                }
+            }
+        });
         boxPolicies.getSelectionModel().selectFirst();
         result = null;
     }

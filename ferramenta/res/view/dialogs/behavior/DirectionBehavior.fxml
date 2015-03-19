@@ -23,8 +23,8 @@
   </rowConstraints>
    <children>
       <Label text="Direction Mode" GridPane.rowIndex="1" />
-      <Label text="Posição inicial" GridPane.rowIndex="2" />
-      <Label text="Posição final" GridPane.rowIndex="3" />
+      <Label fx:id="labFirst" text="Posição inicial" GridPane.rowIndex="2" />
+      <Label fx:id="labLast" text="Posição final" GridPane.rowIndex="3" />
       <Label text="Inteligente" GridPane.rowIndex="4" />
       <Label text="Direction Police" />
       <ComboBox fx:id="boxModes" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
