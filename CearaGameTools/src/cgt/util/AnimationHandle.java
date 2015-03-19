@@ -47,14 +47,16 @@ public class AnimationHandle {
 			// linhas completas
 			for (int i = initialX; i < endingX; i++) {
 				for(int j = initialY; j < numberOfColumns; j++){
+					
 					texture = new TextureRegion(tmp[i][j]);
 					texture.flip(animation.isFlipHorizontal(), animation.isFlipVertical());
 					textureList.add(texture);
 				}
 				initialX = 0;
 			}
-			// linha incompleta
-			for(int j = 0; j <= endingY; j++){
+			
+			int init = initialX == endingX ? initialY : 0; 
+			for(int j = init; j <= endingY; j++){
 				texture = new TextureRegion(tmp[endingX][j]);
 				texture.flip(animation.isFlipHorizontal(), animation.isFlipVertical());
 				textureList.add(texture);
