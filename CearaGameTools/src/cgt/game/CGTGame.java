@@ -213,6 +213,15 @@ public class CGTGame implements Serializable {
 
         return result;
     }
+
+    public boolean remove(CGTGameObject object) {
+        for (CGTGameWorld world : worlds) {
+            if (world.removeObject(object)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 

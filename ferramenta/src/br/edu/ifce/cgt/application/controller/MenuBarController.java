@@ -37,10 +37,12 @@ public class MenuBarController implements Initializable {
     private final String cgtJarPath = "desktop/lib/CearaGameTools-1.0.jar";
 
     public Menu menuRecent;
+    public Menu menuSprite;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         updateRecent();
+        menuSprite.setDisable(true);
     }
 
 	@FXML
@@ -95,6 +97,7 @@ public class MenuBarController implements Initializable {
     }
 
     private void open(File open) {
+        menuSprite.setDisable(false);
         TabPane tabFerramenta = (TabPane) Main.getApp().getScene().lookup("#tabFerramenta");
         Main.getApp().setTitle(open.getName());
         Config.unzip(open);
@@ -138,60 +141,69 @@ public class MenuBarController implements Initializable {
         if (errors.isEmpty()) {
             new ExportDialog().show();
         } else {
-            String msg = "";
-            ResourceBundle bundle = Pref.load().getBundle();
-            for (CGTError e : errors) {
-                msg += bundle.getString(e.getValidate().name()) + " em " + e.getId() + "." + '\n';
-            }
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-
-            alert.setHeaderText("Verifique os seguintes itens");
-            alert.setContentText(msg);
-            alert.showAndWait();
+            showValidateDialog(errors);
         }
     }
 
+    private void showValidateDialog(List<CGTError> errors) {
+        String msg = "";
+        ResourceBundle bundle = Pref.load().getBundle();
+        for (CGTError e : errors) {
+            msg += bundle.getString(e.getValidate().name()) + " em " + e.getId() + "." + '\n';
+        }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+        alert.setHeaderText("Verifique os seguintes itens");
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
+
     @FXML public void run() {
-        Main.getApp().getScene().setCursor(Cursor.WAIT);
-        Config.get().saveConfig();
-        File base = Config.get().getProjectDir();
+        List<CGTError> errors = Config.get().getGame().validate();
+        if (errors.isEmpty()) {
+            Main.getApp().getScene().setCursor(Cursor.WAIT);
+            Config.get().saveConfig();
+            File base = Config.get().getProjectDir();
 
-        try {
-            if (new File(localDefaultDirectory()+desktopJarPath).exists()) {
-                String[] paths = new String[] {coreJarPath, desktopJarPath};
-                boolean changed = false;
-                long foo;
-                long bar;
-                for (int i = 0; i < paths.length && !changed; i++) {
-                    foo = new File(localDefaultDirectory()+paths[i]).lastModified();
-                    bar = new File(Main.class.getResource("/bin/"+paths[i]).toURI()).lastModified();
+            try {
+                if (new File(localDefaultDirectory()+desktopJarPath).exists()) {
+                    String[] paths = new String[] {coreJarPath, desktopJarPath};
+                    boolean changed = false;
+                    long foo;
+                    long bar;
+                    for (int i = 0; i < paths.length && !changed; i++) {
+                        foo = new File(localDefaultDirectory()+paths[i]).lastModified();
+                        bar = new File(Main.class.getResource("/bin/"+paths[i]).toURI()).lastModified();
 
-                    if (foo != bar) {
-                        copyDesktopFiles();
-                        changed = true;
+                        if (foo != bar) {
+                            copyDesktopFiles();
+                            changed = true;
+                        }
+                    }
+                } else {
+                    copyLibDesktopFiles();
+                }
+
+                ZipFile jar = new ZipFile(localDefaultDirectory()+desktopJarPath);
+                for (File f : base.listFiles()) {
+                    if (f.isDirectory()) {
+                        jar.addFolder(f, new ZipParameters());
+                    } else {
+                        jar.addFile(f, new ZipParameters());
                     }
                 }
-            } else {
-                copyLibDesktopFiles();
-            }
 
-            ZipFile jar = new ZipFile(localDefaultDirectory()+desktopJarPath);
-            for (File f : base.listFiles()) {
-                if (f.isDirectory()) {
-                    jar.addFolder(f, new ZipParameters());
-                } else {
-                    jar.addFile(f, new ZipParameters());
-                }
+                runDesktop();
+            } catch (ZipException e) {
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
             }
-
-            runDesktop();
-        } catch (ZipException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
+            Main.getApp().getScene().setCursor(Cursor.DEFAULT);
+        } else {
+            showValidateDialog(errors);
         }
-        Main.getApp().getScene().setCursor(Cursor.DEFAULT);
     }
 
     private void runDesktop() {
@@ -303,5 +315,15 @@ public class MenuBarController implements Initializable {
         }
         path += "/CGTData/";
         return path;
+    }
+
+    public void showInfo(ActionEvent event) {
+        try {
+            String url = "http://www.cgt.ifce.edu.br";
+            java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
+        }
+        catch (java.io.IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

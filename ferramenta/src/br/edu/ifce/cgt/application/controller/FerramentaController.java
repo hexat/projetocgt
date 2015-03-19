@@ -79,7 +79,7 @@ public class FerramentaController implements Initializable {
                 .owner(Main.getApp())
                 .title("Nome para o mundo")
                 .message("Digite um nome para o mundo:")
-                .showTextInput("Mundo ");
+                .showTextInput("Mundo");
 
         if (response.isPresent()) {
             String id = response.get().trim();
@@ -88,6 +88,7 @@ public class FerramentaController implements Initializable {
                 ScreenTab tab = new ScreenTab(world);
                 tabFerramenta.getTabs().add(tab);
                 tabFerramenta.getSelectionModel().select(tab);
+                Main.getApp().getScene().lookup("#menuSprite").setDisable(false);
             } else {
                 Dialogs.create()
                         .owner(Main.getApp())

@@ -222,9 +222,8 @@ public class CGTGameWorld extends CGTWindow {
 		lifeBar.setWorld(this);
 		hud.add(lifeBar);
 	}
-	
-	public void removeLifeBar(LifeBar lifeBar){
-		hud.remove(lifeBar);
+	public boolean removeHud(HUDComponent hudComponent){
+		return hud.remove(hudComponent);
 	}
 
 	public CGTDialog getPauseDialog() {
@@ -397,6 +396,35 @@ public class CGTGameWorld extends CGTWindow {
 	public void addScore(int score2) {
 		this.score += score2;
 		
+	}
+
+	public boolean removeObject(CGTGameObject object) {
+		for (CGTGameObject o : getActor().getProjectiles()) {
+			if (o == object) {
+				getActor().getProjectiles().remove(o);
+				return true;
+			}
+		}
+
+		for (CGTGameObject o : opposites) {
+			if (o == object) {
+				opposites.remove(o);
+				return true;
+			}
+		}
+		for (CGTGameObject o : enemies) {
+			if (o == object) {
+				enemies.remove(o);
+				return true;
+			}
+		}
+		for (CGTGameObject o : bonus) {
+			if (o == object) {
+				bonus.remove(o);
+				return true;
+			}
+		}
+		return false;
 	}
 }
  

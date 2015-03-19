@@ -8,6 +8,10 @@ import cgt.hud.HUDComponent;
 import cgt.hud.IndividualLifeBar;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -74,7 +78,7 @@ public class WorldController extends BorderPane {
         if (listaInimigo.size() < 6) {
             CGTEnemy e = new CGTEnemy("Inimigo");
             world.addEnemy(e);
-            ObjectButton btn = new ObjectButton(e);
+            ObjectButton btn = new ObjectButton(this, e);
             listaInimigo.add(btn);
             boxEnemies.getChildren().addAll(btn);
         } else {
@@ -84,20 +88,11 @@ public class WorldController extends BorderPane {
 
     @FXML
     public void addOpositeInWorld() {
-        if (listaOpposite.size() < 6) {
             CGTOpposite o = new CGTOpposite("Opositor");
             world.addOpposite(o);
-            ObjectButton btn = new ObjectButton(o);
+            ObjectButton btn = new ObjectButton(this, o);
             listaOpposite.add(btn);
             boxOpposites.getChildren().addAll(btn);
-        } else {
-//			Stage dialog = new Stage();
-//			dialog.initStyle(StageStyle.UTILITY);
-//			Scene scene = new Scene(new Group(new Text(50, 50, "Não pode add outro opposite")));
-//			dialog.setScene(scene);
-//			dialog.show();
-            System.out.println("Não pode add outro opposite");
-        }
     }
 
     public void addAmmoDisplay() {
@@ -122,58 +117,63 @@ public class WorldController extends BorderPane {
 
     public void setWorld(CGTGameWorld world) {
         this.world = world;
-        if (world.getActor() != null) {
-            boxActor.getChildren().clear();
-            boxActor.getChildren().add(new ObjectButton(world.getActor()));
-
-            for (CGTProjectile p : world.getActor().getProjectiles()) {
-                boxActor.getChildren().add(new ObjectButton(p));
-            }
-        }
-        boxEnemies.getChildren().clear();
-        for (CGTEnemy enemy : world.getEnemies()) {
-            boxEnemies.getChildren().add(new ObjectButton(enemy));
-        }
-
-        boxOpposites.getChildren().clear();
-        for (CGTOpposite opposite : world.getOpposites()) {
-            boxOpposites.getChildren().add(new ObjectButton(opposite));
-        }
-
-        boxBonus.getChildren().clear();
-        for (CGTBonus bonus : world.getBonus()) {
-            boxBonus.getChildren().add(new ObjectButton(bonus));
-        }
-
-        boxHud.getChildren().clear();
-        for (HUDComponent hud : world.getHUD()) {
-            boxHud.getChildren().add(new ButtonHud(hud));
-        }
+        updatePanes();
     }
 
     public void addBonus(ActionEvent event) {
         CGTBonus bonus = new CGTBonus("Bonus");
         world.addBonus(bonus);
 
-        ObjectButton button = new ObjectButton(bonus);
+        ObjectButton button = new ObjectButton(this, bonus);
 
         boxBonus.getChildren().add(button);
     }
 
     public void addProjectile(ActionEvent event) {
-        final CGTProjectile projectile = new CGTProjectile();
+        CGTProjectile projectile = new CGTProjectile();
         projectile.setId("Projetil");
         world.getActor().addProjectile(projectile);
-        boxActor.getChildren().add(new ObjectButton(projectile));
+        boxActor.getChildren().add(new ObjectButton(this, projectile));
     }
 
-    public void teste(ActionEvent event) {
-        System.out.println("clikei");
+    public void updatePanes() {
+        if (world.getActor() != null) {
+            boxActor.getChildren().clear();
+            boxActor.getChildren().add(new ObjectButton(this, world.getActor()));
+
+            for (CGTProjectile p : world.getActor().getProjectiles()) {
+                boxActor.getChildren().add(new ObjectButton(this, p));
+            }
+        }
+        boxEnemies.getChildren().clear();
+        for (CGTEnemy enemy : world.getEnemies()) {
+            boxEnemies.getChildren().add(new ObjectButton(this, enemy));
+        }
+
+        boxOpposites.getChildren().clear();
+        for (CGTOpposite opposite : world.getOpposites()) {
+            boxOpposites.getChildren().add(new ObjectButton(this, opposite));
+        }
+
+        boxBonus.getChildren().clear();
+        for (CGTBonus bonus : world.getBonus()) {
+            boxBonus.getChildren().add(new ObjectButton(this, bonus));
+        }
+
+        boxHud.getChildren().clear();
+        for (HUDComponent hud : world.getHUD()) {
+            boxHud.getChildren().add(new ButtonHud(hud));
+        }
+        btnConfigWorld();
+    }
+
+    public CGTGameWorld getWorld() {
+        return world;
     }
 
     private class ButtonHud extends Button {
         private HUDComponent hudComponent;
-        public ButtonHud(HUDComponent hud) {
+        public ButtonHud(final HUDComponent hud) {
             super(hud.getName());
             this.hudComponent = hud;
 
@@ -211,6 +211,34 @@ public class WorldController extends BorderPane {
                     }
                 });
             }
+
+            setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (event.getButton() == MouseButton.SECONDARY) {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+                        alert.setTitle("Janela de Confirmação");
+                        alert.setHeaderText("Atenção, confime sua opção");
+                        alert.setContentText("Tem certeza que deseja remover?");
+
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.get() == ButtonType.OK) {
+                            alert.setAlertType(Alert.AlertType.INFORMATION);
+                            if (world.removeHud(hud)) {
+                                alert.setHeaderText(":)");
+                                alert.setContentText("Objeto removido com sucesso!");
+                                alert.showAndWait();
+                                updatePanes();
+                            } else {
+                                alert.setHeaderText(":(");
+                                alert.setContentText("Não foi possível encontrar este objeto");
+                                alert.showAndWait();
+                            }
+                        }
+                    }
+                }
+            });
         }
     }
 }

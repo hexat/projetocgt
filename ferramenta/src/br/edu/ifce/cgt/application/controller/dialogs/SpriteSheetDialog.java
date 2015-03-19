@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
+import cgt.util.CGTFile;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -67,13 +68,18 @@ public class SpriteSheetDialog extends VBox {
     @FXML public void addNewSprite() {
         if (validate()) {
             SpriteSheetDB db = Config.get().getGame().getSpriteDB();
+            CGTFile file = Config.get().createImg(imgFile);
+            file.setFilename(txtImgName.getText());
             if (spriteSheet == null) {
-                spriteSheet = db.create(txtNameSprite.getText(), new CGTTexture(Config.get().createImg(imgFile)));
+                spriteSheet = db.create(txtNameSprite.getText(), new CGTTexture(file));
                 spriteSheet.setColumns(txtNumCol.getValue());
                 spriteSheet.setRows(txtNumLines.getValue());
             } else {
+                if (spriteSheet.getTexture() != null) {
+                    Config.get().destroy(spriteSheet.getTexture().getFile());
+                }
             	if (imgFile != null) {
-            		spriteSheet.setTexture(new CGTTexture(Config.get().createImg(imgFile)));
+            		spriteSheet.setTexture(new CGTTexture(file));
             	}
                 spriteSheet.setColumns(txtNumCol.getValue());
                 spriteSheet.setRows(txtNumLines.getValue());
@@ -104,13 +110,13 @@ public class SpriteSheetDialog extends VBox {
             txtNameSprite.setText(imgFile.getName().substring(0, imgFile.getName().length()-4));
         }
 
+        txtImgName.setText(file.getName());
+
         updateImage();
     }
 
     public void updateImage() {
         if (imgFile != null) {
-            txtImgName.setText(imgFile.getName());
-//          Image image = new Image("file:"+file.getAbsolutePath(), 0, imgView.fitHeightProperty().get(), false, false);
             Image image = new Image("file:"+imgFile.getAbsolutePath());
             if (imgView == null) {
                 imgView = new ImageView();
