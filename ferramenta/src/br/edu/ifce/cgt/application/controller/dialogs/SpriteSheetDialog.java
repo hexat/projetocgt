@@ -59,6 +59,8 @@ public class SpriteSheetDialog extends VBox {
         stage.initOwner(Main.getApp().getScene().getWindow());
         stage.sizeToScene();
 
+        txtNumLines.setMaxMin(1, 100);
+        txtNumCol.setMaxMin(1, 100);
         imgView = null;
 
         setSpriteSheet(sheet);

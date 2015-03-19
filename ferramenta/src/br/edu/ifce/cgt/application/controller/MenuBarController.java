@@ -1,6 +1,7 @@
 package br.edu.ifce.cgt.application.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -26,15 +27,15 @@ import javafx.fxml.FXML;
 import br.edu.ifce.cgt.application.controller.panes.ScreenTab;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.model.UnzipParameters;
 import net.lingala.zip4j.model.ZipParameters;
 import org.apache.commons.io.FileUtils;
 import org.controlsfx.dialog.Dialogs;
 
 public class MenuBarController implements Initializable {
 
-    private final String desktopJarPath = "desktop/lib/desktop-1.0.jar";
-    private final String coreJarPath = "desktop/lib/core-1.0.jar";
-    private final String cgtJarPath = "desktop/lib/CearaGameTools-1.0.jar";
+    private final String desktopJarPath = "desktop/desktop-1.0/lib/desktop-1.0.jar";
+    private final String desktopZipPath = "desktop/desktop.zip";
 
     public Menu menuRecent;
     public Menu menuSprite;
@@ -167,22 +168,18 @@ public class MenuBarController implements Initializable {
             File base = Config.get().getProjectDir();
 
             try {
-                if (new File(localDefaultDirectory()+desktopJarPath).exists()) {
-                    String[] paths = new String[] {coreJarPath, desktopJarPath};
-                    boolean changed = false;
-                    long foo;
-                    long bar;
-                    for (int i = 0; i < paths.length && !changed; i++) {
-                        foo = new File(localDefaultDirectory()+paths[i]).lastModified();
-                        bar = new File(Main.class.getResource("/bin/"+paths[i]).toURI()).lastModified();
-
-                        if (foo != bar) {
-                            copyDesktopFiles();
-                            changed = true;
-                        }
+                File localZip = new File(localDefaultDirectory()+desktopZipPath);
+                if (localZip.exists()) {
+                    long foo = localZip.lastModified();
+                    InputStream bar = Main.class.getResourceAsStream("/bin/desktop-1.0.zip");
+                    File file = new File(localDefaultDirectory()+"tmp.zip");
+                    FileUtils.copyInputStreamToFile(bar, file);
+                    if (localZip.lastModified() != file.lastModified()) {
+                        copyDesktopFiles();
                     }
+                    file.delete();
                 } else {
-                    copyLibDesktopFiles();
+                    copyDesktopFiles();
                 }
 
                 ZipFile jar = new ZipFile(localDefaultDirectory()+desktopJarPath);
@@ -197,7 +194,7 @@ public class MenuBarController implements Initializable {
                 runDesktop();
             } catch (ZipException e) {
                 e.printStackTrace();
-            } catch (URISyntaxException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             Main.getApp().getScene().setCursor(Cursor.DEFAULT);
@@ -207,13 +204,14 @@ public class MenuBarController implements Initializable {
     }
 
     private void runDesktop() {
-        String path = localDefaultDirectory()+"desktop/bin/desktop";
+        String path = localDefaultDirectory()+"desktop/desktop-1.0/bin/desktop";
         Runtime runtime = Runtime.getRuntime();
 			try {
                 Process p1;
                 if (isWin()) {
                     p1 = runtime.exec("cmd /c start "+path+".bat");
                 } else {
+                    runtime.exec("chmod +x "+path);
                     p1 = runtime.exec("sh "+path);
                 }
                 InputStream is = p1.getInputStream();
@@ -260,49 +258,54 @@ public class MenuBarController implements Initializable {
     }
 
     private void copyDesktopFiles() {
-        URL url = Main.class.getResource("/bin/desktop");
-        if (url == null) {
-            // error - missing folder
-        } else {
-            File file = new File(localDefaultDirectory()+"desktop/");
+        System.out.print("Copiando arquivos...");
+        InputStream url = Main.class.getResourceAsStream("/bin/desktop-1.0.zip");
+        File file = new File(localDefaultDirectory()+"desktop/desktop.zip");
+        if (file.exists()) {
             file.delete();
-            file.mkdirs();
-            File dir = null;
-            try {
-                dir = new File(url.toURI());
-                FileUtils.copyDirectory(dir, file);
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
+        file.getParentFile().mkdirs();
+        try {
+            FileUtils.copyInputStreamToFile(url, file);
+            url.close();
+
+            ZipFile zipFile = new ZipFile(file);
+
+            zipFile.extractAll(file.getParent());
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ZipException e) {
+            e.printStackTrace();
+        }
+        System.out.println("fim.");
     }
 
-    private void copyLibDesktopFiles() {
-        if (!new File(localDefaultDirectory()+desktopJarPath).exists()) {
-            copyDesktopFiles();
-        } else {
-            URL url = null;
-            for (String path : new String[]{cgtJarPath, coreJarPath}) {
-                url = Main.class.getResource("/bin/" + path);
-                if (url != null) {
-                    File file = new File(localDefaultDirectory() + path);
-                    file.delete();
-                    File input = null;
-                    try {
-                        input = new File(url.toURI());
-                        FileUtils.copyFile(input, file);
-                    } catch (URISyntaxException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-    }
+//    private void copyLibDesktopFiles() {
+//        if (!new File(localDefaultDirectory()+desktopJarPath).exists()) {
+//            copyDesktopFiles();
+//        } else {
+//            URL url = null;
+//            for (String path : new String[]{cgtJarPath, coreJarPath}) {
+//                url = Main.class.getResource("/bin/" + path);
+//                if (url != null) {
+//                    File file = new File(localDefaultDirectory() + path);
+//                    file.delete();
+//                    File input = null;
+//                    try {
+//                        input = new File(url.toURI());
+//                        FileUtils.copyFile(input, file);
+//                    } catch (URISyntaxException e) {
+//                        e.printStackTrace();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }
+//
+//    }
 
     static String localDefaultDirectory() {
         String path = "";

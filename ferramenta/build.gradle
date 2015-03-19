@@ -26,11 +26,11 @@ task uijar(dependsOn: classes, type: Jar) {
 	include 'br/edu/ifce/cgt/application/controller/ui/**/*'
 }
 
-task copyDesktop(dependsOn: ':desktop:installApp') {
+task copyDesktop(dependsOn: ':desktop:distZip') {
 	doFirst {
-		ext.input = file(rootProject.project(':desktop').installApp.destinationDir)
+		ext.input = file(rootProject.project(':desktop').distZip.destinationDir)
 
-		ext.output = file(sourceSets.main.resources.srcDirs[0].absolutePath + '/bin/desktop/')
+		ext.output = file(sourceSets.main.resources.srcDirs[0].absolutePath + '/bin/')
 		if (output.exists()) {
 			output.delete()
 		}
