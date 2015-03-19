@@ -1,9 +1,6 @@
 package br.edu.ifce.cgt.application.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Observer;
 
 import net.lingala.zip4j.core.ZipFile;
@@ -139,32 +136,18 @@ public  class Config {
 		getGame().saveGame(configWorld);
 		new ZipHelper().zipDir(BASE, outFile.getAbsolutePath());
 	}
-	public static void unzip(File inputFile) {
+	public static void unzip(File inputFile) throws ZipException, IOException {
         inputProjectFile = inputFile;
 		File o = new File(BASE);
-		try {
-			FileUtils.deleteDirectory(o);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			ZipFile zip = new ZipFile(inputFile);
-			zip.extractAll(new File(BASE).getParentFile().getAbsolutePath());
-		} catch (ZipException e) {
-			e.printStackTrace();
-		}
+        FileUtils.deleteDirectory(o);
+        ZipFile zip = new ZipFile(inputFile);
+        zip.extractAll(new File(BASE).getParentFile().getAbsolutePath());
 		File configWorld = new File(BASE + "config.cgt");
 		CGTGame game = null;
 		if (configWorld.exists()) {
-			try {
-				InputStream io = new FileInputStream(configWorld);
-				game = CGTGame.getSavedGame(io);
-				io.close();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+            InputStream io = new FileInputStream(configWorld);
+            game = CGTGame.getSavedGame(io);
+            io.close();
 
 		}
         AppPref pref = new AppPref(new File(BASE+"pref.properties"));
