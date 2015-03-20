@@ -34,6 +34,7 @@ public class TargetTime extends LoseCriteria {
 	}
 
 	public void start(){
+		
 		label.getLabelGDX().setText(String.valueOf(timer));
 		float delay = 1; // seconds
 		float repete = 1;

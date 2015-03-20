@@ -10,6 +10,7 @@ public class GetAllBonus extends WinCriteria {
 
     @Override
     public boolean achieved() {
+    	
         return getWorld().getBonus().size() == 0;
     }
 
