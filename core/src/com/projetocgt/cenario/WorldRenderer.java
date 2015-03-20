@@ -651,10 +651,8 @@ public class WorldRenderer {
                         if(bonus.getPolicies().contains(BonusPolicy.ADD_SCORE)){
                             world.addScore(bonus.getScore());
                         }
-                        System.out.println(bonus.getPolicies());
                         if(bonus.getPolicies().contains(BonusPolicy.ADD_TIME)){
                             TargetTime time = world.getLoseCriteriaTargetTime();
-                            System.out.println(time);
                             if (time != null) {
                                 time.addTime(bonus.getScore());
                             }
