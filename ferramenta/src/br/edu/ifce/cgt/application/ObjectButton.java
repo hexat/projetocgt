@@ -54,7 +54,19 @@ public class ObjectButton extends Button {
         setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if (event.getButton() == MouseButton.SECONDARY) {
+                if (event.getClickCount() == 2) {
+                    if (object instanceof CGTEnemy) {
+                        CGTEnemy e = new CGTEnemy((CGTEnemy) object);
+
+                        worldController.getWorld().addEnemy(e);
+                        worldController.updatePanes();
+                    } else if (object instanceof CGTOpposite) {
+                        CGTOpposite e = new CGTOpposite((CGTOpposite) object);
+
+                        worldController.getWorld().addOpposite(e);
+                        worldController.updatePanes();
+                    }
+                } else if (event.getButton() == MouseButton.SECONDARY) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 
                     alert.setTitle("Janela de Confirmação");

@@ -42,7 +42,6 @@ public class CGTAnimation {
 		spriteVelocity = 1;
 		flipHorizontal = false;
 		flipVertical = false;
-        actorStates = null;
 		animationPolicy = PlayMode.LOOP;
 	}
 	

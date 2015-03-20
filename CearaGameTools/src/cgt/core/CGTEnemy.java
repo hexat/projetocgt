@@ -23,17 +23,27 @@ public class CGTEnemy extends CGTOpposite implements Serializable {
 
 	public CGTEnemy() {
 		this("Inimigo");
+        init();
 	}
+
+    public CGTEnemy(CGTEnemy enemy) {
+        super(enemy);
+        init();
+    }
 
     public CGTEnemy(String label) {
 		super(label);
-		damage=0;
-		behaviors = new ArrayList<AbstractBehavior>();
-		group="General";
-		vulnerable=true;
-		alpha = 1;
-		attacking = false;
-		timeToRecovery = 0;
+        init();
+    }
+
+    private void init() {
+        damage=0;
+        behaviors = new ArrayList<AbstractBehavior>();
+        group="General";
+        vulnerable=true;
+        alpha = 1;
+        attacking = false;
+        timeToRecovery = 0;
     }
 
 	public int getDamage() {
