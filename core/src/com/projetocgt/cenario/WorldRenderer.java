@@ -632,6 +632,7 @@ public class WorldRenderer {
 	 */
 	public boolean isColision() {
 		boolean colision = false;
+		CGTBonus bonusTemp = null;
 		
 
 		//System.out.println(personagem.getState().name());
@@ -666,7 +667,8 @@ public class WorldRenderer {
 		// Verifica se colidiu com algum Bonus
 		//TODO bonus so' pode setar colision true se ele for bloqueante
 		//ver possibilidade se mudar esse trecho de codigo pois nao tem o mesmo objetivo da funcao
-		for (CGTBonus bonus : world.getBonus()) {
+//		System.out.println(world.getBonus().size());
+		for (CGTBonus bonus : world.getBonus()) {			
 			if (bonus.getCollision().overlaps(personagem.getCollision())){				
 				if(bonus.getLife() > 0){
 					if(!bonus.isCollide()){
@@ -688,7 +690,8 @@ public class WorldRenderer {
 						bonus.setState(StatePolicy.DIE);
 						bonus.playSoundDie();
 					} else {	
-						world.getBonus().remove(bonus);
+						bonusTemp = bonus;
+						
 					}
 				}
 				colision = true;
@@ -696,6 +699,10 @@ public class WorldRenderer {
 //				System.out.println("DESATIVOU");
 				bonus.setCollide(false);
 			}
+		}
+		
+		if(bonusTemp != null){
+			world.getBonus().remove(bonusTemp);
 		}
 
 
