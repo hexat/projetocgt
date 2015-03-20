@@ -36,7 +36,6 @@ public class WorldController {
 		keys.put(ActionMovePolicy.WALK_UP, false);
 		keys.put(ActionMovePolicy.WALK_DOWN, false);
 
-		keys.put(ActionMovePolicy.JUMP, false);
 		keys.put(ActionMovePolicy.FIRE, false);
 	};
 	private ArrayList<ActionMovePolicy> actions;

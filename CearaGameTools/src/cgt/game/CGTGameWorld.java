@@ -222,6 +222,8 @@ public class CGTGameWorld extends CGTWindow {
 		lifeBar.setWorld(this);
 		hud.add(lifeBar);
 	}
+
+
 	public boolean removeHud(HUDComponent hudComponent){
 		return hud.remove(hudComponent);
 	}

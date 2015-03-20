@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
-public class CGTLabel extends HUDComponent implements Serializable {
+public class CGTLabel extends HUDComponent {
 	private String text;
 	private int size;
 	private CGTFile file;

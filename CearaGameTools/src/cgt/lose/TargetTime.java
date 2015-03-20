@@ -15,8 +15,13 @@ public class TargetTime extends LoseCriteria {
 	public boolean expired;
 	
 	public TargetTime(){
-		timer = 1000;
+		timer = 10;
 		this.label = new CGTLabel();
+        this.label.setText("x");
+        this.label.setRelativeHeight(0.05f);
+        this.label.setRelativeX(0.45f);
+        this.label.setRelativeY(0.9f);
+
 		expired = false;
 		label.setText(""+timer);
 	}
@@ -35,6 +40,7 @@ public class TargetTime extends LoseCriteria {
 
 	public void start(){
 		label.getLabelGDX().setText(String.valueOf(timer));
+        getWorld().getHUD().add(label);
 		float delay = 1; // seconds
 		float repete = 1;
 		/*
