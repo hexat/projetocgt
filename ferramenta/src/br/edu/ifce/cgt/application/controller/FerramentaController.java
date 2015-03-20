@@ -2,6 +2,7 @@ package br.edu.ifce.cgt.application.controller;
 
 
 import br.edu.ifce.cgt.application.controller.titleds.GameTitledPane;
+import javafx.scene.control.*;
 import org.controlsfx.dialog.Dialogs;
 
 import java.io.*;
@@ -18,12 +19,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TitledPane;
 import br.edu.ifce.cgt.application.controller.panes.ScreenTab;
 
 public class FerramentaController implements Initializable {

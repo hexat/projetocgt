@@ -128,12 +128,12 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				if (buttonScreen.isActive()) {
 					buttonScreen.setTouchable(Touchable.disabled);
 					StarAssault.getInstance().restart(
-							buttonScreen.getScreenToGo());
+							buttonScreen.getWindowId());
 				}
 			}
 
 			CGTButton closeButton = world.getPauseDialog().getCloseButton();
-			if (closeButton.isActive()) {
+			if (closeButton != null && closeButton.isActive()) {
 				world.getPauseDialog().setActive(false);
 
 				Gdx.input.setInputProcessor(new TouchInputs(this));
@@ -148,7 +148,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				if (buttonScreen.isActive()) {
 					buttonScreen.setTouchable(Touchable.disabled);
 					StarAssault.getInstance().restart(
-							buttonScreen.getScreenToGo());
+							buttonScreen.getWindowId());
 				}
 			}
 
@@ -183,7 +183,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 					buttonScreen.setTouchable(Touchable.disabled);
 					world.stopSound(world.getSoundWin());
 					StarAssault.getInstance().restart(
-							buttonScreen.getScreenToGo());
+							buttonScreen.getWindowId());
 				}
 			}
 		}
@@ -195,7 +195,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 					buttonScreen.setTouchable(Touchable.disabled);
 					world.stopSound(world.getSoundLose());
 					StarAssault.getInstance().restart(
-							buttonScreen.getScreenToGo());
+							buttonScreen.getWindowId());
 				}
 			}
 		}
@@ -376,7 +376,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			renderer.getSpriteBatch().begin();
 			renderer.draw();
 			renderer.getSpriteBatch().end();
-			if (!world.getLoseDialog().isActive()) {
+			if (world.getLoseDialog() != null && !world.getLoseDialog().isActive()) {
 				world.getLoseDialog().setActive(true);
 
 				renderer.getSpriteBatch().flush();
@@ -401,7 +401,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 				world.getLoseDialog().addAction(sequenceLose);
 				// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			}
+			} else {
+                StarAssault.getInstance().create();
+            }
 			buttonHandler();
 			this.act();
 			getSpriteBatch().begin();

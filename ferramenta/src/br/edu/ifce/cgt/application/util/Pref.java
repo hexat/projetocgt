@@ -53,9 +53,6 @@ public class Pref {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                if (instance.getLastDir() != null && !(new File(instance.getLastDir()).exists())) {
-                	instance.setLastDir(null);
-                }
             } else {
                 instance = new Pref();
             }
@@ -69,6 +66,9 @@ public class Pref {
     }
 
     public String getLastDir() {
+        if (lastDir != null && !(new File(lastDir).exists())) {
+            lastDir = null;
+        }
         return lastDir;
     }
 

@@ -222,6 +222,8 @@ public class CGTGameWorld extends CGTWindow {
 		lifeBar.setWorld(this);
 		hud.add(lifeBar);
 	}
+
+
 	public boolean removeHud(HUDComponent hudComponent){
 		return hud.remove(hudComponent);
 	}
@@ -334,6 +336,28 @@ public class CGTGameWorld extends CGTWindow {
         if (getActor().getInitialPositions().isEmpty()) {
             res.add(new CGTError(ErrorValidate.SET_ACTOR_POSITION, getId()));
         }
+        boolean aux = false;
+        for (int i = 0; i < enemies.size() && !aux; i++) {
+            if (enemies.get(i).getInitialPositions().size() == 0) {
+                aux = true;
+                res.add(new CGTError(ErrorValidate.SET_OBJECT_POSITION, getId()));
+            }
+        }
+        aux = false;
+        for (int i = 0; i < opposites.size() && !aux; i++) {
+            if (opposites.get(i).getInitialPositions().size() == 0) {
+                aux = true;
+                res.add(new CGTError(ErrorValidate.SET_OBJECT_POSITION, getId()));
+            }
+        }
+        aux = false;
+        for (int i = 0; i < bonus.size() && !aux; i++) {
+            if (bonus.get(i).getInitialPositions().size() == 0) {
+                aux = true;
+                res.add(new CGTError(ErrorValidate.SET_OBJECT_POSITION, getId()));
+            }
+        }
+
         if (!getActor().hasAnimation()) {
             res.add(new CGTError(ErrorValidate.ADD_ACTOR_ANIMATION, getId()));
         }

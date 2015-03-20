@@ -44,7 +44,7 @@
             <Label text="Som de colisão" GridPane.rowIndex="10" />
             <Label text="Som de morte" GridPane.rowIndex="12" />
             <Label text="Posições Iniciais" GridPane.rowIndex="4" />
-            <Label text="Dimenções" GridPane.rowIndex="6" />
+            <Label text="Dimensões" GridPane.rowIndex="6" />
             <Label text="Colisão" GridPane.rowIndex="7" />
             <Label text="Velocidade" GridPane.rowIndex="8" />
             <Label text="Animações" />

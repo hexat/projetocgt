@@ -25,6 +25,9 @@ import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.util.Config;
 import javafx.fxml.FXML;
 import br.edu.ifce.cgt.application.controller.panes.ScreenTab;
+import javafx.scene.input.KeyCharacterCombination;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.UnzipParameters;
@@ -39,11 +42,14 @@ public class MenuBarController implements Initializable {
 
     public Menu menuRecent;
     public Menu menuSprite;
+    public MenuItem menuRun;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         updateRecent();
         menuSprite.setDisable(true);
+
+        menuRun.setAccelerator(new KeyCodeCombination(KeyCode.F6));
     }
 
 	@FXML
@@ -98,10 +104,18 @@ public class MenuBarController implements Initializable {
     }
 
     private void open(File open) {
+        try {
+            Config.unzip(open);
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Problema ao abrir o arquivo");
+            alert.showAndWait();
+            return;
+        }
+
         menuSprite.setDisable(false);
         TabPane tabFerramenta = (TabPane) Main.getApp().getScene().lookup("#tabFerramenta");
         Main.getApp().setTitle(open.getName());
-        Config.unzip(open);
         if (tabFerramenta.getTabs().size() > 1) {
             tabFerramenta.getTabs().remove(1, tabFerramenta.getTabs().size());
         }
@@ -272,7 +286,6 @@ public class MenuBarController implements Initializable {
             ZipFile zipFile = new ZipFile(file);
 
             zipFile.extractAll(file.getParent());
-
 
         } catch (IOException e) {
             e.printStackTrace();

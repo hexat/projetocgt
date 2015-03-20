@@ -263,9 +263,11 @@ public abstract class CGTGameObject implements Serializable {
 	}
 
 	public Vector2 getPosition() {
-		if (position == null && initialPositions.size() > 0){
-			Random random = new Random();
-			position = initialPositions.get(random.nextInt(initialPositions.size()));
+		if (position == null){
+            if (initialPositions.size() > 0) {
+                Random random = new Random();
+                position = initialPositions.get(random.nextInt(initialPositions.size()));
+            }
 		}
 		return position;
 	}
