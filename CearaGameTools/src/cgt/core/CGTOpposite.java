@@ -7,9 +7,14 @@ public class CGTOpposite extends CGTGameObject implements Serializable {
 	private boolean destroyable;
 	private boolean collide;
 
-	public CGTOpposite() {
-		this("Opositor");
-	}
+    public CGTOpposite() {
+        this("Opositor");
+    }
+    public CGTOpposite(CGTOpposite opposite) {
+        super(opposite);
+        block = opposite.isBlock();
+        destroyable = opposite.isDestroyable();
+    }
 
     public CGTOpposite(String label) {
         setId(label);

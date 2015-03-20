@@ -55,6 +55,7 @@ public abstract class CGTGameObject implements Serializable {
 	}
 	
 	public CGTGameObject(CGTGameObject clone) {
+        setId(clone.getId());
 		if (clone.getSound() != null) {
 			sound = clone.getSound().clone();
 		} else {
