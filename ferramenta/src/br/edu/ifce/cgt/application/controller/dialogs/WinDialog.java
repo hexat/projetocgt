@@ -7,6 +7,8 @@ import br.edu.ifce.cgt.application.util.Pref;
 import cgt.game.CGTGameWorld;
 import cgt.policy.WinPolicy;
 import cgt.win.KillAllEnemies;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -60,9 +62,9 @@ public class WinDialog extends BorderPane {
         }
 
         boxCriteria.getItems().setAll(list);
-        boxCriteria.setOnAction(new EventHandler<ActionEvent>() {
+        boxCriteria.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<EnumMap<WinPolicy>>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void changed(ObservableValue<? extends EnumMap<WinPolicy>> observable, EnumMap<WinPolicy> oldValue, EnumMap<WinPolicy> newValue) {
                 updateContent();
             }
         });

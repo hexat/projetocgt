@@ -5,24 +5,24 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<fx:root type="javafx.scene.layout.BorderPane" prefHeight="457.0" prefWidth="482.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+<fx:root prefHeight="457.0" prefWidth="482.0" type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <top>
         <ToolBar prefWidth="Infinity" BorderPane.alignment="CENTER">
             <items>
                 <Button mnemonicParsing="false" onAction="#btnConfigWorld" text="Configurar Mundo" />
                 <MenuButton mnemonicParsing="false" text="Adicionar Objeto">
                     <items>
-                        <MenuItem onAction="#addEnemyInWorld" mnemonicParsing="false" text="Inimigo" />
-                        <MenuItem onAction="#addOpositeInWorld"  mnemonicParsing="false" text="Opositor" />
-                        <MenuItem onAction="#addBonus" mnemonicParsing="false" text="Bonus" />
-                        <MenuItem onAction="#addProjectile" mnemonicParsing="false" text="Projétil" />
+                        <MenuItem mnemonicParsing="false" onAction="#addEnemyInWorld" text="Inimigo" />
+                        <MenuItem mnemonicParsing="false" onAction="#addOpositeInWorld" text="Opositor" />
+                        <MenuItem mnemonicParsing="false" onAction="#addBonus" text="Bonus" />
+                        <MenuItem mnemonicParsing="false" onAction="#addProjectile" text="Projétil" />
                     </items>
                 </MenuButton>
                 <MenuButton mnemonicParsing="false" text="Adicionar HUD">
                     <items>
-                        <MenuItem onAction="#addAmmoDisplay" mnemonicParsing="false" text="Display de Munição" />
-                        <MenuItem onAction="#addEnemiesLifeBar"  mnemonicParsing="false" text="LifeBar de Inimigos" />
-                        <MenuItem onAction="#addObjectLifeBar" mnemonicParsing="false" text="LifeBar de Objetos" />
+                        <MenuItem mnemonicParsing="false" onAction="#addAmmoDisplay" text="Display de Munição" />
+                        <MenuItem mnemonicParsing="false" onAction="#addEnemiesLifeBar" text="LifeBar de Inimigos" />
+                        <MenuItem mnemonicParsing="false" onAction="#addObjectLifeBar" text="LifeBar de Objetos" />
                     </items>
                 </MenuButton>
             </items>

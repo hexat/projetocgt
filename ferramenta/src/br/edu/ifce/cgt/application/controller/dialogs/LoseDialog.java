@@ -10,6 +10,8 @@ import cgt.game.CGTGameWorld;
 import cgt.game.LoseCriteria;
 import cgt.lose.LifeDepleted;
 import cgt.policy.LosePolicy;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -62,9 +64,9 @@ public class LoseDialog extends BorderPane {
         }
 
         boxCriteria.getItems().setAll(list);
-        boxCriteria.setOnAction(new EventHandler<ActionEvent>() {
+        boxCriteria.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<EnumMap<LosePolicy>>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void changed(ObservableValue<? extends EnumMap<LosePolicy>> observable, EnumMap<LosePolicy> oldValue, EnumMap<LosePolicy> newValue) {
                 updateContent();
             }
         });

@@ -21,11 +21,7 @@ import com.badlogic.gdx.math.Vector2;
  * @author ProjetoCGT
  *
  */
-public abstract class CGTGameObject implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1528830629331653234L;
+public abstract class CGTGameObject {
 	private CGTSound sound;
 	private ArrayList<CGTSound> soundsDie;
 	private ArrayList<CGTSound> soundCollision;

@@ -22,9 +22,6 @@ import cgt.unit.Action;
  */
 public class WorldController {
 
-	private boolean ammoCheck=true;
-	//Possiveis movimentos do actor
-
 	private CGTGameWorld world;
 	private CGTActor actor;
 	private WorldRenderer renderer;
@@ -81,34 +78,28 @@ public class WorldController {
 	}
 
 	public void fire(){
-		if(keys.get(ActionMovePolicy.FIRE)
+        if(keys.get(ActionMovePolicy.FIRE)
                 && world.getActor().getProjectileDefault() != null
+                && !world.getActor().isFireActivate()
                 && world.getActor().getProjectileDefault().hasOrientation(actor.getState())) {
-
-            if (world.getActor().getProjectileDefault().getSpeed() > 0) {
-                world.getActor().getProjectileDefault().setVelocity(new Vector2(200, 233));
-            }
             world.getActor().setFireActivate(true);
             if (world.getActor().getProjectileDefault().getAmmo() > 0){
                 ammoDowner(world.getActor().getProjectileDefault());
             }
-
 		}
 	}
 	
 	public void ammoDowner(final CGTProjectile projectile){
-		if(ammoCheck){
-			ammoCheck=false;
-			Timer.schedule(new Task() {
-				@Override
-				public void run() {
-					projectile.ammoDown();
-					ammoCheck=true;
-					world.getActor().setFireActivate(false);
-					world.getActor().getProjectileDefault().setStateTime(0);
-				}
-			}, projectile.getInterval());
-		}
+        if (projectile.getInterval() > 0) {
+            Timer.schedule(new Task() {
+                @Override
+                public void run() {
+                    projectile.ammoDown();
+                    world.getActor().setFireActivate(false);
+                    world.getActor().getProjectileDefault().setStateTime(0);
+                }
+            }, projectile.getInterval());
+        }
 	}
 
 	public void releaseAllDirectionKeys() {
@@ -174,9 +165,6 @@ public class WorldController {
 			if (world.getEnemies().get(i).getCollideAnimation() != null) {
 				world.getEnemies().get(i).getCollideAnimation().update(delta);
 			}
-		}
-		for (int i=0; i<renderer.getAddOns().size(); i++) {
-			renderer.getAddOns().get(i).update(delta);
 		}
 	}
 

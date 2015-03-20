@@ -104,6 +104,7 @@ public class MenuBarController implements Initializable {
     }
 
     private void open(File open) {
+        Main.getApp().getScene().setCursor(Cursor.WAIT);
         try {
             Config.unzip(open);
         } catch (Exception e) {
@@ -125,6 +126,7 @@ public class MenuBarController implements Initializable {
             tabFerramenta.getTabs().add(tab);
             tabFerramenta.getSelectionModel().select(tab);
         }
+        Main.getApp().getScene().setCursor(Cursor.DEFAULT);
     }
 
 	@FXML

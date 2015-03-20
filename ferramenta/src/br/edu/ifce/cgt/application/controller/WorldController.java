@@ -2,14 +2,15 @@ package br.edu.ifce.cgt.application.controller;
 
 import br.edu.ifce.cgt.application.controller.titleds.*;
 import cgt.core.*;
+import cgt.game.CGTGame;
 import cgt.hud.AmmoDisplay;
 import cgt.hud.EnemyGroupLifeBar;
 import cgt.hud.HUDComponent;
 import cgt.hud.IndividualLifeBar;
+import cgt.screen.CGTWindow;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -22,8 +23,6 @@ import br.edu.ifce.cgt.application.Main;
 import cgt.game.CGTGameWorld;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
 import br.edu.ifce.cgt.application.ObjectButton;
 
 public class WorldController extends BorderPane {
@@ -239,6 +238,27 @@ public class WorldController extends BorderPane {
                     }
                 }
             });
+        }
+    }
+
+    public void importObject() {
+        List<String> choices = new ArrayList<String>();
+        for (CGTGameWorld w : CGTGame.get().getWorlds()) {
+            if (w != world) {
+                for (String id : w.getObjectIds()) {
+                    choices.add(id);
+                }
+            }
+        }
+
+        ChoiceDialog<String> dialog = new ChoiceDialog<String>("b", choices);
+        dialog.setTitle("Escolha o objetp");
+        dialog.setContentText("Objeto:");
+
+        Optional<String> result = dialog.showAndWait();
+
+        if (result.isPresent()){
+            System.out.println("Your choice: " + result.get());
         }
     }
 }

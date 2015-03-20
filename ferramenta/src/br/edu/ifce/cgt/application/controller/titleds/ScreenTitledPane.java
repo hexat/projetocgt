@@ -8,7 +8,9 @@ import java.util.ResourceBundle;
 import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
 import cgt.game.CGTScreen;
+import cgt.util.CGTSound;
 import cgt.util.CGTTexture;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,11 +18,13 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
+import javafx.stage.FileChooser;
 
 /**
  * Created by infolev on 05/02/15.
  */
 public class ScreenTitledPane implements Initializable {
+    public TextField txtSound;
     @FXML private TextField txtBackScreen;
     @FXML private TextField txtScreenId;
 
@@ -72,5 +76,22 @@ public class ScreenTitledPane implements Initializable {
             e.printStackTrace();
         }
         return el;
+    }
+
+    public void setSound(ActionEvent actionEvent) {
+        File file = DialogsUtil.showOpenDialog("Selecione audio", DialogsUtil.WAV_FILTER);
+        if (file != null) {
+            if (screen.getSound() != null) {
+                Config.get().destroy(screen.getSound().getFile());
+            }
+
+            try {
+                CGTSound sound = new CGTSound(Config.get().createAudio(file));
+                screen.setSound(sound);
+                txtSound.setText(file.getName());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -1,11 +1,16 @@
 package br.edu.ifce.cgt.application;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import net.lingala.zip4j.core.ZipFile;
 import org.apache.commons.io.FileUtils;
 
@@ -29,7 +34,16 @@ public class Main extends Application {
 			primaryStage.getIcons().add(
 					new Image(
 							Main.class.getResourceAsStream( "/logo.png" )));
-			primaryStage.show();
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+//                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//                    alert.setContentText("Deseja salvar suas alterações?");
+//                    alert.showAndWait();
+//                    we.consume();
+                }
+            });
+
+            primaryStage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

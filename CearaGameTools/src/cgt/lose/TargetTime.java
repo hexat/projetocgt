@@ -54,22 +54,16 @@ public class TargetTime extends LoseCriteria {
 		
 		
 		Timer.schedule(new Timer.Task() {
-			int x;
 			@Override
 			public void run() {
-				x = Integer.parseInt(String.valueOf(label.getLabelGDX().getText()));
-				x -= 1;
-				label.getLabelGDX().setText(String.valueOf(x));
-				if (x <= 0){
+				timer--;
+				label.getLabelGDX().setText(timer+"");
+				if (timer <= 0) {
 					expired = true;
 					this.cancel();
 				}
 			}
 		}, delay, repete);
-		
-		
-		
-		
 	}
 
 	@Override
@@ -84,4 +78,8 @@ public class TargetTime extends LoseCriteria {
 	public int getTimer(){
 		return timer;
 	}
+
+    public void addTime(int time) {
+        timer += time;
+    }
 }

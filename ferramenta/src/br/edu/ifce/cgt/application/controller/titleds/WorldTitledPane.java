@@ -38,7 +38,6 @@ public class WorldTitledPane implements Initializable {
     @FXML private TextField txtMusic;
 
     @FXML private Button btnRemPauseDialog;
-    @FXML private Button btnRemInitialDialog;
     @FXML private Button btnRemWinDialog;
     @FXML private Button btnRemLoseDialog;
 
@@ -60,7 +59,6 @@ public class WorldTitledPane implements Initializable {
             txtMusic.setText(world.getMusic().getFile().getFilename());
         }
 
-        btnRemInitialDialog.setDisable(world.getLoseDialog() == null);
         btnRemWinDialog.setDisable(world.getLoseDialog() == null);
         btnRemLoseDialog.setDisable(world.getLoseDialog() == null);
         btnRemPauseDialog.setDisable(world.getPauseDialog() == null);
@@ -126,13 +124,6 @@ public class WorldTitledPane implements Initializable {
             }
         });
 
-        btnRemInitialDialog.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                removerDialog(world.getInitialDialog());
-                btnRemInitialDialog.setDisable(true);
-            }
-        });
     }
 
     private void removerDialog(CGTDialog dialog) {
@@ -174,8 +165,6 @@ public class WorldTitledPane implements Initializable {
             world.setLoseDialog(null);
         } else if (world.getWinDialog() == dialog) {
             world.setWinDialog(null);
-        } else if (world.getInitialDialog() == dialog) {
-            world.setInitialDialog(null);
         } else if (world.getPauseDialog() == dialog) {
             world.setPauseDialog(null);
         }
@@ -251,16 +240,6 @@ public class WorldTitledPane implements Initializable {
         }
 
         DialogDialog dialog = new DialogDialog(world.getWinDialog());
-        dialog.showAndWait();
-    }
-
-    public void configInitialDialog() {
-        if (world.getInitialDialog() == null) {
-            world.setInitialDialog(new CGTDialog());
-            btnRemInitialDialog.setDisable(false);
-        }
-
-        DialogDialog dialog = new DialogDialog(world.getInitialDialog());
         dialog.showAndWait();
     }
 

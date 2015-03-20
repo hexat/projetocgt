@@ -2,6 +2,7 @@ package cgt.game;
 
 import cgt.core.*;
 import cgt.hud.*;
+import cgt.lose.TargetTime;
 import cgt.policy.ErrorValidate;
 import cgt.policy.WinPolicy;
 import cgt.util.*;
@@ -317,9 +318,13 @@ public class CGTGameWorld extends CGTWindow {
 			res.add(o.getId());
 		}
 
-		for (CGTGameObject o : opposites) {
-			res.add(o.getId());
-		}
+        for (CGTGameObject o : opposites) {
+            res.add(o.getId());
+        }
+
+        for (CGTGameObject o : bonus) {
+            res.add(o.getId());
+        }
 
 		return res;
 	}
@@ -450,5 +455,14 @@ public class CGTGameWorld extends CGTWindow {
 		}
 		return false;
 	}
+
+    public TargetTime getLoseCriteriaTargetTime() {
+        for (Lose l : loseCriteria) {
+            if (l instanceof TargetTime) {
+                return (TargetTime) l;
+            }
+        }
+        return null;
+    }
 }
  

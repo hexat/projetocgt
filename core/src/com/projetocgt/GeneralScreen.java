@@ -6,8 +6,10 @@ import cgt.hud.CGTButtonScreen;
 import cgt.game.CGTScreen;
 
 
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,11 +17,11 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 
 public class GeneralScreen extends Stage implements Screen {
-
 	private StarAssault game;
 	private CGTScreen screen;
     private Texture splsh;
     private SpriteBatch spriteBatch;
+    private Music music;
 
 	
 	public GeneralScreen(CGTScreen screen) {
@@ -34,6 +36,10 @@ public class GeneralScreen extends Stage implements Screen {
         }
 		this.game = StarAssault.getInstance();
 	    Gdx.input.setInputProcessor(this);
+        music = null;
+        if (screen.getSound() != null) {
+            this.music = screen.getSound().getMusic();
+        }
 	}
 	
 	@Override
@@ -69,31 +75,38 @@ public class GeneralScreen extends Stage implements Screen {
 
 	@Override
 	public void show() {
+        if (music != null) {
+            music.play();
+            music.setLooping(true);
+        }
 	}
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-
+        if (music != null) {
+            music.stop();
+            music = null;
+        }
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-
+        if (music != null) {
+            music.pause();
+        }
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-
+        if (music != null) {
+            music.play();
+        }
 	}
 
 	@Override
 	public void dispose() {
 		splsh.dispose();
 		spriteBatch.dispose();
-
 	}
 	
 	public SpriteBatch getSpriteBatch() {

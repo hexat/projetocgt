@@ -6,6 +6,7 @@ import cgt.policy.ErrorValidate;
 import cgt.screen.CGTImage;
 import cgt.screen.CGTWindow;
 import cgt.util.CGTError;
+import cgt.util.CGTSound;
 import cgt.util.CGTTexture;
 
 import java.io.Serializable;
@@ -16,13 +17,15 @@ public class CGTScreen extends CGTWindow implements Serializable{
 	private ArrayList<CGTLabel> labels;
 	private ArrayList<CGTImage> images;
 	private ArrayList<CGTButtonScreen> buttons;
-	private CGTTexture background;
+    private CGTTexture background;
+    private CGTSound sound;
 
     protected CGTScreen() {
         labels = new ArrayList<CGTLabel>();
         images = new ArrayList<CGTImage>();
         buttons = new ArrayList<CGTButtonScreen>();
         background = null;
+        sound = null;
     }
 
     protected CGTScreen(CGTTexture texture) {
@@ -61,6 +64,14 @@ public class CGTScreen extends CGTWindow implements Serializable{
 	public void setBackground(CGTTexture background) {
 		this.background = background;
 	}
+
+    public void setSound(CGTSound sound) {
+        this.sound = sound;
+    }
+
+    public CGTSound getSound() {
+        return sound;
+    }
 
     @Override
     public List<CGTError> validate() {

@@ -166,6 +166,12 @@ public class CGTGame implements Serializable {
         return res;
     }
 
+    public List<CGTGameWorld> getWorlds() {
+        List<CGTGameWorld> res = new ArrayList<CGTGameWorld>();
+        res.addAll(worlds);
+        return res;
+    }
+
     public SpriteSheetDB getSpriteDB() {
         return spriteDB;
     }

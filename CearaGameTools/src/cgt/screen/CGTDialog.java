@@ -140,23 +140,23 @@ public class CGTDialog extends Actor implements Serializable{
 				borderY+=borderHeight;
 			}
 		}
-		float cornerX = this.getX()+this.getWidth()-rightBottomCorner.getTextureRegion().getRegionWidth();
-		float cornerY = this.getY();
-		float cornerWidth = rightBottomCorner.getTextureRegion().getRegionWidth();
-		float cornerHeight = rightBottomCorner.getTextureRegion().getRegionHeight();
-		
-		batch.draw(rightBottomCorner.getTextureRegion(), cornerX, cornerY, 0, 0, cornerWidth, cornerHeight, 1, 1, 0); //direito de baixo
-		
-		cornerY = this.getY()+this.getHeight()-cornerHeight;
-		batch.draw(rightBottomCorner.getTextureRegion(), cornerX, cornerY, cornerWidth/2, cornerHeight/2, cornerWidth, cornerHeight, 1, 1, 90); // direito de cima
-		
-		cornerX = this.getX();
-		batch.draw(rightBottomCorner.getTextureRegion(), cornerX, cornerY, cornerWidth/2, cornerHeight/2, cornerWidth, cornerHeight, 1, 1, 180); //esquerdo de cima
-		
-		cornerY = this.getY();
-		batch.draw(rightBottomCorner.getTextureRegion(), cornerX, cornerY, cornerWidth/2, cornerHeight/2, cornerWidth, cornerHeight, 1, 1, 270); //esquerdo de baixo
-		
-		
+        if (rightBottomCorner != null) {
+            float cornerX = this.getX() + this.getWidth() - rightBottomCorner.getTextureRegion().getRegionWidth();
+            float cornerY = this.getY();
+            float cornerWidth = rightBottomCorner.getTextureRegion().getRegionWidth();
+            float cornerHeight = rightBottomCorner.getTextureRegion().getRegionHeight();
+
+            batch.draw(rightBottomCorner.getTextureRegion(), cornerX, cornerY, 0, 0, cornerWidth, cornerHeight, 1, 1, 0); //direito de baixo
+
+            cornerY = this.getY() + this.getHeight() - cornerHeight;
+            batch.draw(rightBottomCorner.getTextureRegion(), cornerX, cornerY, cornerWidth / 2, cornerHeight / 2, cornerWidth, cornerHeight, 1, 1, 90); // direito de cima
+
+            cornerX = this.getX();
+            batch.draw(rightBottomCorner.getTextureRegion(), cornerX, cornerY, cornerWidth / 2, cornerHeight / 2, cornerWidth, cornerHeight, 1, 1, 180); //esquerdo de cima
+
+            cornerY = this.getY();
+            batch.draw(rightBottomCorner.getTextureRegion(), cornerX, cornerY, cornerWidth / 2, cornerHeight / 2, cornerWidth, cornerHeight, 1, 1, 270); //esquerdo de baixo
+        }
 	}
 
 	public boolean isActive() {

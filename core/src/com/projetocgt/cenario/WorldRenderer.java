@@ -12,6 +12,7 @@ import cgt.core.CGTEnemy;
 import cgt.core.CGTGameObject;
 import cgt.core.CGTOpposite;
 import cgt.core.CGTProjectile;
+import cgt.lose.TargetTime;
 import cgt.policy.BonusPolicy;
 import cgt.policy.StatePolicy;
 
@@ -59,11 +60,8 @@ public class WorldRenderer {
 	private CGTOpposite rio;
 	private CGTOpposite aguaAnimation;
 	
-	private ArrayList<CGTAddOn> addons;
-
 	public WorldRenderer(CGTGameWorld world) {
 		this.world = world;
-		addons = new  ArrayList<CGTAddOn>();
 		fatorVolumeObjects = 1f;
 		
 		isLose = false;
@@ -349,8 +347,8 @@ public class WorldRenderer {
 		if (world.getWinCriteria().isEmpty()) return false;
 		boolean win = true;
 
-		for(int index = 0; index<world.getWinCriteria().size() && win; index++){
-			win = world.getWinCriteria().get(index).achieved();
+		for(int index = 0; index<world.getWinCriteria().size(); index++){
+			win = win && world.getWinCriteria().get(index).achieved();
 		}
 
 		return win;
@@ -376,31 +374,17 @@ public class WorldRenderer {
 		drawEnemies();
 		drawOpposites();
 		drawBonus();
-		drawAddOn();
-	}
-
-	private void drawAddOn() {
-		for (int i = 0; i < addons.size(); i++) {
-				spriteBatch.draw(addons.get(i).getAnimation(),
-						addons.get(i).getPosition().x,
-						addons.get(i).getPosition().y,
-						addons.get(i).getBounds().width, 
-						addons.get(i).getBounds().height);
-				
-//				if (addons.get(i).isDrawing()) {
-//					addons.get(i).setActive(false);
-//					addons.remove(i);
-//				}
-		}
 	}
 
 	private void drawBonus() {
 		for (int i = 0; i < world.getBonus().size(); i++) {
-			spriteBatch.draw(world.getBonus().get(i).getAnimation(), world
-					.getBonus().get(i).getPosition().x, world.getBonus().get(i)
-					.getPosition().y,
-					world.getBonus().get(i).getBounds().width, world.getBonus()
-					.get(i).getBounds().height);
+            if (world.getBonus().get(i).hasAnimation()) {
+                spriteBatch.draw(world.getBonus().get(i).getAnimation(), world
+                                .getBonus().get(i).getPosition().x, world.getBonus().get(i)
+                                .getPosition().y,
+                        world.getBonus().get(i).getBounds().width, world.getBonus()
+                                .get(i).getBounds().height);
+            }
 		}
 	}
 
@@ -411,29 +395,14 @@ public class WorldRenderer {
 			if (world.getEnemies().get(i).getLife() >= 0) {
 				configBehavior(world.getEnemies().get(i));
 				spriteBatch.setColor(1.0f, 1.0f, 1.0f, world.getEnemies().get(i).getAlpha());
-//				for (CGTGameObject o : world.getEnemies().get(i).getObjectsToCollide()) {
-//					world.getEnemies().get(i).getCollideAnimation().setActive(o.getCollision().overlaps(world.getEnemies().get(i).getCollision()));
-//					if (o.getCollision().overlaps(world.getEnemies().get(i).getCollision())) {
-						if (world.getEnemies().get(i).getCollideAnimation()!=null && world.getEnemies().get(i).getPosition().y > 90 && world.getEnemies().get(i).getPosition().y < 95) {
-							world.getEnemies().get(i).getCollideAnimation().setActive(true);
-							CGTAddOn a = world.getEnemies().get(i).getCollideAnimation().clone();
-							a.setPosition(world.getEnemies().get(i).getPosition().cpy());
-							a.getPosition().x += a.getPositionRelativeToParent().x;
-							a.getPosition().y += a.getPositionRelativeToParent().y;
-							a.getBounds().x += a.getPositionRelativeToParent().x;
-							a.getBounds().y += a.getPositionRelativeToParent().y;
-							a.getCollision().x += a.getPositionRelativeToParent().x;
-							a.getCollision().y += a.getPositionRelativeToParent().y;
-							addons.add(a);
-						}
-//					}
-//				}
 
-				spriteBatch.draw(world.getEnemies().get(i).getAnimation(),
-						world.getEnemies().get(i).getPosition().x, world
-						.getEnemies().get(i).getPosition().y, world
-						.getEnemies().get(i).getBounds().width, world
-						.getEnemies().get(i).getBounds().height);
+                if (world.getEnemies().get(i).hasAnimation()) {
+                    spriteBatch.draw(world.getEnemies().get(i).getAnimation(),
+                            world.getEnemies().get(i).getPosition().x, world
+                                    .getEnemies().get(i).getPosition().y, world
+                                    .getEnemies().get(i).getBounds().width, world
+                                    .getEnemies().get(i).getBounds().height);
+                }
 
 				// verifica se algum Enemy destrutivel esta colindindo com
 				// algum Projectile
@@ -477,11 +446,12 @@ public class WorldRenderer {
 					pro.getBounds().y += pro.getOrientations().get(w).getPositionRelativeToGameObject().y;
 					pro.getCollision().x += pro.getOrientations().get(w).getPositionRelativeToGameObject().x;
 					pro.getCollision().y += pro.getOrientations().get(w).getPositionRelativeToGameObject().y;
-					
-					spriteBatch.draw(pro.getAnimation(),pro.getPosition().x + 
-							pro.getOrientations().get(w).getPositionRelativeToGameObject().x,
-							pro.getPosition().y+ pro.getOrientations().get(w).getPositionRelativeToGameObject().y,
-							pro.getBounds().width,pro.getBounds().height);
+					if (pro.hasAnimation()) {
+                        spriteBatch.draw(pro.getAnimation(), pro.getPosition().x +
+                                        pro.getOrientations().get(w).getPositionRelativeToGameObject().x,
+                                pro.getPosition().y + pro.getOrientations().get(w).getPositionRelativeToGameObject().y,
+                                pro.getBounds().width, pro.getBounds().height);
+                    }
 				}
 			}
 
@@ -678,9 +648,17 @@ public class WorldRenderer {
 						if(bonus.getPolicies().contains(BonusPolicy.ADD_LIFE)){
 							world.getActor().addLife(bonus.getScore());
 						}
-						if(bonus.getPolicies().contains(BonusPolicy.ADD_SCORE)){
-							world.addScore(bonus.getScore());
-						}
+                        if(bonus.getPolicies().contains(BonusPolicy.ADD_SCORE)){
+                            world.addScore(bonus.getScore());
+                        }
+                        System.out.println(bonus.getPolicies());
+                        if(bonus.getPolicies().contains(BonusPolicy.ADD_TIME)){
+                            TargetTime time = world.getLoseCriteriaTargetTime();
+                            System.out.println(time);
+                            if (time != null) {
+                                time.addTime(bonus.getScore());
+                            }
+                        }
 						bonus.reduceLife(bonus.getScore());
 						bonus.playSoundCollision();
 						bonus.setCollide(true);
@@ -805,9 +783,5 @@ public class WorldRenderer {
 
 	public boolean lose() {
 		return isLose;
-	}
-
-	public ArrayList<CGTAddOn> getAddOns() {
-		return addons;
 	}
 }

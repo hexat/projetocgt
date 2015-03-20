@@ -23,8 +23,7 @@ public class ListSpriteDialog extends VBox {
 	private Stage stage;
 
     public ListSpriteDialog() {
-    	
-        FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/listaSprites.fxml"));
+        FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/dialogs/ListSprite.fxml"));
         view.setRoot(this);
         view.setController(this);
 
@@ -33,11 +32,11 @@ public class ListSpriteDialog extends VBox {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         stage = new Stage();
         stage.setScene(new Scene(this));
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(Main.getApp().getScene().getWindow());
+        stage.sizeToScene();
 
         ObservableList<String> a = FXCollections.observableArrayList(Config.get().getGame().getSpriteDB().findAllId());
         listViewSprites.setItems(a);

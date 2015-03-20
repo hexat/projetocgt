@@ -79,7 +79,7 @@ public  class Config {
 
 	public CGTFile createAudio(File src) throws IOException {
 		CGTFile res = null;
-		String filename = System.currentTimeMillis() + ".wav";
+        String filename = System.currentTimeMillis() + src.getName().substring(src.getName().length() - 4);
 		FileUtils.copyFile(src, new File(BASE + BASE_AUDIO + filename));
 		res = new CGTFile(BASE_AUDIO + filename);
 		res.setFilename(src.getName());
