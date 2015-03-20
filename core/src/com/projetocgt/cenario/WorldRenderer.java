@@ -657,7 +657,6 @@ public class WorldRenderer {
 				enemy.playSoundCollision();
 				if (enemy.isBlock()) {
 					colision = true;
-					
 				}
 			}
 		}
@@ -728,15 +727,16 @@ public class WorldRenderer {
 			enemy.setState(StatePolicy.DAMAGE);
 			enemy.setAttacking(true);
 
-			personagem.setInputsEnabled(true);
+            if (enemy.isBlock()) {
+                personagem.setInputsEnabled(true);
 
-			Timer.schedule(new Task() {
-				@Override
-				public void run() {
-					personagem.setInputsEnabled(false);
-				}
-			}, personagem.getTimeToEnableInputs());
-
+                Timer.schedule(new Task() {
+                    @Override
+                    public void run() {
+                        personagem.setInputsEnabled(false);
+                    }
+                }, personagem.getTimeToEnableInputs());
+            }
 			personagem.playSoundCollision();
 
 			personagem.setLife(personagem.getLife() - enemy.getDamage());

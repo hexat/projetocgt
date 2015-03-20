@@ -1,5 +1,6 @@
 package com.projetocgt;
 
+import cgt.core.CGTOpposite;
 import cgt.game.CGTGameWorld;
 import cgt.hud.CGTButton;
 import cgt.hud.CGTButtonScreen;
@@ -401,7 +402,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 				world.getLoseDialog().addAction(sequenceLose);
 				// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			} else {
+			} else if (world.getLoseDialog() == null) {
                 StarAssault.getInstance().create();
             }
 			buttonHandler();

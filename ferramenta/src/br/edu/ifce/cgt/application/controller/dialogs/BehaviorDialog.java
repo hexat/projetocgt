@@ -65,6 +65,7 @@ public class BehaviorDialog extends BorderPane {
         });
 
         boxCriteria.getSelectionModel().selectFirst();
+        handleCriteria();
     }
 
     public BehaviorDialog(CGTEnemy enemy, AbstractBehavior behavior) {
@@ -79,6 +80,7 @@ public class BehaviorDialog extends BorderPane {
         } else if (behavior instanceof SineWave) {
             boxCriteria.getSelectionModel().select(3);
         }
+        handleCriteria();
 
         boxCriteria.setDisable(true);
 

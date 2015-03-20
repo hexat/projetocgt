@@ -73,11 +73,7 @@ public abstract class CGTGameObject implements Serializable {
 		for (Vector2 v : clone.getInitialPositions()) {
 			initialPositions.add(v.cpy());
 		}
-		if (clone.getPosition() != null) {
-			position = clone.getPosition().cpy();
-		} else {
-			position = null;
-		}
+        position = null;
 		bounds = new Rectangle();
 		bounds.height = clone.getBounds().height;
 		bounds.width = clone.getBounds().width;
