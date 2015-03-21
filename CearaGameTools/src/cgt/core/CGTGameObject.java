@@ -461,5 +461,10 @@ public abstract class CGTGameObject {
             setLife(getLife() + life);
         }
     }
+
+    public void updateCollisionXY() {
+        posXColider = collision.x;
+        posYColider = collision.y;
+    }
 }
  

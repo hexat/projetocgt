@@ -38,6 +38,7 @@ public class GameObjectTitledPane extends TitledPane {
     @FXML public VBox boxSoundColision;
     @FXML public VBox boxSoundDie;
     @FXML public IntegerTextField txtMaxLife;
+    @FXML public TextField txtSound;
     @FXML private FloatTextField txtBoundsW;
     @FXML private FloatTextField txtBoundsH;
     @FXML private IntegerTextField txtPositionX;
@@ -84,6 +85,9 @@ public class GameObjectTitledPane extends TitledPane {
         txtLife.setText(gameObject.getLife()+"");
         txtMaxLife.setValue(gameObject.getMaxLife());
         txtVelocidade.setText(gameObject.getSpeed()+"");
+        if (gameObject.getSound() != null) {
+            txtSound.setText(gameObject.getSound().getFile().getFilename());
+        }
 
         if (gameObject instanceof CGTProjectile) {
             labLife.setText("Munição");
@@ -100,22 +104,16 @@ public class GameObjectTitledPane extends TitledPane {
         btnSetSound.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (gameObject.getSound() == null) {
-                    File audio = DialogsUtil.showOpenDialog("Selecione um audio", DialogsUtil.WAV_FILTER);
-                    if (audio != null) {
-                        try {
-                            CGTFile som = Config.get().createAudio(audio);
-                            gameObject.setSound(new CGTSound(som));
-                            btnSetSound.setText(som.getFilename());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            DialogsUtil.showErrorDialog();
-                        }
+                File audio = DialogsUtil.showOpenDialog("Selecione um audio", DialogsUtil.WAV_FILTER);
+                if (audio != null) {
+                    try {
+                        CGTFile som = Config.get().createAudio(audio);
+                        gameObject.setSound(new CGTSound(som));
+                        txtSound.setText(som.getFilename());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        DialogsUtil.showErrorDialog();
                     }
-                } else {
-                    Config.get().destroy(gameObject.getSound().getFile());
-                    gameObject.setSound(null);
-                    btnSetSound.setText("Selecionar");
                 }
             }
         });
@@ -166,6 +164,7 @@ public class GameObjectTitledPane extends TitledPane {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue) {
                     gameObject.getCollision().x = txtColisionX.getValue();
+                    gameObject.updateCollisionXY();
                 }
             }
         });
@@ -175,6 +174,7 @@ public class GameObjectTitledPane extends TitledPane {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue) {
                     gameObject.getCollision().y = txtColisionY.getValue();
+                    gameObject.updateCollisionXY();
                 }
             }
         });

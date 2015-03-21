@@ -16,6 +16,7 @@ import cgt.lose.TargetTime;
 import cgt.policy.BonusPolicy;
 import cgt.policy.StatePolicy;
 
+import cgt.util.ProjectileOrientation;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -57,15 +58,11 @@ public class WorldRenderer {
 	private Music musicActorLose;
 	private float fatorVolumeObjects;
 	
-	private CGTOpposite rio;
-	private CGTOpposite aguaAnimation;
-	
 	public WorldRenderer(CGTGameWorld world) {
 		this.world = world;
 		fatorVolumeObjects = 1f;
 		
 		isLose = false;
-		rio = (CGTOpposite) world.getObjectByLabel("rio");
 		musicActorLose = null;
 		zoomCamera = CameraStage.IDLE;
 		float width = world.getBackground().getTextureGDX().getWidth() * world.getCamera().getInitialWidth();
@@ -121,6 +118,7 @@ public class WorldRenderer {
 					isLose = true;
 				} else {
 					personagem.setState(StatePolicy.DYING);
+                    personagem.setInputsEnabled(false);
 					musicActorLose.setOnCompletionListener(new Music.OnCompletionListener() {
 						@Override
 						public void onCompletion(Music music) {
@@ -413,6 +411,7 @@ public class WorldRenderer {
 						&& world.getEnemies().get(i).getCollision().overlaps(pro.getCollision())
 						&& world.getEnemies().get(i).isDestroyable()
 						&& world.getEnemies().get(i).isVulnerable()
+                        && pro.hasOrientation(personagem.getState())
                         && pro.containsGroup(world.getEnemies().get(i).getGroup())) {
 					world.getEnemies().get(i).setLife(world.getEnemies().get(i).getLife() - world.getActor().getProjectiles().get(world.getActor().getFireDefault()).getDamage());
 					world.getEnemies().get(i).playSoundCollision();
@@ -435,24 +434,23 @@ public class WorldRenderer {
 			
 			CGTProjectile pro = getCurrentActorProjectile();
 
-			for (int w = 0; w < pro.getOrientations().size(); w++) {
-				if (pro.getOrientations().get(w).getStates().contains(personagem.getState())) {
-                    pro.setPosition(personagem.getPosition().cpy());
-					//Os desenhos sao feitos de acordo com os States.
-					pro.setState(personagem.getState());
+            pro.setState(personagem.getState());
+            ProjectileOrientation orientation = pro.getOrientation();
+            if (orientation != null) {
+                pro.setPosition(personagem.getPosition().cpy());
+                //Os desenhos sao feitos de acordo com os States.
 
-					// faz um movimento do projectile
-					pro.getBounds().x += pro.getOrientations().get(w).getPositionRelativeToGameObject().x;
-					pro.getBounds().y += pro.getOrientations().get(w).getPositionRelativeToGameObject().y;
-					pro.getCollision().x += pro.getOrientations().get(w).getPositionRelativeToGameObject().x;
-					pro.getCollision().y += pro.getOrientations().get(w).getPositionRelativeToGameObject().y;
-					if (pro.hasAnimation()) {
-                        spriteBatch.draw(pro.getAnimation(), pro.getPosition().x +
-                                        pro.getOrientations().get(w).getPositionRelativeToGameObject().x,
-                                pro.getPosition().y + pro.getOrientations().get(w).getPositionRelativeToGameObject().y,
-                                pro.getBounds().width, pro.getBounds().height);
-                    }
-				}
+                // faz um movimento do projectile
+                pro.getBounds().x += orientation.getPositionRelativeToGameObject().x;
+                pro.getBounds().y += orientation.getPositionRelativeToGameObject().y;
+                pro.getCollision().x += orientation.getPositionRelativeToGameObject().x;
+                pro.getCollision().y += orientation.getPositionRelativeToGameObject().y;
+                if (pro.hasAnimation()) {
+                    spriteBatch.draw(pro.getAnimation(), pro.getPosition().x
+                                    + orientation.getPositionRelativeToGameObject().x,
+                            pro.getPosition().y + orientation.getPositionRelativeToGameObject().y,
+                            pro.getBounds().width, pro.getBounds().height);
+                }
 			}
 
 		}
@@ -608,7 +606,7 @@ public class WorldRenderer {
 		//System.out.println(personagem.getState().name());
 		// Verifica se colidiu com algum Opposite
 		for (CGTOpposite oposite : world.getOpposites()) {
-			if (oposite.getCollision().overlaps(personagem.getCollision()) && oposite.isBlock()){
+            if (oposite.getCollision().overlaps(personagem.getCollision()) && oposite.isBlock()){
 				if(!oposite.isCollide()){
 					oposite.playSoundCollision();
 					oposite.setCollide(true);
@@ -619,8 +617,6 @@ public class WorldRenderer {
 			}
 		}
 			
-		
-
 		// Verifica se colidiu com algum Enemy
 		for (CGTEnemy enemy : world.getEnemies()) {
 			if (enemy.getCollision().overlaps(personagem.getCollision())) {
@@ -632,8 +628,6 @@ public class WorldRenderer {
 			}
 		}
 			
-		
-
 		// Verifica se colidiu com algum Bonus
 		//TODO bonus so' pode setar colision true se ele for bloqueante
 		//ver possibilidade se mudar esse trecho de codigo pois nao tem o mesmo objetivo da funcao
@@ -662,13 +656,13 @@ public class WorldRenderer {
 						bonus.setCollide(true);
 					}
 				} else {
-					if(bonus.hasAnimation(StatePolicy.DIE)){
-						bonus.setState(StatePolicy.DIE);
-						bonus.playSoundDie();
-					} else {	
-						bonusTemp = bonus;
-						
-					}
+                    if (bonus.getState() != StatePolicy.DIE) {
+                        bonus.setState(StatePolicy.DIE);
+                        bonus.playSoundDie();
+                        if (!bonus.hasAnimation(StatePolicy.DIE)){
+                            bonusTemp = bonus;
+                        }
+                    }
 				}
 				colision = true;
 			} else {
@@ -711,12 +705,12 @@ public class WorldRenderer {
 			enemy.setAttacking(true);
 
             if (enemy.isBlock()) {
-                personagem.setInputsEnabled(true);
+                personagem.setInputsEnabled(false);
 
                 Timer.schedule(new Task() {
                     @Override
                     public void run() {
-                        personagem.setInputsEnabled(false);
+                        personagem.setInputsEnabled(true);
                     }
                 }, personagem.getTimeToEnableInputs());
             }

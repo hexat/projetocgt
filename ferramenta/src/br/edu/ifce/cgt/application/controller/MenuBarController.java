@@ -44,11 +44,13 @@ public class MenuBarController implements Initializable {
     public Menu menuSprite;
     public MenuItem menuRun;
 
+    private boolean running;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         updateRecent();
         menuSprite.setDisable(true);
-
+        running = false;
         menuRun.setAccelerator(new KeyCodeCombination(KeyCode.F6));
     }
 
@@ -220,25 +222,34 @@ public class MenuBarController implements Initializable {
     }
 
     private void runDesktop() {
-        String path = localDefaultDirectory()+"desktop/desktop-1.0/bin/desktop";
-        Runtime runtime = Runtime.getRuntime();
-			try {
-                Process p1;
-                if (isWin()) {
-                    p1 = runtime.exec("cmd /c start "+path+".bat");
-                } else {
-                    runtime.exec("chmod +x "+path);
-                    p1 = runtime.exec("sh "+path);
+        if (!running) {
+            new Thread() {
+                @Override
+                public void run() {
+                    running = true;
+                    String path = localDefaultDirectory() + "desktop/desktop-1.0/bin/desktop";
+                    Runtime runtime = Runtime.getRuntime();
+                    try {
+                        Process p1;
+                        if (isWin()) {
+                            p1 = runtime.exec("\"" + path + ".bat\"");
+                        } else {
+                            runtime.exec("chmod +x " + path);
+                            p1 = runtime.exec("sh " + path);
+                        }
+                        InputStream is = p1.getInputStream();
+                        int i;
+                        String res = "";
+                        while ((i = is.read()) != -1) {
+                            System.out.print((char) i);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    running = false;
                 }
-                InputStream is = p1.getInputStream();
-                int i;
-                String res = "";
-                while( (i = is.read() ) != -1) {
-                    System.out.print((char)i);
-                }
-                } catch(IOException e) {
-                e.printStackTrace();
-			}
+            }.start();
+        }
     }
 
     private boolean isWin() {

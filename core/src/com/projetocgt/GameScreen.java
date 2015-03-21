@@ -364,7 +364,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 				world.getWinDialog().addAction(sequenceWin);
 				// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			}
+			} else if (world.getWinDialog() == null) {
+                StarAssault.getInstance().create();
+            }
 			buttonHandler();
 			this.act();
 			getSpriteBatch().begin();

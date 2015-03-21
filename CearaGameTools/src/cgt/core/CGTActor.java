@@ -35,6 +35,7 @@ public class CGTActor extends CGTGameObject {
 		timeToEnableInputs = 1;
 		this.invincible=false;
 		fireActivate = false;
+        inputsEnabled = true;
 	}
 
     public CGTActor(String label) {

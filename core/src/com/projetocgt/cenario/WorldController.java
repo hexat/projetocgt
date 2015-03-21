@@ -27,11 +27,16 @@ public class WorldController {
 	private WorldRenderer renderer;
 	static Map<ActionMovePolicy, Boolean> keys = new HashMap<ActionMovePolicy, Boolean>();
 	static {
-		keys.put(ActionMovePolicy.WALK_RIGHT, false);
-		keys.put(ActionMovePolicy.WALK_LEFT, false);
+        keys.put(ActionMovePolicy.WALK_RIGHT, false);
+        keys.put(ActionMovePolicy.WALK_LEFT, false);
 
-		keys.put(ActionMovePolicy.WALK_UP, false);
-		keys.put(ActionMovePolicy.WALK_DOWN, false);
+        keys.put(ActionMovePolicy.WALK_UP, false);
+        keys.put(ActionMovePolicy.WALK_DOWN, false);
+        keys.put(ActionMovePolicy.RUN_RIGHT, false);
+        keys.put(ActionMovePolicy.RUN_LEFT, false);
+
+        keys.put(ActionMovePolicy.RUN_UP, false);
+        keys.put(ActionMovePolicy.RUN_DOWN, false);
 
 		keys.put(ActionMovePolicy.FIRE, false);
 	};
@@ -51,7 +56,8 @@ public class WorldController {
 	public void activateKey(InputPolicy policy){
 		Action action = actor.getActionFromInput(policy);
 		if (action != null){
-			// colocado para conseguir desativar o tap
+            System.out.println(action);
+            // colocado para conseguir desativar o tap
 			if(policy == InputPolicy.TAP) actions.add(action.getActionPolicy());
 			keys.put(action.getActionPolicy(),true);
 		}
@@ -60,8 +66,13 @@ public class WorldController {
 	public void deactivateKey(InputPolicy policy){
         Action action = actor.getActionFromInput(policy);
 		if (action != null){
-			keys.put(action.getActionPolicy(),false);
-			stopAni();
+            if (!(action.getActionPolicy() == ActionMovePolicy.RUN_DOWN
+                    || action.getActionPolicy() == ActionMovePolicy.RUN_LEFT
+                    || action.getActionPolicy() == ActionMovePolicy.RUN_RIGHT
+                    || action.getActionPolicy() == ActionMovePolicy.RUN_UP)) {
+                keys.put(action.getActionPolicy(), false);
+                stopAni();
+            }
 		}
 	}
 
@@ -132,7 +143,7 @@ public class WorldController {
 	 */
 	public void update(float delta) {
 		// Processa a entrada de algum parametro
-		if(!actor.isInputsEnabled()){
+		if(actor.isInputsEnabled()){
             moveKeys();
             fire();
             verifyActions();
@@ -142,10 +153,6 @@ public class WorldController {
 			releaseAllDirectionKeys();
 		}
 
-		
-	    
-	    
-	    
         actor.update(delta);
 
 		for (int i=0; i<world.getOpposites().size(); i++) {
@@ -169,44 +176,89 @@ public class WorldController {
 	}
 
 	private void moveKeys(){
-		if (keys.get(ActionMovePolicy.WALK_UP)) {
-			//Verifica se o actor pode andar
-			actor.setState(StatePolicy.LOOKUP);
-			if( (actor.getPosition().y + actor.getBounds().height) < renderer.getWorld().getBackground().getTextureGDX().getHeight())
-				actor.getVelocity().y = actor.getSpeed();
-			
-			else{
-				actor.getVelocity().y = 0;
-			}
-		}
+        if (keys.get(ActionMovePolicy.WALK_UP)) {
+            //Verifica se o actor pode andar
+            actor.setState(StatePolicy.LOOKUP);
+            if( (actor.getPosition().y + actor.getBounds().height) < renderer.getWorld().getBackground().getTextureGDX().getHeight())
+                actor.getVelocity().y = actor.getSpeed();
 
-		if (keys.get(ActionMovePolicy.WALK_DOWN)) {
-			// O actor esta olhando para a baixo
-			actor.setState(StatePolicy.LOOKDOWN);
-			if(actor.getPosition().y > 0)
-				actor.getVelocity().y = -actor.getSpeed();
-			else
-				actor.getVelocity().y = 0;
-			}
+            else{
+                actor.getVelocity().y = 0;
+            }
+        }
 
-		if (keys.get(ActionMovePolicy.WALK_LEFT)) {
-			actor.setState(StatePolicy.LOOKLEFT);
-			if(actor.getPosition().x > 0){
-				actor.getVelocity().x = -actor.getSpeed();
-			}
-			else
-				actor.getVelocity().x = 0;
-				
-		}
-			
-		if (keys.get(ActionMovePolicy.WALK_RIGHT)) {
-			actor.setState(StatePolicy.LOOKRIGHT);
-			if( (actor.getPosition().x+ actor.getBounds().width) < renderer.getWorld().getBackground().getTextureGDX().getWidth()){
-				actor.getVelocity().x = actor.getSpeed();
-			}
-			else
-				actor.getVelocity().x = 0;
-		}
+        if (keys.get(ActionMovePolicy.WALK_DOWN)) {
+            // O actor esta olhando para a baixo
+            actor.setState(StatePolicy.LOOKDOWN);
+            if(actor.getPosition().y > 0)
+                actor.getVelocity().y = -actor.getSpeed();
+            else
+                actor.getVelocity().y = 0;
+        }
+
+        if (keys.get(ActionMovePolicy.WALK_LEFT)) {
+            actor.setState(StatePolicy.LOOKLEFT);
+            if(actor.getPosition().x > 0){
+                actor.getVelocity().x = -actor.getSpeed();
+            }
+            else
+                actor.getVelocity().x = 0;
+
+        }
+
+        if (keys.get(ActionMovePolicy.WALK_RIGHT)) {
+            actor.setState(StatePolicy.LOOKRIGHT);
+            if ( (actor.getPosition().x+ actor.getBounds().width) < renderer.getWorld().getBackground().getTextureGDX().getWidth()) {
+                actor.getVelocity().x = actor.getSpeed();
+            }
+            else
+                actor.getVelocity().x = 0;
+        }
+        // run
+        if (keys.get(ActionMovePolicy.RUN_UP)) {
+            //Verifica se o actor pode andar
+            actor.setState(StatePolicy.LOOKUP);
+            if ( (actor.getPosition().y + actor.getBounds().height) < renderer.getWorld().getBackground().getTextureGDX().getHeight())
+                actor.getVelocity().y = actor.getSpeed();
+
+            else{
+                actor.getVelocity().y = 0;
+            }
+            return;
+        }
+
+        if (keys.get(ActionMovePolicy.RUN_DOWN)) {
+            // O actor esta olhando para a baixo
+            actor.setState(StatePolicy.LOOKDOWN);
+            if(actor.getPosition().y > 0)
+                actor.getVelocity().y = -actor.getSpeed();
+            else
+                actor.getVelocity().y = 0;
+            return;
+        }
+
+        if (keys.get(ActionMovePolicy.RUN_LEFT)) {
+            actor.setState(StatePolicy.LOOKLEFT);
+            if(actor.getPosition().x > 0){
+                actor.getVelocity().x = -actor.getSpeed();
+            }
+            else
+                actor.getVelocity().x = 0;
+            return;
+
+        }
+
+        if (keys.get(ActionMovePolicy.RUN_RIGHT)) {
+            actor.setState(StatePolicy.LOOKRIGHT);
+            if( (actor.getPosition().x+ actor.getBounds().width) < renderer.getWorld().getBackground().getTextureGDX().getWidth()){
+                actor.getVelocity().x = actor.getSpeed();
+            }
+            else
+                actor.getVelocity().x = 0;
+            return;
+        }
+        //
+
 		// Verifica se ambos ou nenhum dos sentidos sao presionados
 		if ((keys.get(ActionMovePolicy.WALK_LEFT) && keys.get(ActionMovePolicy.WALK_RIGHT))
 		   ||(!keys.get(ActionMovePolicy.WALK_LEFT) && !(keys.get(ActionMovePolicy.WALK_RIGHT)))) {

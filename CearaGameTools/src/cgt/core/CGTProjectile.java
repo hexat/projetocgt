@@ -105,6 +105,15 @@ public class CGTProjectile extends CGTGameObject {
 		return groups.remove(group);
 	}
 
+    public ProjectileOrientation getOrientation() {
+        for (int w = 0; w < getOrientations().size(); w++) {
+            if (getOrientations().get(w).getStates().contains(getState())) {
+                return getOrientations().get(w);
+            }
+        }
+        return null;
+    }
+
 	@Override
 	public String toString() {
 		return  "CGTProjectile [numFiresForOneInput="
