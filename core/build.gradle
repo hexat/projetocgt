@@ -4,5 +4,4 @@ eclipse.project {
     name = appName + '-core'
 }
 
-
 sourceSets.main.java.srcDirs = ['src/']

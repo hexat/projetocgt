@@ -3,10 +3,7 @@ package br.edu.ifce.cgt.application.util;
 import br.edu.ifce.cgt.application.Main;
 import com.badlogic.gdx.utils.Json;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -49,8 +46,12 @@ public class Pref {
 
             if (file.exists()) {
                 try {
-                    instance = new Json().fromJson(Pref.class, new FileInputStream(FILE_NAME));
+                    FileInputStream stream = new FileInputStream(FILE_NAME);
+                    instance = new Json().fromJson(Pref.class, stream);
+                    stream.close();
                 } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             } else {

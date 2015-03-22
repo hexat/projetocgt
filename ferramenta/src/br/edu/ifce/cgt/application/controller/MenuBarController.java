@@ -37,8 +37,8 @@ import org.controlsfx.dialog.Dialogs;
 
 public class MenuBarController implements Initializable {
 
-    private final String desktopJarPath = "desktop/desktop-1.0/lib/desktop-1.0.jar";
-    private final String desktopZipPath = "desktop/desktop.zip";
+    public static final String desktopJarPath = "desktop/desktop-1.0/lib/desktop-1.0.jar";
+    public static final String desktopZipPath = "desktop/desktop.zip";
 
     public Menu menuRecent;
     public Menu menuSprite;
@@ -110,6 +110,7 @@ public class MenuBarController implements Initializable {
         try {
             Config.unzip(open);
         } catch (Exception e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Problema ao abrir o arquivo");
             alert.showAndWait();
@@ -252,7 +253,7 @@ public class MenuBarController implements Initializable {
         }
     }
 
-    private boolean isWin() {
+    public static boolean isWin() {
         String OS = System.getProperty("os.name").toUpperCase();
         return OS.contains("WIN");
     }
@@ -333,7 +334,7 @@ public class MenuBarController implements Initializable {
 //
 //    }
 
-    static String localDefaultDirectory() {
+    public static String localDefaultDirectory() {
         String path = "";
 
         String OS = System.getProperty("os.name").toUpperCase();

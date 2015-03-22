@@ -73,16 +73,16 @@ project(":android") {
     configurations { natives }
 
     dependencies {
-	compile project(":CearaGameTools")
-    compile project(":core")
-	compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-    compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-		natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
-		natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
-	compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-		natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi"
+    	compile project(":CearaGameTools")
+        compile project(":core")
+    	compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+    	natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
+    	natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
+    	compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+    	natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi-v7a"
-		natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
+    	natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
     }
 }
 

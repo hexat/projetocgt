@@ -12,17 +12,24 @@ if (prefsFile.exists()) {
     APPID = props.getProperty("APPID")
 }
 
-android {
-    buildToolsVersion "19.1.0"
-    compileSdkVersion 19
 
-      defaultConfig {
+
+android {
+    buildToolsVersion "20.0.0"
+    compileSdkVersion 20
+
+
+    //dependencies {
+    //    compile fileTree(dir: 'libs/cgt', include: '*.jar')
+    //}
+
+    defaultConfig {
         applicationId APPID
         minSdkVersion 15
         targetSdkVersion 19
         versionCode VERSION_CODE
         versionName VERSION_NAME
-      }
+    }
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -36,6 +43,23 @@ android {
         }
 
         instrumentTest.setRoot('tests')
+    }
+}
+
+task copyToLibNatives(type: Copy) {
+    into "libs/natives"
+    from configurations.natives
+}
+
+task copyToLib(dependsOn: 'copyToLibNatives', type: Copy) {
+    into "libs/cgt"
+    from configurations.compile
+}
+
+task zip(dependsOn: 'copyToLib', type: Zip) {
+    destinationDir = file('../ferramenta/res/bin/')
+    from('.') {
+        exclude '**/*build*'
     }
 }
 

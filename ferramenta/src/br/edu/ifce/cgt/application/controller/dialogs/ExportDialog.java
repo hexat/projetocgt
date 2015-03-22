@@ -1,6 +1,7 @@
 package br.edu.ifce.cgt.application.controller.dialogs;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.controller.MenuBarController;
 import br.edu.ifce.cgt.application.util.Config;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -11,14 +12,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+import org.apache.commons.io.FileUtils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -56,10 +58,44 @@ public class ExportDialog extends BorderPane implements Observer {
         btnOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                unZip();
                 runGradle();
             }
         });
         setRight(btnOk);
+    }
+
+    private void unZip() {
+        File android = new File(MenuBarController.localDefaultDirectory()+"android/");
+        if (!android.exists()) {
+            android.mkdirs();
+            File out = new File(MenuBarController.localDefaultDirectory()+"android.zip");
+            InputStream io = Main.class.getResourceAsStream("/base-android.zip");
+
+            try {
+                FileUtils.copyInputStreamToFile(io, out);
+                io.close();
+
+                ZipFile zip = new ZipFile(out);
+                zip.extractAll(MenuBarController.localDefaultDirectory());
+
+                out.delete();
+
+                io = Main.class.getResourceAsStream("/bin/android-1.0.zip");
+
+                FileUtils.copyInputStreamToFile(io, out);
+                io.close();
+
+                zip = new ZipFile(out);
+                zip.extractAll(MenuBarController.localDefaultDirectory()+"android/app/");
+                out.delete();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ZipException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -75,7 +111,7 @@ public class ExportDialog extends BorderPane implements Observer {
 
     public void show() {
         stage.show();
-        Config.get().export(this);
+//        Config.get().export(this);
     }
 
     public void runGradle() {
@@ -83,9 +119,21 @@ public class ExportDialog extends BorderPane implements Observer {
 
             @Override
             public void run() {
+                String path = MenuBarController.localDefaultDirectory() + "android/gradlew";
+                String comm = "app:assembleRelease";
                 try {
-                    process = Runtime.getRuntime().exec("./gradlew android:build");
-
+                    FileUtils.deleteDirectory(new File(MenuBarController.localDefaultDirectory() + "android/app/build/"));
+                    if (MenuBarController.isWin()) {
+                        ProcessBuilder builder = new ProcessBuilder("\"" + path + ".bat\"", comm);
+                        builder.directory(new File(path).getParentFile());
+                        process = builder.start();
+//                        process = Runtime.getRuntime().exec("\"" + path + ".bat\" "+comm);
+                    } else {
+                        Runtime.getRuntime().exec("chmod +x " + path);
+                        process = new ProcessBuilder("sh " + path, comm).start();
+//                        process = Runtime.getRuntime().exec("sh " + path + " "+comm);
+                    }
+                    System.out.println("init"+process.toString());
                     StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream(), "ERROR");
 
                     // any output?
@@ -96,6 +144,30 @@ public class ExportDialog extends BorderPane implements Observer {
                     errorGobbler.start();
 
                     process.waitFor();
+
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            File file = new File(MenuBarController.localDefaultDirectory() + "android/app/build/outputs/apk/app-release-unsigned.apk");
+                            if (file.exists()) {
+                                FileChooser chooser = new FileChooser();
+                                chooser.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("Android App", "*.apk"));
+                                File save = chooser.showSaveDialog(Main.getApp());
+                                if (save != null) {
+                                    try {
+                                        FileUtils.copyFile(file, save);
+                                        if (save.exists()) {
+                                            if (MenuBarController.isWin()) {
+                                                Runtime.getRuntime().exec("explorer " + save.getParent());
+                                            }
+                                        }
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+                    });
 
                 } catch (IOException ex) {
                     ex.printStackTrace();

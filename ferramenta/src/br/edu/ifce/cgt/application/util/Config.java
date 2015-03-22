@@ -57,7 +57,7 @@ public  class Config {
 				String filename = System.currentTimeMillis() + ".png";
 				FileUtils.copyFile(src, new File(BASE + BASE_IMG + filename));
 				res = new CGTFile(BASE_IMG + filename);
-				res.setFilename(src.getName());
+				res.setFilename(src.getName().replace(' ', '_'));
 			} catch (IOException e) {
 				DialogsUtil.showErrorDialog();
 				e.printStackTrace();
@@ -82,7 +82,7 @@ public  class Config {
         String filename = System.currentTimeMillis() + src.getName().substring(src.getName().length() - 4);
 		FileUtils.copyFile(src, new File(BASE + BASE_AUDIO + filename));
 		res = new CGTFile(BASE_AUDIO + filename);
-		res.setFilename(src.getName());
+		res.setFilename(src.getName().replace(' ', '_'));
 		return res;
 	}
 

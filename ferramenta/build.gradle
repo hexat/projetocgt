@@ -45,6 +45,14 @@ task copyDesktop(dependsOn: ':desktop:distZip') {
 	}
 }
 
+task copyLibToAndroid {
+	dependsOn ':CearaGameTools:copyLib', ':core:copyLib'
+}
+
+copyLibToAndroid.mustRunAfter ':core:copyLib'
+
+task copyAndroid()
+
 task export(dependsOn: ':core:jar') << {
 	copy {
 		from rootProject.project(':core').jar.archivePath, rootProject.project(':CearaGameTools').jar.archivePath
