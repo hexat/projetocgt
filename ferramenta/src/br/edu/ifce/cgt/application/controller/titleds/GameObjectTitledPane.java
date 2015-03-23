@@ -27,6 +27,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
@@ -49,7 +52,6 @@ public class GameObjectTitledPane extends TitledPane {
     @FXML private FloatTextField txtColisionH;
     @FXML private IntegerTextField txtVelocidade;
     @FXML private IntegerTextField txtLife;
-    @FXML private Button btnSetSound;
     @FXML private VBox listTeste;
 	@FXML private TableView<String> tableSomColisao;
 
@@ -101,23 +103,31 @@ public class GameObjectTitledPane extends TitledPane {
     }
 
     public void setActions() {
-        btnSetSound.setOnAction(new EventHandler<ActionEvent>() {
+        txtSound.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(ActionEvent event) {
-                File audio = DialogsUtil.showOpenDialog("Selecione um audio", DialogsUtil.WAV_FILTER);
-                if (audio != null) {
-                    try {
-                        CGTFile som = Config.get().createAudio(audio);
-                        gameObject.setSound(new CGTSound(som));
-                        txtSound.setText(som.getFilename());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        DialogsUtil.showErrorDialog();
-                    }
+            public void handle(MouseEvent event) {
+                txtSound.selectAll();
+            }
+        });
+        txtSound.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.BACK_SPACE) {
+                    txtSound.setText("");
+                } else {
+                    event.consume();
                 }
             }
         });
-
+        txtSound.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (txtSound.getText().isEmpty()) {
+                    Config.get().destroy(gameObject.getSound().getFile());
+                    gameObject.setSound(null);
+                }
+            }
+        });
         txtLife.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -208,14 +218,20 @@ public class GameObjectTitledPane extends TitledPane {
         });
     }
 
-    @FXML public void teste() {
-        listTeste.getChildren().add(new Label("teste"));
+    public void setSoundObject() {
+        File audio = DialogsUtil.showOpenDialog("Selecione um audio", DialogsUtil.WAV_FILTER);
+        if (audio != null) {
+            try {
+                CGTFile som = Config.get().createAudio(audio);
+                gameObject.setSound(new CGTSound(som));
+                txtSound.setText(som.getFilename());
+            } catch (IOException e) {
+                e.printStackTrace();
+                DialogsUtil.showErrorDialog();
+            }
+        }
     }
 
-    @FXML public void teste2() {
-        listTeste.getChildren().clear();
-    }
-	
 	@FXML public void btnProcurarSom(){
 		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo WAV (*.wav)", "*.wav");
 		FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("Arquivo OGG (*.ogg)", "*.ogg");
@@ -401,7 +417,7 @@ public class GameObjectTitledPane extends TitledPane {
         updateBoxSoundCollision();
         updateBoxSoundDie();
         if (gameObject.getSound() != null) {
-            btnSetSound.setText(gameObject.getSound().getFile().getFilename());
+            txtSound.setText(gameObject.getSound().getFile().getFilename());
         }
         if (gameObject.getBounds().width > 0) {
             txtBoundsW.setText(gameObject.getBounds().width + "");

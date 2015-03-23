@@ -10,10 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.*;
 import net.lingala.zip4j.core.ZipFile;
@@ -32,6 +30,7 @@ public class ExportDialog extends BorderPane {
     private final String PROPERTIES_ANDROID_FILE = "android/local.properties";
 
     private final Stage stage;
+    @FXML public TitledPane tpDetails;
     @FXML private TextArea textArea;
     @FXML private Button btnOk;
     @FXML private TextField txtAndroidSdk;
@@ -76,6 +75,12 @@ public class ExportDialog extends BorderPane {
             public void handle(ActionEvent event) {
                 copyFiles();
                 runGradle();
+            }
+        });
+        tpDetails.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+            @Override
+            public void handle(ContextMenuEvent event) {
+                stage.sizeToScene();
             }
         });
     }

@@ -6,7 +6,7 @@
 
 <fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
-      <TitledPane animated="false" expanded="false" prefWidth="200.0" text="Detalhes" BorderPane.alignment="CENTER">
+      <TitledPane fx:id="tpDetails" animated="false" expanded="false" prefWidth="200.0" text="Detalhes" BorderPane.alignment="CENTER">
          <content>
             <TextArea fx:id="textArea" prefHeight="200.0" prefWidth="200.0" />
          </content>

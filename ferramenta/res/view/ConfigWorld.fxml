@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" text="Configuração Mundo" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifce.cgt.application.controller.titleds.WorldTitledPane">
+<fx:root type="javafx.scene.control.TitledPane" animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" text="Configuração Mundo" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
  <content>
     <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
        <content>
@@ -59,7 +59,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </VBox>
-                 <TextField fx:id="txtMusic" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                 <TextField fx:id="txtMusic" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                   <Button mnemonicParsing="false" onAction="#setMusic" text="Pesquisar" GridPane.columnIndex="2" GridPane.rowIndex="8" />
              </children>
           </GridPane>
@@ -69,4 +69,4 @@
          </padding>
     </ScrollPane>
  </content>
-</TitledPane>
+</fx:root>
