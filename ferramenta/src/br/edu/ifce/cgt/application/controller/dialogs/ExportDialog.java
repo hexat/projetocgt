@@ -160,7 +160,7 @@ public class ExportDialog extends BorderPane {
 
     public void show() {
         stage.show();
-//        Config.get().export();
+        Config.get().export();
     }
 
     public void runGradle() {
