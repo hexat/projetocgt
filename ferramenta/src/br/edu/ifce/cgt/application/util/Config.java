@@ -86,7 +86,7 @@ public  class Config {
 		return res;
 	}
 
-	public boolean export(Observer observer) {
+	public boolean export() {
 		if (getGame().validate().isEmpty()) {
             saveConfig();
 			File out = new File("../android/assets/");
@@ -103,7 +103,6 @@ public  class Config {
 				e.printStackTrace();
 			}
 
-            observer.update(null, "Iniciando...");
 //			Runtime runtime = Runtime.getRuntime();
 //			try {
 //                Process p1 = runtime.exec("sh "+GRADLE_PATH+"run");
@@ -125,8 +124,6 @@ public  class Config {
 
 			return true;
 		}
-
-        observer.update(null, "Problemas");
 		return false;
 	}
 
