@@ -111,7 +111,7 @@ public class ExportDialog extends BorderPane implements Observer {
 
     public void show() {
         stage.show();
-//        Config.get().export(this);
+        Config.get().export(this);
     }
 
     public void runGradle() {

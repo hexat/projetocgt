@@ -56,7 +56,6 @@ public class WorldController {
 	public void activateKey(InputPolicy policy){
 		Action action = actor.getActionFromInput(policy);
 		if (action != null){
-            System.out.println(action);
             // colocado para conseguir desativar o tap
 			if(policy == InputPolicy.TAP) actions.add(action.getActionPolicy());
 			keys.put(action.getActionPolicy(),true);
