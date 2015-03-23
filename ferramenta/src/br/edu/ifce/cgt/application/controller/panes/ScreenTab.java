@@ -63,7 +63,7 @@ public class ScreenTab extends Tab {
                     if (screen instanceof CGTScreen) {
                         configAccordion.getPanes().add(ScreenTitledPane.getNode((CGTScreen) screen));
                     } else {
-                        configAccordion.getPanes().add(WorldTitledPane.getNode((CGTGameWorld) screen));
+                        configAccordion.getPanes().add(new WorldTitledPane((CGTGameWorld) screen));
                         configAccordion.getPanes().add(new CameraTitledPane(((CGTGameWorld) screen).getCamera()));
                     }
                     configAccordion.getPanes().get(0).setExpanded(true);

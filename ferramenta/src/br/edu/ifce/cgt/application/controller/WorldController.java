@@ -67,7 +67,7 @@ public class WorldController extends BorderPane {
 
     @FXML public void btnConfigWorld() {
         configAccordion.getPanes().clear();
-        configAccordion.getPanes().add(WorldTitledPane.getNode(world));
+        configAccordion.getPanes().add(new WorldTitledPane(world));
         configAccordion.getPanes().add(new CameraTitledPane(world.getCamera()));
         configAccordion.getPanes().get(0).setExpanded(true);
     }

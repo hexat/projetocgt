@@ -67,7 +67,7 @@
             <FloatTextField fx:id="txtColisionH" promptText="Altura" GridPane.columnIndex="4" GridPane.rowIndex="7" />
             <IntegerTextField fx:id="txtVelocidade" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8" />
             <TextField fx:id="txtSound" prefHeight="26.0" prefWidth="193.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="9" />
-            <Button fx:id="btnSetSound" mnemonicParsing="false" text="Pesquisar" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="9" />
+            <Button mnemonicParsing="false" onAction="#setSoundObject" text="Pesquisar" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="9" />
             <Button mnemonicParsing="false" onAction="#addSoundCollision" text="+" GridPane.columnIndex="1" GridPane.rowIndex="10" />
             <VBox fx:id="boxSoundColision" alignment="CENTER" GridPane.columnSpan="5" GridPane.rowIndex="11">
                      <padding>

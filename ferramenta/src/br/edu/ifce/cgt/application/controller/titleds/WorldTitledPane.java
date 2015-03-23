@@ -28,11 +28,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 
-public class WorldTitledPane implements Initializable {
+public class WorldTitledPane extends TitledPane {
 	@FXML private Button btnPesquisaBack;
     @FXML private TextField txtProcuraBack;
     @FXML private TextField txtMusic;
@@ -68,38 +71,46 @@ public class WorldTitledPane implements Initializable {
         return world;
     }
 
-    public static TitledPane getNode(CGTGameWorld world) {
+    public WorldTitledPane(CGTGameWorld world) {
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigWorld.fxml"));
-        TitledPane el = null;
+        xml.setController(this);
+        xml.setRoot(this);
+
         try {
-            el = xml.load();
-            WorldTitledPane controller = xml.getController();
-            controller.setWorld(world);
+            xml.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return el;
+        init();
+        setWorld(world);
     }
 
-	public String getTextTxtProcurarBack(){
-		return txtProcuraBack.getText();
-	}
-	
-	public void pesquisarBackground(){
-		File chosenFile = DialogsUtil.showOpenDialog("Selecionar background", DialogsUtil.IMG_FILTER);
-
-		String path = "";
-
-		if(chosenFile != null) {
-            world.setBackground(new CGTTexture(Config.get().createImg(chosenFile)));
-            path = chosenFile.getName();
-		}
-
-		txtProcuraBack.setText(path);
-	}
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    private void init() {
+        txtMusic.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                txtMusic.selectAll();
+            }
+        });
+        txtMusic.setOnKeyTyped(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.BACK_SPACE) {
+                    txtMusic.setText("");
+                } else {
+                    event.consume();
+                }
+            }
+        });
+        txtMusic.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (txtMusic.getText().isEmpty()) {
+                    Config.get().destroy(world.getMusic().getFile());
+                    world.setMusic(null);
+                }
+            }
+        });
         btnRemLoseDialog.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -123,8 +134,24 @@ public class WorldTitledPane implements Initializable {
                 btnRemWinDialog.setDisable(true);
             }
         });
-
     }
+
+    public String getTextTxtProcurarBack(){
+		return txtProcuraBack.getText();
+	}
+	
+	public void pesquisarBackground(){
+		File chosenFile = DialogsUtil.showOpenDialog("Selecionar background", DialogsUtil.IMG_FILTER);
+
+		String path = "";
+
+		if(chosenFile != null) {
+            world.setBackground(new CGTTexture(Config.get().createImg(chosenFile)));
+            path = chosenFile.getName();
+		}
+
+		txtProcuraBack.setText(path);
+	}
 
     private void removerDialog(CGTDialog dialog) {
         if (dialog.getHorizontalBorderTexture() != null) {

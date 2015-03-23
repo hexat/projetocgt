@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0" type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <TitledPane fx:id="tpDetails" animated="false" expanded="false" prefWidth="200.0" text="Detalhes" BorderPane.alignment="CENTER">
+         <content>
+            <TextArea fx:id="textArea" prefHeight="200.0" prefWidth="200.0" />
+         </content>
+      </TitledPane>
+   </bottom>
+   <top>
+      <ProgressBar prefWidth="600.0" progress="0.0" BorderPane.alignment="CENTER" />
+   </top>
+   <right>
+      <Button fx:id="btnOk" mnemonicParsing="false" text="Iniciar" BorderPane.alignment="CENTER" />
+   </right>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Android SDK" />
+                  <TextField fx:id="txtAndroidSdk" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#selSdkFolder" text="Procurar" GridPane.columnIndex="2" />
+               </children>
+            </GridPane>
+         </children>
+      </VBox>
+   </center>
+</fx:root>
