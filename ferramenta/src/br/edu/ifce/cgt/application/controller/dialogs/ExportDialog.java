@@ -6,16 +6,16 @@ import br.edu.ifce.cgt.application.util.Config;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.FileChooser;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.Window;
+import javafx.stage.*;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
@@ -23,46 +23,81 @@ import org.apache.commons.io.FileUtils;
 import java.io.*;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Properties;
 
 /**
  * Created by luanjames on 25/02/15.
  */
-public class ExportDialog extends BorderPane implements Observer {
-    private final Stage stage;
-    private final Label labStatus;
-    private TextArea textArea;
-    private Button btnOk;
+public class ExportDialog extends BorderPane {
+    private final String PROPERTIES_ANDROID_FILE = "android/local.properties";
 
-    private ProcessBuilder processBuilder;
+    private final Stage stage;
+    @FXML private TextArea textArea;
+    @FXML private Button btnOk;
+    @FXML private TextField txtAndroidSdk;
     private Process process;
 
     public ExportDialog() {
-        this(Main.getApp().getScene().getWindow());
-    }
+        FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/dialogs/ExportDialog.fxml"));
+        view.setRoot(this);
+        view.setController(this);
 
-    public ExportDialog(Window owner) {
-        setPrefSize(500, 100);
+        try {
+            view.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         stage = new Stage();
         stage.setScene(new Scene(this));
         stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(owner);
+        stage.initOwner(Main.getApp().getScene().getWindow());
 
-        labStatus = new Label();
-        labStatus.setAlignment(Pos.CENTER);
-        labStatus.setText("teste");
-        setCenter(labStatus);
-        textArea = new TextArea();
-        setBottom(textArea);
+        unZip();
 
-        btnOk = new Button();
+        init();
+    }
+
+    private void init() {
+        Properties prefs = new Properties();
+        try {
+            FileInputStream stream = new FileInputStream(MenuBarController.localDefaultDirectory()+PROPERTIES_ANDROID_FILE);
+            prefs.load(stream);
+            String dir = prefs.getProperty("sdk.dir");
+            txtAndroidSdk.setText(dir);
+            stream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         btnOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                unZip();
+                copyFiles();
                 runGradle();
             }
         });
-        setRight(btnOk);
+    }
+
+    private void copyFiles() {
+        File assets = new File(MenuBarController.localDefaultDirectory()+"android/app/assets");
+        try {
+            FileUtils.deleteDirectory(assets);
+            assets.mkdirs();
+
+            FileUtils.copyDirectory(new File(Config.BASE), assets);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        File input = Config.get().getPref().getFile();
+        File out = new File(MenuBarController.localDefaultDirectory()+"android/"+input.getName());
+        try {
+            FileUtils.copyFile(input, out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void unZip() {
@@ -98,15 +133,24 @@ public class ExportDialog extends BorderPane implements Observer {
         }
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        final String txt = arg.toString();
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                labStatus.setText(txt);
+    public void selSdkFolder() {
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Android SDK");
+        File selectedDirectory = chooser.showDialog(Main.getApp());
+        if (selectedDirectory != null) {
+            Properties properties = new Properties();
+            properties.put("sdk.dir", selectedDirectory.getAbsolutePath());
+            try {
+                FileOutputStream stream = new FileOutputStream(MenuBarController.localDefaultDirectory()+PROPERTIES_ANDROID_FILE);
+                properties.store(stream, null);
+                stream.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        });
+            txtAndroidSdk.setText(selectedDirectory.getAbsolutePath());
+        }
     }
 
     public void show() {
@@ -130,10 +174,11 @@ public class ExportDialog extends BorderPane implements Observer {
 //                        process = Runtime.getRuntime().exec("\"" + path + ".bat\" "+comm);
                     } else {
                         Runtime.getRuntime().exec("chmod +x " + path);
-                        process = new ProcessBuilder("sh " + path, comm).start();
-//                        process = Runtime.getRuntime().exec("sh " + path + " "+comm);
+                        ProcessBuilder builder = new ProcessBuilder("./gradlew", comm);
+                        builder.directory(new File(path).getParentFile());
+                        process = builder.start();
+//                        process = Runtime.getRuntime().exec(path + " "+comm);
                     }
-                    System.out.println("init"+process.toString());
                     StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream(), "ERROR");
 
                     // any output?

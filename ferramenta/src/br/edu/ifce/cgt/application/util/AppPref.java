@@ -91,6 +91,9 @@ public class AppPref {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public File getFile() {
+        return file;
     }
 }
