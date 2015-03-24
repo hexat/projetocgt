@@ -177,8 +177,10 @@ public class ExportDialog extends VBox {
             e.printStackTrace();
         }
 
+        saveSettings();
+
         // Copy keystore
-        File key = new File(txtKeyStorePath.getText());
+        File key = new File(settings.getKeyPath());
         File outKey = new File(MenuBarController.localDefaultDirectory()+"android/app/android.keystore");
 
         try {
@@ -186,8 +188,6 @@ public class ExportDialog extends VBox {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        saveSettings();
 
         AppPref pref = Config.get().getPref();
 
@@ -291,7 +291,7 @@ public class ExportDialog extends VBox {
                 Process run = builder.start();
                 run.waitFor();
                 stage.getScene().setCursor(Cursor.DEFAULT);
-                
+
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
@@ -302,7 +302,7 @@ public class ExportDialog extends VBox {
 
     public void show() {
         stage.show();
-        Config.get().export();
+//        Config.get().export();
     }
 
     public void runGradle() {
@@ -374,6 +374,10 @@ public class ExportDialog extends VBox {
                 }
             }
         } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Ocorreu algum erro. Verifique se sua chave foi criada corretamente");
+            alert.show();
             barStatus.setStyle("-fx-accent: red; ");
         }
         boxButton.getChildren().setAll(btnOk);

@@ -159,7 +159,9 @@ public class MenuBarController implements Initializable {
     @FXML public void export() {
         List<CGTError> errors = Config.get().getGame().validate();
         if (errors.isEmpty()) {
+            Main.getApp().getScene().setCursor(Cursor.WAIT);
             new ExportDialog().show();
+            Main.getApp().getScene().setCursor(Cursor.DEFAULT);
         } else {
             showValidateDialog(errors);
         }
