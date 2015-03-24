@@ -89,7 +89,7 @@ public  class Config {
 	public boolean export() {
 		if (getGame().validate().isEmpty()) {
             saveConfig();
-			File out = new File("android/assets/");
+			File out = new File("../android/assets/");
             System.out.println(out.getAbsolutePath());
             try {
 				FileUtils.deleteDirectory(out);

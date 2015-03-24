@@ -48,6 +48,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	private TouchInputs touchInput;
 	private Gesture gesture;
 	private InputMultiplexer inputMultiplexer;
+	private AudioManager audioManager;
 	private int contador;
 
 	public GameScreen(CGTGameWorld world) {
@@ -61,7 +62,9 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		}
 		
 		this.world = world;
+		
 		this.music = world.getMusicGDX();
+		
 		Timer.instance().start();
 
 		for (int i = 0; i < world.getWinCriteria().size(); i++) {
@@ -73,11 +76,13 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		}
 
 		getActorsFromWorld();
-		renderer = new WorldRenderer(world);
+		audioManager = new AudioManager(world);
+		renderer = new WorldRenderer(world,audioManager);
 		setSpriteBatch(new SpriteBatch());
 		controller = new WorldController(world, renderer);
 		lastPoint = world.getActor().getPosition().cpy();
 //		touchInput = new TouchInputs(this);
+		
 		gesture = new Gesture(this);
 		inputMultiplexer = new InputMultiplexer();
 		inputMultiplexer.addProcessor(gesture.getGd());
@@ -237,14 +242,14 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			renderer.render();
 			if (renderer.verifyWin()) {
 				state = State.WIN;
-				world.playSoundWin();
+				audioManager.stopGameMusic();
+				audioManager.playWinMusic();
 			}
 			if (renderer.lose()) {
-				if (music != null) {
-					music.stop();
-				}
+				audioManager.stopGameMusic();
 				state = State.LOSE;
-				world.playSoundLose();
+				audioManager.playLoseMusic();
+				
 			}
 			buttonHandler();
 			this.act();
@@ -283,9 +288,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				world.getPauseDialog().setActive(true);
 				// Para os behaviors
 				// renderer.getSpriteBatch().flush();
-				if (music != null) {
-					music.pause();
-				}
+				audioManager.stopGameMusic();
 				this.getActors().clear();
 
 				addDialog(world.getPauseDialog());
@@ -323,9 +326,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				Timer.instance().start();
 				this.getActors().clear();
 				getActorsFromWorld();
-				if (music != null) {
-					music.play();
-				}
+				audioManager.playGameMusic();
 				break;
 			}
 
@@ -344,9 +345,8 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 			if (world.getWinDialog() != null && !world.getWinDialog().isActive()) {
 				world.getWinDialog().setActive(true);
 				renderer.getSpriteBatch().flush();
-				if (music != null) {
-					music.pause();
-				}
+				audioManager.stopGameMusic();
+				audioManager.playWinMusic();
 				this.getActors().clear();
 				addDialog(world.getWinDialog());
 				world.getWinDialog().autosize();
@@ -383,9 +383,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				world.getLoseDialog().setActive(true);
 
 				renderer.getSpriteBatch().flush();
-				if (music != null) {
-					music.pause();
-				}
+				audioManager.stopGameMusic();
 				this.getActors().clear();
 
 				addDialog(world.getLoseDialog());
@@ -439,11 +437,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 	@Override
 	public void show() {
-		if (music != null) {
-			music.play();
-			System.out.println(music);
-			music.setLooping(true);
-		}
+		audioManager.playGameMusic();
 		if (world.getCamera().getGameMode() == GameModePolicy.JOYSTICK
 				|| world.getStartGame() != null) {
 			Gdx.input.setInputProcessor(this);
@@ -560,40 +554,31 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		return world;
 	}
 	
+	public AudioManager getAudioManager() {
+		return audioManager;
+	}
+
+	public void setAudioManager(AudioManager audioManager) {
+		this.audioManager = audioManager;
+	}
+
 	public void accelerometer(){		
 		contador++;
 		if(contador >=5){
 			getController().releaseAccelerometer();
 	    contador = 0;
 		}
-//	    System.out.println("X: "+ Gdx.input.getAccelerometerX());
-//	    System.out.println("Y: "+ Gdx.input.getAccelerometerY());
-		if(Math.abs(Gdx.input.getAccelerometerX()) > Math.abs(Gdx.input.getAccelerometerY())){				
-			
+		if(Math.abs(Gdx.input.getAccelerometerX()) > Math.abs(Gdx.input.getAccelerometerY())){							
 			if(Gdx.input.getAccelerometerX() > 0){
 				controller.activateKey(InputPolicy.ACEL_DOWN);
-//				controller.deactivateKey(InputPolicy.ACEL_UP);
-//				controller.deactivateKey(InputPolicy.ACEL_LEFT);
-//				controller.deactivateKey(InputPolicy.ACEL_RIGHT);
 			} else {
 				controller.activateKey(InputPolicy.ACEL_UP);
-//				controller.deactivateKey(InputPolicy.ACEL_DOWN);
-//				controller.deactivateKey(InputPolicy.ACEL_RIGHT);
-//				controller.deactivateKey(InputPolicy.ACEL_LEFT);
 			} 
 		} else{
 			if(Gdx.input.getAccelerometerY() > 0){
 				controller.activateKey(InputPolicy.ACEL_RIGHT);
-				
-//				controller.deactivateKey(InputPolicy.ACEL_LEFT);
-//				controller.deactivateKey(InputPolicy.ACEL_UP);
-//				controller.deactivateKey(InputPolicy.ACEL_DOWN);
 			} else {
 				controller.activateKey(InputPolicy.ACEL_LEFT);
-				
-//				controller.deactivateKey(InputPolicy.ACEL_RIGHT);
-//				controller.deactivateKey(InputPolicy.ACEL_UP);
-//				controller.deactivateKey(InputPolicy.ACEL_DOWN);
 			} 
 			
 		}

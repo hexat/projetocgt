@@ -76,7 +76,6 @@ public class GeneralScreen extends Stage implements Screen {
 	@Override
 	public void show() {
         if (music != null) {
-        	System.out.println(music);
             music.play();
             music.setLooping(true);
         }
@@ -93,6 +92,7 @@ public class GeneralScreen extends Stage implements Screen {
 	@Override
 	public void pause() {
         if (music != null) {
+        	
             music.pause();
         }
 	}

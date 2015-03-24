@@ -405,10 +405,6 @@ public abstract class CGTGameObject {
 		this.delayPlaySound = delayPlaySound;
 	}
 
-	public void canPlaySaund() {
-		isPlayingSound = false;
-	}
-	
 	public ArrayList<CGTGameObject> getObjectsToCollide() {
 		return objectsToCollide;
 	}
