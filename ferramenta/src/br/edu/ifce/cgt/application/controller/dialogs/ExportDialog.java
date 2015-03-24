@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.ContextMenuEvent;
@@ -258,6 +259,44 @@ public class ExportDialog extends VBox {
         if (file != null) {
             txtKeyStorePath.setText(file.getAbsolutePath());
             settings.setKeyPath(txtKeyStorePath.getText());
+        }
+    }
+
+    public void createKey() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        ButtonType button = new ButtonType("Criar Chave com Portable");
+        alert.getButtonTypes().setAll(button);
+
+        if (alert.showAndWait().get() == button) {
+            File out = new File(MenuBarController.localDefaultDirectory()+"portecle.zip");
+            File path = new File(MenuBarController.localDefaultDirectory() + "portecle-1.7/");
+            if (!out.exists()) {
+                InputStream io = Main.class.getResourceAsStream("/portecle-1.7.zip");
+                try {
+                    FileUtils.copyInputStreamToFile(io, out);
+                    io.close();
+
+                    ZipFile zip = new ZipFile(out);
+                    zip.extractAll(MenuBarController.localDefaultDirectory());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ZipException e) {
+                    e.printStackTrace();
+                }
+            }
+            stage.getScene().setCursor(Cursor.WAIT);
+            ProcessBuilder builder = new ProcessBuilder("java", "-jar", "portecle.jar");
+            builder.directory(path);
+            try {
+                Process run = builder.start();
+                run.waitFor();
+                stage.getScene().setCursor(Cursor.DEFAULT);
+                
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
