@@ -2,8 +2,13 @@ package br.edu.ifce.cgt.application.controller.dialogs;
 
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.MenuBarController;
+import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
+import br.edu.ifce.cgt.application.util.AppPref;
 import br.edu.ifce.cgt.application.util.Config;
+import br.edu.ifce.cgt.application.util.Pref;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.*;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
@@ -26,14 +32,25 @@ import java.util.Properties;
 /**
  * Created by luanjames on 25/02/15.
  */
-public class ExportDialog extends BorderPane {
+public class ExportDialog extends VBox {
     private final String PROPERTIES_ANDROID_FILE = "android/local.properties";
 
     private final Stage stage;
+    private final Pref settings;
     @FXML public TitledPane tpDetails;
+    @FXML public ProgressBar barStatus;
+    @FXML public TextField txtKeyStorePath;
+    @FXML public TextField txtAliasKey;
+    @FXML public PasswordField txtAliasPassword;
+    @FXML public PasswordField txtStorePassword;
+    @FXML public VBox boxButton;
+    @FXML public IntegerTextField txtTarget;
+    @FXML public TextField txtBuildTools;
+    @FXML public IntegerTextField txtMinVersion;
     @FXML private TextArea textArea;
     @FXML private Button btnOk;
     @FXML private TextField txtAndroidSdk;
+    private ProgressIndicator progressIndicator;
     private Process process;
 
     public ExportDialog() {
@@ -53,39 +70,102 @@ public class ExportDialog extends BorderPane {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(Main.getApp().getScene().getWindow());
 
+        settings = Pref.load();
+
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                saveSettings();
+            }
+        });
         unZip();
 
         init();
     }
 
+    private void saveSettings() {
+        settings.setMinSdkVersion(txtMinVersion.getValue());
+        settings.setBuildToolsVersion(txtBuildTools.getText());
+        settings.setTargetVersion(txtTarget.getValue());
+        settings.setKeyAlias(txtAliasKey.getText());
+        settings.setStorePassword(txtStorePassword.getText());
+        settings.setKeyPassword(txtAliasPassword.getText());
+
+        settings.save();
+    }
+
     private void init() {
-        Properties prefs = new Properties();
-        try {
-            FileInputStream stream = new FileInputStream(MenuBarController.localDefaultDirectory()+PROPERTIES_ANDROID_FILE);
-            prefs.load(stream);
-            String dir = prefs.getProperty("sdk.dir");
-            txtAndroidSdk.setText(dir);
-            stream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        progressIndicator = new ProgressIndicator();
 
         btnOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                copyFiles();
-                runGradle();
+                if (check()) {
+                    boxButton.getChildren().setAll(progressIndicator);
+                    barStatus.setProgress(0);
+                    barStatus.setStyle(null);
+                    copyFiles();
+                    runGradle();
+                }
             }
         });
-        tpDetails.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+
+        txtAndroidSdk.setText(settings.getSdkPath());
+        if (settings.getTargetVersion() > 0) {
+            txtTarget.setValue(settings.getTargetVersion());
+        }
+        txtBuildTools.setText(settings.getBuildToolsVersion());
+        if (settings.getMinSdkVersion() > 0) {
+            txtMinVersion.setValue(settings.getMinSdkVersion());
+        }
+        txtAliasKey.setText(settings.getKeyAlias());
+        txtKeyStorePath.setText(settings.getKeyPath());
+
+        tpDetails.expandedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ContextMenuEvent event) {
-                stage.sizeToScene();
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
+                if (tpDetails.isExpanded()) {
+                    stage.setHeight(stage.getHeight()+200);
+                } else {
+                    stage.setHeight(stage.getHeight()-200);
+                }
+//                stage.sizeToScene();
             }
         });
+
+    }
+
+    private boolean check() {
+        boolean result = !(txtKeyStorePath.getText().isEmpty() || txtAndroidSdk.getText().isEmpty()
+                || txtAliasPassword.getText().isEmpty()
+                || txtAliasKey.getText().isEmpty()
+                || txtStorePassword.getText().isEmpty()
+                || txtMinVersion.getValue() <= 0
+                || txtBuildTools.getText().isEmpty()
+                || txtTarget.getValue() <= 0);
+
+        if (!result) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Preencha todos os campos!");
+            alert.showAndWait();
+        }
+        return result;
     }
 
     private void copyFiles() {
+        Properties properties = new Properties();
+        properties.put("sdk.dir", settings.getSdkPath());
+        try {
+            FileOutputStream stream = new FileOutputStream(MenuBarController.localDefaultDirectory()+PROPERTIES_ANDROID_FILE);
+            properties.store(stream, null);
+            stream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         File assets = new File(MenuBarController.localDefaultDirectory()+"android/app/assets");
         try {
             FileUtils.deleteDirectory(assets);
@@ -96,12 +176,36 @@ public class ExportDialog extends BorderPane {
             e.printStackTrace();
         }
 
-        File input = Config.get().getPref().getFile();
-        File out = new File(MenuBarController.localDefaultDirectory()+"android/"+input.getName());
+        // Copy keystore
+        File key = new File(txtKeyStorePath.getText());
+        File outKey = new File(MenuBarController.localDefaultDirectory()+"android/app/android.keystore");
+
         try {
-            FileUtils.copyFile(input, out);
+            FileUtils.copyFile(key, outKey);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        saveSettings();
+
+        AppPref pref = Config.get().getPref();
+
+        File out = new File(MenuBarController.localDefaultDirectory()+"android/"+pref.getFile().getName());
+        pref.saveSignPref(out);
+
+        File icon;
+        int[] sizes = new int[]{36, 48, 72, 96, 144};
+        String[] paths = new String[]{"ldpi", "mdpi", "hdpi", "xhdpi", "xxhdpi"};
+
+        for (int i = 0; i < sizes.length; i++) {
+            icon = Config.get().getIcon(sizes[i]);
+            if (icon.exists()) {
+                try {
+                    FileUtils.copyFile(icon, new File(MenuBarController.localDefaultDirectory()+"android/app/res/drawable-"+paths[i]+"/ic_launcher.png"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -143,18 +247,17 @@ public class ExportDialog extends BorderPane {
         chooser.setTitle("Android SDK");
         File selectedDirectory = chooser.showDialog(Main.getApp());
         if (selectedDirectory != null) {
-            Properties properties = new Properties();
-            properties.put("sdk.dir", selectedDirectory.getAbsolutePath());
-            try {
-                FileOutputStream stream = new FileOutputStream(MenuBarController.localDefaultDirectory()+PROPERTIES_ANDROID_FILE);
-                properties.store(stream, null);
-                stream.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             txtAndroidSdk.setText(selectedDirectory.getAbsolutePath());
+            settings.setSdkPath(selectedDirectory.getAbsolutePath());
+        }
+    }
+
+    public void selectKeyStore() {
+        FileChooser chooser = new FileChooser();
+        File file = chooser.showOpenDialog(stage);
+        if (file != null) {
+            txtKeyStorePath.setText(file.getAbsolutePath());
+            settings.setKeyPath(txtKeyStorePath.getText());
         }
     }
 
@@ -198,24 +301,7 @@ public class ExportDialog extends BorderPane {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            File file = new File(MenuBarController.localDefaultDirectory() + "android/app/build/outputs/apk/app-release-unsigned.apk");
-                            if (file.exists()) {
-                                FileChooser chooser = new FileChooser();
-                                chooser.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("Android App", "*.apk"));
-                                File save = chooser.showSaveDialog(Main.getApp());
-                                if (save != null) {
-                                    try {
-                                        FileUtils.copyFile(file, save);
-                                        if (save.exists()) {
-                                            if (MenuBarController.isWin()) {
-                                                Runtime.getRuntime().exec("explorer " + save.getParent());
-                                            }
-                                        }
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
+                            endBuild();
                         }
                     });
 
@@ -228,19 +314,52 @@ public class ExportDialog extends BorderPane {
         }).start();
     }
 
+    private void endBuild() {
+        barStatus.setProgress(1);
+        File file = new File(MenuBarController.localDefaultDirectory() + "android/app/build/outputs/apk/app-release.apk");
+        if (file.exists()) {
+            barStatus.setStyle("-fx-accent: green; ");
+            FileChooser chooser = new FileChooser();
+            chooser.getExtensionFilters().setAll(new FileChooser.ExtensionFilter("Android App", "*.apk"));
+            File save = chooser.showSaveDialog(stage);
+            if (save != null) {
+                try {
+                    FileUtils.copyFile(file, save);
+                    if (save.exists()) {
+                        if (MenuBarController.isWin()) {
+                            Runtime.getRuntime().exec("explorer " + save.getParent());
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            barStatus.setStyle("-fx-accent: red; ");
+        }
+        boxButton.getChildren().setAll(btnOk);
+    }
+
     private class StreamGobbler extends Thread {
 
         InputStream is;
         String type;
+        double count;
 
         private StreamGobbler(InputStream is, String type) {
             this.is = is;
             this.type = type;
+            count = 0;
         }
 
         @Override
         public void run() {
-            textArea.clear();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    textArea.clear();
+                }
+            });
             try {
                 InputStreamReader isr = new InputStreamReader(is);
                 BufferedReader br = new BufferedReader(isr);
@@ -251,6 +370,7 @@ public class ExportDialog extends BorderPane {
                         @Override
                         public void run() {
                             textArea.appendText(str + "\n");
+                            barStatus.setProgress(count++ / 30 );
                         }
                     });
                 }
