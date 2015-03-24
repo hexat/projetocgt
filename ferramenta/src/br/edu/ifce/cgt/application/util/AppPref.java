@@ -11,6 +11,13 @@ public class AppPref {
     private final String VERSION_NAME="VERSION_NAME";
     private final String VERSION_CODE="VERSION_CODE";
     private final String APPID="APPID";
+    private final String STORE_PASSWORD="STORE_PASSWORD";
+    private final String KEY_PATH="KEY_PATH";
+    private final String KEY_ALIAS="KEY_ALIAS";
+    private final String KEY_PASSWORD="KEY_PASSWORD";
+    private final String TARGET_VERSION="TARGET_VERSION";
+    private final String MIN_SDK_VERSION="MIN_SDK_VERSION";
+    private final String BUILD_TOOLS_VERSION="BUILD_TOOLS_VERSION";
 
     private String apkName;
     private String versionName;
@@ -30,6 +37,7 @@ public class AppPref {
                 versionCode = Integer.parseInt(prefs.getProperty(VERSION_CODE));
                 versionName = prefs.getProperty(VERSION_NAME);
                 appId = prefs.getProperty(APPID);
+
                 stream.close();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -76,14 +84,33 @@ public class AppPref {
         this.appId = appId;
     }
 
+    public void saveSignPref(File out) {
+        out.delete();
+        Properties prefs = getNewProperties();
+
+        Pref settings = Pref.load();
+        prefs.put(STORE_PASSWORD, settings.getStorePassword());
+        prefs.put(KEY_PASSWORD, settings.getKeyPassword());
+        prefs.put(KEY_PATH, settings.getKeyPath());
+        prefs.put(BUILD_TOOLS_VERSION, settings.getBuildToolsVersion());
+        prefs.put(MIN_SDK_VERSION, settings.getMinSdkVersion()+"");
+        prefs.put(TARGET_VERSION, settings.getTargetVersion()+"");
+        prefs.put(KEY_ALIAS, settings.getKeyAlias());
+
+        try {
+            out.createNewFile();
+            FileOutputStream stream = new FileOutputStream(out);
+            prefs.store(stream, null);
+            stream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void save() {
-        Properties prefs = new Properties();
-
-        prefs.put(APK_NAME, getApkName());
-        prefs.put(VERSION_NAME, getVersionName());
-        prefs.put(VERSION_CODE, getVersionCode()+"");
-        prefs.put(APPID, getAppId());
-
+        Properties prefs = getNewProperties();
         try {
             prefs.store(new FileOutputStream(file), null);
         } catch (FileNotFoundException e) {
@@ -91,6 +118,17 @@ public class AppPref {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private Properties getNewProperties() {
+        Properties prefs = new Properties();
+
+        prefs.put(APK_NAME, getApkName());
+        prefs.put(VERSION_NAME, getVersionName());
+        prefs.put(VERSION_CODE, getVersionCode()+"");
+        prefs.put(APPID, getAppId());
+
+        return prefs;
     }
 
     public File getFile() {

@@ -17,12 +17,28 @@ public class Pref {
 
     private String lang;
     private String lastDir;
+    private String sdkPath;
+    private String keyPath;
+    private String storePassword;
+    private String keyPassword;
+    private String keyAlias;
+    private String buildToolsVersion;
+    private int minSdkVersion;
+    private int targetVersion;
     private List<String> recentProjects;
 
     private static Pref instance = null;
 
     private Pref() {
+        sdkPath = null;
         lastDir = null;
+        keyPath = null;
+        storePassword = null;
+        keyAlias = null;
+        keyPassword = null;
+        buildToolsVersion = null;
+        targetVersion = 0;
+        minSdkVersion = 0;
         lang = "pt";
         recentProjects = new ArrayList<String>();
     }
@@ -60,6 +76,70 @@ public class Pref {
         }
 
         return instance;
+    }
+
+    public String getKeyPath() {
+        return keyPath;
+    }
+
+    public void setKeyPath(String keyPath) {
+        this.keyPath = keyPath;
+    }
+
+    public String getStorePassword() {
+        return storePassword;
+    }
+
+    public void setStorePassword(String storePassword) {
+        this.storePassword = storePassword;
+    }
+
+    public String getKeyPassword() {
+        return keyPassword;
+    }
+
+    public void setKeyPassword(String keyPassword) {
+        this.keyPassword = keyPassword;
+    }
+
+    public String getKeyAlias() {
+        return keyAlias;
+    }
+
+    public void setKeyAlias(String keyAlias) {
+        this.keyAlias = keyAlias;
+    }
+
+    public String getBuildToolsVersion() {
+        return buildToolsVersion;
+    }
+
+    public void setBuildToolsVersion(String buildToolsVersion) {
+        this.buildToolsVersion = buildToolsVersion;
+    }
+
+    public int getMinSdkVersion() {
+        return minSdkVersion;
+    }
+
+    public void setMinSdkVersion(int minSdkVersion) {
+        this.minSdkVersion = minSdkVersion;
+    }
+
+    public int getTargetVersion() {
+        return targetVersion;
+    }
+
+    public void setTargetVersion(int targetVersion) {
+        this.targetVersion = targetVersion;
+    }
+
+    public void setSdkPath(String sdkPath) {
+        this.sdkPath = sdkPath;
+    }
+
+    public String getSdkPath() {
+        return sdkPath;
     }
 
     public void setLastDir(String lastDir) {
