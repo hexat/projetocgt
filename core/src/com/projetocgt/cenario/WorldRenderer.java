@@ -16,8 +16,8 @@ import cgt.core.CGTProjectile;
 import cgt.lose.TargetTime;
 import cgt.policy.BonusPolicy;
 import cgt.policy.StatePolicy;
-
 import cgt.util.ProjectileOrientation;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -30,6 +30,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.projetocgt.AudioManager;
 import com.projetocgt.GameScreen;
 
 /**
@@ -42,6 +43,7 @@ import com.projetocgt.GameScreen;
  */
 public class WorldRenderer {
 
+	private AudioManager audioManager;
 	private CGTGameWorld world;
 	private OrthographicCamera camera;
 	private CGTActor personagem;
@@ -59,7 +61,9 @@ public class WorldRenderer {
 	private Music musicActorLose;
 	private float fatorVolumeObjects;
 	
-	public WorldRenderer(CGTGameWorld world) {
+	public WorldRenderer(CGTGameWorld world, AudioManager audioManager) {
+		
+		this.audioManager = audioManager;
 		this.world = world;
 		fatorVolumeObjects = 1f;
 		
@@ -128,7 +132,8 @@ public class WorldRenderer {
 							Timer.instance().clear();
 						}
 					});
-					musicActorLose.play();
+					
+					audioManager.playSoundActorDie();
 				}
 			}
 
@@ -138,16 +143,9 @@ public class WorldRenderer {
 			
 			Gdx.input.setInputProcessor(null);
 
-			for(int index = 0; index < world.getOpposites().size(); index ++){
-				if(world.getOpposites().get(index).isPlayingSound()){
-					world.getOpposites().get(index).stopMusic();
-				}
-			}
-			for(int index = 0; index < world.getEnemies().size(); index ++){
-				if(world.getEnemies().get(index).isPlayingSound()){
-					world.getEnemies().get(index).stopMusic();
-				}
-			}
+			
+			
+			audioManager.stopAll();
 		}
 	}
 
@@ -159,21 +157,7 @@ public class WorldRenderer {
 		// verifica Opposites
 		for(int i = 0; i < world.getOpposites().size(); i++){
 			if (world.getOpposites().get(i).getSound() != null && rectangleCamera.overlaps(world.getOpposites().get(i).getCollision())){
-				if (!world.getOpposites().get(i).isPlayingSound()){
-					final CGTGameObject cgt = world.getOpposites().get(i);
-					cgt.playSound();
-					if (cgt.getDelayPlaySound() > 0) {
-						Timer.schedule(new Task() {
-							@Override
-							public void run() {
-								cgt.canPlaySaund();
-							}
-						}, cgt.getDelayPlaySound());
-					} else {
-						cgt.canPlaySaund();
-					}
-				}
-
+				
 				float distanciaObjeto = world.getActor().getPosition().dst(world.getOpposites().get(i).getPosition());				
 				float distanciaMaxima = (float) Math.sqrt((double) (Math.pow((double) camera.viewportHeight, 2)) + Math.pow((double) camera.viewportWidth, 2));
 				float volume = (1 - distanciaObjeto/distanciaMaxima)* world.getOpposites().get(i).getSound().getVolume();
@@ -181,33 +165,20 @@ public class WorldRenderer {
 				if (volume <= 0){
 					volume = 0;
 				}
-				world.getOpposites().get(i).getSound().getMusic().setVolume(volume);
+				
+				audioManager.setVolumeSound(world.getOpposites().get(i), volume);
+				audioManager.playSound(world.getOpposites().get(i));
+				
 
 
 			} else {
-				if (world.getOpposites().get(i).isPlayingSound()){
-					world.getOpposites().get(i).stopMusic();
-				}
-				world.getOpposites().get(i).canPlaySaund();
+				audioManager.stopSound(world.getOpposites().get(i));
+				
 			}
 		}
 		// verifica Enemies
 		for(int i = 0; i < world.getEnemies().size(); i++){
 			if (world.getEnemies().get(i).getSound() != null && rectangleCamera.overlaps(world.getEnemies().get(i).getCollision())){
-				if (!world.getEnemies().get(i).isPlayingSound()){
-					final CGTGameObject cgt = world.getEnemies().get(i);
-					cgt.playSound();
-					if (cgt.getDelayPlaySound() > 0) {
-						Timer.schedule(new Task() {
-							@Override
-							public void run() {
-								cgt.canPlaySaund();
-							}
-						}, cgt.getDelayPlaySound());
-					} else {
-						cgt.canPlaySaund();
-					}
-				}
 
 				float distanciaObjeto = world.getActor().getPosition().dst(world.getEnemies().get(i).getPosition());
 				float distanciaMaxima = (float) Math.sqrt((double) (Math.pow((double) camera.viewportHeight, 2)) + Math.pow((double) camera.viewportWidth, 2));
@@ -217,14 +188,14 @@ public class WorldRenderer {
 				if (volume <= 0){
 					volume = 0;
 				}
-				world.getEnemies().get(i).getSound().getMusic().setVolume(volume);
-
+				
+				audioManager.setVolumeSound(world.getEnemies().get(i), volume);
+				audioManager.playSound(world.getEnemies().get(i));
+				
 
 			} else {
-				if (world.getEnemies().get(i).isPlayingSound()){
-					world.getEnemies().get(i).stopMusic();
-				}
-				world.getEnemies().get(i).canPlaySaund();
+				audioManager.stopSound(world.getEnemies().get(i));
+				
 			}
 		}		
 
@@ -416,6 +387,7 @@ public class WorldRenderer {
                         && pro.containsGroup(world.getEnemies().get(i).getGroup())) {
 					world.getEnemies().get(i).setLife(world.getEnemies().get(i).getLife() - world.getActor().getProjectiles().get(world.getActor().getFireDefault()).getDamage());
 					world.getEnemies().get(i).playSoundCollision();
+					
 					if (world.getEnemies().get(i).getLife() <= 0){
 						world.getEnemies().get(i).playSoundDie();
 						world.getEnemies().remove(i);
