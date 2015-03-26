@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Json;
 public class CGTGame implements Serializable {
     private static CGTGame instance = null;
 
+    private boolean debug;
     private final SpriteSheetDB spriteDB;
     private final List<CGTScreen> screens = new ArrayList<CGTScreen>();
     private final List<CGTGameWorld> worlds = new ArrayList<CGTGameWorld>();
@@ -25,6 +26,7 @@ public class CGTGame implements Serializable {
     private CGTGame() {
         setStartWindowId(null);
         spriteDB = new SpriteSheetDB();
+        debug = false;
 	}
 
     public static CGTGame get() {
@@ -98,6 +100,14 @@ public class CGTGame implements Serializable {
             }
         }
         return null;
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
+    public boolean isDebug() {
+        return debug;
     }
 
     public CGTWindow getWindow(String id) {

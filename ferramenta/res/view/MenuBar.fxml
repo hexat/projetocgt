@@ -25,7 +25,7 @@
                   <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                </accelerator></MenuItem>
 						<MenuItem mnemonicParsing="false" onAction="#saveAs" text="Salvar como…" />
-						<MenuItem mnemonicParsing="false" onAction="#export" text="Exportar">
+						<MenuItem fx:id="menuExport" mnemonicParsing="false" onAction="#export" text="Exportar">
                <accelerator>
                   <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                </accelerator></MenuItem>

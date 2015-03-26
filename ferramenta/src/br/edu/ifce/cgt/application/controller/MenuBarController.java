@@ -28,6 +28,7 @@ import br.edu.ifce.cgt.application.controller.panes.ScreenTab;
 import javafx.scene.input.KeyCharacterCombination;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
+import javafx.stage.WindowEvent;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.UnzipParameters;
@@ -43,6 +44,7 @@ public class MenuBarController implements Initializable {
     public Menu menuRecent;
     public Menu menuSprite;
     public MenuItem menuRun;
+    public MenuItem menuExport;
 
     private boolean running;
 
@@ -50,6 +52,8 @@ public class MenuBarController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         updateRecent();
         menuSprite.setDisable(true);
+        menuRun.setDisable(true);
+        menuExport.setDisable(true);
         running = false;
         menuRun.setAccelerator(new KeyCodeCombination(KeyCode.F6));
     }
@@ -118,6 +122,8 @@ public class MenuBarController implements Initializable {
         }
 
         menuSprite.setDisable(false);
+        menuRun.setDisable(false);
+        menuExport.setDisable(false);
         TabPane tabFerramenta = (TabPane) Main.getApp().getScene().lookup("#tabFerramenta");
         Main.getApp().setTitle(open.getName());
         if (tabFerramenta.getTabs().size() > 1) {
@@ -270,6 +276,14 @@ public class MenuBarController implements Initializable {
 	}
 
     public void exit(ActionEvent actionEvent) {
+        Main.getApp().getOnCloseRequest()
+                .handle(
+                        new WindowEvent(
+                                Main.getApp(),
+                                WindowEvent.WINDOW_CLOSE_REQUEST
+                        )
+                );
+
         Main.getApp().close();
     }
 

@@ -77,6 +77,13 @@ public class ExportDialog extends VBox {
             @Override
             public void handle(WindowEvent event) {
                 saveSettings();
+                if (process != null) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setHeaderText(null);
+                    alert.setContentText("O processo de gerar o APK pode demorar alguns minutos.\nPor favor, aguarde mais um pouco.");
+                    alert.show();
+                    event.consume();
+                }
             }
         });
         unZip();
@@ -381,6 +388,7 @@ public class ExportDialog extends VBox {
             barStatus.setStyle("-fx-accent: red; ");
         }
         boxButton.getChildren().setAll(btnOk);
+        process = null;
     }
 
     private class StreamGobbler extends Thread {
