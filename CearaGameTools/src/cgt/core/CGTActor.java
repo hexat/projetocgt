@@ -1,17 +1,15 @@
 package cgt.core;
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import cgt.policy.ActionMovePolicy;
 import cgt.policy.InputPolicy;
-import cgt.policy.StatePolicy;
 import cgt.unit.Action;
 import cgt.util.Jump;
-import cgt.util.ProjectileOrientation;
+
 
 public class CGTActor extends CGTGameObject {
 	private ArrayList<Jump> jumps;

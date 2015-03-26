@@ -1,8 +1,6 @@
 package cgt.game;
 
 import java.io.Serializable;
-
-import cgt.core.CGTGameObject;
 import cgt.util.CGTTexture;
 
 

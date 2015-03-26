@@ -3,12 +3,8 @@ package com.projetocgt.cenario;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
-
 import cgt.game.CGTGameWorld;
 import cgt.core.CGTActor;
 import cgt.core.CGTProjectile;

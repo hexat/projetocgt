@@ -4,15 +4,11 @@ import cgt.core.*;
 import cgt.hud.*;
 import cgt.lose.TargetTime;
 import cgt.policy.ErrorValidate;
-import cgt.policy.WinPolicy;
 import cgt.util.*;
 import com.badlogic.gdx.audio.Music;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import cgt.lose.Lose;
-import cgt.policy.GameModePolicy;
 import cgt.screen.CGTDialog;
 import cgt.screen.CGTWindow;
 import cgt.win.Win;

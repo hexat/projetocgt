@@ -1,8 +1,6 @@
 package cgt.core;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-
 import cgt.policy.StatePolicy;
 import cgt.util.ProjectileOrientation;
 

@@ -2,13 +2,9 @@ package cgt.game;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-
 import cgt.core.CGTEnemy;
 import cgt.core.CGTGameObject;
-import cgt.policy.ErrorValidate;
 import cgt.screen.CGTWindow;
 import cgt.util.CGTError;
 import com.badlogic.gdx.utils.Json;
