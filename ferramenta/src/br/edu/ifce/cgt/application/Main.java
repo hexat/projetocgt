@@ -52,7 +52,7 @@ public class Main extends Application {
                         Optional<ButtonType> result = alert.showAndWait();
                         if (result.get() == ButtonType.OK){
                             File save;
-                            if (Config.get().isLoaded()) {
+                            if (Config.isLoaded()) {
                                 save = Config.get().getInputProjectFile();
                             } else {
                                 save = DialogsUtil.showSaveDialog("Salvar projeto");

@@ -309,7 +309,7 @@ public class ExportDialog extends VBox {
 
     public void show() {
         stage.show();
-//        Config.get().export();
+        Config.get().export();
     }
 
     public void runGradle() {
