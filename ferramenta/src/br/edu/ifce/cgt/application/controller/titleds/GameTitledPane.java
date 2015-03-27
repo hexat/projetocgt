@@ -10,23 +10,26 @@ import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.util.AppPref;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
+import cgt.game.CGTGame;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 
 /**
  * Created by infolev on 06/02/15.
  */
 public class GameTitledPane extends TitledPane {
+    @FXML public CheckBox chkDebug;
     @FXML private TextField txtVersion;
     @FXML private TextField txtGameName;
     @FXML private TextField txtGameId;
@@ -36,6 +39,11 @@ public class GameTitledPane extends TitledPane {
     @FXML private ImageView img72;
     @FXML private ImageView img96;
     @FXML private ImageView img144;
+    @FXML private Button btn32;
+    @FXML private Button btn48;
+    @FXML private Button btn72;
+    @FXML private Button btn96;
+    @FXML private Button btn144;
 
     @FXML private ComboBox<String> boxWindows;
 
@@ -105,9 +113,17 @@ public class GameTitledPane extends TitledPane {
                 }
             }
         });
+
+        chkDebug.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Config.get().getGame().setDebug(chkDebug.isSelected());
+            }
+        });
     }
 
     private void init() {
+        chkDebug.setSelected(Config.get().getGame().isDebug());
         boxWindows.getItems().clear();
         for (String s : Config.get().getGame().getIds()) {
             boxWindows.getItems().add(s);
@@ -130,21 +146,23 @@ public class GameTitledPane extends TitledPane {
         }
     }
 
-    public void setImg(MouseEvent event) {
+    public void setImg(ActionEvent event) {
         Config config = Config.get();
         int size = Integer.parseInt(((Node) event.getSource()).getId());
-        if (event.getClickCount() == 2) {
+        if (iconsMap.get(size).getImage() == null) {
             File file = DialogsUtil.showOpenDialog("Selecione Icone", DialogsUtil.IMG_FILTER);
             if (file != null) {
                 File imgFile = config.createIcon(file, size);
                 Image image = new Image("file:"+imgFile.getAbsolutePath());
                 iconsMap.get(size).setImage(image);
             }
-        } else if (event.getButton() == MouseButton.SECONDARY) {
+            ((Button)event.getSource()).setText("Remover");
+        } else {
             File file = config.getIcon(size);
             if (file.exists()) {
                 file.delete();
-                updateIcons();
+                iconsMap.get(size).setImage(null);
+                ((Button)event.getSource()).setText("Selecionar");
             }
         }
     }
@@ -157,9 +175,22 @@ public class GameTitledPane extends TitledPane {
                 if (e.getValue().getImage() == null) {
                     e.getValue().setImage(new Image("file:" + aux.getAbsolutePath()));
                 }
+                getButton(e.getKey()).setText("Remover");
             } else {
                 e.getValue().setImage(null);
+                getButton(e.getKey()).setText("Selecionar");
             }
         }
+    }
+
+    private Button getButton(int size) {
+        switch (size) {
+            case 32: return btn32;
+            case 48: return btn48;
+            case 72: return btn72;
+            case 96: return btn96;
+            case 144: return btn144;
+        }
+        return null;
     }
 }

@@ -2,7 +2,11 @@ package br.edu.ifce.cgt.application.util;
 
 import java.io.*;
 import java.util.Observer;
+import java.util.Optional;
 
+import com.badlogic.gdx.utils.Json;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
@@ -89,7 +93,7 @@ public  class Config {
 	public boolean export() {
 		if (getGame().validate().isEmpty()) {
             saveConfig();
-			File out = new File("../android/assets/");
+			File out = new File("android/assets/");
             System.out.println(out.getAbsolutePath());
             try {
 				FileUtils.deleteDirectory(out);
@@ -158,9 +162,11 @@ public  class Config {
 		f.delete();
 	}
 
-    public boolean isLoaded() {
+    public static boolean isLoaded() {
         return inputProjectFile != null;
     }
+
+    public static boolean isCreated() {return instance != null;}
 
     public File getInputProjectFile() {
         return inputProjectFile;
@@ -183,6 +189,15 @@ public  class Config {
         return new File(BASE);
     }
 
+    public boolean wasModified() {
+        try {
+            String initial = FileUtils.readFileToString(new File(BASE + "config.cgt"));
+            return !initial.equals(new Json().toJson(Config.get().getGame()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 //	public static void loadView(String pathResource, Object controller) {
 //		FXMLLoader xml = new FXMLLoader(Main.class.getResource(pathResource));

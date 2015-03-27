@@ -29,7 +29,7 @@ public class StarAssault extends Game {
         }
     }
 
-	public void restart(String id){
+    public void restart(String id){
         InputStream io = Gdx.files.internal("config.cgt").read();
         CGTGame game = CGTGame.getSavedGame(io);
         CGTWindow window = game.getWindow(id);

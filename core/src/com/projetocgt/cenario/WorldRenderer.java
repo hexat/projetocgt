@@ -1,5 +1,11 @@
 package com.projetocgt.cenario;
 
+
+import java.util.ArrayList;
+import java.util.Random;
+
+import cgt.game.CGTGame;
+
 import cgt.game.CGTGameWorld;
 import cgt.core.CGTActor;
 import cgt.core.CGTBonus;
@@ -98,7 +104,7 @@ public class WorldRenderer {
 			spriteBatch.begin();
 			draw();
 			spriteBatch.end();
-			if (GameScreen.DEBUG) {
+			if (CGTGame.get().isDebug()) {
 				drawDebug();
 			}
 		}

@@ -1,7 +1,9 @@
 package br.edu.ifce.cgt.application.util;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.controller.MenuBarController;
 import com.badlogic.gdx.utils.Json;
+import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ import java.util.ResourceBundle;
 public class Pref {
     private static final String FILE_NAME = "config.properties";
 
+    private static final int CURRENT_VERSION = 1;
+    private int lastVersion;
     private String lang;
     private String lastDir;
     private String sdkPath;
@@ -39,6 +43,7 @@ public class Pref {
         buildToolsVersion = null;
         targetVersion = 0;
         minSdkVersion = 0;
+        lastVersion = 0;
         lang = "pt";
         recentProjects = new ArrayList<String>();
     }
@@ -65,6 +70,13 @@ public class Pref {
                     FileInputStream stream = new FileInputStream(FILE_NAME);
                     instance = new Json().fromJson(Pref.class, stream);
                     stream.close();
+
+                    if (instance.getLastVersion() != CURRENT_VERSION) {
+                        FileUtils.deleteDirectory(new File(MenuBarController.localDefaultDirectory()));
+                        instance.setLastVersion(CURRENT_VERSION);
+                        instance.save();
+                    }
+
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -168,5 +180,13 @@ public class Pref {
                 recentProjects.remove(recentProjects.size() - 1);
             }
         }
+    }
+
+    public int getLastVersion() {
+        return lastVersion;
+    }
+
+    public void setLastVersion(int lastVersion) {
+        this.lastVersion = lastVersion;
     }
 }
