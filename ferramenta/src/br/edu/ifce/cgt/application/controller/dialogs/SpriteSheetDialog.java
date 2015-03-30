@@ -1,10 +1,13 @@
 package br.edu.ifce.cgt.application.controller.dialogs;
 
-import java.io.File;
-import java.io.IOException;
-
+import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
+import br.edu.ifce.cgt.application.util.Config;
+import br.edu.ifce.cgt.application.util.DialogsUtil;
+import cgt.game.CGTSpriteSheet;
+import cgt.game.SpriteSheetDB;
 import cgt.util.CGTFile;
+import cgt.util.CGTTexture;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,15 +18,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import org.controlsfx.dialog.Dialogs;
 
-import br.edu.ifce.cgt.application.util.DialogsUtil;
-import br.edu.ifce.cgt.application.util.Config;
-import br.edu.ifce.cgt.application.Main;
-import cgt.game.CGTSpriteSheet;
-import cgt.game.SpriteSheetDB;
-import cgt.util.CGTTexture;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by infolev on 06/02/15.

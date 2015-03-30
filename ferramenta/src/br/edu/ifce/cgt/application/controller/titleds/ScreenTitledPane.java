@@ -1,12 +1,8 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.util.Config;
+import br.edu.ifce.cgt.application.util.DialogsUtil;
 import cgt.game.CGTScreen;
 import cgt.util.CGTSound;
 import cgt.util.CGTTexture;
@@ -17,8 +13,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import br.edu.ifce.cgt.application.util.DialogsUtil;
-import javafx.stage.FileChooser;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Created by infolev on 05/02/15.

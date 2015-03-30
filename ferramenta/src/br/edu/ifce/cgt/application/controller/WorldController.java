@@ -1,15 +1,22 @@
 package br.edu.ifce.cgt.application.controller;
 
+import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.ObjectButton;
 import br.edu.ifce.cgt.application.controller.titleds.*;
-import cgt.core.*;
+import cgt.core.CGTBonus;
+import cgt.core.CGTEnemy;
+import cgt.core.CGTOpposite;
+import cgt.core.CGTProjectile;
 import cgt.game.CGTGame;
+import cgt.game.CGTGameWorld;
 import cgt.hud.AmmoDisplay;
 import cgt.hud.EnemyGroupLifeBar;
 import cgt.hud.HUDComponent;
 import cgt.hud.IndividualLifeBar;
-import cgt.screen.CGTWindow;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -17,13 +24,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.util.*;
-
-import br.edu.ifce.cgt.application.Main;
-import cgt.game.CGTGameWorld;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import br.edu.ifce.cgt.application.ObjectButton;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class WorldController extends BorderPane {
     private Button btnGameObject;

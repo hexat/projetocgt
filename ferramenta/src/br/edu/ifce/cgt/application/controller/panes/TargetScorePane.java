@@ -4,7 +4,6 @@ import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import cgt.game.WinCriteria;
 import cgt.win.TargetScore;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 

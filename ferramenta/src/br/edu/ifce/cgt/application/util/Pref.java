@@ -1,7 +1,6 @@
 package br.edu.ifce.cgt.application.util;
 
-import br.edu.ifce.cgt.application.Main;
-import br.edu.ifce.cgt.application.controller.MenuBarController;
+import br.edu.ifce.cgt.application.controller.MainPane;
 import com.badlogic.gdx.utils.Json;
 import org.apache.commons.io.FileUtils;
 
@@ -72,7 +71,7 @@ public class Pref {
                     stream.close();
 
                     if (instance.getLastVersion() != CURRENT_VERSION) {
-                        FileUtils.deleteDirectory(new File(MenuBarController.localDefaultDirectory()));
+                        FileUtils.deleteDirectory(new File(MainPane.localDefaultDirectory()));
                         instance.setLastVersion(CURRENT_VERSION);
                         instance.save();
                     }

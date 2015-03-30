@@ -1,10 +1,8 @@
 package br.edu.ifce.cgt.application.controller.dialogs;
 
-import java.io.IOException;
-
-import cgt.game.CGTSpriteSheet;
-import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.util.Config;
+import cgt.game.CGTSpriteSheet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +12,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
  * Created by infolev on 06/02/15.

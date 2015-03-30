@@ -4,14 +4,12 @@ import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import br.edu.ifce.cgt.application.util.EnumMap;
 import br.edu.ifce.cgt.application.util.Pref;
-import cgt.behaviors.Behavior;
 import cgt.behaviors.Sine;
 import cgt.core.AbstractBehavior;
 import cgt.policy.MovementPolicy;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;

@@ -1,9 +1,5 @@
 package br.edu.ifce.cgt.application.controller;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.titleds.ButtonScreenTitledPane;
 import br.edu.ifce.cgt.application.controller.titleds.ScreenTitledPane;
@@ -18,6 +14,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * Created by infolev on 05/02/15.

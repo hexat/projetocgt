@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.*?>
-<?import java.lang.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.AnchorPane?>
-
 <fx:root type="javafx.scene.control.TitledPane" animated="false" prefWidth="300.0" text="Configuração Opposite" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
  <content>
     <ScrollPane fitToWidth="true" hbarPolicy="NEVER">

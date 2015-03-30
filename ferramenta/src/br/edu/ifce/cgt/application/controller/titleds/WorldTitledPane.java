@@ -1,15 +1,12 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.dialogs.DialogDialog;
 import br.edu.ifce.cgt.application.controller.dialogs.LoseDialog;
 import br.edu.ifce.cgt.application.controller.dialogs.WinDialog;
+import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
+import br.edu.ifce.cgt.application.util.Config;
+import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.util.Pref;
 import cgt.game.CGTGameWorld;
 import cgt.hud.CGTButtonScreen;
@@ -23,7 +20,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -32,8 +28,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import br.edu.ifce.cgt.application.util.DialogsUtil;
-import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class WorldTitledPane extends TitledPane {
 	@FXML private Button btnPesquisaBack;

@@ -1,16 +1,12 @@
 package br.edu.ifce.cgt.application.controller.panes;
 
-import br.edu.ifce.cgt.application.controller.titleds.CameraTitledPane;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.Dialogs;
-
-import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
-import br.edu.ifce.cgt.application.controller.titleds.ScreenTitledPane;
-import br.edu.ifce.cgt.application.controller.titleds.WorldTitledPane;
 import br.edu.ifce.cgt.application.controller.ScreenController;
 import br.edu.ifce.cgt.application.controller.WorldController;
+import br.edu.ifce.cgt.application.controller.titleds.CameraTitledPane;
+import br.edu.ifce.cgt.application.controller.titleds.ScreenTitledPane;
+import br.edu.ifce.cgt.application.controller.titleds.WorldTitledPane;
+import br.edu.ifce.cgt.application.util.Config;
 import cgt.game.CGTGameWorld;
 import cgt.game.CGTScreen;
 import cgt.screen.CGTWindow;
@@ -18,6 +14,9 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Tab;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
 
 public class ScreenTab extends Tab {
     private final Accordion configAccordion;

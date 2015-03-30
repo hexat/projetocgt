@@ -1,39 +1,41 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
-import br.edu.ifce.cgt.application.util.Config;
+import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.dialogs.AnimationDialog;
 import br.edu.ifce.cgt.application.controller.panes.ItemEditPane;
+import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
+import br.edu.ifce.cgt.application.util.Config;
+import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.util.Pref;
 import cgt.core.CGTAnimation;
+import cgt.core.CGTGameObject;
 import cgt.core.CGTProjectile;
 import cgt.util.CGTFile;
 import cgt.util.CGTSound;
 import com.badlogic.gdx.math.Vector2;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.ResourceBundle;
-
-import br.edu.ifce.cgt.application.Main;
-import cgt.core.CGTGameObject;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import br.edu.ifce.cgt.application.util.DialogsUtil;
-import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class GameObjectTitledPane extends TitledPane {
     @FXML public VBox boxAnimations;

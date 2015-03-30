@@ -2,7 +2,8 @@ package br.edu.ifce.cgt.application.controller.panes;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 
 /**
  * Created by Luan on 16/02/2015.

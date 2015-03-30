@@ -1,9 +1,9 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.controller.dialogs.ProjectileOrientationDialog;
 import br.edu.ifce.cgt.application.controller.panes.ItemEditPane;
 import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
-import br.edu.ifce.cgt.application.controller.dialogs.ProjectileOrientationDialog;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import br.edu.ifce.cgt.application.util.Config;

@@ -4,7 +4,6 @@ import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.util.EnumMap;
 import br.edu.ifce.cgt.application.util.Pref;
-import cgt.game.CGTGameWorld;
 import cgt.policy.GameModePolicy;
 import cgt.util.Camera;
 import javafx.beans.value.ChangeListener;

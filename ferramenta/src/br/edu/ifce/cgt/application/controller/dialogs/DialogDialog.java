@@ -1,11 +1,9 @@
 package br.edu.ifce.cgt.application.controller.dialogs;
 
-import java.io.File;
-import java.io.IOException;
-
-import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
+import br.edu.ifce.cgt.application.util.Config;
+import br.edu.ifce.cgt.application.util.DialogsUtil;
 import cgt.hud.CGTButtonScreen;
 import cgt.screen.CGTDialog;
 import cgt.util.CGTTexture;
@@ -22,7 +20,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import br.edu.ifce.cgt.application.util.DialogsUtil;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by infolev on 19/02/15.

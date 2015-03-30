@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.layout.*?>
-<?import java.lang.*?>
+<?import br.edu.ifce.cgt.application.controller.ui.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-
-<?import br.edu.ifce.cgt.application.controller.ui.FloatTextField?>
+<?import javafx.scene.layout.*?>
 <fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" text="Configurações de Camera" type="javafx.scene.control.TitledPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <ScrollPane fitToWidth="true">

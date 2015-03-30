@@ -1,10 +1,7 @@
 package br.edu.ifce.cgt.application.controller.panes;
 
-import java.io.File;
-import java.io.IOException;
-
-import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
 import cgt.hud.CGTButton;
 import cgt.util.CGTTexture;
@@ -15,6 +12,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by infolev on 19/02/15.

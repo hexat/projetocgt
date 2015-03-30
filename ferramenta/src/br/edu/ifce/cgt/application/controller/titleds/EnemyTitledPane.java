@@ -1,17 +1,11 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.ResourceBundle;
-
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.controller.dialogs.BehaviorDialog;
 import br.edu.ifce.cgt.application.controller.panes.ItemEditPane;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.Pref;
-import cgt.behaviors.Behavior;
-import br.edu.ifce.cgt.application.controller.dialogs.BehaviorDialog;
 import cgt.core.AbstractBehavior;
 import cgt.core.CGTEnemy;
 import javafx.beans.value.ChangeListener;
@@ -25,7 +19,9 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
+
+import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class EnemyTitledPane extends TitledPane {
 

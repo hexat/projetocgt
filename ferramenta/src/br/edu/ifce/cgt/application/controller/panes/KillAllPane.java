@@ -1,6 +1,5 @@
 package br.edu.ifce.cgt.application.controller.panes;
 
-import br.edu.ifce.cgt.application.controller.panes.WinCriteriaPane;
 import cgt.game.CGTGameWorld;
 import cgt.game.WinCriteria;
 import cgt.win.KillAllEnemies;

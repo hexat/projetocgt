@@ -4,7 +4,6 @@ import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import br.edu.ifce.cgt.application.util.EnumMap;
 import br.edu.ifce.cgt.application.util.Pref;
-import cgt.behaviors.Behavior;
 import cgt.behaviors.Direction;
 import cgt.core.AbstractBehavior;
 import cgt.policy.DirectionPolicy;
@@ -16,7 +15,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;

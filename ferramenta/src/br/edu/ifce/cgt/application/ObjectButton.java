@@ -2,18 +2,15 @@ package br.edu.ifce.cgt.application;
 
 import br.edu.ifce.cgt.application.controller.WorldController;
 import br.edu.ifce.cgt.application.controller.titleds.*;
-import br.edu.ifce.cgt.application.util.Config;
 import cgt.core.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 
 import java.util.Optional;
 

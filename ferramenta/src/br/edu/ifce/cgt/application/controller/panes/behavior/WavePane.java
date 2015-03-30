@@ -3,12 +3,10 @@ package br.edu.ifce.cgt.application.controller.panes.behavior;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
-import cgt.behaviors.Behavior;
 import cgt.behaviors.SineWave;
 import cgt.core.AbstractBehavior;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;

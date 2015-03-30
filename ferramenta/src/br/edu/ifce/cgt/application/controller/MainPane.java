@@ -1,43 +1,44 @@
 package br.edu.ifce.cgt.application.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
 
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.dialogs.ExportDialog;
 import br.edu.ifce.cgt.application.controller.dialogs.ListSpriteDialog;
 import br.edu.ifce.cgt.application.controller.dialogs.SpriteSheetDialog;
+import br.edu.ifce.cgt.application.controller.panes.ScreenTab;
+import br.edu.ifce.cgt.application.controller.titleds.GameTitledPane;
+import br.edu.ifce.cgt.application.util.Config;
+import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.util.Pref;
+import cgt.game.CGTGameWorld;
+import cgt.game.CGTScreen;
 import cgt.screen.CGTWindow;
 import cgt.util.CGTError;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import br.edu.ifce.cgt.application.util.DialogsUtil;
-import br.edu.ifce.cgt.application.util.Config;
-import javafx.fxml.FXML;
-import br.edu.ifce.cgt.application.controller.panes.ScreenTab;
-import javafx.scene.input.KeyCharacterCombination;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.WindowEvent;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
-import net.lingala.zip4j.model.UnzipParameters;
 import net.lingala.zip4j.model.ZipParameters;
 import org.apache.commons.io.FileUtils;
 import org.controlsfx.dialog.Dialogs;
 
-public class MenuBarController implements Initializable {
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
+public class MainPane extends BorderPane {
     public static final String desktopJarPath = "desktop/desktop-1.0/lib/desktop-1.0.jar";
     public static final String desktopZipPath = "desktop/desktop.zip";
 
@@ -45,28 +46,140 @@ public class MenuBarController implements Initializable {
     public Menu menuSprite;
     public MenuItem menuRun;
     public MenuItem menuExport;
-
+    @FXML private Button btnMyWorld;
+    @FXML private Accordion configAccordion;
+    @FXML private MenuItem menuExportar;
+    @FXML private Tab tabGame;
+    @FXML private TabPane tabFerramenta;
     private boolean running;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public MainPane() {
+        FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/Ferramenta.fxml"));
+        xml.setController(this);
+        xml.setRoot(this);
+
+        try {
+            xml.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         updateRecent();
         menuSprite.setDisable(true);
         menuRun.setDisable(true);
         menuExport.setDisable(true);
         running = false;
         menuRun.setAccelerator(new KeyCodeCombination(KeyCode.F6));
+
+        tabGame.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                if (tabGame.isSelected()) {
+                    configAccordion.getPanes().clear();
+                    if (Config.isCreated()) {
+                        configAccordion.getPanes().add(new GameTitledPane());
+                        configAccordion.getPanes().get(0).setExpanded(true);
+                    }
+                }
+            }
+        });
     }
 
-	@FXML
-	public void novo() {
+    @FXML public void createWorld() {
+        Optional<String> response = Dialogs.create()
+                .owner(Main.getApp())
+                .title("Nome para o mundo")
+                .message("Digite um nome para o mundo:")
+                .showTextInput("Mundo");
 
-	}
+        if (response.isPresent()) {
+            String id = response.get().trim();
+            CGTGameWorld world = Config.get().getGame().createWorld(id);
+            if (world != null) {
+                ScreenTab tab = new ScreenTab(world);
+                tabFerramenta.getTabs().add(tab);
+                tabFerramenta.getSelectionModel().select(tab);
+                menuSprite.setDisable(false);
+            } else {
+                Dialogs.create()
+                        .owner(Main.getApp())
+                        .title("Atenção")
+                        .message("Já existe uma janela com este ID!")
+                        .showWarning();
+            }
+        }
+    }
 
-	@FXML
-	public void abrir() {
+    @FXML public void createScreen() {
+        Optional<String> response = Dialogs.create()
+                .owner(Main.getApp())
+                .title("Nome para o screen")
+                .message("Digite um nome para o screen:")
+                .showTextInput("Screen");
+
+        if (response.isPresent()) {
+            String id = response.get().trim();
+            CGTScreen screen = Config.get().getGame().createScreen(id);
+            if (screen != null) {
+//                Tab aba = new Tab(response.get());
+//                aba.setOnCloseRequest(new EventHandler<Event>() {
+//                    @Override
+//                    public void handle(Event event) {
+//                        Action response = Dialogs.create()
+//                                .owner(Main.getApp())
+//                                .title("Excluir mundo")
+//                                .masthead("Ao fechar esta aba você esterá removendo este mundo do jogo.")
+//                                .message("Tem certeza que deseja fazer isso?")
+//                                .actions(Dialog.ACTION_OK, Dialog.ACTION_CANCEL)
+//                                .showConfirm();
+//
+//                        if (response == Dialog.ACTION_OK) {
+//                            Config.getGame().removeScreen(screen);
+//                            if (tabFerramenta.getTabs().contains(event.getSource())) {
+//                                tabFerramenta.getTabs().remove(event.getSource());
+//                            }
+//                        } else {
+//
+//                        }
+//                        event.consume();
+//                    }
+//                });
+//                aba.setContent(ScreenController.getNode(screen));
+//                aba.setOnSelectionChanged(new EventHandler<Event>() {
+//                    @Override
+//                    public void handle(Event event) {
+//                        if (((Tab) event.getSource()).isSelected()) {
+//                            configAccordion.getPanes().clear();
+//                            configAccordion.getPanes().add(ConfigScreenController.getNode(screen));
+//                        }
+//                    }
+//                });
+                ScreenTab tab = new ScreenTab(screen);
+                tabFerramenta.getTabs().add(tab);
+                tabFerramenta.getSelectionModel().select(tab);
+            } else {
+                Dialogs.create()
+                        .owner(Main.getApp())
+                        .title("Atenção")
+                        .message("Já existe uma janela com este ID!")
+                        .showWarning();
+            }
+        }
+
+    }
+
+    @FXML
+    public void novo() {
+        Config.reset();
+        TabPane tabFerramenta = (TabPane) Main.getApp().getScene().lookup("#tabFerramenta");
+        Main.getApp().setTitle("Ceará Game Tools");
+        tabFerramenta.getTabs().remove(1, tabFerramenta.getTabs().size());
+    }
+
+    @FXML
+    public void abrir() {
         File file = DialogsUtil.showOpenDialog("Abrir projeto", DialogsUtil.CGT_FILTER);
-		if (file != null) {
+        if (file != null) {
             Pref.load().addRecentProject(file.getAbsolutePath());
             Pref.load().save();
 
@@ -74,7 +187,7 @@ public class MenuBarController implements Initializable {
 
             open(file);
         }
-	}
+    }
 
     private void updateRecent() {
         MenuItem item;
@@ -138,8 +251,8 @@ public class MenuBarController implements Initializable {
         Main.getApp().getScene().setCursor(Cursor.DEFAULT);
     }
 
-	@FXML
-	public void salvar() {
+    @FXML
+    public void salvar() {
         File save;
         if (Config.get().isLoaded()) {
             save = Config.get().getInputProjectFile();
@@ -160,9 +273,10 @@ public class MenuBarController implements Initializable {
                 e.printStackTrace();
             }
         }
-	}
+    }
 
-    @FXML public void export() {
+    @FXML
+    public void export() {
         List<CGTError> errors = Config.get().getGame().validate();
         if (errors.isEmpty()) {
             Main.getApp().getScene().setCursor(Cursor.WAIT);
@@ -187,7 +301,8 @@ public class MenuBarController implements Initializable {
         alert.showAndWait();
     }
 
-    @FXML public void run() {
+    @FXML
+    public void run() {
         List<CGTError> errors = Config.get().getGame().validate();
         if (errors.isEmpty()) {
             Main.getApp().getScene().setCursor(Cursor.WAIT);
@@ -195,11 +310,11 @@ public class MenuBarController implements Initializable {
             File base = Config.get().getProjectDir();
 
             try {
-                File localZip = new File(localDefaultDirectory()+desktopZipPath);
+                File localZip = new File(localDefaultDirectory() + desktopZipPath);
                 if (localZip.exists()) {
                     long foo = localZip.lastModified();
                     InputStream bar = Main.class.getResourceAsStream("/bin/desktop-1.0.zip");
-                    File file = new File(localDefaultDirectory()+"tmp.zip");
+                    File file = new File(localDefaultDirectory() + "tmp.zip");
                     FileUtils.copyInputStreamToFile(bar, file);
                     if (localZip.lastModified() != file.lastModified()) {
                         copyDesktopFiles();
@@ -209,7 +324,7 @@ public class MenuBarController implements Initializable {
                     copyDesktopFiles();
                 }
 
-                ZipFile jar = new ZipFile(localDefaultDirectory()+desktopJarPath);
+                ZipFile jar = new ZipFile(localDefaultDirectory() + desktopJarPath);
                 for (File f : base.listFiles()) {
                     if (f.isDirectory()) {
                         jar.addFolder(f, new ZipParameters());
@@ -267,13 +382,15 @@ public class MenuBarController implements Initializable {
     }
 
     @FXML
-	public void addSpriteSheet() {
-		SpriteSheetDialog dia =  new SpriteSheetDialog(null);
+    public void addSpriteSheet() {
+        SpriteSheetDialog dia = new SpriteSheetDialog(null);
         dia.show();
-	}
-	@FXML public void editSpriteSheet(){
-		new ListSpriteDialog().show();
-	}
+    }
+
+    @FXML
+    public void editSpriteSheet() {
+        new ListSpriteDialog().show();
+    }
 
     public void exit(ActionEvent actionEvent) {
         Main.getApp().getOnCloseRequest()
@@ -304,7 +421,7 @@ public class MenuBarController implements Initializable {
     private void copyDesktopFiles() {
         System.out.print("Copiando arquivos...");
         InputStream url = Main.class.getResourceAsStream("/bin/desktop-1.0.zip");
-        File file = new File(localDefaultDirectory()+"desktop/desktop.zip");
+        File file = new File(localDefaultDirectory() + "desktop/desktop.zip");
         if (file.exists()) {
             file.delete();
         }
@@ -367,9 +484,9 @@ public class MenuBarController implements Initializable {
         try {
             String url = "http://www.cgt.ifce.edu.br";
             java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
-        }
-        catch (java.io.IOException e) {
+        } catch (java.io.IOException e) {
             System.out.println(e.getMessage());
         }
     }
+
 }

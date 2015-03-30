@@ -4,8 +4,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
-import java.text.ParseException;
-
 /**
  * Created by Luan on 20/02/2015.
  */

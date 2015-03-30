@@ -1,7 +1,7 @@
 package br.edu.ifce.cgt.application.controller.dialogs;
 
 import br.edu.ifce.cgt.application.Main;
-import br.edu.ifce.cgt.application.controller.MenuBarController;
+import br.edu.ifce.cgt.application.controller.MainPane;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import br.edu.ifce.cgt.application.util.AppPref;
 import br.edu.ifce.cgt.application.util.Config;
@@ -13,12 +13,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.*;
 import net.lingala.zip4j.core.ZipFile;
@@ -26,8 +23,6 @@ import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Properties;
 
 /**
@@ -165,7 +160,7 @@ public class ExportDialog extends VBox {
         Properties properties = new Properties();
         properties.put("sdk.dir", settings.getSdkPath());
         try {
-            FileOutputStream stream = new FileOutputStream(MenuBarController.localDefaultDirectory()+PROPERTIES_ANDROID_FILE);
+            FileOutputStream stream = new FileOutputStream(MainPane.localDefaultDirectory()+PROPERTIES_ANDROID_FILE);
             properties.store(stream, null);
             stream.close();
         } catch (FileNotFoundException e) {
@@ -174,7 +169,7 @@ public class ExportDialog extends VBox {
             e.printStackTrace();
         }
 
-        File assets = new File(MenuBarController.localDefaultDirectory()+"android/app/assets");
+        File assets = new File(MainPane.localDefaultDirectory()+"android/app/assets");
         try {
             FileUtils.deleteDirectory(assets);
             assets.mkdirs();
@@ -188,7 +183,7 @@ public class ExportDialog extends VBox {
 
         // Copy keystore
         File key = new File(settings.getKeyPath());
-        File outKey = new File(MenuBarController.localDefaultDirectory()+"android/app/android.keystore");
+        File outKey = new File(MainPane.localDefaultDirectory()+"android/app/android.keystore");
 
         try {
             FileUtils.copyFile(key, outKey);
@@ -198,7 +193,7 @@ public class ExportDialog extends VBox {
 
         AppPref pref = Config.get().getPref();
 
-        File out = new File(MenuBarController.localDefaultDirectory()+"android/"+pref.getFile().getName());
+        File out = new File(MainPane.localDefaultDirectory()+"android/"+pref.getFile().getName());
         pref.saveSignPref(out);
 
         File icon;
@@ -209,7 +204,7 @@ public class ExportDialog extends VBox {
             icon = Config.get().getIcon(sizes[i]);
             if (icon.exists()) {
                 try {
-                    FileUtils.copyFile(icon, new File(MenuBarController.localDefaultDirectory()+"android/app/res/drawable-"+paths[i]+"/ic_launcher.png"));
+                    FileUtils.copyFile(icon, new File(MainPane.localDefaultDirectory()+"android/app/res/drawable-"+paths[i]+"/ic_launcher.png"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -218,10 +213,10 @@ public class ExportDialog extends VBox {
     }
 
     private void unZip() {
-        File android = new File(MenuBarController.localDefaultDirectory()+"android/");
+        File android = new File(MainPane.localDefaultDirectory()+"android/");
         if (!android.exists()) {
             android.mkdirs();
-            File out = new File(MenuBarController.localDefaultDirectory()+"android.zip");
+            File out = new File(MainPane.localDefaultDirectory()+"android.zip");
             InputStream io = Main.class.getResourceAsStream("/base-android.zip");
 
             try {
@@ -229,7 +224,7 @@ public class ExportDialog extends VBox {
                 io.close();
 
                 ZipFile zip = new ZipFile(out);
-                zip.extractAll(MenuBarController.localDefaultDirectory());
+                zip.extractAll(MainPane.localDefaultDirectory());
 
                 out.delete();
 
@@ -239,7 +234,7 @@ public class ExportDialog extends VBox {
                 io.close();
 
                 zip = new ZipFile(out);
-                zip.extractAll(MenuBarController.localDefaultDirectory()+"android/app/");
+                zip.extractAll(MainPane.localDefaultDirectory()+"android/app/");
                 out.delete();
 
             } catch (IOException e) {
@@ -275,8 +270,8 @@ public class ExportDialog extends VBox {
         alert.getButtonTypes().setAll(button);
 
         if (alert.showAndWait().get() == button) {
-            File out = new File(MenuBarController.localDefaultDirectory()+"portecle.zip");
-            File path = new File(MenuBarController.localDefaultDirectory() + "portecle-1.7/");
+            File out = new File(MainPane.localDefaultDirectory()+"portecle.zip");
+            File path = new File(MainPane.localDefaultDirectory() + "portecle-1.7/");
             if (!out.exists()) {
                 InputStream io = Main.class.getResourceAsStream("/portecle-1.7.zip");
                 try {
@@ -284,7 +279,7 @@ public class ExportDialog extends VBox {
                     io.close();
 
                     ZipFile zip = new ZipFile(out);
-                    zip.extractAll(MenuBarController.localDefaultDirectory());
+                    zip.extractAll(MainPane.localDefaultDirectory());
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ZipException e) {
@@ -317,11 +312,11 @@ public class ExportDialog extends VBox {
 
             @Override
             public void run() {
-                String path = MenuBarController.localDefaultDirectory() + "android/gradlew";
+                String path = MainPane.localDefaultDirectory() + "android/gradlew";
                 String comm = "app:assembleRelease";
                 try {
-                    FileUtils.deleteDirectory(new File(MenuBarController.localDefaultDirectory() + "android/app/build/"));
-                    if (MenuBarController.isWin()) {
+                    FileUtils.deleteDirectory(new File(MainPane.localDefaultDirectory() + "android/app/build/"));
+                    if (MainPane.isWin()) {
                         ProcessBuilder builder = new ProcessBuilder("\"" + path + ".bat\"", comm);
                         builder.directory(new File(path).getParentFile());
                         process = builder.start();
@@ -362,7 +357,7 @@ public class ExportDialog extends VBox {
 
     private void endBuild() {
         barStatus.setProgress(1);
-        File file = new File(MenuBarController.localDefaultDirectory() + "android/app/build/outputs/apk/app-release.apk");
+        File file = new File(MainPane.localDefaultDirectory() + "android/app/build/outputs/apk/app-release.apk");
         if (file.exists()) {
             barStatus.setStyle("-fx-accent: green; ");
             FileChooser chooser = new FileChooser();
@@ -372,7 +367,7 @@ public class ExportDialog extends VBox {
                 try {
                     FileUtils.copyFile(file, save);
                     if (save.exists()) {
-                        if (MenuBarController.isWin()) {
+                        if (MainPane.isWin()) {
                             Runtime.getRuntime().exec("explorer " + save.getParent());
                         }
                     }

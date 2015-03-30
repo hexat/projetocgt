@@ -1,16 +1,13 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
+import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.dialogs.ActionDialog;
+import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
+import cgt.core.CGTActor;
 import cgt.core.CGTProjectile;
 import cgt.policy.ActionMovePolicy;
 import cgt.policy.InputPolicy;
-
-import java.io.IOException;
-import java.util.*;
-
-import br.edu.ifce.cgt.application.Main;
-import cgt.core.CGTActor;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -22,7 +19,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
+
+import java.io.IOException;
+import java.util.*;
 
 public class ActorTitledPane extends TitledPane {
 

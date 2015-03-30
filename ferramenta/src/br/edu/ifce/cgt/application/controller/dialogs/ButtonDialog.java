@@ -1,7 +1,5 @@
 package br.edu.ifce.cgt.application.controller.dialogs;
 
-import java.io.IOException;
-
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.panes.ButtonPane;
 import br.edu.ifce.cgt.application.controller.panes.HudPane;
@@ -13,6 +11,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
+import java.io.IOException;
 
 /**
  * Created by infolev on 19/02/15.

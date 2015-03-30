@@ -2,13 +2,8 @@
 
 <?import br.edu.ifce.cgt.application.controller.ui.*?>
 <?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import br.edu.ifce.cgt.application.controller.ui.IntegerTextField?>
-<?import br.edu.ifce.cgt.application.controller.ui.FloatTextField?>
-
 <fx:root animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="567.0" prefWidth="300.0" text="Configuração Game Object" type="javafx.scene.control.TitledPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 <content>
     <ScrollPane fitToWidth="true" hbarPolicy="NEVER" hmax="0.0" vmax="1.1">

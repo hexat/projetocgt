@@ -1,18 +1,16 @@
 package br.edu.ifce.cgt.application.util;
 
-import java.io.*;
-import java.util.Observer;
-import java.util.Optional;
-
+import cgt.game.CGTGame;
+import cgt.util.CGTFile;
 import com.badlogic.gdx.utils.Json;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
 
-import cgt.game.CGTGame;
-import cgt.util.CGTFile;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public  class Config {
 	private final static String GRADLE_PATH = "/Users/luanjames/src/projetocgt/";
@@ -94,7 +92,6 @@ public  class Config {
 		if (getGame().validate().isEmpty()) {
             saveConfig();
 			File out = new File("android/assets/");
-            System.out.println(out.getAbsolutePath());
             try {
 				FileUtils.deleteDirectory(out);
 			} catch (IOException e) {
@@ -106,26 +103,6 @@ public  class Config {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
-//			Runtime runtime = Runtime.getRuntime();
-//			try {
-//                Process p1 = runtime.exec("sh "+GRADLE_PATH+"run");
-//                InputStream is = p1.getInputStream();
-//                int i;
-//                String res = "";
-//                while( (i = is.read() ) != -1) {
-//                    if (((char)i) == '\n') {
-//                        observer.update(null, res);
-//                        res = "";
-//                    } else {
-//                        res += (char) i;
-//                    }
-//                }
-//                observer.update(null, "Concluido...");
-//                } catch(IOException e) {
-//                e.printStackTrace();
-//			}
-
 			return true;
 		}
 		return false;
@@ -197,6 +174,11 @@ public  class Config {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static void reset() {
+        instance = null;
+        inputProjectFile = null;
     }
 
 //	public static void loadView(String pathResource, Object controller) {

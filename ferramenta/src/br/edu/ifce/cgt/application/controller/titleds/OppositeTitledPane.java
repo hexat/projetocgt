@@ -1,19 +1,16 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import br.edu.ifce.cgt.application.Main;
 import cgt.core.CGTOpposite;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
+
+import java.io.IOException;
 
 /**
  * Created by Luan James on 02/02/15.

@@ -5,8 +5,6 @@ import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import cgt.hud.CGTLabel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;

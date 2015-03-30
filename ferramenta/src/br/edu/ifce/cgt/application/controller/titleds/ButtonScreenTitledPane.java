@@ -1,9 +1,9 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
-import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.panes.ButtonPane;
 import br.edu.ifce.cgt.application.controller.panes.HudPane;
+import br.edu.ifce.cgt.application.util.Config;
 import cgt.hud.CGTButtonScreen;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

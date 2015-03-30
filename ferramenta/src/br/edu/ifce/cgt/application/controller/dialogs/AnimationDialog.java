@@ -1,26 +1,19 @@
 package br.edu.ifce.cgt.application.controller.dialogs;
 
+import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.panes.ImagePane;
 import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.EnumMap;
 import br.edu.ifce.cgt.application.util.Pref;
+import cgt.core.CGTAnimation;
+import cgt.core.CGTGameObject;
 import cgt.game.CGTSpriteSheet;
+import cgt.policy.StatePolicy;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ResourceBundle;
-
-import br.edu.ifce.cgt.application.util.Config;
-import br.edu.ifce.cgt.application.Main;
-import cgt.core.CGTGameObject;
-import cgt.policy.StatePolicy;
-import cgt.core.CGTAnimation;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -34,6 +27,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Created by infolev on 10/02/15.

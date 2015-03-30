@@ -15,7 +15,10 @@ import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  * Created by Luan on 16/02/2015.

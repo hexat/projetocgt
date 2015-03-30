@@ -1,11 +1,11 @@
 package br.edu.ifce.cgt.application.util;
 
-import java.io.File;
-
 import br.edu.ifce.cgt.application.Main;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Window;
+
+import java.io.File;
 
 /**
  * Created by Luan on 29/01/2015.
