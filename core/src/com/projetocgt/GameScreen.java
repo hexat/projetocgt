@@ -1,6 +1,5 @@
 package com.projetocgt;
 
-import cgt.core.CGTOpposite;
 import cgt.game.CGTGameWorld;
 import cgt.hud.CGTButton;
 import cgt.hud.CGTButtonScreen;
@@ -9,21 +8,16 @@ import cgt.hud.HUDComponent;
 import cgt.policy.GameModePolicy;
 import cgt.policy.InputPolicy;
 import cgt.screen.CGTDialog;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.projetocgt.cenario.WorldController;
@@ -40,10 +34,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	private WorldRenderer renderer;
 	private WorldController controller;
 	private SpriteBatch spriteBatch;
-	private Music music;
 	private boolean flagTouch;
-	private Vector2 lastPoint;
-	private TouchInputs touchInput;
 	private Gesture gesture;
 	private InputMultiplexer inputMultiplexer;
 	private AudioManager audioManager;
@@ -61,8 +52,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		
 		this.world = world;
 		
-		this.music = world.getMusicGDX();
-		
 		Timer.instance().start();
 
 		for (int i = 0; i < world.getWinCriteria().size(); i++) {
@@ -78,8 +67,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 		renderer = new WorldRenderer(world,audioManager);
 		setSpriteBatch(new SpriteBatch());
 		controller = new WorldController(world, renderer);
-		lastPoint = world.getActor().getPosition().cpy();
-//		touchInput = new TouchInputs(this);
 		
 		gesture = new Gesture(this);
 		inputMultiplexer = new InputMultiplexer();
@@ -225,13 +212,7 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	@Override
 	public void render(float delta) {
 		switch (state) {
-		case PLAYING:
-
-//			System.out.println(world.getActor().getPosition());
-//			System.out.println(world.getActor().getLife());
-//			System.out.println(world.getScore());
-//			System.out.println(world.getActor().getState());
-			
+		case PLAYING:			
 			accelerometer();
 			
 			Gdx.input.setInputProcessor(gesture.getGd());
@@ -291,20 +272,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 				addDialog(world.getPauseDialog());
 				world.getPauseDialog().autosize();
-				// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//				MoveToAction actionDialogPause = new MoveToAction();
-//				actionDialogPause.setPosition(0.2f, 0.3f);
-//				actionDialogPause.setDuration(0.15f);
-//
-//				MoveToAction actionDialogPause2 = new MoveToAction();
-//				actionDialogPause2.setPosition(0.2f, 0.25f);
-//				actionDialogPause2.setDuration(0.15f);
-//
-//				SequenceAction sequencePause = new SequenceAction(
-//						actionDialogPause, actionDialogPause2);
-//
-//				world.getPauseDialog().addAction(sequencePause);
-				// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			}
 
 			buttonHandler();
@@ -348,20 +315,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 				this.getActors().clear();
 				addDialog(world.getWinDialog());
 				world.getWinDialog().autosize();
-//				// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//				MoveToAction actionDialogWin = new MoveToAction();
-//				actionDialogWin.setPosition(0.2f, 0.3f);
-//				actionDialogWin.setDuration(0.15f);
-//
-//				MoveToAction actionDialogWin2 = new MoveToAction();
-//				actionDialogWin2.setPosition(0.2f, 0.25f);
-//				actionDialogWin2.setDuration(0.15f);
-//
-//				SequenceAction sequenceWin = new SequenceAction(
-//						actionDialogWin, actionDialogWin2);
-//
-//				world.getWinDialog().addAction(sequenceWin);
-				// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			} else if (world.getWinDialog() == null) {
                 StarAssault.getInstance().create();
             }
@@ -386,20 +339,6 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 
 				addDialog(world.getLoseDialog());
 				world.getLoseDialog().autosize();
-				// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//				MoveToAction actionDialogLose = new MoveToAction();
-//				actionDialogLose.setPosition(0.2f, 0.3f);
-//				actionDialogLose.setDuration(0.15f);
-//
-//				MoveToAction actionDialogLose2 = new MoveToAction();
-//				actionDialogLose2.setPosition(0.2f, 0.25f);
-//				actionDialogLose2.setDuration(0.15f);
-//
-//				SequenceAction sequenceLose = new SequenceAction(
-//						actionDialogLose, actionDialogLose2);
-//
-//				world.getLoseDialog().addAction(sequenceLose);
-				// /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			} else if (world.getLoseDialog() == null) {
                 StarAssault.getInstance().create();
             }
@@ -473,17 +412,17 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		if (keycode == Keys.LEFT) {
-			controller.activateKey(InputPolicy.ACEL_LEFT);
+			controller.activateKey(InputPolicy.BTN_LEFT);
 			
 		}
 		if (keycode == Keys.RIGHT) {
-			controller.activateKey(InputPolicy.ACEL_RIGHT);
+			controller.activateKey(InputPolicy.BTN_RIGHT);
 		}
 		if (keycode == Keys.UP) {
-			controller.activateKey(InputPolicy.ACEL_UP);
+			controller.activateKey(InputPolicy.BTN_UP);
 		}
 		if (keycode == Keys.DOWN) {
-			controller.activateKey(InputPolicy.ACEL_DOWN);
+			controller.activateKey(InputPolicy.BTN_DOWN);
 		}
 		if (keycode == Keys.A) {
 
@@ -504,19 +443,19 @@ public class GameScreen extends Stage implements Screen, InputProcessor {
 	public boolean keyUp(int keycode) {
 
 		if (keycode == Keys.LEFT) {
-			controller.deactivateKey(InputPolicy.ACEL_LEFT);
+			controller.deactivateKey(InputPolicy.BTN_LEFT);
 		}
 
 		if (keycode == Keys.RIGHT) {
-			controller.deactivateKey(InputPolicy.ACEL_RIGHT);
+			controller.deactivateKey(InputPolicy.BTN_RIGHT);
 		}
 
 		if (keycode == Keys.UP) {
-			controller.deactivateKey(InputPolicy.ACEL_UP);
+			controller.deactivateKey(InputPolicy.BTN_UP);
 		}
 
 		if (keycode == Keys.DOWN) {
-			controller.deactivateKey(InputPolicy.ACEL_DOWN);
+			controller.deactivateKey(InputPolicy.BTN_DOWN);
 		}
 
 		if (keycode == Keys.A) {

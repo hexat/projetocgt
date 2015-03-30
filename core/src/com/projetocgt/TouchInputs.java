@@ -1,9 +1,6 @@
 package com.projetocgt;
 
-import cgt.game.CGTGameWorld;
 import cgt.policy.InputPolicy;
-import cgt.policy.StatePolicy;
-
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.projetocgt.cenario.WorldController;
@@ -15,26 +12,17 @@ public class TouchInputs implements InputProcessor{
 	private int contador;
 	private InputPolicy currentDragged;
 	private WorldController controller;
-	private GameScreen game;
 	private boolean ready;
-	private CGTGameWorld world;
-	private float xRelative;
-	private float yRelative;
-	private boolean touchPerson;
+
 	
 	public TouchInputs(GameScreen gameScreen){
-		game = gameScreen;
+		
 		lastPoint = new Vector2();
 		firstPoint = new Vector2();
 		contador = 0;
 		currentDragged = null;
 		ready = false;
-		this.controller = gameScreen.getController();
-		this.world = gameScreen.getWorld();
-		xRelative = 0;
-		yRelative = 0;
-		touchPerson = false;
-		
+		this.controller = gameScreen.getController();		
 	}
 
 	@Override

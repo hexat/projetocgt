@@ -4,9 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import cgt.policy.BonusPolicy;
-import cgt.unit.LabelID;
+
 
 public class CGTBonus extends CGTGameObject implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int score;
 	private boolean destroyable;
 	private int lifetime;

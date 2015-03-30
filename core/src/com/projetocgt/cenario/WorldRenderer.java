@@ -1,23 +1,21 @@
 package com.projetocgt.cenario;
 
+
 import java.util.ArrayList;
 import java.util.Random;
 
 import cgt.game.CGTGame;
+
 import cgt.game.CGTGameWorld;
-import cgt.behaviors.Fade;
 import cgt.core.CGTActor;
-import cgt.core.CGTAddOn;
 import cgt.core.CGTBonus;
 import cgt.core.CGTEnemy;
-import cgt.core.CGTGameObject;
 import cgt.core.CGTOpposite;
 import cgt.core.CGTProjectile;
 import cgt.lose.TargetTime;
 import cgt.policy.BonusPolicy;
 import cgt.policy.StatePolicy;
 import cgt.util.ProjectileOrientation;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -49,13 +47,10 @@ public class WorldRenderer {
 	private CGTActor personagem;
 	private ShapeRenderer debugRenderer;
 	private SpriteBatch spriteBatch;
-
 	private StretchViewport viewport;
 	private Rectangle rectangleCamera;
-	private Random random;
 	private Vector2 lastActorPosition;
 	private enum CameraStage {INITIAL, FULL, CLOSE, IDLE};
-	
 	private CameraStage zoomCamera;
 	private boolean isLose;
 	private Music musicActorLose;
@@ -82,7 +77,6 @@ public class WorldRenderer {
 		this.spriteBatch = new SpriteBatch();
 		this.personagem = world.getActor();
 		rectangleCamera = new Rectangle(camera.position.x - camera.viewportWidth/2, camera.position.y - camera.viewportHeight/2, camera.viewportWidth, camera.viewportHeight);
-		random = new Random();
 
 	}
 
@@ -443,10 +437,7 @@ public class WorldRenderer {
 		}
 	}
 
-	private void drawCollisions() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	/***
 	 * Desenha o Actor na cena
@@ -519,15 +510,6 @@ public class WorldRenderer {
 			}
 		}
 		debugRenderer.end();
-	}
-
-	private void drawDamageActor() {
-		for (int i = 0; i < world.getEnemies().size(); i++) {
-			if (world.getEnemies().get(i).getCollision().overlaps(personagem.getCollision())) {
-				
-				animationDamage(world.getEnemies().get(i));
-			}
-		}
 	}
 
 	/**

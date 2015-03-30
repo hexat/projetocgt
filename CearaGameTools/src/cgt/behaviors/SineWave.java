@@ -1,7 +1,5 @@
 package cgt.behaviors;
 
-import java.io.Serializable;
-
 import cgt.core.AbstractBehavior;
 import com.badlogic.gdx.math.Vector2;
 

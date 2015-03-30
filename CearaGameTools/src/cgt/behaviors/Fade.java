@@ -1,7 +1,5 @@
 package cgt.behaviors;
 
-import java.io.Serializable;
-
 import cgt.core.AbstractBehavior;
 import cgt.policy.FadePolicy;
 import com.badlogic.gdx.utils.Timer;

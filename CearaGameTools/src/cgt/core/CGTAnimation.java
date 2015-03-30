@@ -1,14 +1,12 @@
 package cgt.core;
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
 import cgt.core.CGTGameObject;
 import cgt.game.CGTGame;
 import cgt.game.CGTSpriteSheet;
-import cgt.game.SpriteSheetDB;
 import cgt.policy.StatePolicy;
 import cgt.util.AnimationHandle;
 

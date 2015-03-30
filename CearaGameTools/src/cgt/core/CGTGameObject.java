@@ -1,19 +1,14 @@
 package cgt.core;
 
 import cgt.game.CGTGame;
-import cgt.game.CGTGameWorld;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import cgt.policy.StatePolicy;
 import cgt.util.CGTSound;
-
 import com.badlogic.gdx.math.Vector2;
 
 

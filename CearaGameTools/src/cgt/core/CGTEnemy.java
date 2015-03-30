@@ -2,17 +2,14 @@ package cgt.core;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
-
-import com.badlogic.gdx.math.Vector2;
-
 import cgt.behaviors.Behavior;
-import cgt.policy.DirectionPolicy;
-import cgt.policy.StatePolicy;
-import cgt.unit.LabelID;
-import com.badlogic.gdx.utils.Array;
+
 
 public class CGTEnemy extends CGTOpposite implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int damage;
 	private ArrayList<AbstractBehavior> behaviors;
 	private String group;

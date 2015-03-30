@@ -4,7 +4,6 @@ import cgt.game.CGTGame;
 import cgt.game.CGTGameWorld;
 import cgt.game.CGTScreen;
 import cgt.screen.CGTWindow;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 
@@ -12,7 +11,6 @@ import java.io.InputStream;
 
 public class StarAssault extends Game {
 	private static StarAssault instance =  null;
-	private CGTScreen menu;
 
 	private StarAssault(){
 		

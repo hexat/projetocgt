@@ -3,6 +3,10 @@ package cgt.core;
 import java.io.Serializable;
 
 public class CGTOpposite extends CGTGameObject implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean block;
 	private boolean destroyable;
 	private boolean collide;
