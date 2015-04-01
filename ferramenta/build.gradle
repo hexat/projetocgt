@@ -5,7 +5,7 @@ run {
 }
 
 mainClassName = "br.edu.ifce.cgt.application.Main"
-
+compileJava.options.encoding = 'UTF-8'
 sourceSets.main.java.srcDirs = ['src/']
 
 
