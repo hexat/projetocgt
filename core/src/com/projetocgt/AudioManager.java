@@ -17,7 +17,7 @@ public class AudioManager {
 	private Sound soundActorDie;
 
 	private CGTGameWorld world;
-	
+
 	public AudioManager(CGTGameWorld world) {
 		this.world = world;
 		objectsSounds=new HashMap<CGTGameObject, CGTSound>();
@@ -37,18 +37,18 @@ public class AudioManager {
 
 		soundActorDie = (Sound) world.getActor().getSoundDie();
 	}
-	
+
 	public void playSound(final CGTGameObject object) {
 		if (objectsSounds.get(object) == null) {
 			if(!object.getSound().isPlaying()){
 				objectsSounds.put(object, object.getSound());
-				final long id = object.getSound().getSound().loop(object.getSound().getVolume());	
+				final long id = object.getSound().getSound().loop(object.getSound().getVolume());
 				object.getSound().setIdSound(id);
-				object.getSound().setPlaying(true);	
+				object.getSound().setPlaying(true);
 			}
 		}
 	}
-	
+
 
 	public void setVolumeSound(CGTGameObject object, float volume) {
 		CGTSound s = objectsSounds.get(object);
@@ -56,12 +56,12 @@ public class AudioManager {
 			s.getSound().setVolume(s.getIdSound(), volume);
 		}
 	}
-	
-	
+
+
 	public void stopSound(CGTGameObject object) {
 		CGTSound s = objectsSounds.get(object);
 		if (s != null) {
-			s.getSound().stop(); 
+			s.getSound().stop();
 			objectsSounds.remove(object);
 			object.getSound().setPlaying(false);
 		}
@@ -72,7 +72,7 @@ public class AudioManager {
 			s.getSound().stop();
 		}
 	}
-	
+
 
 	public void stopAndDisposeAll() {
 		for (CGTSound s : objectsSounds.values()) {
@@ -91,10 +91,10 @@ public class AudioManager {
 			winMusic.dispose();
 		}
 		if (loseMusic != null) {
-			loseMusic.stop();	
+			loseMusic.stop();
 			loseMusic.dispose();
 		}
-		
+
 		objectsSounds.clear();
 	}
 
@@ -111,12 +111,13 @@ public class AudioManager {
 		}
 	}
 	public void playLoseMusic() {
-
-			this.loseMusic = Gdx.audio.newMusic(world.getSoundLose().getFile().getFileHandle());
-		// if (loseMusic != null && !gameMusic.isPlaying()) {
-			loseMusic.play();
-			loseMusic.setLooping(false);
-		// }
+        if (world.getSoundLose() != null) {
+            this.loseMusic = Gdx.audio.newMusic(world.getSoundLose().getFile().getFileHandle());
+            if (loseMusic != null && !gameMusic.isPlaying()) {
+                loseMusic.play();
+                loseMusic.setLooping(false);
+            }
+        }
 	}
 	
 	public void stopGameMusic() {

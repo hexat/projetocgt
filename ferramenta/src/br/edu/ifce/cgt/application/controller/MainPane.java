@@ -194,14 +194,16 @@ public class MainPane extends BorderPane {
         menuRecent.getItems().clear();
         for (String path : Pref.load().getRecentProjects()) {
             final File file = new File(path);
-            item = new MenuItem(file.getName());
-            item.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    open(file);
-                }
-            });
-            menuRecent.getItems().add(item);
+            if (file.exists()) {
+                item = new MenuItem(file.getName());
+                item.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        open(file);
+                    }
+                });
+                menuRecent.getItems().add(item);
+            }
         }
         if (menuRecent.getItems().size() > 0) {
             item = new MenuItem("Limpar");
