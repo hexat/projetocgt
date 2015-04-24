@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import cgt.core.CGTGameObject;
 import cgt.game.CGTGameWorld;
 import cgt.util.CGTSound;
@@ -14,7 +13,7 @@ public class AudioManager {
 	private Music gameMusic;
 	private Music winMusic;
 	private Music loseMusic;
-	private Sound soundActorDie;
+	private Music soundActorDie;
 
 	private CGTGameWorld world;
 
@@ -35,7 +34,7 @@ public class AudioManager {
 
         this.loseMusic = null;
 
-		soundActorDie = (Sound) world.getActor().getSoundDie();
+		soundActorDie = world.getActor().getSoundDie();
 	}
 
 	public void playSound(final CGTGameObject object) {

@@ -279,6 +279,7 @@ public class MainPane extends BorderPane {
 
     @FXML
     public void export() {
+//        Config.get().export();
         List<CGTError> errors = Config.get().getGame().validate();
         if (errors.isEmpty()) {
             Main.getApp().getScene().setCursor(Cursor.WAIT);

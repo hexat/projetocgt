@@ -2,6 +2,7 @@ package cgt.core;
 
 import cgt.game.CGTGame;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import java.util.ArrayList;
