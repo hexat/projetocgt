@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="900.0" type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <MenuBar>
+            <menus>
+                <Menu mnemonicParsing="false" text="Arquivo">
+                    <items>
+                        <MenuItem fx:id="newProjectMenuItem" mnemonicParsing="false" onAction="#newProject" text="Novo">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                        <MenuItem fx:id="openProjectMenuItem" mnemonicParsing="false" onAction="#openProject" text="Abrir">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                        <Menu fx:id="openRecentMenu" mnemonicParsing="false" text="Abrir recente">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Vazio" />
+                            </items>
+                        </Menu>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="saveProjectMenuItem" mnemonicParsing="false" onAction="#saveProject" text="Salvar">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                        <MenuItem fx:id="saveProjectAsMenuItem" mnemonicParsing="false" onAction="#saveProjectAs" text="Salvar como">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                        <MenuItem fx:id="exportProjectMenuItem" mnemonicParsing="false" onAction="#exportProject" text="Exportar">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                        <MenuItem fx:id="closeProjectMenuItem" mnemonicParsing="false" onAction="#closeProject" text="Fechar projeto">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="W" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" onAction="#exit" text="Sair">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="Q" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Executar">
+                    <items>
+                        <MenuItem fx:id="runProjectMenuItem" disable="true" mnemonicParsing="false" onAction="#runProject" text="Executar">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Ajuda">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#about" text="Sobre" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <bottom>
+        <HBox alignment="TOP_RIGHT" prefHeight="25.0">
+            <children>
+                <Label contentDisplay="CENTER" text="Canvas Size: ">
+                    <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                    </HBox.margin>
+                    <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                    </padding>
+                </Label>
+                <ChoiceBox minHeight="20.0" prefHeight="20.0">
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                    <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                    </padding>
+                    <HBox.margin>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                    </HBox.margin>
+                </ChoiceBox>
+            </children>
+        </HBox>
+    </bottom>
+    <left>
+        <ToolBar orientation="VERTICAL">
+            <items>
+                <Button mnemonicParsing="false" text="Adicionar" onAction="#addItem" />
+            </items>
+        </ToolBar>
+    </left>
+    <center>
+        <SplitPane dividerPositions="0.8" prefHeight="160.0" prefWidth="200.0">
+            <items>
+                <AnchorPane fx:id="drawablePane" minHeight="0.0" minWidth="0.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="548.0" prefWidth="180.0">
+                    <children>
+                        <SplitPane dividerPositions="0.8" orientation="VERTICAL" prefHeight="548.0" prefWidth="164.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <items>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                    <children>
+                                        <ScrollPane prefHeight="434.0" prefWidth="162.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <content>
+                                                <TreeView />
+                                            </content>
+                                        </ScrollPane>
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="126.0" prefWidth="162.0" />
+                            </items>
+                        </SplitPane>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </center>
+</fx:root>

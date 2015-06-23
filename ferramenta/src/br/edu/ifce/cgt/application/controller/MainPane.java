@@ -46,11 +46,16 @@ public class MainPane extends BorderPane {
     public Menu menuSprite;
     public MenuItem menuRun;
     public MenuItem menuExport;
-    @FXML private Button btnMyWorld;
-    @FXML private Accordion configAccordion;
-    @FXML private MenuItem menuExportar;
-    @FXML private Tab tabGame;
-    @FXML private TabPane tabFerramenta;
+    @FXML
+    private Button btnMyWorld;
+    @FXML
+    private Accordion configAccordion;
+    @FXML
+    private MenuItem menuExportar;
+    @FXML
+    private Tab tabGame;
+    @FXML
+    private TabPane tabFerramenta;
     private boolean running;
 
     public MainPane() {
@@ -85,7 +90,8 @@ public class MainPane extends BorderPane {
         });
     }
 
-    @FXML public void createWorld() {
+    @FXML
+    public void createWorld() {
         Optional<String> response = Dialogs.create()
                 .owner(Main.getApp())
                 .title("Nome para o mundo")
@@ -110,7 +116,8 @@ public class MainPane extends BorderPane {
         }
     }
 
-    @FXML public void createScreen() {
+    @FXML
+    public void createScreen() {
         Optional<String> response = Dialogs.create()
                 .owner(Main.getApp())
                 .title("Nome para o screen")
@@ -121,39 +128,6 @@ public class MainPane extends BorderPane {
             String id = response.get().trim();
             CGTScreen screen = Config.get().getGame().createScreen(id);
             if (screen != null) {
-//                Tab aba = new Tab(response.get());
-//                aba.setOnCloseRequest(new EventHandler<Event>() {
-//                    @Override
-//                    public void handle(Event event) {
-//                        Action response = Dialogs.create()
-//                                .owner(Main.getApp())
-//                                .title("Excluir mundo")
-//                                .masthead("Ao fechar esta aba você esterá removendo este mundo do jogo.")
-//                                .message("Tem certeza que deseja fazer isso?")
-//                                .actions(Dialog.ACTION_OK, Dialog.ACTION_CANCEL)
-//                                .showConfirm();
-//
-//                        if (response == Dialog.ACTION_OK) {
-//                            Config.getGame().removeScreen(screen);
-//                            if (tabFerramenta.getTabs().contains(event.getSource())) {
-//                                tabFerramenta.getTabs().remove(event.getSource());
-//                            }
-//                        } else {
-//
-//                        }
-//                        event.consume();
-//                    }
-//                });
-//                aba.setContent(ScreenController.getNode(screen));
-//                aba.setOnSelectionChanged(new EventHandler<Event>() {
-//                    @Override
-//                    public void handle(Event event) {
-//                        if (((Tab) event.getSource()).isSelected()) {
-//                            configAccordion.getPanes().clear();
-//                            configAccordion.getPanes().add(ConfigScreenController.getNode(screen));
-//                        }
-//                    }
-//                });
                 ScreenTab tab = new ScreenTab(screen);
                 tabFerramenta.getTabs().add(tab);
                 tabFerramenta.getSelectionModel().select(tab);
@@ -182,9 +156,7 @@ public class MainPane extends BorderPane {
         if (file != null) {
             Pref.load().addRecentProject(file.getAbsolutePath());
             Pref.load().save();
-
             updateRecent();
-
             open(file);
         }
     }
