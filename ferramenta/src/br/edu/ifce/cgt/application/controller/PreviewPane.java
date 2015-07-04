@@ -2,18 +2,19 @@ package br.edu.ifce.cgt.application.controller;
 
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.util.Pref;
+import br.edu.ifce.cgt.application.vo.CGTGameWorldDrawable;
+import br.edu.ifce.cgt.application.vo.CGTProjectDrawable;
+import br.edu.ifce.cgt.application.vo.DrawableObject;
+import br.edu.ifce.cgt.application.vo.DrawableObjectTreeCellImpl;
+import cgt.game.CGTGameWorld;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
+import javafx.util.Callback;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,10 +22,16 @@ import java.io.IOException;
 public class PreviewPane extends BorderPane {
 
     @FXML
+    public AnchorPane drawableObjectPane;
+
+    @FXML
+    public AnchorPane drawableConfigurationsPane;
+
+    @FXML
     private Menu openRecentMenu;
 
     @FXML
-    private AnchorPane drawablePane;
+    private TreeView<DrawableObject> tree;
 
     public PreviewPane() {
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/Ferramenta2.fxml"));
@@ -34,10 +41,26 @@ public class PreviewPane extends BorderPane {
         try {
             xml.load();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
+        this.setupTree();
         this.updateRecent();
+    }
+
+    private void setupTree() {
+        tree.setEditable(true);
+        tree.setCellFactory(new Callback<TreeView<DrawableObject>, TreeCell<DrawableObject>>() {
+            @Override
+            public TreeCell<DrawableObject> call(TreeView<DrawableObject> param) {
+                return new DrawableObjectTreeCellImpl();
+            }
+        });
+
+        DrawableObject rootItem = new CGTProjectDrawable("New Project", this.drawableObjectPane, this.drawableConfigurationsPane);
+        TreeItem<DrawableObject> root = new TreeItem<>(rootItem);
+        root.setExpanded(true);
+        tree.setRoot(root);
     }
 
     @FXML
@@ -86,13 +109,54 @@ public class PreviewPane extends BorderPane {
     }
 
     @FXML
-    public void addItem() {
-        drawablePane.setStyle("-fx-background-color: black;");
-        Circle circle = new Circle(50, Color.BLUE);
-        circle.relocate(20, 20);
-        Rectangle rectangle = new Rectangle(100, 100, Color.RED);
-        rectangle.relocate(70, 70);
-        drawablePane.getChildren().addAll(circle, rectangle);
+    public void addWorld() {
+        CGTGameWorld world = new CGTGameWorld();
+        DrawableObject obj = new CGTGameWorldDrawable(world, this.drawableObjectPane, this.drawableConfigurationsPane);
+    }
+
+    @FXML
+    public void addScreen() {
+
+    }
+
+    @FXML
+    public void addEnemy() {
+
+    }
+
+    @FXML
+    public void addOpponent() {
+
+    }
+
+    @FXML
+    public void addBonus() {
+
+    }
+
+    @FXML
+    public void addBullet() {
+
+    }
+
+    @FXML
+    public void addGearInformation() {
+
+    }
+
+    @FXML
+    public void addObjectLifeBar() {
+
+    }
+
+    @FXML
+    public void addEnemyLifeBar() {
+
+    }
+
+    @FXML
+    public void addButtonScreen() {
+
     }
 
     private void updateRecent() {
@@ -108,7 +172,7 @@ public class PreviewPane extends BorderPane {
                 item.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        // open(file);
+
                     }
                 });
 

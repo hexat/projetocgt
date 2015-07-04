@@ -27,6 +27,7 @@ public class Main extends Application {
         app = primaryStage;
         //BorderPane root = new MainPane();
         BorderPane root = new PreviewPane();
+
         Scene scene = new Scene(root, 900, 650);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Ceará Game Tools");
