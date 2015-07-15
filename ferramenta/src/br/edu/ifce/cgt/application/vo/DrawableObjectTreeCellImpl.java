@@ -26,6 +26,8 @@ public class DrawableObjectTreeCellImpl extends TreeCell<DrawableObject> {
 
         if (!empty) {
             setText(item.toString());
+        } else {
+            setText(null);
         }
     }
 }

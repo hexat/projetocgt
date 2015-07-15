@@ -1,6 +1,7 @@
 package br.edu.ifce.cgt.application.controller;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.Pref;
 import br.edu.ifce.cgt.application.vo.CGTGameWorldDrawable;
 import br.edu.ifce.cgt.application.vo.CGTProjectDrawable;
@@ -57,7 +58,7 @@ public class PreviewPane extends BorderPane {
             }
         });
 
-        DrawableObject rootItem = new CGTProjectDrawable("New Project", this.drawableObjectPane, this.drawableConfigurationsPane);
+        DrawableObject rootItem = new CGTProjectDrawable("Projeto", this.drawableObjectPane, this.drawableConfigurationsPane);
         TreeItem<DrawableObject> root = new TreeItem<>(rootItem);
         root.setExpanded(true);
         tree.setRoot(root);
@@ -110,8 +111,9 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addWorld() {
-        CGTGameWorld world = new CGTGameWorld();
-        DrawableObject obj = new CGTGameWorldDrawable(world, this.drawableObjectPane, this.drawableConfigurationsPane);
+        DrawableObject obj = new CGTGameWorldDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
+        TreeItem<DrawableObject> treeItem = new TreeItem<>(obj);
+        tree.getRoot().getChildren().add(treeItem);
     }
 
     @FXML

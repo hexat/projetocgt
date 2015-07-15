@@ -19,11 +19,14 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
 
     @Override
     public void drawObject() {
-
     }
 
     @Override
     public void drawConfigurationPanel() {
+    }
+
+    @Override
+    public void onCreate() {
 
     }
 }

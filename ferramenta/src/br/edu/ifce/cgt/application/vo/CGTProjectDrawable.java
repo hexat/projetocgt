@@ -25,6 +25,10 @@ public class CGTProjectDrawable extends AbstractDrawableObject {
     }
 
     @Override
+    public void onCreate() {
+    }
+
+    @Override
     public String toString() {
         return this.projectName;
     }

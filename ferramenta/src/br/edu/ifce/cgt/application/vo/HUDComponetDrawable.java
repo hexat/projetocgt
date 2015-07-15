@@ -26,4 +26,9 @@ public class HUDComponetDrawable extends AbstractDrawableObject {
     public void drawConfigurationPanel() {
 
     }
+
+    @Override
+    public void onCreate() {
+
+    }
 }

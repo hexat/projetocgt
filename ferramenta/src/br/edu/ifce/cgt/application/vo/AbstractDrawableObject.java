@@ -11,6 +11,7 @@ public abstract class AbstractDrawableObject implements DrawableObject {
     public AbstractDrawableObject(AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
         this.drawableObjectPane = drawableObjectPane;
         this.drawableConfigurationsPane = drawableConfigurationsPane;
+        this.onCreate();
     }
 
     public AnchorPane getDrawableObjectPane() {

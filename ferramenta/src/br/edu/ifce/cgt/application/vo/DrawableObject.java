@@ -6,4 +6,6 @@ public interface DrawableObject {
     void drawObject();
 
     void drawConfigurationPanel();
+
+    void onCreate();
 }
