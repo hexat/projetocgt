@@ -4,12 +4,10 @@ import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.panes.ConfigWorldPane;
 import br.edu.ifce.cgt.application.util.Config;
 import cgt.game.CGTGameWorld;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import org.controlsfx.dialog.Dialogs;
 
-import java.io.File;
 import java.util.Optional;
 
 public class CGTGameWorldDrawable extends AbstractDrawableObject {
@@ -43,7 +41,7 @@ public class CGTGameWorldDrawable extends AbstractDrawableObject {
             }
         });
 
-        getDrawableConfigurationsPane().getChildren().add(0, pane);
+        super.addConfigurationPane(pane);
     }
 
     @Override

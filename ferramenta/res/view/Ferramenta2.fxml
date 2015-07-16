@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
-
 <fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="900.0" type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <MenuBar>
@@ -24,7 +21,7 @@
                         </MenuItem>
                         <Menu fx:id="openRecentMenu" mnemonicParsing="false" text="Abrir recente">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Vazio" />
+                            <MenuItem mnemonicParsing="false" text="Vazio" />
                             </items>
                         </Menu>
                         <SeparatorMenuItem mnemonicParsing="false" />
@@ -95,34 +92,16 @@
         </MenuBar>
     </top>
     <bottom>
-        <HBox alignment="TOP_RIGHT" prefHeight="25.0">
-            <children>
-                <Label contentDisplay="CENTER" text="Size: ">
-                    <HBox.margin>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                    </HBox.margin>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                    </padding>
-                </Label>
-                <ChoiceBox minHeight="20.0" prefHeight="20.0">
-                    <opaqueInsets>
-                        <Insets />
-                    </opaqueInsets>
-                    <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                    </padding>
-                    <HBox.margin>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                    </HBox.margin>
-                </ChoiceBox>
-            </children>
-        </HBox>
+        <HBox alignment="TOP_RIGHT" prefHeight="25.0" />
     </bottom>
     <center>
         <SplitPane dividerPositions="0.6" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <items>
-                <AnchorPane fx:id="drawableObjectPane" />
+            <ScrollPane prefHeight="200.0" prefWidth="200.0">
+               <content>
+                      <AnchorPane fx:id="drawableObjectPane" />
+               </content>
+            </ScrollPane>
                 <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="548.0" prefWidth="308.0">
                     <items>
                         <TreeView fx:id="tree" prefHeight="271.0" prefWidth="177.0" />

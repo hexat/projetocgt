@@ -1,6 +1,7 @@
 package br.edu.ifce.cgt.application.vo;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 public abstract class AbstractDrawableObject implements DrawableObject {
 
@@ -20,6 +21,11 @@ public abstract class AbstractDrawableObject implements DrawableObject {
 
     public AnchorPane getDrawableConfigurationsPane() {
         return drawableConfigurationsPane;
+    }
+
+    public void addConfigurationPane(Pane pane) {
+        getDrawableConfigurationsPane().getChildren().removeAll(getDrawableConfigurationsPane().getChildren());
+        getDrawableConfigurationsPane().getChildren().add(pane);
     }
 
 }
