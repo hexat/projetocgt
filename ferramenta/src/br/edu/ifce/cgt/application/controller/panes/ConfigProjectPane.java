@@ -13,6 +13,8 @@ import java.io.IOException;
 
 public class ConfigProjectPane extends AnchorPane {
 
+    private static final String[] projectSizes = {"1920x1080", "1366x768", "1334x750", "1280x720", "1024x768", "1136x640", "960x640", "1024x600", "800x600", "854x480", "800x480", "768x480", "640x480"};
+
     @FXML
     private ChoiceBox<String> canvasSize;
 
@@ -34,18 +36,22 @@ public class ConfigProjectPane extends AnchorPane {
             e.printStackTrace();
         }
 
-        this.canvasSize.getItems().addAll("800x600", "856x480", "640x480");
+        this.canvasSize.getItems().addAll(projectSizes);
         this.canvasSize.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String[] widthHeight = newValue.split("x");
-                int width = Integer.valueOf(widthHeight[0]);
-                int height = Integer.valueOf(widthHeight[1]);
-                cgtProject.setCanvasWidth(width);
-                cgtProject.setCanvasHeight(height);
-                onUpdateRunner.run();
+                changeProjectSize(newValue);
             }
         });
+    }
+
+    private void changeProjectSize(String size) {
+        String[] widthHeight = size.split("x");
+        int width = Integer.valueOf(widthHeight[0]);
+        int height = Integer.valueOf(widthHeight[1]);
+        this.cgtProject.setCanvasWidth(width);
+        this.cgtProject.setCanvasHeight(height);
+        this.onUpdateRunner.run();
     }
 
     public ConfigProjectPane(CGTProject cgtProject, Runnable onUpdateRunner) {

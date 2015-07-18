@@ -12,21 +12,29 @@ import java.util.Optional;
 
 public class CGTGameWorldDrawable extends AbstractDrawableObject {
 
-    private CGTGameWorld cgtGameWorld;
+    private CGTGameWorld gameWorld;
+    private ConfigWorldPane worldPane;
 
     public CGTGameWorldDrawable(AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
         super(drawableObjectPane, drawableConfigurationsPane);
+
+        this.worldPane = new ConfigWorldPane(gameWorld, new Runnable() {
+            @Override
+            public void run() {
+                drawObject();
+            }
+        });
     }
 
     @Override
     public Object getObject() {
-        return cgtGameWorld;
+        return gameWorld;
     }
 
     @Override
     public void drawObject() {
-        if (this.cgtGameWorld.getBackground() != null) {
-            String backFilename = this.cgtGameWorld.getBackground().getFile().getFilename();
+        if (this.gameWorld.getBackground() != null) {
+            String backFilename = this.gameWorld.getBackground().getFile().getFilename();
             ImageView img = new ImageView(Config.get().getImage(backFilename));
             getDrawableObjectPane().getChildren().add(img);
         }
@@ -34,14 +42,7 @@ public class CGTGameWorldDrawable extends AbstractDrawableObject {
 
     @Override
     public void drawConfigurationPanel() {
-        ConfigWorldPane pane = new ConfigWorldPane(cgtGameWorld, new Runnable() {
-            @Override
-            public void run() {
-                drawObject();
-            }
-        });
-
-        super.addConfigurationPane(pane);
+        super.updateConfigPane(worldPane);
     }
 
     @Override
@@ -54,12 +55,12 @@ public class CGTGameWorldDrawable extends AbstractDrawableObject {
 
         if (response.isPresent()) {
             String id = response.get().trim();
-            this.cgtGameWorld = Config.get().getGame().createWorld(id);
+            this.gameWorld = Config.get().getGame().createWorld(id);
         }
     }
 
     @Override
     public String toString() {
-        return this.cgtGameWorld.getId();
+        return this.gameWorld.getId();
     }
 }
