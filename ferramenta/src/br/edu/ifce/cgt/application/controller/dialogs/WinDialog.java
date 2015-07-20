@@ -23,17 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-/**
- * Created by Luan on 16/02/2015.
- */
 public class WinDialog extends BorderPane {
 
     private final Stage stage;
     private final CGTGameWorld world;
 
-    @FXML private ComboBox<EnumMap<WinPolicy>> boxCriteria;
-
-    public WinDialog(CGTGameWorld world) {
+    public WinDialog(CGTGameWorld world, WinPolicy policy) {
         this.world = world;
         FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/dialogs/Win.fxml"));
         view.setRoot(this);
@@ -51,25 +46,11 @@ public class WinDialog extends BorderPane {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(Main.getApp().getScene().getWindow());
 
-        ResourceBundle bundle = Pref.load().getBundle();
-        List<EnumMap<WinPolicy>> list = new ArrayList<EnumMap<WinPolicy>>();
-
-        for (WinPolicy w : WinPolicy.values()) {
-            list.add(new EnumMap<WinPolicy>(w, bundle.getString(w.name())));
-        }
-
-        boxCriteria.getItems().setAll(list);
-        boxCriteria.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<EnumMap<WinPolicy>>() {
-            @Override
-            public void changed(ObservableValue<? extends EnumMap<WinPolicy>> observable, EnumMap<WinPolicy> oldValue, EnumMap<WinPolicy> newValue) {
-                updateContent();
-            }
-        });
-        boxCriteria.getSelectionModel().selectFirst();
+        this.setContent(policy);
     }
 
-    private void updateContent() {
-        switch (boxCriteria.getValue().getKey()) {
+    private void setContent(WinPolicy policy) {
+        switch (policy) {
             case KILL_ENEMIES:
                 setCenter(new KillAllPane(world));
                 break;

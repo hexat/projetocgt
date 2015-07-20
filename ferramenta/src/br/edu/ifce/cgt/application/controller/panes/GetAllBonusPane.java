@@ -8,9 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
-/**
- * Created by luanjames on 09/03/15.
- */
 public class GetAllBonusPane extends GridPane implements WinCriteriaPane {
     private GetAllBonus getAllBonus;
 

@@ -2,6 +2,7 @@ package br.edu.ifce.cgt.application.vo;
 
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.panes.ConfigWorldPane;
+import br.edu.ifce.cgt.application.controller.panes.ConfigWorldPreviewPane;
 import br.edu.ifce.cgt.application.util.Config;
 import cgt.game.CGTGameWorld;
 import javafx.scene.image.ImageView;
@@ -13,12 +14,12 @@ import java.util.Optional;
 public class CGTGameWorldDrawable extends AbstractDrawableObject {
 
     private CGTGameWorld gameWorld;
-    private ConfigWorldPane worldPane;
+    private ConfigWorldPreviewPane worldPane;
 
     public CGTGameWorldDrawable(AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
         super(drawableObjectPane, drawableConfigurationsPane);
 
-        this.worldPane = new ConfigWorldPane(gameWorld, new Runnable() {
+        this.worldPane = new ConfigWorldPreviewPane(gameWorld, new Runnable() {
             @Override
             public void run() {
                 drawObject();

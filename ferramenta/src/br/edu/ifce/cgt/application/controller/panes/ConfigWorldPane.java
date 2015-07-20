@@ -217,7 +217,7 @@ public class ConfigWorldPane extends AnchorPane {
     }
 
     public void addWin(ActionEvent actionEvent) {
-        WinDialog win = new WinDialog(world);
+        WinDialog win = new WinDialog(world , null);
         win.showAndWait();
         updateWin();
     }
