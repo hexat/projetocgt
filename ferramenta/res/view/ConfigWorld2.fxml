@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <fx:root type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
@@ -62,31 +63,58 @@
                                     <children>
                                         <Label text="Critérios de vitória:"/>
                                         <CheckBox fx:id="killEnemiesCheckbox" mnemonicParsing="false"
-                                                  text="Eliminar os inimigos"
-                                                  GridPane.rowIndex="1"/>
+                                                  text="Eliminar os inimigos" GridPane.rowIndex="1"/>
                                         <CheckBox fx:id="surviveCheckbox" mnemonicParsing="false" text="Sobreviver"
-                                                  GridPane.columnIndex="1"
-                                                  GridPane.rowIndex="1"/>
+                                                  GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                                         <CheckBox fx:id="getBonusCheckbox" mnemonicParsing="false" text="Pegar bônus"
                                                   GridPane.rowIndex="2"/>
                                         <CheckBox fx:id="completeCrossingCheckbox" mnemonicParsing="false"
-                                                  text="Completar percurso"
-                                                  GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                                  text="Completar percurso" GridPane.columnIndex="1"
+                                                  GridPane.rowIndex="2"/>
                                         <CheckBox fx:id="targetScoreCheckbox" mnemonicParsing="false"
-                                                  text="Atingir pontuação"
-                                                  GridPane.rowIndex="3"/>
+                                                  text="Atingir pontuação" GridPane.rowIndex="3"/>
                                         <Label text="Mensagem da vitória" GridPane.rowIndex="4"/>
                                         <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                             <children>
-                                                <Button mnemonicParsing="false" text="Configurar"/>
-                                                <Button mnemonicParsing="false" text="Remover"/>
+                                                <Button mnemonicParsing="false" onAction="#configWinDialog"
+                                                        text="Configurar"/>
+                                                <Button fx:id="removeWinDialogButton" mnemonicParsing="false"
+                                                        text="Remover"/>
                                             </children>
                                         </HBox>
                                     </children>
                                 </GridPane>
                             </content>
                         </TitledPane>
-                        <TitledPane animated="false" text="Configurações de derrota"/>
+                        <TitledPane animated="false" text="Configurações de derrota">
+                            <content>
+                                <GridPane>
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                    </rowConstraints>
+                                    <children>
+                                        <CheckBox fx:id="actorDeadCheckbox" mnemonicParsing="false" text="Ator morrer"/>
+                                        <CheckBox fx:id="targetTimeCheckbox" mnemonicParsing="false" text="Contagem regressiva"
+                                                  GridPane.columnIndex="1"/>
+                                        <Label text="Mensagem da derrota" GridPane.rowIndex="1"/>
+                                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0"
+                                              GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                            <children>
+                                                <Button mnemonicParsing="false" text="Configurar"
+                                                        onAction="#configLoseDialog"/>
+                                                <Button fx:id="removeLoseDialogButton" mnemonicParsing="false"
+                                                        text="Remover"/>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </GridPane>
+                            </content>
+                        </TitledPane>
                         <TitledPane prefHeight="200.0" prefWidth="200.0" text="Configurações de pausa"/>
                     </panes>
                 </Accordion>

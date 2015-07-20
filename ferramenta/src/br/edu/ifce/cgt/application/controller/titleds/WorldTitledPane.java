@@ -34,16 +34,24 @@ import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class WorldTitledPane extends TitledPane {
-	@FXML private Button btnPesquisaBack;
-    @FXML private TextField txtProcuraBack;
-    @FXML private TextField txtMusic;
+    @FXML
+    private Button btnPesquisaBack;
+    @FXML
+    private TextField txtProcuraBack;
+    @FXML
+    private TextField txtMusic;
 
-    @FXML private Button btnRemPauseDialog;
-    @FXML private Button btnRemWinDialog;
-    @FXML private Button btnRemLoseDialog;
+    @FXML
+    private Button btnRemPauseDialog;
+    @FXML
+    private Button btnRemWinDialog;
+    @FXML
+    private Button btnRemLoseDialog;
 
-    @FXML private VBox panWins;
-    @FXML private VBox panLoses;
+    @FXML
+    private VBox panWins;
+    @FXML
+    private VBox panLoses;
 
     private CGTGameWorld world;
 
@@ -134,22 +142,22 @@ public class WorldTitledPane extends TitledPane {
         });
     }
 
-    public String getTextTxtProcurarBack(){
-		return txtProcuraBack.getText();
-	}
-	
-	public void pesquisarBackground(){
-		File chosenFile = DialogsUtil.showOpenDialog("Selecionar background", DialogsUtil.IMG_FILTER);
+    public String getTextTxtProcurarBack() {
+        return txtProcuraBack.getText();
+    }
 
-		String path = "";
+    public void pesquisarBackground() {
+        File chosenFile = DialogsUtil.showOpenDialog("Selecionar background", DialogsUtil.IMG_FILTER);
 
-		if(chosenFile != null) {
+        String path = "";
+
+        if (chosenFile != null) {
             world.setBackground(new CGTTexture(Config.get().createImg(chosenFile)));
             path = chosenFile.getName();
-		}
+        }
 
-		txtProcuraBack.setText(path);
-	}
+        txtProcuraBack.setText(path);
+    }
 
     private void removerDialog(CGTDialog dialog) {
         if (dialog.getHorizontalBorderTexture() != null) {
@@ -202,7 +210,7 @@ public class WorldTitledPane extends TitledPane {
     }
 
     public void addLose(ActionEvent event) {
-        LoseDialog loseDialog = new LoseDialog(world);
+        LoseDialog loseDialog = new LoseDialog(world, null);
         loseDialog.showAndWait();
         updateLose();
 

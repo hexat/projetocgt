@@ -27,6 +27,7 @@ public class WinDialog extends BorderPane {
 
     private final Stage stage;
     private final CGTGameWorld world;
+    private boolean result;
 
     public WinDialog(CGTGameWorld world, WinPolicy policy) {
         this.world = world;
@@ -67,6 +68,7 @@ public class WinDialog extends BorderPane {
                 setCenter(new GetAllBonusPane(world));
                 break;
         }
+
         setMargin(getCenter(), new Insets(5, 0, 5, 0));
         stage.sizeToScene();
     }
@@ -79,8 +81,13 @@ public class WinDialog extends BorderPane {
         stage.showAndWait();
     }
 
-    public void addWin(ActionEvent actionEvent) {
+    public void addCriteria(ActionEvent actionEvent) {
         world.addWinCriterion( ( (WinCriteriaPane) getCenter() ).getCriteria() );
+        result = true;
         stage.close();
+    }
+
+    public boolean getResult() {
+        return result;
     }
 }

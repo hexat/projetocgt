@@ -223,7 +223,7 @@ public class ConfigWorldPane extends AnchorPane {
     }
 
     public void addLose(ActionEvent event) {
-        LoseDialog loseDialog = new LoseDialog(world);
+        LoseDialog loseDialog = new LoseDialog(world, null);
         loseDialog.showAndWait();
         updateLose();
 

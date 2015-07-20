@@ -1,20 +1,30 @@
 package br.edu.ifce.cgt.application.controller.panes;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.controller.dialogs.DialogDialog;
+import br.edu.ifce.cgt.application.controller.dialogs.LoseDialog;
 import br.edu.ifce.cgt.application.controller.dialogs.WinDialog;
 import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
 import cgt.game.CGTGameWorld;
+import cgt.hud.CGTButtonScreen;
+import cgt.lose.Lose;
+import cgt.policy.LosePolicy;
 import cgt.policy.WinPolicy;
+import cgt.screen.CGTDialog;
 import cgt.util.CGTFile;
 import cgt.util.CGTSound;
 import cgt.util.CGTTexture;
+import cgt.win.GetAllBonus;
+import cgt.win.KillAllEnemies;
+import cgt.win.Win;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -43,6 +53,14 @@ public class ConfigWorldPreviewPane extends AnchorPane {
     private CheckBox completeCrossingCheckbox;
     @FXML
     private CheckBox targetScoreCheckbox;
+    @FXML
+    private Button removeWinDialogButton;
+    @FXML
+    private CheckBox actorDeadCheckbox;
+    @FXML
+    private CheckBox targetTimeCheckbox;
+    @FXML
+    private Button removeLoseDialogButton;
 
     private CGTGameWorld world;
 
@@ -119,9 +137,11 @@ public class ConfigWorldPreviewPane extends AnchorPane {
         this.killEnemiesCheckbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                WinPolicy policy = WinPolicy.KILL_ENEMIES;
                 if (newValue) {
-                    WinDialog win = new WinDialog(world, WinPolicy.KILL_ENEMIES);
-                    win.showAndWait();
+                    world.addWinCriterion(new KillAllEnemies());
+                } else {
+                    removeWinCriteria(policy);
                 }
             }
         });
@@ -129,9 +149,12 @@ public class ConfigWorldPreviewPane extends AnchorPane {
         this.completeCrossingCheckbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                WinPolicy policy = WinPolicy.COMPLETE_CROSSING;
                 if (newValue) {
-                    WinDialog win = new WinDialog(world, WinPolicy.COMPLETE_CROSSING);
-                    win.showAndWait();
+                    boolean result = addWinCriteria(policy);
+                    completeCrossingCheckbox.selectedProperty().setValue(result);
+                } else {
+                    removeWinCriteria(policy);
                 }
             }
         });
@@ -139,9 +162,11 @@ public class ConfigWorldPreviewPane extends AnchorPane {
         this.getBonusCheckbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                WinPolicy policy = WinPolicy.GET_ALL_BONUS;
                 if (newValue) {
-                    WinDialog win = new WinDialog(world, WinPolicy.GET_ALL_BONUS);
-                    win.showAndWait();
+                    world.addWinCriterion(new GetAllBonus());
+                } else {
+                    removeWinCriteria(policy);
                 }
             }
         });
@@ -149,9 +174,12 @@ public class ConfigWorldPreviewPane extends AnchorPane {
         this.surviveCheckbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                WinPolicy policy = WinPolicy.SURVIVE;
                 if (newValue) {
-                    WinDialog win = new WinDialog(world, WinPolicy.SURVIVE);
-                    win.showAndWait();
+                    boolean result = addWinCriteria(policy);
+                    surviveCheckbox.selectedProperty().setValue(result);
+                } else {
+                    removeWinCriteria(policy);
                 }
             }
         });
@@ -159,13 +187,74 @@ public class ConfigWorldPreviewPane extends AnchorPane {
         this.targetScoreCheckbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                WinPolicy policy = WinPolicy.TARGET_SCORE;
                 if (newValue) {
-                    WinDialog win = new WinDialog(world, WinPolicy.TARGET_SCORE);
-                    win.showAndWait();
+                    boolean result = addWinCriteria(policy);
+                    targetScoreCheckbox.selectedProperty().setValue(result);
+                } else {
+                    removeWinCriteria(policy);
                 }
             }
         });
 
+        this.actorDeadCheckbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                LosePolicy policy = LosePolicy.ACTOR_DEAD;
+                if (newValue) {
+                    boolean result = addLoseCriteria(policy);
+                    actorDeadCheckbox.selectedProperty().setValue(result);
+                } else {
+                    removeLoseCriteria(policy);
+                }
+            }
+        });
+
+        this.targetTimeCheckbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                LosePolicy policy = LosePolicy.TARGET_TIME;
+                if (newValue) {
+                    boolean result = addLoseCriteria(policy);
+                    targetTimeCheckbox.selectedProperty().setValue(result);
+                } else {
+                    removeLoseCriteria(policy);
+                }
+            }
+        });
+
+        removeWinDialogButton.setDisable(world.getWinDialog() == null);
+        removeLoseDialogButton.setDisable(world.getLoseDialog() == null);
+    }
+
+    private boolean addWinCriteria(WinPolicy policy) {
+        WinDialog win = new WinDialog(world, policy);
+        win.showAndWait();
+        return win.getResult();
+    }
+
+    private void removeWinCriteria(WinPolicy policy) {
+        for (Win w : world.getWinCriteria()) {
+            if (w.getPolicy() == policy) {
+                world.removeWinCriteria(w);
+                break;
+            }
+        }
+    }
+
+    private boolean addLoseCriteria(LosePolicy policy) {
+        LoseDialog loseDialog = new LoseDialog(world, policy);
+        loseDialog.showAndWait();
+        return loseDialog.getResult();
+    }
+
+    private void removeLoseCriteria(LosePolicy policy) {
+        for (Lose lose : world.getLoseCriteria()) {
+            if (lose.getPolicy() == policy) {
+                world.removeLoseCriteria(lose);
+                break;
+            }
+        }
     }
 
     @FXML
@@ -204,7 +293,79 @@ public class ConfigWorldPreviewPane extends AnchorPane {
         }
     }
 
-    public void updateWorld(String name) {
-        this.world.setId(name);
+    public void configWinDialog() {
+        if (world.getWinDialog() == null) {
+            world.setWinDialog(new CGTDialog());
+            removeWinDialogButton.setDisable(false);
+        }
+
+        DialogDialog dialog = new DialogDialog(world.getWinDialog());
+        dialog.showAndWait();
     }
+
+    public void configLoseDialog() {
+        if (world.getLoseDialog() == null) {
+            world.setLoseDialog(new CGTDialog());
+            removeLoseDialogButton.setDisable(false);
+        }
+
+        DialogDialog dialog = new DialogDialog(world.getLoseDialog());
+        dialog.showAndWait();
+    }
+
+    public void removeWinDialog() {
+        removeDialog(world.getWinDialog());
+        removeWinDialogButton.setDisable(true);
+    }
+
+    public void removeLoseDialog () {
+        removeDialog(world.getLoseDialog());
+        removeLoseDialogButton.setDisable(true);
+    }
+
+    private void removeDialog(CGTDialog dialog) {
+        if (dialog.getHorizontalBorderTexture() != null) {
+            Config.get().destroy(dialog.getHorizontalBorderTexture().getFile());
+        }
+        if (dialog.getRightBottomCorner() != null) {
+            Config.get().destroy(dialog.getRightBottomCorner().getFile());
+        }
+        if (dialog.getWindow() != null) {
+            Config.get().destroy(dialog.getWindow().getFile());
+        }
+        for (CGTButtonScreen bs : dialog.getButtons()) {
+            if (bs.getTextureUp() != null) {
+                Config.get().destroy(bs.getTextureUp().getFile());
+            }
+            if (bs.getTextureDown() != null) {
+                Config.get().destroy(bs.getTextureDown().getFile());
+            }
+            bs.setTextureDown(null);
+            bs.setTextureUp(null);
+        }
+        dialog.getButtons().clear();
+
+        if (dialog.getCloseButton() != null) {
+            if (dialog.getCloseButton().getTextureDown() != null) {
+                Config.get().destroy(dialog.getCloseButton().getTextureDown().getFile());
+                dialog.getCloseButton().setTextureDown(null);
+            }
+
+            if (dialog.getCloseButton().getTextureUp() != null) {
+                Config.get().destroy(dialog.getCloseButton().getTextureUp().getFile());
+                dialog.getCloseButton().setTextureUp(null);
+            }
+        }
+
+        dialog.setCloseButton(null);
+
+        if (world.getLoseDialog() == dialog) {
+            world.setLoseDialog(null);
+        } else if (world.getWinDialog() == dialog) {
+            world.setWinDialog(null);
+        } else if (world.getPauseDialog() == dialog) {
+            world.setPauseDialog(null);
+        }
+    }
+
 }
