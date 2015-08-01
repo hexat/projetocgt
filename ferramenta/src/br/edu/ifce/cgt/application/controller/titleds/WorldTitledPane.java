@@ -213,7 +213,6 @@ public class WorldTitledPane extends TitledPane {
         LoseDialog loseDialog = new LoseDialog(world, null);
         loseDialog.showAndWait();
         updateLose();
-
     }
 
     private void updateLose() {

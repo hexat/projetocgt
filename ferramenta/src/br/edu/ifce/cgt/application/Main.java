@@ -30,6 +30,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(root, 900, 650);
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.setTitle("Ceará Game Tools");
         primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/logo.png")));
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {

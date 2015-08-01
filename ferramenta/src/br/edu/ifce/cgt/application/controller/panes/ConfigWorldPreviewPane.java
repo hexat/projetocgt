@@ -8,6 +8,7 @@ import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
 import cgt.game.CGTGameWorld;
 import cgt.hud.CGTButtonScreen;
+import cgt.lose.LifeDeleted;
 import cgt.lose.Lose;
 import cgt.policy.LosePolicy;
 import cgt.policy.WinPolicy;
@@ -61,6 +62,8 @@ public class ConfigWorldPreviewPane extends AnchorPane {
     private CheckBox targetTimeCheckbox;
     @FXML
     private Button removeLoseDialogButton;
+    @FXML
+    private Button removePauseDialogButton;
 
     private CGTGameWorld world;
 
@@ -202,8 +205,7 @@ public class ConfigWorldPreviewPane extends AnchorPane {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 LosePolicy policy = LosePolicy.ACTOR_DEAD;
                 if (newValue) {
-                    boolean result = addLoseCriteria(policy);
-                    actorDeadCheckbox.selectedProperty().setValue(result);
+                    world.addLoseCriterion(new LifeDeleted());
                 } else {
                     removeLoseCriteria(policy);
                 }
@@ -225,6 +227,7 @@ public class ConfigWorldPreviewPane extends AnchorPane {
 
         removeWinDialogButton.setDisable(world.getWinDialog() == null);
         removeLoseDialogButton.setDisable(world.getLoseDialog() == null);
+        removePauseDialogButton.setDisable(world.getPauseDialog() == null);
     }
 
     private boolean addWinCriteria(WinPolicy policy) {
@@ -255,6 +258,16 @@ public class ConfigWorldPreviewPane extends AnchorPane {
                 break;
             }
         }
+    }
+
+    public void configPauseDialog() {
+        if (world.getPauseDialog() == null) {
+            world.setPauseDialog(new CGTDialog());
+            removePauseDialogButton.setDisable(false);
+        }
+
+        DialogDialog dialog = new DialogDialog(world.getPauseDialog());
+        dialog.showAndWait();
     }
 
     @FXML
@@ -318,7 +331,7 @@ public class ConfigWorldPreviewPane extends AnchorPane {
         removeWinDialogButton.setDisable(true);
     }
 
-    public void removeLoseDialog () {
+    public void removeLoseDialog() {
         removeDialog(world.getLoseDialog());
         removeLoseDialogButton.setDisable(true);
     }
