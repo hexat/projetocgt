@@ -1,7 +1,6 @@
 package br.edu.ifce.cgt.application.vo;
 
 import br.edu.ifce.cgt.application.Main;
-import br.edu.ifce.cgt.application.controller.panes.ConfigWorldPane;
 import br.edu.ifce.cgt.application.controller.panes.ConfigWorldPreviewPane;
 import br.edu.ifce.cgt.application.util.Config;
 import cgt.game.CGTGameWorld;

@@ -4,18 +4,23 @@ import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.dialogs.DialogDialog;
 import br.edu.ifce.cgt.application.controller.dialogs.LoseDialog;
 import br.edu.ifce.cgt.application.controller.dialogs.WinDialog;
+import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
+import br.edu.ifce.cgt.application.util.EnumMap;
+import br.edu.ifce.cgt.application.util.Pref;
 import cgt.game.CGTGameWorld;
 import cgt.hud.CGTButtonScreen;
 import cgt.lose.LifeDeleted;
 import cgt.lose.Lose;
+import cgt.policy.GameModePolicy;
 import cgt.policy.LosePolicy;
 import cgt.policy.WinPolicy;
 import cgt.screen.CGTDialog;
 import cgt.util.CGTFile;
 import cgt.util.CGTSound;
 import cgt.util.CGTTexture;
+import cgt.util.Camera;
 import cgt.win.GetAllBonus;
 import cgt.win.KillAllEnemies;
 import cgt.win.Win;
@@ -27,6 +32,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -35,6 +41,9 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class ConfigWorldPreviewPane extends AnchorPane {
 
@@ -64,8 +73,28 @@ public class ConfigWorldPreviewPane extends AnchorPane {
     private Button removeLoseDialogButton;
     @FXML
     private Button removePauseDialogButton;
+    @FXML
+    private ComboBox<EnumMap<GameModePolicy>> boxGameMode;
+    @FXML
+    private FloatTextField txtInitialWidth;
+    @FXML
+    private FloatTextField txtInitialHeight;
+    @FXML
+    private FloatTextField txtCloseWidth;
+    @FXML
+    private FloatTextField txtCloseHeight;
+    @FXML
+    private FloatTextField txtFullWidth;
+    @FXML
+    private FloatTextField txtFullHeight;
+    @FXML
+    private FloatTextField txtScale;
+    @FXML
+    private FloatTextField txtVolumeFull;
 
     private CGTGameWorld world;
+
+    private final Camera camera;
 
     private Runnable onUpdateRunnable;
 
@@ -80,9 +109,10 @@ public class ConfigWorldPreviewPane extends AnchorPane {
             e.printStackTrace();
         }
 
-        setWorld(world);
-        init();
+        this.world = world;
+        this.camera = getWorld().getCamera();
 
+        init();
     }
 
     public ConfigWorldPreviewPane(CGTGameWorld world, Runnable onUpdateRunnable) {
@@ -99,14 +129,15 @@ public class ConfigWorldPreviewPane extends AnchorPane {
     }
 
     private void init() {
-        musicTextField.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+        this.musicTextField.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 musicTextField.selectAll();
             }
         });
 
-        musicTextField.setOnKeyTyped(new EventHandler<KeyEvent>() {
+        this.musicTextField.setOnKeyTyped(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 if (event.getCode() == KeyCode.BACK_SPACE) {
@@ -117,7 +148,7 @@ public class ConfigWorldPreviewPane extends AnchorPane {
             }
         });
 
-        musicTextField.setOnAction(new EventHandler<ActionEvent>() {
+        this.musicTextField.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if (musicTextField.getText().isEmpty()) {
@@ -127,14 +158,14 @@ public class ConfigWorldPreviewPane extends AnchorPane {
             }
         });
 
-        worldTextField.setText(this.world.getId());
+        this.worldTextField.setText(this.world.getId());
 
         if (world.getBackground() != null) {
-            backgroundTextField.setText(world.getBackground().getFile().getFilename());
+            this.backgroundTextField.setText(world.getBackground().getFile().getFilename());
         }
 
         if (world.getMusic() != null) {
-            musicTextField.setText(world.getMusic().getFile().getFilename());
+            this.musicTextField.setText(world.getMusic().getFile().getFilename());
         }
 
         this.killEnemiesCheckbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
@@ -225,9 +256,122 @@ public class ConfigWorldPreviewPane extends AnchorPane {
             }
         });
 
-        removeWinDialogButton.setDisable(world.getWinDialog() == null);
-        removeLoseDialogButton.setDisable(world.getLoseDialog() == null);
-        removePauseDialogButton.setDisable(world.getPauseDialog() == null);
+        this.txtInitialWidth.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    camera.setInitialWidth(txtInitialWidth.getValue());
+                }
+            }
+        });
+
+        this.txtInitialHeight.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    camera.setInitialHeight(txtInitialHeight.getValue());
+                }
+            }
+        });
+
+        this.txtCloseWidth.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    camera.setCloseWidth(txtCloseWidth.getValue());
+                }
+            }
+        });
+
+        this.txtCloseHeight.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    camera.setCloseHeight(txtCloseHeight.getValue());
+                }
+            }
+        });
+
+        this.txtFullWidth.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    camera.setFullWidth(txtFullWidth.getValue());
+                }
+            }
+        });
+
+        this.txtFullHeight.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    camera.setFullHeight(txtFullHeight.getValue());
+                }
+            }
+        });
+
+        this.txtScale.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    camera.setScale(txtScale.getValue());
+                }
+            }
+        });
+
+        this.txtVolumeFull.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    camera.setVolumeOnFullCamera(txtVolumeFull.getValue());
+                }
+            }
+        });
+
+        this. boxGameMode.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                EnumMap<GameModePolicy> item = boxGameMode.getSelectionModel().getSelectedItem();
+                if (item != null) {
+                    camera.setGameMode(item.getKey());
+                }
+            }
+        });
+
+        this.removeWinDialogButton.setDisable(getWorld().getWinDialog() == null);
+        this.removeLoseDialogButton.setDisable(getWorld().getLoseDialog() == null);
+        this.removePauseDialogButton.setDisable(getWorld().getPauseDialog() == null);
+        this.txtCloseHeight.setMaxMin(0, 1);
+        this.txtCloseWidth.setMaxMin(0, 1);
+        this.txtFullHeight.setMaxMin(0, 1);
+        this.txtFullWidth.setMaxMin(0, 1);
+        this.txtInitialHeight.setMaxMin(0, 1);
+        this.txtInitialWidth.setMaxMin(0, 1);
+        this.txtVolumeFull.setMaxMin(0, 1);
+        this.boxGameMode.getItems().setAll(getGameModes());
+        this.txtInitialWidth.setValue(camera.getInitialWidth());
+        this.txtInitialHeight.setValue(camera.getInitialHeight());
+        this.txtCloseWidth.setValue(camera.getCloseWidth());
+        this.txtCloseHeight.setValue(camera.getCloseHeight());
+        this.txtFullWidth.setValue(camera.getFullWidth());
+        this.txtFullHeight.setValue(camera.getFullHeight());
+        this.txtScale.setValue(camera.getScale()*100);
+        this.txtVolumeFull.setValue(camera.getVolumeOnFullCamera());
+
+        int i = 0;
+        while (i < boxGameMode.getItems().size() && boxGameMode.getItems().get(i).getKey() != camera.getGameMode()) i++;
+        if (i < boxGameMode.getItems().size()) boxGameMode.getSelectionModel().select(i);
+    }
+
+    private List<EnumMap<GameModePolicy>> getGameModes() {
+        ResourceBundle bundle = Pref.load().getBundle();
+        List<EnumMap<GameModePolicy>> list = new ArrayList<EnumMap<GameModePolicy>>();
+
+        for (GameModePolicy p : GameModePolicy.values()) {
+            list.add(new EnumMap<GameModePolicy>(p, bundle.getString(p.name())));
+        }
+
+        return list;
     }
 
     private boolean addWinCriteria(WinPolicy policy) {
@@ -340,22 +484,28 @@ public class ConfigWorldPreviewPane extends AnchorPane {
         if (dialog.getHorizontalBorderTexture() != null) {
             Config.get().destroy(dialog.getHorizontalBorderTexture().getFile());
         }
+
         if (dialog.getRightBottomCorner() != null) {
             Config.get().destroy(dialog.getRightBottomCorner().getFile());
         }
+
         if (dialog.getWindow() != null) {
             Config.get().destroy(dialog.getWindow().getFile());
         }
+
         for (CGTButtonScreen bs : dialog.getButtons()) {
             if (bs.getTextureUp() != null) {
                 Config.get().destroy(bs.getTextureUp().getFile());
             }
+
             if (bs.getTextureDown() != null) {
                 Config.get().destroy(bs.getTextureDown().getFile());
             }
+
             bs.setTextureDown(null);
             bs.setTextureUp(null);
         }
+
         dialog.getButtons().clear();
 
         if (dialog.getCloseButton() != null) {
@@ -380,5 +530,4 @@ public class ConfigWorldPreviewPane extends AnchorPane {
             world.setPauseDialog(null);
         }
     }
-
 }

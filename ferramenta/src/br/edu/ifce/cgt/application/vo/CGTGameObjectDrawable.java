@@ -29,4 +29,9 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
     public void onCreate() {
 
     }
+
+    @Override
+    public String toString() {
+        return gameObject.getId();
+    }
 }

@@ -3,10 +3,7 @@ package br.edu.ifce.cgt.application.controller;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.Pref;
-import br.edu.ifce.cgt.application.vo.CGTGameWorldDrawable;
-import br.edu.ifce.cgt.application.vo.CGTProjectDrawable;
-import br.edu.ifce.cgt.application.vo.DrawableObject;
-import br.edu.ifce.cgt.application.vo.DrawableObjectTreeCellImpl;
+import br.edu.ifce.cgt.application.vo.*;
 import cgt.game.CGTGameWorld;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -111,9 +108,12 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addWorld() {
-        DrawableObject obj = new CGTGameWorldDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
-        TreeItem<DrawableObject> treeItem = new TreeItem<>(obj);
-        tree.getRoot().getChildren().add(treeItem);
+        DrawableObject<CGTGameWorld> worldDrawable = new CGTGameWorldDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
+        DrawableObject drawableActor = new CGTGameActorDrawable(worldDrawable.getObject().getActor(), this.drawableObjectPane, this.drawableConfigurationsPane);
+        TreeItem<DrawableObject> worldTreeItem = new TreeItem<>(worldDrawable);
+        TreeItem<DrawableObject> actorTreeItem = new TreeItem<>(drawableActor);
+        worldTreeItem.getChildren().add(actorTreeItem);
+        this.tree.getRoot().getChildren().add(worldTreeItem);
     }
 
     @FXML

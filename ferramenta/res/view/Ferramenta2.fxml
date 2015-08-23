@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
@@ -59,13 +58,37 @@
                     <items>
                         <Menu mnemonicParsing="false" text="Adicionar">
                             <items>
-                                <MenuItem fx:id="addWorldMenuItem" mnemonicParsing="false" onAction="#addWorld" text="Mundo" />
+                                <MenuItem fx:id="addWorldMenuItem" mnemonicParsing="false" onAction="#addWorld" text="Mundo">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="DOWN" code="M" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
                                 <SeparatorMenuItem mnemonicParsing="false" />
-                                <MenuItem fx:id="addOpponentMenuItem" mnemonicParsing="false" onAction="#addOpponent" text="Opositor" />
-                                <MenuItem fx:id="addScreenMenuItem" mnemonicParsing="false" onAction="#addScreen" text="Tela" />
-                                <MenuItem fx:id="addEnemyMenuItem" mnemonicParsing="false" onAction="#addEnemy" text="Inimigo" />
-                                <MenuItem fx:id="addBonusMenuItem" mnemonicParsing="false" onAction="#addBonus" text="Bõnus" />
-                                <MenuItem fx:id="addBulletMenuItem" mnemonicParsing="false" onAction="#addBullet" text="Projétil" />
+                                <MenuItem fx:id="addOpponentMenuItem" mnemonicParsing="false" onAction="#addOpponent" text="Opositor">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="DOWN" code="O" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem fx:id="addScreenMenuItem" mnemonicParsing="false" onAction="#addScreen" text="Tela">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="DOWN" code="T" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem fx:id="addEnemyMenuItem" mnemonicParsing="false" onAction="#addEnemy" text="Inimigo">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="DOWN" code="I" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem fx:id="addBonusMenuItem" mnemonicParsing="false" onAction="#addBonus" text="Bõnus">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="DOWN" code="B" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                                <MenuItem fx:id="addBulletMenuItem" mnemonicParsing="false" onAction="#addBullet" text="Projétil">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="DOWN" code="P" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
                                 <SeparatorMenuItem mnemonicParsing="false" />
                                 <MenuItem fx:id="addGearInformationMenuItem" mnemonicParsing="false" onAction="#addGearInformation" text="Informação da munição" />
                                 <MenuItem fx:id="addObjectLifeBarMenuItem" mnemonicParsing="false" onAction="#addObjectLifeBar" text="Informação da vida de objetos" />
@@ -97,7 +120,7 @@
         <HBox alignment="TOP_RIGHT" prefHeight="25.0" />
     </bottom>
     <center>
-        <SplitPane dividerPositions="0.8" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <SplitPane dividerPositions="0.9" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <items>
             <ScrollPane prefHeight="200.0" prefWidth="200.0">
                <content>

@@ -1,6 +1,12 @@
 package br.edu.ifce.cgt.application.vo;
 
+import javafx.scene.layout.AnchorPane;
+
 public class CGTGameDialogDrawable extends AbstractDrawableObject {
+
+    public CGTGameDialogDrawable(AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
+        super(drawableObjectPane, drawableConfigurationsPane);
+    }
 
     @Override
     public Object getObject() {

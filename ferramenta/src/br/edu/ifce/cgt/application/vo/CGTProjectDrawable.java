@@ -35,7 +35,7 @@ public class CGTProjectDrawable extends AbstractDrawableObject {
         size.setHeight(this.cgtProject.getCanvasHeight());
         size.setFill(null);
         size.setStroke(Color.RED);
-        size.setStrokeWidth(1);
+        size.setStrokeWidth(0.5);
         super.updateDrawPane(size);
     }
 
