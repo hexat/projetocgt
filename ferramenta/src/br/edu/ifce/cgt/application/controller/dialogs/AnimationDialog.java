@@ -14,6 +14,8 @@ import cgt.game.CGTSpriteSheet;
 import cgt.policy.StatePolicy;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -81,9 +83,9 @@ public class AnimationDialog extends HBox {
 
         boxSprite.getItems().setAll(Config.get().getGame().getSpriteDB().findAllId());
 
-        boxSprite.setOnAction(new EventHandler<ActionEvent>() {
+        boxSprite.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 CGTSpriteSheet sheet = Config.get().getGame().getSpriteDB().find(boxSprite.getValue());
                 imgPane.setTexture(sheet.getTexture());
             }
