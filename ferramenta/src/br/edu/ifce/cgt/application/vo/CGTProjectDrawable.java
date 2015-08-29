@@ -2,6 +2,7 @@ package br.edu.ifce.cgt.application.vo;
 
 import br.edu.ifce.cgt.application.controller.panes.ConfigProjectPane;
 import cgt.core.CGTProject;
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -27,6 +28,11 @@ public class CGTProjectDrawable extends AbstractDrawableObject {
     @Override
     public Object getObject() {
         return this.cgtProject;
+    }
+
+    @Override
+    public Node getPane() {
+        return this.projectPane;
     }
 
     @Override

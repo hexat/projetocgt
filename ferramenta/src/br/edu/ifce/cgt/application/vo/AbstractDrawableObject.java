@@ -4,7 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
-public abstract class AbstractDrawableObject implements DrawableObject {
+public abstract class AbstractDrawableObject<T> implements DrawableObject {
 
     private AnchorPane drawableObjectPane;
 
@@ -34,6 +34,16 @@ public abstract class AbstractDrawableObject implements DrawableObject {
         getDrawableConfigurationsPane().getChildren().add(pane);
     }
 
+    public void updateConfigPane(Node node) {
+        getDrawableConfigurationsPane().getChildren().removeAll(getDrawableConfigurationsPane().getChildren());
+        getDrawableConfigurationsPane().getChildren().add(node);
+    }
+
     @Override
     public void onCreate() {}
+
+    @Override
+    public T getObject() {
+        return null;
+    }
 }

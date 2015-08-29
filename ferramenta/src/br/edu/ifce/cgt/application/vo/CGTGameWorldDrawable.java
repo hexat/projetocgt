@@ -4,6 +4,7 @@ import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.panes.ConfigWorldPreviewPane;
 import br.edu.ifce.cgt.application.util.Config;
 import cgt.game.CGTGameWorld;
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import org.controlsfx.dialog.Dialogs;
@@ -27,8 +28,13 @@ public class CGTGameWorldDrawable extends AbstractDrawableObject {
     }
 
     @Override
-    public Object getObject() {
+    public CGTGameWorld getObject() {
         return gameWorld;
+    }
+
+    @Override
+    public Node getPane() {
+        return this.worldPane;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package br.edu.ifce.cgt.application.vo;
 
 import cgt.hud.HUDComponent;
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 
 public class HUDComponetDrawable extends AbstractDrawableObject {
@@ -15,6 +16,11 @@ public class HUDComponetDrawable extends AbstractDrawableObject {
     @Override
     public Object getObject() {
         return hudComponent;
+    }
+
+    @Override
+    public Node getPane() {
+        return null;
     }
 
     @Override

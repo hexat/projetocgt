@@ -1,5 +1,6 @@
 package br.edu.ifce.cgt.application.vo;
 
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 
 public class CGTGameDialogDrawable extends AbstractDrawableObject {
@@ -10,6 +11,11 @@ public class CGTGameDialogDrawable extends AbstractDrawableObject {
 
     @Override
     public Object getObject() {
+        return null;
+    }
+
+    @Override
+    public Node getPane() {
         return null;
     }
 
