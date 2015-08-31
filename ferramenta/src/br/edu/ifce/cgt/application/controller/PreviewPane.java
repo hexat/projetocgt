@@ -1,6 +1,8 @@
 package br.edu.ifce.cgt.application.controller;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.controller.dialogs.ListSpriteDialog;
+import br.edu.ifce.cgt.application.controller.dialogs.SpriteSheetDialog;
 import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.Pref;
 import br.edu.ifce.cgt.application.vo.*;
@@ -159,6 +161,17 @@ public class PreviewPane extends BorderPane {
     @FXML
     public void addButtonScreen() {
 
+    }
+
+    @FXML
+    public void addSpriteSheet() {
+        SpriteSheetDialog dia = new SpriteSheetDialog(null);
+        dia.show();
+    }
+
+    @FXML
+    public void editSpriteSheet() {
+        new ListSpriteDialog().show();
     }
 
     private void updateRecent() {

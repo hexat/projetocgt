@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
@@ -95,6 +96,12 @@
                                 <MenuItem fx:id="addEnemyLifeBarMenuitem" mnemonicParsing="false" onAction="#addEnemyLifeBar" text="Informação da vida de inimigos" />
                                 <SeparatorMenuItem mnemonicParsing="false" />
                                 <MenuItem fx:id="addButtonScreenMenuItem" mnemonicParsing="false" onAction="#addButtonScreen" text="Botão de tela" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Spritesheet">
+                            <items>
+                                <MenuItem fx:id="addSprite" mnemonicParsing="false" onAction="#addSpriteSheet" text="Adicionar" />
+                                <MenuItem fx:id="editSprite" mnemonicParsing="false" onAction="#editSpriteSheet" text="Editar"/>
                             </items>
                         </Menu>
                     </items>

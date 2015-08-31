@@ -3,11 +3,19 @@ package br.edu.ifce.cgt.application.util;
 import cgt.game.CGTGame;
 import cgt.util.CGTFile;
 import com.badlogic.gdx.utils.Json;
+
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
 
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.io.*;
 
 public class Config {
@@ -196,5 +204,39 @@ public class Config {
     public static void reset() {
         instance = null;
         inputProjectFile = null;
+    }
+
+
+    public static Image[] splitImage(Image img, int cols, int rows, int prefWidth, int prefHeight) {
+
+        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(img, null);
+        int w = bufferedImage.getWidth()/cols;
+        int h = bufferedImage.getHeight()/rows;
+        int num = 0;
+        BufferedImage imgs[] = new BufferedImage[w*h];
+
+        for(int y = 0; y < rows; y++) {
+            for(int x = 0; x < cols; x++) {
+                imgs[num] = new BufferedImage(w, h, bufferedImage.getType());
+                Graphics2D g = imgs[num].createGraphics();
+                g.drawImage(bufferedImage, 0, 0, w, h, w * x, h * y, w * x + w, h * y + h, null);
+                g.dispose();
+                num++;
+            }
+        }
+
+        Image images[] = new Image[cols*rows];
+
+        for (int i = 0; i < images.length; i++ ) {
+            BufferedImage image = imgs[i];
+            BufferedImage scaledImage = new BufferedImage(prefWidth, prefHeight, image.getType());
+            Graphics2D graphics2D = scaledImage.createGraphics();
+            graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            graphics2D.drawImage(image, 0, 0, prefWidth, prefHeight, null);
+            graphics2D.dispose();
+            images[i] = SwingFXUtils.toFXImage(scaledImage, null);
+        }
+
+        return images;
     }
 }

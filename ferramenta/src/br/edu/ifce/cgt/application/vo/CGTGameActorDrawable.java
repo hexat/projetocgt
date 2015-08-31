@@ -2,6 +2,7 @@ package br.edu.ifce.cgt.application.vo;
 
 import br.edu.ifce.cgt.application.controller.titleds.ActorTitledPane;
 import cgt.core.CGTActor;
+
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
@@ -31,6 +32,7 @@ public class CGTGameActorDrawable extends CGTGameObjectDrawable {
     @Override
     public void drawObject() {
         super.drawObject();
+
     }
 
     @Override

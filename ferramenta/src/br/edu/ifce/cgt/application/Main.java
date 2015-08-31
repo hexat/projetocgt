@@ -1,16 +1,18 @@
 package br.edu.ifce.cgt.application;
 
-import br.edu.ifce.cgt.application.controller.MainPane;
+
 import br.edu.ifce.cgt.application.controller.PreviewPane;
 import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.util.Pref;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
+
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -25,13 +27,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         app = primaryStage;
-        //BorderPane root = new MainPane();
         BorderPane root = new PreviewPane();
-
+        primaryStage.setTitle("Ceará Game Tools");
         Scene scene = new Scene(root, 900, 650);
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
-        primaryStage.setTitle("Ceará Game Tools");
         primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/logo.png")));
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {

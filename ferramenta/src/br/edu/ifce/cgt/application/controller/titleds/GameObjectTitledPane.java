@@ -56,7 +56,6 @@ public class GameObjectTitledPane extends TitledPane {
     @FXML private IntegerTextField txtLife;
     @FXML private VBox listTeste;
 	@FXML private TableView<String> tableSomColisao;
-
     @FXML private Label labLife;
     @FXML private Label labMaxLife;
 
