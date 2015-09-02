@@ -38,12 +38,4 @@ public abstract class AbstractDrawableObject<T> implements DrawableObject {
         getDrawableConfigurationsPane().getChildren().removeAll(getDrawableConfigurationsPane().getChildren());
         getDrawableConfigurationsPane().getChildren().add(node);
     }
-
-    @Override
-    public void onCreate() {}
-
-    @Override
-    public T getObject() {
-        return null;
-    }
 }

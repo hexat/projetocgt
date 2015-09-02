@@ -33,6 +33,12 @@ public class CGTGameWorldDrawable extends AbstractDrawableObject {
     }
 
     @Override
+    public void setObject(Object obj) {
+        if (obj instanceof CGTGameWorld)
+        this.gameWorld = (CGTGameWorld) obj;
+    }
+
+    @Override
     public Node getPane() {
         return this.worldPane;
     }

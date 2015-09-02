@@ -31,6 +31,12 @@ public class CGTProjectDrawable extends AbstractDrawableObject {
     }
 
     @Override
+    public void setObject(Object obj) {
+        if (obj instanceof CGTProject)
+            this.cgtProject = (CGTProject) obj;
+    }
+
+    @Override
     public Node getPane() {
         return this.projectPane;
     }
@@ -48,6 +54,11 @@ public class CGTProjectDrawable extends AbstractDrawableObject {
     @Override
     public void drawConfigurationPanel() {
         super.updateConfigPane(projectPane);
+    }
+
+    @Override
+    public void onCreate() {
+
     }
 
     @Override

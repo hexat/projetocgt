@@ -15,6 +15,11 @@ public class CGTGameDialogDrawable extends AbstractDrawableObject {
     }
 
     @Override
+    public void setObject(Object obj) {
+
+    }
+
+    @Override
     public Node getPane() {
         return null;
     }
@@ -26,6 +31,11 @@ public class CGTGameDialogDrawable extends AbstractDrawableObject {
 
     @Override
     public void drawConfigurationPanel() {
+
+    }
+
+    @Override
+    public void onCreate() {
 
     }
 }

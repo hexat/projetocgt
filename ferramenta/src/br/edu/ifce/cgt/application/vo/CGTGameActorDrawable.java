@@ -2,7 +2,6 @@ package br.edu.ifce.cgt.application.vo;
 
 import br.edu.ifce.cgt.application.controller.titleds.ActorTitledPane;
 import cgt.core.CGTActor;
-
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
@@ -20,11 +19,6 @@ public class CGTGameActorDrawable extends CGTGameObjectDrawable {
     }
 
     @Override
-    public CGTActor getObject() {
-        return this.actor;
-    }
-
-    @Override
     public Node getPane() {
         return this.actorTitledPane;
     }
@@ -32,7 +26,6 @@ public class CGTGameActorDrawable extends CGTGameObjectDrawable {
     @Override
     public void drawObject() {
         super.drawObject();
-
     }
 
     @Override
@@ -43,11 +36,6 @@ public class CGTGameActorDrawable extends CGTGameObjectDrawable {
         accordion.getPanes().add(titledPaneObject);
         accordion.getPanes().add(titledPaneActor);
         super.updateConfigPane(accordion);
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
     }
 
     @Override

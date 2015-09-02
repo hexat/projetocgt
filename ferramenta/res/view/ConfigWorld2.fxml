@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import br.edu.ifce.cgt.application.controller.ui.FloatTextField?>
+
 <fx:root type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <ScrollPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">

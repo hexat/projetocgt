@@ -63,6 +63,8 @@ public class GameObjectTitledPane extends TitledPane {
 	
 	private CGTGameObject gameObject;
 
+    private Runnable onUpdateRunnable;
+
     public GameObjectTitledPane(CGTGameObject object) {
         this.gameObject = object;
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigGameObject.fxml"));
@@ -74,20 +76,27 @@ public class GameObjectTitledPane extends TitledPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         init();
         setActions();
     }
 
+    public GameObjectTitledPane(CGTGameObject object, Runnable onUpdateRunnable) {
+        this(object);
+        this.onUpdateRunnable = onUpdateRunnable;
+    }
+
     private void init() {
         txtBoundsH.setText(gameObject.getBounds().getHeight() + "");
-        txtBoundsW.setText(gameObject.getBounds().getWidth()+"");
-        txtColisionH.setText(gameObject.getCollision().getHeight()+"");
-        txtColisionW.setText(gameObject.getCollision().getWidth()+"");
-        txtColisionX.setText(((int)gameObject.getCollision().x)+"");
-        txtColisionY.setText(((int)gameObject.getCollision().y)+"");
-        txtLife.setText(gameObject.getLife()+"");
+        txtBoundsW.setText(gameObject.getBounds().getWidth() + "");
+        txtColisionH.setText(gameObject.getCollision().getHeight() + "");
+        txtColisionW.setText(gameObject.getCollision().getWidth() + "");
+        txtColisionX.setText(((int) gameObject.getCollision().x) + "");
+        txtColisionY.setText(((int) gameObject.getCollision().y) + "");
+        txtLife.setText(gameObject.getLife() + "");
         txtMaxLife.setValue(gameObject.getMaxLife());
         txtVelocidade.setText(gameObject.getSpeed()+"");
+
         if (gameObject.getSound() != null) {
             txtSound.setText(gameObject.getSound().getFile().getFilename());
         }
@@ -110,6 +119,7 @@ public class GameObjectTitledPane extends TitledPane {
                 txtSound.selectAll();
             }
         });
+
         txtSound.setOnKeyTyped(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -158,6 +168,10 @@ public class GameObjectTitledPane extends TitledPane {
                 if (!newValue) {
                     gameObject.getBounds().height = txtBoundsH.getValue();
                 }
+
+                if (onUpdateRunnable != null) {
+                    onUpdateRunnable.run();
+                }
             }
         });
 
@@ -166,6 +180,10 @@ public class GameObjectTitledPane extends TitledPane {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue) {
                     gameObject.getBounds().width = txtBoundsW.getValue();
+                }
+
+                if (onUpdateRunnable != null) {
+                    onUpdateRunnable.run();
                 }
             }
         });
@@ -177,6 +195,10 @@ public class GameObjectTitledPane extends TitledPane {
                     gameObject.getCollision().x = txtColisionX.getValue();
                     gameObject.updateCollisionXY();
                 }
+
+                if (onUpdateRunnable != null) {
+                    onUpdateRunnable.run();
+                }
             }
         });
 
@@ -186,6 +208,10 @@ public class GameObjectTitledPane extends TitledPane {
                 if (!newValue) {
                     gameObject.getCollision().y = txtColisionY.getValue();
                     gameObject.updateCollisionXY();
+                }
+
+                if (onUpdateRunnable != null) {
+                    onUpdateRunnable.run();
                 }
             }
         });
@@ -197,6 +223,9 @@ public class GameObjectTitledPane extends TitledPane {
                     gameObject.getCollision().width = txtColisionW.getValue();
                 }
 
+                if (onUpdateRunnable != null) {
+                    onUpdateRunnable.run();
+                }
             }
         });
 
@@ -205,6 +234,10 @@ public class GameObjectTitledPane extends TitledPane {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue) {
                     gameObject.getCollision().height = txtColisionH.getValue();
+                }
+
+                if (onUpdateRunnable != null) {
+                    onUpdateRunnable.run();
                 }
             }
         });
@@ -256,6 +289,10 @@ public class GameObjectTitledPane extends TitledPane {
             txtPositionX.clear();
             txtPositionY.clear();
             updateBoxPositions();
+
+            if (onUpdateRunnable != null) {
+                onUpdateRunnable.run();
+            }
         }
     }
 

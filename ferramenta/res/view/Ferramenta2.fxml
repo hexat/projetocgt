@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
@@ -23,7 +22,7 @@
                         </MenuItem>
                         <Menu fx:id="openRecentMenu" mnemonicParsing="false" text="Abrir recente">
                             <items>
-                            <MenuItem mnemonicParsing="false" text="Vazio" />
+                                <MenuItem mnemonicParsing="false" text="Vazio" />
                             </items>
                         </Menu>
                         <SeparatorMenuItem mnemonicParsing="false" />
@@ -108,7 +107,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Executar">
                     <items>
-                        <MenuItem fx:id="runProjectMenuItem" disable="true" mnemonicParsing="false" onAction="#runProject" text="Executar">
+                        <MenuItem fx:id="runProjectMenuItem" mnemonicParsing="false" onAction="#runProject" text="Executar">
                             <accelerator>
                                 <KeyCodeCombination alt="UP" code="R" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>
@@ -124,24 +123,24 @@
         </MenuBar>
     </top>
     <bottom>
-        <HBox alignment="TOP_RIGHT" prefHeight="25.0" />
+        <HBox alignment="TOP_RIGHT"/>
     </bottom>
     <center>
-        <SplitPane dividerPositions="0.9" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <SplitPane dividerPositions="0.6" BorderPane.alignment="CENTER">
             <items>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0">
-               <content>
-                      <AnchorPane fx:id="drawableObjectPane" />
-               </content>
-            </ScrollPane>
-                <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="548.0" prefWidth="308.0">
+                <ScrollPane>
+                    <content>
+                        <AnchorPane fx:id="drawableObjectPane" />
+                    </content>
+                </ScrollPane>
+                <SplitPane dividerPositions="0.5" orientation="VERTICAL" >
                     <items>
-                        <TreeView fx:id="tree" prefHeight="271.0" prefWidth="177.0" />
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
-                     <content>
-                              <AnchorPane fx:id="drawableConfigurationsPane" minHeight="0.0" minWidth="0.0" prefHeight="126.0" prefWidth="162.0" />
-                     </content>
-                  </ScrollPane>
+                        <TreeView fx:id="tree" />
+                        <ScrollPane>
+                            <content>
+                                <AnchorPane fx:id="drawableConfigurationsPane"/>
+                            </content>
+                        </ScrollPane>
                     </items>
                 </SplitPane>
             </items>

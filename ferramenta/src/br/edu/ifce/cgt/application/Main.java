@@ -27,43 +27,14 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         app = primaryStage;
-        BorderPane root = new PreviewPane();
+        PreviewPane root = new PreviewPane();
         primaryStage.setTitle("Ceará Game Tools");
-        Scene scene = new Scene(root, 900, 650);
+        Scene scene = new Scene(root, 1080, 820);
         primaryStage.setScene(scene);
-        primaryStage.setMaximized(true);
         primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/logo.png")));
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {
-                if (Config.isCreated() && (!Config.isLoaded() || (Config.isLoaded() && Config.get().wasModified()))) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Salvar");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Você modificou seu projeto. Deseja salvar antes de sair?");
-
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.get() == ButtonType.OK) {
-                        File save;
-                        if (Config.isLoaded()) {
-                            save = Config.get().getInputProjectFile();
-                        } else {
-                            save = DialogsUtil.showSaveDialog("Salvar projeto");
-                        }
-
-                        if (save != null) {
-
-                            Pref.load().addRecentProject(save.getAbsolutePath());
-                            Pref.load().save();
-
-                            try {
-                                Config.get().zip(save);
-                            } catch (IOException e) {
-                                DialogsUtil.showErrorDialog();
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
+                root.beforeClosing();
             }
         });
         primaryStage.show();

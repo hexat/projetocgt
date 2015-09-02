@@ -212,10 +212,13 @@ public class MainPane extends BorderPane {
         menuRun.setDisable(false);
         menuExport.setDisable(false);
         TabPane tabFerramenta = (TabPane) Main.getApp().getScene().lookup("#tabFerramenta");
+
         Main.getApp().setTitle(open.getName());
+
         if (tabFerramenta.getTabs().size() > 1) {
             tabFerramenta.getTabs().remove(1, tabFerramenta.getTabs().size());
         }
+
         for (CGTWindow w : Config.get().getGame().getWindows()) {
             ScreenTab tab = new ScreenTab(w);
 
@@ -253,6 +256,7 @@ public class MainPane extends BorderPane {
     public void export() {
 //        Config.get().export();
         List<CGTError> errors = Config.get().getGame().validate();
+
         if (errors.isEmpty()) {
             Main.getApp().getScene().setCursor(Cursor.WAIT);
             new ExportDialog().show();
@@ -265,6 +269,7 @@ public class MainPane extends BorderPane {
     private void showValidateDialog(List<CGTError> errors) {
         String msg = "";
         ResourceBundle bundle = Pref.load().getBundle();
+
         for (CGTError e : errors) {
             msg += bundle.getString(e.getValidate().name()) + " em " + e.getId() + "." + '\n';
         }
@@ -418,7 +423,7 @@ public class MainPane extends BorderPane {
     }
 
 //    private void copyLibDesktopFiles() {
-//        if (!new File(localDefaultDirectory()+desktopJarPath).exists()) {
+//        if (!new File(localDefaultDirectory()+DESKTOP_JAR_PATH).exists()) {
 //            copyDesktopFiles();
 //        } else {
 //            URL url = null;

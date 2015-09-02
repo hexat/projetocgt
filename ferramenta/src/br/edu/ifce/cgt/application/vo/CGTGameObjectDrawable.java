@@ -22,21 +22,25 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
     public CGTGameObjectDrawable(CGTGameObject gameObject, AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
         super(drawableObjectPane, drawableConfigurationsPane);
         this.gameObject = gameObject;
-        this.gameObjectTitledPane = new GameObjectTitledPane(this.gameObject);
+        this.gameObjectTitledPane = new GameObjectTitledPane(this.gameObject, new Runnable() {
+            @Override
+            public void run() {
+                drawObject();
+            }
+        });
         this.bounds = new Rectangle(this.gameObject.getBounds().getWidth(), this.gameObject.getBounds().getHeight());
         this.collision = new Rectangle(this.gameObject.getCollision().getWidth(), this.gameObject.getCollision().getHeight());
-
-        if (this.gameObject.getPosition() != null) {
-            this.bounds.setX(this.gameObject.getPosition().x);
-            this.bounds.setY(this.gameObject.getPosition().y);
-            this.collision.setX(this.gameObject.getPosition().x);
-            this.collision.setY(this.gameObject.getPosition().y);
-        }
     }
 
     @Override
-    public Object getObject() {
+    public CGTGameObject getObject() {
         return gameObject;
+    }
+
+    @Override
+    public void setObject(Object obj) {
+        if (obj instanceof CGTGameObject)
+            this.gameObject = (CGTGameObject) obj;
     }
 
     @Override
@@ -83,13 +87,10 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
     }
 
     @Override
-    public void drawConfigurationPanel() {
-    }
+    public void drawConfigurationPanel() {}
 
     @Override
-    public void onCreate() {
-
-    }
+    public void onCreate() {}
 
     @Override
     public String toString() {

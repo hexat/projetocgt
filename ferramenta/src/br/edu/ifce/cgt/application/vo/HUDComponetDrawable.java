@@ -19,6 +19,12 @@ public class HUDComponetDrawable extends AbstractDrawableObject {
     }
 
     @Override
+    public void setObject(Object obj) {
+        if (obj instanceof HUDComponent )
+            this.hudComponent = (HUDComponent) obj;
+    }
+
+    @Override
     public Node getPane() {
         return null;
     }
