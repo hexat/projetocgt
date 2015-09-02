@@ -78,20 +78,22 @@ public class AnimationDialog extends HBox {
         dialogStage.setScene(new Scene(this));
         dialogStage.initModality(Modality.WINDOW_MODAL);
         dialogStage.initOwner(Main.getApp().getScene().getWindow());
-
         imgPane.setSize(256, 256);
-
         boxSprite.getItems().setAll(Config.get().getGame().getSpriteDB().findAllId());
+        boxSprite.getSelectionModel().selectFirst();
+
+        if (!boxSprite.getItems().isEmpty()) {
+            updateImgPane();
+        }
 
         boxSprite.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                CGTSpriteSheet sheet = Config.get().getGame().getSpriteDB().find(boxSprite.getValue());
-                imgPane.setTexture(sheet.getTexture());
+                updateImgPane();
             }
         });
 
-        boxSprite.getSelectionModel().selectFirst();
+
 
         ResourceBundle bundle = Pref.load().getBundle();
 
@@ -108,6 +110,11 @@ public class AnimationDialog extends HBox {
 
         boxStates.getItems().setAll(getListActorStates());
         boxStates.getSelectionModel().selectFirst();
+    }
+
+    private void updateImgPane() {
+        CGTSpriteSheet sheet = Config.get().getGame().getSpriteDB().find(boxSprite.getValue());
+        imgPane.setTexture(sheet.getTexture());
     }
 
     public AnimationDialog(CGTAnimation animation) {

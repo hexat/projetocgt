@@ -17,7 +17,7 @@
 //import cgt.hud.CGTButtonScreen;
 //import cgt.hud.CGTButtonStartGame;
 //import cgt.hud.CGTLabel;
-//import cgt.lose.LifeDepleted;
+//import cgt.lose.LifeDeleted;
 //import cgt.policy.ActionMovePolicy;
 //import cgt.policy.DirectionPolicy;
 //import cgt.policy.GameModePolicy;
@@ -918,7 +918,7 @@
 //		world.getCamera().setInitialWidth(0.5f);
 //		world.getCamera().setScale(2);
 //
-//		world.getLoseCriteria().add(new LifeDepleted(personagemCGTActor));
+//		world.getLoseCriteria().add(new LifeDeleted(personagemCGTActor));
 //
 //		//
 //		// // Button iniciar

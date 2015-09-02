@@ -1,6 +1,5 @@
 package cgt.core;
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +8,6 @@ import cgt.policy.ActionMovePolicy;
 import cgt.policy.InputPolicy;
 import cgt.unit.Action;
 import cgt.util.Jump;
-
 
 public class CGTActor extends CGTGameObject {
 	private ArrayList<Jump> jumps;
@@ -31,7 +29,7 @@ public class CGTActor extends CGTGameObject {
         fireDefault = -1;
 		timeToRecovery = 1;
 		timeToEnableInputs = 1;
-		this.invincible=false;
+		invincible=false;
 		fireActivate = false;
         inputsEnabled = true;
 	}
@@ -44,6 +42,7 @@ public class CGTActor extends CGTGameObject {
 	public boolean addAction(InputPolicy inputPolicy, ActionMovePolicy movePolicy) {
 		boolean hasInput = false;
 		boolean hasAction = false;
+
 		for (int i = 0; i < actions.size() && (!hasInput || !hasAction); i++) {
 			if (actions.get(i).hasInput(inputPolicy)) {
 				hasInput = true;
@@ -56,7 +55,6 @@ public class CGTActor extends CGTGameObject {
 
 		if (!hasAction && !hasInput) {
 			actions.add(new Action(movePolicy, inputPolicy));
-
 			return true;
 		} else {
 			return false;
