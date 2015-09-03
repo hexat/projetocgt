@@ -1,43 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import br.edu.ifce.cgt.application.controller.ui.IntegerTextField?>
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root animated="true" minWidth="300.0" text="Configuração Inimigo" type="javafx.scene.control.TitledPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<?import br.edu.ifce.cgt.application.controller.ui.IntegerTextField?>
+<fx:root animated="true" text="Configuração inimigo" type="javafx.scene.control.TitledPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <content>
-        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="385.0">
+        <ScrollPane>
             <content>
                 <VBox fx:id="boxContent">
                     <children>
-                        <GridPane layoutX="2.0" layoutY="1.0">
+                        <GridPane alignment="TOP_CENTER" hgap="8.0" vgap="8.0">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" />
-                                <ColumnConstraints hgrow="SOMETIMES" />
-                                <ColumnConstraints hgrow="SOMETIMES"/>
+                                <ColumnConstraints hgrow="ALWAYS" />
+                                <ColumnConstraints hgrow="ALWAYS" />
+                                <ColumnConstraints hgrow="ALWAYS" />
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints vgrow="ALWAYS" />
-                                <RowConstraints  vgrow="SOMETIMES" />
                                 <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints  vgrow="SOMETIMES" />
+                                <RowConstraints vgrow="SOMETIMES" />
+                                <RowConstraints vgrow="SOMETIMES" />
+                                <RowConstraints vgrow="SOMETIMES" />
                                 <RowConstraints vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Label text="Comportamento" />
+                                <Label text="Comportamento" GridPane.columnSpan="2" />
+
+                                <HBox GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                    <children>
+                                        <CheckBox fx:id="fadeCheckbox" alignment="TOP_LEFT" mnemonicParsing="false" text="Fade">
+                                            <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                            </padding>
+                                        </CheckBox>
+                                        <CheckBox fx:id="directionCheckbox" alignment="TOP_LEFT" mnemonicParsing="false" text="Movimentação">
+                                            <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                            </padding>
+                                        </CheckBox>
+                                        <CheckBox fx:id="sineWaveCheckbox" alignment="TOP_LEFT" mnemonicParsing="false" text="Onda">
+                                            <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                            </padding>
+                                        </CheckBox>
+                                        <CheckBox fx:id="sineCheckbox" alignment="TOP_LEFT" mnemonicParsing="false" text="Sino">
+                                            <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                            </padding>
+                                        </CheckBox>
+                                    </children>
+                                    <GridPane.margin>
+                                        <Insets />
+                                    </GridPane.margin>
+                                    <opaqueInsets>
+                                        <Insets />
+                                    </opaqueInsets>
+                                </HBox>
+
                                 <Label text="Valor de Dano" GridPane.rowIndex="2" />
-                                <Button mnemonicParsing="false" onAction="#addBehavior" text="+" GridPane.columnIndex="1" />
-                                <IntegerTextField fx:id="txtDamage" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <VBox fx:id="panBehaviors" alignment="CENTER" GridPane.columnSpan="3" GridPane.rowIndex="1">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                </VBox>
+                                <IntegerTextField fx:id="txtDamage" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                                 <Label text="Grupo" GridPane.rowIndex="3" />
                                 <ComboBox fx:id="boxGroup" editable="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
                             </children>
+                            <opaqueInsets>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                            </opaqueInsets>
+                            <VBox.margin>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                            </VBox.margin>
+                            <padding>
+                                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                            </padding>
                         </GridPane>
                     </children>
                 </VBox>

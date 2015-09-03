@@ -8,6 +8,7 @@ import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.Pref;
 import cgt.core.AbstractBehavior;
 import cgt.core.CGTEnemy;
+import cgt.policy.BehaviorPolicy;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -25,14 +26,16 @@ import java.util.ResourceBundle;
 
 public class EnemyTitledPane extends TitledPane {
 
-    @FXML public VBox panBehaviors;
     @FXML public IntegerTextField txtDamage;
     @FXML public CheckBox chkBlock;
     @FXML public VBox boxContent;
     @FXML public ComboBox<String> boxGroup;
+    @FXML public CheckBox fadeCheckbox;
+    @FXML public CheckBox directionCheckbox;
+    @FXML public CheckBox sineWaveCheckbox;
+    @FXML public CheckBox sineCheckbox;
 
     public CheckBox chkDestroyable;
-
     private CGTEnemy enemy;
     private ObservableList<String> listGroups;
 
@@ -46,6 +49,7 @@ public class EnemyTitledPane extends TitledPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         OppositeTitledPane pane = new OppositeTitledPane(object);
 
         boxContent.getChildren().add(0, pane.getGridOpposite());
@@ -59,7 +63,7 @@ public class EnemyTitledPane extends TitledPane {
     }
 
     public void init() {
-        txtDamage.focusedProperty().addListener(new ChangeListener<Boolean>() {
+        this.txtDamage.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue) {
@@ -68,16 +72,16 @@ public class EnemyTitledPane extends TitledPane {
             }
         });
 
-        listGroups = boxGroup.getItems();
+        this.listGroups = this.boxGroup.getItems();
 
-        boxGroup.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        this.boxGroup.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 listGroups.setAll(Config.get().getGame().getEnemiesGroup());
             }
         });
 
-        boxGroup.setOnAction(new EventHandler<ActionEvent>() {
+        this.boxGroup.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if (boxGroup.getValue() != null && !boxGroup.getValue().trim().isEmpty()) {
@@ -87,36 +91,56 @@ public class EnemyTitledPane extends TitledPane {
                 }
             }
         });
-        boxGroup.getSelectionModel().select(enemy.getGroup());
-    }
 
-    public void updateBehaviors() {
-        panBehaviors.getChildren().clear();
-        if (enemy.getBehaviorsSize() > 0) {
-            ResourceBundle bundle = Pref.load().getBundle();
-            for (int i = 0; i < enemy.getBehaviorsSize(); i++) {
-                final AbstractBehavior behavior = enemy.getBehavior(i);
-                ItemEditPane pane = new ItemEditPane(bundle.getString(behavior.getBehaviorPolicy()));
-                pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        enemy.removeBehavior(behavior);
-                        updateBehaviors();
-                    }
-                });
-                pane.getEditButton().setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        BehaviorDialog dialog = new BehaviorDialog(enemy, behavior);
-                        dialog.showAndWait();
-                        updateBehaviors();
-                    }
-                });
-                panBehaviors.getChildren().add(pane);
+        this.boxGroup.getSelectionModel().select(enemy.getGroup());
+
+        this.fadeCheckbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                    BehaviorDialog dialog = new BehaviorDialog(enemy, BehaviorPolicy.FADE);
+                    dialog.showAndWait();
+                } else {
+                    enemy.removeBehavior(BehaviorPolicy.FADE);
+                }
             }
-        } else {
-            panBehaviors.getChildren().add(new Label("Vazio"));
-        }
+        });
+
+        this.directionCheckbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                    BehaviorDialog dialog = new BehaviorDialog(enemy, BehaviorPolicy.DIRECTION);
+                    dialog.showAndWait();
+                } else {
+                    enemy.removeBehavior(BehaviorPolicy.DIRECTION);
+                }
+            }
+        });
+
+        this.sineCheckbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                    BehaviorDialog dialog = new BehaviorDialog(enemy, BehaviorPolicy.SINE);
+                    dialog.showAndWait();
+                } else {
+                    enemy.removeBehavior(BehaviorPolicy.SINE);
+                }
+            }
+        });
+
+        this.sineWaveCheckbox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (newValue) {
+                    BehaviorDialog dialog = new BehaviorDialog(enemy, BehaviorPolicy.WAVE);
+                    dialog.showAndWait();
+                } else {
+                    enemy.removeBehavior(BehaviorPolicy.WAVE);
+                }
+            }
+        });
     }
 
     public void setEnemy(CGTEnemy enemy) {
@@ -125,17 +149,9 @@ public class EnemyTitledPane extends TitledPane {
         if (enemy.getDamage() > 0) {
             txtDamage.setValue(enemy.getDamage());
         }
-
-        updateBehaviors();
     }
 
     public CGTEnemy getEnemy() {
         return enemy;
-    }
-
-    public void addBehavior(ActionEvent event) {
-        BehaviorDialog dialog = new BehaviorDialog(enemy);
-        dialog.showAndWait();
-        updateBehaviors();
     }
 }

@@ -1,27 +1,32 @@
 package br.edu.ifce.cgt.application.vo;
 
-import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.titleds.EnemyTitledPane;
+import br.edu.ifce.cgt.application.util.Config;
 import cgt.core.CGTEnemy;
-
 import cgt.core.CGTGameObject;
+import cgt.game.CGTGameWorld;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import org.controlsfx.dialog.Dialogs;
+import javafx.scene.layout.GridPane;
+import javafx.util.Pair;
 
+import java.util.List;
 import java.util.Optional;
 
 public class CGTGameEnemyDrawable extends CGTGameObjectDrawable {
 
     private CGTEnemy enemy;
+    private String name;
+    private String worldName;
     private EnemyTitledPane enemyTitledPane;
 
     public CGTGameEnemyDrawable(AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
         super(new CGTEnemy(), drawableObjectPane, drawableConfigurationsPane);
-        super.setObject(this.enemy);
-        this.setObject(this.enemy);
+        this.setObject(super.getObject());
+        this.enemy.setId(name);
         this.enemyTitledPane = new EnemyTitledPane(enemy);
     }
 
@@ -63,15 +68,58 @@ public class CGTGameEnemyDrawable extends CGTGameObjectDrawable {
 
     @Override
     public void onCreate() {
-        Optional<String> response = Dialogs.create()
-                .owner(Main.getApp())
-                .title("Nome para o inimigo")
-                .message("Digite um nome para o inimigo:")
-                .showTextInput("Inimigo");
 
-        if (response.isPresent()) {
-            String id = response.get().trim();
-            this.enemy = new CGTEnemy(id);
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setTitle("Inimigo");
+        dialog.setHeaderText("Criação de um inimigo");
+
+        ButtonType createButtonType = new ButtonType("Criar", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(createButtonType, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField enemyName = new TextField();
+        enemyName.setPromptText("Nome do inimigo");
+        ComboBox<String> worldCombobox = new ComboBox<>();
+        List<CGTGameWorld> worlds = Config.get().getGame().getWorlds();
+        worlds.stream().forEach(w -> worldCombobox.getItems().add(w.getId()));
+
+        grid.add(new Label("Nome do inimigo:"), 0, 0);
+        grid.add(enemyName, 1, 0);
+        grid.add(new Label("Mundo:"), 0, 1);
+        grid.add(worldCombobox, 1, 1);
+
+        Node loginButton = dialog.getDialogPane().lookupButton(createButtonType);
+        loginButton.setDisable(true);
+
+        enemyName.textProperty().addListener((observable, oldValue, newValue) -> {
+            loginButton.setDisable(newValue.trim().isEmpty());
+        });
+
+        dialog.getDialogPane().setContent(grid);
+        Platform.runLater(() -> enemyName.requestFocus());
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == createButtonType) {
+                return new Pair<>(enemyName.getText(), worldCombobox.getSelectionModel().getSelectedItem());
+            }
+            return null;
+        });
+
+        Optional<Pair<String, String>> result = dialog.showAndWait();
+
+        if (result.isPresent()) {
+            String id = result.get().getKey();
+            String worldName = result.get().getValue();
+            this.name = id;
+            this.worldName = worldName;
         }
+    }
+
+    public String getWorldName() {
+        return worldName;
     }
 }

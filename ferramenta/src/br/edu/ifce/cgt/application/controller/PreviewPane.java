@@ -240,13 +240,13 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addEnemy() {
-        DrawableObject<CGTEnemy> enemyDrawableObject = new CGTGameEnemyDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
+        CGTGameEnemyDrawable enemyDrawableObject = new CGTGameEnemyDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
         TreeItem<DrawableObject> enemyTreeItem = new TreeItem<>(enemyDrawableObject);
-        TreeItem<DrawableObject> worldTreeItem = this.getWorldNode();
-
-        if (worldTreeItem != null) {
-            worldTreeItem.getChildren().add(enemyTreeItem);
-        }
+        String worldName = enemyDrawableObject.getWorldName();
+        TreeItem<DrawableObject> worldTreeItem = this.getWorldNode(worldName);
+        worldTreeItem.getChildren().add(enemyTreeItem);
+        CGTGameWorld cgtGameWorld = Config.get().getGame().getWorld(worldName);
+        cgtGameWorld.addEnemy((CGTEnemy) enemyDrawableObject.getObject());
     }
 
     @FXML
@@ -309,14 +309,19 @@ public class PreviewPane extends BorderPane {
         }
     }
 
-    private TreeItem<DrawableObject> getWorldNode () {
+    private TreeItem<DrawableObject> getWorldNode (String worldName) {
         TreeItem<DrawableObject> result = null;
 
-        for (int i =0; i < this.tree.getExpandedItemCount(); i++) {
+        for (int i = 0; i < this.tree.getExpandedItemCount(); i++) {
             DrawableObject drawableObject = this.tree.getTreeItem(i).getValue();
-            if ( drawableObject instanceof CGTGameWorldDrawable ) {
-                result  = this.tree.getTreeItem(i);
-                break;
+
+            if (drawableObject instanceof CGTGameWorldDrawable) {
+                CGTGameWorldDrawable gameDrawable = (CGTGameWorldDrawable) drawableObject;
+
+                if (gameDrawable.getObject().getId().equals(worldName)){
+                    result = this.tree.getTreeItem(i);
+                    break;
+                }
             }
         }
 
