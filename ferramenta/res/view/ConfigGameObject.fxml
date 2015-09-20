@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import br.edu.ifce.cgt.application.controller.ui.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -9,29 +10,29 @@
     <content>
         <ScrollPane>
             <content>
-                <GridPane alignment="TOP_CENTER"  hgap="10.0" vgap="10.0">
+                <GridPane alignment="TOP_CENTER" hgap="10.0" vgap="10.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="ALWAYS" />
-                        <ColumnConstraints hgrow="ALWAYS" />
-                        <ColumnConstraints hgrow="ALWAYS" />
-                        <ColumnConstraints hgrow="ALWAYS" />
-                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" />
+                        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" prefWidth="60" />
+                        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" prefWidth="60" />
+                        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" prefWidth="60" />
+                        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" prefWidth="60" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                        <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                        <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                        <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                        <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                        <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                        <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                        <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                        <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                        <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                        <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                        <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                        <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+                        <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
                         <RowConstraints vgrow="SOMETIMES" />
                         <RowConstraints vgrow="SOMETIMES" />
                     </rowConstraints>
@@ -46,10 +47,10 @@
                         </VBox>
 
                         <Label fx:id="labMaxLife" text="Máxima vida" GridPane.rowIndex="2" />
-                        <IntegerTextField fx:id="txtMaxLife" GridPane.columnSpan="4" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <IntegerTextField fx:id="txtMaxLife" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="2" />
 
                         <Label fx:id="labLife" text="Vida" GridPane.rowIndex="3" />
-                        <IntegerTextField fx:id="txtLife" GridPane.columnSpan="4" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <IntegerTextField fx:id="txtLife" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="3" />
 
                         <Label text="Posições Iniciais" GridPane.columnSpan="1" GridPane.rowIndex="4" />
                         <IntegerTextField fx:id="txtPositionX" promptText="x" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -77,7 +78,7 @@
 
                         <Label text="Som" GridPane.rowIndex="9" />
                         <TextField fx:id="txtSound" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="9" />
-                        <Button mnemonicParsing="false" onAction="#setSoundObject" text="Pesquisar" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+                        <Button mnemonicParsing="false" onAction="#setSoundObject" text="..." GridPane.columnIndex="4" GridPane.rowIndex="9" />
 
                         <Label text="Som de colisão" GridPane.rowIndex="10" />
                         <Button mnemonicParsing="false" onAction="#addSoundCollision" text="+" GridPane.columnIndex="1" GridPane.rowIndex="10" />

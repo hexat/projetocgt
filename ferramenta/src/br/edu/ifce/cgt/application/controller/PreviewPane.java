@@ -9,6 +9,7 @@ import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.util.Pref;
 import br.edu.ifce.cgt.application.vo.*;
 import cgt.core.CGTActor;
+import cgt.core.CGTBonus;
 import cgt.core.CGTEnemy;
 import cgt.game.CGTGameWorld;
 import cgt.util.CGTError;
@@ -256,7 +257,13 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addBonus() {
-
+        CGTGameBonusDrawable bonusDrawable = new CGTGameBonusDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
+        TreeItem<DrawableObject> bonusTreeItem = new TreeItem<>(bonusDrawable);
+        String worldName = bonusDrawable.getWorldName();
+        TreeItem<DrawableObject> worldTreeItem = this.getWorldNode(worldName);
+        worldTreeItem.getChildren().add(bonusTreeItem);
+        CGTGameWorld cgtGameWorld = Config.get().getGame().getWorld(worldName);
+        cgtGameWorld.addBonus((CGTBonus) bonusDrawable.getObject());
     }
 
     @FXML
