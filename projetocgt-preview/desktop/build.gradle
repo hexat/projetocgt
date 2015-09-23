@@ -1,0 +1,20 @@
+sourceCompatibility = 1.7
+
+run {
+    ignoreExitValue = true
+}
+
+mainClassName = "com.projetcgt.Main"
+
+sourceSets.main.java.srcDirs = ['src/']
+
+
+sourceSets.main.resources.srcDirs = [file("../android/assets").getAbsolutePath()]
+
+eclipse.project {
+    name = appName + "-desktop"
+}
+
+tasks.ideaModule.doFirst {
+    sourceSets.main.resources.srcDirs = []
+}

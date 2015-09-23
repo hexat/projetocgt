@@ -1,0 +1,51 @@
+sourceCompatibility = 1.8
+run {
+    ignoreExitValue = true
+}
+mainClassName = "br.edu.ifce.cgt.application.Main"
+compileJava.options.encoding = 'UTF-8'
+sourceSets.main.java.srcDirs = ['src/']
+//sourceSets.main.resources.srcDirs = [file("../android/assets").getAbsolutePath()]
+sourceSets.main.resources.srcDirs = ['res/']
+eclipse.project {
+    name = "Ferramenta"
+}
+tasks.ideaModule.doFirst {
+    sourceSets.main.resources.srcDirs = ['res/']
+}
+task uijar(dependsOn: classes, type: Jar) {
+    archiveName = 'cgt-fx-ui.jar'
+    from sourceSets.main.output.classesDir
+    include 'br/edu/ifce/cgt/application/controller/ui/**/*'
+}
+task copyDesktop(dependsOn: ':desktop:distZip') {
+    doFirst {
+        ext.input = file(rootProject.project(':desktop').distZip.destinationDir)
+
+        ext.output = file(sourceSets.main.resources.srcDirs[0].absolutePath + '/bin/')
+        if (output.exists()) {
+            output.delete()
+        }
+        mkdir(output)
+    }
+
+    doLast {
+        copy {
+            from input
+            into output
+        }
+    }
+}
+task copyLibToAndroid {
+    dependsOn ':CearaGameTools:copyLib', ':core:copyLib'
+}
+copyLibToAndroid.mustRunAfter ':core:copyLib'
+task copyAndroid()
+task export(dependsOn: ':core:jar') << {
+    copy {
+        from rootProject.project(':core').jar.archivePath, rootProject.project(':CearaGameTools').jar.archivePath
+        into file(sourceSets.main.resources.srcDirs[0].absolutePath + '/bin/desktop/lib')
+    }
+}
+dependencies {
+}
