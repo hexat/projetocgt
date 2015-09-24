@@ -55,8 +55,8 @@ public class PreviewPane extends BorderPane {
     @FXML
     private TreeView<DrawableObject> tree;
 
-    @FXML
-    private CGTGameScreenDrawable[] screenSet;
+    /*@FXML
+    private CGTGameScreenDrawable[] screenSet;*/
 
     private boolean running;
 
@@ -171,7 +171,7 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void exit() {
-        Main.getApp().getOnCloseRequest().handle(new WindowEvent(Main.getApp(),WindowEvent.WINDOW_CLOSE_REQUEST));
+        Main.getApp().getOnCloseRequest().handle(new WindowEvent(Main.getApp(), WindowEvent.WINDOW_CLOSE_REQUEST));
         Main.getApp().close();
     }
 
@@ -289,8 +289,13 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addButtonScreen() {
-        CGTButtonScreen Btn = new CGTButtonScreen();
-
+        CGTButtonScreenPreview btn = new CGTButtonScreenPreview(new CGTButtonScreen(),this.drawableObjectPane, this.drawableConfigurationsPane);
+        TreeItem<DrawableObject> btnTreeItem = new TreeItem<>(btn);
+        String screenName = btn.getScreenName();
+        TreeItem<DrawableObject> screenTreeItem = this.getScreenNode(screenName);
+        screenTreeItem.getChildren().add(btnTreeItem);
+        CGTScreen cgtScreen = Config.get().getGame().getScreen(screenName);
+        //cgtScreen.addButtons(btn);
     }
 
     @FXML
@@ -328,6 +333,25 @@ public class PreviewPane extends BorderPane {
                 CGTGameWorldDrawable gameDrawable = (CGTGameWorldDrawable) drawableObject;
 
                 if (gameDrawable.getObject().getId().equals(worldName)){
+                    result = this.tree.getTreeItem(i);
+                    break;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private TreeItem<DrawableObject> getScreenNode (String screenName) {
+        TreeItem<DrawableObject> result = null;
+
+        for (int i = 0; i < this.tree.getExpandedItemCount(); i++) {
+            DrawableObject drawableObject = this.tree.getTreeItem(i).getValue();
+
+            if (drawableObject instanceof CGTGameScreenDrawable) {
+                CGTGameScreenDrawable gameDrawable = (CGTGameScreenDrawable) drawableObject;
+
+                if (gameDrawable.getObject().getId().equals(screenName)){
                     result = this.tree.getTreeItem(i);
                     break;
                 }

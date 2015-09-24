@@ -178,6 +178,12 @@ public class CGTGame implements Serializable {
         return res;
     }
 
+    public List<CGTScreen> getScreens() {
+        List<CGTScreen> res = new ArrayList<CGTScreen>();
+        res.addAll(screens);
+        return res;
+    }
+
     public SpriteSheetDB getSpriteDB() {
         return spriteDB;
     }

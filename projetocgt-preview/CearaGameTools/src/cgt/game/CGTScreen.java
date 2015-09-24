@@ -57,6 +57,10 @@ public class CGTScreen extends CGTWindow implements Serializable{
 		this.buttons = buttons;
 	}
 
+    public void addButtons(CGTButtonScreenPreview btn) {
+        this.buttons.add(btn);
+    }
+
 	public CGTTexture getBackground() {
 		return background;
 	}
