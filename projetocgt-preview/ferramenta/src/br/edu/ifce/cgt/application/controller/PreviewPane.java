@@ -294,8 +294,9 @@ public class PreviewPane extends BorderPane {
         String screenName = btn.getScreenName();
         TreeItem<DrawableObject> screenTreeItem = this.getScreenNode(screenName);
         screenTreeItem.getChildren().add(btnTreeItem);
-        CGTScreen cgtScreen = Config.get().getGame().getScreen(screenName);
-        //cgtScreen.addButtons(btn);
+        CGTScreenPreview cgtScreen = new CGTScreenPreview();
+        cgtScreen.setScreen(Config.get().getGame().getScreen(screenName));
+        cgtScreen.addButtons(btn);
     }
 
     @FXML

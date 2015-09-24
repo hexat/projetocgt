@@ -24,7 +24,7 @@ import java.io.IOException;
  * Created by Edy Junior on 15/09/2015.
  */
 public class ConfigScreenPreviewPane extends AnchorPane {
-
+    @FXML
     public TextField txtSound;
     @FXML
     private TextField txtBackScreen;

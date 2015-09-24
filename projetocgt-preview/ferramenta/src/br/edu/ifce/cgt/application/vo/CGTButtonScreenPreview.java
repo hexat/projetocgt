@@ -1,5 +1,7 @@
 package br.edu.ifce.cgt.application.vo;
 
+import br.edu.ifce.cgt.application.controller.panes.ConfigButtonPreviewPane;
+import br.edu.ifce.cgt.application.controller.panes.ConfigScreenPreviewPane;
 import br.edu.ifce.cgt.application.controller.titleds.GameObjectTitledPane;
 import br.edu.ifce.cgt.application.util.Config;
 import cgt.core.CGTGameObject;
@@ -25,13 +27,13 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
     private CGTGameObject gameObject;
     private String name;
     private String screenName;
-    private GameObjectTitledPane gameObjectTitledPane;
+    private ConfigButtonPreviewPane buttonPane;
     private Rectangle bounds;
 
     public CGTButtonScreenPreview(CGTButtonScreen btn, AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane){
         super( drawableObjectPane, drawableConfigurationsPane);
         this.btn = btn;
-        this.gameObjectTitledPane = new GameObjectTitledPane(this.gameObject, new Runnable() {
+        this.buttonPane = new ConfigButtonPreviewPane(this, new Runnable() {
             @Override
             public void run() {
                 drawObject();
@@ -54,15 +56,16 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
     @Override
     public void drawObject() {
 
+        getDrawableObjectPane().getChildren().addAll();
     }
 
     @Override
     public Node getPane() {
-        return this.gameObjectTitledPane;
+        return this.buttonPane;
     }
 
     @Override
-    public void drawConfigurationPanel() {}
+    public void drawConfigurationPanel() {super.updateConfigPane(buttonPane);}
 
     @Override
     public void onCreate() {
@@ -117,9 +120,17 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
         }
     }
 
+    public CGTButtonScreen getButton(){
+        return this.btn;
+    }
+
+    public void setButton(CGTButtonScreen btn){
+        this.btn = btn;
+    }
+
     @Override
     public String toString() {
-        return gameObject.getId();
+        return name;
     }
 
     public String getScreenName() {

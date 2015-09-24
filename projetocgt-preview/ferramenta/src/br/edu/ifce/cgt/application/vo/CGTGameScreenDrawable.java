@@ -51,6 +51,7 @@ public class CGTGameScreenDrawable extends AbstractDrawableObject {
         if (this.screen.getBackground() != null) {
             String backFilename = this.screen.getBackground().getFile().getFilename();
             ImageView img = new ImageView(Config.get().getImage(backFilename));
+            getDrawableObjectPane().getChildren().clear();
             getDrawableObjectPane().getChildren().add(img);
         }
     }
