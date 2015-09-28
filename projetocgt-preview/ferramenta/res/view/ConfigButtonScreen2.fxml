@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="333.0" prefWidth="473.0" type="Accordion" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="333.0" prefWidth="473.0" type="Accordion" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <panes>
     <TitledPane prefHeight="344.0" prefWidth="460.0" text="Configurações do botão">
       <content>
@@ -26,9 +26,13 @@
                   <FloatTextField layoutX="167.0" layoutY="260.0" />
                   <TextField layoutX="164.0" layoutY="55.0" />
                   <TextField layoutX="164.0" layoutY="96.0" />
-                  <Button layoutX="312.0" layoutY="55.0" mnemonicParsing="false" text="Pesquisa" />
-                  <Button layoutX="312.0" layoutY="96.0" mnemonicParsing="false" text="Pesquisa" />
+                  <Button layoutX="331.0" layoutY="55.0" mnemonicParsing="false" onAction="#Search1" text="Pesquisa" />
+                  <Button layoutX="331.0" layoutY="96.0" mnemonicParsing="false" onAction="#Search2" text="Pesquisa" />
                   <ComboBox layoutX="164.0" layoutY="16.0" prefWidth="150.0" />
+                  <Button layoutX="331.0" layoutY="155.0" mnemonicParsing="false" onAction="#BX" text="+" />
+                  <Button layoutX="331.0" layoutY="189.0" mnemonicParsing="false" onAction="#BY" text="+" />
+                  <Button layoutX="331.0" layoutY="223.0" mnemonicParsing="false" onAction="#BW" text="+" />
+                  <Button layoutX="331.0" layoutY="260.0" mnemonicParsing="false" onAction="#BH" text="+" />
                </children></AnchorPane>
       </content>
     </TitledPane>
