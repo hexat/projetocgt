@@ -33,8 +33,8 @@ public class CGTGameWorld extends CGTWindow {
 	private CGTButtonStartGame startGame;
     private int score;
 
-	protected CGTGameWorld(){
-        actor = new CGTActor("Actor");
+	public CGTGameWorld(){
+        actor = new CGTActor("Ator");
 		opposites = new ArrayList<CGTOpposite>();
 		bonus = new ArrayList<CGTBonus>();
 		enemies = new ArrayList<CGTEnemy>();

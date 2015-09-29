@@ -2,7 +2,9 @@ package cgt.core;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import cgt.behaviors.Behavior;
+
+import cgt.behaviors.*;
+import cgt.policy.BehaviorPolicy;
 
 
 public class CGTEnemy extends CGTOpposite implements Serializable {
@@ -72,6 +74,34 @@ public class CGTEnemy extends CGTOpposite implements Serializable {
 	
 	public void removeBehavior(int index){
 		behaviors.remove(index);
+	}
+
+	public void removeBehavior(BehaviorPolicy policy) {
+
+		int position = -1;
+
+		for (int i = 0; i< this.getBehaviorsSize(); i++) {
+			AbstractBehavior b = this.getBehavior(i);
+
+			if (policy == BehaviorPolicy.FADE && b instanceof Fade) {
+				position = i;
+				break;
+			} else if (policy == BehaviorPolicy.DIRECTION && b instanceof Direction)  {
+				position = i;
+				break;
+			} else if (policy == BehaviorPolicy.SINE && b instanceof Sine) {
+				position = i;
+				break;
+			} else if (policy == BehaviorPolicy.WAVE && b instanceof SineWave) {
+				position = i;
+				break;
+			}
+		}
+
+		if (position > -1) {
+			this.removeBehavior(position);
+		}
+
 	}
 
 	public String getGroup() {

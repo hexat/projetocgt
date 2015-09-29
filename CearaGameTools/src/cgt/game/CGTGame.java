@@ -15,8 +15,8 @@ public class CGTGame implements Serializable {
 
     private boolean debug;
     private final SpriteSheetDB spriteDB;
-    private final List<CGTScreen> screens = new ArrayList<CGTScreen>();
-    private final List<CGTGameWorld> worlds = new ArrayList<CGTGameWorld>();
+    private final List<CGTScreen> screens = new ArrayList<>();
+    private final List<CGTGameWorld> worlds = new ArrayList<>();
 	private String startWindowId;
 
     private CGTGame() {
@@ -50,8 +50,8 @@ public class CGTGame implements Serializable {
         }
         if (ok) {
             CGTScreen screen = new CGTScreen();
-            screen.setId(id);
             if (startWindowId == null) startWindowId = id;
+            screen.setId(id);
             screens.add(screen);
             return screen;
         }
@@ -175,6 +175,12 @@ public class CGTGame implements Serializable {
     public List<CGTGameWorld> getWorlds() {
         List<CGTGameWorld> res = new ArrayList<CGTGameWorld>();
         res.addAll(worlds);
+        return res;
+    }
+
+    public List<CGTScreen> getScreens() {
+        List<CGTScreen> res = new ArrayList<CGTScreen>();
+        res.addAll(screens);
         return res;
     }
 

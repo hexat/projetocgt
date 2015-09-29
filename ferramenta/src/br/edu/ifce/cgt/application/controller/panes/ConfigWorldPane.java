@@ -1,10 +1,9 @@
-package br.edu.ifce.cgt.application.controller.titleds;
+package br.edu.ifce.cgt.application.controller.panes;
 
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.dialogs.DialogDialog;
 import br.edu.ifce.cgt.application.controller.dialogs.LoseDialog;
 import br.edu.ifce.cgt.application.controller.dialogs.WinDialog;
-import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.util.Pref;
@@ -23,17 +22,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
-public class WorldTitledPane extends TitledPane {
+public class ConfigWorldPane extends AnchorPane {
+
+    private Runnable onUpdateRunnable;
+
     @FXML
     private Button btnPesquisaBack;
     @FXML
@@ -60,6 +62,7 @@ public class WorldTitledPane extends TitledPane {
 
         updateWin();
         updateLose();
+
         if (world.getBackground() != null) {
             txtProcuraBack.setText(world.getBackground().getFile().getFilename());
         }
@@ -77,7 +80,7 @@ public class WorldTitledPane extends TitledPane {
         return world;
     }
 
-    public WorldTitledPane(CGTGameWorld world) {
+    public ConfigWorldPane(CGTGameWorld world) {
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigWorld.fxml"));
         xml.setController(this);
         xml.setRoot(this);
@@ -87,8 +90,14 @@ public class WorldTitledPane extends TitledPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         init();
         setWorld(world);
+    }
+
+    public ConfigWorldPane(CGTGameWorld world, Runnable onUpdateRunnable) {
+        this(world);
+        this.onUpdateRunnable = onUpdateRunnable;
     }
 
     private void init() {
@@ -157,6 +166,9 @@ public class WorldTitledPane extends TitledPane {
         }
 
         txtProcuraBack.setText(path);
+
+        if (onUpdateRunnable != null)
+            onUpdateRunnable.run();
     }
 
     private void removerDialog(CGTDialog dialog) {
@@ -192,6 +204,7 @@ public class WorldTitledPane extends TitledPane {
                 dialog.getCloseButton().setTextureUp(null);
             }
         }
+
         dialog.setCloseButton(null);
 
         if (world.getLoseDialog() == dialog) {
@@ -204,7 +217,7 @@ public class WorldTitledPane extends TitledPane {
     }
 
     public void addWin(ActionEvent actionEvent) {
-        WinDialog win = new WinDialog(world, null);
+        WinDialog win = new WinDialog(world , null);
         win.showAndWait();
         updateWin();
     }
@@ -213,6 +226,7 @@ public class WorldTitledPane extends TitledPane {
         LoseDialog loseDialog = new LoseDialog(world, null);
         loseDialog.showAndWait();
         updateLose();
+
     }
 
     private void updateLose() {
@@ -294,16 +308,11 @@ public class WorldTitledPane extends TitledPane {
             }
             try {
                 CGTFile music = Config.get().createAudio(file);
-
                 world.setMusic(new CGTSound(music));
-
                 txtMusic.setText(music.getFilename());
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
         }
     }
 }

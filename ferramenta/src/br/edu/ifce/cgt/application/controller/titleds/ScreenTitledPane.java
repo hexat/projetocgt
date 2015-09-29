@@ -29,6 +29,19 @@ public class ScreenTitledPane implements Initializable {
 
     private CGTScreen screen;
 
+    public ScreenTitledPane(CGTScreen screen){
+        setScreen(screen);
+        FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigScreen.fxml"));
+        TitledPane el = null;
+        try {
+            el = xml.load();
+            ScreenTitledPane controller = xml.getController();
+            controller.setScreen(screen);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
