@@ -35,10 +35,6 @@ public class ConfigButtonPreviewPane extends Accordion {
     private FloatTextField RelX;
     @FXML
     private FloatTextField RelY;
-    /*@FXML
-    private Button p2;
-    @FXML
-    private Button p1;*/
     @FXML
     private ComboBox<String> choices;
     private CGTButtonScreenPreview btn;
@@ -88,27 +84,42 @@ public class ConfigButtonPreviewPane extends Accordion {
             path = chosenFile.getName();
         }
 
-        texPres.setText(path);
+        //texPres.setText(path);
 
         if (onUpdateRunnable != null)
             onUpdateRunnable.run();
     }
 
-    @FXML public void BX(ActionEvent actionEvent) {
+    @FXML public void Save(ActionEvent actionEvent) {
+        if(RelX.getValue() != 0 && RelY.getValue() != 0 && WRel.getValue() != 0 && HRel.getValue() != 0){
+            btn.getButton().setRelativeX(RelX.getValue());
+            btn.getButton().setRelativeY(RelY.getValue());
+            btn.getButton().setRelativeWidth(WRel.getValue());
+            btn.getButton().setRelativeHeight(HRel.getValue());
+            System.out.println("\nGGGGGGGGGGGG\n");
+        }
+    }
+
+    /*@FXML public void BX(ActionEvent actionEvent) {
         if(RelX.getValue() != 0)
             btn.getButton().setRelativeX(RelX.getValue());
+        System.out.println("SSSSSSSS");
     }
     @FXML public void BY(ActionEvent actionEvent) {
         if(RelY.getValue() != 0)
             btn.getButton().setRelativeY(RelY.getValue());
+        System.out.println("SSSSSSSS");
     }
     @FXML public void BW(ActionEvent actionEvent) {
         if(WRel.getValue() != 0)
             btn.getButton().setRelativeWidth(WRel.getValue());
-    }@FXML public void BH(ActionEvent actionEvent) {
+        System.out.println("SSSSSSSS");
+    }
+    @FXML public void BH(ActionEvent actionEvent) {
         if(HRel.getValue() != 0)
             btn.getButton().setRelativeHeight(HRel.getValue());
-    }
+        System.out.println("SSSSSSSS");
+    }*/
 
 
 }

@@ -5,6 +5,7 @@ import br.edu.ifce.cgt.application.util.Config;
 import cgt.core.CGTGameObject;
 import cgt.game.CGTSpriteSheet;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -72,14 +73,15 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
         super.updateDrawPane(bounds);
         super.updateDrawPane(collision);
 
-        if (!this.gameObject.getAnimations().isEmpty()){
+        int actorWidth = (int) this.gameObject.getBounds().getWidth();
+        int actorHeight = (int) this.gameObject.getBounds().getHeight();
+
+        if (!this.gameObject.getAnimations().isEmpty() && actorWidth > 0 && actorHeight > 0) {
             CGTSpriteSheet cgtSpriteSheet = this.gameObject.getAnimations().get(0).getSpriteSheet();
             String urlToFile = cgtSpriteSheet.getTexture().getFile().getFile().getName();
             Image img = Config.get().getImage(urlToFile);
-            int actorWidth = (int) this.gameObject.getBounds().getWidth();
-            int actorHeight = (int) this.gameObject.getBounds().getHeight();
-            Image[] images = Config.get().splitImage(img, cgtSpriteSheet.getColumns(), cgtSpriteSheet.getRows(),actorWidth,actorHeight );
-            preview = new ImageView(images[images.length/2]);
+            Image[] images = Config.get().splitImage(img, cgtSpriteSheet.getColumns(), cgtSpriteSheet.getRows(), actorWidth, actorHeight);
+            preview = new ImageView(images[images.length / 2]);
             preview.setX(this.gameObject.getPosition().x);
             preview.setY(this.gameObject.getPosition().y);
             super.updateDrawPane(preview);
