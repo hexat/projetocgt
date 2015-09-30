@@ -55,9 +55,6 @@ public class PreviewPane extends BorderPane {
     @FXML
     private TreeView<DrawableObject> tree;
 
-    /*@FXML
-    private CGTGameScreenDrawable[] screenSet;*/
-
     private boolean running;
 
     public PreviewPane() {

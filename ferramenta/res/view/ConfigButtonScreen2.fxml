@@ -20,15 +20,15 @@
                   <Separator layoutX="13.0" layoutY="125.0" prefHeight="5.0" prefWidth="457.0" />
                   <Label layoutX="38.0" layoutY="227.0" text="Largura Relativa" />
                   <Label layoutX="38.0" layoutY="264.0" text="Altura Relativa" />
-                  <FloatTextField layoutX="167.0" layoutY="155.0" />
-                  <FloatTextField layoutX="167.0" layoutY="189.0" />
-                  <FloatTextField layoutX="167.0" layoutY="223.0" />
-                  <FloatTextField layoutX="167.0" layoutY="260.0" />
-                  <TextField layoutX="164.0" layoutY="55.0" />
-                  <TextField layoutX="164.0" layoutY="96.0" />
+                  <FloatTextField fx:id="RelX" layoutX="167.0" layoutY="155.0" />
+                  <FloatTextField fx:id="RelY" layoutX="167.0" layoutY="189.0" />
+                  <FloatTextField fx:id="WRel" layoutX="167.0" layoutY="223.0" />
+                  <FloatTextField fx:id="HRel" layoutX="167.0" layoutY="260.0" />
+                  <TextField fx:id="texture" layoutX="164.0" layoutY="55.0" />
+                  <TextField fx:id="texPres" layoutX="164.0" layoutY="96.0" />
                   <Button layoutX="331.0" layoutY="55.0" mnemonicParsing="false" onAction="#Search1" text="Pesquisa" />
                   <Button layoutX="331.0" layoutY="96.0" mnemonicParsing="false" onAction="#Search2" text="Pesquisa" />
-                  <ComboBox layoutX="164.0" layoutY="16.0" prefWidth="150.0" />
+                  <ComboBox fx:id="choices" layoutX="164.0" layoutY="16.0" prefWidth="150.0" />
                   <Button layoutX="350.0" layoutY="186.0" mnemonicParsing="false" onAction="#Save" prefHeight="57.0" prefWidth="84.0" text="Salvar botão" />
                </children></AnchorPane>
       </content>

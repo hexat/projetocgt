@@ -18,6 +18,7 @@
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="90.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="90.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="90.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -26,6 +27,8 @@
                     <children>
                         <Label text="Tamanho da tela" />
                         <ChoiceBox fx:id="canvasSize" prefWidth="150.0" GridPane.columnIndex="1" />
+                  <ComboBox fx:id="firstWindow" prefHeight="25.0" prefWidth="34.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label layoutX="10.0" layoutY="17.0" text="Tela inicial" GridPane.rowIndex="1" />
                     </children>
                 </GridPane>
             </content>

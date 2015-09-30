@@ -5,8 +5,10 @@ import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.vo.CGTButtonScreenPreview;
+import cgt.hud.CGTButtonScreen;
 import cgt.util.CGTTexture;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Accordion;
@@ -52,11 +54,32 @@ public class ConfigButtonPreviewPane extends Accordion {
         }
 
         this.btn = btn;
+
+        init();
+
+        choices.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                btn.getButton().setScreenToGo(choices.getValue());
+            }
+        });
     }
 
     public ConfigButtonPreviewPane(CGTButtonScreenPreview btn, Runnable onUpdateRunnable){
         this(btn);
         this.onUpdateRunnable = onUpdateRunnable;
+    }
+
+    private void init() {
+        choices.getItems().setAll(Config.get().getGame().getIds());
+
+        //hudControl.setHud(buttonScreen);
+
+        if (btn.getButton().getScreenToGo() != null) {
+            choices.getSelectionModel().select(btn.getButton().getScreenToGo().getId());
+        }
+
+        //btn.setButton(buttonScreen);
     }
 
     @FXML public void Search1(ActionEvent actionEvent) {
@@ -84,7 +107,7 @@ public class ConfigButtonPreviewPane extends Accordion {
             path = chosenFile.getName();
         }
 
-        //texPres.setText(path);
+        texPres.setText(path);
 
         if (onUpdateRunnable != null)
             onUpdateRunnable.run();
@@ -97,7 +120,8 @@ public class ConfigButtonPreviewPane extends Accordion {
             btn.getButton().setRelativeWidth(WRel.getValue());
             btn.getButton().setRelativeHeight(HRel.getValue());
             System.out.println("\nGGGGGGGGGGGG\n");
-        }
+        }else
+            System.out.println("\nEEEERRRROOOOO\n");
     }
 
     /*@FXML public void BX(ActionEvent actionEvent) {

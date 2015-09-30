@@ -1,12 +1,15 @@
 package br.edu.ifce.cgt.application.controller.panes;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.util.Config;
 import cgt.core.CGTProject;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -17,6 +20,9 @@ public class ConfigProjectPane extends AnchorPane {
 
     @FXML
     private ChoiceBox<String> canvasSize;
+
+    @FXML
+    private ComboBox<String> firstWindow;
 
     private Runnable onUpdateRunner;
 
@@ -43,6 +49,7 @@ public class ConfigProjectPane extends AnchorPane {
                 changeProjectSize(newValue);
             }
         });
+        firstWindow.getItems().setAll(Config.get().getGame().getIds());
     }
 
     private void changeProjectSize(String size) {
