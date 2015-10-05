@@ -4,7 +4,9 @@ import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
-public abstract class AbstractDrawableObject<T> implements DrawableObject {
+public abstract class AbstractDrawableObject<T> implements DrawableObject<T> {
+
+    private T object;
 
     private AnchorPane drawableObjectPane;
 
@@ -16,6 +18,12 @@ public abstract class AbstractDrawableObject<T> implements DrawableObject {
         this.onCreate();
     }
 
+    public AbstractDrawableObject(T object, AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
+        this.object = object;
+        this.drawableObjectPane = drawableObjectPane;
+        this.drawableConfigurationsPane = drawableConfigurationsPane;
+    }
+
     public AnchorPane getDrawableObjectPane() {
         return drawableObjectPane;
     }
@@ -24,7 +32,17 @@ public abstract class AbstractDrawableObject<T> implements DrawableObject {
         return drawableConfigurationsPane;
     }
 
-     public void updateDrawPane(Node node) {
+    @Override
+    public T getObject() {
+        return object;
+    }
+
+    @Override
+    public void setObject(T object) {
+        this.object = object;
+    }
+
+    public void updateDrawPane(Node node) {
          getDrawableObjectPane().getChildren().remove(node);
          getDrawableObjectPane().getChildren().add(node);
      }

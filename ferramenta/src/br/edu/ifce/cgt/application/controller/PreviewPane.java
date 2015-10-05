@@ -11,9 +11,11 @@ import br.edu.ifce.cgt.application.vo.*;
 import cgt.core.CGTActor;
 import cgt.core.CGTBonus;
 import cgt.core.CGTEnemy;
+import cgt.game.CGTGame;
 import cgt.game.CGTGameWorld;
 import cgt.game.CGTScreen;
 import cgt.hud.CGTButtonScreen;
+import cgt.screen.CGTWindow;
 import cgt.util.CGTError;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -106,7 +108,35 @@ public class PreviewPane extends BorderPane {
             Pref.load().save();
             updateRecent();
 
-            // Opens project
+            open(file);
+        }
+    }
+
+    private void open(File open) {
+        Main.getApp().getScene().setCursor(Cursor.WAIT);
+        try {
+            Config.unzip(open);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Problema ao abrir o arquivo");
+            alert.showAndWait();
+            return;
+        }
+
+//        TabPane tabFerramenta = (TabPane) Main.getApp().getScene().lookup("#tabFerramenta");
+
+        Main.getApp().setTitle(open.getName());
+        updateTree();
+        Main.getApp().getScene().setCursor(Cursor.DEFAULT);
+    }
+
+    private void updateTree() { //TODO terminar
+        CGTGame game = Config.get().getGame();
+        for (CGTGameWorld w : game.getWorlds()) {
+            DrawableObject<CGTGameWorld> worldDrawable = new CGTGameWorldDrawable(w, this.drawableObjectPane, this.drawableConfigurationsPane);
+            TreeItem<DrawableObject> worldTreeItem = new TreeItem<>(worldDrawable);
+            this.tree.getRoot().getChildren().add(worldTreeItem);
         }
     }
 
@@ -438,7 +468,7 @@ public class PreviewPane extends BorderPane {
                 item.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-
+                        open(file);
                     }
                 });
 

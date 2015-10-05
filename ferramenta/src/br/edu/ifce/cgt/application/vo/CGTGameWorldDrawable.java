@@ -3,6 +3,7 @@ package br.edu.ifce.cgt.application.vo;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.panes.ConfigWorldPreviewPane;
 import br.edu.ifce.cgt.application.util.Config;
+import cgt.core.CGTGameObject;
 import cgt.game.CGTGameWorld;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
@@ -11,31 +12,28 @@ import org.controlsfx.dialog.Dialogs;
 
 import java.util.Optional;
 
-public class CGTGameWorldDrawable extends AbstractDrawableObject {
-
-    private CGTGameWorld gameWorld;
+public class CGTGameWorldDrawable extends AbstractDrawableObject<CGTGameWorld> {
     private ConfigWorldPreviewPane worldPane;
 
     public CGTGameWorldDrawable(AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
         super(drawableObjectPane, drawableConfigurationsPane);
 
-        this.worldPane = new ConfigWorldPreviewPane(gameWorld, new Runnable() {
+        init();
+    }
+
+    public CGTGameWorldDrawable(CGTGameWorld object, AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
+        super(object, drawableObjectPane, drawableConfigurationsPane);
+
+        init();
+    }
+
+    public void init() {
+        this.worldPane = new ConfigWorldPreviewPane(getObject(), new Runnable() {
             @Override
             public void run() {
                 drawObject();
             }
         });
-    }
-
-    @Override
-    public CGTGameWorld getObject() {
-        return gameWorld;
-    }
-
-    @Override
-    public void setObject(Object obj) {
-        if (obj instanceof CGTGameWorld)
-            this.gameWorld = (CGTGameWorld) obj;
     }
 
     @Override
@@ -45,8 +43,8 @@ public class CGTGameWorldDrawable extends AbstractDrawableObject {
 
     @Override
     public void drawObject() {
-        if (this.gameWorld.getBackground() != null) {
-            String backFilename = this.gameWorld.getBackground().getFile().getFilename();
+        if (getObject().getBackground() != null) {
+            String backFilename = getObject().getBackground().getFile().getFilename();
             ImageView img = new ImageView(Config.get().getImage(backFilename));
             getDrawableObjectPane().getChildren().add(img);
         }
@@ -67,12 +65,12 @@ public class CGTGameWorldDrawable extends AbstractDrawableObject {
 
         if (response.isPresent()) {
             String id = response.get().trim();
-            this.gameWorld = Config.get().getGame().createWorld(id);
+            setObject(Config.get().getGame().createWorld(id));
         }
     }
 
     @Override
     public String toString() {
-        return this.gameWorld.getId();
+        return getObject().getId();
     }
 }
