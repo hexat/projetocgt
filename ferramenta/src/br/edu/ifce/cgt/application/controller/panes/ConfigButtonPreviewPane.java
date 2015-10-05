@@ -26,7 +26,7 @@ import java.io.IOException;
 public class ConfigButtonPreviewPane extends Accordion {
 
     @FXML
-    public TextField texture;
+    private TextField texture;
     @FXML
     private TextField texPres;
     @FXML
@@ -73,13 +73,9 @@ public class ConfigButtonPreviewPane extends Accordion {
     private void init() {
         choices.getItems().setAll(Config.get().getGame().getIds());
 
-        //hudControl.setHud(buttonScreen);
-
         if (btn.getButton().getScreenToGo() != null) {
             choices.getSelectionModel().select(btn.getButton().getScreenToGo().getId());
         }
-
-        //btn.setButton(buttonScreen);
     }
 
     @FXML public void Search1(ActionEvent actionEvent) {
@@ -114,36 +110,33 @@ public class ConfigButtonPreviewPane extends Accordion {
     }
 
     @FXML public void Save(ActionEvent actionEvent) {
-        if(RelX.getValue() != 0 && RelY.getValue() != 0 && WRel.getValue() != 0 && HRel.getValue() != 0){
+        if(RelX.getValue() >= 0 && RelY.getValue() >= 0 && WRel.getValue() > 0 && HRel.getValue() > 0){
             btn.getButton().setRelativeX(RelX.getValue());
             btn.getButton().setRelativeY(RelY.getValue());
             btn.getButton().setRelativeWidth(WRel.getValue());
             btn.getButton().setRelativeHeight(HRel.getValue());
-            System.out.println("\nGGGGGGGGGGGG\n");
+            System.out.println("\nCRIOU\n");
         }else
-            System.out.println("\nEEEERRRROOOOO\n");
+            System.out.println("\nProblema\n");
     }
 
-    /*@FXML public void BX(ActionEvent actionEvent) {
-        if(RelX.getValue() != 0)
-            btn.getButton().setRelativeX(RelX.getValue());
-        System.out.println("SSSSSSSS");
+    public TextField getTexture(){
+        return this.texture;
     }
-    @FXML public void BY(ActionEvent actionEvent) {
-        if(RelY.getValue() != 0)
-            btn.getButton().setRelativeY(RelY.getValue());
-        System.out.println("SSSSSSSS");
+    public TextField getTextPress(){
+        return this.texPres;
     }
-    @FXML public void BW(ActionEvent actionEvent) {
-        if(WRel.getValue() != 0)
-            btn.getButton().setRelativeWidth(WRel.getValue());
-        System.out.println("SSSSSSSS");
+    public FloatTextField getRelX(){
+        return this.RelX;
     }
-    @FXML public void BH(ActionEvent actionEvent) {
-        if(HRel.getValue() != 0)
-            btn.getButton().setRelativeHeight(HRel.getValue());
-        System.out.println("SSSSSSSS");
-    }*/
-
+    public FloatTextField getRelY(){
+        return this.RelY;
+    }
+    public FloatTextField getWRel(){
+        return this.WRel;
+    }
+    public FloatTextField getHRel(){
+        return this.HRel;
+    }
 
 }

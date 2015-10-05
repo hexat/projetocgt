@@ -32,7 +32,6 @@ public class ConfigProjectPane extends AnchorPane {
         this.cgtProject = cgtProject;
 
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigProject.fxml"));
-
         xml.setController(this);
         xml.setRoot(this);
 
@@ -50,6 +49,12 @@ public class ConfigProjectPane extends AnchorPane {
             }
         });
         firstWindow.getItems().setAll(Config.get().getGame().getIds());
+        this.firstWindow.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                Config.get().getGame().setStartWindowId(newValue);
+            }
+        });
     }
 
     private void changeProjectSize(String size) {
@@ -64,5 +69,9 @@ public class ConfigProjectPane extends AnchorPane {
     public ConfigProjectPane(CGTProject cgtProject, Runnable onUpdateRunner) {
         this(cgtProject);
         this.onUpdateRunner = onUpdateRunner;
+    }
+
+    public ComboBox<String> getComboBox(){
+        return  this.firstWindow;
     }
 }

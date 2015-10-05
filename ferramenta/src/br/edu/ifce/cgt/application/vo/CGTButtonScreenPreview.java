@@ -7,10 +7,18 @@ import br.edu.ifce.cgt.application.util.Config;
 import cgt.core.CGTGameObject;
 import cgt.game.CGTScreen;
 import cgt.hud.CGTButtonScreen;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Affine2;
+import com.badlogic.gdx.math.Matrix4;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
@@ -55,8 +63,14 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
 
     @Override
     public void drawObject() {
-
-        getDrawableObjectPane().getChildren().addAll();
+        if(!buttonPane.getTexture().getText().isEmpty()){// && this.btn.getTextureUp().getFile().getFile().exists()) {
+            ImageView preview = new ImageView(this.btn.getTextureUp().getFile().getFile().getAbsolutePath());
+            preview.setX(buttonPane.getRelX().getValue() * getDrawableObjectPane().getWidth());
+            preview.setY(buttonPane.getRelY().getValue() * getDrawableObjectPane().getHeight());
+            //preview.setScaleX(buttonPane.getWRel().getValue() * getDrawableObjectPane().getWidth());
+            //preview.setScaleY(buttonPane.getHRel().getValue() * getDrawableObjectPane().getHeight());
+            super.updateDrawPane(preview);
+        }
     }
 
     @Override

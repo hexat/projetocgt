@@ -49,9 +49,6 @@ public class ConfigScreenPreviewPane extends AnchorPane {
 
         this.screen = screen;
         this.btnBox = new VBox(30);
-        //this.camera = getScreen().getCamera();
-
-        //init();
     }
 
     public ConfigScreenPreviewPane(CGTScreen screen, Runnable onUpdateRunnable) {

@@ -9,12 +9,12 @@ import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.util.Pref;
 import br.edu.ifce.cgt.application.vo.*;
 import cgt.core.CGTActor;
+import cgt.core.CGTBonus;
 import cgt.core.CGTEnemy;
 import cgt.game.CGTGameWorld;
 import cgt.game.CGTScreen;
 import cgt.hud.CGTButtonScreen;
 import cgt.util.CGTError;
-import javafx.collections.ObservableArray;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,8 +29,6 @@ import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
 import org.apache.commons.io.FileUtils;
-import org.controlsfx.dialog.Dialogs;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,6 +52,9 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     private TreeView<DrawableObject> tree;
+
+    @FXML
+    private CGTProjectDrawable rootItem;
 
     private boolean running;
 
@@ -82,7 +83,7 @@ public class PreviewPane extends BorderPane {
             }
         });
 
-        DrawableObject rootItem = new CGTProjectDrawable("Projeto", this.drawableObjectPane, this.drawableConfigurationsPane);
+        rootItem = new CGTProjectDrawable("Projeto", this.drawableObjectPane, this.drawableConfigurationsPane);
         TreeItem<DrawableObject> root = new TreeItem<>(rootItem);
         root.setExpanded(true);
         tree.setRoot(root);
@@ -169,6 +170,7 @@ public class PreviewPane extends BorderPane {
     @FXML
     public void exit() {
         Main.getApp().getOnCloseRequest().handle(new WindowEvent(Main.getApp(), WindowEvent.WINDOW_CLOSE_REQUEST));
+
         Main.getApp().close();
     }
 
@@ -234,6 +236,7 @@ public class PreviewPane extends BorderPane {
         TreeItem<DrawableObject> actorTreeItem = new TreeItem<>(drawableActor);
         worldTreeItem.getChildren().add(actorTreeItem);
         this.tree.getRoot().getChildren().add(worldTreeItem);
+        this.rootItem.getConfig().getComboBox().getItems().add(worldDrawable.toString());
     }
 
     @FXML
@@ -241,6 +244,7 @@ public class PreviewPane extends BorderPane {
         DrawableObject<CGTScreen> screenDrawable = new CGTGameScreenDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
         TreeItem<DrawableObject> screenTreeItem = new TreeItem<>(screenDrawable);
         this.tree.getRoot().getChildren().add(screenTreeItem);
+        this.rootItem.getConfig().getComboBox().getItems().add(screenDrawable.toString());
     }
 
     @FXML
@@ -261,7 +265,13 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addBonus() {
-
+        CGTGameBonusDrawable bonusDrawable = new CGTGameBonusDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
+        TreeItem<DrawableObject> bonusTreeItem = new TreeItem<>(bonusDrawable);
+        String worldName = bonusDrawable.getWorldName();
+        TreeItem<DrawableObject> worldTreeItem = this.getWorldNode(worldName);
+        worldTreeItem.getChildren().add(bonusTreeItem);
+        CGTGameWorld cgtGameWorld = Config.get().getGame().getWorld(worldName);
+        cgtGameWorld.addBonus((CGTBonus) bonusDrawable.getObject());
     }
 
     @FXML

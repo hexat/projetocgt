@@ -1,26 +1,21 @@
 package br.edu.ifce.cgt.application.vo;
 
-import br.edu.ifce.cgt.application.controller.titleds.ActorTitledPane;
-import cgt.core.CGTActor;
+import br.edu.ifce.cgt.application.controller.titleds.BonusTitledPane;
+import cgt.core.CGTBonus;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 
-public class CGTGameActorDrawable extends CGTGameObjectDrawable {
+public class CGTGameBonusDrawable extends  CGTGameObjectDrawable{
 
-    private CGTActor actor;
-    private ActorTitledPane actorTitledPane;
+    private CGTBonus bonus;
+    private BonusTitledPane pane;
 
-    public CGTGameActorDrawable(CGTActor actor, AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
-        super(actor, drawableObjectPane, drawableConfigurationsPane);
-        this.actor = actor;
-        this.actorTitledPane = new ActorTitledPane(actor);
-    }
-
-    @Override
-    public Node getPane() {
-        return this.actorTitledPane;
+    public CGTGameBonusDrawable(AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
+        super(new CGTBonus(), drawableObjectPane, drawableConfigurationsPane);
+        this.bonus = (CGTBonus) super.getObject();
+        this.pane = new BonusTitledPane(this.bonus);
     }
 
     @Override
@@ -39,7 +34,7 @@ public class CGTGameActorDrawable extends CGTGameObjectDrawable {
     }
 
     @Override
-    public String toString() {
-        return super.toString() + " (Ator)";
+    public Node getPane() {
+        return this.pane;
     }
 }

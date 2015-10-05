@@ -122,4 +122,5 @@ public class CGTGameEnemyDrawable extends CGTGameObjectDrawable {
     public String getWorldName() {
         return worldName;
     }
+
 }

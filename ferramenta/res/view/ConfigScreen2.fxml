@@ -43,27 +43,6 @@
                   </AnchorPane>
                </content>
             </TitledPane>
-            <TitledPane expanded="false" text="Butões da Tela">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <ScrollPane prefHeight="200.0" prefWidth="461.0">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="236.0" prefWidth="462.0">
-                                 <children>
-                                    <Button layoutX="553.0" layoutY="24.0" mnemonicParsing="false" text="Button" />
-                                 </children>
-                              </AnchorPane>
-                          </content>
-                        </ScrollPane>
-                     </children></AnchorPane>
-               </content>
-            </TitledPane>
-            <TitledPane expanded="false" text="untitled 3">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
-            </TitledPane>
          </panes>
       </Accordion>
    </children>

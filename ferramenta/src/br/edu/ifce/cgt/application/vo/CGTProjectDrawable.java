@@ -41,6 +41,10 @@ public class CGTProjectDrawable extends AbstractDrawableObject {
         return this.projectPane;
     }
 
+    public  ConfigProjectPane getConfig(){
+        return this.projectPane;
+    }
+
     @Override
     public void drawObject() {
         size.setWidth(this.cgtProject.getCanvasWidth());

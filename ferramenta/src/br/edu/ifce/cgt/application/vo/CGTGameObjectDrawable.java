@@ -3,19 +3,28 @@ package br.edu.ifce.cgt.application.vo;
 import br.edu.ifce.cgt.application.controller.titleds.GameObjectTitledPane;
 import br.edu.ifce.cgt.application.util.Config;
 import cgt.core.CGTGameObject;
+import cgt.game.CGTGameWorld;
 import cgt.game.CGTSpriteSheet;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Pair;
+import java.util.List;
+import java.util.Optional;
 
 public class CGTGameObjectDrawable extends AbstractDrawableObject {
 
     private CGTGameObject gameObject;
     private GameObjectTitledPane gameObjectTitledPane;
+    private String worldName;
+    private String gameObjectId;
     private Rectangle bounds;
     private Rectangle collision;
     private ImageView preview;
@@ -23,6 +32,7 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
     public CGTGameObjectDrawable(CGTGameObject gameObject, AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
         super(drawableObjectPane, drawableConfigurationsPane);
         this.gameObject = gameObject;
+        this.gameObject.setId(this.getGameObjectId());
         this.gameObjectTitledPane = new GameObjectTitledPane(this.gameObject, new Runnable() {
             @Override
             public void run() {
@@ -92,10 +102,67 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
     public void drawConfigurationPanel() {}
 
     @Override
-    public void onCreate() {}
+    public void onCreate() {
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setTitle("Criar objeto");
+        dialog.setHeaderText("Criação de um objeto do jogo");
+
+        ButtonType createButtonType = new ButtonType("Criar", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(createButtonType, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField name = new TextField();
+        name.setPromptText("Nome do objeto");
+        ComboBox<String> worldCombobox = new ComboBox<>();
+        List<CGTGameWorld> worlds = Config.get().getGame().getWorlds();
+        worlds.stream().forEach(w -> worldCombobox.getItems().add(w.getId()));
+
+        grid.add(new Label("Nome do objeto:"), 0, 0);
+        grid.add(name, 1, 0);
+        grid.add(new Label("Mundo:"), 0, 1);
+        grid.add(worldCombobox, 1, 1);
+
+        Node loginButton = dialog.getDialogPane().lookupButton(createButtonType);
+        loginButton.setDisable(true);
+
+        name.textProperty().addListener((observable, oldValue, newValue) -> {
+            loginButton.setDisable(newValue.trim().isEmpty());
+        });
+
+        dialog.getDialogPane().setContent(grid);
+        Platform.runLater(() -> name.requestFocus());
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == createButtonType) {
+                return new Pair<>(name.getText(), worldCombobox.getSelectionModel().getSelectedItem());
+            }
+            return null;
+        });
+
+        Optional<Pair<String, String>> result = dialog.showAndWait();
+
+        if (result.isPresent()) {
+            String id = result.get().getKey();
+            String worldName = result.get().getValue();
+            this.gameObjectId = id;
+            this.worldName = worldName;
+        }
+    }
+
+    public String getWorldName () {
+        return worldName;
+    }
+
+    public String getGameObjectId() {
+        return gameObjectId;
+    }
 
     @Override
     public String toString() {
-        return gameObject.getId();
+        return this.gameObjectId;
     }
 }
