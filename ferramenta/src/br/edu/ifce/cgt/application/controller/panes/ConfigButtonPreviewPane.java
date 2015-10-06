@@ -5,17 +5,14 @@ import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.vo.CGTButtonScreenPreview;
-import cgt.hud.CGTButtonScreen;
 import cgt.util.CGTTexture;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Accordion;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,13 +53,6 @@ public class ConfigButtonPreviewPane extends Accordion {
         this.btn = btn;
 
         init();
-
-        choices.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                btn.getButton().setScreenToGo(choices.getValue());
-            }
-        });
     }
 
     public ConfigButtonPreviewPane(CGTButtonScreenPreview btn, Runnable onUpdateRunnable){
@@ -71,7 +61,17 @@ public class ConfigButtonPreviewPane extends Accordion {
     }
 
     private void init() {
-        choices.getItems().setAll(Config.get().getGame().getIds());
+        choices.setOnMouseClicked(e-> {
+            choices.getItems().clear();
+            choices.getItems().addAll(Config.get().getGame().getIds());
+        });
+
+        choices.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                btn.getButton().setScreenToGo(choices.getValue());
+            }
+        });
 
         if (btn.getButton().getScreenToGo() != null) {
             choices.getSelectionModel().select(btn.getButton().getScreenToGo().getId());
@@ -137,6 +137,10 @@ public class ConfigButtonPreviewPane extends Accordion {
     }
     public FloatTextField getHRel(){
         return this.HRel;
+    }
+
+    public ComboBox<String> getScreens(){
+        return  this.choices;
     }
 
 }

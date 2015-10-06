@@ -18,6 +18,7 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -36,7 +37,6 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
     private String name;
     private String screenName;
     private ConfigButtonPreviewPane buttonPane;
-    private Rectangle bounds;
 
     public CGTButtonScreenPreview(CGTButtonScreen btn, AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane){
         super( drawableObjectPane, drawableConfigurationsPane);
@@ -47,7 +47,6 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
                 drawObject();
             }
         });
-        //this.bounds = new Rectangle(this.gameObject.getBounds().getWidth(), this.gameObject.getBounds().getHeight());
     }
 
     @Override
@@ -63,12 +62,13 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
 
     @Override
     public void drawObject() {
-        if(!buttonPane.getTexture().getText().isEmpty()){// && this.btn.getTextureUp().getFile().getFile().exists()) {
-            ImageView preview = new ImageView(this.btn.getTextureUp().getFile().getFile().getAbsolutePath());
+        if(!buttonPane.getTexture().getText().isEmpty() && buttonPane.getRelX().getValue() >= 0 &&
+                buttonPane.getRelY().getValue() >= 0 && buttonPane.getWRel().getValue() > 0 && buttonPane.getHRel().getValue() > 0){
+            ImageView preview = new ImageView(Config.get().getImage(this.btn.getTextureUp().getFile().getFile().getName()));
             preview.setX(buttonPane.getRelX().getValue() * getDrawableObjectPane().getWidth());
             preview.setY(buttonPane.getRelY().getValue() * getDrawableObjectPane().getHeight());
-            //preview.setScaleX(buttonPane.getWRel().getValue() * getDrawableObjectPane().getWidth());
-            //preview.setScaleY(buttonPane.getHRel().getValue() * getDrawableObjectPane().getHeight());
+            preview.setFitWidth(buttonPane.getWRel().getValue() * getDrawableObjectPane().getWidth());
+            preview.setFitHeight(buttonPane.getHRel().getValue() * getDrawableObjectPane().getHeight());
             super.updateDrawPane(preview);
         }
     }
