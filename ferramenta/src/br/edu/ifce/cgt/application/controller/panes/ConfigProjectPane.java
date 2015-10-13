@@ -63,6 +63,7 @@ public class ConfigProjectPane extends AnchorPane {
         int height = Integer.valueOf(widthHeight[1]);
         this.cgtProject.setCanvasWidth(width);
         this.cgtProject.setCanvasHeight(height);
+        //Config.get().getGame().
         this.onUpdateRunner.run();
     }
 

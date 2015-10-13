@@ -4,6 +4,7 @@ import br.edu.ifce.cgt.application.controller.panes.ConfigButtonPreviewPane;
 import br.edu.ifce.cgt.application.controller.panes.ConfigScreenPreviewPane;
 import br.edu.ifce.cgt.application.controller.titleds.GameObjectTitledPane;
 import br.edu.ifce.cgt.application.util.Config;
+import br.edu.ifce.cgt.application.util.Draggable;
 import cgt.core.CGTGameObject;
 import cgt.game.CGTScreen;
 import cgt.hud.CGTButtonScreen;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Affine2;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -37,6 +39,7 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
     private String name;
     private String screenName;
     private ConfigButtonPreviewPane buttonPane;
+    private Draggable preview = new Draggable();
 
     public CGTButtonScreenPreview(CGTButtonScreen btn, AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane){
         super( drawableObjectPane, drawableConfigurationsPane);
@@ -46,6 +49,16 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
             public void run() {
                 drawObject();
             }
+        });
+        preview = new Draggable(buttonPane.getRelX(), buttonPane.getRelY(),btn);
+
+        preview.setOnMouseEntered(E->{
+            if (!buttonPane.getTextPress().getText().isEmpty())
+                preview.setImage(Config.get().getImage(this.btn.getTextureDown().getFile().getFile().getName()));
+        });
+        preview.setOnMouseExited(e -> {
+            if (!buttonPane.getTextUp().getText().isEmpty())
+                preview.setImage(Config.get().getImage(this.btn.getTextureUp().getFile().getFile().getName()));
         });
     }
 
@@ -62,13 +75,12 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
 
     @Override
     public void drawObject() {
-        if(!buttonPane.getTexture().getText().isEmpty() && buttonPane.getRelX().getValue() >= 0 &&
-                buttonPane.getRelY().getValue() >= 0 && buttonPane.getWRel().getValue() > 0 && buttonPane.getHRel().getValue() > 0){
-            ImageView preview = new ImageView(Config.get().getImage(this.btn.getTextureUp().getFile().getFile().getName()));
-            preview.setX(buttonPane.getRelX().getValue() * getDrawableObjectPane().getWidth());
-            preview.setY(buttonPane.getRelY().getValue() * getDrawableObjectPane().getHeight());
-            preview.setFitWidth(buttonPane.getWRel().getValue() * getDrawableObjectPane().getWidth());
-            preview.setFitHeight(buttonPane.getHRel().getValue() * getDrawableObjectPane().getHeight());
+        if(!buttonPane.getTextUp().getText().isEmpty() && buttonPane.getRelX().getValue() >= 0 &&
+                buttonPane.getRelY().getValue() >= 0 && buttonPane.getWRel().getValue() > 0
+                && buttonPane.getHRel().getValue() > 0){
+
+            setSizeButton();
+
             super.updateDrawPane(preview);
         }
     }
@@ -149,6 +161,28 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
 
     public String getScreenName() {
         return screenName;
+    }
+
+    public Draggable getImage(){
+        return  this.preview;
+    }
+
+    public void setSizeButton(){
+        preview.setWidthBCKG(
+                Config.get().getImage(Config.get().getGame().getScreen(getScreenName()).
+                        getBackground().getFile().getFile().getName()).getWidth()
+        );
+        preview.setHeightBCKG(
+                Config.get().getImage(Config.get().getGame().getScreen(getScreenName()).
+                        getBackground().getFile().getFile().getName()).getHeight()
+        );
+        preview.setFitWidth(buttonPane.getWRel().getValue() * preview.getWidthBCKG());
+        preview.setFitHeight(buttonPane.getHRel().getValue() * preview.getHeightBCKG());
+        btn.setRelativeHeight(buttonPane.getHRel().getValue());
+        btn.setRelativeWidth(buttonPane.getWRel().getValue());
+        getButton().setRelativeX(buttonPane.getRelX().getValue());
+        getButton().setRelativeY(buttonPane.getRelY().getValue() -
+                (float) (preview.getFitHeight()/preview.getHeightBCKG()));
     }
 
 }
