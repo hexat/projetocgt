@@ -32,8 +32,7 @@ public class ConfigScreenPreviewPane extends AnchorPane {
     private TextField txtScreenId;
     @FXML
     private CGTScreen screen;
-    @FXML
-    private VBox btnBox;
+
     private Runnable onUpdateRunnable;
 
     public ConfigScreenPreviewPane(CGTScreen screen) {
@@ -48,7 +47,6 @@ public class ConfigScreenPreviewPane extends AnchorPane {
         }
 
         this.screen = screen;
-        this.btnBox = new VBox(30);
     }
 
     public ConfigScreenPreviewPane(CGTScreen screen, Runnable onUpdateRunnable) {
@@ -85,8 +83,8 @@ public class ConfigScreenPreviewPane extends AnchorPane {
         }
     }
 
-    public VBox getBtnBox(){
-        return  btnBox;
+    public TextField getTxtScreenId(){
+        return this.txtScreenId;
     }
 
     @FXML

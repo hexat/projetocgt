@@ -1,0 +1,66 @@
+package br.edu.ifce.cgt.application.util;
+
+import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
+import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
+import cgt.hud.CGTButtonScreen;
+import javafx.scene.Node;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+/**
+ * Created by Edy Junior on 08/10/2015.
+ */
+public class Draggable extends ImageView{
+
+    private double widthBCKG;
+    private double heightBCKG;
+
+    public Draggable (){
+        super();
+    }
+
+    public Draggable (Image img){
+        super(img);
+    }
+
+    public Draggable (FloatTextField X, FloatTextField Y, CGTButtonScreen btn){
+        super();
+        this.setOnMouseDragged(event-> {
+            if(this.getFitWidth() + event.getX() < widthBCKG &&
+                    this.getFitHeight() + event.getY() < heightBCKG &&
+                    event.getX() > 0 && event.getY() > 0) {
+                this.setX(event.getX());
+                this.setY(event.getY());
+                X.setValue(event.getX() / widthBCKG);
+                Y.setValue(1 - (event.getY()) / heightBCKG);
+                btn.setRelativeX(X.getValue());
+                btn.setRelativeY(Y.getValue() - (float) (getFitHeight()/getHeightBCKG()));
+            }
+        });
+    }
+
+    public Draggable (IntegerTextField X, IntegerTextField Y){
+        super();
+        this.setOnMouseDragged(event-> {
+            if(this.getFitWidth() + event.getX() < widthBCKG &&
+                    this.getFitHeight() + event.getY() < heightBCKG &&
+                    event.getX() > 0 && event.getY() > 0) {
+                this.setX(event.getX());
+                this.setY(event.getY());
+                X.setValue((int) event.getX());
+                Y.setValue((int) event.getY());
+            }
+        });
+    }
+
+
+    public void setWidthBCKG(double w){
+        this.widthBCKG = w;
+    }
+    public void setHeightBCKG(double h){
+        this.heightBCKG = h;
+    }
+    public double getWidthBCKG(){return  widthBCKG;}
+    public double getHeightBCKG(){return  heightBCKG;}
+}

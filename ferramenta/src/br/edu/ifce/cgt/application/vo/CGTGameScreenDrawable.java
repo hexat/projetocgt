@@ -73,6 +73,7 @@ public class CGTGameScreenDrawable extends AbstractDrawableObject {
         if (response.isPresent()) {
             String id = response.get().trim();
             this.screen = (Config.get().getGame().createScreen(id));
+            //screenPane.getTxtScreenId().setText(id);
         }
     }
 
