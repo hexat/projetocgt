@@ -8,6 +8,7 @@ import javafx.collections.ObservableArray;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import org.controlsfx.dialog.Dialogs;
 
 import java.util.Optional;
@@ -19,7 +20,7 @@ public class CGTGameScreenDrawable extends AbstractDrawableObject {
     private CGTScreen screen;
     private ConfigScreenPreviewPane screenPane;
 
-    public CGTGameScreenDrawable(AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
+    public CGTGameScreenDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(drawableObjectPane, drawableConfigurationsPane);
 
         this.screenPane = new ConfigScreenPreviewPane(screen, new Runnable() {

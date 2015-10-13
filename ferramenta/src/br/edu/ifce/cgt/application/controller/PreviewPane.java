@@ -15,7 +15,6 @@ import cgt.game.CGTGame;
 import cgt.game.CGTGameWorld;
 import cgt.game.CGTScreen;
 import cgt.hud.CGTButtonScreen;
-import cgt.screen.CGTWindow;
 import cgt.util.CGTError;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,12 +24,14 @@ import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
 import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,10 +45,10 @@ public class PreviewPane extends BorderPane {
     public static final String DESKTOP_ZIP_PATH = "desktop/desktop.zip";
 
     @FXML
-    public AnchorPane drawableObjectPane;
+    public Pane drawableObjectPane;
 
     @FXML
-    public AnchorPane drawableConfigurationsPane;
+    public Pane drawableConfigurationsPane;
 
     @FXML
     private Menu openRecentMenu;
@@ -77,7 +78,6 @@ public class PreviewPane extends BorderPane {
 
     private void setupTree() {
         tree.setEditable(true);
-
         tree.setCellFactory(new Callback<TreeView<DrawableObject>, TreeCell<DrawableObject>>() {
             @Override
             public TreeCell<DrawableObject> call(TreeView<DrawableObject> param) {
@@ -326,7 +326,7 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addButtonScreen() {
-        CGTButtonScreenPreview btn = new CGTButtonScreenPreview(new CGTButtonScreen(),this.drawableObjectPane, this.drawableConfigurationsPane);
+        CGTButtonScreenPreview btn = new CGTButtonScreenPreview(new CGTButtonScreen(), this.drawableObjectPane, this.drawableConfigurationsPane);
         TreeItem<DrawableObject> btnTreeItem = new TreeItem<>(btn);
         String screenName = btn.getScreenName();
         TreeItem<DrawableObject> screenTreeItem = this.getScreenNode(screenName);
@@ -347,7 +347,7 @@ public class PreviewPane extends BorderPane {
         new ListSpriteDialog().show();
     }
 
-    public void beforeClosing () {
+    public void beforeClosing() {
         if (Config.isCreated() && (!Config.isLoaded() || (Config.isLoaded() && Config.get().wasModified()))) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Salvar");
@@ -361,7 +361,7 @@ public class PreviewPane extends BorderPane {
         }
     }
 
-    private TreeItem<DrawableObject> getWorldNode (String worldName) {
+    private TreeItem<DrawableObject> getWorldNode(String worldName) {
         TreeItem<DrawableObject> result = null;
 
         for (int i = 0; i < this.tree.getExpandedItemCount(); i++) {
@@ -370,7 +370,7 @@ public class PreviewPane extends BorderPane {
             if (drawableObject instanceof CGTGameWorldDrawable) {
                 CGTGameWorldDrawable gameDrawable = (CGTGameWorldDrawable) drawableObject;
 
-                if (gameDrawable.getObject().getId().equals(worldName)){
+                if (gameDrawable.getObject().getId().equals(worldName)) {
                     result = this.tree.getTreeItem(i);
                     break;
                 }
@@ -380,7 +380,7 @@ public class PreviewPane extends BorderPane {
         return result;
     }
 
-    private TreeItem<DrawableObject> getScreenNode (String screenName) {
+    private TreeItem<DrawableObject> getScreenNode(String screenName) {
         TreeItem<DrawableObject> result = null;
 
         for (int i = 0; i < this.tree.getExpandedItemCount(); i++) {
@@ -389,7 +389,7 @@ public class PreviewPane extends BorderPane {
             if (drawableObject instanceof CGTGameScreenDrawable) {
                 CGTGameScreenDrawable gameDrawable = (CGTGameScreenDrawable) drawableObject;
 
-                if (gameDrawable.getObject().getId().equals(screenName)){
+                if (gameDrawable.getObject().getId().equals(screenName)) {
                     result = this.tree.getTreeItem(i);
                     break;
                 }

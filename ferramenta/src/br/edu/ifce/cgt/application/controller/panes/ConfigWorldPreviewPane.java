@@ -37,7 +37,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ConfigWorldPreviewPane extends AnchorPane {
+public class ConfigWorldPreviewPane extends StackPane {
 
     @FXML
     private TextField worldTextField;
@@ -111,7 +111,6 @@ public class ConfigWorldPreviewPane extends AnchorPane {
 
         this.world = world;
         this.camera = getWorld().getCamera();
-
         init();
     }
 
@@ -328,7 +327,7 @@ public class ConfigWorldPreviewPane extends AnchorPane {
             }
         });
 
-        this. boxGameMode.setOnAction(new EventHandler<ActionEvent>() {
+        this.boxGameMode.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 EnumMap<GameModePolicy> item = boxGameMode.getSelectionModel().getSelectedItem();
@@ -355,7 +354,7 @@ public class ConfigWorldPreviewPane extends AnchorPane {
         this.txtCloseHeight.setValue(camera.getCloseHeight());
         this.txtFullWidth.setValue(camera.getFullWidth());
         this.txtFullHeight.setValue(camera.getFullHeight());
-        this.txtScale.setValue(camera.getScale()*100);
+        this.txtScale.setValue(camera.getScale() * 100);
         this.txtVolumeFull.setValue(camera.getVolumeOnFullCamera());
 
         int i = 0;

@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class CGTGameEnemyDrawable extends CGTGameObjectDrawable {
     private String worldName;
     private EnemyTitledPane enemyTitledPane;
 
-    public CGTGameEnemyDrawable(AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
+    public CGTGameEnemyDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(new CGTEnemy(), drawableObjectPane, drawableConfigurationsPane);
         this.setObject(super.getObject());
         this.enemy.setId(name);

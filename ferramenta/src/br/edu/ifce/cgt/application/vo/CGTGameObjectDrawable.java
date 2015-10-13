@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
@@ -29,7 +30,7 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
     private Rectangle collision;
     private ImageView preview;
 
-    public CGTGameObjectDrawable(CGTGameObject gameObject, AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
+    public CGTGameObjectDrawable(CGTGameObject gameObject, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(drawableObjectPane, drawableConfigurationsPane);
         this.gameObject = gameObject;
         this.gameObject.setId(this.getGameObjectId());

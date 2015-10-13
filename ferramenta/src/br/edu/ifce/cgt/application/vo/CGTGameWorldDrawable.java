@@ -3,11 +3,11 @@ package br.edu.ifce.cgt.application.vo;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.panes.ConfigWorldPreviewPane;
 import br.edu.ifce.cgt.application.util.Config;
-import cgt.core.CGTGameObject;
 import cgt.game.CGTGameWorld;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import org.controlsfx.dialog.Dialogs;
 
 import java.util.Optional;
@@ -15,15 +15,13 @@ import java.util.Optional;
 public class CGTGameWorldDrawable extends AbstractDrawableObject<CGTGameWorld> {
     private ConfigWorldPreviewPane worldPane;
 
-    public CGTGameWorldDrawable(AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
+    public CGTGameWorldDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(drawableObjectPane, drawableConfigurationsPane);
-
         init();
     }
 
-    public CGTGameWorldDrawable(CGTGameWorld object, AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
+    public CGTGameWorldDrawable(CGTGameWorld object, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(object, drawableObjectPane, drawableConfigurationsPane);
-
         init();
     }
 

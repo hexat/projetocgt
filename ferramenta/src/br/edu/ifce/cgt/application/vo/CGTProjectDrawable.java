@@ -4,6 +4,7 @@ import br.edu.ifce.cgt.application.controller.panes.ConfigProjectPane;
 import cgt.core.CGTProject;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -13,7 +14,7 @@ public class CGTProjectDrawable extends AbstractDrawableObject {
     private Rectangle size;
     private ConfigProjectPane projectPane;
 
-    public CGTProjectDrawable(String projectName, AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
+    public CGTProjectDrawable(String projectName, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(drawableObjectPane, drawableConfigurationsPane);
         this.cgtProject = new CGTProject(projectName);
         this.size = new Rectangle(this.cgtProject.getCanvasWidth(), this.cgtProject.getCanvasHeight());

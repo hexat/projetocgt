@@ -8,27 +8,27 @@ public abstract class AbstractDrawableObject<T> implements DrawableObject<T> {
 
     private T object;
 
-    private AnchorPane drawableObjectPane;
+    private Pane drawableObjectPane;
 
-    private AnchorPane drawableConfigurationsPane;
+    private Pane drawableConfigurationsPane;
 
-    public AbstractDrawableObject(AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
+    public AbstractDrawableObject(Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         this.drawableObjectPane = drawableObjectPane;
         this.drawableConfigurationsPane = drawableConfigurationsPane;
         this.onCreate();
     }
 
-    public AbstractDrawableObject(T object, AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
+    public AbstractDrawableObject(T object, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         this.object = object;
         this.drawableObjectPane = drawableObjectPane;
         this.drawableConfigurationsPane = drawableConfigurationsPane;
     }
 
-    public AnchorPane getDrawableObjectPane() {
+    public Pane getDrawableObjectPane() {
         return drawableObjectPane;
     }
 
-    public AnchorPane getDrawableConfigurationsPane() {
+    public Pane getDrawableConfigurationsPane() {
         return drawableConfigurationsPane;
     }
 

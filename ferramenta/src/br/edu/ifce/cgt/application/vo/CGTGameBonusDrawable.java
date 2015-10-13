@@ -6,13 +6,14 @@ import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 public class CGTGameBonusDrawable extends  CGTGameObjectDrawable{
 
     private CGTBonus bonus;
     private BonusTitledPane pane;
 
-    public CGTGameBonusDrawable(AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
+    public CGTGameBonusDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(new CGTBonus(), drawableObjectPane, drawableConfigurationsPane);
         this.bonus = (CGTBonus) super.getObject();
         this.pane = new BonusTitledPane(this.bonus);
