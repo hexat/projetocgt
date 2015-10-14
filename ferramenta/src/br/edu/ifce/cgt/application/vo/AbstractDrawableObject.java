@@ -1,7 +1,6 @@
 package br.edu.ifce.cgt.application.vo;
 
 import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 public abstract class AbstractDrawableObject<T> implements DrawableObject<T> {
@@ -43,9 +42,9 @@ public abstract class AbstractDrawableObject<T> implements DrawableObject<T> {
     }
 
     public void updateDrawPane(Node node) {
-         getDrawableObjectPane().getChildren().remove(node);
-         getDrawableObjectPane().getChildren().add(node);
-     }
+        getDrawableObjectPane().getChildren().remove(node);
+        getDrawableObjectPane().getChildren().add(node);
+    }
 
     public void updateConfigPane(Pane pane) {
         getDrawableConfigurationsPane().getChildren().removeAll(getDrawableConfigurationsPane().getChildren());

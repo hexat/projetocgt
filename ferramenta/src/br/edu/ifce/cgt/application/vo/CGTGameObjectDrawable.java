@@ -1,6 +1,6 @@
 package br.edu.ifce.cgt.application.vo;
 
-import br.edu.ifce.cgt.application.controller.titleds.GameObjectTitledPane;
+import br.edu.ifce.cgt.application.controller.panes.GameObjectPane;
 import br.edu.ifce.cgt.application.util.Config;
 import cgt.core.CGTGameObject;
 import cgt.game.CGTGameWorld;
@@ -11,19 +11,19 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
+
 import java.util.List;
 import java.util.Optional;
 
 public class CGTGameObjectDrawable extends AbstractDrawableObject {
 
     private CGTGameObject gameObject;
-    private GameObjectTitledPane gameObjectTitledPane;
+    private GameObjectPane gameObjectTitledPane;
     private String worldName;
     private String gameObjectId;
     private Rectangle bounds;
@@ -34,7 +34,7 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
         super(drawableObjectPane, drawableConfigurationsPane);
         this.gameObject = gameObject;
         this.gameObject.setId(this.getGameObjectId());
-        this.gameObjectTitledPane = new GameObjectTitledPane(this.gameObject, new Runnable() {
+        this.gameObjectTitledPane = new GameObjectPane(this.gameObject, new Runnable() {
             @Override
             public void run() {
                 drawObject();
@@ -100,7 +100,8 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
     }
 
     @Override
-    public void drawConfigurationPanel() {}
+    public void drawConfigurationPanel() {
+    }
 
     @Override
     public void onCreate() {
@@ -154,7 +155,7 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
         }
     }
 
-    public String getWorldName () {
+    public String getWorldName() {
         return worldName;
     }
 

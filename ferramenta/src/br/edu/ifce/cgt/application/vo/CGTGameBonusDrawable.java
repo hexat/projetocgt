@@ -26,10 +26,9 @@ public class CGTGameBonusDrawable extends  CGTGameObjectDrawable{
 
     @Override
     public void drawConfigurationPanel() {
-        TitledPane titledPaneObject = (TitledPane) super.getPane();
+        Pane paneObject = (Pane) super.getPane();
+        Accordion accordion = (Accordion) paneObject.getChildren().get(0);
         TitledPane titledPaneActor = (TitledPane) this.getPane();
-        Accordion accordion = new Accordion();
-        accordion.getPanes().add(titledPaneObject);
         accordion.getPanes().add(titledPaneActor);
         super.updateConfigPane(accordion);
     }

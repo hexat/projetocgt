@@ -1,31 +1,17 @@
 package br.edu.ifce.cgt.application.vo;
 
 import br.edu.ifce.cgt.application.controller.panes.ConfigButtonPreviewPane;
-import br.edu.ifce.cgt.application.controller.panes.ConfigScreenPreviewPane;
-import br.edu.ifce.cgt.application.controller.titleds.GameObjectTitledPane;
 import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.Draggable;
 import cgt.core.CGTGameObject;
 import cgt.game.CGTScreen;
 import cgt.hud.CGTButtonScreen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.Affine2;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Pair;
 
 import java.util.List;

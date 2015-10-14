@@ -5,7 +5,6 @@ import cgt.core.CGTActor;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 public class CGTGameActorDrawable extends CGTGameObjectDrawable {
@@ -31,10 +30,9 @@ public class CGTGameActorDrawable extends CGTGameObjectDrawable {
 
     @Override
     public void drawConfigurationPanel() {
-        TitledPane titledPaneObject = (TitledPane) super.getPane();
+        Pane paneObject = (Pane) super.getPane();
+        Accordion accordion = (Accordion) paneObject.getChildren().get(0);
         TitledPane titledPaneActor = (TitledPane) this.getPane();
-        Accordion accordion = new Accordion();
-        accordion.getPanes().add(titledPaneObject);
         accordion.getPanes().add(titledPaneActor);
         super.updateConfigPane(accordion);
     }

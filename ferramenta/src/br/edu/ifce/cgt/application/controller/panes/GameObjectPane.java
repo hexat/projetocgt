@@ -1,19 +1,20 @@
-package br.edu.ifce.cgt.application.controller.titleds;
+package br.edu.ifce.cgt.application.controller.panes;
 
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.dialogs.AnimationDialog;
-import br.edu.ifce.cgt.application.controller.panes.ItemEditPane;
-import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
+import br.edu.ifce.cgt.application.util.EnumMap;
 import br.edu.ifce.cgt.application.util.Pref;
 import cgt.core.CGTAnimation;
 import cgt.core.CGTGameObject;
 import cgt.core.CGTProjectile;
+import cgt.policy.StatePolicy;
 import cgt.util.CGTFile;
 import cgt.util.CGTSound;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,50 +23,111 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class GameObjectTitledPane extends TitledPane {
-    @FXML public VBox boxAnimations;
-    @FXML public VBox boxPositions;
-    @FXML public VBox boxSoundColision;
-    @FXML public VBox boxSoundDie;
-    @FXML public IntegerTextField txtMaxLife;
-    @FXML public TextField txtSound;
-    @FXML private FloatTextField txtBoundsW;
-    @FXML private FloatTextField txtBoundsH;
-    @FXML private IntegerTextField txtPositionX;
-    @FXML private IntegerTextField txtPositionY;
-    @FXML private IntegerTextField txtColisionX;
-    @FXML private IntegerTextField txtColisionY;
-    @FXML private FloatTextField txtColisionW;
-    @FXML private FloatTextField txtColisionH;
-    @FXML private IntegerTextField txtVelocidade;
-    @FXML private IntegerTextField txtLife;
-    @FXML private VBox listTeste;
-	@FXML private TableView<String> tableSomColisao;
-    @FXML private Label labLife;
-    @FXML private Label labMaxLife;
+public class GameObjectPane extends StackPane {
+    /**
+     * Informações gerais do objeto. Limites, posições,
+     * colisão e velocidade
+     */
+    @FXML
+    private FloatTextField txtBoundsW;
+    @FXML
+    private FloatTextField txtBoundsH;
+    @FXML
+    private IntegerTextField txtPositionX;
+    @FXML
+    private IntegerTextField txtPositionY;
+    @FXML
+    private VBox boxPositions;
+    @FXML
+    private IntegerTextField txtColisionX;
+    @FXML
+    private IntegerTextField txtColisionY;
+    @FXML
+    private FloatTextField txtColisionW;
+    @FXML
+    private FloatTextField txtColisionH;
+    @FXML
+    private IntegerTextField txtVelocidade;
 
-	private ObservableList<String> listaSomColisao;
-	
-	private CGTGameObject gameObject;
+    /**
+     * Controles para configuração do life inicial e
+     * máximo do objeto
+     */
+    @FXML
+    private Label labLife;
+    @FXML
+    private Label labMaxLife;
+    @FXML
+    private IntegerTextField txtLife;
+    @FXML
+    private IntegerTextField txtMaxLife;
 
+    /**
+     * Controles para configuração da animação do objeto
+     */
+    @FXML
+    private ComboBox<String> spritesheetCombobox;
+    @FXML
+    private ComboBox initialFrameCombobox;
+    @FXML
+    private ComboBox finalFrameCombobox;
+    @FXML
+    private FloatTextField speedField;
+    @FXML
+    private ComboBox<EnumMap<Animation.PlayMode>> policyCombobox;
+    @FXML
+    private ComboBox<EnumMap<StatePolicy>> stateBox;
+    @FXML
+    private VBox states;
+    @FXML
+    private CheckBox vflipCheckBox;
+    @FXML
+    private CheckBox hflipCheckbox;
+    @FXML
+    private VBox animationsBox;
+
+    private List<EnumMap<StatePolicy>> statePolicies;
+
+    /**
+     * Controles para configuração dos sons do objeto
+     */
+    @FXML
+    private VBox boxSoundColision;
+    @FXML
+    private VBox boxSoundDie;
+    @FXML
+    private TextField txtSound;
+    @FXML
+    private TableView<String> tableSomColisao;
+
+    private ObservableList<String> listaSomColisao;
+
+    /**
+     * Objeto core que é configurado a partir dessa classe
+     */
+    private CGTGameObject gameObject;
+
+    /**
+     * Runnable que deve ser chamado toda vez que o objeto for
+     * alterado e deve ser atualizado a pré-vizualização dele
+     */
     private Runnable onUpdateRunnable;
 
-    public GameObjectTitledPane(CGTGameObject object) {
+    public GameObjectPane(CGTGameObject object) {
         this.gameObject = object;
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigGameObject.fxml"));
         xml.setRoot(this);
@@ -81,7 +143,7 @@ public class GameObjectTitledPane extends TitledPane {
         setActions();
     }
 
-    public GameObjectTitledPane(CGTGameObject object, Runnable onUpdateRunnable) {
+    public GameObjectPane(CGTGameObject object, Runnable onUpdateRunnable) {
         this(object);
         this.onUpdateRunnable = onUpdateRunnable;
     }
@@ -95,7 +157,7 @@ public class GameObjectTitledPane extends TitledPane {
         txtColisionY.setText(((int) gameObject.getCollision().y) + "");
         txtLife.setText(gameObject.getLife() + "");
         txtMaxLife.setValue(gameObject.getMaxLife());
-        txtVelocidade.setText(gameObject.getSpeed()+"");
+        txtVelocidade.setText(gameObject.getSpeed() + "");
 
         if (gameObject.getSound() != null) {
             txtSound.setText(gameObject.getSound().getFile().getFilename());
@@ -105,6 +167,13 @@ public class GameObjectTitledPane extends TitledPane {
             labLife.setText("Munição");
             labMaxLife.setText("Munição máxima:");
         }
+
+
+        this.statePolicies = new ArrayList<EnumMap<StatePolicy>>();
+        this.stateBox.getItems().addAll(getStates());
+        this.policyCombobox.getItems().addAll(getPolicies());
+
+
 
         updateBoxAnimation();
         updateBoxPositions();
@@ -266,20 +335,22 @@ public class GameObjectTitledPane extends TitledPane {
         }
     }
 
-	@FXML public void btnProcurarSom(){
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo WAV (*.wav)", "*.wav");
-		FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("Arquivo OGG (*.ogg)", "*.ogg");
+    @FXML
+    public void btnProcurarSom() {
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo WAV (*.wav)", "*.wav");
+        FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("Arquivo OGG (*.ogg)", "*.ogg");
 
-		File chosenFile = DialogsUtil.showOpenDialog("Som de Colisão", extFilter, extFilter2);
-		String path;
-		if(chosenFile != null) {
-		    path = chosenFile.getPath();
+        File chosenFile = DialogsUtil.showOpenDialog("Som de Colisão", extFilter, extFilter2);
+        String path;
+        if (chosenFile != null) {
+            path = chosenFile.getPath();
         } else {
-		    path = null;
-		}
-	}
+            path = null;
+        }
+    }
 
-    @FXML public void addInitialPosition() {
+    @FXML
+    public void addInitialPosition() {
         if (!txtPositionX.getText().equals("") && !txtPositionY.getText().equals("")) {
             int x = Integer.parseInt(txtPositionX.getText());
             int y = Integer.parseInt(txtPositionY.getText());
@@ -355,27 +426,28 @@ public class GameObjectTitledPane extends TitledPane {
         }
     }
 
-    @FXML public void btnProcurarSomColisao(){
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Selecione o Background");
+    @FXML
+    public void btnProcurarSomColisao() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Selecione o Background");
 
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo WAV (*.wav)", "*.wav");
-		FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("Arquivo OGG (*.ogg)", "*.ogg");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Arquivo WAV (*.wav)", "*.wav");
+        FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("Arquivo OGG (*.ogg)", "*.ogg");
 
-		File chosenFile = DialogsUtil.showOpenDialog("Selecione o som de colisão", extFilter, extFilter2);
-		String path;
-		if(chosenFile != null) {
-		    path = chosenFile.getPath();
-		} else {
-		    //default return value
-		    path = null;
-		}
-		
-		listaSomColisao.add(path);
-		tableSomColisao.setEditable(true);
-		tableSomColisao.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-		tableSomColisao.setItems(listaSomColisao);
-	}
+        File chosenFile = DialogsUtil.showOpenDialog("Selecione o som de colisão", extFilter, extFilter2);
+        String path;
+        if (chosenFile != null) {
+            path = chosenFile.getPath();
+        } else {
+            //default return value
+            path = null;
+        }
+
+        listaSomColisao.add(path);
+        tableSomColisao.setEditable(true);
+        tableSomColisao.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableSomColisao.setItems(listaSomColisao);
+    }
 
     public void addAnimation() {
         AnimationDialog dialog = new AnimationDialog(gameObject);
@@ -384,7 +456,7 @@ public class GameObjectTitledPane extends TitledPane {
     }
 
     private void updateBoxAnimation() {
-        boxAnimations.getChildren().clear();
+        animationsBox.getChildren().clear();
         List<CGTAnimation> lista = gameObject.getAnimations();
         if (lista.size() > 0) {
             ResourceBundle bundle = Pref.load().getBundle();
@@ -410,14 +482,15 @@ public class GameObjectTitledPane extends TitledPane {
                         updateBoxAnimation();
                     }
                 });
-                boxAnimations.getChildren().add(pane);
+                animationsBox.getChildren().add(pane);
             }
         } else {
-            boxAnimations.getChildren().add(new Label("Nenhuma Animação"));
+            animationsBox.getChildren().add(new Label("Nenhuma Animação"));
         }
     }
 
-    @FXML public void addSoundDie() {
+    @FXML
+    public void addSoundDie() {
         File file = DialogsUtil.showOpenDialog("Selecionar som de morte", DialogsUtil.WAV_FILTER);
 
         if (file != null) {
@@ -432,7 +505,8 @@ public class GameObjectTitledPane extends TitledPane {
         }
     }
 
-    @FXML public void addSoundCollision() {
+    @FXML
+    public void addSoundCollision() {
         File file = DialogsUtil.showOpenDialog("Selecionar som de colisão", DialogsUtil.WAV_FILTER);
 
         if (file != null) {
@@ -447,45 +521,66 @@ public class GameObjectTitledPane extends TitledPane {
         }
     }
 
-    public void setGameObject(CGTGameObject gameObject) {
-        this.gameObject = gameObject;
+    @FXML
+    public void addObjAnimation() {
 
-        updateBoxAnimation();
-        updateBoxPositions();
-        updateBoxSoundCollision();
-        updateBoxSoundDie();
-        if (gameObject.getSound() != null) {
-            txtSound.setText(gameObject.getSound().getFile().getFilename());
-        }
-        if (gameObject.getBounds().width > 0) {
-            txtBoundsW.setText(gameObject.getBounds().width + "");
-        }
-        if (gameObject.getBounds().height > 0) {
-            txtBoundsH.setText(gameObject.getBounds().height + "");
-        }
+    }
 
-        if (gameObject.getCollision().height > 0) {
-            txtColisionH.setText(gameObject.getCollision().height+"");
+    @FXML
+    public void addState() {
+        if (!stateBox.getSelectionModel().isEmpty()) {
+            EnumMap<StatePolicy> el = stateBox.getSelectionModel().getSelectedItem();
+            statePolicies.add(el);
+            stateBox.getItems().remove(el);
+            updateStates();
         }
-        if (gameObject.getCollision().width  > 0) {
-            txtColisionW.setText(gameObject.getCollision().width+"");
-        }
-        if (gameObject.getCollision().x > 0) {
-            txtColisionX.setText(gameObject.getCollision().x+"");
-        }
-        if (gameObject.getCollision().y > 0) {
-            txtColisionY.setText(gameObject.getCollision().y+"");
-        }
+    }
 
-        if (gameObject.getSpeed() > 0) {
-            txtVelocidade.setText(gameObject.getSpeed()+"");
-        }
+    private void updateStates() {
+        states.getChildren().clear();
+        if (statePolicies.size() > 0) {
+            for (final EnumMap<StatePolicy> s : statePolicies) {
+                ItemViewPane pane = new ItemViewPane(s.getValue());
+                pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        statePolicies.remove(s);
+                        stateBox.getItems().add(s);
+                        updateStates();
 
-        txtLife.setText(gameObject.getLife()+"");
+                    }
+                });
+                states.getChildren().add(pane);
+            }
+        } else {
+            states.getChildren().add(new Label("Adicione pelo menos um estado."));
+        }
     }
 
     public CGTGameObject getGameObject() {
         return gameObject;
     }
 
+    public List<EnumMap<StatePolicy>> getStates() {
+        ResourceBundle bundle = Pref.load().getBundle();
+
+        List<EnumMap<StatePolicy>> list = new ArrayList<EnumMap<StatePolicy>>();
+
+        for (StatePolicy s : StatePolicy.values()) {
+            list.add(new EnumMap<StatePolicy>(s, bundle.getString(s.name())));
+        }
+        return list;
+    }
+
+    public List<EnumMap<Animation.PlayMode>> getPolicies() {
+        ResourceBundle bundle = Pref.load().getBundle();
+
+        List<EnumMap<Animation.PlayMode>> listModes = new ArrayList<EnumMap<Animation.PlayMode>>();
+
+        for (Animation.PlayMode p : Animation.PlayMode.values()) {
+            listModes.add(new EnumMap<Animation.PlayMode>(p, bundle.getString(p.name())));
+        }
+
+        return listModes;
+    }
 }

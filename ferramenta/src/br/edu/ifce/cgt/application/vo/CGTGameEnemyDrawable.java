@@ -49,10 +49,9 @@ public class CGTGameEnemyDrawable extends CGTGameObjectDrawable {
 
     @Override
     public void drawConfigurationPanel() {
-        TitledPane titledPaneObject = (TitledPane) super.getPane();
+        Pane paneObject = (Pane) super.getPane();
+        Accordion accordion = (Accordion) paneObject.getChildren().get(0);
         TitledPane titledPaneEnemy = (TitledPane) this.getPane();
-        Accordion accordion = new Accordion();
-        accordion.getPanes().add(titledPaneObject);
         accordion.getPanes().add(titledPaneEnemy);
         super.updateConfigPane(accordion);
     }

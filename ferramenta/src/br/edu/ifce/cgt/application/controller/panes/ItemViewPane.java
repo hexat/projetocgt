@@ -14,7 +14,6 @@ public class ItemViewPane extends BorderPane {
         super();
 
         setCenter(new Label(text));
-
         this.btnDelete = new Button("Excluir");
         setRight(btnDelete);
     }
