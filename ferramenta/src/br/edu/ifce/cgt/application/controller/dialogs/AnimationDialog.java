@@ -42,22 +42,34 @@ import java.util.ResourceBundle;
 public class AnimationDialog extends HBox {
 
     private final Stage dialogStage;
-    @FXML public ImagePane imgPane;
+    @FXML
+    public ImagePane imgPane;
 
     private CGTGameObject object;
     private CGTAnimation animation;
 
-    @FXML private FloatTextField txtVel;
-    @FXML private IntegerTextField txtFrameInitialX;
-    @FXML private IntegerTextField txtFrameFinalX;
-    @FXML private IntegerTextField txtFrameInitialY;
-    @FXML private IntegerTextField txtFrameFinalY;
-    @FXML private CheckBox chkFlipHor;
-    @FXML private CheckBox chkFlipVertical;
-    @FXML private ComboBox<EnumMap<Animation.PlayMode>> boxAnimationPolicy;
-    @FXML private ComboBox<String> boxSprite;
-    @FXML private ComboBox<EnumMap<StatePolicy>> boxStates;
-    @FXML private VBox panStates;
+    @FXML
+    private FloatTextField txtVel;
+    @FXML
+    private IntegerTextField txtFrameInitialX;
+    @FXML
+    private IntegerTextField txtFrameFinalX;
+    @FXML
+    private IntegerTextField txtFrameInitialY;
+    @FXML
+    private IntegerTextField txtFrameFinalY;
+    @FXML
+    private CheckBox chkFlipHor;
+    @FXML
+    private CheckBox chkFlipVertical;
+    @FXML
+    private ComboBox<EnumMap<Animation.PlayMode>> boxAnimationPolicy;
+    @FXML
+    private ComboBox<String> boxSprite;
+    @FXML
+    private ComboBox<EnumMap<StatePolicy>> boxStates;
+    @FXML
+    private VBox panStates;
 
     private List<EnumMap<StatePolicy>> statePolicies;
 
@@ -92,8 +104,6 @@ public class AnimationDialog extends HBox {
                 updateImgPane();
             }
         });
-
-
 
         ResourceBundle bundle = Pref.load().getBundle();
 

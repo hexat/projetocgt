@@ -92,90 +92,167 @@
                 </TitledPane>
                 <TitledPane text="Animações do objeto">
                     <content>
-                        <VBox>
-                            <children>
-                                <GridPane hgap="10.0" vgap="10.0">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="ALWAYS"/>
-                                        <ColumnConstraints hgrow="ALWAYS"/>
-                                        <ColumnConstraints hgrow="ALWAYS"/>
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints vgrow="ALWAYS"/>
-                                        <RowConstraints vgrow="ALWAYS"/>
-                                        <RowConstraints vgrow="ALWAYS"/>
-                                        <RowConstraints vgrow="ALWAYS"/>
-                                        <RowConstraints vgrow="ALWAYS"/>
-                                        <RowConstraints vgrow="ALWAYS"/>
-                                        <RowConstraints vgrow="ALWAYS"/>
-                                        <RowConstraints vgrow="ALWAYS"/>
-                                        <RowConstraints vgrow="ALWAYS"/>
-                                    </rowConstraints>
-                                    <children>
-                                        <Label text="Spritesheet"/>
-                                        <ComboBox fx:id="spritesheetCombobox" prefWidth="150.0" GridPane.columnIndex="1"
-                                                  GridPane.columnSpan="2"/>
-                                        <Button mnemonicParsing="false" text="Adicionar" GridPane.columnIndex="2"/>
-                                        <Label text="Frame inicial" GridPane.rowIndex="1"/>
-                                        <ComboBox fx:id="initialFrameCombobox" prefWidth="250.0"
-                                                  GridPane.columnIndex="1" GridPane.columnSpan="2"
-                                                  GridPane.rowIndex="1"/>
-                                        <Label text="Frame final" GridPane.rowIndex="2"/>
-                                        <ComboBox fx:id="finalFrameCombobox" prefWidth="250.0" GridPane.columnIndex="1"
-                                                  GridPane.columnSpan="2" GridPane.rowIndex="2"/>
-                                        <Label text="Velocidade" GridPane.rowIndex="3"/>
-                                        <FloatTextField fx:id="speedField" GridPane.columnIndex="1"
-                                                        GridPane.columnSpan="2" GridPane.rowIndex="3"/>
-                                        <Label text="Política" GridPane.rowIndex="4"/>
-                                        <ComboBox fx:id="policyCombobox" prefWidth="250.0" GridPane.columnIndex="1"
-                                                  GridPane.columnSpan="2" GridPane.rowIndex="4"/>
-                                        <CheckBox fx:id="vflipCheckBox" mnemonicParsing="false" text="Flip vertical"
-                                                  GridPane.columnIndex="1" GridPane.rowIndex="7"/>
-                                        <CheckBox fx:id="hflipCheckbox" mnemonicParsing="false" text="Flip horizontal"
-                                                  GridPane.rowIndex="7"/>
-                                        <Label text="Estado" GridPane.rowIndex="5"/>
-                                        <ComboBox fx:id="stateBox" prefWidth="150.0" GridPane.columnIndex="1"
-                                                  GridPane.rowIndex="5"/>
-                                        <Button onAction="#addState" text="Adicionar" GridPane.columnIndex="2"
-                                                GridPane.rowIndex="5"/>
-                                        <ScrollPane prefHeight="100.0" GridPane.columnSpan="3" GridPane.rowIndex="6">
-                                            <content>
-                                                <VBox fx:id="states" alignment="CENTER">
-                                                    <children>
-                                                        <Label text="Adicione pelo menos um estado."/>
-                                                    </children>
-                                                </VBox>
-                                            </content>
-                                        </ScrollPane>
-                                    </children>
-                                    <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                    </VBox.margin>
-                                </GridPane>
-                                <Button mnemonicParsing="false" onAction="#addObjAnimation" text="Salvar">
-                                    <VBox.margin>
-                                        <Insets/>
-                                    </VBox.margin>
-                                </Button>
-                                <Label text="Animações:">
-                                    <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="20.0"/>
-                                    </VBox.margin>
-                                </Label>
-                                <ScrollPane prefHeight="100.0">
+                        <TabPane rotateGraphic="true" tabClosingPolicy="UNAVAILABLE">
+                            <tabs>
+                                <Tab closable="false" text="Sprite sheet">
                                     <content>
-                                        <VBox fx:id="animationsBox" alignment="CENTER">
+                                        <VBox>
                                             <children>
-                                                <Label text="Selecione uma animação."/>
+                                                <GridPane hgap="10.0" vgap="10.0">
+                                                    <columnConstraints>
+                                                        <ColumnConstraints hgrow="ALWAYS"/>
+                                                        <ColumnConstraints hgrow="ALWAYS"/>
+                                                        <ColumnConstraints/>
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints vgrow="ALWAYS"/>
+                                                        <RowConstraints vgrow="ALWAYS"/>
+                                                        <RowConstraints/>
+                                                    </rowConstraints>
+                                                    <children>
+                                                        <ComboBox fx:id="spritesheetCombobox" prefWidth="150.0"/>
+                                                        <Button mnemonicParsing="false" onAction="#addSpriteSheet"
+                                                                text="Adicionar" GridPane.columnIndex="1"/>
+
+                                                        <ToggleButton fx:id="initialFrameButton" text="Frame inicial"
+                                                                      GridPane.rowIndex="1"/>
+                                                        <Label fx:id="initialFrameLabel"
+                                                               text="Clique para escolher o frame."
+                                                               GridPane.columnIndex="1" GridPane.columnSpan="2"
+                                                               GridPane.rowIndex="1"/>
+
+                                                        <ToggleButton fx:id="finalFrameButton" text="Frame final"
+                                                                      GridPane.rowIndex="2"/>
+                                                        <Label fx:id="finalFrameLabel"
+                                                               text="Clique para escolher um frame."
+                                                               GridPane.columnIndex="1" GridPane.columnSpan="2"
+                                                               GridPane.rowIndex="2"/>
+                                                    </children>
+                                                    <VBox.margin>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                    </VBox.margin>
+                                                </GridPane>
+                                                <ScrollPane>
+                                                    <content>
+                                                        <StackPane fx:id="spritePreview">
+                                                            <VBox.margin>
+                                                                <Insets bottom="10.0" left="10.0" right="10.0"
+                                                                        top="10.0"/>
+                                                            </VBox.margin>
+                                                        </StackPane>
+                                                    </content>
+                                                    <VBox.margin>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                    </VBox.margin>
+                                                </ScrollPane>
                                             </children>
                                         </VBox>
                                     </content>
-                                    <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                                    </VBox.margin>
-                                </ScrollPane>
-                            </children>
-                        </VBox>
+                                </Tab>
+                                <Tab closable="false" text="Propriedades">
+                                    <content>
+                                        <VBox>
+                                            <children>
+                                                <FloatTextField fx:id="speedField"
+                                                                promptText="Velocidade da animação...">
+                                                    <VBox.margin>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                    </VBox.margin>
+                                                </FloatTextField>
+                                                <ComboBox fx:id="policyCombobox" promptText="Selecione uma política...">
+                                                    <VBox.margin>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                    </VBox.margin>
+                                                    <padding>
+                                                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0"/>
+                                                    </padding>
+                                                </ComboBox>
+                                                <GridPane hgap="10.0" vgap="10.0">
+                                                    <columnConstraints>
+                                                        <ColumnConstraints hgrow="SOMETIMES"/>
+                                                        <ColumnConstraints hgrow="SOMETIMES"/>
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints vgrow="SOMETIMES"/>
+                                                    </rowConstraints>
+                                                    <children>
+                                                        <CheckBox fx:id="vflipCheckBox" mnemonicParsing="false"
+                                                                  text="Flip vertical"/>
+                                                        <CheckBox fx:id="hflipCheckbox" mnemonicParsing="false"
+                                                                  text="Flip horizontal" GridPane.columnIndex="1"/>
+                                                    </children>
+                                                    <VBox.margin>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                    </VBox.margin>
+                                                </GridPane>
+                                                <GridPane hgap="10.0" vgap="10.0">
+                                                    <columnConstraints>
+                                                        <ColumnConstraints hgrow="SOMETIMES"/>
+                                                        <ColumnConstraints hgrow="SOMETIMES"/>
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints vgrow="SOMETIMES"/>
+                                                    </rowConstraints>
+                                                    <children>
+                                                        <ComboBox fx:id="stateBox" prefHeight="31.0" prefWidth="308.0"
+                                                                  promptText="Selecione um estado..."/>
+                                                        <Button onAction="#addState" text="Adicionar"
+                                                                GridPane.columnIndex="1"/>
+                                                    </children>
+                                                    <VBox.margin>
+                                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                                    </VBox.margin>
+                                                </GridPane>
+                                                <ScrollPane prefHeight="149.0" prefWidth="210.0">
+                                                    <content>
+                                                        <VBox fx:id="states" alignment="CENTER">
+                                                            <children>
+                                                                <Label text="Adicione pelo menos um estado."/>
+                                                            </children>
+                                                        </VBox>
+                                                    </content>
+                                                    <VBox.margin>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                    </VBox.margin>
+                                                    <padding>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                    </padding>
+                                                </ScrollPane>
+                                            </children>
+                                        </VBox>
+                                    </content>
+                                </Tab>
+                                <Tab closable="false" text="Animações">
+                                    <content>
+                                        <VBox>
+                                            <children>
+                                                <Button mnemonicParsing="false" onAction="#addObjAnimation"
+                                                        text="Salvar animação">
+                                                    <VBox.margin>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                    </VBox.margin>
+                                                </Button>
+                                                <ScrollPane prefHeight="253.0" prefWidth="393.0">
+                                                    <content>
+                                                        <VBox fx:id="animationsBox" alignment="CENTER">
+                                                            <children>
+                                                                <Label text="Crie uma animação."/>
+                                                            </children>
+                                                        </VBox>
+                                                    </content>
+                                                    <padding>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                    </padding>
+                                                    <VBox.margin>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                    </VBox.margin>
+                                                </ScrollPane>
+                                            </children>
+                                        </VBox>
+                                    </content>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
                     </content>
                 </TitledPane>
                 <TitledPane text="Sons do objeto">

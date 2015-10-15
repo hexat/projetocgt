@@ -2,6 +2,7 @@ package br.edu.ifce.cgt.application.controller.panes;
 
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.dialogs.AnimationDialog;
+import br.edu.ifce.cgt.application.controller.dialogs.SpriteSheetDialog;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import br.edu.ifce.cgt.application.util.Config;
@@ -11,9 +12,11 @@ import br.edu.ifce.cgt.application.util.Pref;
 import cgt.core.CGTAnimation;
 import cgt.core.CGTGameObject;
 import cgt.core.CGTProjectile;
+import cgt.game.CGTSpriteSheet;
 import cgt.policy.StatePolicy;
 import cgt.util.CGTFile;
 import cgt.util.CGTSound;
+import cgt.util.SpriteSheetTile;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import javafx.beans.value.ChangeListener;
@@ -23,10 +26,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -34,6 +41,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -82,9 +90,15 @@ public class GameObjectPane extends StackPane {
     @FXML
     private ComboBox<String> spritesheetCombobox;
     @FXML
-    private ComboBox initialFrameCombobox;
+    private StackPane spritePreview;
     @FXML
-    private ComboBox finalFrameCombobox;
+    private ToggleButton initialFrameButton;
+    @FXML
+    private ToggleButton finalFrameButton;
+    @FXML
+    private Label initialFrameLabel;
+    @FXML
+    private Label finalFrameLabel;
     @FXML
     private FloatTextField speedField;
     @FXML
@@ -127,6 +141,10 @@ public class GameObjectPane extends StackPane {
      */
     private Runnable onUpdateRunnable;
 
+    private SpriteSheetTile initialTile;
+
+    private SpriteSheetTile finalTile;
+
     public GameObjectPane(CGTGameObject object) {
         this.gameObject = object;
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigGameObject.fxml"));
@@ -168,12 +186,10 @@ public class GameObjectPane extends StackPane {
             labMaxLife.setText("Munição máxima:");
         }
 
-
         this.statePolicies = new ArrayList<EnumMap<StatePolicy>>();
         this.stateBox.getItems().addAll(getStates());
         this.policyCombobox.getItems().addAll(getPolicies());
-
-
+        this.spritesheetCombobox.getItems().setAll(Config.get().getGame().getSpriteDB().findAllId());
 
         updateBoxAnimation();
         updateBoxPositions();
@@ -319,6 +335,17 @@ public class GameObjectPane extends StackPane {
                 }
             }
         });
+
+        this.spritesheetCombobox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                updateSpriteSheetPreview(newValue);
+
+                if (onUpdateRunnable != null) {
+                    onUpdateRunnable.run();
+                }
+            }
+        });
     }
 
     public void setSoundObject() {
@@ -457,24 +484,25 @@ public class GameObjectPane extends StackPane {
 
     private void updateBoxAnimation() {
         animationsBox.getChildren().clear();
-        List<CGTAnimation> lista = gameObject.getAnimations();
-        if (lista.size() > 0) {
+        List<CGTAnimation> animationList = gameObject.getAnimations();
+        if (animationList.size() > 0) {
             ResourceBundle bundle = Pref.load().getBundle();
-            for (final CGTAnimation animation : lista) {
+            for (final CGTAnimation animation : animationList) {
                 String name = bundle.getString(animation.getStatesIterator().next().name());
                 if (animation.getStatesActorSize() > 1) {
                     name += "...";
                 }
 
                 ItemEditPane pane = new ItemEditPane(name);
+
                 pane.getEditButton().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        AnimationDialog dialog = new AnimationDialog(animation);
-                        dialog.showAndWait();
+                        openAnimation(animation);
                         updateBoxAnimation();
                     }
                 });
+
                 pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
@@ -482,12 +510,14 @@ public class GameObjectPane extends StackPane {
                         updateBoxAnimation();
                     }
                 });
+
                 animationsBox.getChildren().add(pane);
             }
         } else {
             animationsBox.getChildren().add(new Label("Nenhuma Animação"));
         }
     }
+
 
     @FXML
     public void addSoundDie() {
@@ -523,7 +553,25 @@ public class GameObjectPane extends StackPane {
 
     @FXML
     public void addObjAnimation() {
+        CGTAnimation animation = new CGTAnimation();
+        animation.cleanActorStates();
 
+        for (EnumMap<StatePolicy> p : statePolicies) {
+            animation.addActorState(p.getKey());
+        }
+
+        animation.setSpriteSheet(spritesheetCombobox.getSelectionModel().getSelectedItem());
+        animation.setAnimationPolicy(policyCombobox.getSelectionModel().getSelectedItem().getKey());
+        animation.setFlipHorizontal(hflipCheckbox.isSelected());
+        animation.setFlipVertical(vflipCheckBox.isSelected());
+        animation.setSpriteVelocity(speedField.getValue());
+        animation.setInitialFrame(new Vector2(initialTile.getRow(),
+                initialTile.getCol()));
+        animation.setEndingFrame(new Vector2(finalTile.getRow(),
+                finalTile.getCol()));
+
+        this.gameObject.addAnimation(animation);
+        this.updateBoxAnimation();
     }
 
     @FXML
@@ -534,6 +582,12 @@ public class GameObjectPane extends StackPane {
             stateBox.getItems().remove(el);
             updateStates();
         }
+    }
+
+    @FXML
+    public void addSpriteSheet() {
+        new SpriteSheetDialog(null).showAndWait();
+        this.spritesheetCombobox.getItems().setAll(Config.get().getGame().getSpriteDB().findAllId());
     }
 
     private void updateStates() {
@@ -583,4 +637,87 @@ public class GameObjectPane extends StackPane {
 
         return listModes;
     }
+
+    public void updateSpriteSheetPreview(String spritesheetName) {
+
+        if (!"".equals(spritesheetName)) {
+            CGTSpriteSheet cgtSpriteSheet = Config.get().getGame().getSpriteDB().find(spritesheetName);
+            String urlToFile = cgtSpriteSheet.getTexture().getFile().getFile().getName();
+            Image img = Config.get().getImage(urlToFile);
+            List<SpriteSheetTile> tiles = Config.get().splitImage(img, cgtSpriteSheet.getColumns(), cgtSpriteSheet.getRows());
+            GridPane grid = new GridPane();
+            grid.setAlignment(Pos.CENTER);
+
+            for (SpriteSheetTile tile : tiles) {
+                ImageView imgView = new ImageView(tile.getImage());
+                Button b = new Button();
+                b.setGraphic(imgView);
+
+                b.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        fillSelectFrameValue(tile);
+                    }
+                });
+
+                grid.add(b, tile.getCol(), tile.getRow());
+            }
+
+            this.spritePreview.getChildren().setAll(grid);
+        }
+    }
+
+    private void fillSelectFrameValue(SpriteSheetTile tile) {
+        if (this.initialFrameButton.isSelected()) {
+            this.initialTile = tile;
+            this.initialFrameLabel.setText(this.spritesheetCombobox.getValue() + " (" + tile.getRow() + ", " + tile.getCol() + ")");
+            this.initialFrameButton.setSelected(false);
+        }
+
+        if (this.finalFrameButton.isSelected()) {
+            this.finalTile = tile;
+            this.finalFrameLabel.setText(this.spritesheetCombobox.getValue() + " (" + tile.getRow() + ", " + tile.getCol() + ")");
+            this.finalFrameButton.setSelected(false);
+        }
+    }
+
+    private void openAnimation(CGTAnimation animation) {
+
+        this.spritesheetCombobox.getSelectionModel().select(animation.getSpriteSheet().getId());
+        this.initialFrameLabel.setText(this.spritesheetCombobox.getValue() + " (" + animation.getInitialFrame().x + ", " + animation.getInitialFrame().y + ")");
+        this.finalFrameLabel.setText(this.spritesheetCombobox.getValue() + " (" + animation.getEndingFrame().x + ", " + animation.getEndingFrame().y + ")");
+        this.updateSpriteSheetPreview(animation.getSpriteSheet().getId());
+        this.speedField.setValue(animation.getSpriteVelocity());
+
+        int i = 0;
+        while (i < policyCombobox.getItems().size() &&
+                policyCombobox.getItems().get(i).getKey() != animation.getAnimationPolicy()) i++;
+        if (i < policyCombobox.getItems().size()) {
+            policyCombobox.getSelectionModel().select(i);
+        }
+
+        this.hflipCheckbox.setSelected(animation.isFlipHorizontal());
+        this.vflipCheckBox.setSelected(animation.isFlipVertical());
+
+        Iterator<StatePolicy> itr = animation.getStatesIterator();
+        boolean found;
+
+        while (itr.hasNext()) {
+            StatePolicy item = itr.next();
+            found = false;
+
+            for (i = 0; i < this.stateBox.getItems().size() && !found; i++) {
+
+                if (this.stateBox.getItems().get(i).getKey() == item) {
+                    found = true;
+                    statePolicies.add(this.stateBox.getItems().get(i));
+                    this.stateBox.getItems().remove(i);
+                }   
+            }
+        }
+
+        this.updateStates();
+    }
+
+
 }
