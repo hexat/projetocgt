@@ -712,7 +712,7 @@ public class GameObjectPane extends StackPane {
                     found = true;
                     statePolicies.add(this.stateBox.getItems().get(i));
                     this.stateBox.getItems().remove(i);
-                }   
+                }
             }
         }
 
