@@ -46,6 +46,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class GameObjectPane extends StackPane {
+
+    @FXML
+    private Accordion accordionRoot;
+
     /**
      * Informações gerais do objeto. Limites, posições,
      * colisão e velocidade
@@ -645,25 +649,31 @@ public class GameObjectPane extends StackPane {
             String urlToFile = cgtSpriteSheet.getTexture().getFile().getFile().getName();
             Image img = Config.get().getImage(urlToFile);
             List<SpriteSheetTile> tiles = Config.get().splitImage(img, cgtSpriteSheet.getColumns(), cgtSpriteSheet.getRows());
-            GridPane grid = new GridPane();
-            grid.setAlignment(Pos.CENTER);
 
-            for (SpriteSheetTile tile : tiles) {
-                ImageView imgView = new ImageView(tile.getImage());
-                Button b = new Button();
-                b.setGraphic(imgView);
+            if (!tiles.isEmpty()) {
+                this.txtBoundsH.setValue(tiles.get(0).getHeight());
+                this.txtBoundsW.setValue(tiles.get(0).getWidth());
 
-                b.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        fillSelectFrameValue(tile);
-                    }
-                });
+                GridPane grid = new GridPane();
+                grid.setAlignment(Pos.CENTER);
 
-                grid.add(b, tile.getCol(), tile.getRow());
+                for (SpriteSheetTile tile : tiles) {
+                    ImageView imgView = new ImageView(tile.getImage());
+                    Button b = new Button();
+                    b.setGraphic(imgView);
+
+                    b.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            fillSelectFrameValue(tile);
+                        }
+                    });
+
+                    grid.add(b, tile.getCol(), tile.getRow());
+                }
+
+                this.spritePreview.getChildren().setAll(grid);
             }
-
-            this.spritePreview.getChildren().setAll(grid);
         }
     }
 
@@ -719,5 +729,7 @@ public class GameObjectPane extends StackPane {
         this.updateStates();
     }
 
-
+    public Accordion getAccordionRoot() {
+        return accordionRoot;
+    }
 }

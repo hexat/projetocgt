@@ -1,5 +1,6 @@
 package br.edu.ifce.cgt.application.vo;
 
+import br.edu.ifce.cgt.application.controller.panes.GameObjectPane;
 import br.edu.ifce.cgt.application.controller.titleds.ActorTitledPane;
 import cgt.core.CGTActor;
 import javafx.scene.Node;
@@ -16,25 +17,15 @@ public class CGTGameActorDrawable extends CGTGameObjectDrawable {
         super(actor, drawableObjectPane, drawableConfigurationsPane);
         this.actor = actor;
         this.actorTitledPane = new ActorTitledPane(actor);
+
+        GameObjectPane paneObject = (GameObjectPane) super.getPane();
+        Accordion accordion = paneObject.getAccordionRoot();
+        accordion.getPanes().add(this.actorTitledPane);
     }
 
     @Override
     public Node getPane() {
         return this.actorTitledPane;
-    }
-
-    @Override
-    public void drawObject() {
-        super.drawObject();
-    }
-
-    @Override
-    public void drawConfigurationPanel() {
-        Pane paneObject = (Pane) super.getPane();
-        Accordion accordion = (Accordion) paneObject.getChildren().get(0);
-        TitledPane titledPaneActor = (TitledPane) this.getPane();
-        accordion.getPanes().add(titledPaneActor);
-        super.updateConfigPane(accordion);
     }
 
     @Override
