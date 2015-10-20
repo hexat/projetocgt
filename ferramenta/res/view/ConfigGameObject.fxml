@@ -12,41 +12,63 @@
             <panes>
                 <TitledPane text="Configurações gerais do objeto">
                     <content>
-                        <GridPane alignment="CENTER_LEFT" hgap="5.0" vgap="5.0">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" />
-                                <ColumnConstraints hgrow="SOMETIMES" />
-                                <ColumnConstraints hgrow="SOMETIMES" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints vgrow="SOMETIMES" />
-                            </rowConstraints>
+                        <VBox>
                             <children>
-                                <Label fx:id="labMaxLife" text="Vida" />
-                                <IntegerTextField fx:id="txtLife" promptText="Valor inical" GridPane.rowIndex="1" />
-                                <IntegerTextField fx:id="txtMaxLife" promptText="Máximo permitido" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <Label text="Posições iniciais" GridPane.columnSpan="3" GridPane.rowIndex="2" />
-                                <IntegerTextField fx:id="txtPositionX" promptText="X" GridPane.rowIndex="3" />
-                                <IntegerTextField fx:id="txtPositionY" promptText="Y" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <Button mnemonicParsing="false" onAction="#addInitialPosition" text="+" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                <VBox fx:id="boxPositions" alignment="CENTER" GridPane.columnSpan="3" GridPane.rowIndex="4">
+                                <Label style="-fx-font-weight: bold" text="Vida do objeto">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin></Label>
+                                <GridPane hgap="5.0" vgap="5.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" />
+                                        <ColumnConstraints hgrow="SOMETIMES" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints vgrow="SOMETIMES" />
+                                        <RowConstraints vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label fx:id="labLife" text="Inicial" />
+                                        <IntegerTextField fx:id="txtLife" GridPane.columnIndex="1" />
+                                        <Label fx:id="labMaxLife" text="Total" GridPane.rowIndex="1" />
+                                        <IntegerTextField fx:id="txtMaxLife" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </padding>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                                </GridPane>
+                                <Label style="-fx-font-weight: bold" text="Posições iniciais">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin></Label>
+                                <HBox>
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </padding>
+                                    <children>
+                                        <IntegerTextField fx:id="txtPositionX" promptText="X" />
+                                        <IntegerTextField fx:id="txtPositionY" promptText="Y" />
+                                        <Button mnemonicParsing="false" onAction="#addInitialPosition" text="+" />
+                                    </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                                </HBox>
+                                <VBox fx:id="boxPositions" alignment="CENTER">
                                     <padding>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </padding>
                                 </VBox>
-
-                                <Label text="Velocidade" GridPane.rowIndex="5" />
-                                <IntegerTextField fx:id="txtVelocidade" GridPane.columnSpan="3" GridPane.rowIndex="6" />
+                                <Label style="-fx-font-weight: bold" text="Velocidade">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin></Label>
+                                <IntegerTextField fx:id="txtVelocidade" />
                             </children>
-                            <padding>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </padding>
-                        </GridPane>
+                        </VBox>
                     </content>
                 </TitledPane>
                 <TitledPane text="Animações do objeto">
@@ -102,7 +124,6 @@
                                     <content>
                                         <VBox>
                                             <children>
-
                                                 <HBox alignment="CENTER_LEFT">
                                                     <children>
                                                         <Label text="Frames por segundo" />
@@ -206,85 +227,116 @@
                         </TabPane>
                     </content>
                 </TitledPane>
-                <TitledPane text="Dimensão e colisão">
+                <TitledPane text="Propriedades de dimensão e colisão">
                     <content>
-                        <GridPane alignment="TOP_CENTER" hgap="5.0" vgap="5.0">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" />
-                                <ColumnConstraints hgrow="SOMETIMES" />
-                                <ColumnConstraints hgrow="SOMETIMES" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints />
-                            </rowConstraints>
+                        <VBox>
                             <children>
-                                <Label style="-fx-font-weight: bold" text="Dimensões" />
-
-                                <Label text="Largura" GridPane.rowIndex="1" />
-                                <FloatTextField fx:id="txtBoundsW" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-                                <Label text="Altura" GridPane.rowIndex="2" />
-                                <FloatTextField fx:id="txtBoundsH" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
-                                <Label style="-fx-font-weight: bold" text="Colisão" GridPane.rowIndex="3" />
-
-                                <Label text="X" GridPane.rowIndex="4" />
-                                <IntegerTextField fx:id="txtColisionX" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-
-                                <Label text="Y" GridPane.rowIndex="5" />
-                                <IntegerTextField fx:id="txtColisionY" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-
-                                <Label text="Largura" GridPane.rowIndex="6" />
-                                <FloatTextField fx:id="txtColisionW" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-
-                                <Label text="Altura" GridPane.rowIndex="7" />
-                                <FloatTextField fx:id="txtColisionH" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                <Label style="-fx-font-weight: bold" text="Dimensões">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin></Label>
+                                <GridPane alignment="CENTER_LEFT" hgap="5.0" vgap="5.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints />
+                                        <ColumnConstraints />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints />
+                                        <RowConstraints />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label text="Largura" />
+                                        <FloatTextField fx:id="txtBoundsW" GridPane.columnIndex="1" />
+                                        <Label text="Altura" GridPane.rowIndex="1" />
+                                        <FloatTextField fx:id="txtBoundsH" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                                </GridPane>
+                                <Label style="-fx-font-weight: bold" text="Colisão" GridPane.rowIndex="3">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin></Label>
+                                <GridPane alignment="CENTER_LEFT" hgap="5.0" vgap="5.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints />
+                                        <ColumnConstraints />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints />
+                                        <RowConstraints />
+                                        <RowConstraints />
+                                        <RowConstraints />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label text="X" />
+                                        <IntegerTextField fx:id="txtColisionX" GridPane.columnIndex="1" />
+                                        <Label text="Y" GridPane.rowIndex="1" />
+                                        <IntegerTextField fx:id="txtColisionY" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Label text="Largura" GridPane.rowIndex="2" />
+                                        <FloatTextField fx:id="txtColisionW" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Label text="Altura" GridPane.rowIndex="3" />
+                                        <FloatTextField fx:id="txtColisionH" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                                </GridPane>
                             </children>
-                        </GridPane>
+                        </VBox>
                     </content>
                 </TitledPane>
-                <TitledPane text="Sons do objeto">
+                <TitledPane text="Configurações dos sons do objeto">
                     <content>
-                        <GridPane alignment="CENTER_LEFT" hgap="10.0" vgap="10.0">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" />
-                                <ColumnConstraints />
-                                <ColumnConstraints />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints />
-                                <RowConstraints />
-                                <RowConstraints />
-                                <RowConstraints />
-                            </rowConstraints>
+                        <VBox>
                             <children>
-                                <Label text="Som" />
-                                <TextField fx:id="txtSound" GridPane.columnIndex="1" />
-                                <Button mnemonicParsing="false" onAction="#setSoundObject" text="..." GridPane.columnIndex="2" />
-                                <Label text="Som de colisão" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                                <Button mnemonicParsing="false" onAction="#addSoundCollision" text="+" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                <VBox fx:id="boxSoundColision" alignment="CENTER" GridPane.columnSpan="3" GridPane.rowIndex="2">
+                                <Label style="-fx-font-weight: bold" text="Som do objeto">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin></Label>
+                                <HBox>
+                                    <children>
+                                        <TextField fx:id="txtSound" />
+                                        <Button mnemonicParsing="false" onAction="#setSoundObject" text="..." />
+                                    </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                                </HBox>
+
+                                <Button mnemonicParsing="false" onAction="#addSoundCollision" text="Adicionar som de colisão">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin></Button>
+
+                                <VBox fx:id="boxSoundColision">
                                     <padding>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </padding>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
                                 </VBox>
-                                <Label text="Som de morte" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                                <Button mnemonicParsing="false" onAction="#addSoundDie" text="+" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                <VBox fx:id="boxSoundDie" alignment="CENTER" GridPane.columnSpan="3" GridPane.rowIndex="4">
+
+                                <Button mnemonicParsing="false" onAction="#addSoundDie" text="Adiconar som de eliminação">
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin></Button>
+                                <VBox fx:id="boxSoundDie">
                                     <padding>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </padding>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
                                 </VBox>
+                                
                             </children>
-                        </GridPane>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                        </VBox>
                     </content>
                 </TitledPane>
             </panes>
