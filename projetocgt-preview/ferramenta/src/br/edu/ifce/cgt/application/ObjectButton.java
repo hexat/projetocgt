@@ -1,14 +1,12 @@
 package br.edu.ifce.cgt.application;
 
 import br.edu.ifce.cgt.application.controller.WorldController;
+import br.edu.ifce.cgt.application.controller.panes.GameObjectPane;
 import br.edu.ifce.cgt.application.controller.titleds.*;
 import cgt.core.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
@@ -91,6 +89,10 @@ public class ObjectButton extends Button {
 
     private void clearAndAddGameObject() {
         configAccordion.getPanes().clear();
-        configAccordion.getPanes().add(new GameObjectTitledPane(object));
+        GameObjectPane pane = new GameObjectPane(object);
+        Accordion accordion = (Accordion) pane.getChildren().get(0);
+        for (TitledPane titledPane : accordion.getPanes()) {
+            configAccordion.getPanes().add(titledPane);
+        }
     }
 }

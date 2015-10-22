@@ -1,13 +1,17 @@
 package cgt.game;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import cgt.core.CGTEnemy;
 import cgt.core.CGTGameObject;
 import cgt.screen.CGTWindow;
 import cgt.util.CGTError;
 import com.badlogic.gdx.utils.Json;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CGTGame implements Serializable {
@@ -55,6 +59,12 @@ public class CGTGame implements Serializable {
             screens.add(screen);
             return screen;
         }
+        else{
+            /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Id ja registrado!");
+            alert.showAndWait();*/
+            System.out.println("Id ja registrado!");
+        }
         return null;
     }
 
@@ -74,6 +84,12 @@ public class CGTGame implements Serializable {
             world.setId(id);
             worlds.add(world);
             return world;
+        }
+        else{
+            /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Id ja registrado!");
+            alert.showAndWait();*/
+            System.out.println("Id ja registrado!");
         }
         return null;
     }

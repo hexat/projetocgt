@@ -1,12 +1,15 @@
 package br.edu.ifce.cgt.application.controller.panes;
 
 import br.edu.ifce.cgt.application.Main;
+import br.edu.ifce.cgt.application.util.Config;
 import cgt.core.CGTProject;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -18,6 +21,9 @@ public class ConfigProjectPane extends AnchorPane {
     @FXML
     private ChoiceBox<String> canvasSize;
 
+    @FXML
+    private ComboBox<String> firstWindow;
+
     private Runnable onUpdateRunner;
 
     private CGTProject cgtProject;
@@ -26,7 +32,6 @@ public class ConfigProjectPane extends AnchorPane {
         this.cgtProject = cgtProject;
 
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigProject.fxml"));
-
         xml.setController(this);
         xml.setRoot(this);
 
@@ -43,6 +48,13 @@ public class ConfigProjectPane extends AnchorPane {
                 changeProjectSize(newValue);
             }
         });
+        firstWindow.getItems().setAll(Config.get().getGame().getIds());
+        this.firstWindow.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                Config.get().getGame().setStartWindowId(newValue);
+            }
+        });
     }
 
     private void changeProjectSize(String size) {
@@ -51,11 +63,16 @@ public class ConfigProjectPane extends AnchorPane {
         int height = Integer.valueOf(widthHeight[1]);
         this.cgtProject.setCanvasWidth(width);
         this.cgtProject.setCanvasHeight(height);
+        //Config.get().getGame().
         this.onUpdateRunner.run();
     }
 
     public ConfigProjectPane(CGTProject cgtProject, Runnable onUpdateRunner) {
         this(cgtProject);
         this.onUpdateRunner = onUpdateRunner;
+    }
+
+    public ComboBox<String> getComboBox(){
+        return  this.firstWindow;
     }
 }

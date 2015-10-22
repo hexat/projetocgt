@@ -27,21 +27,26 @@ import java.io.IOException;
  * Created by infolev on 06/02/15.
  */
 public class SpriteSheetDialog extends VBox {
-    @FXML public BorderPane boxPane;
+    @FXML
+    public BorderPane boxPane;
     private CGTSpriteSheet spriteSheet;
 
     private Stage stage;
 
-    @FXML private TextField txtImgName;
-    @FXML private TextField txtNameSprite;
-    @FXML private IntegerTextField txtNumLines;
-    @FXML private IntegerTextField txtNumCol;
+    @FXML
+    private TextField txtImgName;
+    @FXML
+    private TextField txtNameSprite;
+    @FXML
+    private IntegerTextField txtNumLines;
+    @FXML
+    private IntegerTextField txtNumCol;
 
     private File imgFile;
     private ImageView imgView;
 
     public SpriteSheetDialog(CGTSpriteSheet sheet) {
-    	
+
         FXMLLoader view = new FXMLLoader(Main.class.getResource("/view/ConfigSprite.fxml"));
         view.setRoot(this);
         view.setController(this);
@@ -63,9 +68,10 @@ public class SpriteSheetDialog extends VBox {
 
         setSpriteSheet(sheet);
         txtImgName.setEditable(false);
-	}
+    }
 
-    @FXML public void addNewSprite() {
+    @FXML
+    public void addNewSprite() {
         if (validate()) {
             SpriteSheetDB db = Config.get().getGame().getSpriteDB();
             CGTFile file = Config.get().createImg(imgFile);
@@ -78,9 +84,9 @@ public class SpriteSheetDialog extends VBox {
                 if (spriteSheet.getTexture() != null) {
                     Config.get().destroy(spriteSheet.getTexture().getFile());
                 }
-            	if (imgFile != null) {
-            		spriteSheet.setTexture(new CGTTexture(file));
-            	}
+                if (imgFile != null) {
+                    spriteSheet.setTexture(new CGTTexture(file));
+                }
                 spriteSheet.setColumns(txtNumCol.getValue());
                 spriteSheet.setRows(txtNumLines.getValue());
             }
@@ -91,23 +97,24 @@ public class SpriteSheetDialog extends VBox {
     }
 
     private boolean validate() {
-    	if (spriteSheet != null) {
-    		return (!txtNumCol.getText().equals("") && !txtNumLines.getText().equals(""));
-    	} else {
-    		return (imgFile != null && !txtNameSprite.getText().equals("") && !txtNumCol.getText().equals("")
-                && !txtNumLines.getText().equals("") && Config.get().getGame()
-                .getSpriteDB().find(txtNameSprite.getText()) == null);
-    	}
-        
+        if (spriteSheet != null) {
+            return (!txtNumCol.getText().equals("") && !txtNumLines.getText().equals(""));
+        } else {
+            return (imgFile != null && !txtNameSprite.getText().equals("") && !txtNumCol.getText().equals("")
+                    && !txtNumLines.getText().equals("") && Config.get().getGame()
+                    .getSpriteDB().find(txtNameSprite.getText()) == null);
+        }
+
     }
 
-    @FXML public void setTextureSprite() {
+    @FXML
+    public void setTextureSprite() {
         File file = DialogsUtil.showOpenDialog("Selecione o Sprite", txtImgName.getScene().getWindow(), DialogsUtil.IMG_FILTER);
 
         imgFile = file;
 
         if (file != null && txtNameSprite.getText().equals("")) {
-            txtNameSprite.setText(imgFile.getName().substring(0, imgFile.getName().length()-4));
+            txtNameSprite.setText(imgFile.getName().substring(0, imgFile.getName().length() - 4));
         }
 
         txtImgName.setText(file.getName());
@@ -117,7 +124,7 @@ public class SpriteSheetDialog extends VBox {
 
     public void updateImage() {
         if (imgFile != null) {
-            Image image = new Image("file:"+imgFile.getAbsolutePath());
+            Image image = new Image("file:" + imgFile.getAbsolutePath());
             if (imgView == null) {
                 imgView = new ImageView();
                 if (image.getHeight() > 256) {
@@ -137,11 +144,11 @@ public class SpriteSheetDialog extends VBox {
     public void setSpriteSheet(CGTSpriteSheet spriteSheet) {
         this.spriteSheet = spriteSheet;
         if (spriteSheet != null) {
-		    txtImgName.setText(spriteSheet.getTexture().getFile().getFilename());
-		    txtNameSprite.setText(spriteSheet.getId());
-		    txtNameSprite.setEditable(false);
-		    txtNumCol.setText(spriteSheet.getColumns()+"");
-		    txtNumLines.setText(spriteSheet.getRows()+"");
+            txtImgName.setText(spriteSheet.getTexture().getFile().getFilename());
+            txtNameSprite.setText(spriteSheet.getId());
+            txtNameSprite.setEditable(false);
+            txtNumCol.setText(spriteSheet.getColumns() + "");
+            txtNumLines.setText(spriteSheet.getRows() + "");
 
             imgFile = new File(Config.BASE + spriteSheet.getTexture().getFile().getFile().getPath());
             updateImage();
@@ -152,7 +159,11 @@ public class SpriteSheetDialog extends VBox {
         return spriteSheet;
     }
 
-	public void show() {
-		stage.show();
-	}
+    public void show() {
+        stage.show();
+    }
+
+    public void showAndWait() {
+        stage.showAndWait();
+    }
 }

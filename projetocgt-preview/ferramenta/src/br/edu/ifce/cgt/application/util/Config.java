@@ -2,21 +2,22 @@ package br.edu.ifce.cgt.application.util;
 
 import cgt.game.CGTGame;
 import cgt.util.CGTFile;
+import cgt.util.SpriteSheetTile;
 import com.badlogic.gdx.utils.Json;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.WritableImage;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import org.apache.commons.io.FileUtils;
 
-import java.awt.*;
-import java.awt.geom.AffineTransform;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Config {
     public final static String SEPARATOR = System.getProperty("file.separator");
@@ -206,7 +207,6 @@ public class Config {
         inputProjectFile = null;
     }
 
-
     public static Image[] splitImage(Image img, int cols, int rows, int prefWidth, int prefHeight) {
 
         BufferedImage bufferedImage = SwingFXUtils.fromFXImage(img, null);
@@ -238,5 +238,32 @@ public class Config {
         }
 
         return images;
+    }
+
+    public static List<SpriteSheetTile> splitImage(Image img, int cols, int rows) {
+        List<SpriteSheetTile> tiles = new ArrayList<>();
+        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(img, null);
+        int w = bufferedImage.getWidth()/cols;
+        int h = bufferedImage.getHeight()/rows;
+
+        for(int y = 0; y < rows; y++) {
+            for(int x = 0; x < cols; x++) {
+                SpriteSheetTile tile = new SpriteSheetTile();
+                tile.setCol(x);
+                tile.setRow(y);
+                tile.setHeight(h);
+                tile.setWidth(w);
+
+                BufferedImage buffer = new BufferedImage(w, h, bufferedImage.getType());
+                Graphics2D g = buffer.createGraphics();
+                g.drawImage(bufferedImage, 0, 0, w, h, w * x, h * y, w * x + w, h * y + h, null);
+                g.dispose();
+
+                tile.setImage(SwingFXUtils.toFXImage(buffer, null));
+                tiles.add(tile);
+            }
+        }
+
+        return tiles;
     }
 }

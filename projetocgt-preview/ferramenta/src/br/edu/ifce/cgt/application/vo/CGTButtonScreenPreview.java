@@ -1,9 +1,8 @@
 package br.edu.ifce.cgt.application.vo;
 
 import br.edu.ifce.cgt.application.controller.panes.ConfigButtonPreviewPane;
-import br.edu.ifce.cgt.application.controller.panes.ConfigScreenPreviewPane;
-import br.edu.ifce.cgt.application.controller.titleds.GameObjectTitledPane;
 import br.edu.ifce.cgt.application.util.Config;
+import br.edu.ifce.cgt.application.util.Draggable;
 import cgt.core.CGTGameObject;
 import cgt.game.CGTScreen;
 import cgt.hud.CGTButtonScreen;
@@ -11,9 +10,8 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
 import java.util.List;
@@ -28,9 +26,9 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
     private String name;
     private String screenName;
     private ConfigButtonPreviewPane buttonPane;
-    private Rectangle bounds;
+    private Draggable preview = new Draggable();
 
-    public CGTButtonScreenPreview(CGTButtonScreen btn, AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane){
+    public CGTButtonScreenPreview(CGTButtonScreen btn, Pane drawableObjectPane, Pane drawableConfigurationsPane){
         super( drawableObjectPane, drawableConfigurationsPane);
         this.btn = btn;
         this.buttonPane = new ConfigButtonPreviewPane(this, new Runnable() {
@@ -39,7 +37,16 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
                 drawObject();
             }
         });
-        //this.bounds = new Rectangle(this.gameObject.getBounds().getWidth(), this.gameObject.getBounds().getHeight());
+        preview = new Draggable(buttonPane.getRelX(), buttonPane.getRelY(),btn);
+
+        preview.setOnMouseEntered(E->{
+            if (!buttonPane.getTextPress().getText().isEmpty())
+                preview.setImage(Config.get().getImage(this.btn.getTextureDown().getFile().getFile().getName()));
+        });
+        preview.setOnMouseExited(e -> {
+            if (!buttonPane.getTextUp().getText().isEmpty())
+                preview.setImage(Config.get().getImage(this.btn.getTextureUp().getFile().getFile().getName()));
+        });
     }
 
     @Override
@@ -55,8 +62,14 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
 
     @Override
     public void drawObject() {
+        if(!buttonPane.getTextUp().getText().isEmpty() && buttonPane.getRelX().getValue() >= 0 &&
+                buttonPane.getRelY().getValue() >= 0 && buttonPane.getWRel().getValue() > 0
+                && buttonPane.getHRel().getValue() > 0){
 
-        getDrawableObjectPane().getChildren().addAll();
+            setSizeButton();
+
+            super.updateDrawPane(preview);
+        }
     }
 
     @Override
@@ -135,6 +148,28 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
 
     public String getScreenName() {
         return screenName;
+    }
+
+    public Draggable getImage(){
+        return  this.preview;
+    }
+
+    public void setSizeButton(){
+        preview.setWidthBCKG(
+                Config.get().getImage(Config.get().getGame().getScreen(getScreenName()).
+                        getBackground().getFile().getFile().getName()).getWidth()
+        );
+        preview.setHeightBCKG(
+                Config.get().getImage(Config.get().getGame().getScreen(getScreenName()).
+                        getBackground().getFile().getFile().getName()).getHeight()
+        );
+        preview.setFitWidth(buttonPane.getWRel().getValue() * preview.getWidthBCKG());
+        preview.setFitHeight(buttonPane.getHRel().getValue() * preview.getHeightBCKG());
+        btn.setRelativeHeight(buttonPane.getHRel().getValue());
+        btn.setRelativeWidth(buttonPane.getWRel().getValue());
+        getButton().setRelativeX(buttonPane.getRelX().getValue());
+        getButton().setRelativeY(buttonPane.getRelY().getValue() -
+                (float) (preview.getFitHeight()/preview.getHeightBCKG()));
     }
 
 }

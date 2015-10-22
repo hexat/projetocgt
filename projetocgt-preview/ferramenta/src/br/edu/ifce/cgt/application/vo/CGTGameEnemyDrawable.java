@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class CGTGameEnemyDrawable extends CGTGameObjectDrawable {
     private String worldName;
     private EnemyTitledPane enemyTitledPane;
 
-    public CGTGameEnemyDrawable(AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
+    public CGTGameEnemyDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(new CGTEnemy(), drawableObjectPane, drawableConfigurationsPane);
         this.setObject(super.getObject());
         this.enemy.setId(name);
@@ -48,10 +49,9 @@ public class CGTGameEnemyDrawable extends CGTGameObjectDrawable {
 
     @Override
     public void drawConfigurationPanel() {
-        TitledPane titledPaneObject = (TitledPane) super.getPane();
+        Pane paneObject = (Pane) super.getPane();
+        Accordion accordion = (Accordion) paneObject.getChildren().get(0);
         TitledPane titledPaneEnemy = (TitledPane) this.getPane();
-        Accordion accordion = new Accordion();
-        accordion.getPanes().add(titledPaneObject);
         accordion.getPanes().add(titledPaneEnemy);
         super.updateConfigPane(accordion);
     }
@@ -122,4 +122,5 @@ public class CGTGameEnemyDrawable extends CGTGameObjectDrawable {
     public String getWorldName() {
         return worldName;
     }
+
 }

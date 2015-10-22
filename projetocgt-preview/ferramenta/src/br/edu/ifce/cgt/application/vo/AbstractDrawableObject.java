@@ -1,33 +1,50 @@
 package br.edu.ifce.cgt.application.vo;
 
 import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
-public abstract class AbstractDrawableObject<T> implements DrawableObject {
+public abstract class AbstractDrawableObject<T> implements DrawableObject<T> {
 
-    private AnchorPane drawableObjectPane;
+    private T object;
 
-    private AnchorPane drawableConfigurationsPane;
+    private Pane drawableObjectPane;
 
-    public AbstractDrawableObject(AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
+    private Pane drawableConfigurationsPane;
+
+    public AbstractDrawableObject(Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         this.drawableObjectPane = drawableObjectPane;
         this.drawableConfigurationsPane = drawableConfigurationsPane;
         this.onCreate();
     }
 
-    public AnchorPane getDrawableObjectPane() {
+    public AbstractDrawableObject(T object, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
+        this.object = object;
+        this.drawableObjectPane = drawableObjectPane;
+        this.drawableConfigurationsPane = drawableConfigurationsPane;
+    }
+
+    public Pane getDrawableObjectPane() {
         return drawableObjectPane;
     }
 
-    public AnchorPane getDrawableConfigurationsPane() {
+    public Pane getDrawableConfigurationsPane() {
         return drawableConfigurationsPane;
     }
 
-     public void updateDrawPane(Node node) {
-         getDrawableObjectPane().getChildren().remove(node);
-         getDrawableObjectPane().getChildren().add(node);
-     }
+    @Override
+    public T getObject() {
+        return object;
+    }
+
+    @Override
+    public void setObject(T object) {
+        this.object = object;
+    }
+
+    public void updateDrawPane(Node node) {
+        getDrawableObjectPane().getChildren().remove(node);
+        getDrawableObjectPane().getChildren().add(node);
+    }
 
     public void updateConfigPane(Pane pane) {
         getDrawableConfigurationsPane().getChildren().removeAll(getDrawableConfigurationsPane().getChildren());

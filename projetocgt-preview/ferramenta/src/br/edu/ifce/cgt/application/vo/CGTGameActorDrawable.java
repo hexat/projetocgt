@@ -1,21 +1,26 @@
 package br.edu.ifce.cgt.application.vo;
 
+import br.edu.ifce.cgt.application.controller.panes.GameObjectPane;
 import br.edu.ifce.cgt.application.controller.titleds.ActorTitledPane;
 import cgt.core.CGTActor;
 import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 public class CGTGameActorDrawable extends CGTGameObjectDrawable {
 
     private CGTActor actor;
     private ActorTitledPane actorTitledPane;
 
-    public CGTGameActorDrawable(CGTActor actor, AnchorPane drawableObjectPane, AnchorPane drawableConfigurationsPane) {
+    public CGTGameActorDrawable(CGTActor actor, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(actor, drawableObjectPane, drawableConfigurationsPane);
         this.actor = actor;
         this.actorTitledPane = new ActorTitledPane(actor);
+
+        GameObjectPane paneObject = (GameObjectPane) super.getPane();
+        Accordion accordion = paneObject.getAccordionRoot();
+        accordion.getPanes().add(this.actorTitledPane);
     }
 
     @Override
@@ -24,22 +29,7 @@ public class CGTGameActorDrawable extends CGTGameObjectDrawable {
     }
 
     @Override
-    public void drawObject() {
-        super.drawObject();
-    }
-
-    @Override
-    public void drawConfigurationPanel() {
-        TitledPane titledPaneObject = (TitledPane) super.getPane();
-        TitledPane titledPaneActor = (TitledPane) this.getPane();
-        Accordion accordion = new Accordion();
-        accordion.getPanes().add(titledPaneObject);
-        accordion.getPanes().add(titledPaneActor);
-        super.updateConfigPane(accordion);
-    }
-
-    @Override
     public String toString() {
-        return this.actor.getId();
+        return super.toString() + " (Ator)";
     }
 }
