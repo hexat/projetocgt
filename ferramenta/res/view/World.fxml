@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<fx:root prefHeight="457.0" prefWidth="482.0" type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+        <ToolBar prefWidth="Infinity" BorderPane.alignment="CENTER">
+            <items>
+                <Button mnemonicParsing="false" onAction="#btnConfigWorld" text="Configurar Mundo" />
+                <MenuButton mnemonicParsing="false" text="Adicionar Objeto">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#addEnemyInWorld" text="Inimigo" />
+                        <MenuItem mnemonicParsing="false" onAction="#addOpositeInWorld" text="Opositor" />
+                        <MenuItem mnemonicParsing="false" onAction="#addBonus" text="Bonus" />
+                        <MenuItem mnemonicParsing="false" onAction="#addProjectile" text="Projétil" />
+                    </items>
+                </MenuButton>
+                <MenuButton mnemonicParsing="false" text="Adicionar HUD">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#addAmmoDisplay" text="Display de Munição" />
+                        <MenuItem mnemonicParsing="false" onAction="#addEnemiesLifeBar" text="LifeBar de Inimigos" />
+                        <MenuItem mnemonicParsing="false" onAction="#addObjectLifeBar" text="LifeBar de Objetos" />
+                    </items>
+                </MenuButton>
+            </items>
+        </ToolBar>
+   </top>
+   <center>
+      <HBox fx:id="boxMundo" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+             <VBox fx:id="boxActor" prefHeight="200.0" prefWidth="100.0" />
+            <VBox fx:id="boxEnemies" prefHeight="200.0" prefWidth="100.0" />
+            <VBox fx:id="boxOpposites" prefHeight="200.0" prefWidth="100.0" />
+             <VBox fx:id="boxBonus" prefHeight="200.0" prefWidth="100.0" />
+             <VBox fx:id="boxHud" prefHeight="200.0" prefWidth="100.0" />
+         </children>
+      </HBox>
+   </center>
+</fx:root>

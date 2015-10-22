@@ -1,0 +1,7 @@
+sourceCompatibility = 1.7
+
+eclipse.project {
+    name = appName
+}
+
+sourceSets.main.java.srcDirs = ['src/']

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import br.edu.ifce.cgt.application.controller.ui.IntegerTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" text="Configurações do Jogo" type="javafx.scene.control.TitledPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <ScrollPane fitToWidth="true" prefViewportHeight="565.0" prefViewportWidth="278.0">
+         <content>
+            <GridPane hgap="5.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="120.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                   <Label text="Modo Debug" />
+                   <CheckBox fx:id="chkDebug" mnemonicParsing="false" GridPane.columnIndex="1" />
+                  <Label text="Tela Principal:" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="boxWindows" onAction="#setWindowDefault" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Nome do Jogo" GridPane.rowIndex="2" />
+                  <Label text="Identificador" GridPane.rowIndex="3" />
+                  <TextField fx:id="txtGameName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtGameId" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="Versão" GridPane.rowIndex="4" />
+                  <Label text="Código da versão" GridPane.rowIndex="5" />
+                  <TextField fx:id="txtVersion" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <IntegerTextField fx:id="txtVersionCode" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <BorderPane prefHeight="36.0" prefWidth="139.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                     <center>
+                        <ImageView fx:id="img32" fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center>
+                     <right>
+                        <Button id="32" fx:id="btn32" mnemonicParsing="false" onAction="#setImg" text="Selecionar" BorderPane.alignment="BOTTOM_CENTER">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </right>
+                     <bottom>
+                        <Separator prefWidth="200.0" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+                  <Label text="32x32" GridPane.rowIndex="6" />
+                  <Label text="48x48" GridPane.rowIndex="7" />
+                  <BorderPane prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                     <center>
+                        <ImageView fx:id="img48" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center>
+                     <right>
+                          <Button id="48" fx:id="btn48" mnemonicParsing="false" onAction="#setImg" text="Sel" BorderPane.alignment="BOTTOM_CENTER">
+                              <font>
+                                  <Font size="10.0" />
+                              </font>
+                          </Button>
+                     </right>
+                     <bottom>
+                        <Separator prefWidth="200.0" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+                  <Label text="72x72" GridPane.rowIndex="8" />
+                  <BorderPane prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                     <center>
+                        <ImageView fx:id="img72" fitHeight="72.0" fitWidth="72.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center>
+                     <right>
+                          <Button id="72" fx:id="btn72" mnemonicParsing="false" onAction="#setImg" text="Sel" BorderPane.alignment="BOTTOM_CENTER">
+                              <font>
+                                  <Font size="10.0" />
+                              </font>
+                          </Button>
+                     </right>
+                     <bottom>
+                        <Separator prefWidth="200.0" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+                  <Label text="96x96" GridPane.rowIndex="9" />
+                  <BorderPane prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                     <center>
+                        <ImageView fx:id="img96" fitHeight="96.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center>
+                     <right>
+                          <Button id="96" fx:id="btn96" mnemonicParsing="false" onAction="#setImg" text="Sel" BorderPane.alignment="BOTTOM_CENTER">
+                              <font>
+                                  <Font size="10.0" />
+                              </font>
+                          </Button>
+                     </right>
+                     <bottom>
+                        <Separator prefWidth="200.0" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+                  <Label text="144x144" GridPane.rowIndex="10" />
+                  <BorderPane prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                     <center>
+                        <ImageView fx:id="img144" fitHeight="144.0" fitWidth="144.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center>
+                     <bottom>
+                          <Button id="144" fx:id="btn144" mnemonicParsing="false" onAction="#setImg" text="Sel" BorderPane.alignment="CENTER_RIGHT">
+                              <font>
+                                  <Font size="10.0" />
+                              </font>
+                          </Button>
+                     </bottom>
+                  </BorderPane>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </GridPane>
+         </content>
+      </ScrollPane>
+   </content>
+</fx:root>
