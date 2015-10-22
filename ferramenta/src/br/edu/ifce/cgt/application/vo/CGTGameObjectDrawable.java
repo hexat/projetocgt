@@ -101,6 +101,7 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
 
     @Override
     public void drawConfigurationPanel() {
+        super.updateConfigPane(gameObjectTitledPane.getAccordionRoot());
     }
 
     @Override

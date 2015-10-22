@@ -1,9 +1,9 @@
 package br.edu.ifce.cgt.application.controller.titleds;
 
 import br.edu.ifce.cgt.application.Main;
-import br.edu.ifce.cgt.application.controller.dialogs.ActionDialog;
 import br.edu.ifce.cgt.application.controller.panes.ItemViewPane;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
+import br.edu.ifce.cgt.application.util.EnumMap;
 import cgt.core.CGTActor;
 import cgt.core.CGTProjectile;
 import cgt.policy.ActionMovePolicy;
@@ -23,41 +23,49 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.*;
 
+
 public class ActorTitledPane extends TitledPane {
 
-    @FXML public ComboBox<String> boxProjectiles;
-    @FXML public IntegerTextField txtTimeToRecovery;
-    @FXML private VBox panActions;
+    @FXML
+    public ComboBox<String> boxProjectiles;
+    @FXML
+    public IntegerTextField txtTimeToRecovery;
+    @FXML
+    private VBox panActions;
+    @FXML
+    private ComboBox<EnumMap<InputPolicy>> boxInputs;
+    @FXML
+    private ComboBox<EnumMap<ActionMovePolicy>> boxMoves;
 
-	@FXML public void addAction() {
-		ActionDialog dialog = new ActionDialog(actor);
-		dialog.showAndWait();
+    @FXML
+    public void addAction() {
+        actor.addAction(boxInputs.getValue().getKey(), boxMoves.getValue().getKey());
         updateActions();
-	}
+    }
 
-	private void updateActions() {
-		panActions.getChildren().clear();
-		final Map<InputPolicy, ActionMovePolicy> actions = actor.getActions();
+    private void updateActions() {
+        panActions.getChildren().clear();
+        final Map<InputPolicy, ActionMovePolicy> actions = actor.getActions();
         ResourceBundle bundle = ResourceBundle.getBundle("i18n.String", new Locale("pt", "PT"));
-		if (actions.size() > 0 ) {
-			for (final InputPolicy input : actions.keySet()) {
-				ItemViewPane pane = new ItemViewPane(bundle.getString(input.name()) + " -> " +
+        if (actions.size() > 0) {
+            for (final InputPolicy input : actions.keySet()) {
+                ItemViewPane pane = new ItemViewPane(bundle.getString(input.name()) + " -> " +
                         bundle.getString(actions.get(input).name()));
-				pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-						actor.removeInputFromAction(input);
-						updateActions();
-					}
-				});
-				panActions.getChildren().add(pane);
-			}
-		} else {
-			panActions.getChildren().add(new Label("Vazio"));
-		}
-	}
+                pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        actor.removeInputFromAction(input);
+                        updateActions();
+                    }
+                });
+                panActions.getChildren().add(pane);
+            }
+        } else {
+            panActions.getChildren().add(new Label("Vazio"));
+        }
+    }
 
-	private CGTActor actor;
+    private CGTActor actor;
 
     public void setActor(CGTActor actor) {
         this.actor = actor;
@@ -102,6 +110,24 @@ public class ActorTitledPane extends TitledPane {
     }
 
     private void init() {
+
+        List<EnumMap<InputPolicy>> inputs = new ArrayList<EnumMap<InputPolicy>>();
+
+        ResourceBundle bundle = ResourceBundle.getBundle("i18n.String", new Locale("pt", "PT"));
+        for (InputPolicy policy : actor.getAvailableInputs()) {
+            inputs.add(new EnumMap<InputPolicy>(policy, bundle.getString(policy.name())));
+        }
+
+        boxInputs.getItems().setAll(inputs);
+        boxInputs.getSelectionModel().selectFirst();
+
+        ArrayList<EnumMap<ActionMovePolicy>> moves = new ArrayList<EnumMap<ActionMovePolicy>>();
+        for (ActionMovePolicy policy : actor.getAvailableActionsMove()) {
+            moves.add(new EnumMap<ActionMovePolicy>(policy, bundle.getString(policy.name())));
+        }
+        boxMoves.getItems().addAll(moves);
+        boxMoves.getSelectionModel().selectFirst();
+
         txtTimeToRecovery.setValue(actor.getTimeToRecovery());
         txtTimeToRecovery.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
