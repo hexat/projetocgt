@@ -31,10 +31,12 @@ public class CGTGameActorDrawable extends CGTGameObjectDrawable {
     @Override
     public void drawConfigurationPanel() {
         Pane paneObject = (Pane) super.getPane();
-        Accordion accordion = (Accordion) paneObject.getChildren().get(0);
-        TitledPane titledPaneActor = (TitledPane) this.getPane();
-        accordion.getPanes().add(titledPaneActor);
-        super.updateConfigPane(accordion);
+        if (!paneObject.getChildren().isEmpty()) {
+            Accordion accordion = (Accordion) paneObject.getChildren().get(0);
+            TitledPane titledPaneActor = (TitledPane) this.getPane();
+            accordion.getPanes().add(titledPaneActor);
+            super.updateConfigPane(accordion);
+        }
     }
 
     @Override

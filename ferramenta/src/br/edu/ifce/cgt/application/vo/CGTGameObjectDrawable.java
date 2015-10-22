@@ -23,7 +23,7 @@ import java.util.Optional;
 public class CGTGameObjectDrawable extends AbstractDrawableObject {
 
     private CGTGameObject gameObject;
-    private GameObjectPane gameObjectTitledPane;
+    private GameObjectPane objectPane;
     private String worldName;
     private String gameObjectId;
     private Rectangle bounds;
@@ -34,7 +34,7 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
         super(drawableObjectPane, drawableConfigurationsPane);
         this.gameObject = gameObject;
         this.gameObject.setId(this.getGameObjectId());
-        this.gameObjectTitledPane = new GameObjectPane(this.gameObject, new Runnable() {
+        this.objectPane = new GameObjectPane(this.gameObject, new Runnable() {
             @Override
             public void run() {
                 drawObject();
@@ -57,7 +57,7 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
 
     @Override
     public Node getPane() {
-        return this.gameObjectTitledPane;
+        return this.objectPane;
     }
 
     @Override
