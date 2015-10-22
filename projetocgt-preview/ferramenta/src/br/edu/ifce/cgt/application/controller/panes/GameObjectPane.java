@@ -9,6 +9,7 @@ import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.util.EnumMap;
 import br.edu.ifce.cgt.application.util.Pref;
+import br.edu.ifce.cgt.application.vo.CGTGameObjectDrawable;
 import cgt.core.CGTAnimation;
 import cgt.core.CGTGameObject;
 import cgt.core.CGTProjectile;
@@ -138,6 +139,7 @@ public class GameObjectPane extends StackPane {
      * Objeto core que é configurado a partir dessa classe
      */
     private CGTGameObject gameObject;
+    private CGTGameObjectDrawable objectDrawable;
 
     /**
      * Runnable que deve ser chamado toda vez que o objeto for
@@ -167,6 +169,12 @@ public class GameObjectPane extends StackPane {
 
     public GameObjectPane(CGTGameObject object, Runnable onUpdateRunnable) {
         this(object);
+        this.onUpdateRunnable = onUpdateRunnable;
+    }
+
+    public GameObjectPane(CGTGameObject object, CGTGameObjectDrawable drawable, Runnable onUpdateRunnable) {
+        this(object);
+        this.objectDrawable = drawable;
         this.onUpdateRunnable = onUpdateRunnable;
     }
 
@@ -386,15 +394,20 @@ public class GameObjectPane extends StackPane {
         if (!txtPositionX.getText().equals("") && !txtPositionY.getText().equals("")) {
             int x = Integer.parseInt(txtPositionX.getText());
             int y = Integer.parseInt(txtPositionY.getText());
-            if(x >= 0 && y >= 0){// && x < this.gameObject.getDraggable().getWidthBCKG() &&
-                    //y < this.gameObject.getHeightBCKG()) {
-                gameObject.getInitialPositions().add(new Vector2(x, y));
+            if(x >= 0 && y >= 0){/*objectDrawable.getDraggable().getFitHeight() &&
+                    x <= objectDrawable.getDraggable().getWidthBCKG() - objectDrawable.getDraggable().getFitWidth() &&
+                    y <= objectDrawable.getDraggable().getHeightBCKG()) {*/
+                gameObject.getInitialPositions().add(new Vector2(x, y - (int)objectDrawable.getDraggable().getFitHeight()));
                 txtPositionX.clear();
                 txtPositionY.clear();
+                //System.out.printf("%d %d\n",objectDrawable.getDraggable().getFitWidth(),
+                        //objectDrawable.getDraggable().getFitHeight());
                 updateBoxPositions();
             }
             else{
-                System.out.println("Coordenadas fora da tela!");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Coordenadas fora da tela!");
+                alert.show();
             }
             if (onUpdateRunnable != null) {
                 onUpdateRunnable.run();
