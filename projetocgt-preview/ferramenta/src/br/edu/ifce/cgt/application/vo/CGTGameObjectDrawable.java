@@ -36,7 +36,7 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
         super(drawableObjectPane, drawableConfigurationsPane);
         this.gameObject = gameObject;
         this.gameObject.setId(this.getGameObjectId());
-        this.gameObjectTitledPane = new GameObjectPane(this.gameObject, new Runnable() {
+        this.gameObjectTitledPane = new GameObjectPane(this.gameObject, this, new Runnable() {
             @Override
             public void run() {
                 drawObject();
@@ -100,9 +100,10 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
             setSizeObject();
             //preview.setX(this.gameObject.getPosition().x);
             //preview.setY(this.gameObject.getPosition().y + preview.getFitHeight());
-            this.gameObject.setPosition(new Vector2(this.gameObject.getPosition().x,
-                    this.gameObject.getPosition().y));// + gameObjectTitledPane.getBoundsH().getValue())
+            //this.gameObject.setPosition(new Vector2(this.gameObject.getPosition().x,
+                    //this.gameObject.getPosition().y + gameObjectTitledPane.getBoundsH().getValue()/2));// + gameObjectTitledPane.getBoundsH().getValue())
             super.updateDrawPane(preview);
+            //this.gameObject.setPosition(null);
         }
     }
 
