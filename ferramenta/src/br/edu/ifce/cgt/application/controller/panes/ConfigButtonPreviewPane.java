@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -88,14 +89,16 @@ public class ConfigButtonPreviewPane extends Accordion {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue && RelX.getValue() >= 0 && RelX.getValue() <= 1 - WRel.getValue()) {
-                    System.out.println("Mexe\n");
                     btn.getImage().setX(RelX.getValue() * btn.getImage().getWidthBCKG());
                     btn.getButton().setRelativeX(RelX.getValue());
                     x = RelX.getValue();
                 }
 
                 else if(!newValue){
-                    System.out.println("ERROR");
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText("Coordenadas fora dos limites");
+                    alert.setContentText("Intervalo aceito: [0 ; " + (1 - WRel.getValue()) + "]");
+                    alert.show();
                     btn.getButton().setRelativeX((float)x);
                     RelX.setValue(x);
                 }
@@ -112,7 +115,10 @@ public class ConfigButtonPreviewPane extends Accordion {
                     y = RelY.getValue();
                 }
                 else if(!newValue){
-                    System.out.println("ERROR");
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText("Coordenadas fora dos limites");
+                    alert.setContentText("Intervalo aceito: [" + HRel.getValue() + " ; 1]");
+                    alert.show();
                     btn.getButton().setRelativeY(1.0f - (float)y);
                     RelY.setValue(y);
                 }
@@ -128,7 +134,10 @@ public class ConfigButtonPreviewPane extends Accordion {
                     w = WRel.getValue();
                 }
                 else if(!newValue){
-                    System.out.println("ERROR");
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText("Largura fora dos limites");
+                    alert.setContentText("Intervalo aceito: [0 ; " + (1 - RelX.getValue()) + "]");
+                    alert.show();
                     btn.getButton().setRelativeWidth((float)(w));
                     WRel.setValue(w);
                 }
@@ -139,12 +148,15 @@ public class ConfigButtonPreviewPane extends Accordion {
         HRel.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (!newValue && HRel.getValue() <= RelY.getValue()) {
+                if (!newValue && HRel.getValue() >= 0 && HRel.getValue() <= RelY.getValue()) {
                     btn.getButton().setRelativeHeight(HRel.getValue());
                     h = HRel.getValue();
                 }
                 else if(!newValue){
-                    System.out.println("ERROR");
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText("Largura fora dos limites");
+                    alert.setContentText("Intervalo aceito: [0 ; " + RelY.getValue() + "]");
+                    alert.show();
                     btn.getButton().setRelativeHeight((float)(h));
                     HRel.setValue(h);
                 }

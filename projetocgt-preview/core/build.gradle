@@ -1,7 +1,0 @@
-sourceCompatibility = 1.7
-
-eclipse.project {
-    name = appName + '-core'
-}
-
-sourceSets.main.java.srcDirs = ['src/']

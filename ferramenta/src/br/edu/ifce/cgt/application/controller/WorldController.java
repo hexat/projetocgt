@@ -68,7 +68,8 @@ public class WorldController extends BorderPane {
         setWorld(world);
     }
 
-    @FXML public void btnConfigWorld() {
+    @FXML
+    public void btnConfigWorld() {
         configAccordion.getPanes().clear();
         configAccordion.getPanes().add(new WorldTitledPane(world));
         configAccordion.getPanes().add(new CameraTitledPane(world.getCamera()));
@@ -90,11 +91,11 @@ public class WorldController extends BorderPane {
 
     @FXML
     public void addOpositeInWorld() {
-            CGTOpposite o = new CGTOpposite("Opositor");
-            world.addOpposite(o);
-            ObjectButton btn = new ObjectButton(this, o);
-            listaOpposite.add(btn);
-            boxOpposites.getChildren().addAll(btn);
+        CGTOpposite o = new CGTOpposite("Opositor");
+        world.addOpposite(o);
+        ObjectButton btn = new ObjectButton(this, o);
+        listaOpposite.add(btn);
+        boxOpposites.getChildren().addAll(btn);
     }
 
     public void addAmmoDisplay() {
@@ -175,6 +176,7 @@ public class WorldController extends BorderPane {
 
     private class ButtonHud extends Button {
         private HUDComponent hudComponent;
+
         public ButtonHud(final HUDComponent hud) {
             super(hud.getName());
             this.hudComponent = hud;
@@ -260,7 +262,7 @@ public class WorldController extends BorderPane {
 
         Optional<String> result = dialog.showAndWait();
 
-        if (result.isPresent()){
+        if (result.isPresent()) {
             System.out.println("Your choice: " + result.get());
         }
     }

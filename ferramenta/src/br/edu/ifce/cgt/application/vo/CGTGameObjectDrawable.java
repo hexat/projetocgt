@@ -2,9 +2,11 @@ package br.edu.ifce.cgt.application.vo;
 
 import br.edu.ifce.cgt.application.controller.panes.GameObjectPane;
 import br.edu.ifce.cgt.application.util.Config;
+import br.edu.ifce.cgt.application.util.Draggable;
 import cgt.core.CGTGameObject;
 import cgt.game.CGTGameWorld;
 import cgt.game.CGTSpriteSheet;
+import com.badlogic.gdx.math.Vector2;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -23,18 +25,18 @@ import java.util.Optional;
 public class CGTGameObjectDrawable extends AbstractDrawableObject {
 
     private CGTGameObject gameObject;
-    private GameObjectPane objectPane;
+    private GameObjectPane gameObjectTitledPane;
     private String worldName;
     private String gameObjectId;
     private Rectangle bounds;
     private Rectangle collision;
-    private ImageView preview;
+    private Draggable preview = new Draggable();
 
     public CGTGameObjectDrawable(CGTGameObject gameObject, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(drawableObjectPane, drawableConfigurationsPane);
         this.gameObject = gameObject;
         this.gameObject.setId(this.getGameObjectId());
-        this.objectPane = new GameObjectPane(this.gameObject, new Runnable() {
+        this.gameObjectTitledPane = new GameObjectPane(this.gameObject, this, new Runnable() {
             @Override
             public void run() {
                 drawObject();
@@ -42,6 +44,8 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
         });
         this.bounds = new Rectangle(this.gameObject.getBounds().getWidth(), this.gameObject.getBounds().getHeight());
         this.collision = new Rectangle(this.gameObject.getCollision().getWidth(), this.gameObject.getCollision().getHeight());
+        preview = new Draggable(gameObjectTitledPane.getPositionX(), gameObjectTitledPane.getPositionY(),bounds,collision);
+
     }
 
     @Override
@@ -57,7 +61,7 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
 
     @Override
     public Node getPane() {
-        return this.objectPane;
+        return this.gameObjectTitledPane;
     }
 
     @Override
@@ -74,12 +78,12 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
         collision.setStroke(Color.YELLOW);
         collision.setStrokeWidth(0.8);
 
-        if (this.gameObject.getPosition() != null) {
+        /*if (this.gameObject.getPosition() != null) {
             bounds.setX(this.gameObject.getPosition().x);
             bounds.setY(this.gameObject.getPosition().y);
             collision.setX(this.gameObject.getPosition().x);
             collision.setY(this.gameObject.getPosition().y);
-        }
+        }*/
 
         super.updateDrawPane(bounds);
         super.updateDrawPane(collision);
@@ -92,16 +96,20 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
             String urlToFile = cgtSpriteSheet.getTexture().getFile().getFile().getName();
             Image img = Config.get().getImage(urlToFile);
             Image[] images = Config.get().splitImage(img, cgtSpriteSheet.getColumns(), cgtSpriteSheet.getRows(), actorWidth, actorHeight);
-            preview = new ImageView(images[images.length / 2]);
-            preview.setX(this.gameObject.getPosition().x);
-            preview.setY(this.gameObject.getPosition().y);
+            preview.setImage(images[images.length / 2]);
+            setSizeObject();
+            //preview.setX(this.gameObject.getPosition().x);
+            //preview.setY(this.gameObject.getPosition().y + preview.getFitHeight());
+            //this.gameObject.setPosition(new Vector2(this.gameObject.getPosition().x,
+                    //this.gameObject.getPosition().y + gameObjectTitledPane.getBoundsH().getValue()/2));// + gameObjectTitledPane.getBoundsH().getValue())
             super.updateDrawPane(preview);
+            //this.gameObject.setPosition(null);
         }
     }
 
     @Override
     public void drawConfigurationPanel() {
-        super.updateConfigPane(objectPane.getAccordionRoot());
+        super.updateConfigPane(gameObjectTitledPane.getAccordionRoot());
     }
 
     @Override
@@ -164,8 +172,23 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
         return gameObjectId;
     }
 
+    public Draggable getDraggable(){ return this.preview; }
+
     @Override
     public String toString() {
         return this.gameObjectId;
+    }
+
+    public void setSizeObject(){
+        preview.setWidthBCKG(
+                Config.get().getImage(Config.get().getGame().getWorld(getWorldName()).
+                        getBackground().getFile().getFile().getName()).getWidth()
+        );
+        preview.setHeightBCKG(
+                Config.get().getImage(Config.get().getGame().getWorld(getWorldName()).
+                        getBackground().getFile().getFile().getName()).getHeight()
+        );
+        preview.setFitWidth(gameObjectTitledPane.getBoundsW().getValue());
+        preview.setFitHeight(gameObjectTitledPane.getBoundsH().getValue());
     }
 }
