@@ -248,6 +248,7 @@ public class PreviewPane extends BorderPane {
                 if (localZip.exists()) {
                     long foo = localZip.lastModified();
                     InputStream bar = Main.class.getResourceAsStream("/bin/desktop-1.0.zip");
+                    if (bar == null) throw new RuntimeException("run task ferramenta:copyDesktop to copy runner");
                     File file = new File(localDefaultDirectory() + "tmp.zip");
                     FileUtils.copyInputStreamToFile(bar, file);
                     if (localZip.lastModified() != file.lastModified()) {
@@ -491,7 +492,7 @@ public class PreviewPane extends BorderPane {
     }
 
     private String localDefaultDirectory() {
-        return (isWin()) ? System.getenv("APPDATA") : System.getProperty("user.home") + "/.local";
+        return (isWin()) ? System.getenv("APPDATA") : System.getProperty("user.home") + "/.local/";
     }
 
     private void showValidateDialog(List<CGTError> errors) {
