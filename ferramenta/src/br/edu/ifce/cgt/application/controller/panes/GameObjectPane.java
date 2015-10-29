@@ -227,6 +227,7 @@ public class GameObjectPane extends StackPane {
                 }
             }
         });
+
         txtSound.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -236,6 +237,7 @@ public class GameObjectPane extends StackPane {
                 }
             }
         });
+
         txtLife.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {

@@ -6,13 +6,11 @@ import br.edu.ifce.cgt.application.util.Draggable;
 import cgt.core.CGTGameObject;
 import cgt.game.CGTGameWorld;
 import cgt.game.CGTSpriteSheet;
-import com.badlogic.gdx.math.Vector2;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -44,7 +42,7 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
         });
         this.bounds = new Rectangle(this.gameObject.getBounds().getWidth(), this.gameObject.getBounds().getHeight());
         this.collision = new Rectangle(this.gameObject.getCollision().getWidth(), this.gameObject.getCollision().getHeight());
-        preview = new Draggable(gameObjectTitledPane.getPositionX(), gameObjectTitledPane.getPositionY(),bounds,collision);
+        this.preview = new Draggable(gameObjectTitledPane.getPositionX(), gameObjectTitledPane.getPositionY(), bounds, collision);
 
     }
 
@@ -101,7 +99,7 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
             //preview.setX(this.gameObject.getPosition().x);
             //preview.setY(this.gameObject.getPosition().y + preview.getFitHeight());
             //this.gameObject.setPosition(new Vector2(this.gameObject.getPosition().x,
-                    //this.gameObject.getPosition().y + gameObjectTitledPane.getBoundsH().getValue()/2));// + gameObjectTitledPane.getBoundsH().getValue())
+            //this.gameObject.getPosition().y + gameObjectTitledPane.getBoundsH().getValue()/2));// + gameObjectTitledPane.getBoundsH().getValue())
             super.updateDrawPane(preview);
             //this.gameObject.setPosition(null);
         }
@@ -131,6 +129,7 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
         ComboBox<String> worldCombobox = new ComboBox<>();
         List<CGTGameWorld> worlds = Config.get().getGame().getWorlds();
         worlds.stream().forEach(w -> worldCombobox.getItems().add(w.getId()));
+        worldCombobox.getSelectionModel().select(0);
 
         grid.add(new Label("Nome do objeto:"), 0, 0);
         grid.add(name, 1, 0);
@@ -148,8 +147,11 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
         Platform.runLater(() -> name.requestFocus());
 
         dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == createButtonType) {
-                return new Pair<>(name.getText(), worldCombobox.getSelectionModel().getSelectedItem());
+            String objName = name.getText();
+            String worldName = worldCombobox.getSelectionModel().getSelectedItem();
+
+            if (dialogButton == createButtonType && !"".equals(objName) && !"".equals(worldName)) {
+                return new Pair<>(objName, worldName);
             }
             return null;
         });
@@ -172,14 +174,16 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
         return gameObjectId;
     }
 
-    public Draggable getDraggable(){ return this.preview; }
+    public Draggable getDraggable() {
+        return this.preview;
+    }
 
     @Override
     public String toString() {
         return this.gameObjectId;
     }
 
-    public void setSizeObject(){
+    public void setSizeObject() {
         preview.setWidthBCKG(
                 Config.get().getImage(Config.get().getGame().getWorld(getWorldName()).
                         getBackground().getFile().getFile().getName()).getWidth()
