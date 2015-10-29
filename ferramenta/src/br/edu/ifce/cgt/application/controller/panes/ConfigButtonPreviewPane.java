@@ -78,19 +78,19 @@ public class ConfigButtonPreviewPane extends Accordion {
         choices.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                btn.getButton().setScreenToGo(choices.getValue());
+                btn.getObject().setScreenToGo(choices.getValue());
             }
         });
 
-        if (btn.getButton().getScreenToGo() != null) {
-            choices.getSelectionModel().select(btn.getButton().getScreenToGo().getId());
+        if (btn.getObject().getScreenToGo() != null) {
+            choices.getSelectionModel().select(btn.getObject().getScreenToGo().getId());
         }
         RelX.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue && RelX.getValue() >= 0 && RelX.getValue() <= 1 - WRel.getValue()) {
                     btn.getImage().setX(RelX.getValue() * btn.getImage().getWidthBCKG());
-                    btn.getButton().setRelativeX(RelX.getValue());
+                    btn.getObject().setRelativeX(RelX.getValue());
                     x = RelX.getValue();
                 }
 
@@ -99,7 +99,7 @@ public class ConfigButtonPreviewPane extends Accordion {
                     alert.setHeaderText("Coordenadas fora dos limites");
                     alert.setContentText("Intervalo aceito: [0 ; " + (1 - WRel.getValue()) + "]");
                     alert.show();
-                    btn.getButton().setRelativeX((float)x);
+                    btn.getObject().setRelativeX((float)x);
                     RelX.setValue(x);
                 }
                 if (onUpdateRunnable != null)
@@ -111,7 +111,7 @@ public class ConfigButtonPreviewPane extends Accordion {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue && RelY.getValue() >= HRel.getValue() && RelY.getValue() <= 1) {
                     btn.getImage().setY((1 - RelY.getValue()) * btn.getImage().getHeightBCKG());
-                    btn.getButton().setRelativeY(1 - RelY.getValue());
+                    btn.getObject().setRelativeY(1 - RelY.getValue());
                     y = RelY.getValue();
                 }
                 else if(!newValue){
@@ -119,7 +119,7 @@ public class ConfigButtonPreviewPane extends Accordion {
                     alert.setHeaderText("Coordenadas fora dos limites");
                     alert.setContentText("Intervalo aceito: [" + HRel.getValue() + " ; 1]");
                     alert.show();
-                    btn.getButton().setRelativeY(1.0f - (float)y);
+                    btn.getObject().setRelativeY(1.0f - (float)y);
                     RelY.setValue(y);
                 }
                 if (onUpdateRunnable != null)
@@ -130,7 +130,7 @@ public class ConfigButtonPreviewPane extends Accordion {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue && WRel.getValue() >= 0 && WRel.getValue() <= 1 - RelX.getValue()) {
-                    btn.getButton().setRelativeWidth(WRel.getValue());
+                    btn.getObject().setRelativeWidth(WRel.getValue());
                     w = WRel.getValue();
                 }
                 else if(!newValue){
@@ -138,7 +138,7 @@ public class ConfigButtonPreviewPane extends Accordion {
                     alert.setHeaderText("Largura fora dos limites");
                     alert.setContentText("Intervalo aceito: [0 ; " + (1 - RelX.getValue()) + "]");
                     alert.show();
-                    btn.getButton().setRelativeWidth((float)(w));
+                    btn.getObject().setRelativeWidth((float)(w));
                     WRel.setValue(w);
                 }
                 if (onUpdateRunnable != null)
@@ -149,7 +149,7 @@ public class ConfigButtonPreviewPane extends Accordion {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue && HRel.getValue() >= 0 && HRel.getValue() <= RelY.getValue()) {
-                    btn.getButton().setRelativeHeight(HRel.getValue());
+                    btn.getObject().setRelativeHeight(HRel.getValue());
                     h = HRel.getValue();
                 }
                 else if(!newValue){
@@ -157,7 +157,7 @@ public class ConfigButtonPreviewPane extends Accordion {
                     alert.setHeaderText("Largura fora dos limites");
                     alert.setContentText("Intervalo aceito: [0 ; " + RelY.getValue() + "]");
                     alert.show();
-                    btn.getButton().setRelativeHeight((float)(h));
+                    btn.getObject().setRelativeHeight((float)(h));
                     HRel.setValue(h);
                 }
                 if (onUpdateRunnable != null)
@@ -172,8 +172,8 @@ public class ConfigButtonPreviewPane extends Accordion {
         String path = "";
 
         if (chosenFile != null) {
-            btn.getButton().setTextureUp(new CGTTexture(Config.get().createImg(chosenFile)));
-            Image img = Config.get().getImage(btn.getButton().getTextureUp().getFile().getFile().getName());
+            btn.getObject().setTextureUp(new CGTTexture(Config.get().createImg(chosenFile)));
+            Image img = Config.get().getImage(btn.getObject().getTextureUp().getFile().getFile().getName());
             btn.getImage().setImage(img);
             path = chosenFile.getName();
         }
@@ -189,7 +189,7 @@ public class ConfigButtonPreviewPane extends Accordion {
         String path = "";
 
         if (chosenFile != null) {
-            btn.getButton().setTextureDown(new CGTTexture(Config.get().createImg(chosenFile)));
+            btn.getObject().setTextureDown(new CGTTexture(Config.get().createImg(chosenFile)));
             path = chosenFile.getName();
         }
 

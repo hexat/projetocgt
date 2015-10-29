@@ -20,17 +20,19 @@ import java.util.Optional;
 /**
  * Created by Edy Junior on 23/09/2015.
  */
-public class CGTButtonScreenPreview extends AbstractDrawableObject {
-    private CGTButtonScreen btn;
-    //private CGTGameObject gameObject;
+public class CGTButtonScreenPreview extends AbstractDrawableObject<CGTButtonScreen> {
     private String name;
     private String screenName;
     private ConfigButtonPreviewPane buttonPane;
     private Draggable preview = new Draggable();
 
-    public CGTButtonScreenPreview(CGTButtonScreen btn, Pane drawableObjectPane, Pane drawableConfigurationsPane){
+    public CGTButtonScreenPreview(Pane drawableObjectPane, Pane drawableConfigurationsPane){
         super(drawableObjectPane, drawableConfigurationsPane);
-        this.btn = btn;
+    }
+
+    public CGTButtonScreenPreview(CGTButtonScreen object, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
+        super(object, drawableObjectPane, drawableConfigurationsPane);
+        name = "-> " + object.getWindowId();
     }
 
     @Override
@@ -41,15 +43,15 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
                 drawObject();
             }
         });
-        preview = new Draggable(buttonPane.getRelX(), buttonPane.getRelY(),btn);
+        preview = new Draggable(buttonPane.getRelX(), buttonPane.getRelY(), getObject());
 
         preview.setOnMouseEntered(E->{
             if (!buttonPane.getTextPress().getText().isEmpty())
-                preview.setImage(Config.get().getImage(this.btn.getTextureDown().getFile().getFile().getName()));
+                preview.setImage(Config.get().getImage(getObject().getTextureDown().getFile().getFile().getName()));
         });
         preview.setOnMouseExited(e -> {
             if (!buttonPane.getTextUp().getText().isEmpty())
-                preview.setImage(Config.get().getImage(this.btn.getTextureUp().getFile().getFile().getName()));
+                preview.setImage(Config.get().getImage(getObject().getTextureUp().getFile().getFile().getName()));
         });
     }
 
@@ -121,17 +123,10 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
         if (result.isPresent()) {
             String id = result.get().getKey();
             String screenName = result.get().getValue();
+            setObject(new CGTButtonScreen());
             this.name = id;
             this.screenName = screenName;
         }
-    }
-
-    public CGTButtonScreen getButton(){
-        return this.btn;
-    }
-
-    public void setButton(CGTButtonScreen btn){
-        this.btn = btn;
     }
 
     @Override
@@ -158,10 +153,10 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
         );
         preview.setFitWidth(buttonPane.getWRel().getValue() * preview.getWidthBCKG());
         preview.setFitHeight(buttonPane.getHRel().getValue() * preview.getHeightBCKG());
-        btn.setRelativeHeight(buttonPane.getHRel().getValue());
-        btn.setRelativeWidth(buttonPane.getWRel().getValue());
-        getButton().setRelativeX(buttonPane.getRelX().getValue());
-        getButton().setRelativeY(buttonPane.getRelY().getValue() -
+        getObject().setRelativeHeight(buttonPane.getHRel().getValue());
+        getObject().setRelativeWidth(buttonPane.getWRel().getValue());
+        getObject().setRelativeX(buttonPane.getRelX().getValue());
+        getObject().setRelativeY(buttonPane.getRelY().getValue() -
                 (float) (preview.getFitHeight()/preview.getHeightBCKG()));
     }
 

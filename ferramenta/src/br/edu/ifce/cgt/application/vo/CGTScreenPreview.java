@@ -13,7 +13,7 @@ public class CGTScreenPreview{
     private CGTScreen screen;
 
     public void addButtons(CGTButtonScreenPreview btn){
-        getScreen().getButtons().add(btn.getButton());
+        getScreen().getButtons().add(btn.getObject());
     }
 
     public CGTScreen getScreen(){

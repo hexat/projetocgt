@@ -60,7 +60,6 @@ public class CGTGameEnemyDrawable extends CGTGameObjectDrawable<CGTEnemy> {
 
     @Override
     public void onCreate() {
-
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Inimigo");
         dialog.setHeaderText("Criação de um inimigo");

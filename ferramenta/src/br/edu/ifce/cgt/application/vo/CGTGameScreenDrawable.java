@@ -45,8 +45,7 @@ public class CGTGameScreenDrawable extends AbstractDrawableObject<CGTScreen> {
     @Override
     public void drawObject() {
         if (getObject().getBackground() != null) {
-            String backFilename = getObject().getBackground().getFile().getFilename();
-            ImageView img = new ImageView(Config.get().getImage(backFilename));
+            ImageView img = new ImageView(Config.get().getImage(getObject().getBackground().getFile()));
             getDrawableObjectPane().getChildren().clear();
             getDrawableObjectPane().getChildren().add(img);
         }

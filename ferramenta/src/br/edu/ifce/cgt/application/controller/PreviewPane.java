@@ -136,6 +136,7 @@ public class PreviewPane extends BorderPane {
 
     private void updateTree() { //TODO terminar
         CGTGame game = Config.get().getGame();
+        this.tree.getRoot().getChildren().clear();
         for (CGTGameWorld w : game.getWorlds()) {
             DrawableObject<CGTGameWorld> worldDrawable = new CGTGameWorldDrawable(w, this.drawableObjectPane, this.drawableConfigurationsPane);
             TreeItem<DrawableObject> worldTreeItem = new TreeItem<>(worldDrawable);
@@ -377,7 +378,7 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addButtonScreen() {
-        CGTButtonScreenPreview btn = new CGTButtonScreenPreview(new CGTButtonScreen(), this.drawableObjectPane, this.drawableConfigurationsPane);
+        CGTButtonScreenPreview btn = new CGTButtonScreenPreview(this.drawableObjectPane, this.drawableConfigurationsPane);
         TreeItem<DrawableObject> btnTreeItem = new TreeItem<>(btn);
         String screenName = btn.getScreenName();
         TreeItem<DrawableObject> screenTreeItem = this.getScreenNode(screenName);
