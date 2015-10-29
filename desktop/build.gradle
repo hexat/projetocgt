@@ -9,7 +9,7 @@ mainClassName = "com.projetcgt.Main"
 sourceSets.main.java.srcDirs = ['src/']
 
 
-sourceSets.main.resources.srcDirs = [file("../android/assets").getAbsolutePath()]
+//sourceSets.main.resources.srcDirs = [file("../android/assets").getAbsolutePath()]
 
 eclipse.project {
     name = appName + "-desktop"

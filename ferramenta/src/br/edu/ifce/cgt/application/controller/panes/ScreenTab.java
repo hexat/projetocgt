@@ -13,10 +13,11 @@ import cgt.screen.CGTWindow;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.Dialogs;
+
+import java.util.Optional;
 
 public class ScreenTab extends Tab {
     private final Accordion configAccordion;
@@ -30,15 +31,13 @@ public class ScreenTab extends Tab {
 		setOnCloseRequest(new EventHandler<Event>() {
             @Override
             public void handle(Event event) {
-                Action response = Dialogs.create()
-                        .owner(Main.getApp())
-                        .title("Excluir tela")
-                        .masthead("Ao fechar esta aba você esterá removendo esta tela do jogo.")
-                        .message("Tem certeza que deseja fazer isso?")
-                        .actions(Dialog.ACTION_OK, Dialog.ACTION_CANCEL)
-                        .showConfirm();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("Look, a Confirmation Dialog");
+                alert.setContentText("Are you ok with this?");
 
-                if (response == Dialog.ACTION_OK) {
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
                     Config.get().getGame().remove(screen);
                     if (ScreenTab.this.getTabPane().getTabs().contains(event.getSource())) {
                     	ScreenTab.this.getTabPane().getTabs().remove(event.getSource());

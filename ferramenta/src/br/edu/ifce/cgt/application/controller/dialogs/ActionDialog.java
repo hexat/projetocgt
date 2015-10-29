@@ -8,11 +8,11 @@ import cgt.policy.InputPolicy;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.controlsfx.dialog.Dialogs;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -89,8 +89,14 @@ public class ActionDialog extends VBox {
         if (actor.addAction(boxInputs.getValue().getKey(), boxMoves.getValue().getKey())) {
             stage.close();
         } else {
-            Dialogs.create().message("Verifique se você adicionou uma entrada ou " +
-                    "se este  movimento já foi adicionado à este ator.").owner(stage).showWarning();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Verifique se você adicionou uma entrada ou " +
+                    "se este  movimento já foi adicionado à este ator.");
+            alert.showAndWait();
+
         }
     }
 

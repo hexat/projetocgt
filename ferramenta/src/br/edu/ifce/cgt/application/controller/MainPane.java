@@ -29,7 +29,6 @@ import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
 import org.apache.commons.io.FileUtils;
-import org.controlsfx.dialog.Dialogs;
 
 import java.io.File;
 import java.io.IOException;
@@ -92,14 +91,13 @@ public class MainPane extends BorderPane {
 
     @FXML
     public void createWorld() {
-        Optional<String> response = Dialogs.create()
-                .owner(Main.getApp())
-                .title("Nome para o mundo")
-                .message("Digite um nome para o mundo:")
-                .showTextInput("Mundo");
+        TextInputDialog dialog = new TextInputDialog("Mundo");
+        dialog.setTitle("Nome para o mundo");
+        dialog.setContentText("Digite um nome para o mundo:");
 
-        if (response.isPresent()) {
-            String id = response.get().trim();
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            String id = result.get().trim();
             CGTGameWorld world = Config.get().getGame().createWorld(id);
             if (world != null) {
                 ScreenTab tab = new ScreenTab(world);
@@ -107,36 +105,36 @@ public class MainPane extends BorderPane {
                 tabFerramenta.getSelectionModel().select(tab);
                 menuSprite.setDisable(false);
             } else {
-                Dialogs.create()
-                        .owner(Main.getApp())
-                        .title("Atenção")
-                        .message("Já existe uma janela com este ID!")
-                        .showWarning();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Atenção");
+                alert.setContentText("Já existe uma janela com este ID!");
+
+                alert.showAndWait();
             }
         }
     }
 
     @FXML
     public void createScreen() {
-        Optional<String> response = Dialogs.create()
-                .owner(Main.getApp())
-                .title("Nome para o screen")
-                .message("Digite um nome para o screen:")
-                .showTextInput("Screen");
+        TextInputDialog dialog = new TextInputDialog("Tela");
+        dialog.setTitle("Nome para a tela");
+        dialog.setContentText("Digite um nome para a tela:");
 
-        if (response.isPresent()) {
-            String id = response.get().trim();
+        Optional<String> result = dialog.showAndWait();
+
+        if (result.isPresent()) {
+            String id = result.get().trim();
             CGTScreen screen = Config.get().getGame().createScreen(id);
             if (screen != null) {
                 ScreenTab tab = new ScreenTab(screen);
                 tabFerramenta.getTabs().add(tab);
                 tabFerramenta.getSelectionModel().select(tab);
             } else {
-                Dialogs.create()
-                        .owner(Main.getApp())
-                        .title("Atenção")
-                        .message("Já existe uma janela com este ID!")
-                        .showWarning();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Atenção");
+                alert.setContentText("Já existe uma janela com este ID!");
+
+                alert.showAndWait();
             }
         }
 
@@ -244,12 +242,21 @@ public class MainPane extends BorderPane {
 
             try {
                 Config.get().zip(save);
-                Dialogs.create().owner(Main.getApp()).message(":)").title("Salvando Projeto").showInformation();
+                showDialogSave();
             } catch (IOException e) {
                 DialogsUtil.showErrorDialog();
                 e.printStackTrace();
             }
         }
+    }
+
+    private void showDialogSave() {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText(":) Salvando Projeto!");
+        alert.showAndWait();
     }
 
     @FXML
@@ -390,7 +397,7 @@ public class MainPane extends BorderPane {
             try {
                 Main.getApp().setTitle(save.getName());
                 Config.get().zip(save);
-                Dialogs.create().owner(Main.getApp()).message(":)").title("Salvando Projeto").showInformation();
+                showDialogSave();
             } catch (IOException e) {
                 DialogsUtil.showErrorDialog();
                 e.printStackTrace();

@@ -6,10 +6,10 @@ import br.edu.ifce.cgt.application.util.Config;
 import cgt.game.CGTScreen;
 import javafx.collections.ObservableArray;
 import javafx.scene.Node;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import org.controlsfx.dialog.Dialogs;
 
 import java.util.Optional;
 
@@ -64,14 +64,13 @@ public class CGTGameScreenDrawable extends AbstractDrawableObject {
 
     @Override
     public void onCreate() {
-        Optional<String> response = Dialogs.create()
-                .owner(Main.getApp())
-                .title("Nome para a tela")
-                .message("Digite um nome para a tela:")
-                .showTextInput("Tela");
+        TextInputDialog dialog = new TextInputDialog("Tela");
+        dialog.setTitle("Nome para a tela");
+        dialog.setContentText("Digite um nome para a tela:");
 
-        if (response.isPresent()) {
-            String id = response.get().trim();
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            String id = result.get().trim();
             this.screen = (Config.get().getGame().createScreen(id));
             //screenPane.getTxtScreenId().setText(id);
         }

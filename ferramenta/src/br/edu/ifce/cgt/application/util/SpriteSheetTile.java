@@ -1,4 +1,4 @@
-package cgt.util;
+package br.edu.ifce.cgt.application.util;
 
 import cgt.game.CGTSpriteSheet;
 import javafx.scene.image.Image;

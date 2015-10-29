@@ -5,10 +5,10 @@ import br.edu.ifce.cgt.application.controller.panes.ConfigWorldPreviewPane;
 import br.edu.ifce.cgt.application.util.Config;
 import cgt.game.CGTGameWorld;
 import javafx.scene.Node;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import org.controlsfx.dialog.Dialogs;
 
 import java.util.Optional;
 
@@ -55,14 +55,13 @@ public class CGTGameWorldDrawable extends AbstractDrawableObject<CGTGameWorld> {
 
     @Override
     public void onCreate() {
-        Optional<String> response = Dialogs.create()
-                .owner(Main.getApp())
-                .title("Nome para o mundo")
-                .message("Digite um nome para o mundo:")
-                .showTextInput("Mundo");
+        TextInputDialog dialog = new TextInputDialog("Mundo");
+        dialog.setTitle("Nome para o mundo");
+        dialog.setContentText("Digite um nome para o mundo:");
 
-        if (response.isPresent()) {
-            String id = response.get().trim();
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            String id = result.get().trim();
             setObject(Config.get().getGame().createWorld(id));
         }
     }

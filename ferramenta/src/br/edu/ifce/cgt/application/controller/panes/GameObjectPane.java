@@ -17,7 +17,7 @@ import cgt.game.CGTSpriteSheet;
 import cgt.policy.StatePolicy;
 import cgt.util.CGTFile;
 import cgt.util.CGTSound;
-import cgt.util.SpriteSheetTile;
+import br.edu.ifce.cgt.application.util.SpriteSheetTile;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import javafx.beans.value.ChangeListener;

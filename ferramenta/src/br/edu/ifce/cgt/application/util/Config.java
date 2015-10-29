@@ -2,7 +2,6 @@ package br.edu.ifce.cgt.application.util;
 
 import cgt.game.CGTGame;
 import cgt.util.CGTFile;
-import cgt.util.SpriteSheetTile;
 import com.badlogic.gdx.utils.Json;
 
 import javafx.embed.swing.SwingFXUtils;

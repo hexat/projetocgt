@@ -376,7 +376,7 @@ public class PreviewPane extends BorderPane {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Salvar");
             alert.setHeaderText(null);
-            alert.setContentText("Voc� modificou seu projeto. Deseja salvar antes de sair?");
+            alert.setContentText("Você modificou seu projeto. Deseja salvar antes de sair?");
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.get() == ButtonType.OK) {
