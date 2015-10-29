@@ -4,6 +4,7 @@ import br.edu.ifce.cgt.application.Main;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Window;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 
@@ -87,8 +88,12 @@ public class DialogsUtil {
         if (res != null) {
             pref.setLastDir (res.getParent());
             pref.save();
-        }
 
+            if (!FilenameUtils.getExtension(res.getName()).equalsIgnoreCase("pcgt")) {
+                res = new File(res.toString() + ".pcgt");
+            }
+        }
+        
 		return res;
 	}
 }
