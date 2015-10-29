@@ -60,4 +60,9 @@ public class CGTProjectDrawable extends AbstractDrawableObject<CGTProject> {
     public String toString() {
         return getObject().getProjectName();
     }
+
+    @Override
+    public boolean destroy() {
+        return false;
+    }
 }

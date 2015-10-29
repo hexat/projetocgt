@@ -30,8 +30,9 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject<CGTButtonScre
         super(drawableObjectPane, drawableConfigurationsPane);
     }
 
-    public CGTButtonScreenPreview(CGTButtonScreen object, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
+    public CGTButtonScreenPreview(CGTButtonScreen object, String screenName, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(object, drawableObjectPane, drawableConfigurationsPane);
+        this.screenName = screenName;
         name = "-> " + object.getWindowId();
     }
 
@@ -160,4 +161,8 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject<CGTButtonScre
                 (float) (preview.getFitHeight()/preview.getHeightBCKG()));
     }
 
+    @Override
+    public boolean destroy() {
+        return Config.get().getGame().getScreen(screenName).getButtons().remove(getObject());
+    }
 }

@@ -68,4 +68,9 @@ public class CGTGameWorldDrawable extends AbstractDrawableObject<CGTGameWorld> {
     public String toString() {
         return getObject().getId();
     }
+
+    @Override
+    public boolean destroy() {
+        return Config.get().getGame().removeWorld(getObject());
+    }
 }

@@ -47,4 +47,9 @@ public class HUDComponetDrawable extends AbstractDrawableObject {
     public void onCreate() {
 
     }
+
+    @Override
+    public boolean destroy() {
+        return false;
+    }
 }

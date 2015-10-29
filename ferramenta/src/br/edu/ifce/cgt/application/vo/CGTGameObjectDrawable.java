@@ -193,4 +193,9 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
         preview.setFitWidth(gameObjectTitledPane.getBoundsW().getValue());
         preview.setFitHeight(gameObjectTitledPane.getBoundsH().getValue());
     }
+
+    @Override
+    public boolean destroy() {
+        return Config.get().getGame().getWorld(worldName).removeObject(getObject());
+    }
 }

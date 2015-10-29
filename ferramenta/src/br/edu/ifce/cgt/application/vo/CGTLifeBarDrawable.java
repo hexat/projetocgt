@@ -180,4 +180,10 @@ public class CGTLifeBarDrawable extends AbstractDrawableObject {
     public String toString() {
         return this.life.getId();
     }*/
+
+    @Override
+    public boolean destroy() {
+        // TODO nao implementado ainda
+        return false;
+    }
 }

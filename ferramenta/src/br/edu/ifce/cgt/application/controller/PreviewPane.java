@@ -25,6 +25,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -85,6 +87,23 @@ public class PreviewPane extends BorderPane {
             @Override
             public TreeCell<DrawableObject> call(TreeView<DrawableObject> param) {
                 return new DrawableObjectTreeCellImpl();
+            }
+        });
+
+        tree.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                TreeItem<DrawableObject> selectedItem = tree.getSelectionModel().getSelectedItem();
+
+                if ( selectedItem != null )
+                {
+                    if ( event.getCode().equals( KeyCode.DELETE ) )
+                    {
+                        if (selectedItem .getValue().destroy()) {
+                            selectedItem.getParent().getChildren().remove(selectedItem);
+                        }
+                    }
+                }
             }
         });
 
@@ -165,7 +184,7 @@ public class PreviewPane extends BorderPane {
             this.tree.getRoot().getChildren().add(screenItem);
 
             for (CGTButtonScreen bs : s.getButtons()) {
-                CGTButtonScreenPreview btnScreen = new CGTButtonScreenPreview(bs, this.drawableObjectPane, this.drawableConfigurationsPane);
+                CGTButtonScreenPreview btnScreen = new CGTButtonScreenPreview(bs, s.getId(), this.drawableObjectPane, this.drawableConfigurationsPane);
                 screenItem.getChildren().add(new TreeItem<>(btnScreen));
             }
         }

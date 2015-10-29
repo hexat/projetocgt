@@ -16,4 +16,6 @@ public interface DrawableObject<T> {
     void onCreate();
 
     void onStart();
+
+    boolean destroy();
 }

@@ -74,4 +74,9 @@ public class CGTGameScreenDrawable extends AbstractDrawableObject<CGTScreen> {
     public String toString() {
         return getObject().getId();
     }
+
+    @Override
+    public boolean destroy() {
+        return Config.get().getGame().removeScreen(getObject());
+    }
 }
