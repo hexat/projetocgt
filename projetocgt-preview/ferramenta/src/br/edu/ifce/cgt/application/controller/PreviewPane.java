@@ -11,10 +11,13 @@ import br.edu.ifce.cgt.application.vo.*;
 import cgt.core.CGTActor;
 import cgt.core.CGTBonus;
 import cgt.core.CGTEnemy;
+import cgt.core.CGTGameObject;
 import cgt.game.CGTGame;
 import cgt.game.CGTGameWorld;
 import cgt.game.CGTScreen;
+import cgt.game.LifeBar;
 import cgt.hud.CGTButtonScreen;
+import cgt.hud.IndividualLifeBar;
 import cgt.util.CGTError;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -322,7 +325,22 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addObjectLifeBar() {
-
+        CGTLifeBarDrawable life = new CGTLifeBarDrawable(drawableObjectPane,drawableConfigurationsPane);
+        //if(life.getLife() != null) {
+            TreeItem<DrawableObject> lifeTreeItem = new TreeItem<>(life);
+            String worldName = life.getLife().getWorld().getId();
+            String bar = life.getLife().getOwnerId();
+            TreeItem<DrawableObject> worldTreeItem = this.getWorldNode(worldName);
+            CGTGameObject go = Config.get().getGame().findObject(bar);
+            for (TreeItem<DrawableObject> a : worldTreeItem.getChildren()) {
+                if (a.getValue().getObject().equals(go))
+                    a.getChildren().add(lifeTreeItem);
+            }
+            CGTGameWorld cgtGameWorld = Config.get().getGame().getWorld(worldName);
+            cgtGameWorld.addLifeBar(life.getLife());
+        //}
+        //else
+          //  System.out.println("DesistiuNULL");
     }
 
     @FXML

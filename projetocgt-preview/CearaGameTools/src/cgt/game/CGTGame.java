@@ -62,6 +62,7 @@ public class CGTGame implements Serializable {
         else{
             /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Id ja registrado!");
+            alert.setHeaderText("Nome repetido");
             alert.showAndWait();*/
             System.out.println("Id ja registrado!");
         }
@@ -88,6 +89,7 @@ public class CGTGame implements Serializable {
         else{
             /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Id ja registrado!");
+            alert.setHeaderText("Nome repetido");
             alert.showAndWait();*/
             System.out.println("Id ja registrado!");
         }

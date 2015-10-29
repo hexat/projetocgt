@@ -5,6 +5,10 @@ import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
 import br.edu.ifce.cgt.application.vo.CGTButtonScreenPreview;
+import br.edu.ifce.cgt.application.vo.CGTGameObjectDrawable;
+import br.edu.ifce.cgt.application.vo.CGTLifeBarDrawable;
+import cgt.core.CGTGameObject;
+import cgt.hud.IndividualLifeBar;
 import cgt.util.CGTTexture;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,14 +26,14 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by Edy Junior on 24/09/2015.
+ * Created by Edy Junior on 22/10/2015.
  */
-public class ConfigButtonPreviewPane extends Accordion {
+public class ConfigLifePane extends Accordion {
 
     @FXML
-    private TextField textUp;
+    private TextField textBar;
     @FXML
-    private TextField textPres;
+    private TextField textBack;
     @FXML
     private FloatTextField HRel;
     @FXML
@@ -40,12 +44,12 @@ public class ConfigButtonPreviewPane extends Accordion {
     private FloatTextField RelY;
     @FXML
     private ComboBox<String> choices;
-    private CGTButtonScreenPreview btn;
+    private CGTLifeBarDrawable life;
     private Runnable onUpdateRunnable;
     private double x = 0, y = 1.0f, w = 0.2f, h = 0.2f;
 
-    public ConfigButtonPreviewPane(CGTButtonScreenPreview btn){
-        FXMLLoader xml2 = new FXMLLoader(Main.class.getResource("/view/ConfigButtonScreen2.fxml"));
+    public ConfigLifePane(CGTLifeBarDrawable life){
+        FXMLLoader xml2 = new FXMLLoader(Main.class.getResource("/view/ConfigLifeBar.fxml"));
         xml2.setController(this);
         xml2.setRoot(this);
 
@@ -55,20 +59,20 @@ public class ConfigButtonPreviewPane extends Accordion {
             e.printStackTrace();
         }
 
-        this.btn = btn;
+        this.life = life;
 
         init();
     }
 
-    public ConfigButtonPreviewPane(CGTButtonScreenPreview btn, Runnable onUpdateRunnable){
-        this(btn);
+    public ConfigLifePane(CGTLifeBarDrawable life, Runnable onUpdateRunnable){
+        this(life);
         this.onUpdateRunnable = onUpdateRunnable;
     }
 
     private void init() {
         choices.setOnMouseClicked(e-> {
             choices.getItems().clear();
-            choices.getItems().addAll(Config.get().getGame().getIds());
+            choices.getItems().addAll(Config.get().getGame().objectIds());
         });
         RelX.setValue(0.0f);
         RelY.setValue(1.0f);
@@ -78,19 +82,22 @@ public class ConfigButtonPreviewPane extends Accordion {
         choices.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                btn.getButton().setScreenToGo(choices.getValue());
+                CGTGameObject ob = Config.get().getGame().findObject(choices.getValue().toString());
+                life.getLife().setOwner(ob.getId());
+                //Config.get().getGame().getWorld("").addLifeBar(life.getLife());
+                //life.getLife().setn
             }
         });
 
-        if (btn.getButton().getScreenToGo() != null) {
-            choices.getSelectionModel().select(btn.getButton().getScreenToGo().getId());
+        if (life.getObject() != null) {
+            choices.getSelectionModel().select(life.getLife().getOwnerId());
         }
         RelX.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue && RelX.getValue() >= 0 && RelX.getValue() <= 1 - WRel.getValue()) {
-                    btn.getImage().setX(RelX.getValue() * btn.getImage().getWidthBCKG());
-                    btn.getButton().setRelativeX(RelX.getValue());
+                    life.getDraggable().setX(RelX.getValue() * life.getDraggable().getWidthBCKG());
+                    life.getLife().setRelativeX(RelX.getValue());
                     x = RelX.getValue();
                 }
 
@@ -99,7 +106,7 @@ public class ConfigButtonPreviewPane extends Accordion {
                     alert.setHeaderText("Coordenadas fora dos limites");
                     alert.setContentText("Intervalo aceito: [0 ; " + (1 - WRel.getValue()) + "]");
                     alert.show();
-                    btn.getButton().setRelativeX((float)x);
+                    life.getLife().setRelativeX((float)x);
                     RelX.setValue(x);
                 }
                 if (onUpdateRunnable != null)
@@ -110,8 +117,8 @@ public class ConfigButtonPreviewPane extends Accordion {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue && RelY.getValue() >= HRel.getValue() && RelY.getValue() <= 1) {
-                    btn.getImage().setY((1 - RelY.getValue()) * btn.getImage().getHeightBCKG());
-                    btn.getButton().setRelativeY(1 - RelY.getValue());
+                    life.getDraggable().setY((1 - RelY.getValue()) * life.getDraggable().getHeightBCKG());
+                    life.getLife().setRelativeY(1 - RelY.getValue());
                     y = RelY.getValue();
                 }
                 else if(!newValue){
@@ -119,7 +126,7 @@ public class ConfigButtonPreviewPane extends Accordion {
                     alert.setHeaderText("Coordenadas fora dos limites");
                     alert.setContentText("Intervalo aceito: [" + HRel.getValue() + " ; 1]");
                     alert.show();
-                    btn.getButton().setRelativeY(1.0f - (float)y);
+                    life.getLife().setRelativeY(1.0f - (float)y);
                     RelY.setValue(y);
                 }
                 if (onUpdateRunnable != null)
@@ -130,7 +137,7 @@ public class ConfigButtonPreviewPane extends Accordion {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue && WRel.getValue() >= 0 && WRel.getValue() <= 1 - RelX.getValue()) {
-                    btn.getButton().setRelativeWidth(WRel.getValue());
+                    life.getLife().setRelativeWidth(WRel.getValue());
                     w = WRel.getValue();
                 }
                 else if(!newValue){
@@ -138,7 +145,7 @@ public class ConfigButtonPreviewPane extends Accordion {
                     alert.setHeaderText("Largura fora dos limites");
                     alert.setContentText("Intervalo aceito: [0 ; " + (1 - RelX.getValue()) + "]");
                     alert.show();
-                    btn.getButton().setRelativeWidth((float)(w));
+                    life.getLife().setRelativeWidth((float)(w));
                     WRel.setValue(w);
                 }
                 if (onUpdateRunnable != null)
@@ -148,8 +155,8 @@ public class ConfigButtonPreviewPane extends Accordion {
         HRel.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (!newValue && HRel.getValue() >= 0 && HRel.getValue() <= RelY.getValue()) {
-                    btn.getButton().setRelativeHeight(HRel.getValue());
+                if (!newValue && HRel.getValue() <= RelY.getValue()) {
+                    life.getLife().setRelativeHeight(HRel.getValue());
                     h = HRel.getValue();
                 }
                 else if(!newValue){
@@ -157,7 +164,7 @@ public class ConfigButtonPreviewPane extends Accordion {
                     alert.setHeaderText("Largura fora dos limites");
                     alert.setContentText("Intervalo aceito: [0 ; " + RelY.getValue() + "]");
                     alert.show();
-                    btn.getButton().setRelativeHeight((float)(h));
+                    life.getLife().setRelativeHeight((float)(h));
                     HRel.setValue(h);
                 }
                 if (onUpdateRunnable != null)
@@ -167,43 +174,43 @@ public class ConfigButtonPreviewPane extends Accordion {
     }
 
     @FXML public void Search1(ActionEvent actionEvent) {
-        File chosenFile = DialogsUtil.showOpenDialog("Selecionar imagem do botao", DialogsUtil.IMG_FILTER);
+        File chosenFile = DialogsUtil.showOpenDialog("Selecionar imagem da barra de vida", DialogsUtil.IMG_FILTER);
 
         String path = "";
 
         if (chosenFile != null) {
-            btn.getButton().setTextureUp(new CGTTexture(Config.get().createImg(chosenFile)));
-            Image img = Config.get().getImage(btn.getButton().getTextureUp().getFile().getFile().getName());
-            btn.getImage().setImage(img);
+            life.getLife().setBar(new CGTTexture(Config.get().createImg(chosenFile)));
+            Image img = Config.get().getImage(life.getLife().getBar().getFile().getFile().getName());
+            life.getDraggable().setImage(img);
             path = chosenFile.getName();
         }
 
-        textUp.setText(path);
+        textBar.setText(path);
 
         if (onUpdateRunnable != null)
             onUpdateRunnable.run();
     }
     @FXML public void Search2(ActionEvent actionEvent) {
-        File chosenFile = DialogsUtil.showOpenDialog("Selecionar imagem do botao pressionado", DialogsUtil.IMG_FILTER);
+        File chosenFile = DialogsUtil.showOpenDialog("Selecionar imagem de fundo", DialogsUtil.IMG_FILTER);
 
         String path = "";
 
         if (chosenFile != null) {
-            btn.getButton().setTextureDown(new CGTTexture(Config.get().createImg(chosenFile)));
+            life.getLife().setBackgroundBar(new CGTTexture(Config.get().createImg(chosenFile)));
             path = chosenFile.getName();
         }
 
-        textPres.setText(path);
+        textBack.setText(path);
 
         if (onUpdateRunnable != null)
             onUpdateRunnable.run();
     }
 
-    public TextField getTextUp(){
-        return this.textUp;
+    public TextField getTextBar(){
+        return this.textBar;
     }
-    public TextField getTextPress(){
-        return this.textPres;
+    public TextField getTextBack(){
+        return this.textBack;
     }
     public FloatTextField getRelX(){
         return this.RelX;
@@ -218,7 +225,7 @@ public class ConfigButtonPreviewPane extends Accordion {
         return this.HRel;
     }
 
-    public ComboBox<String> getScreens(){
+    public ComboBox<String> getChoices(){
         return this.choices;
     }
 

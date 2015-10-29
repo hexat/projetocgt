@@ -12,6 +12,15 @@ public class IndividualLifeBar extends LifeBar {
 
 	private CGTGameObject object;
 
+    public IndividualLifeBar(){
+        super();
+    }
+
+    public IndividualLifeBar(String id){
+        this();
+		setId(id);
+    }
+
 	public void act(float delta){
 		if (object != null) {
 			currentLife = object.getLife();
@@ -25,12 +34,10 @@ public class IndividualLifeBar extends LifeBar {
 	public void setup() {
 		super.setup();
 		if (object == null) {
-			
 			object = getWorld().getObjectByLabel(ownerId);
 			setMaxLife(object.getMaxLife());
 		}
 	}
-
 
 	public void setOwner(String label) {
 		this.ownerId = label;

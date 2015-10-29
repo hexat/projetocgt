@@ -3,6 +3,7 @@ package br.edu.ifce.cgt.application.util;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
 import cgt.hud.CGTButtonScreen;
+import cgt.hud.HUDComponent;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -30,7 +31,7 @@ public class Draggable extends ImageView{
         super(img);
     }
 
-    public Draggable (FloatTextField X, FloatTextField Y, CGTButtonScreen btn){
+    public Draggable (FloatTextField X, FloatTextField Y, HUDComponent btn){//CGTButtonScreen
         super();
         this.setOnMouseDragged(event-> {
             if(this.getFitWidth() + event.getX() < widthBCKG &&
@@ -56,7 +57,6 @@ public class Draggable extends ImageView{
                 this.setY(event.getY());
                 X.setValue((int) event.getX());
                 Y.setValue((int) heightBCKG - (int) event.getY());
-                System.out.printf("%d %d\n",(int) widthBCKG,(int) heightBCKG);
             }
         });
     }

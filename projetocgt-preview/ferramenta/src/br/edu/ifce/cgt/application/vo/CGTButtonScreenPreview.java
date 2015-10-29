@@ -22,7 +22,7 @@ import java.util.Optional;
  */
 public class CGTButtonScreenPreview extends AbstractDrawableObject {
     private CGTButtonScreen btn;
-    private CGTGameObject gameObject;
+    //private CGTGameObject gameObject;
     private String name;
     private String screenName;
     private ConfigButtonPreviewPane buttonPane;
@@ -49,7 +49,7 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
         });
     }
 
-    @Override
+    /*@Override
     public CGTGameObject getObject() {
         return gameObject;
     }
@@ -58,7 +58,7 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
     public void setObject(Object obj) {
         if (obj instanceof CGTGameObject)
             this.gameObject = (CGTGameObject) obj;
-    }
+    }*/
 
     @Override
     public void drawObject() {
