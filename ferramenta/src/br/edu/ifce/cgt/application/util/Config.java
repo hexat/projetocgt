@@ -73,6 +73,18 @@ public class Config {
 
         return img;
     }
+    public Image getImage(CGTFile file) {
+        Image img = null;
+
+        try {
+            InputStream is = new FileInputStream(BASE + file.getRelativePath());
+            img = new Image(is);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return img;
+    }
 
     public CGTFile createImg(File src) {
         CGTFile res = null;

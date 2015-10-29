@@ -4,10 +4,10 @@ import cgt.core.CGTActor;
 import cgt.game.LoseCriteria;
 import cgt.policy.LosePolicy;
 
-public class LifeDeleted extends LoseCriteria {
+public class LifeDepleted extends LoseCriteria {
     private CGTActor actor;
 
-    public LifeDeleted() {
+    public LifeDepleted() {
         actor = null;
     }
 

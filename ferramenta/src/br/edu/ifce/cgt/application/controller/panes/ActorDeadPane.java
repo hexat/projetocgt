@@ -2,7 +2,7 @@ package br.edu.ifce.cgt.application.controller.panes;
 
 import cgt.core.CGTActor;
 import cgt.game.LoseCriteria;
-import cgt.lose.LifeDeleted;
+import cgt.lose.LifeDepleted;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
@@ -12,7 +12,7 @@ import javafx.scene.layout.GridPane;
  * Created by luanjames on 09/03/15.
  */
 public class ActorDeadPane extends GridPane implements LoseCriteriaPane {
-    private LifeDeleted actorDead;
+    private LifeDepleted actorDead;
 
     public ActorDeadPane(CGTActor actor) {
         ColumnConstraints c1 = new ColumnConstraints();
@@ -28,10 +28,10 @@ public class ActorDeadPane extends GridPane implements LoseCriteriaPane {
         txtActor.setText(actor.getId());
         add(txtActor, 1, 0);
 
-        setActorDead(new LifeDeleted());
+        setActorDead(new LifeDepleted());
     }
 
-    public void setActorDead(LifeDeleted actorDead) {
+    public void setActorDead(LifeDepleted actorDead) {
         this.actorDead = actorDead;
     }
 

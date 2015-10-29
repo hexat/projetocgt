@@ -16,30 +16,25 @@ import java.util.Optional;
 /**
  * Created by Edy Junior on 14/09/2015.
  */
-public class CGTGameScreenDrawable extends AbstractDrawableObject {
-    private CGTScreen screen;
+public class CGTGameScreenDrawable extends AbstractDrawableObject<CGTScreen> {
     private ConfigScreenPreviewPane screenPane;
 
     public CGTGameScreenDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(drawableObjectPane, drawableConfigurationsPane);
+    }
 
-        this.screenPane = new ConfigScreenPreviewPane(screen, new Runnable() {
+    public CGTGameScreenDrawable(CGTScreen object, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
+        super(object, drawableObjectPane, drawableConfigurationsPane);
+    }
+
+    @Override
+    public void onStart() {
+        this.screenPane = new ConfigScreenPreviewPane(getObject(), new Runnable() {
             @Override
             public void run() {
                 drawObject();
             }
         });
-    }
-
-    @Override
-    public CGTScreen getObject() {
-        return screen;
-    }
-
-    @Override
-    public void setObject(Object obj) {
-        if (obj instanceof CGTScreen)
-            this.screen = (CGTScreen) obj;
     }
 
     @Override
@@ -49,8 +44,8 @@ public class CGTGameScreenDrawable extends AbstractDrawableObject {
 
     @Override
     public void drawObject() {
-        if (this.screen.getBackground() != null) {
-            String backFilename = this.screen.getBackground().getFile().getFilename();
+        if (getObject().getBackground() != null) {
+            String backFilename = getObject().getBackground().getFile().getFilename();
             ImageView img = new ImageView(Config.get().getImage(backFilename));
             getDrawableObjectPane().getChildren().clear();
             getDrawableObjectPane().getChildren().add(img);
@@ -71,13 +66,13 @@ public class CGTGameScreenDrawable extends AbstractDrawableObject {
         Optional<String> result = dialog.showAndWait();
         if (result.isPresent()){
             String id = result.get().trim();
-            this.screen = (Config.get().getGame().createScreen(id));
+            setObject(Config.get().getGame().createScreen(id));
             //screenPane.getTxtScreenId().setText(id);
         }
     }
 
     @Override
     public String toString() {
-        return this.screen.getId();
+        return getObject().getId();
     }
 }

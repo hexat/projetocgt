@@ -15,7 +15,7 @@
 //import cgt.hud.CGTControllerButton;
 //import cgt.hud.EnemyGroupLifeBar;
 //import cgt.hud.IndividualLifeBar;
-//import cgt.lose.LifeDeleted;
+//import cgt.lose.LifeDepleted;
 //import cgt.policy.DirectionPolicy;
 //import cgt.policy.FadePolicy;
 //import cgt.policy.InputPolicy;
@@ -716,7 +716,7 @@
 //		world.addLifeBar(alerts);
 //		
 //		//world.addLoseCriterion(new TargetTime(5));
-//		world.addLoseCriterion(new LifeDeleted(world.getActor()));
+//		world.addLoseCriterion(new LifeDepleted(world.getActor()));
 //		world.addWinCriterion(new KillAllEnemies(world.getEnemies()));
 //	}
 //

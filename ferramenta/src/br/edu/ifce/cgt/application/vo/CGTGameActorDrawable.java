@@ -6,21 +6,36 @@ import javafx.scene.Node;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
 
-public class CGTGameActorDrawable extends CGTGameObjectDrawable {
-
-    private CGTActor actor;
+public class CGTGameActorDrawable extends CGTGameObjectDrawable<CGTActor> {
     private ActorTitledPane actorTitledPane;
 
-    public CGTGameActorDrawable(CGTActor actor, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
-        super(actor, drawableObjectPane, drawableConfigurationsPane);
-        this.actor = actor;
-        this.actorTitledPane = new ActorTitledPane(actor);
+    public CGTGameActorDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane) {
+        super(drawableObjectPane, drawableConfigurationsPane);
+    }
+
+    public CGTGameActorDrawable(CGTActor gameObject, String worldName, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
+        super(gameObject, worldName, drawableObjectPane, drawableConfigurationsPane);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        this.actorTitledPane = new ActorTitledPane(getObject());
     }
 
     @Override
     public Node getPane() {
         return this.actorTitledPane;
+    }
+
+    @Override
+    public void onCreate() {
+        String pair = showInputIdDialog();
+        if (pair != null) {
+            setObject(new CGTActor(pair));
+        }
     }
 
     @Override

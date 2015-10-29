@@ -17,15 +17,14 @@ public class CGTGameWorldDrawable extends AbstractDrawableObject<CGTGameWorld> {
 
     public CGTGameWorldDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(drawableObjectPane, drawableConfigurationsPane);
-        init();
     }
 
     public CGTGameWorldDrawable(CGTGameWorld object, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(object, drawableObjectPane, drawableConfigurationsPane);
-        init();
     }
 
-    public void init() {
+    @Override
+    public void onStart() {
         this.worldPane = new ConfigWorldPreviewPane(getObject(), new Runnable() {
             @Override
             public void run() {
@@ -42,8 +41,7 @@ public class CGTGameWorldDrawable extends AbstractDrawableObject<CGTGameWorld> {
     @Override
     public void drawObject() {
         if (getObject().getBackground() != null) {
-            String backFilename = getObject().getBackground().getFile().getFilename();
-            ImageView img = new ImageView(Config.get().getImage(backFilename));
+            ImageView img = new ImageView(Config.get().getImage(getObject().getBackground().getFile()));
             getDrawableObjectPane().getChildren().add(img);
         }
     }

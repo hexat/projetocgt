@@ -11,7 +11,7 @@ import br.edu.ifce.cgt.application.util.EnumMap;
 import br.edu.ifce.cgt.application.util.Pref;
 import cgt.game.CGTGameWorld;
 import cgt.hud.CGTButtonScreen;
-import cgt.lose.LifeDeleted;
+import cgt.lose.LifeDepleted;
 import cgt.lose.Lose;
 import cgt.policy.GameModePolicy;
 import cgt.policy.LosePolicy;
@@ -235,7 +235,7 @@ public class ConfigWorldPreviewPane extends StackPane {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 LosePolicy policy = LosePolicy.ACTOR_DEAD;
                 if (newValue) {
-                    world.addLoseCriterion(new LifeDeleted());
+                    world.addLoseCriterion(new LifeDepleted());
                 } else {
                     removeLoseCriteria(policy);
                 }

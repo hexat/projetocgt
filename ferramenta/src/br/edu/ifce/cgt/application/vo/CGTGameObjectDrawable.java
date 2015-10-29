@@ -20,9 +20,7 @@ import javafx.util.Pair;
 import java.util.List;
 import java.util.Optional;
 
-public class CGTGameObjectDrawable extends AbstractDrawableObject {
-
-    private CGTGameObject gameObject;
+public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends AbstractDrawableObject<T> {
     private GameObjectPane gameObjectTitledPane;
     private String worldName;
     private String gameObjectId;
@@ -30,78 +28,73 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
     private Rectangle collision;
     private Draggable preview = new Draggable();
 
-    public CGTGameObjectDrawable(CGTGameObject gameObject, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
+    public CGTGameObjectDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(drawableObjectPane, drawableConfigurationsPane);
-        this.gameObject = gameObject;
-        this.gameObject.setId(this.getGameObjectId());
-        this.gameObjectTitledPane = new GameObjectPane(this.gameObject, this, new Runnable() {
+    }
+
+    public CGTGameObjectDrawable(T gameObject, String worldName, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
+        super(gameObject, drawableObjectPane, drawableConfigurationsPane);
+        setWorldName(worldName);
+    }
+
+    @Override
+    public void onStart() {
+        gameObjectTitledPane = new GameObjectPane(getObject(), this, new Runnable() {
             @Override
             public void run() {
                 drawObject();
             }
         });
-        this.bounds = new Rectangle(this.gameObject.getBounds().getWidth(), this.gameObject.getBounds().getHeight());
-        this.collision = new Rectangle(this.gameObject.getCollision().getWidth(), this.gameObject.getCollision().getHeight());
+        this.bounds = new Rectangle(getObject().getBounds().getWidth(), getObject().getBounds().getHeight());
+        this.collision = new Rectangle(getObject().getCollision().getWidth(), getObject().getCollision().getHeight());
         this.preview = new Draggable(gameObjectTitledPane.getPositionX(), gameObjectTitledPane.getPositionY(), bounds, collision);
-
-    }
-
-    @Override
-    public CGTGameObject getObject() {
-        return gameObject;
-    }
-
-    @Override
-    public void setObject(Object obj) {
-        if (obj instanceof CGTGameObject)
-            this.gameObject = (CGTGameObject) obj;
     }
 
     @Override
     public Node getPane() {
-        return this.gameObjectTitledPane;
+        return gameObjectTitledPane;
     }
 
     @Override
     public void drawObject() {
-        bounds.setWidth(this.gameObject.getBounds().getWidth());
-        bounds.setHeight(this.gameObject.getBounds().getHeight());
+        bounds.setWidth(getObject().getBounds().getWidth());
+        bounds.setHeight(getObject().getBounds().getHeight());
         bounds.setFill(null);
         bounds.setStroke(Color.RED);
         bounds.setStrokeWidth(0.8);
 
-        collision.setWidth(this.gameObject.getCollision().getWidth());
-        collision.setHeight(this.gameObject.getCollision().getHeight());
+        collision.setWidth(getObject().getCollision().getWidth());
+        collision.setHeight(getObject().getCollision().getHeight());
         collision.setFill(null);
         collision.setStroke(Color.YELLOW);
         collision.setStrokeWidth(0.8);
 
-        /*if (this.gameObject.getPosition() != null) {
-            bounds.setX(this.gameObject.getPosition().x);
-            bounds.setY(this.gameObject.getPosition().y);
-            collision.setX(this.gameObject.getPosition().x);
-            collision.setY(this.gameObject.getPosition().y);
+        /*if (getObject().getPosition() != null) {
+            bounds.setX(getObject().getPosition().x);
+            bounds.setY(getObject().getPosition().y);
+            collision.setX(getObject().getPosition().x);
+            collision.setY(getObject().getPosition().y);
         }*/
 
         super.updateDrawPane(bounds);
         super.updateDrawPane(collision);
 
-        int actorWidth = (int) this.gameObject.getBounds().getWidth();
-        int actorHeight = (int) this.gameObject.getBounds().getHeight();
+        int actorWidth = (int) getObject().getBounds().getWidth();
+        int actorHeight = (int) getObject().getBounds().getHeight();
 
-        if (!this.gameObject.getAnimations().isEmpty() && actorWidth > 0 && actorHeight > 0) {
-            CGTSpriteSheet cgtSpriteSheet = this.gameObject.getAnimations().get(0).getSpriteSheet();
+        if (!getObject().getAnimations().isEmpty() && actorWidth > 0 && actorHeight > 0) {
+            CGTSpriteSheet cgtSpriteSheet = getObject().getAnimations().get(0).getSpriteSheet();
             String urlToFile = cgtSpriteSheet.getTexture().getFile().getFile().getName();
             Image img = Config.get().getImage(urlToFile);
             Image[] images = Config.get().splitImage(img, cgtSpriteSheet.getColumns(), cgtSpriteSheet.getRows(), actorWidth, actorHeight);
             preview.setImage(images[images.length / 2]);
             setSizeObject();
-            //preview.setX(this.gameObject.getPosition().x);
-            //preview.setY(this.gameObject.getPosition().y + preview.getFitHeight());
-            //this.gameObject.setPosition(new Vector2(this.gameObject.getPosition().x,
-            //this.gameObject.getPosition().y + gameObjectTitledPane.getBoundsH().getValue()/2));// + gameObjectTitledPane.getBoundsH().getValue())
+            //preview.setX(getObject().getPosition().x);
+            //preview.setY(getObject().getPosition().y + preview.getFitHeight());
+            //getObject().setPosition(new Vector2(getObject().getPosition().x,
+            //getObject().getPosition().y + gameObjectTitledPane.getBoundsH().getValue()/2));// + gameObjectTitledPane.getBoundsH().getValue())
             super.updateDrawPane(preview);
-            //this.gameObject.setPosition(null);
+            //getObject().setPosition(null);
         }
     }
 
@@ -111,7 +104,9 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
     }
 
     @Override
-    public void onCreate() {
+    public abstract void onCreate();
+
+    public String showInputIdDialog() {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Criar objeto");
         dialog.setHeaderText("Criação de um objeto do jogo");
@@ -159,11 +154,14 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
         Optional<Pair<String, String>> result = dialog.showAndWait();
 
         if (result.isPresent()) {
-            String id = result.get().getKey();
-            String worldName = result.get().getValue();
-            this.gameObjectId = id;
-            this.worldName = worldName;
+            worldName = result.get().getValue();
+            return result.get().getKey();
         }
+        return null;
+    }
+
+    public void setWorldName(String worldName) {
+        this.worldName = worldName;
     }
 
     public String getWorldName() {
@@ -180,17 +178,17 @@ public class CGTGameObjectDrawable extends AbstractDrawableObject {
 
     @Override
     public String toString() {
-        return this.gameObjectId;
+        return getObject().getId();
     }
 
     public void setSizeObject() {
         preview.setWidthBCKG(
                 Config.get().getImage(Config.get().getGame().getWorld(getWorldName()).
-                        getBackground().getFile().getFile().getName()).getWidth()
+                        getBackground().getFile()).getWidth()
         );
         preview.setHeightBCKG(
                 Config.get().getImage(Config.get().getGame().getWorld(getWorldName()).
-                        getBackground().getFile().getFile().getName()).getHeight()
+                        getBackground().getFile()).getHeight()
         );
         preview.setFitWidth(gameObjectTitledPane.getBoundsW().getValue());
         preview.setFitHeight(gameObjectTitledPane.getBoundsH().getValue());

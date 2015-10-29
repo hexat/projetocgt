@@ -34,7 +34,11 @@ public class CGTFile implements Serializable {
     public File getFile() {
 		return new File(fileRelativePath);
 	}
-	
+
+	public String getRelativePath() {
+		return fileRelativePath;
+	}
+
 	public FileHandle getFileHandle() {
 		if (fileHandle == null) {
 			fileHandle = Gdx.files.internal(fileRelativePath);

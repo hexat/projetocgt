@@ -140,6 +140,33 @@ public class PreviewPane extends BorderPane {
             DrawableObject<CGTGameWorld> worldDrawable = new CGTGameWorldDrawable(w, this.drawableObjectPane, this.drawableConfigurationsPane);
             TreeItem<DrawableObject> worldTreeItem = new TreeItem<>(worldDrawable);
             this.tree.getRoot().getChildren().add(worldTreeItem);
+
+            // add actor
+            CGTGameActorDrawable actor = new CGTGameActorDrawable(w.getActor(), w.getId(), this.drawableObjectPane, this.drawableConfigurationsPane);
+            worldTreeItem.getChildren().add(new TreeItem<>(actor));
+
+            // add enemies
+            for (CGTEnemy e : w.getEnemies()) {
+                CGTGameEnemyDrawable enemyDrawableObject = new CGTGameEnemyDrawable(e, w.getId(), this.drawableObjectPane, this.drawableConfigurationsPane);
+                TreeItem<DrawableObject> enemyTreeItem = new TreeItem<>(enemyDrawableObject);
+                worldTreeItem.getChildren().add(enemyTreeItem);
+            }
+
+            for (CGTBonus b : w.getBonus()) {
+                CGTGameBonusDrawable bonus = new CGTGameBonusDrawable(b, w.getId(), this.drawableObjectPane, this.drawableConfigurationsPane);
+                worldTreeItem.getChildren().add(new TreeItem<>(bonus));
+            }
+        }
+
+        for (CGTScreen s : game.getScreens()) {
+            DrawableObject<CGTScreen> screenDrawable = new CGTGameScreenDrawable(s, this.drawableObjectPane, this.drawableConfigurationsPane);
+            TreeItem<DrawableObject> screenItem = new TreeItem<>(screenDrawable);
+            this.tree.getRoot().getChildren().add(screenItem);
+
+            for (CGTButtonScreen bs : s.getButtons()) {
+                CGTButtonScreenPreview btnScreen = new CGTButtonScreenPreview(bs, this.drawableObjectPane, this.drawableConfigurationsPane);
+                screenItem.getChildren().add(new TreeItem<>(btnScreen));
+            }
         }
     }
 
@@ -264,7 +291,7 @@ public class PreviewPane extends BorderPane {
     @FXML
     public void addWorld() {
         DrawableObject<CGTGameWorld> worldDrawable = new CGTGameWorldDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
-        DrawableObject<CGTActor> drawableActor = new CGTGameActorDrawable(worldDrawable.getObject().getActor(), this.drawableObjectPane, this.drawableConfigurationsPane);
+        DrawableObject<CGTActor> drawableActor = new CGTGameActorDrawable(worldDrawable.getObject().getActor(), worldDrawable.getObject().getId(), this.drawableObjectPane, this.drawableConfigurationsPane);
         TreeItem<DrawableObject> worldTreeItem = new TreeItem<>(worldDrawable);
         TreeItem<DrawableObject> actorTreeItem = new TreeItem<>(drawableActor);
         worldTreeItem.getChildren().add(actorTreeItem);

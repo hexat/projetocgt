@@ -17,48 +17,40 @@ import javafx.util.Pair;
 import java.util.List;
 import java.util.Optional;
 
-public class CGTGameEnemyDrawable extends CGTGameObjectDrawable {
-
-    private CGTEnemy enemy;
-    private String name;
-    private String worldName;
+public class CGTGameEnemyDrawable extends CGTGameObjectDrawable<CGTEnemy> {
     private EnemyTitledPane enemyTitledPane;
 
     public CGTGameEnemyDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane) {
-        super(new CGTEnemy(), drawableObjectPane, drawableConfigurationsPane);
-        this.setObject(super.getObject());
-        this.enemy.setId(name);
-        this.enemyTitledPane = new EnemyTitledPane(enemy);
+        super(drawableObjectPane, drawableConfigurationsPane);
+    }
+
+    public CGTGameEnemyDrawable(CGTEnemy gameObject, String worldName, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
+        super(gameObject, worldName, drawableObjectPane, drawableConfigurationsPane);
     }
 
     @Override
-    public CGTGameObject getObject() {
-        return enemy;
-    }
-
-    @Override
-    public void setObject(Object obj) {
-        if (obj instanceof CGTEnemy)
-            this.enemy  = (CGTEnemy) obj;
+    public void onStart() {
+        super.onStart();
+        this.enemyTitledPane = new EnemyTitledPane(getObject());
     }
 
     @Override
     public void drawObject() {
         super.drawObject();
     }
-
+/*
     @Override
     public void drawConfigurationPanel() {
         Pane paneObject = (Pane) super.getPane();
-        Accordion accordion = (Accordion) paneObject.getChildren().get(0);
+        Accordion accordion = (Accordion) paneObject.getChildren().get(0); // null point
         TitledPane titledPaneEnemy = (TitledPane) this.getPane();
         accordion.getPanes().add(titledPaneEnemy);
         super.updateConfigPane(accordion);
     }
-
+*/
     @Override
     public String toString() {
-        return enemy.getId();
+        return getObject().getId();
     }
 
     @Override
@@ -114,13 +106,8 @@ public class CGTGameEnemyDrawable extends CGTGameObjectDrawable {
         if (result.isPresent()) {
             String id = result.get().getKey();
             String worldName = result.get().getValue();
-            this.name = id;
-            this.worldName = worldName;
+            setObject(new CGTEnemy(id));
+            setWorldName(worldName);
         }
     }
-
-    public String getWorldName() {
-        return worldName;
-    }
-
 }

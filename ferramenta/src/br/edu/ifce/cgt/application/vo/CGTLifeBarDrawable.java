@@ -34,7 +34,6 @@ public class CGTLifeBarDrawable extends AbstractDrawableObject {
                 drawObject();
             }
         });*/
-        this.lifePane = new IndividualLifeBarTitledPane(life);
 
         //preview = new Draggable(lifePane.getRelX(), lifePane.getRelY(),this.life);
 
@@ -154,6 +153,11 @@ public class CGTLifeBarDrawable extends AbstractDrawableObject {
             //IndividualLifeBar lifeBar = new IndividualLifeBar();
 
         }
+    }
+
+    @Override
+    public void onStart() {
+        this.lifePane = new IndividualLifeBarTitledPane(life);
     }
 
     @Override

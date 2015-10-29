@@ -8,33 +8,23 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class CGTProjectDrawable extends AbstractDrawableObject {
-
-    private CGTProject cgtProject;
+public class CGTProjectDrawable extends AbstractDrawableObject<CGTProject> {
     private Rectangle size;
     private ConfigProjectPane projectPane;
 
     public CGTProjectDrawable(String projectName, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
-        super(drawableObjectPane, drawableConfigurationsPane);
-        this.cgtProject = new CGTProject(projectName);
-        this.size = new Rectangle(this.cgtProject.getCanvasWidth(), this.cgtProject.getCanvasHeight());
-        this.projectPane = new ConfigProjectPane(this.cgtProject, new Runnable() {
+        super(new CGTProject(projectName), drawableObjectPane, drawableConfigurationsPane);
+    }
+
+    @Override
+    public void onStart() {
+        this.size = new Rectangle(getObject().getCanvasWidth(), getObject().getCanvasHeight());
+        this.projectPane = new ConfigProjectPane(getObject(), new Runnable() {
             @Override
             public void run() {
                 drawObject();
             }
         });
-    }
-
-    @Override
-    public Object getObject() {
-        return this.cgtProject;
-    }
-
-    @Override
-    public void setObject(Object obj) {
-        if (obj instanceof CGTProject)
-            this.cgtProject = (CGTProject) obj;
     }
 
     @Override
@@ -48,8 +38,8 @@ public class CGTProjectDrawable extends AbstractDrawableObject {
 
     @Override
     public void drawObject() {
-        size.setWidth(this.cgtProject.getCanvasWidth());
-        size.setHeight(this.cgtProject.getCanvasHeight());
+        size.setWidth(getObject().getCanvasWidth());
+        size.setHeight(getObject().getCanvasHeight());
         size.setFill(null);
         size.setStroke(Color.RED);
         size.setStrokeWidth(0.5);
@@ -68,6 +58,6 @@ public class CGTProjectDrawable extends AbstractDrawableObject {
 
     @Override
     public String toString() {
-        return this.cgtProject.getProjectName();
+        return getObject().getProjectName();
     }
 }

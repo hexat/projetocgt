@@ -15,12 +15,14 @@ public abstract class AbstractDrawableObject<T> implements DrawableObject<T> {
         this.drawableObjectPane = drawableObjectPane;
         this.drawableConfigurationsPane = drawableConfigurationsPane;
         this.onCreate();
+        this.onStart();
     }
 
     public AbstractDrawableObject(T object, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         this.object = object;
         this.drawableObjectPane = drawableObjectPane;
         this.drawableConfigurationsPane = drawableConfigurationsPane;
+        this.onStart();
     }
 
     public Pane getDrawableObjectPane() {

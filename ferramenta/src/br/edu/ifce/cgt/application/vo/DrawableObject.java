@@ -14,4 +14,6 @@ public interface DrawableObject<T> {
     void drawConfigurationPanel();
 
     void onCreate();
+
+    void onStart();
 }

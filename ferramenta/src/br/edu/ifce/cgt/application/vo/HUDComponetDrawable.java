@@ -14,6 +14,10 @@ public class HUDComponetDrawable extends AbstractDrawableObject {
     }
 
     @Override
+    public void onStart() {
+    }
+
+    @Override
     public Object getObject() {
         return hudComponent;
     }

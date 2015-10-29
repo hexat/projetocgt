@@ -29,8 +29,12 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
     private Draggable preview = new Draggable();
 
     public CGTButtonScreenPreview(CGTButtonScreen btn, Pane drawableObjectPane, Pane drawableConfigurationsPane){
-        super( drawableObjectPane, drawableConfigurationsPane);
+        super(drawableObjectPane, drawableConfigurationsPane);
         this.btn = btn;
+    }
+
+    @Override
+    public void onStart() {
         this.buttonPane = new ConfigButtonPreviewPane(this, new Runnable() {
             @Override
             public void run() {
@@ -48,17 +52,6 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject {
                 preview.setImage(Config.get().getImage(this.btn.getTextureUp().getFile().getFile().getName()));
         });
     }
-
-    /*@Override
-    public CGTGameObject getObject() {
-        return gameObject;
-    }
-
-    @Override
-    public void setObject(Object obj) {
-        if (obj instanceof CGTGameObject)
-            this.gameObject = (CGTGameObject) obj;
-    }*/
 
     @Override
     public void drawObject() {
