@@ -5,10 +5,7 @@ import br.edu.ifce.cgt.application.controller.dialogs.AnimationDialog;
 import br.edu.ifce.cgt.application.controller.dialogs.SpriteSheetDialog;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
-import br.edu.ifce.cgt.application.util.Config;
-import br.edu.ifce.cgt.application.util.DialogsUtil;
-import br.edu.ifce.cgt.application.util.EnumMap;
-import br.edu.ifce.cgt.application.util.Pref;
+import br.edu.ifce.cgt.application.util.*;
 import br.edu.ifce.cgt.application.vo.CGTGameObjectDrawable;
 import cgt.core.CGTAnimation;
 import cgt.core.CGTGameObject;
@@ -17,7 +14,6 @@ import cgt.game.CGTSpriteSheet;
 import cgt.policy.StatePolicy;
 import cgt.util.CGTFile;
 import cgt.util.CGTSound;
-import br.edu.ifce.cgt.application.util.SpriteSheetTile;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import javafx.beans.value.ChangeListener;
@@ -28,12 +24,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -109,15 +107,15 @@ public class GameObjectPane extends StackPane {
     @FXML
     private ComboBox<EnumMap<Animation.PlayMode>> policyCombobox;
     @FXML
-    private ComboBox<EnumMap<StatePolicy>> stateBox;
-    @FXML
-    private VBox states;
+    private FlowPane statesPane;
     @FXML
     private CheckBox vflipCheckBox;
     @FXML
     private CheckBox hflipCheckbox;
     @FXML
     private VBox animationsBox;
+    @FXML
+    private Tab animationTab;
 
     private List<EnumMap<StatePolicy>> statePolicies;
 
@@ -199,7 +197,9 @@ public class GameObjectPane extends StackPane {
         }
 
         this.statePolicies = new ArrayList<EnumMap<StatePolicy>>();
-        this.stateBox.getItems().addAll(getStates());
+
+        createStatesCheckBoxes(getStates());
+
         this.policyCombobox.getItems().addAll(getPolicies());
         this.spritesheetCombobox.getItems().setAll(Config.get().getGame().getSpriteDB().findAllId());
 
@@ -396,17 +396,16 @@ public class GameObjectPane extends StackPane {
         if (!txtPositionX.getText().equals("") && !txtPositionY.getText().equals("")) {
             int x = Integer.parseInt(txtPositionX.getText());
             int y = Integer.parseInt(txtPositionY.getText());
-            if(x >= 0 && y >= 0){/*objectDrawable.getDraggable().getFitHeight() &&
+            if (x >= 0 && y >= 0) {/*objectDrawable.getDraggable().getFitHeight() &&
                     x <= objectDrawable.getDraggable().getWidthBCKG() - objectDrawable.getDraggable().getFitWidth() &&
                     y <= objectDrawable.getDraggable().getHeightBCKG()) {*/
-                gameObject.getInitialPositions().add(new Vector2(x, y - (int)objectDrawable.getDraggable().getFitHeight()));
+                gameObject.getInitialPositions().add(new Vector2(x, y - (int) objectDrawable.getDraggable().getFitHeight()));
                 txtPositionX.clear();
                 txtPositionY.clear();
                 //System.out.printf("%d %d\n",objectDrawable.getDraggable().getFitWidth(),
-                        //objectDrawable.getDraggable().getFitHeight());
+                //objectDrawable.getDraggable().getFitHeight());
                 updateBoxPositions();
-            }
-            else{
+            } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Coordenadas fora da tela!");
                 alert.show();
@@ -508,6 +507,8 @@ public class GameObjectPane extends StackPane {
     private void updateBoxAnimation() {
         animationsBox.getChildren().clear();
         List<CGTAnimation> animationList = gameObject.getAnimations();
+        animationTab.setText("Animações (" + animationList.size() + ")");
+
         if (animationList.size() > 0) {
             ResourceBundle bundle = Pref.load().getBundle();
             for (final CGTAnimation animation : animationList) {
@@ -598,13 +599,37 @@ public class GameObjectPane extends StackPane {
         this.updateBoxAnimation();
     }
 
-    @FXML
-    public void addState() {
-        if (!stateBox.getSelectionModel().isEmpty()) {
-            EnumMap<StatePolicy> el = stateBox.getSelectionModel().getSelectedItem();
-            statePolicies.add(el);
-            stateBox.getItems().remove(el);
-            updateStates();
+    public List<EnumMap<StatePolicy>> getStates() {
+        ResourceBundle bundle = Pref.load().getBundle();
+
+        List<EnumMap<StatePolicy>> list = new ArrayList<EnumMap<StatePolicy>>();
+
+        for (StatePolicy s : StatePolicy.values()) {
+            list.add(new EnumMap<StatePolicy>(s, bundle.getString(s.name())));
+        }
+
+        return list;
+    }
+
+    private void createStatesCheckBoxes(List<EnumMap<StatePolicy>> states) {
+
+        for (EnumMap<StatePolicy> state : states) {
+            CheckBox chk = new CheckBox(state.getValue());
+            chk.setUserData(state);
+            chk.selectedProperty().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                    EnumMap<StatePolicy> statePolicy = (EnumMap<StatePolicy>) chk.getUserData();
+                    if (newValue) {
+                        statePolicies.add(statePolicy);
+                    } else {
+                        statePolicies.remove(statePolicy);
+                    }
+                }
+            });
+
+
+            this.statesPane.getChildren().add(chk);
         }
     }
 
@@ -614,40 +639,9 @@ public class GameObjectPane extends StackPane {
         this.spritesheetCombobox.getItems().setAll(Config.get().getGame().getSpriteDB().findAllId());
     }
 
-    private void updateStates() {
-        states.getChildren().clear();
-        if (statePolicies.size() > 0) {
-            for (final EnumMap<StatePolicy> s : statePolicies) {
-                ItemViewPane pane = new ItemViewPane(s.getValue());
-                pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        statePolicies.remove(s);
-                        stateBox.getItems().add(s);
-                        updateStates();
-
-                    }
-                });
-                states.getChildren().add(pane);
-            }
-        } else {
-            states.getChildren().add(new Label("Adicione pelo menos um estado."));
-        }
-    }
 
     public CGTGameObject getGameObject() {
         return gameObject;
-    }
-
-    public List<EnumMap<StatePolicy>> getStates() {
-        ResourceBundle bundle = Pref.load().getBundle();
-
-        List<EnumMap<StatePolicy>> list = new ArrayList<EnumMap<StatePolicy>>();
-
-        for (StatePolicy s : StatePolicy.values()) {
-            list.add(new EnumMap<StatePolicy>(s, bundle.getString(s.name())));
-        }
-        return list;
     }
 
     public List<EnumMap<Animation.PlayMode>> getPolicies() {
@@ -730,34 +724,34 @@ public class GameObjectPane extends StackPane {
         this.vflipCheckBox.setSelected(animation.isFlipVertical());
 
         Iterator<StatePolicy> itr = animation.getStatesIterator();
-        boolean found;
 
         while (itr.hasNext()) {
             StatePolicy item = itr.next();
-            found = false;
 
-            for (i = 0; i < this.stateBox.getItems().size() && !found; i++) {
+            for (Node node : this.statesPane.getChildren()) {
+                CheckBox chkBox = (CheckBox) node;
+                EnumMap<StatePolicy> enumMap = (EnumMap<StatePolicy>) chkBox.getUserData();
 
-                if (this.stateBox.getItems().get(i).getKey() == item) {
-                    found = true;
-                    statePolicies.add(this.stateBox.getItems().get(i));
-                    this.stateBox.getItems().remove(i);
+                if (enumMap.getKey().equals(item)) {
+                    chkBox.setSelected(true);
+                    break;
                 }
             }
         }
-
-        this.updateStates();
     }
 
-    public IntegerTextField getPositionX(){
+    public IntegerTextField getPositionX() {
         return txtPositionX;
     }
-    public IntegerTextField getPositionY(){
+
+    public IntegerTextField getPositionY() {
         return txtPositionY;
     }
-    public FloatTextField getBoundsW(){
+
+    public FloatTextField getBoundsW() {
         return txtBoundsW;
     }
+
     public FloatTextField getBoundsH() {
         return txtBoundsH;
     }
