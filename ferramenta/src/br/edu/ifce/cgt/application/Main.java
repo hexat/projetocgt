@@ -14,6 +14,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 

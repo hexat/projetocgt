@@ -29,11 +29,11 @@ public class ItemEditPane extends BorderPane {
 
         btnEdit = new Button();
         btnEdit.setFont(fontAwesome);
-        btnEdit.setText(AwesomeIcons.ICON_EDIT);
+        btnEdit.setText(AwesomeIcons.EDIT.toString());
 
         btnExcluir = new Button();
         btnExcluir.setFont(fontAwesome);
-        btnExcluir.setText(AwesomeIcons.ICON_REMOVE);
+        btnExcluir.setText(AwesomeIcons.TRASH.toString());
 
         buttons.getChildren().setAll(btnEdit, btnExcluir);
         setRight(buttons);

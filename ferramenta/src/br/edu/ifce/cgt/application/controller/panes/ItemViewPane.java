@@ -26,7 +26,7 @@ public class ItemViewPane extends BorderPane {
 
         this.btnDelete = new Button();
         this.btnDelete.setFont(fontAwesome);
-        this.btnDelete.setText(AwesomeIcons.ICON_REMOVE);
+        this.btnDelete.setText(AwesomeIcons.TRASH.toString());
 
         setRight(btnDelete);
     }
