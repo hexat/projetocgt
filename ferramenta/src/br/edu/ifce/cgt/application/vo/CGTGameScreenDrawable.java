@@ -46,8 +46,10 @@ public class CGTGameScreenDrawable extends AbstractDrawableObject<CGTScreen> {
     public void drawObject() {
         if (getObject().getBackground() != null) {
             ImageView img = new ImageView(Config.get().getImage(getObject().getBackground().getFile()));
-            getDrawableObjectPane().getChildren().clear();
-            getDrawableObjectPane().getChildren().add(img);
+            img.setOnMouseClicked(e->{
+                System.out.println("hkgkjhkjh");
+            });
+            super.updateDrawPane(img);
         }
     }
 

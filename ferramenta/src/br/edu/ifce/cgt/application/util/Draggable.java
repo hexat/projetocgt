@@ -2,12 +2,13 @@ package br.edu.ifce.cgt.application.util;
 
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.controller.ui.IntegerTextField;
+import cgt.hud.CGTButtonScreen;
 import cgt.hud.HUDComponent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
-//import java.awt.*;
+import java.awt.*;
 
 
 /**
@@ -26,18 +27,21 @@ public class Draggable extends ImageView {
         super(img);
     }
 
-    public Draggable(FloatTextField X, FloatTextField Y, HUDComponent btn) {//CGTButtonScreen
+    public Draggable(FloatTextField X, FloatTextField Y, HUDComponent hud) {//CGTButtonScreen
         super();
+
         this.setOnMouseDragged(event -> {
+            System.out.printf("%f %f %f %f\n",event.getX(),event.getY(),widthBCKG,heightBCKG);
             if (this.getFitWidth() + event.getX() < widthBCKG &&
                     this.getFitHeight() + event.getY() < heightBCKG &&
                     event.getX() > 0 && event.getY() > 0) {
+
                 this.setX(event.getX());
                 this.setY(event.getY());
                 X.setValue(event.getX() / widthBCKG);
                 Y.setValue(1 - (event.getY()) / heightBCKG);
-                btn.setRelativeX(X.getValue());
-                btn.setRelativeY(Y.getValue() - (float) (getFitHeight() / getHeightBCKG()));
+                hud.setRelativeX(X.getValue());
+                hud.setRelativeY(Y.getValue() - (float) (getFitHeight() / getHeightBCKG()));
             }
         });
     }

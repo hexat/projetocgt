@@ -396,20 +396,18 @@ public class GameObjectPane extends StackPane {
         if (!txtPositionX.getText().equals("") && !txtPositionY.getText().equals("")) {
             int x = Integer.parseInt(txtPositionX.getText());
             int y = Integer.parseInt(txtPositionY.getText());
-            if (x >= 0 && y >= 0) {/*objectDrawable.getDraggable().getFitHeight() &&
+            /*if (x >= 0 && y >= 0) {objectDrawable.getDraggable().getFitHeight() &&
                     x <= objectDrawable.getDraggable().getWidthBCKG() - objectDrawable.getDraggable().getFitWidth() &&
                     y <= objectDrawable.getDraggable().getHeightBCKG()) {*/
                 gameObject.getInitialPositions().add(new Vector2(x, y - (int) objectDrawable.getDraggable().getFitHeight()));
                 txtPositionX.clear();
                 txtPositionY.clear();
-                //System.out.printf("%d %d\n",objectDrawable.getDraggable().getFitWidth(),
-                //objectDrawable.getDraggable().getFitHeight());
                 updateBoxPositions();
-            } else {
+            /*} else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setContentText("Coordenadas fora da tela!");
                 alert.show();
-            }
+            }*/
             if (onUpdateRunnable != null) {
                 onUpdateRunnable.run();
             }
@@ -420,7 +418,13 @@ public class GameObjectPane extends StackPane {
         boxPositions.getChildren().clear();
         if (gameObject.getInitialPositions().size() > 0) {
             for (final Vector2 v : gameObject.getInitialPositions()) {
-                ItemViewPane pane = new ItemViewPane(v.toString());
+                //Operação necessária para mostrar coordenada y corretamente
+                String vector = v.toString();
+                String concat = vector.substring(vector.indexOf(':') + 1, vector.length() - 1);
+                float y = Float.parseFloat(concat) + 100.0f;
+                String newY = vector.substring(0,vector.indexOf(':') + 1).concat(String.valueOf(y)) + ']';
+                //Fim da operação
+                ItemViewPane pane = new ItemViewPane(newY);
                 pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {

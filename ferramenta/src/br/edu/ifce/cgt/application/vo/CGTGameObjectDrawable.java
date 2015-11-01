@@ -30,11 +30,13 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
 
     public CGTGameObjectDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(drawableObjectPane, drawableConfigurationsPane);
+        this.preview = new Draggable(gameObjectTitledPane.getPositionX(), gameObjectTitledPane.getPositionY(), bounds, collision);
     }
 
     public CGTGameObjectDrawable(T gameObject, String worldName, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(gameObject, drawableObjectPane, drawableConfigurationsPane);
         setWorldName(worldName);
+        this.preview = new Draggable(gameObjectTitledPane.getPositionX(), gameObjectTitledPane.getPositionY(), bounds, collision);
     }
 
     @Override
@@ -47,7 +49,6 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
         });
         this.bounds = new Rectangle(getObject().getBounds().getWidth(), getObject().getBounds().getHeight());
         this.collision = new Rectangle(getObject().getCollision().getWidth(), getObject().getCollision().getHeight());
-        this.preview = new Draggable(gameObjectTitledPane.getPositionX(), gameObjectTitledPane.getPositionY(), bounds, collision);
     }
 
     @Override
@@ -69,13 +70,6 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
         collision.setStroke(Color.YELLOW);
         collision.setStrokeWidth(0.8);
 
-        /*if (getObject().getPosition() != null) {
-            bounds.setX(getObject().getPosition().x);
-            bounds.setY(getObject().getPosition().y);
-            collision.setX(getObject().getPosition().x);
-            collision.setY(getObject().getPosition().y);
-        }*/
-
         super.updateDrawPane(bounds);
         super.updateDrawPane(collision);
 
@@ -89,12 +83,7 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
             Image[] images = Config.get().splitImage(img, cgtSpriteSheet.getColumns(), cgtSpriteSheet.getRows(), actorWidth, actorHeight);
             preview.setImage(images[images.length / 2]);
             setSizeObject();
-            //preview.setX(getObject().getPosition().x);
-            //preview.setY(getObject().getPosition().y + preview.getFitHeight());
-            //getObject().setPosition(new Vector2(getObject().getPosition().x,
-            //getObject().getPosition().y + gameObjectTitledPane.getBoundsH().getValue()/2));// + gameObjectTitledPane.getBoundsH().getValue())
             super.updateDrawPane(preview);
-            //getObject().setPosition(null);
         }
     }
 

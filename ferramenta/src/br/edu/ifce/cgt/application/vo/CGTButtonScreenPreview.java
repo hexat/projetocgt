@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
 
+import javafx.scene.image.ImageView;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,28 +25,28 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject<CGTButtonScre
     private String name;
     private String screenName;
     private ConfigButtonPreviewPane buttonPane;
+    //private ImageView preview;
     private Draggable preview = new Draggable();
 
     public CGTButtonScreenPreview(Pane drawableObjectPane, Pane drawableConfigurationsPane){
         super(drawableObjectPane, drawableConfigurationsPane);
+        setObject(new CGTButtonScreen());
+        preview = new Draggable(buttonPane.getRelX(), buttonPane.getRelY(), getObject());
+        preview.setOnMouseEntered(E->{
+            if (!buttonPane.getTextPress().getText().isEmpty())
+                preview.setImage(Config.get().getImage(getObject().getTextureDown().getFile().getFile().getName()));
+        });
+        preview.setOnMouseExited(e -> {
+            if (!buttonPane.getTextUp().getText().isEmpty())
+                preview.setImage(Config.get().getImage(getObject().getTextureUp().getFile().getFile().getName()));
+        });
     }
 
     public CGTButtonScreenPreview(CGTButtonScreen object, String screenName, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(object, drawableObjectPane, drawableConfigurationsPane);
         this.screenName = screenName;
         name = "-> " + object.getWindowId();
-    }
-
-    @Override
-    public void onStart() {
-        this.buttonPane = new ConfigButtonPreviewPane(this, new Runnable() {
-            @Override
-            public void run() {
-                drawObject();
-            }
-        });
         preview = new Draggable(buttonPane.getRelX(), buttonPane.getRelY(), getObject());
-
         preview.setOnMouseEntered(E->{
             if (!buttonPane.getTextPress().getText().isEmpty())
                 preview.setImage(Config.get().getImage(getObject().getTextureDown().getFile().getFile().getName()));
@@ -57,11 +58,24 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject<CGTButtonScre
     }
 
     @Override
+    public void onStart() {
+        this.buttonPane = new ConfigButtonPreviewPane(this, new Runnable() {
+            @Override
+            public void run() {
+                drawObject();
+            }
+        });
+
+
+
+    }
+
+    @Override
     public void drawObject() {
+
         if(!buttonPane.getTextUp().getText().isEmpty() && buttonPane.getRelX().getValue() >= 0 &&
                 buttonPane.getRelY().getValue() >= 0 && buttonPane.getWRel().getValue() > 0
                 && buttonPane.getHRel().getValue() > 0){
-
             setSizeButton();
 
             super.updateDrawPane(preview);
