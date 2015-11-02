@@ -17,6 +17,7 @@ public class CGTGameActorDrawable extends CGTGameObjectDrawable<CGTActor> {
 
     public CGTGameActorDrawable(CGTActor gameObject, String worldName, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(gameObject, worldName, drawableObjectPane, drawableConfigurationsPane);
+        super.getObjectPane().getAccordionRoot().getPanes().add(actorTitledPane);
     }
 
     @Override
