@@ -15,7 +15,7 @@ public class EnemyGroupLifeBar extends LifeBar {
 	private List<String> enemiesIds;
 
 	public EnemyGroupLifeBar() {
-		this.worldId = null;
+		setWorld(null);
 		enemiesList = null;
 		enemiesIds = new ArrayList<String>();
 	}

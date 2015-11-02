@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import br.edu.ifce.cgt.application.controller.ui.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<fx:root alignment="CENTER_LEFT" type="javafx.scene.layout.StackPane" xmlns="http://javafx.com/javafx/8"
-         xmlns:fx="http://javafx.com/fxml/1">
+
+<fx:root alignment="CENTER_LEFT" type="javafx.scene.layout.StackPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Accordion fx:id="accordionRoot">
             <panes>
@@ -15,61 +16,61 @@
                             <children>
                                 <Label style="-fx-font-weight: bold" text="Vida do objeto">
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </Label>
                                 <GridPane hgap="5.0" vgap="5.0">
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES"/>
-                                        <ColumnConstraints hgrow="SOMETIMES"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" />
+                                        <ColumnConstraints hgrow="SOMETIMES" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints vgrow="SOMETIMES"/>
-                                        <RowConstraints vgrow="SOMETIMES"/>
+                                        <RowConstraints vgrow="SOMETIMES" />
+                                        <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Label fx:id="labLife" text="Inicial"/>
-                                        <IntegerTextField fx:id="txtLife" GridPane.columnIndex="1"/>
-                                        <Label fx:id="labMaxLife" text="Total" GridPane.rowIndex="1"/>
-                                        <IntegerTextField fx:id="txtMaxLife" GridPane.columnIndex="1"
-                                                          GridPane.rowIndex="1"/>
+                                        <Label fx:id="labLife" text="Inicial" GridPane.rowIndex="2" />
+                                        <IntegerTextField fx:id="txtLife" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Label fx:id="labMaxLife" prefHeight="17.0" prefWidth="35.0" text="Total" />
+                                        <IntegerTextField fx:id="txtMaxLife" GridPane.columnIndex="1" />
                                     </children>
                                     <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </padding>
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </GridPane>
                                 <Label style="-fx-font-weight: bold" text="Posições iniciais">
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </Label>
                                 <HBox>
                                     <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </padding>
                                     <children>
-                                        <IntegerTextField fx:id="txtPositionX" promptText="X"/>
-                                        <IntegerTextField fx:id="txtPositionY" promptText="Y"/>
-                                        <Button mnemonicParsing="false" onAction="#addInitialPosition" text="+"/>
+                                        <IntegerTextField fx:id="txtPositionX" promptText="X" />
+                                        <IntegerTextField fx:id="txtPositionY" promptText="Y" />
+                                        <Button mnemonicParsing="false" onAction="#addInitialPosition" text="+" />
                                     </children>
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </HBox>
                                 <VBox fx:id="boxPositions" alignment="CENTER">
                                     <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </padding>
                                 </VBox>
                                 <Label style="-fx-font-weight: bold" text="Velocidade">
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </Label>
-                                <IntegerTextField fx:id="txtVelocidade"/>
+                                <IntegerTextField fx:id="txtVelocidade" />
                             </children>
                         </VBox>
                     </content>
@@ -86,54 +87,39 @@
                                                     <children>
                                                         <GridPane hgap="10.0" vgap="10.0">
                                                             <columnConstraints>
-                                                                <ColumnConstraints hgrow="ALWAYS"/>
-                                                                <ColumnConstraints hgrow="ALWAYS"/>
-                                                                <ColumnConstraints/>
+                                                                <ColumnConstraints hgrow="ALWAYS" />
+                                                                <ColumnConstraints hgrow="ALWAYS" />
+                                                                <ColumnConstraints />
                                                             </columnConstraints>
                                                             <rowConstraints>
-                                                                <RowConstraints vgrow="ALWAYS"/>
-                                                                <RowConstraints vgrow="ALWAYS"/>
-                                                                <RowConstraints/>
+                                                                <RowConstraints vgrow="ALWAYS" />
+                                                                <RowConstraints vgrow="ALWAYS" />
+                                                                <RowConstraints />
                                                             </rowConstraints>
                                                             <children>
-                                                                <ComboBox fx:id="spritesheetCombobox"
-                                                                          prefWidth="150.0"/>
-                                                                <Button mnemonicParsing="false"
-                                                                        onAction="#addSpriteSheet" text="Adicionar"
-                                                                        GridPane.columnIndex="1"/>
+                                                                <ComboBox fx:id="spritesheetCombobox" prefWidth="150.0" />
+                                                                <Button mnemonicParsing="false" onAction="#addSpriteSheet" text="Adicionar" GridPane.columnIndex="1" />
 
-                                                                <ToggleButton fx:id="initialFrameButton"
-                                                                              text="Frame inicial"
-                                                                              GridPane.rowIndex="1"/>
-                                                                <Label fx:id="initialFrameLabel"
-                                                                       text="Clique para escolher o frame."
-                                                                       GridPane.columnIndex="1" GridPane.columnSpan="2"
-                                                                       GridPane.rowIndex="1"/>
+                                                                <ToggleButton fx:id="initialFrameButton" text="Frame inicial" GridPane.rowIndex="1" />
+                                                                <Label fx:id="initialFrameLabel" text="Clique para escolher o frame." GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
 
-                                                                <ToggleButton fx:id="finalFrameButton"
-                                                                              text="Frame final" GridPane.rowIndex="2"/>
-                                                                <Label fx:id="finalFrameLabel"
-                                                                       text="Clique para escolher um frame."
-                                                                       GridPane.columnIndex="1" GridPane.columnSpan="2"
-                                                                       GridPane.rowIndex="2"/>
+                                                                <ToggleButton fx:id="finalFrameButton" text="Frame final" GridPane.rowIndex="2" />
+                                                                <Label fx:id="finalFrameLabel" text="Clique para escolher um frame." GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                                                             </children>
                                                             <VBox.margin>
-                                                                <Insets bottom="10.0" left="10.0" right="10.0"
-                                                                        top="10.0"/>
+                                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                             </VBox.margin>
                                                         </GridPane>
                                                         <ScrollPane>
                                                             <content>
                                                                 <StackPane fx:id="spritePreview">
                                                                     <VBox.margin>
-                                                                        <Insets bottom="10.0" left="10.0" right="10.0"
-                                                                                top="10.0"/>
+                                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                                     </VBox.margin>
                                                                 </StackPane>
                                                             </content>
                                                             <VBox.margin>
-                                                                <Insets bottom="10.0" left="10.0" right="10.0"
-                                                                        top="10.0"/>
+                                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                             </VBox.margin>
                                                         </ScrollPane>
                                                     </children>
@@ -146,59 +132,46 @@
                                                     <children>
                                                         <GridPane hgap="10.0" vgap="10.0">
                                                             <columnConstraints>
-                                                                <ColumnConstraints hgrow="SOMETIMES"/>
-                                                                <ColumnConstraints hgrow="SOMETIMES"/>
+                                                                <ColumnConstraints hgrow="SOMETIMES" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" />
                                                             </columnConstraints>
                                                             <rowConstraints>
-                                                                <RowConstraints vgrow="SOMETIMES"/>
-                                                                <RowConstraints/>
-                                                                <RowConstraints/>
+                                                                <RowConstraints vgrow="SOMETIMES" />
+                                                                <RowConstraints />
+                                                                <RowConstraints />
                                                             </rowConstraints>
                                                             <children>
-                                                                <Label text="Velocidade"/>
-                                                                <FloatTextField fx:id="speedField"
-                                                                                promptText="Velocidade da animação..."
-                                                                                GridPane.columnIndex="1"/>
-                                                                <Label text="Política" GridPane.rowIndex="1"/>
-                                                                <ComboBox fx:id="policyCombobox"
-                                                                          promptText="Selecione uma política..."
-                                                                          GridPane.columnIndex="1"
-                                                                          GridPane.rowIndex="1"/>
-                                                                <CheckBox fx:id="vflipCheckBox" mnemonicParsing="false"
-                                                                          text="Flip vertical" GridPane.rowIndex="2"/>
-                                                                <CheckBox fx:id="hflipCheckbox" mnemonicParsing="false"
-                                                                          text="Flip horizontal"
-                                                                          GridPane.columnIndex="1"
-                                                                          GridPane.rowIndex="2"/>
+                                                                <Label text="Velocidade" />
+                                                                <FloatTextField fx:id="speedField" promptText="Velocidade da animação..." GridPane.columnIndex="1" />
+                                                                <Label text="Política" GridPane.rowIndex="1" />
+                                                                <ComboBox fx:id="policyCombobox" promptText="Selecione uma política..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                <CheckBox fx:id="vflipCheckBox" mnemonicParsing="false" text="Flip vertical" GridPane.rowIndex="2" />
+                                                                <CheckBox fx:id="hflipCheckbox" mnemonicParsing="false" text="Flip horizontal" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                             </children>
                                                             <VBox.margin>
-                                                                <Insets bottom="10.0" left="10.0" right="10.0"
-                                                                        top="10.0"/>
+                                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                             </VBox.margin>
                                                         </GridPane>
 
                                                         <Label text="Estados da animação">
                                                             <VBox.margin>
-                                                                <Insets bottom="5.0" left="10.0" right="10.0"
-                                                                        top="10.0"/>
+                                                                <Insets bottom="5.0" left="10.0" right="10.0" top="10.0" />
                                                             </VBox.margin>
                                                         </Label>
 
                                                         <ScrollPane prefHeight="149.0" prefWidth="210.0">
                                                             <content>
-                                                                <FlowPane fx:id="statesPane" vgap="10" hgap="10" prefWrapLength="200">
+                                                                <FlowPane fx:id="statesPane" hgap="10" prefWrapLength="200" vgap="10">
                                                                     <children>
 
                                                                     </children>
                                                                 </FlowPane>
                                                             </content>
                                                             <VBox.margin>
-                                                                <Insets bottom="10.0" left="10.0" right="10.0"
-                                                                        top="10.0"/>
+                                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                             </VBox.margin>
                                                             <padding>
-                                                                <Insets bottom="10.0" left="10.0" right="10.0"
-                                                                        top="10.0"/>
+                                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                             </padding>
                                                         </ScrollPane>
                                                     </children>
@@ -211,12 +184,12 @@
                                                     <content>
                                                         <VBox fx:id="animationsBox" alignment="CENTER">
                                                             <children>
-                                                                <Label text="Nenhuma animação"/>
+                                                                <Label text="Nenhuma animação" />
                                                             </children>
                                                         </VBox>
                                                     </content>
                                                     <padding>
-                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                     </padding>
                                                 </ScrollPane>
                                             </content>
@@ -225,10 +198,10 @@
                                 </TabPane>
                                 <Button mnemonicParsing="false" onAction="#addObjAnimation" text="Salvar animação">
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                     <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </padding>
                                 </Button>
                             </children>
@@ -241,60 +214,56 @@
                             <children>
                                 <Label style="-fx-font-weight: bold" text="Dimensões">
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </Label>
                                 <GridPane alignment="CENTER_LEFT" hgap="5.0" vgap="5.0">
                                     <columnConstraints>
-                                        <ColumnConstraints/>
-                                        <ColumnConstraints/>
+                                        <ColumnConstraints />
+                                        <ColumnConstraints />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints/>
-                                        <RowConstraints/>
+                                        <RowConstraints />
+                                        <RowConstraints />
                                     </rowConstraints>
                                     <children>
-                                        <Label text="Largura"/>
-                                        <FloatTextField fx:id="txtBoundsW" GridPane.columnIndex="1"/>
-                                        <Label text="Altura" GridPane.rowIndex="1"/>
-                                        <FloatTextField fx:id="txtBoundsH" GridPane.columnIndex="1"
-                                                        GridPane.rowIndex="1"/>
+                                        <Label text="Largura" />
+                                        <FloatTextField fx:id="txtBoundsW" GridPane.columnIndex="1" />
+                                        <Label text="Altura" GridPane.rowIndex="1" />
+                                        <FloatTextField fx:id="txtBoundsH" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     </children>
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </GridPane>
                                 <Label style="-fx-font-weight: bold" text="Colisão" GridPane.rowIndex="3">
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </Label>
                                 <GridPane alignment="CENTER_LEFT" hgap="5.0" vgap="5.0">
                                     <columnConstraints>
-                                        <ColumnConstraints/>
-                                        <ColumnConstraints/>
+                                        <ColumnConstraints />
+                                        <ColumnConstraints />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints/>
-                                        <RowConstraints/>
-                                        <RowConstraints/>
-                                        <RowConstraints/>
+                                        <RowConstraints />
+                                        <RowConstraints />
+                                        <RowConstraints />
+                                        <RowConstraints />
                                     </rowConstraints>
                                     <children>
-                                        <Label text="X"/>
-                                        <IntegerTextField fx:id="txtColisionX" GridPane.columnIndex="1"/>
-                                        <Label text="Y" GridPane.rowIndex="1"/>
-                                        <IntegerTextField fx:id="txtColisionY" GridPane.columnIndex="1"
-                                                          GridPane.rowIndex="1"/>
-                                        <Label text="Largura" GridPane.rowIndex="2"/>
-                                        <FloatTextField fx:id="txtColisionW" GridPane.columnIndex="1"
-                                                        GridPane.rowIndex="2"/>
-                                        <Label text="Altura" GridPane.rowIndex="3"/>
-                                        <FloatTextField fx:id="txtColisionH" GridPane.columnIndex="1"
-                                                        GridPane.rowIndex="3"/>
+                                        <Label text="X" />
+                                        <IntegerTextField fx:id="txtColisionX" GridPane.columnIndex="1" />
+                                        <Label text="Y" GridPane.rowIndex="1" />
+                                        <IntegerTextField fx:id="txtColisionY" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Label text="Largura" GridPane.rowIndex="2" />
+                                        <FloatTextField fx:id="txtColisionW" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Label text="Altura" GridPane.rowIndex="3" />
+                                        <FloatTextField fx:id="txtColisionH" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     </children>
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </GridPane>
                             </children>
@@ -307,53 +276,51 @@
                             <children>
                                 <Label style="-fx-font-weight: bold" text="Som do objeto">
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </Label>
                                 <HBox>
                                     <children>
-                                        <TextField fx:id="txtSound"/>
-                                        <Button mnemonicParsing="false" onAction="#setSoundObject" text="..."/>
+                                        <TextField fx:id="txtSound" />
+                                        <Button mnemonicParsing="false" onAction="#setSoundObject" text="..." />
                                     </children>
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </HBox>
 
-                                <Button mnemonicParsing="false" onAction="#addSoundCollision"
-                                        text="Adicionar som de colisão">
+                                <Button mnemonicParsing="false" onAction="#addSoundCollision" text="Adicionar som de colisão">
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </Button>
 
                                 <VBox fx:id="boxSoundColision">
                                     <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </padding>
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </VBox>
 
-                                <Button mnemonicParsing="false" onAction="#addSoundDie"
-                                        text="Adiconar som de eliminação">
+                                <Button mnemonicParsing="false" onAction="#addSoundDie" text="Adiconar som de eliminação">
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </Button>
                                 <VBox fx:id="boxSoundDie">
                                     <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </padding>
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </VBox.margin>
                                 </VBox>
 
                             </children>
                             <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                             </padding>
                         </VBox>
                     </content>

@@ -65,9 +65,6 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject<CGTButtonScre
                 drawObject();
             }
         });
-
-
-
     }
 
     @Override

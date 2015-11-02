@@ -4,6 +4,8 @@ import cgt.hud.HUDComponent;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 
+/*Provavelmente inútil*/
+
 public class HUDComponetDrawable extends AbstractDrawableObject {
 
     private HUDComponent hudComponent;

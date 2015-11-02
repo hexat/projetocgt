@@ -1,6 +1,7 @@
 package cgt.hud;
 
 import cgt.core.CGTGameObject;
+import cgt.game.CGTGameWorld;
 import cgt.game.LifeBar;
 
 public class IndividualLifeBar extends LifeBar {
@@ -33,7 +34,6 @@ public class IndividualLifeBar extends LifeBar {
         }
     }
 
-
     public void setOwner(String label) {
         this.ownerId = label;
     }
@@ -47,4 +47,6 @@ public class IndividualLifeBar extends LifeBar {
     public String getOwnerId() {
         return ownerId;
     }
+
+    public CGTGameObject getObject(){ return this.object; }
 }

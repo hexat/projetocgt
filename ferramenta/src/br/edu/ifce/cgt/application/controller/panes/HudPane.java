@@ -102,4 +102,10 @@ public class HudPane extends GridPane {
             }
         }
     }
+
+    public FloatTextField getRelX(){ return this.txtRelX; }
+    public FloatTextField getRelY(){ return this.txtRelY; }
+    public FloatTextField getWRel(){ return this.txtWid; }
+    public FloatTextField getHRel(){ return this.txtHei; }
+
 }

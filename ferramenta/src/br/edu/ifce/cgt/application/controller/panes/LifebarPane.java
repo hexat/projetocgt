@@ -91,4 +91,6 @@ public class LifebarPane extends VBox {
             }
         }
     }
+
+    public HudPane getHudPane(){ return this.hudPane; }
 }

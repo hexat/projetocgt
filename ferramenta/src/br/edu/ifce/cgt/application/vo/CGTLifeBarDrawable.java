@@ -1,8 +1,10 @@
 package br.edu.ifce.cgt.application.vo;
 
+import br.edu.ifce.cgt.application.controller.panes.ConfigLifePane;
 import br.edu.ifce.cgt.application.controller.titleds.IndividualLifeBarTitledPane;
 import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.Draggable;
+import cgt.core.CGTGameObject;
 import cgt.game.CGTGameWorld;
 import cgt.hud.IndividualLifeBar;
 import javafx.application.Platform;
@@ -22,83 +24,30 @@ import java.util.Optional;
 public class CGTLifeBarDrawable extends AbstractDrawableObject {
 
     private IndividualLifeBar life;
-    //private ConfigLifePane lifePane;
-    private IndividualLifeBarTitledPane lifePane;
+    private ConfigLifePane lifePane;
+    //private IndividualLifeBarTitledPane lifePane;
     private Draggable preview = new Draggable();
 
     public CGTLifeBarDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane){
         super(drawableObjectPane,drawableConfigurationsPane);
-        /*this.lifePane = new ConfigLifePane(this, new Runnable() {
-            @Override
-            public void run() {
-                drawObject();
-            }
-        });*/
-
-        //preview = new Draggable(lifePane.getRelX(), lifePane.getRelY(),this.life);
-
+        /*preview = new Draggable(lifePane.getLifeBarPane().getHudPane().getRelX(),
+                lifePane.getLifeBarPane().getHudPane().getRelY(),this.life);*/
+        preview = new Draggable(lifePane.getRelX(), lifePane.getRelY(),this.life);
     }
 
     @Override
     public void drawObject() {
+        if(!lifePane.getTextBar().getText().isEmpty() && lifePane.getRelX().getValue() >= 0 &&
+                lifePane.getRelY().getValue() >= 0 && lifePane.getWRel().getValue() > 0
+                && lifePane.getHRel().getValue() > 0){
+            setSizeLife();
 
+            super.updateDrawPane(preview);
+        }
     }
 
     @Override
     public void onCreate() {
-
-        /*TextField LName = new TextField();
-        Label AskNameL = new Label("Nome da barra de vida");
-        Label AskNameW = new Label("Qual o mundo?");
-        Label AskNameO = new Label("Qual o objeto?");
-        Label warning = new Label("O mundo e o objeto devem ser escolhidos!");
-        warning.setVisible(false);
-
-        ComboBox<String> worldCombobox = new ComboBox<>();
-        List<CGTGameWorld> worlds = Config.get().getGame().getWorlds();
-        worlds.stream().forEach(w -> worldCombobox.getItems().add(w.getId()));
-        ComboBox<String> objectCombobox = new ComboBox<>();
-
-        worldCombobox.setOnAction(e->{
-            objectCombobox.getItems().clear();
-            objectCombobox.getItems().addAll(Config.get().getGame().getWorld(worldCombobox.getValue()).getObjectIds());
-        });
-
-        Button ok = new Button("OK");
-        Button cancel = new Button("Cancelar");
-
-        HBox HName = new HBox(20.5);
-        HName.getChildren().addAll(AskNameL,LName);
-        HBox HWorld = new HBox(20.5);
-        HWorld.getChildren().addAll(AskNameW,worldCombobox);
-        HBox HObject = new HBox(20.5);
-        HObject.getChildren().addAll(AskNameO,objectCombobox);
-        HBox HButton = new HBox(20.5);
-        HButton.getChildren().addAll(ok,cancel);
-
-
-        VBox ask = new VBox(20.0);
-        ask.getChildren().addAll(HName,HWorld,HObject,HButton,warning);
-
-        Stage stage = new Stage();
-        stage.setTitle("Criando barra de vida");
-        ok.setOnAction(e->{
-            String id = LName.getText();
-            String world = worldCombobox.getValue();
-            String object = objectCombobox.getValue();
-
-            if(!id.isEmpty() && !world.isEmpty() && !object.isEmpty()) {
-                this.life = new IndividualLifeBar(id);
-                this.life.setOwner(object);
-                stage.close();
-            }
-            else
-                warning.setVisible(true);
-        });
-
-        cancel.setOnAction(e -> stage.close());
-        stage.setScene(new Scene(ask));
-        stage.show();*/
 
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Barra de vida");
@@ -150,14 +99,27 @@ public class CGTLifeBarDrawable extends AbstractDrawableObject {
             String object = result.get().getValue();
             this.life = new IndividualLifeBar(id);
             this.life.setOwner(object);
-            //IndividualLifeBar lifeBar = new IndividualLifeBar();
-
+            this.life.setName(id);
+            CGTGameObject res = null;
+            for (CGTGameWorld w : Config.get().getGame().getWorlds() ) {
+                res = w.getObjectByLabel(object);
+                if (res != null) {
+                    Config.get().getGame().getWorld(w.getId()).addLifeBar(getLife());
+                    //Sem o break todos os mundos com objetos de mesmo nome receberão lifeBar?
+                }
+            }
         }
     }
 
     @Override
     public void onStart() {
-        this.lifePane = new IndividualLifeBarTitledPane(life);
+        //this.lifePane = new IndividualLifeBarTitledPane(life);
+        this.lifePane = new ConfigLifePane(this, new Runnable() {
+            @Override
+            public void run() {
+                drawObject();
+            }
+        });
     }
 
     @Override
@@ -176,10 +138,30 @@ public class CGTLifeBarDrawable extends AbstractDrawableObject {
         return this.preview;
     }
 
-    /*@Override
+    @Override
     public String toString() {
-        return this.life.getId();
-    }*/
+        return this.life.getName();
+    }
+
+    public void setSizeLife(){
+        preview.setWidthBCKG(
+                Config.get().getImage(Config.get().getGame().getWorld(getLife().getWorld().getId()).
+                        getBackground().getFile().getFile().getName()).getWidth()
+        );
+        preview.setHeightBCKG(
+                Config.get().getImage(Config.get().getGame().getWorld(getLife().getWorld().getId()).
+                        getBackground().getFile().getFile().getName()).getHeight()
+        );
+        preview.setFitWidth(lifePane.getWRel().getValue() * preview.getWidthBCKG());
+        preview.setFitHeight(lifePane.getHRel().getValue() * preview.getHeightBCKG());
+        preview.setFitWidth(lifePane.getWRel().getValue() * preview.getWidthBCKG());
+        preview.setFitHeight(lifePane.getHRel().getValue() * preview.getHeightBCKG());
+        getLife().setRelativeHeight(lifePane.getHRel().getValue());
+        getLife().setRelativeWidth(lifePane.getWRel().getValue());
+        getLife().setRelativeX(lifePane.getRelX().getValue());
+        getLife().setRelativeY(lifePane.getRelY().getValue() -
+                (float) (preview.getFitHeight() / preview.getHeightBCKG()));
+    }
 
     @Override
     public boolean destroy() {

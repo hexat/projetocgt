@@ -33,7 +33,7 @@ public class ConfigLifePane extends Accordion {
     @FXML
     private TextField textBar;
     @FXML
-    private TextField textBack;
+    private TextField textback;
     @FXML
     private FloatTextField HRel;
     @FXML
@@ -183,6 +183,7 @@ public class ConfigLifePane extends Accordion {
             Image img = Config.get().getImage(life.getLife().getBar().getFile().getFile().getName());
             life.getDraggable().setImage(img);
             path = chosenFile.getName();
+            life.getLife().setBar(new CGTTexture(Config.get().createImg(chosenFile)));
         }
 
         textBar.setText(path);
@@ -198,9 +199,10 @@ public class ConfigLifePane extends Accordion {
         if (chosenFile != null) {
             life.getLife().setBackgroundBar(new CGTTexture(Config.get().createImg(chosenFile)));
             path = chosenFile.getName();
+            life.getLife().setBackgroundBar(new CGTTexture(Config.get().createImg(chosenFile)));
         }
 
-        textBack.setText(path);
+        textback.setText(path);
 
         if (onUpdateRunnable != null)
             onUpdateRunnable.run();
@@ -210,7 +212,7 @@ public class ConfigLifePane extends Accordion {
         return this.textBar;
     }
     public TextField getTextBack(){
-        return this.textBack;
+        return this.textback;
     }
     public FloatTextField getRelX(){
         return this.RelX;

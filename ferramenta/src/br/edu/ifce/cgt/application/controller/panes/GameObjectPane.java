@@ -421,10 +421,10 @@ public class GameObjectPane extends StackPane {
                 //Operação necessária para mostrar coordenada y corretamente
                 String vector = v.toString();
                 String concat = vector.substring(vector.indexOf(':') + 1, vector.length() - 1);
-                float y = Float.parseFloat(concat) + (float) objectDrawable.getDraggable().getFitHeight();
-                String newY = vector.substring(0,vector.indexOf(':') + 1).concat(String.valueOf(y)) + ']';
+                //float y = Float.parseFloat(concat) + (float) objectDrawable.getDraggable().getFitHeight();
+                //String newY = vector.substring(0,vector.indexOf(':') + 1).concat(String.valueOf(y)) + ']';
                 //Fim da operação
-                ItemViewPane pane = new ItemViewPane(newY);
+                ItemViewPane pane = new ItemViewPane(vector);
                 pane.getDeleteButton().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {

@@ -56,6 +56,10 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
         return gameObjectTitledPane;
     }
 
+    public GameObjectPane getObjectPane(){
+        return gameObjectTitledPane;
+    }
+
     @Override
     public void drawObject() {
         bounds.setWidth(getObject().getBounds().getWidth());
@@ -82,6 +86,14 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
             Image img = Config.get().getImage(urlToFile);
             Image[] images = Config.get().splitImage(img, cgtSpriteSheet.getColumns(), cgtSpriteSheet.getRows(), actorWidth, actorHeight);
             preview.setImage(images[images.length / 2]);
+            if(getObjectPane().getGameObject().getInitialPositions() != null &&
+                    getObjectPane().getPositionX().getText().equals("") &&
+                    getObjectPane().getPositionY().getText().equals("")) {
+                float x = getObjectPane().getGameObject().getInitialPositions().get(0).x;
+                float y = getObjectPane().getGameObject().getInitialPositions().get(0).y;
+                preview.setX(x);
+                preview.setY(preview.getHeightBCKG() - y);
+            }
             setSizeObject();
             super.updateDrawPane(preview);
         }

@@ -79,4 +79,6 @@ public class IndividualLifeBarTitledPane extends TitledPane {
         scroll.setFitToWidth(true);
         setContent(scroll);
     }
+
+    public LifebarPane getLifeBarPane(){ return this.lifeBarPane; }
 }
