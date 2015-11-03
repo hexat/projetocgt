@@ -22,10 +22,12 @@ public class CGTGameEnemyDrawable extends CGTGameObjectDrawable<CGTEnemy> {
 
     public CGTGameEnemyDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(drawableObjectPane, drawableConfigurationsPane);
+        super.getObjectPane().getAccordionRoot().getPanes().add(enemyTitledPane);
     }
 
     public CGTGameEnemyDrawable(CGTEnemy gameObject, String worldName, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(gameObject, worldName, drawableObjectPane, drawableConfigurationsPane);
+        super.getObjectPane().getAccordionRoot().getPanes().add(enemyTitledPane);
     }
 
     @Override
