@@ -23,20 +23,22 @@ import java.util.Optional;
 public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends AbstractDrawableObject<T> {
     private GameObjectPane gameObjectTitledPane;
     private String worldName;
-    private String gameObjectId;
+    //private String gameObjectId;
     private Rectangle bounds;
     private Rectangle collision;
     private Draggable preview = new Draggable();
 
     public CGTGameObjectDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(drawableObjectPane, drawableConfigurationsPane);
-        this.preview = new Draggable(gameObjectTitledPane.getPositionX(), gameObjectTitledPane.getPositionY(), bounds, collision);
+        this.preview = new Draggable(gameObjectTitledPane.getPositionX(), gameObjectTitledPane.getPositionY(),
+                bounds, collision, gameObjectTitledPane.getColisionX(), gameObjectTitledPane.getColisionY());
     }
 
     public CGTGameObjectDrawable(T gameObject, String worldName, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(gameObject, drawableObjectPane, drawableConfigurationsPane);
         setWorldName(worldName);
-        this.preview = new Draggable(gameObjectTitledPane.getPositionX(), gameObjectTitledPane.getPositionY(), bounds, collision);
+        this.preview = new Draggable(gameObjectTitledPane.getPositionX(), gameObjectTitledPane.getPositionY(),
+                bounds, collision, gameObjectTitledPane.getColisionX(), gameObjectTitledPane.getColisionY());
     }
 
     @Override
@@ -81,18 +83,15 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
         int actorHeight = (int) getObject().getBounds().getHeight();
 
         if (!getObject().getAnimations().isEmpty() && actorWidth > 0 && actorHeight > 0) {
-            CGTSpriteSheet cgtSpriteSheet = getObject().getAnimations().get(0).getSpriteSheet();
-            String urlToFile = cgtSpriteSheet.getTexture().getFile().getFile().getName();
-            Image img = Config.get().getImage(urlToFile);
-            Image[] images = Config.get().splitImage(img, cgtSpriteSheet.getColumns(), cgtSpriteSheet.getRows(), actorWidth, actorHeight);
-            preview.setImage(images[images.length / 2]);
+            preview.setImage(getObjectPane().getInitialTile().getImage());//images[images.length / 2]);
             if(getObjectPane().getGameObject().getInitialPositions() != null &&
+                    getObjectPane().getGameObject().getInitialPositions().size() == 1 &&
                     getObjectPane().getPositionX().getText().equals("") &&
                     getObjectPane().getPositionY().getText().equals("")) {
                 float x = getObjectPane().getGameObject().getInitialPositions().get(0).x;
                 float y = getObjectPane().getGameObject().getInitialPositions().get(0).y;
                 preview.setX(x);
-                preview.setY(preview.getHeightBCKG() - y);
+                preview.setY(preview.getHeightBCKG() - y - preview.getFitHeight());
             }
             setSizeObject();
             super.updateDrawPane(preview);
@@ -169,9 +168,9 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
         return worldName;
     }
 
-    public String getGameObjectId() {
+    /*public String getGameObjectId() {
         return gameObjectId;
-    }
+    }*/
 
     public Draggable getDraggable() {
         return this.preview;

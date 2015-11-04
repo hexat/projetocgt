@@ -89,7 +89,7 @@ public class ConfigLifePane extends Accordion {
             }
         });
 
-        if (life.getObject() != null) {
+        if (life.getLife() != null) {
             choices.getSelectionModel().select(life.getLife().getOwnerId());
         }
         RelX.focusedProperty().addListener(new ChangeListener<Boolean>() {

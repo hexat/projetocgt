@@ -60,12 +60,25 @@ public class Draggable extends ImageView {
         });
     }
 
-    public Draggable(IntegerTextField X, IntegerTextField Y, Rectangle a, Rectangle b) {
-        this(X, Y);
+    public Draggable(IntegerTextField X, IntegerTextField Y, Rectangle a,
+                     Rectangle b, IntegerTextField sX, IntegerTextField sY) {
+        //this(X, Y);
+        super();
+        this.setOnMouseDragged(event -> {
+            if (this.getFitWidth() + event.getX() < widthBCKG &&
+                    this.getFitHeight() + event.getY() < heightBCKG &&
+                    event.getX() > 0 && event.getY() > 0) {
+                this.setX(event.getX());
+                this.setY(event.getY());
+                b.setX(event.getX() + sX.getValue());
+                b.setY(event.getY() + sY.getValue());
+                X.setValue((int) event.getX());
+                Y.setValue((int) heightBCKG - (int) event.getY());// + (float) this.prefHeight().getFitHeight());
+            }
+        });
         a.xProperty().bind(this.xProperty());
         a.yProperty().bind(this.yProperty());
-        b.xProperty().bind(this.xProperty());
-        b.yProperty().bind(this.yProperty());
+
     }
 
     public void setWidthBCKG(double w) {
