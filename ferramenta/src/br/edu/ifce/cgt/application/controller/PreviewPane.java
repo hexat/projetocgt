@@ -121,12 +121,8 @@ public class PreviewPane extends BorderPane {
             }
         });
 
-
         ContextMenu treeMenu = new ContextMenu();
-        treeMenu.getItems().
-
-                addAll(deleteItem);
-
+        treeMenu.getItems().addAll(deleteItem);
         tree.setContextMenu(treeMenu);
     }
 
@@ -146,7 +142,6 @@ public class PreviewPane extends BorderPane {
             Pref.load().addRecentProject(file.getAbsolutePath());
             Pref.load().save();
             updateRecent();
-
             open(file);
         }
     }
@@ -162,8 +157,6 @@ public class PreviewPane extends BorderPane {
             alert.showAndWait();
             return;
         }
-
-//        TabPane tabFerramenta = (TabPane) Main.getApp().getScene().lookup("#tabFerramenta");
 
         Main.getApp().setTitle(open.getName());
         updateTree();
@@ -267,7 +260,6 @@ public class PreviewPane extends BorderPane {
     @FXML
     public void exit() {
         Main.getApp().getOnCloseRequest().handle(new WindowEvent(Main.getApp(), WindowEvent.WINDOW_CLOSE_REQUEST));
-
         Main.getApp().close();
     }
 
@@ -345,8 +337,7 @@ public class PreviewPane extends BorderPane {
             this.tree.getRoot().getChildren().add(screenTreeItem);
             this.rootItem.getConfig().getComboBox().getItems().add(screenDrawable.toString());
         } else {
-            System.out.println("desistiu");
-            //Config.get().getGame().removeScreen(screenDrawable.getObject());
+
         }
     }
 

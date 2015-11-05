@@ -8,6 +8,9 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
+
+import java.util.Optional;
 
 public class CGTGameBonusDrawable extends  CGTGameObjectDrawable {
 
@@ -45,7 +48,14 @@ public class CGTGameBonusDrawable extends  CGTGameObjectDrawable {
 
     @Override
     public void onCreate() {
+        Optional<Pair<String, String>> result = showGameObjectDialog();
 
+        if (result.isPresent()) {
+            String id = result.get().getKey();
+            String worldName = result.get().getValue();
+            setObject(new CGTBonus(id));
+            setWorldName(worldName);
+        }
     }
 
     @Override

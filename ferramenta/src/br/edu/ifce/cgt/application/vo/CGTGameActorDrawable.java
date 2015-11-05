@@ -1,12 +1,20 @@
 package br.edu.ifce.cgt.application.vo;
 
 import br.edu.ifce.cgt.application.controller.titleds.ActorTitledPane;
+import br.edu.ifce.cgt.application.util.Config;
 import cgt.core.CGTActor;
+import cgt.core.CGTEnemy;
+import cgt.game.CGTGameWorld;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Pair;
+
+import java.util.List;
+import java.util.Optional;
 
 public class CGTGameActorDrawable extends CGTGameObjectDrawable<CGTActor> {
     private ActorTitledPane actorTitledPane;
@@ -33,9 +41,13 @@ public class CGTGameActorDrawable extends CGTGameObjectDrawable<CGTActor> {
 
     @Override
     public void onCreate() {
-        String pair = showInputIdDialog();
-        if (pair != null) {
-            setObject(new CGTActor(pair));
+        Optional<Pair<String, String>> result = showGameObjectDialog();
+
+        if (result.isPresent()) {
+            String id = result.get().getKey();
+            String worldName = result.get().getValue();
+            setObject(new CGTActor(id));
+            setWorldName(worldName);
         }
     }
 

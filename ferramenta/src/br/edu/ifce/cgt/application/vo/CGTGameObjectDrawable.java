@@ -104,63 +104,6 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
         super.updateConfigPane(gameObjectTitledPane.getAccordionRoot());
     }
 
-    @Override
-    public abstract void onCreate();
-
-    public String showInputIdDialog() {
-        Dialog<Pair<String, String>> dialog = new Dialog<>();
-        dialog.setTitle("Criar objeto");
-        dialog.setHeaderText("Criação de um objeto do jogo");
-
-        ButtonType createButtonType = new ButtonType("Criar", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(createButtonType, ButtonType.CANCEL);
-
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
-
-        TextField name = new TextField();
-        name.setPromptText("Nome do objeto");
-        ComboBox<String> worldCombobox = new ComboBox<>();
-        List<CGTGameWorld> worlds = Config.get().getGame().getWorlds();
-        worlds.stream().forEach(w -> worldCombobox.getItems().add(w.getId()));
-        worldCombobox.getSelectionModel().select(0);
-
-        grid.add(new Label("Nome do objeto:"), 0, 0);
-        grid.add(name, 1, 0);
-        grid.add(new Label("Mundo:"), 0, 1);
-        grid.add(worldCombobox, 1, 1);
-
-        Node loginButton = dialog.getDialogPane().lookupButton(createButtonType);
-        loginButton.setDisable(true);
-
-        name.textProperty().addListener((observable, oldValue, newValue) -> {
-            loginButton.setDisable(newValue.trim().isEmpty());
-        });
-
-        dialog.getDialogPane().setContent(grid);
-        Platform.runLater(() -> name.requestFocus());
-
-        dialog.setResultConverter(dialogButton -> {
-            String objName = name.getText();
-            String worldName = worldCombobox.getSelectionModel().getSelectedItem();
-
-            if (dialogButton == createButtonType && !"".equals(objName) && !"".equals(worldName)) {
-                return new Pair<>(objName, worldName);
-            }
-            return null;
-        });
-
-        Optional<Pair<String, String>> result = dialog.showAndWait();
-
-        if (result.isPresent()) {
-            worldName = result.get().getValue();
-            return result.get().getKey();
-        }
-        return null;
-    }
-
     public void setWorldName(String worldName) {
         this.worldName = worldName;
     }
@@ -194,5 +137,53 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
     @Override
     public boolean destroy() {
         return Config.get().getGame().getWorld(worldName).removeObject(getObject());
+    }
+
+    public Optional<Pair<String, String>> showGameObjectDialog() {
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setTitle("Criar objeto");
+        dialog.setHeaderText("Criação de um objeto do jogo");
+
+        ButtonType createButtonType = new ButtonType("Criar", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(createButtonType, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField name = new TextField();
+        name.setPromptText("Nome");
+        ComboBox<String> worldCombobox = new ComboBox<>();
+        List<CGTGameWorld> worlds = Config.get().getGame().getWorlds();
+        worlds.stream().forEach(w -> worldCombobox.getItems().add(w.getId()));
+        worldCombobox.getSelectionModel().select(0);
+
+        grid.add(new Label("Nome:"), 0, 0);
+        grid.add(name, 1, 0);
+        grid.add(new Label("Mundo:"), 0, 1);
+        grid.add(worldCombobox, 1, 1);
+
+        Node loginButton = dialog.getDialogPane().lookupButton(createButtonType);
+        loginButton.setDisable(true);
+
+        name.textProperty().addListener((observable, oldValue, newValue) -> {
+            loginButton.setDisable(newValue.trim().isEmpty());
+        });
+
+        dialog.getDialogPane().setContent(grid);
+        Platform.runLater(() -> name.requestFocus());
+
+        dialog.setResultConverter(dialogButton -> {
+            String objName = name.getText();
+            String worldName = worldCombobox.getSelectionModel().getSelectedItem();
+
+            if (dialogButton == createButtonType && !"".equals(objName) && !"".equals(worldName)) {
+                return new Pair<>(objName, worldName);
+            }
+            return null;
+        });
+
+        return dialog.showAndWait();
     }
 }
