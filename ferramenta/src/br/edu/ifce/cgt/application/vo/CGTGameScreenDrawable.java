@@ -1,14 +1,11 @@
 package br.edu.ifce.cgt.application.vo;
 
-import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.panes.ConfigScreenPreviewPane;
 import br.edu.ifce.cgt.application.util.Config;
 import cgt.game.CGTScreen;
-import javafx.collections.ObservableArray;
 import javafx.scene.Node;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 import java.util.Optional;
@@ -46,7 +43,7 @@ public class CGTGameScreenDrawable extends AbstractDrawableObject<CGTScreen> {
     public void drawObject() {
         if (getObject().getBackground() != null) {
             ImageView img = new ImageView(Config.get().getImage(getObject().getBackground().getFile()));
-            img.setOnMouseClicked(e->{
+            img.setOnMouseClicked(e -> {
                 System.out.println("hkgkjhkjh");
             });
             super.updateDrawPane(img);
@@ -65,7 +62,7 @@ public class CGTGameScreenDrawable extends AbstractDrawableObject<CGTScreen> {
         dialog.setContentText("Digite um nome para a tela:");
 
         Optional<String> result = dialog.showAndWait();
-        if (result.isPresent()){
+        if (result.isPresent()) {
             String id = result.get().trim();
             setObject(Config.get().getGame().createScreen(id));
             //screenPane.getTxtScreenId().setText(id);

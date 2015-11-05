@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?scenebuilder-stylesheet ../css/main.css?>
-<?import java.lang.*?>
+
 <?import br.edu.ifce.cgt.application.controller.ui.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<fx:root stylesheets="/css/main.css" type="javafx.scene.layout.StackPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root stylesheets="/css/main.css" type="javafx.scene.layout.StackPane" xmlns="http://javafx.com/javafx/8"
+         xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Accordion>
             <panes>
@@ -15,55 +15,57 @@
                     <content>
                         <VBox>
                             <children>
-
                                 <Label text="Nome">
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                     </VBox.margin>
                                 </Label>
                                 <TextField fx:id="worldTextField" editable="false">
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                     </VBox.margin>
                                 </TextField>
 
 
                                 <Label text="Plano de fundo">
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                     </VBox.margin>
                                 </Label>
                                 <HBox alignment="CENTER_LEFT">
                                     <children>
                                         <TextField fx:id="backgroundTextField" alignment="CENTER" editable="false">
                                             <HBox.margin>
-                                                <Insets />
+                                                <Insets/>
                                             </HBox.margin>
                                         </TextField>
-                                        <Button fx:id="selectBackgroundButton" mnemonicParsing="false" onAction="#selectBackground" styleClass="awesome-button" text="" HBox.hgrow="ALWAYS" />
+                                        <Button fx:id="selectBackgroundButton" mnemonicParsing="false"
+                                                onAction="#selectBackground" styleClass="awesome-button" text=""
+                                                HBox.hgrow="ALWAYS"/>
                                     </children>
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                     </VBox.margin>
                                 </HBox>
 
                                 <Label text="Música">
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                     </VBox.margin>
                                 </Label>
                                 <HBox alignment="CENTER_LEFT">
                                     <children>
-                                        <TextField fx:id="musicTextField" alignment="CENTER" editable="false" />
-                                        <Button fx:id="selectMusic" mnemonicParsing="false" onAction="#selectMusic" styleClass="awesome-button" text="" HBox.hgrow="ALWAYS" />
+                                        <TextField fx:id="musicTextField" alignment="CENTER" editable="false"/>
+                                        <Button fx:id="selectMusic" mnemonicParsing="false" onAction="#selectMusic"
+                                                styleClass="awesome-button" text="" HBox.hgrow="ALWAYS"/>
                                     </children>
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                     </VBox.margin>
                                 </HBox>
                             </children>
                             <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </padding>
                         </VBox>
                     </content>
@@ -74,23 +76,29 @@
                             <children>
                                 <GridPane hgap="20.0" vgap="20.0">
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="ALWAYS" />
-                                        <ColumnConstraints hgrow="ALWAYS" />
+                                        <ColumnConstraints hgrow="ALWAYS"/>
+                                        <ColumnConstraints hgrow="ALWAYS"/>
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints vgrow="SOMETIMES" />
-                                        <RowConstraints vgrow="SOMETIMES" />
-                                        <RowConstraints vgrow="SOMETIMES" />
+                                        <RowConstraints vgrow="SOMETIMES"/>
+                                        <RowConstraints vgrow="SOMETIMES"/>
+                                        <RowConstraints vgrow="SOMETIMES"/>
                                     </rowConstraints>
                                     <children>
-                                        <CheckBox fx:id="killEnemiesCheckbox" mnemonicParsing="false" text="Eliminar os inimigos" />
-                                        <CheckBox fx:id="surviveCheckbox" mnemonicParsing="false" text="Sobreviver" GridPane.columnIndex="1" />
-                                        <CheckBox fx:id="getBonusCheckbox" mnemonicParsing="false" text="Pegar bônus" GridPane.rowIndex="1" />
-                                        <CheckBox fx:id="completeCrossingCheckbox" mnemonicParsing="false" text="Completar percurso" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                        <CheckBox fx:id="targetScoreCheckbox" mnemonicParsing="false" text="Atingir pontuação" GridPane.rowIndex="2" />
+                                        <CheckBox fx:id="killEnemiesCheckbox" mnemonicParsing="false"
+                                                  text="Eliminar os inimigos"/>
+                                        <CheckBox fx:id="surviveCheckbox" mnemonicParsing="false" text="Sobreviver"
+                                                  GridPane.columnIndex="1"/>
+                                        <CheckBox fx:id="getBonusCheckbox" mnemonicParsing="false" text="Pegar bônus"
+                                                  GridPane.rowIndex="1"/>
+                                        <CheckBox fx:id="completeCrossingCheckbox" mnemonicParsing="false"
+                                                  text="Completar percurso" GridPane.columnIndex="1"
+                                                  GridPane.rowIndex="1"/>
+                                        <CheckBox fx:id="targetScoreCheckbox" mnemonicParsing="false"
+                                                  text="Atingir pontuação" GridPane.rowIndex="2"/>
                                     </children>
                                     <padding>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                                     </padding>
                                 </GridPane>
 
@@ -98,17 +106,17 @@
                                     <children>
                                         <Label text="Mensagem da vitória">
                                             <HBox.margin>
-                                                <Insets bottom="5.0" left="5.0" right="20.0" top="5.0" />
+                                                <Insets bottom="5.0" left="5.0" right="20.0" top="5.0"/>
                                             </HBox.margin>
                                         </Label>
-                                        <Button mnemonicParsing="false" onAction="#configWinDialog" text="Configurar" />
-                                        <Button fx:id="removeWinDialogButton" mnemonicParsing="false" text="Remover" />
+                                        <Button mnemonicParsing="false" onAction="#configWinDialog" text="Configurar"/>
+                                        <Button fx:id="removeWinDialogButton" mnemonicParsing="false" text="Remover"/>
                                     </children>
                                     <VBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                     </VBox.margin>
                                     <padding>
-                                        <Insets top="5.0" />
+                                        <Insets top="5.0"/>
                                     </padding>
                                 </HBox>
 
@@ -122,29 +130,30 @@
                             <children>
                                 <GridPane hgap="10.0" vgap="10.0">
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="ALWAYS" />
-                                        <ColumnConstraints hgrow="ALWAYS" />
+                                        <ColumnConstraints hgrow="ALWAYS"/>
+                                        <ColumnConstraints hgrow="ALWAYS"/>
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints vgrow="SOMETIMES" />
+                                        <RowConstraints vgrow="SOMETIMES"/>
                                     </rowConstraints>
                                     <children>
-                                        <CheckBox fx:id="actorDeadCheckbox" mnemonicParsing="false" text="Ator morrer" />
-                                        <CheckBox fx:id="targetTimeCheckbox" mnemonicParsing="false" text="Contagem regressiva" GridPane.columnIndex="1" />
+                                        <CheckBox fx:id="actorDeadCheckbox" mnemonicParsing="false" text="Ator morrer"/>
+                                        <CheckBox fx:id="targetTimeCheckbox" mnemonicParsing="false"
+                                                  text="Contagem regressiva" GridPane.columnIndex="1"/>
                                     </children>
                                     <padding>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                                     </padding>
                                 </GridPane>
                                 <HBox alignment="CENTER_LEFT">
                                     <children>
                                         <Label text="Mensagem da derrota">
                                             <HBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
+                                                <Insets bottom="10.0" left="10.0" right="20.0" top="10.0"/>
                                             </HBox.margin>
                                         </Label>
-                                        <Button mnemonicParsing="false" onAction="#configLoseDialog" text="Configurar" />
-                                        <Button fx:id="removeLoseDialogButton" mnemonicParsing="false" text="Remover" />
+                                        <Button mnemonicParsing="false" onAction="#configLoseDialog" text="Configurar"/>
+                                        <Button fx:id="removeLoseDialogButton" mnemonicParsing="false" text="Remover"/>
                                     </children>
                                 </HBox>
                             </children>
@@ -158,15 +167,16 @@
                         <HBox alignment="CENTER" GridPane.columnIndex="1">
                             <children>
                                 <Label text="Mensagem da pausa">
-                           <HBox.margin>
-                              <Insets right="20.0" />
-                           </HBox.margin></Label>
-                                <Button mnemonicParsing="false" onAction="#configPauseDialog" text="Configurar" />
-                                <Button fx:id="removePauseDialogButton" mnemonicParsing="false" text="Remover" />
+                                    <HBox.margin>
+                                        <Insets right="20.0"/>
+                                    </HBox.margin>
+                                </Label>
+                                <Button mnemonicParsing="false" onAction="#configPauseDialog" text="Configurar"/>
+                                <Button fx:id="removePauseDialogButton" mnemonicParsing="false" text="Remover"/>
                             </children>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                            </padding>
                         </HBox>
 
                     </content>
@@ -175,37 +185,38 @@
                     <content>
                         <GridPane hgap="10.0" vgap="10.0">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" />
-                                <ColumnConstraints hgrow="SOMETIMES" />
-                                <ColumnConstraints hgrow="SOMETIMES" />
+                                <ColumnConstraints hgrow="SOMETIMES"/>
+                                <ColumnConstraints hgrow="SOMETIMES"/>
+                                <ColumnConstraints hgrow="SOMETIMES"/>
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints vgrow="SOMETIMES" />
-                                <RowConstraints vgrow="SOMETIMES" />
+                                <RowConstraints vgrow="SOMETIMES"/>
+                                <RowConstraints vgrow="SOMETIMES"/>
+                                <RowConstraints vgrow="SOMETIMES"/>
+                                <RowConstraints vgrow="SOMETIMES"/>
+                                <RowConstraints vgrow="SOMETIMES"/>
+                                <RowConstraints vgrow="SOMETIMES"/>
                             </rowConstraints>
                             <children>
-                                <Label text="Modo de Jogo" />
-                                <Label text="Tamanho Inicial" GridPane.rowIndex="1" />
-                                <Label text="Tamanho Fechado" GridPane.rowIndex="2" />
-                                <Label text="Tamanho Aberto" GridPane.rowIndex="3" />
-                                <Label text="Escala" GridPane.rowIndex="4" />
-                                <Label text="Volume em Camera Cheia" GridPane.rowIndex="5" />
-                                <ComboBox fx:id="boxGameMode" GridPane.columnIndex="1" GridPane.columnSpan="2" />
-                                <FloatTextField fx:id="txtInitialWidth" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <FloatTextField fx:id="txtInitialHeight" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                <FloatTextField fx:id="txtCloseWidth" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <FloatTextField fx:id="txtCloseHeight" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                <FloatTextField fx:id="txtFullWidth" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <FloatTextField fx:id="txtFullHeight" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                <FloatTextField fx:id="txtScale" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                <FloatTextField fx:id="txtVolumeFull" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                <Label text="Modo de Jogo"/>
+                                <Label text="Tamanho Inicial" GridPane.rowIndex="1"/>
+                                <Label text="Tamanho Fechado" GridPane.rowIndex="2"/>
+                                <Label text="Tamanho Aberto" GridPane.rowIndex="3"/>
+                                <Label text="Escala" GridPane.rowIndex="4"/>
+                                <Label text="Volume em Camera Cheia" GridPane.rowIndex="5"/>
+                                <ComboBox fx:id="boxGameMode" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+                                <FloatTextField fx:id="txtInitialWidth" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                <FloatTextField fx:id="txtInitialHeight" GridPane.columnIndex="2"
+                                                GridPane.rowIndex="1"/>
+                                <FloatTextField fx:id="txtCloseWidth" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                <FloatTextField fx:id="txtCloseHeight" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                                <FloatTextField fx:id="txtFullWidth" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                <FloatTextField fx:id="txtFullHeight" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+                                <FloatTextField fx:id="txtScale" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                                <FloatTextField fx:id="txtVolumeFull" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
                             </children>
                             <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                             </padding>
                         </GridPane>
                     </content>

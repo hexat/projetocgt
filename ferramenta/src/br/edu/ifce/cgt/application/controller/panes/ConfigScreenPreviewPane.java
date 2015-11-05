@@ -15,6 +15,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
@@ -23,7 +24,7 @@ import java.io.IOException;
 /**
  * Created by Edy Junior on 15/09/2015.
  */
-public class ConfigScreenPreviewPane extends AnchorPane {
+public class ConfigScreenPreviewPane extends StackPane {
     @FXML
     public TextField txtSound;
     @FXML
@@ -41,7 +42,7 @@ public class ConfigScreenPreviewPane extends AnchorPane {
         xml2.setRoot(this);
 
         try {
-            xml2.load();
+             xml2.load();
         } catch (IOException e) {
             e.printStackTrace();
         }

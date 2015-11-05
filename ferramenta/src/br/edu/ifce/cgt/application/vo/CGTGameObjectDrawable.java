@@ -23,7 +23,6 @@ import java.util.Optional;
 public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends AbstractDrawableObject<T> {
     private GameObjectPane gameObjectTitledPane;
     private String worldName;
-    //private String gameObjectId;
     private Rectangle bounds;
     private Rectangle collision;
     private Draggable preview = new Draggable();
@@ -83,7 +82,8 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
         int actorHeight = (int) getObject().getBounds().getHeight();
 
         if (!getObject().getAnimations().isEmpty() && actorWidth > 0 && actorHeight > 0) {
-            preview.setImage(getObjectPane().getInitialTile().getImage());//images[images.length / 2]);
+            preview.setImage(getObjectPane().getInitialTile().getImage());
+
             if(getObjectPane().getGameObject().getInitialPositions() != null &&
                     getObjectPane().getGameObject().getInitialPositions().size() == 1 &&
                     getObjectPane().getPositionX().getText().equals("") &&
@@ -93,6 +93,7 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
                 preview.setX(x);
                 preview.setY(preview.getHeightBCKG() - y - preview.getFitHeight());
             }
+
             setSizeObject();
             super.updateDrawPane(preview);
         }
@@ -167,10 +168,6 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
     public String getWorldName() {
         return worldName;
     }
-
-    /*public String getGameObjectId() {
-        return gameObjectId;
-    }*/
 
     public Draggable getDraggable() {
         return this.preview;
