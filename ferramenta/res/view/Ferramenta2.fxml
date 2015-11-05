@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="900.0"
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="600.0" minWidth="1000.0"
          type="javafx.scene.layout.BorderPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <MenuBar>
@@ -85,13 +85,7 @@
                                                             shortcut="UP"/>
                                     </accelerator>
                                 </MenuItem>
-                                <MenuItem fx:id="addScreenMenuItem" mnemonicParsing="false" onAction="#addScreen"
-                                          text="Tela">
-                                    <accelerator>
-                                        <KeyCodeCombination alt="DOWN" code="T" control="UP" meta="UP" shift="UP"
-                                                            shortcut="UP"/>
-                                    </accelerator>
-                                </MenuItem>
+
                                 <MenuItem fx:id="addEnemyMenuItem" mnemonicParsing="false" onAction="#addEnemy"
                                           text="Inimigo">
                                     <accelerator>
@@ -121,8 +115,20 @@
                                 <MenuItem fx:id="addEnemyLifeBarMenuitem" mnemonicParsing="false"
                                           onAction="#addEnemyLifeBar" text="Informação da vida de inimigos"/>
                                 <SeparatorMenuItem mnemonicParsing="false"/>
+                                <MenuItem fx:id="addScreenMenuItem" mnemonicParsing="false" onAction="#addScreen"
+                                          text="Tela">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="DOWN" code="T" control="UP" meta="UP" shift="UP"
+                                                            shortcut="UP"/>
+                                    </accelerator>
+                                </MenuItem>
                                 <MenuItem fx:id="addButtonScreenMenuItem" mnemonicParsing="false"
-                                          onAction="#addButtonScreen" text="Botão de tela"/>
+                                          onAction="#addButtonScreen" text="Botão de tela">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="DOWN" code="E" control="UP" meta="UP" shift="UP"
+                                                            shortcut="UP"/>
+                                    </accelerator>
+                                </MenuItem>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Spritesheet">
@@ -162,10 +168,10 @@
             <items>
                 <ScrollPane>
                     <content>
-                        <AnchorPane fx:id="drawableObjectPane"/>
+                        <AnchorPane fx:id="drawableObjectPane" prefWidth="100" prefHeight="100"/>
                     </content>
                 </ScrollPane>
-                <SplitPane dividerPositions="0.4" orientation="VERTICAL">
+                <SplitPane dividerPositions="0.5" orientation="VERTICAL">
                     <items>
                         <TreeView fx:id="tree"/>
                         <StackPane fx:id="drawableConfigurationsPane"/>

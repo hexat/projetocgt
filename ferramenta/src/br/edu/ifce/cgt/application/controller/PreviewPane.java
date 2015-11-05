@@ -15,9 +15,7 @@ import cgt.core.CGTGameObject;
 import cgt.game.CGTGame;
 import cgt.game.CGTGameWorld;
 import cgt.game.CGTScreen;
-import cgt.game.LifeBar;
 import cgt.hud.CGTButtonScreen;
-import cgt.hud.IndividualLifeBar;
 import cgt.util.CGTError;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,7 +25,6 @@ import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.WindowEvent;
@@ -95,11 +92,9 @@ public class PreviewPane extends BorderPane {
             public void handle(KeyEvent event) {
                 TreeItem<DrawableObject> selectedItem = tree.getSelectionModel().getSelectedItem();
 
-                if ( selectedItem != null )
-                {
-                    if ( event.getCode().equals( KeyCode.DELETE ) )
-                    {
-                        if (selectedItem .getValue().destroy()) {
+                if (selectedItem != null) {
+                    if (event.getCode().equals(KeyCode.DELETE)) {
+                        if (selectedItem.getValue().destroy()) {
                             selectedItem.getParent().getChildren().remove(selectedItem);
                         }
                     }
@@ -111,6 +106,28 @@ public class PreviewPane extends BorderPane {
         TreeItem<DrawableObject> root = new TreeItem<>(rootItem);
         root.setExpanded(true);
         tree.setRoot(root);
+
+        MenuItem deleteItem = new MenuItem("Remover");
+        deleteItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                TreeItem<DrawableObject> selectedItem = tree.getSelectionModel().getSelectedItem();
+
+                if (selectedItem != null) {
+                    if (selectedItem.getValue().destroy()) {
+                        selectedItem.getParent().getChildren().remove(selectedItem);
+                    }
+                }
+            }
+        });
+
+
+        ContextMenu treeMenu = new ContextMenu();
+        treeMenu.getItems().
+
+                addAll(deleteItem);
+
+        tree.setContextMenu(treeMenu);
     }
 
     @FXML
@@ -323,12 +340,11 @@ public class PreviewPane extends BorderPane {
     @FXML
     public void addScreen() {
         DrawableObject<CGTScreen> screenDrawable = new CGTGameScreenDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
-        if(screenDrawable.getObject() != null) {
+        if (screenDrawable.getObject() != null) {
             TreeItem<DrawableObject> screenTreeItem = new TreeItem<>(screenDrawable);
             this.tree.getRoot().getChildren().add(screenTreeItem);
             this.rootItem.getConfig().getComboBox().getItems().add(screenDrawable.toString());
-        }
-        else{
+        } else {
             System.out.println("desistiu");
             //Config.get().getGame().removeScreen(screenDrawable.getObject());
         }
@@ -373,22 +389,22 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addObjectLifeBar() {
-        CGTLifeBarDrawable life = new CGTLifeBarDrawable(drawableObjectPane,drawableConfigurationsPane);
+        CGTLifeBarDrawable life = new CGTLifeBarDrawable(drawableObjectPane, drawableConfigurationsPane);
         //if(life.getLife() != null) {
-            TreeItem<DrawableObject> lifeTreeItem = new TreeItem<>(life);
-            String worldName = life.getLife().getWorld().getId();
-            String bar = life.getLife().getOwnerId();
-            TreeItem<DrawableObject> worldTreeItem = this.getWorldNode(worldName);
-            CGTGameObject go = Config.get().getGame().findObject(bar);
-            for (TreeItem<DrawableObject> a : worldTreeItem.getChildren()) {
-                if (a.getValue().getObject().equals(go))
-                    a.getChildren().add(lifeTreeItem);
-            }
-            CGTGameWorld cgtGameWorld = Config.get().getGame().getWorld(worldName);
-            cgtGameWorld.addLifeBar(life.getLife());
+        TreeItem<DrawableObject> lifeTreeItem = new TreeItem<>(life);
+        String worldName = life.getLife().getWorld().getId();
+        String bar = life.getLife().getOwnerId();
+        TreeItem<DrawableObject> worldTreeItem = this.getWorldNode(worldName);
+        CGTGameObject go = Config.get().getGame().findObject(bar);
+        for (TreeItem<DrawableObject> a : worldTreeItem.getChildren()) {
+            if (a.getValue().getObject().equals(go))
+                a.getChildren().add(lifeTreeItem);
+        }
+        CGTGameWorld cgtGameWorld = Config.get().getGame().getWorld(worldName);
+        cgtGameWorld.addLifeBar(life.getLife());
         //}
         //else
-          //  System.out.println("DesistiuNULL");
+        //  System.out.println("DesistiuNULL");
     }
 
     @FXML
