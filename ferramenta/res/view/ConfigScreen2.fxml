@@ -11,8 +11,6 @@
                     <content>
                         <VBox>
                             <children>
-
-
                                 <GridPane vgap="10.0" hgap="10.0">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES"/>
