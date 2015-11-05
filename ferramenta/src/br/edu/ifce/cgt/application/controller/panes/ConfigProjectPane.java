@@ -9,12 +9,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
-
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 
-public class ConfigProjectPane extends AnchorPane {
+public class ConfigProjectPane extends StackPane {
 
     private static final String[] projectSizes = {"1920x1080", "1366x768", "1334x750", "1280x720", "1024x768", "1136x640", "960x640", "1024x600", "800x600", "854x480", "800x480", "768x480", "640x480"};
 
@@ -63,7 +62,6 @@ public class ConfigProjectPane extends AnchorPane {
         int height = Integer.valueOf(widthHeight[1]);
         this.cgtProject.setCanvasWidth(width);
         this.cgtProject.setCanvasHeight(height);
-        //Config.get().getGame().
         this.onUpdateRunner.run();
     }
 
@@ -72,7 +70,7 @@ public class ConfigProjectPane extends AnchorPane {
         this.onUpdateRunner = onUpdateRunner;
     }
 
-    public ComboBox<String> getComboBox(){
-        return  this.firstWindow;
+    public ComboBox<String> getComboBox() {
+        return this.firstWindow;
     }
 }
