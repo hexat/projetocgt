@@ -1,6 +1,7 @@
 package br.edu.ifce.cgt.application.vo;
 
 import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeItem;
 
 public class DrawableObjectTreeCellImpl extends TreeCell<DrawableObject> {
 
@@ -13,6 +14,10 @@ public class DrawableObjectTreeCellImpl extends TreeCell<DrawableObject> {
         super.startEdit();
         getItem().drawConfigurationPanel();
         getItem().drawObject();
+
+        for (TreeItem<DrawableObject> treeItem : getTreeItem().getChildren() ) {
+            treeItem.getValue().drawObject();
+        }
     }
 
     @Override
