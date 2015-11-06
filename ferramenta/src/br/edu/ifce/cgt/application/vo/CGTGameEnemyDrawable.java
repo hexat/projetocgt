@@ -37,16 +37,6 @@ public class CGTGameEnemyDrawable extends CGTGameObjectDrawable<CGTEnemy> {
     }
 
     @Override
-    public void drawObject() {
-        super.drawObject();
-    }
-
-    @Override
-    public String toString() {
-        return getObject().getId();
-    }
-
-    @Override
     public Node getPane() {
         return this.enemyTitledPane;
     }

@@ -19,10 +19,12 @@ public class CGTGameBonusDrawable extends  CGTGameObjectDrawable {
 
     public CGTGameBonusDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(drawableObjectPane, drawableConfigurationsPane);
+        super.getObjectPane().getAccordionRoot().getPanes().add(this.pane);
     }
 
     public CGTGameBonusDrawable(CGTGameObject gameObject, String worldName, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(gameObject, worldName, drawableObjectPane, drawableConfigurationsPane);
+        super.getObjectPane().getAccordionRoot().getPanes().add(this.pane);
     }
 
     @Override
@@ -30,20 +32,6 @@ public class CGTGameBonusDrawable extends  CGTGameObjectDrawable {
         super.onStart();
         this.bonus = (CGTBonus) super.getObject();
         this.pane = new BonusTitledPane(this.bonus);
-    }
-
-    @Override
-    public void drawObject() {
-        super.drawObject();
-    }
-
-    @Override
-    public void drawConfigurationPanel() {
-        Pane paneObject = (Pane) super.getPane();
-        Accordion accordion = (Accordion) paneObject.getChildren().get(0);
-        TitledPane titledPaneActor = (TitledPane) this.getPane();
-        accordion.getPanes().add(titledPaneActor);
-        super.updateConfigPane(accordion);
     }
 
     @Override

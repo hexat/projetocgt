@@ -354,7 +354,13 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addOpponent() {
-
+        CGTGameOppositeDrawable oppositeDrawable = new CGTGameOppositeDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
+        TreeItem<DrawableObject> enemyTreeItem = new TreeItem<>(oppositeDrawable);
+        String worldName = oppositeDrawable.getWorldName();
+        TreeItem<DrawableObject> worldTreeItem = this.getWorldNode(worldName);
+        worldTreeItem.getChildren().add(enemyTreeItem);
+        CGTGameWorld cgtGameWorld = Config.get().getGame().getWorld(worldName);
+        cgtGameWorld.addEnemy((CGTEnemy) oppositeDrawable.getObject());
     }
 
     @FXML
