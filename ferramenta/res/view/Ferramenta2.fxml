@@ -100,7 +100,7 @@
                                                             shortcut="UP"/>
                                     </accelerator>
                                 </MenuItem>
-                                <MenuItem fx:id="addBulletMenuItem" mnemonicParsing="false" onAction="#addBullet"
+                                <MenuItem fx:id="addProjectileMenuItem" mnemonicParsing="false" onAction="#addProjectile"
                                           text="Projétil">
                                     <accelerator>
                                         <KeyCodeCombination alt="DOWN" code="P" control="UP" meta="UP" shift="UP"

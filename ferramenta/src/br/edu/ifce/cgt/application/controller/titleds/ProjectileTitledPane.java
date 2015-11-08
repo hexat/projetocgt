@@ -30,11 +30,13 @@ public class ProjectileTitledPane extends TitledPane {
     public IntegerTextField txtInterval;
     public FloatTextField txtAngle;
     public VBox panOrientations;
-    @FXML public VBox panGroup;
+    @FXML
+    public VBox panGroup;
 
     private CGTProjectile projectile;
 
-    @FXML private ComboBox<String> boxGroup;
+    @FXML
+    private ComboBox<String> boxGroup;
 
     public ProjectileTitledPane(CGTProjectile projectile) {
         this.projectile = projectile;
@@ -93,7 +95,7 @@ public class ProjectileTitledPane extends TitledPane {
         ProjectileOrientationDialog dialog = new ProjectileOrientationDialog();
         dialog.showAndWait();
 
-        if (dialog.getOrientation()!= null) {
+        if (dialog.getOrientation() != null) {
             projectile.addOrientation(dialog.getOrientation());
             updateOrientations();
         }
