@@ -25,7 +25,6 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject<CGTButtonScre
     private String name;
     private String screenName;
     private ConfigButtonPreviewPane buttonPane;
-    //private ImageView preview;
     private Draggable preview = new Draggable();
 
     public CGTButtonScreenPreview(Pane drawableObjectPane, Pane drawableConfigurationsPane){
@@ -155,14 +154,16 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject<CGTButtonScre
     }
 
     public void setSizeButton(){
-        preview.setWidthBCKG(
+        /*preview.setWidthBCKG(
                 Config.get().getImage(Config.get().getGame().getScreen(getScreenName()).
                         getBackground().getFile().getFile().getName()).getWidth()
         );
         preview.setHeightBCKG(
                 Config.get().getImage(Config.get().getGame().getScreen(getScreenName()).
                         getBackground().getFile().getFile().getName()).getHeight()
-        );
+        );*/
+        preview.setWidthBCKG(Config.get().getGame().getScreen(getScreenName()).getWidth());
+        preview.setHeightBCKG(Config.get().getGame().getScreen(getScreenName()).getHeight());
         preview.setFitWidth(buttonPane.getWRel().getValue() * preview.getWidthBCKG());
         preview.setFitHeight(buttonPane.getHRel().getValue() * preview.getHeightBCKG());
         getObject().setRelativeHeight(buttonPane.getHRel().getValue());

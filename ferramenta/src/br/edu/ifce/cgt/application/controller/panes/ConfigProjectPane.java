@@ -3,6 +3,8 @@ package br.edu.ifce.cgt.application.controller.panes;
 import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.util.Config;
 import cgt.core.CGTProject;
+import cgt.game.CGTGameWorld;
+import cgt.game.CGTScreen;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -60,8 +62,15 @@ public class ConfigProjectPane extends StackPane {
         String[] widthHeight = size.split("x");
         int width = Integer.valueOf(widthHeight[0]);
         int height = Integer.valueOf(widthHeight[1]);
+        //System.out.printf("%d  %d\n",width,height);
         this.cgtProject.setCanvasWidth(width);
         this.cgtProject.setCanvasHeight(height);
+        for(CGTGameWorld w : Config.get().getGame().getWorlds()) {
+            w.setHeightAndWidth(height, width);
+        }
+        for(CGTScreen s : Config.get().getGame().getScreens()) {
+            s.setHeightAndWidth(height, width);
+        }
         this.onUpdateRunner.run();
     }
 
@@ -69,6 +78,8 @@ public class ConfigProjectPane extends StackPane {
         this(cgtProject);
         this.onUpdateRunner = onUpdateRunner;
     }
+
+    public CGTProject getCgtProject(){ return this.cgtProject; }
 
     public ComboBox<String> getComboBox() {
         return this.firstWindow;

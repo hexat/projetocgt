@@ -27,11 +27,11 @@ public class Draggable extends ImageView {
         super(img);
     }
 
-    public Draggable(FloatTextField X, FloatTextField Y, HUDComponent hud) {//CGTButtonScreen
+    public Draggable(FloatTextField X, FloatTextField Y, HUDComponent hud) {
         super();
 
         this.setOnMouseDragged(event -> {
-            System.out.printf("%f %f %f %f\n",event.getX(),event.getY(),widthBCKG,heightBCKG);
+            //System.out.printf("%f %f %f %f\n",event.getX(),event.getY(),widthBCKG,heightBCKG);
             if (this.getFitWidth() + event.getX() < widthBCKG &&
                     this.getFitHeight() + event.getY() < heightBCKG &&
                     event.getX() > 0 && event.getY() > 0) {
@@ -62,7 +62,6 @@ public class Draggable extends ImageView {
 
     public Draggable(IntegerTextField X, IntegerTextField Y, Rectangle a,
                      Rectangle b, IntegerTextField sX, IntegerTextField sY) {
-        //this(X, Y);
         super();
         this.setOnMouseDragged(event -> {
             if (this.getFitWidth() + event.getX() < widthBCKG &&
@@ -97,4 +96,3 @@ public class Draggable extends ImageView {
         return heightBCKG;
     }
 }
-

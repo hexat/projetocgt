@@ -1,12 +1,11 @@
 package br.edu.ifce.cgt.application.vo;
 
+import br.edu.ifce.cgt.application.controller.panes.ConfigGroupLifePane;
 import br.edu.ifce.cgt.application.controller.panes.ConfigLifePane;
-import br.edu.ifce.cgt.application.controller.titleds.IndividualLifeBarTitledPane;
 import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.Draggable;
-import cgt.core.CGTGameObject;
 import cgt.game.CGTGameWorld;
-import cgt.hud.IndividualLifeBar;
+import cgt.hud.EnemyGroupLifeBar;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -19,15 +18,15 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Created by Edy Junior on 22/10/2015.
+ * Created by Edy Junior on 10/11/2015.
  */
-public class CGTLifeBarDrawable extends AbstractDrawableObject {
-
-    private IndividualLifeBar life;
-    private ConfigLifePane lifePane;
+public class CGTEnemyGroupLifeBarDrawable extends AbstractDrawableObject {
+    private EnemyGroupLifeBar life;
+    //private ConfigLifePane lifePane;
+    private ConfigGroupLifePane lifePane;
     private Draggable preview = new Draggable();
 
-    public CGTLifeBarDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane){
+    public CGTEnemyGroupLifeBarDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane){
         super(drawableObjectPane,drawableConfigurationsPane);
         preview = new Draggable(lifePane.getRelX(), lifePane.getRelY(),this.life);
     }
@@ -48,7 +47,7 @@ public class CGTLifeBarDrawable extends AbstractDrawableObject {
 
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Barra de vida");
-        dialog.setHeaderText("Criacao de uma barra de vida");
+        dialog.setHeaderText("Barra de vida para grupo de inimigos");
 
         ButtonType createButtonType = new ButtonType("Criar", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(createButtonType, ButtonType.CANCEL);
@@ -63,14 +62,14 @@ public class CGTLifeBarDrawable extends AbstractDrawableObject {
         ComboBox<String> worldCombobox = new ComboBox<>();
         List<CGTGameWorld> worlds = Config.get().getGame().getWorlds();
         worlds.stream().forEach(w -> worldCombobox.getItems().add(w.getId()));
-        ComboBox<String> objectsCombobox = new ComboBox<>();
-        List<String> obj = Config.get().getGame().objectIds();
-        obj.stream().forEach(w -> objectsCombobox.getItems().add(w));
+        //ComboBox<String> objectsCombobox = new ComboBox<>();
+        //List<String> obj = Config.get().getGame().objectIds();
+        //obj.stream().forEach(w -> objectsCombobox.getItems().add(w));
 
         grid.add(new Label("Nome da barra de vida:"), 0, 0);
         grid.add(lifeName, 1, 0);
-        grid.add(new Label("Objeto:"), 0, 1);
-        grid.add(objectsCombobox, 1, 1);
+        grid.add(new Label("Mundo:"), 0, 1);
+        grid.add(worldCombobox, 1, 1);
 
         Node loginButton = dialog.getDialogPane().lookupButton(createButtonType);
         loginButton.setDisable(true);
@@ -84,7 +83,7 @@ public class CGTLifeBarDrawable extends AbstractDrawableObject {
 
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == createButtonType) {
-                return new Pair<>(lifeName.getText(), objectsCombobox.getSelectionModel().getSelectedItem());
+                return new Pair<>(lifeName.getText(), worldCombobox.getSelectionModel().getSelectedItem());
             }
             return null;
         });
@@ -93,24 +92,16 @@ public class CGTLifeBarDrawable extends AbstractDrawableObject {
 
         if (result.isPresent()) {
             String id = result.get().getKey();
-            String object = result.get().getValue();
-            this.life = new IndividualLifeBar(id);
-            this.life.setOwner(object);
+            String world = result.get().getValue();
+            this.life = new EnemyGroupLifeBar(Config.get().getGame().getWorld(world));
             this.life.setName(id);
-            CGTGameObject res = null;
-            for (CGTGameWorld w : Config.get().getGame().getWorlds() ) {
-                res = w.getObjectByLabel(object);
-                if (res != null) {
-                    Config.get().getGame().getWorld(w.getId()).addLifeBar(getLife());
-                    //Sem o break todos os mundos com objetos de mesmo nome receberão lifeBar?
-                }
-            }
+            Config.get().getGame().getWorld(world).addLifeBar(this.life);
         }
     }
 
     @Override
     public void onStart() {
-        this.lifePane = new ConfigLifePane(this, new Runnable() {
+        this.lifePane = new ConfigGroupLifePane(this, new Runnable() {
             @Override
             public void run() {
                 drawObject();
@@ -126,7 +117,7 @@ public class CGTLifeBarDrawable extends AbstractDrawableObject {
         return this.preview;
     }
 
-    public IndividualLifeBar getLife(){
+    public EnemyGroupLifeBar getLife(){
         return this.life;
     }
 
@@ -148,9 +139,10 @@ public class CGTLifeBarDrawable extends AbstractDrawableObject {
                 Config.get().getImage(Config.get().getGame().getWorld(getLife().getWorld().getId()).
                         getBackground().getFile().getFile().getName()).getHeight()
         );*/
-        preview.setWidthBCKG(Config.get().getGame().getScreen(getLife().getWorld().getId()).getWidth());
-        preview.setHeightBCKG(Config.get().getGame().getScreen(getLife().getWorld().getId()).getHeight());
-
+        preview.setWidthBCKG(Config.get().getGame().getWorld(getLife().getWorld().getId()).getWidth());
+        preview.setHeightBCKG(Config.get().getGame().getWorld(getLife().getWorld().getId()).getHeight());
+        preview.setFitWidth(lifePane.getWRel().getValue() * preview.getWidthBCKG());
+        preview.setFitHeight(lifePane.getHRel().getValue() * preview.getHeightBCKG());
         preview.setFitWidth(lifePane.getWRel().getValue() * preview.getWidthBCKG());
         preview.setFitHeight(lifePane.getHRel().getValue() * preview.getHeightBCKG());
         getLife().setRelativeHeight(lifePane.getHRel().getValue());

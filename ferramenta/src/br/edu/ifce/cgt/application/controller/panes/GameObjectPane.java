@@ -149,6 +149,7 @@ public class GameObjectPane extends StackPane {
 
     private SpriteSheetTile finalTile;
 
+
     public GameObjectPane(CGTGameObject object) {
         this.gameObject = object;
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigGameObject.fxml"));
@@ -400,6 +401,7 @@ public class GameObjectPane extends StackPane {
                     x <= objectDrawable.getDraggable().getWidthBCKG() - objectDrawable.getDraggable().getFitWidth() &&
                     y <= objectDrawable.getDraggable().getHeightBCKG()) {*/
                 gameObject.getInitialPositions().add(new Vector2(x, y - (int) objectDrawable.getDraggable().getFitHeight()));
+
                 txtPositionX.clear();
                 txtPositionY.clear();
                 updateBoxPositions();
@@ -421,7 +423,9 @@ public class GameObjectPane extends StackPane {
                 //Operação necessária para mostrar coordenada y corretamente
                 String vector = v.toString();
                 String concat = vector.substring(vector.indexOf(':') + 1, vector.length() - 1);
-                float y = Float.parseFloat(concat) + (float) objectDrawable.getDraggable().getFitHeight();
+                float y = Float.parseFloat(concat);
+                if(objectDrawable != null)
+                    y += (float) objectDrawable.getDraggable().getFitHeight();
                 String newY = vector.substring(0,vector.indexOf(':') + 1).concat(String.valueOf(y)) + ']';
                 //Fim da operação
                 ItemViewPane pane = new ItemViewPane(newY);

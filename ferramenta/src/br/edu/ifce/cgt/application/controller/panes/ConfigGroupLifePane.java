@@ -4,11 +4,9 @@ import br.edu.ifce.cgt.application.Main;
 import br.edu.ifce.cgt.application.controller.ui.FloatTextField;
 import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.DialogsUtil;
-import br.edu.ifce.cgt.application.vo.CGTButtonScreenPreview;
-import br.edu.ifce.cgt.application.vo.CGTGameObjectDrawable;
+import br.edu.ifce.cgt.application.vo.CGTEnemyGroupLifeBarDrawable;
 import br.edu.ifce.cgt.application.vo.CGTLifeBarDrawable;
 import cgt.core.CGTGameObject;
-import cgt.hud.IndividualLifeBar;
 import cgt.util.CGTTexture;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -26,9 +24,9 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by Edy Junior on 22/10/2015.
+ * Created by Edy Junior on 10/11/2015.
  */
-public class ConfigLifePane extends Accordion {
+public class ConfigGroupLifePane extends Accordion {
 
     @FXML
     private TextField textBar;
@@ -44,12 +42,12 @@ public class ConfigLifePane extends Accordion {
     private FloatTextField RelY;
     @FXML
     private ComboBox<String> choices;
-    private CGTLifeBarDrawable life;
+    private CGTEnemyGroupLifeBarDrawable life;
     private Runnable onUpdateRunnable;
     private double x = 0, y = 1.0f, w = 0.2f, h = 0.2f;
 
-    public ConfigLifePane(CGTLifeBarDrawable life){
-        FXMLLoader xml2 = new FXMLLoader(Main.class.getResource("/view/ConfigLifeBar.fxml"));
+    public ConfigGroupLifePane(CGTEnemyGroupLifeBarDrawable life){
+        FXMLLoader xml2 = new FXMLLoader(Main.class.getResource("/view/ConfigGroupLifeBar.fxml"));
         xml2.setController(this);
         xml2.setRoot(this);
 
@@ -64,7 +62,7 @@ public class ConfigLifePane extends Accordion {
         init();
     }
 
-    public ConfigLifePane(CGTLifeBarDrawable life, Runnable onUpdateRunnable){
+    public ConfigGroupLifePane(CGTEnemyGroupLifeBarDrawable life, Runnable onUpdateRunnable){
         this(life);
         this.onUpdateRunnable = onUpdateRunnable;
     }
@@ -72,7 +70,7 @@ public class ConfigLifePane extends Accordion {
     private void init() {
         choices.setOnMouseClicked(e-> {
             choices.getItems().clear();
-            choices.getItems().addAll(Config.get().getGame().objectIds());
+            choices.getItems().addAll(Config.get().getGame().getEnemiesGroup());
         });
         RelX.setValue(0.0f);
         RelY.setValue(1.0f);
@@ -83,13 +81,13 @@ public class ConfigLifePane extends Accordion {
             @Override
             public void handle(ActionEvent event) {
                 CGTGameObject ob = Config.get().getGame().findObject(choices.getValue().toString());
-                life.getLife().setOwner(ob.getId());
+                //life.getLife().setOwner(ob.getId());
             }
         });
 
-        if (life.getLife() != null) {
+        /*if (life.getLife() != null) {
             choices.getSelectionModel().select(life.getLife().getOwnerId());
-        }
+        }*/
         RelX.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -228,5 +226,4 @@ public class ConfigLifePane extends Accordion {
     public ComboBox<String> getChoices(){
         return this.choices;
     }
-
 }

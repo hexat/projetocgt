@@ -6,7 +6,6 @@ import cgt.util.CGTTexture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 
 public abstract class LifeBar extends HUDComponent {
-    //public String worldId;
 	protected String worldId;
 
 	protected CGTTexture bar;
@@ -57,9 +56,6 @@ public abstract class LifeBar extends HUDComponent {
 		this.currentLife = currentLife;
 	}
 
-	/*public void setWorld(CGTGameWorld world) {
-		worldId = world.getId();
-	}*/
 	protected void setWorld(CGTGameWorld world) {
 		worldId = world.getId();
 	}
@@ -73,7 +69,6 @@ public abstract class LifeBar extends HUDComponent {
 	}
 
 	public CGTGameWorld getWorld() {
-//		System.out.println(worldId);
 		return CGTGame.get().getWorld(worldId);
 	}
 }

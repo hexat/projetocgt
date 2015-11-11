@@ -20,6 +20,11 @@ public class EnemyGroupLifeBar extends LifeBar {
 		enemiesIds = new ArrayList<String>();
 	}
 
+	public EnemyGroupLifeBar(CGTGameWorld world) {
+		super();
+		setWorld(world);
+	}
+
 	@Override
 	public void setup() {
 		super.setup();

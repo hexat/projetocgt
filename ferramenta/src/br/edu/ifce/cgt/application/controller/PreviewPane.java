@@ -320,8 +320,12 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addWorld() {
-        DrawableObject<CGTGameWorld> worldDrawable = new CGTGameWorldDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
-        DrawableObject<CGTActor> drawableActor = new CGTGameActorDrawable(worldDrawable.getObject().getActor(), worldDrawable.getObject().getId(), this.drawableObjectPane, this.drawableConfigurationsPane);
+        double h = rootItem.getObject().getCanvasHeight();
+        double w = rootItem.getObject().getCanvasWidth();
+        DrawableObject<CGTGameWorld> worldDrawable = new CGTGameWorldDrawable(this.drawableObjectPane,
+                this.drawableConfigurationsPane, h, w);
+        DrawableObject<CGTActor> drawableActor = new CGTGameActorDrawable(worldDrawable.getObject().getActor(),
+                worldDrawable.getObject().getId(), this.drawableObjectPane, this.drawableConfigurationsPane);
         TreeItem<DrawableObject> worldTreeItem = new TreeItem<>(worldDrawable);
         TreeItem<DrawableObject> actorTreeItem = new TreeItem<>(drawableActor);
         worldTreeItem.getChildren().add(actorTreeItem);
@@ -331,7 +335,10 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addScreen() {
-        DrawableObject<CGTScreen> screenDrawable = new CGTGameScreenDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
+        double h = rootItem.getObject().getCanvasHeight();
+        double w = rootItem.getObject().getCanvasWidth();
+        DrawableObject<CGTScreen> screenDrawable = new CGTGameScreenDrawable(this.drawableObjectPane,
+                this.drawableConfigurationsPane, h, w);
         if (screenDrawable.getObject() != null) {
             TreeItem<DrawableObject> screenTreeItem = new TreeItem<>(screenDrawable);
             this.tree.getRoot().getChildren().add(screenTreeItem);
@@ -349,7 +356,7 @@ public class PreviewPane extends BorderPane {
         TreeItem<DrawableObject> worldTreeItem = this.getWorldNode(worldName);
         worldTreeItem.getChildren().add(enemyTreeItem);
         CGTGameWorld cgtGameWorld = Config.get().getGame().getWorld(worldName);
-        cgtGameWorld.addEnemy((CGTEnemy) enemyDrawableObject.getObject());
+        cgtGameWorld.addEnemy(enemyDrawableObject.getObject());
     }
 
     @FXML
@@ -393,7 +400,6 @@ public class PreviewPane extends BorderPane {
     @FXML
     public void addObjectLifeBar() {
         CGTLifeBarDrawable life = new CGTLifeBarDrawable(drawableObjectPane, drawableConfigurationsPane);
-        //if(life.getLife() != null) {
         TreeItem<DrawableObject> lifeTreeItem = new TreeItem<>(life);
         String worldName = life.getLife().getWorld().getId();
         String bar = life.getLife().getOwnerId();
@@ -405,14 +411,15 @@ public class PreviewPane extends BorderPane {
         }
         CGTGameWorld cgtGameWorld = Config.get().getGame().getWorld(worldName);
         cgtGameWorld.addLifeBar(life.getLife());
-        //}
-        //else
-        //  System.out.println("DesistiuNULL");
     }
 
     @FXML
     public void addEnemyLifeBar() {
-
+        CGTEnemyGroupLifeBarDrawable groupLife = new CGTEnemyGroupLifeBarDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
+        TreeItem<DrawableObject> groupTreeItem = new TreeItem<>(groupLife);
+        String worldName = groupLife.getLife().getWorld().getId();
+        TreeItem<DrawableObject> worldTreeItem = this.getWorldNode(worldName);
+        worldTreeItem.getChildren().add(groupTreeItem);
     }
 
     @FXML

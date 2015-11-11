@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class CGTProject implements Serializable {
 
     private String projectName;
-    private double canvasWidth;
-    private double canvasHeight;
+    private double canvasWidth = 0;
+    private double canvasHeight = 0;
 
     public CGTProject(String projectName) {
         this.projectName = projectName;

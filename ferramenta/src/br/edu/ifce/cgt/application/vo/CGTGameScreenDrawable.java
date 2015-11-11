@@ -20,6 +20,16 @@ public class CGTGameScreenDrawable extends AbstractDrawableObject<CGTScreen> {
         super(drawableObjectPane, drawableConfigurationsPane);
     }
 
+    public CGTGameScreenDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane, double h, double w) {
+        super(drawableObjectPane, drawableConfigurationsPane);
+        screenPane.getScreen().setHeightAndWidth(h, w);
+    }
+
+    public CGTGameScreenDrawable(CGTScreen object, Pane drawableObjectPane, Pane drawableConfigurationsPane, double h, double w) {
+        super(object, drawableObjectPane, drawableConfigurationsPane);
+        screenPane.getScreen().setHeightAndWidth(h, w);
+    }
+
     public CGTGameScreenDrawable(CGTScreen object, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(object, drawableObjectPane, drawableConfigurationsPane);
     }
@@ -43,9 +53,10 @@ public class CGTGameScreenDrawable extends AbstractDrawableObject<CGTScreen> {
     public void drawObject() {
         if (getObject().getBackground() != null) {
             ImageView img = new ImageView(Config.get().getImage(getObject().getBackground().getFile()));
-            img.setOnMouseClicked(e -> {
-                System.out.println("hkgkjhkjh");
-            });
+            if(screenPane.getHeight() != 0 && screenPane.getWidth() != 0) {
+                img.setFitHeight(screenPane.getScreen().getHeight());
+                img.setFitWidth(screenPane.getScreen().getWidth());
+            }
             super.updateDrawPane(img);
         }
     }

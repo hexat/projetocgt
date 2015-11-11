@@ -98,6 +98,8 @@ public class ConfigWorldPreviewPane extends StackPane {
 
     private Runnable onUpdateRunnable;
 
+    //private double height = 0, width = 0;
+
     public ConfigWorldPreviewPane(CGTGameWorld world) {
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigWorld2.fxml"));
         xml.setController(this);
