@@ -81,7 +81,6 @@ public class ConfigGroupLifePane extends Accordion {
             @Override
             public void handle(ActionEvent event) {
                 CGTGameObject ob = Config.get().getGame().findObject(choices.getValue().toString());
-                //life.getLife().setOwner(ob.getId());
             }
         });
 

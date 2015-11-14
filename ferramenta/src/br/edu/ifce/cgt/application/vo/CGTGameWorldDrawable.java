@@ -20,12 +20,12 @@ public class CGTGameWorldDrawable extends AbstractDrawableObject<CGTGameWorld> {
         super(drawableObjectPane, drawableConfigurationsPane);
     }
 
-    public CGTGameWorldDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane, double h, double w) {
+    public CGTGameWorldDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane, int h, int w) {
         super(drawableObjectPane, drawableConfigurationsPane);
         worldPane.getWorld().setHeightAndWidth(h,w);
     }
 
-    public CGTGameWorldDrawable(CGTGameWorld object, Pane drawableObjectPane, Pane drawableConfigurationsPane, double h, double w) {
+    public CGTGameWorldDrawable(CGTGameWorld object, Pane drawableObjectPane, Pane drawableConfigurationsPane, int h, int w) {
         super(object, drawableObjectPane, drawableConfigurationsPane);
         worldPane.getWorld().setHeightAndWidth(h,w);
     }
@@ -54,10 +54,10 @@ public class CGTGameWorldDrawable extends AbstractDrawableObject<CGTGameWorld> {
         if (getObject().getBackground() != null) {
             ImageView img = new ImageView(Config.get().getImage(getObject().getBackground().getFile()));
             if(worldPane.getWidth() != 0 && worldPane.getHeight() != 0) {
-                img.setFitHeight(worldPane.getWorld().getHeight());
-                img.setFitWidth(worldPane.getWorld().getWidth() );
+                img.setFitHeight(worldPane.getWorld().getHeightP());
+                img.setFitWidth(worldPane.getWorld().getWidthP() );
             }
-            getDrawableObjectPane().getChildren().add(img);
+            super.updateDrawPaneClear(img);
         }
     }
 

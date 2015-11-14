@@ -62,7 +62,6 @@ public class ConfigProjectPane extends StackPane {
         String[] widthHeight = size.split("x");
         int width = Integer.valueOf(widthHeight[0]);
         int height = Integer.valueOf(widthHeight[1]);
-        //System.out.printf("%d  %d\n",width,height);
         this.cgtProject.setCanvasWidth(width);
         this.cgtProject.setCanvasHeight(height);
         for(CGTGameWorld w : Config.get().getGame().getWorlds()) {

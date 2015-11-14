@@ -72,7 +72,7 @@ public class Draggable extends ImageView {
                 b.setX(event.getX() + sX.getValue());
                 b.setY(event.getY() + sY.getValue());
                 X.setValue((int) event.getX());
-                Y.setValue((int) heightBCKG - (int) event.getY());// + (float) this.prefHeight().getFitHeight());
+                Y.setValue((int) heightBCKG - (int) event.getY());
             }
         });
         a.xProperty().bind(this.xProperty());

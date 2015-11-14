@@ -320,8 +320,8 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addWorld() {
-        double h = rootItem.getObject().getCanvasHeight();
-        double w = rootItem.getObject().getCanvasWidth();
+        int h = (int) rootItem.getObject().getCanvasHeight();
+        int w = (int) rootItem.getObject().getCanvasWidth();
         DrawableObject<CGTGameWorld> worldDrawable = new CGTGameWorldDrawable(this.drawableObjectPane,
                 this.drawableConfigurationsPane, h, w);
         DrawableObject<CGTActor> drawableActor = new CGTGameActorDrawable(worldDrawable.getObject().getActor(),
@@ -335,10 +335,13 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addScreen() {
-        double h = rootItem.getObject().getCanvasHeight();
-        double w = rootItem.getObject().getCanvasWidth();
+        int h = (int) rootItem.getObject().getCanvasHeight();
+        int w = (int) rootItem.getObject().getCanvasWidth();
         DrawableObject<CGTScreen> screenDrawable = new CGTGameScreenDrawable(this.drawableObjectPane,
                 this.drawableConfigurationsPane, h, w);
+        /*CGTGameScreenDrawable screenDrawable = new CGTGameScreenDrawable(this.drawableObjectPane,
+                this.drawableConfigurationsPane);
+        screenDrawable.getObject().setHeightAndWidth(h,w);*/
         if (screenDrawable.getObject() != null) {
             TreeItem<DrawableObject> screenTreeItem = new TreeItem<>(screenDrawable);
             this.tree.getRoot().getChildren().add(screenTreeItem);

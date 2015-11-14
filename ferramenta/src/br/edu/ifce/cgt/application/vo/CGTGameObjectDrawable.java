@@ -85,13 +85,16 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
             preview.setImage(getObjectPane().getInitialTile().getImage());
 
             if(getObjectPane().getGameObject().getInitialPositions() != null &&
-                    getObjectPane().getGameObject().getInitialPositions().size() == 1 &&
+                    getObjectPane().getGameObject().getInitialPositions().size() > 0 &&
                     getObjectPane().getPositionX().getText().equals("") &&
                     getObjectPane().getPositionY().getText().equals("")) {
-                float x = getObjectPane().getGameObject().getInitialPositions().get(0).x;
-                float y = getObjectPane().getGameObject().getInitialPositions().get(0).y;
+                int total = getObjectPane().getGameObject().getInitialPositions().size();
+                float x = getObjectPane().getGameObject().getInitialPositions().get(total - 1).x;
+                float y = getObjectPane().getGameObject().getInitialPositions().get(total - 1).y;
                 preview.setX(x);
                 preview.setY(preview.getHeightBCKG() - y - preview.getFitHeight());
+                collision.setX(x);
+                collision.setY(preview.getHeightBCKG() - y - preview.getFitHeight());
             }
 
             setSizeObject();
@@ -122,14 +125,22 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
     }
 
     public void setSizeObject() {
-        preview.setWidthBCKG(
-                Config.get().getImage(Config.get().getGame().getWorld(getWorldName()).
-                        getBackground().getFile()).getWidth()
-        );
-        preview.setHeightBCKG(
-                Config.get().getImage(Config.get().getGame().getWorld(getWorldName()).
-                        getBackground().getFile()).getHeight()
-        );
+        int x = Config.get().getGame().getWorld(getWorldName()).getWidthP();
+        int y = Config.get().getGame().getWorld(getWorldName()).getHeightP();
+        if(x == 0) {
+            preview.setWidthBCKG(
+                    Config.get().getImage(Config.get().getGame().getWorld(getWorldName()).
+                            getBackground().getFile().getFile().getName()).getWidth()
+            );
+            preview.setHeightBCKG(
+                    Config.get().getImage(Config.get().getGame().getWorld(getWorldName()).
+                            getBackground().getFile().getFile().getName()).getHeight()
+            );
+        }
+        else {
+            preview.setWidthBCKG(x);
+            preview.setHeightBCKG(y);
+        }
         preview.setFitWidth(gameObjectTitledPane.getBoundsW().getValue());
         preview.setFitHeight(gameObjectTitledPane.getBoundsH().getValue());
     }

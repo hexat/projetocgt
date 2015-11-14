@@ -131,18 +131,22 @@ public class CGTEnemyGroupLifeBarDrawable extends AbstractDrawableObject {
     }
 
     public void setSizeLife(){
-        /*preview.setWidthBCKG(
-                Config.get().getImage(Config.get().getGame().getWorld(getLife().getWorld().getId()).
-                        getBackground().getFile().getFile().getName()).getWidth()
-        );
-        preview.setHeightBCKG(
-                Config.get().getImage(Config.get().getGame().getWorld(getLife().getWorld().getId()).
-                        getBackground().getFile().getFile().getName()).getHeight()
-        );*/
-        preview.setWidthBCKG(Config.get().getGame().getWorld(getLife().getWorld().getId()).getWidth());
-        preview.setHeightBCKG(Config.get().getGame().getWorld(getLife().getWorld().getId()).getHeight());
-        preview.setFitWidth(lifePane.getWRel().getValue() * preview.getWidthBCKG());
-        preview.setFitHeight(lifePane.getHRel().getValue() * preview.getHeightBCKG());
+        int x = Config.get().getGame().getWorld(getLife().getWorld().getId()).getWidthP();
+        int y = Config.get().getGame().getWorld(getLife().getWorld().getId()).getHeightP();
+        if(x == 0) {
+            preview.setWidthBCKG(
+                    Config.get().getImage(Config.get().getGame().getWorld(getLife().getWorld().getId()).
+                            getBackground().getFile().getFile().getName()).getWidth()
+            );
+            preview.setHeightBCKG(
+                    Config.get().getImage(Config.get().getGame().getWorld(getLife().getWorld().getId()).
+                            getBackground().getFile().getFile().getName()).getHeight()
+            );
+        }
+        else {
+            preview.setWidthBCKG(x);
+            preview.setHeightBCKG(y);
+        }
         preview.setFitWidth(lifePane.getWRel().getValue() * preview.getWidthBCKG());
         preview.setFitHeight(lifePane.getHRel().getValue() * preview.getHeightBCKG());
         getLife().setRelativeHeight(lifePane.getHRel().getValue());

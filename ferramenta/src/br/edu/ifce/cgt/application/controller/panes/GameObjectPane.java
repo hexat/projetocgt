@@ -149,7 +149,6 @@ public class GameObjectPane extends StackPane {
 
     private SpriteSheetTile finalTile;
 
-
     public GameObjectPane(CGTGameObject object) {
         this.gameObject = object;
         FXMLLoader xml = new FXMLLoader(Main.class.getResource("/view/ConfigGameObject.fxml"));
@@ -172,9 +171,8 @@ public class GameObjectPane extends StackPane {
     }
 
     public GameObjectPane(CGTGameObject object, CGTGameObjectDrawable drawable, Runnable onUpdateRunnable) {
-        this(object);
+        this(object,onUpdateRunnable);
         this.objectDrawable = drawable;
-        this.onUpdateRunnable = onUpdateRunnable;
     }
 
     private void init() {
@@ -266,7 +264,12 @@ public class GameObjectPane extends StackPane {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue) {
-                    gameObject.getBounds().height = txtBoundsH.getValue();
+                    if(!getGameObject().getAnimations().isEmpty()) {
+                        gameObject.getBounds().height = txtBoundsH.getValue();
+                    }
+                    else {
+                        AlertFunction();
+                    }
                 }
 
                 if (onUpdateRunnable != null) {
@@ -279,8 +282,14 @@ public class GameObjectPane extends StackPane {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 if (!newValue) {
-                    gameObject.getBounds().width = txtBoundsW.getValue();
+                    if(!getGameObject().getAnimations().isEmpty()) {
+                        gameObject.getBounds().width = txtBoundsW.getValue();
+                    }
+                    else {
+                        AlertFunction();
+                    }
                 }
+
 
                 if (onUpdateRunnable != null) {
                     onUpdateRunnable.run();
@@ -364,6 +373,13 @@ public class GameObjectPane extends StackPane {
         });
     }
 
+    public void AlertFunction(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Adicione pelo menos uma animação");
+        alert.setHeaderText("Falta animação!");
+        alert.show();
+    }
+
     public void setSoundObject() {
         File audio = DialogsUtil.showOpenDialog("Selecione um audio", DialogsUtil.WAV_FILTER);
         if (audio != null) {
@@ -394,25 +410,28 @@ public class GameObjectPane extends StackPane {
 
     @FXML
     public void addInitialPosition() {
-        if (!txtPositionX.getText().equals("") && !txtPositionY.getText().equals("")) {
+        if (!txtPositionX.getText().equals("") && !txtPositionY.getText().equals("") && !getGameObject().getAnimations().isEmpty()) {
             int x = Integer.parseInt(txtPositionX.getText());
             int y = Integer.parseInt(txtPositionY.getText());
-            /*if (x >= 0 && y >= 0) {objectDrawable.getDraggable().getFitHeight() &&
-                    x <= objectDrawable.getDraggable().getWidthBCKG() - objectDrawable.getDraggable().getFitWidth() &&
-                    y <= objectDrawable.getDraggable().getHeightBCKG()) {*/
-                gameObject.getInitialPositions().add(new Vector2(x, y - (int) objectDrawable.getDraggable().getFitHeight()));
+            gameObject.getInitialPositions().add(new Vector2(x, y - (int) objectDrawable.getDraggable().getFitHeight()));
+            System.out.println("tam = " + gameObject.getInitialPositions().size());
 
-                txtPositionX.clear();
-                txtPositionY.clear();
-                updateBoxPositions();
-            /*} else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("Coordenadas fora da tela!");
-                alert.show();
-            }*/
+            objectDrawable.getDraggable().setX(x);
+            objectDrawable.getDraggable().setY(objectDrawable.getDraggable().getHeightBCKG() - y -
+                    (int) objectDrawable.getDraggable().getFitHeight());
+            txtPositionX.clear();
+            txtPositionY.clear();
+            updateBoxPositions();
+
             if (onUpdateRunnable != null) {
                 onUpdateRunnable.run();
             }
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Adicione pelo menos uma animação e uma posição");
+            alert.setHeaderText("Faltam dados!");
+            alert.show();
         }
     }
 
@@ -424,8 +443,9 @@ public class GameObjectPane extends StackPane {
                 String vector = v.toString();
                 String concat = vector.substring(vector.indexOf(':') + 1, vector.length() - 1);
                 float y = Float.parseFloat(concat);
-                if(objectDrawable != null)
+                if(objectDrawable != null) {
                     y += (float) objectDrawable.getDraggable().getFitHeight();
+                }
                 String newY = vector.substring(0,vector.indexOf(':') + 1).concat(String.valueOf(y)) + ']';
                 //Fim da operação
                 ItemViewPane pane = new ItemViewPane(newY);
@@ -675,6 +695,8 @@ public class GameObjectPane extends StackPane {
             if (!tiles.isEmpty()) {
                 this.txtBoundsH.setValue(tiles.get(0).getHeight());
                 this.txtBoundsW.setValue(tiles.get(0).getWidth());
+                gameObject.getBounds().height = txtBoundsH.getValue();
+                gameObject.getBounds().width = txtBoundsW.getValue();
 
                 GridPane grid = new GridPane();
                 grid.setAlignment(Pos.CENTER);

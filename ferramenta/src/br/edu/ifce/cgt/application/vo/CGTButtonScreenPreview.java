@@ -154,16 +154,20 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject<CGTButtonScre
     }
 
     public void setSizeButton(){
-        /*preview.setWidthBCKG(
-                Config.get().getImage(Config.get().getGame().getScreen(getScreenName()).
-                        getBackground().getFile().getFile().getName()).getWidth()
-        );
-        preview.setHeightBCKG(
-                Config.get().getImage(Config.get().getGame().getScreen(getScreenName()).
-                        getBackground().getFile().getFile().getName()).getHeight()
-        );*/
-        preview.setWidthBCKG(Config.get().getGame().getScreen(getScreenName()).getWidth());
-        preview.setHeightBCKG(Config.get().getGame().getScreen(getScreenName()).getHeight());
+        int x = Config.get().getGame().getScreen(screenName).getWidthP();
+        int y = Config.get().getGame().getScreen(screenName).getHeightP();
+        if(x == 0) {
+            preview.setWidthBCKG(
+                    Config.get().getImage(Config.get().getGame().getScreen(getScreenName()).
+                            getBackground().getFile().getFile().getName()).getWidth());
+            preview.setHeightBCKG(
+                    Config.get().getImage(Config.get().getGame().getScreen(getScreenName()).
+                            getBackground().getFile().getFile().getName()).getHeight());
+        }
+        else{
+            preview.setWidthBCKG(x);
+            preview.setHeightBCKG(y);
+        }
         preview.setFitWidth(buttonPane.getWRel().getValue() * preview.getWidthBCKG());
         preview.setFitHeight(buttonPane.getHRel().getValue() * preview.getHeightBCKG());
         getObject().setRelativeHeight(buttonPane.getHRel().getValue());

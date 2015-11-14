@@ -20,12 +20,12 @@ public class CGTGameScreenDrawable extends AbstractDrawableObject<CGTScreen> {
         super(drawableObjectPane, drawableConfigurationsPane);
     }
 
-    public CGTGameScreenDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane, double h, double w) {
+    public CGTGameScreenDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane, int h, int w) {
         super(drawableObjectPane, drawableConfigurationsPane);
         screenPane.getScreen().setHeightAndWidth(h, w);
     }
 
-    public CGTGameScreenDrawable(CGTScreen object, Pane drawableObjectPane, Pane drawableConfigurationsPane, double h, double w) {
+    public CGTGameScreenDrawable(CGTScreen object, Pane drawableObjectPane, Pane drawableConfigurationsPane, int h, int w) {
         super(object, drawableObjectPane, drawableConfigurationsPane);
         screenPane.getScreen().setHeightAndWidth(h, w);
     }
@@ -53,11 +53,11 @@ public class CGTGameScreenDrawable extends AbstractDrawableObject<CGTScreen> {
     public void drawObject() {
         if (getObject().getBackground() != null) {
             ImageView img = new ImageView(Config.get().getImage(getObject().getBackground().getFile()));
-            if(screenPane.getHeight() != 0 && screenPane.getWidth() != 0) {
-                img.setFitHeight(screenPane.getScreen().getHeight());
-                img.setFitWidth(screenPane.getScreen().getWidth());
+            if(screenPane.getScreen().getHeightP() != 0 && screenPane.getScreen().getWidthP() != 0) {
+                img.setFitHeight(screenPane.getScreen().getHeightP());
+                img.setFitWidth(screenPane.getScreen().getWidthP());
             }
-            super.updateDrawPane(img);
+            super.updateDrawPaneClear(img);
         }
     }
 

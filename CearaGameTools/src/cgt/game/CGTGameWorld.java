@@ -32,7 +32,7 @@ public class CGTGameWorld extends CGTWindow {
 	private CGTSound soundLose;
 	private CGTButtonStartGame startGame;
     private int score;
-	private double height = 0,width = 0;
+	private int heightPre = 0,widthPre = 0;
 
 	public CGTGameWorld(){
         actor = new CGTActor("Ator");
@@ -462,16 +462,16 @@ public class CGTGameWorld extends CGTWindow {
         return null;
     }
 
-	public void setHeightAndWidth(double height, double width){
-		this.height = height;
-		this.width = width;
+	public void setHeightAndWidth(int height, int width){
+		this.heightPre = height;
+		this.widthPre = width;
 	}
 
-	public double getHeight(){
-		return this.height;
+	public int getHeightP(){
+		return this.heightPre;
 	}
-	public double getWidth(){
-		return this.width;
+	public int getWidthP(){
+		return this.widthPre;
 	}
 }
  

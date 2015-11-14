@@ -48,6 +48,11 @@ public abstract class AbstractDrawableObject<T> implements DrawableObject<T> {
         getDrawableObjectPane().getChildren().add(node);
     }
 
+    public void updateDrawPaneClear(Node node) {
+        getDrawableObjectPane().getChildren().clear();
+        getDrawableObjectPane().getChildren().add(node);
+    }
+
     public void updateConfigPane(Pane pane) {
         getDrawableConfigurationsPane().getChildren().removeAll(getDrawableConfigurationsPane().getChildren());
         getDrawableConfigurationsPane().getChildren().add(pane);

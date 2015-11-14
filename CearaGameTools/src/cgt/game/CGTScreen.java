@@ -19,7 +19,7 @@ public class CGTScreen extends CGTWindow implements Serializable{
 	private ArrayList<CGTButtonScreen> buttons;
     private CGTTexture background;
     private CGTSound sound;
-    private double height = 0,width = 0;
+    private int heightPre = 0,widthPre = 0;
 
     protected CGTScreen() {
         labels = new ArrayList<CGTLabel>();
@@ -83,15 +83,15 @@ public class CGTScreen extends CGTWindow implements Serializable{
         return res;
     }
 
-    public void setHeightAndWidth(double height, double width){
-        this.height = height;
-        this.width = width;
+    public void setHeightAndWidth(int height, int width){
+        this.heightPre = height;
+        this.widthPre = width;
     }
 
-    public double getHeight(){
-        return this.height;
+    public int getHeightP(){
+        return this.heightPre;
     }
-    public double getWidth(){
-        return this.width;
+    public int getWidthP(){
+        return this.widthPre;
     }
 }
