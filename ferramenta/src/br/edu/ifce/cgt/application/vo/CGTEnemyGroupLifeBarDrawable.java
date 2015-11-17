@@ -127,7 +127,7 @@ public class CGTEnemyGroupLifeBarDrawable extends AbstractDrawableObject {
 
     @Override
     public String toString() {
-        return this.life.getName();
+        return this.life.getName() + " (Vida de inimigos)";
     }
 
     public void setSizeLife(){

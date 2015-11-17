@@ -53,6 +53,6 @@ public class CGTGameActorDrawable extends CGTGameObjectDrawable<CGTActor> {
 
     @Override
     public String toString() {
-        return super.toString() + " (Ator)";
+        return getObject().getId();// + " (Ator)";
     }
 }

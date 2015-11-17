@@ -119,10 +119,10 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
         return this.preview;
     }
 
-    @Override
-    public String toString() {
-        return getObject().getId();
-    }
+//    @Override
+//    public String toString() {
+//        return getObject().getId();
+//    }
 
     public void setSizeObject() {
         int x = Config.get().getGame().getWorld(getWorldName()).getWidthP();

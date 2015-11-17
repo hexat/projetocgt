@@ -47,6 +47,11 @@ public class CGTGameProjectitleDrawable extends CGTGameObjectDrawable<CGTProject
     }
 
     @Override
+    public String toString() {
+        return getObject().getId() + " (Projétil)";
+    }
+
+    @Override
     public Node getPane() {
         return this.pane;
     }

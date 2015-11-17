@@ -142,7 +142,7 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject<CGTButtonScre
 
     @Override
     public String toString() {
-        return name;
+        return name + " (Botão de tela)";
     }
 
     public String getScreenName() {

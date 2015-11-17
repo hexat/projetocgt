@@ -42,4 +42,9 @@ public class CGTGameOppositeDrawable extends CGTGameObjectDrawable<CGTOpposite> 
             setWorldName(worldName);
         }
     }
+
+    @Override
+    public String toString() {
+        return getObject().getId() + " (Opositor)";
+    }
 }

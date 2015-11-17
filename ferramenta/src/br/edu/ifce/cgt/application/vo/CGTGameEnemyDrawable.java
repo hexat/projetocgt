@@ -52,4 +52,9 @@ public class CGTGameEnemyDrawable extends CGTGameObjectDrawable<CGTEnemy> {
             setWorldName(worldName);
         }
     }
+
+    @Override
+    public String toString() {
+        return getObject().getId() + " (Inimigo)";
+    }
 }

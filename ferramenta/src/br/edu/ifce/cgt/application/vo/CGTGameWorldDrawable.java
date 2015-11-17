@@ -53,9 +53,11 @@ public class CGTGameWorldDrawable extends AbstractDrawableObject<CGTGameWorld> {
     public void drawObject() {
         if (getObject().getBackground() != null) {
             ImageView img = new ImageView(Config.get().getImage(getObject().getBackground().getFile()));
-            if(worldPane.getWidth() != 0 && worldPane.getHeight() != 0) {
+            if(worldPane.getWorld().getHeightP() != 0 && worldPane.getWorld().getWidthP() != 0) {
                 img.setFitHeight(worldPane.getWorld().getHeightP());
-                img.setFitWidth(worldPane.getWorld().getWidthP() );
+                img.setFitWidth(worldPane.getWorld().getWidthP());
+//                this.worldPane.getWorld().getBackground().getTextureRegion().setRegionHeight(worldPane.getWorld().getHeightP());
+//                this.worldPane.getWorld().getBackground().getTextureRegion().setRegionWidth(worldPane.getWorld().getWidthP());
             }
             super.updateDrawPaneClear(img);
         }
@@ -81,7 +83,7 @@ public class CGTGameWorldDrawable extends AbstractDrawableObject<CGTGameWorld> {
 
     @Override
     public String toString() {
-        return getObject().getId();
+        return getObject().getId() + " (Mundo)";
     }
 
     @Override

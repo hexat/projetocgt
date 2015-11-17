@@ -50,4 +50,11 @@ public class CGTGameBonusDrawable extends  CGTGameObjectDrawable {
     public Node getPane() {
         return this.pane;
     }
+
+    public CGTBonus getBonus(){ return  this.bonus; }
+
+    @Override
+    public String toString() {
+        return getBonus().getId() + " (Bônus)";
+    }
 }

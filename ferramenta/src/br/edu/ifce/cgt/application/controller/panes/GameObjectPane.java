@@ -410,7 +410,9 @@ public class GameObjectPane extends StackPane {
 
     @FXML
     public void addInitialPosition() {
-        if (!txtPositionX.getText().equals("") && !txtPositionY.getText().equals("") && !getGameObject().getAnimations().isEmpty()) {
+        if (!txtPositionX.getText().equals("") && !txtPositionY.getText().equals("") &&
+                !getGameObject().getAnimations().isEmpty() &&
+                gameObject.getBounds().height > 0 && gameObject.getBounds().width > 0) {
             int x = Integer.parseInt(txtPositionX.getText());
             int y = Integer.parseInt(txtPositionY.getText());
             gameObject.getInitialPositions().add(new Vector2(x, y - (int) objectDrawable.getDraggable().getFitHeight()));

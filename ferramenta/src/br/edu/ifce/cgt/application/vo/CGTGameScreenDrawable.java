@@ -82,7 +82,7 @@ public class CGTGameScreenDrawable extends AbstractDrawableObject<CGTScreen> {
 
     @Override
     public String toString() {
-        return getObject().getId();
+        return getObject().getId() + " (Tela)";
     }
 
     @Override

@@ -17,8 +17,7 @@ import java.io.IOException;
 
 public class ConfigProjectPane extends StackPane {
 
-    private static final String[] projectSizes = {"1920x1080", "1366x768", "1334x750", "1280x720", "1024x768", "1136x640", "960x640", "1024x600", "800x600", "854x480", "800x480", "768x480", "640x480"};
-
+    private static final String[] projectSizes = {"16:9", "17:10", "16:10", "3:2", "4:3"};
     @FXML
     private ChoiceBox<String> canvasSize;
 
@@ -59,9 +58,29 @@ public class ConfigProjectPane extends StackPane {
     }
 
     private void changeProjectSize(String size) {
-        String[] widthHeight = size.split("x");
+        String[] widthHeight = size.split(":");
         int width = Integer.valueOf(widthHeight[0]);
         int height = Integer.valueOf(widthHeight[1]);
+        if(width == 16 && height == 9){
+            width = 640;
+            height = 360;
+        }
+        else if(width == 16 && height == 10){
+            width = 576;
+            height = 360;
+        }
+        else if(width == 17 && height == 10){
+            width = 612;
+            height = 360;
+        }
+        else if(width == 3 && height == 2){
+            width = 540;
+            height = 360;
+        }
+        else if(width == 4 && height == 3){
+            width = 480;
+            height = 360;
+        }
         this.cgtProject.setCanvasWidth(width);
         this.cgtProject.setCanvasHeight(height);
         for(CGTGameWorld w : Config.get().getGame().getWorlds()) {

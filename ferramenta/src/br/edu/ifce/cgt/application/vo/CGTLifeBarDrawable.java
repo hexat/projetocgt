@@ -136,7 +136,7 @@ public class CGTLifeBarDrawable extends AbstractDrawableObject {
 
     @Override
     public String toString() {
-        return this.life.getName();
+        return this.life.getName() + " (Barra de vida)";
     }
 
     public void setSizeLife(){
