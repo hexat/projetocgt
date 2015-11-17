@@ -22,12 +22,14 @@ public class CGTGameScreenDrawable extends AbstractDrawableObject<CGTScreen> {
 
     public CGTGameScreenDrawable(Pane drawableObjectPane, Pane drawableConfigurationsPane, int h, int w) {
         super(drawableObjectPane, drawableConfigurationsPane);
-        screenPane.getScreen().setHeightAndWidth(h, w);
+        if(screenPane.getScreen() != null)
+            screenPane.getScreen().setHeightAndWidth(h, w);
     }
 
     public CGTGameScreenDrawable(CGTScreen object, Pane drawableObjectPane, Pane drawableConfigurationsPane, int h, int w) {
         super(object, drawableObjectPane, drawableConfigurationsPane);
-        screenPane.getScreen().setHeightAndWidth(h, w);
+        if(screenPane.getScreen() != null)
+            screenPane.getScreen().setHeightAndWidth(h, w);
     }
 
     public CGTGameScreenDrawable(CGTScreen object, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
