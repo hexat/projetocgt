@@ -59,7 +59,9 @@ public class EnemyTitledPane extends TitledPane {
         chkDestroyable = pane.getCheckDestroyable();
 
         setEnemy(object);
-        init();
+        if(object != null)
+            init();
+
     }
 
     public void init() {
@@ -146,7 +148,7 @@ public class EnemyTitledPane extends TitledPane {
     public void setEnemy(CGTEnemy enemy) {
         this.enemy = enemy;
 
-        if (enemy.getDamage() > 0) {
+        if(enemy != null && enemy.getDamage() > 0) {
             txtDamage.setValue(enemy.getDamage());
         }
     }

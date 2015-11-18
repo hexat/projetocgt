@@ -481,9 +481,11 @@ public class PreviewPane extends BorderPane {
             TreeItem<DrawableObject> btnTreeItem = new TreeItem<>(btn);
             String screenName = btn.getScreenName();
             TreeItem<DrawableObject> screenTreeItem = this.getScreenNode(screenName);
-            screenTreeItem.getChildren().add(btnTreeItem);
-            CGTScreen cgtScreen = Config.get().getGame().getScreen(screenName);
-            cgtScreen.getButtons().add(btn.getObject());
+            if(screenTreeItem != null) {
+                screenTreeItem.getChildren().add(btnTreeItem);
+                CGTScreen cgtScreen = Config.get().getGame().getScreen(screenName);
+                cgtScreen.getButtons().add(btn.getObject());
+            }
         }
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -6,6 +6,7 @@ import br.edu.ifce.cgt.application.util.Draggable;
 import cgt.core.CGTGameObject;
 import cgt.game.CGTGameWorld;
 import cgt.game.CGTSpriteSheet;
+import cgt.util.CGTTexture;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -48,8 +49,10 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
                 drawObject();
             }
         });
-        this.bounds = new Rectangle(getObject().getBounds().getWidth(), getObject().getBounds().getHeight());
-        this.collision = new Rectangle(getObject().getCollision().getWidth(), getObject().getCollision().getHeight());
+        if(getObject() != null) {
+            this.bounds = new Rectangle(getObject().getBounds().getWidth(), getObject().getBounds().getHeight());
+            this.collision = new Rectangle(getObject().getCollision().getWidth(), getObject().getCollision().getHeight());
+        }
     }
 
     @Override
@@ -127,14 +130,13 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
     public void setSizeObject() {
         int x = Config.get().getGame().getWorld(getWorldName()).getWidthP();
         int y = Config.get().getGame().getWorld(getWorldName()).getHeightP();
-        if(x == 0) {
+        CGTTexture bkg = Config.get().getGame().getWorld(getWorldName()).getBackground();
+        if(x == 0 && bkg != null) {
             preview.setWidthBCKG(
-                    Config.get().getImage(Config.get().getGame().getWorld(getWorldName()).
-                            getBackground().getFile().getFile().getName()).getWidth()
+                    Config.get().getImage(bkg.getFile().getFile().getName()).getWidth()
             );
             preview.setHeightBCKG(
-                    Config.get().getImage(Config.get().getGame().getWorld(getWorldName()).
-                            getBackground().getFile().getFile().getName()).getHeight()
+                    Config.get().getImage(bkg.getFile().getFile().getName()).getHeight()
             );
         }
         else {

@@ -6,6 +6,7 @@ import br.edu.ifce.cgt.application.util.Config;
 import br.edu.ifce.cgt.application.util.Draggable;
 import cgt.game.CGTGameWorld;
 import cgt.hud.EnemyGroupLifeBar;
+import cgt.util.CGTTexture;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -131,16 +132,17 @@ public class CGTEnemyGroupLifeBarDrawable extends AbstractDrawableObject {
     }
 
     public void setSizeLife(){
-        int x = Config.get().getGame().getWorld(getLife().getWorld().getId()).getWidthP();
-        int y = Config.get().getGame().getWorld(getLife().getWorld().getId()).getHeightP();
-        if(x == 0) {
+        String name = getLife().getWorld().getId();
+        int x = Config.get().getGame().getWorld(name).getWidthP();
+        int y = Config.get().getGame().getWorld(name).getHeightP();
+
+        CGTTexture bkg = Config.get().getGame().getWorld(name).getBackground();
+        if(x == 0 && bkg != null) {
             preview.setWidthBCKG(
-                    Config.get().getImage(Config.get().getGame().getWorld(getLife().getWorld().getId()).
-                            getBackground().getFile().getFile().getName()).getWidth()
+                    Config.get().getImage(bkg.getFile().getFile().getName()).getWidth()
             );
             preview.setHeightBCKG(
-                    Config.get().getImage(Config.get().getGame().getWorld(getLife().getWorld().getId()).
-                            getBackground().getFile().getFile().getName()).getHeight()
+                    Config.get().getImage(bkg.getFile().getFile().getName()).getHeight()
             );
         }
         else {

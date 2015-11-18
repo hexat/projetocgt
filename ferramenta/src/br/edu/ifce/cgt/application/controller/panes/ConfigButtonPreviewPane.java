@@ -83,7 +83,7 @@ public class ConfigButtonPreviewPane extends StackPane {
             }
         });
 
-        if (btn.getObject().getScreenToGo() != null) {
+        if (btn.getObject() != null && btn.getObject().getScreenToGo() != null) {
             choices.getSelectionModel().select(btn.getObject().getScreenToGo().getId());
         }
 

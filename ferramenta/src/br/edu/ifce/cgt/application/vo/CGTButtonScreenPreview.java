@@ -6,6 +6,7 @@ import br.edu.ifce.cgt.application.util.Draggable;
 import cgt.core.CGTGameObject;
 import cgt.game.CGTScreen;
 import cgt.hud.CGTButtonScreen;
+import cgt.util.CGTTexture;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -154,15 +155,16 @@ public class CGTButtonScreenPreview extends AbstractDrawableObject<CGTButtonScre
     }
 
     public void setSizeButton(){
-        int x = Config.get().getGame().getScreen(screenName).getWidthP();
-        int y = Config.get().getGame().getScreen(screenName).getHeightP();
-        if(x == 0) {
+        CGTScreen screen = Config.get().getGame().getScreen(screenName);
+        int x = screen.getWidthP();
+        int y = screen.getHeightP();
+
+        CGTTexture bkg = screen.getBackground();
+        if(x == 0 && bkg != null) {
             preview.setWidthBCKG(
-                    Config.get().getImage(Config.get().getGame().getScreen(getScreenName()).
-                            getBackground().getFile().getFile().getName()).getWidth());
+                    Config.get().getImage(bkg.getFile().getFile().getName()).getWidth());
             preview.setHeightBCKG(
-                    Config.get().getImage(Config.get().getGame().getScreen(getScreenName()).
-                            getBackground().getFile().getFile().getName()).getHeight());
+                    Config.get().getImage(bkg.getFile().getFile().getName()).getHeight());
         }
         else{
             preview.setWidthBCKG(x);

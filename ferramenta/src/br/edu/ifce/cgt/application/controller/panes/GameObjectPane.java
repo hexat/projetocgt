@@ -14,6 +14,7 @@ import cgt.game.CGTSpriteSheet;
 import cgt.policy.StatePolicy;
 import cgt.util.CGTFile;
 import cgt.util.CGTSound;
+import cgt.util.CGTTexture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import javafx.beans.value.ChangeListener;
@@ -160,9 +161,10 @@ public class GameObjectPane extends StackPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        init();
-        setActions();
+        if(gameObject != null) {
+            init();
+            setActions();
+        }
     }
 
     public GameObjectPane(CGTGameObject object, Runnable onUpdateRunnable) {
@@ -176,24 +178,26 @@ public class GameObjectPane extends StackPane {
     }
 
     private void init() {
-        txtBoundsH.setText(gameObject.getBounds().getHeight() + "");
-        txtBoundsW.setText(gameObject.getBounds().getWidth() + "");
-        txtColisionH.setText(gameObject.getCollision().getHeight() + "");
-        txtColisionW.setText(gameObject.getCollision().getWidth() + "");
-        txtColisionX.setText(((int) gameObject.getCollision().x) + "");
-        txtColisionY.setText(((int) gameObject.getCollision().y) + "");
-        txtLife.setText(gameObject.getLife() + "");
-        txtMaxLife.setValue(gameObject.getMaxLife());
-        txtVelocidade.setText(gameObject.getSpeed() + "");
 
-        if (gameObject.getSound() != null) {
-            txtSound.setText(gameObject.getSound().getFile().getFilename());
-        }
+            txtBoundsH.setText(gameObject.getBounds().getHeight() + "");
+            txtBoundsW.setText(gameObject.getBounds().getWidth() + "");
+            txtColisionH.setText(gameObject.getCollision().getHeight() + "");
+            txtColisionW.setText(gameObject.getCollision().getWidth() + "");
+            txtColisionX.setText(((int) gameObject.getCollision().x) + "");
+            txtColisionY.setText(((int) gameObject.getCollision().y) + "");
+            txtLife.setText(gameObject.getLife() + "");
+            txtMaxLife.setValue(gameObject.getMaxLife());
+            txtVelocidade.setText(gameObject.getSpeed() + "");
 
-        if (gameObject instanceof CGTProjectile) {
-            labLife.setText("Munição");
-            labMaxLife.setText("Munição máxima:");
-        }
+            if (gameObject.getSound() != null) {
+                txtSound.setText(gameObject.getSound().getFile().getFilename());
+            }
+
+            if (gameObject instanceof CGTProjectile) {
+                labLife.setText("Munição");
+                labMaxLife.setText("Munição máxima:");
+            }
+
 
         this.statePolicies = new ArrayList<EnumMap<StatePolicy>>();
 
@@ -413,17 +417,33 @@ public class GameObjectPane extends StackPane {
         if (!txtPositionX.getText().equals("") && !txtPositionY.getText().equals("") &&
                 !getGameObject().getAnimations().isEmpty() &&
                 gameObject.getBounds().height > 0 && gameObject.getBounds().width > 0) {
-            int x = Integer.parseInt(txtPositionX.getText());
-            int y = Integer.parseInt(txtPositionY.getText());
-            gameObject.getInitialPositions().add(new Vector2(x, y - (int) objectDrawable.getDraggable().getFitHeight()));
-            System.out.println("tam = " + gameObject.getInitialPositions().size());
+            CGTTexture bkg = Config.get().getGame().getWorld(objectDrawable.getWorldName()).getBackground();
+            if(bkg != null) {
+                //if (objectDrawable.getDraggable().getFitHeight() != 0 && objectDrawable.getDraggable().getFitWidth() != 0) {
+                    int x = Integer.parseInt(txtPositionX.getText());
+                    int y = Integer.parseInt(txtPositionY.getText());
+                    gameObject.getInitialPositions().add(new Vector2(x, y - (int) objectDrawable.getDraggable().getFitHeight()));
+                    System.out.println("tam = " + gameObject.getInitialPositions().size());
 
-            objectDrawable.getDraggable().setX(x);
-            objectDrawable.getDraggable().setY(objectDrawable.getDraggable().getHeightBCKG() - y -
-                    (int) objectDrawable.getDraggable().getFitHeight());
-            txtPositionX.clear();
-            txtPositionY.clear();
-            updateBoxPositions();
+                    objectDrawable.getDraggable().setX(x);
+                    objectDrawable.getDraggable().setY(objectDrawable.getDraggable().getHeightBCKG() - y -
+                            (int) objectDrawable.getDraggable().getFitHeight());
+                    txtPositionX.clear();
+                    txtPositionY.clear();
+                    updateBoxPositions();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setContentText("Escolha as dimensões do objeto");
+                    alert.setHeaderText("Objeto sem largura e/ou altura!");
+                    alert.show();
+                }
+//            }
+//            else{
+//                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//                alert.setContentText("Escolha um background para o mundo deste objeto");
+//                alert.setHeaderText("Mundo sem background!");
+//                alert.show();
+//            }
 
             if (onUpdateRunnable != null) {
                 onUpdateRunnable.run();
@@ -699,6 +719,9 @@ public class GameObjectPane extends StackPane {
                 this.txtBoundsW.setValue(tiles.get(0).getWidth());
                 gameObject.getBounds().height = txtBoundsH.getValue();
                 gameObject.getBounds().width = txtBoundsW.getValue();
+                objectDrawable.getDraggable().setFitWidth(txtBoundsW.getValue());
+                objectDrawable.getDraggable().setFitHeight(txtBoundsH.getValue());
+                objectDrawable.updateDrawPane(objectDrawable.getDraggable());
 
                 GridPane grid = new GridPane();
                 grid.setAlignment(Pos.CENTER);
