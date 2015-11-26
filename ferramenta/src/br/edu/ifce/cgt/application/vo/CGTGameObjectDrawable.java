@@ -66,14 +66,14 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
 
     @Override
     public void drawObject() {
-        bounds.setWidth(getObject().getBounds().getWidth());
-        bounds.setHeight(getObject().getBounds().getHeight());
+//        bounds.setWidth(getObject().getBounds().getWidth());
+//        bounds.setHeight(getObject().getBounds().getHeight());
         bounds.setFill(null);
         bounds.setStroke(Color.RED);
         bounds.setStrokeWidth(0.8);
 
-        collision.setWidth(getObject().getCollision().getWidth());
-        collision.setHeight(getObject().getCollision().getHeight());
+//        collision.setWidth(getObject().getCollision().getWidth());
+//        collision.setHeight(getObject().getCollision().getHeight());
         collision.setFill(null);
         collision.setStroke(Color.YELLOW);
         collision.setStrokeWidth(0.8);
@@ -94,8 +94,10 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
                 int total = getObjectPane().getGameObject().getInitialPositions().size();
                 float x = getObjectPane().getGameObject().getInitialPositions().get(total - 1).x;
                 float y = getObjectPane().getGameObject().getInitialPositions().get(total - 1).y;
-                preview.setX(x);
-                preview.setY(preview.getHeightBCKG() - y - preview.getFitHeight());
+                preview.setX(x * (preview.getWidthBCKG()/preview.getWI()));
+                preview.setY(preview.getHeightBCKG() - ((y) * preview.getHeightBCKG()/preview.getHI()) - preview.getFitHeight());
+                //(preview.getHI() - y) * preview.getHeightBCKG()/preview.getHI());// - preview.getFitHeight());
+                System.out.printf("%.2f  %.2f\n",preview.getX(),preview.getY());
                 collision.setX(x);
                 collision.setY(preview.getHeightBCKG() - y - preview.getFitHeight());
             }
@@ -122,29 +124,28 @@ public abstract class CGTGameObjectDrawable<T extends CGTGameObject> extends Abs
         return this.preview;
     }
 
-//    @Override
-//    public String toString() {
-//        return getObject().getId();
-//    }
-
     public void setSizeObject() {
         int x = Config.get().getGame().getWorld(getWorldName()).getWidthP();
         int y = Config.get().getGame().getWorld(getWorldName()).getHeightP();
         CGTTexture bkg = Config.get().getGame().getWorld(getWorldName()).getBackground();
+        double X = Config.get().getImage(bkg.getFile().getFile().getName()).getWidth();
+        double Y = Config.get().getImage(bkg.getFile().getFile().getName()).getHeight();
         if(x == 0 && bkg != null) {
-            preview.setWidthBCKG(
-                    Config.get().getImage(bkg.getFile().getFile().getName()).getWidth()
-            );
-            preview.setHeightBCKG(
-                    Config.get().getImage(bkg.getFile().getFile().getName()).getHeight()
-            );
+            preview.setWidthBCKG(X);
+            preview.setHeightBCKG(Y);
         }
         else {
             preview.setWidthBCKG(x);
             preview.setHeightBCKG(y);
         }
-        preview.setFitWidth(gameObjectTitledPane.getBoundsW().getValue());
-        preview.setFitHeight(gameObjectTitledPane.getBoundsH().getValue());
+        preview.setWI(X);
+        preview.setHI(Y);
+        preview.setFitWidth(gameObjectTitledPane.getBoundsW().getValue() * x / X);
+        preview.setFitHeight(gameObjectTitledPane.getBoundsH().getValue() * y / Y);
+        bounds.setWidth(getObject().getBounds().getWidth() * x / X);
+        bounds.setHeight(getObject().getBounds().getHeight() * y / Y);
+        collision.setWidth(getObject().getCollision().getWidth() * x / X);
+        collision.setHeight(getObject().getCollision().getHeight() * y / Y);
     }
 
     @Override

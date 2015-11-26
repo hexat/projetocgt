@@ -160,7 +160,8 @@ public class CGTEnemyGroupLifeBarDrawable extends AbstractDrawableObject {
 
     @Override
     public boolean destroy() {
-        // TODO nao implementado ainda
-        return false;
+        // TODO nao sei se esta correto
+        return life.getWorld().removeHud(getLife());
+        //return false;
     }
 }

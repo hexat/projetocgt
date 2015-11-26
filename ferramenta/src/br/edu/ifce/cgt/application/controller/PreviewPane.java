@@ -376,7 +376,7 @@ public class PreviewPane extends BorderPane {
             TreeItem<DrawableObject> worldTreeItem = this.getWorldNode(worldName);
             worldTreeItem.getChildren().add(enemyTreeItem);
             CGTGameWorld cgtGameWorld = Config.get().getGame().getWorld(worldName);
-            cgtGameWorld.addEnemy((CGTEnemy) oppositeDrawable.getObject());
+            cgtGameWorld.addOpposite(oppositeDrawable.getObject());//.addEnemy((CGTEnemy) oppositeDrawable.getObject());
         }
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -436,14 +436,16 @@ public class PreviewPane extends BorderPane {
             TreeItem<DrawableObject> lifeTreeItem = new TreeItem<>(life);
             String worldName = life.getLife().getWorld().getId();
             TreeItem<DrawableObject> worldTreeItem = this.getWorldNode(worldName);
-            TreeItem<DrawableObject> hudTreeItem = this.getHUDNode("HUDs");
+            TreeItem<DrawableObject> hudTreeItem = this.getHUDNode("HUDs Individuais");
             if (hudTreeItem != null) {
                 hudTreeItem.getChildren().add(lifeTreeItem);
+                ((CGTHUDDrawable) hudTreeItem.getValue()).getLifes().add(life);
             } else {
-                CGTHUDDrawable hud = new CGTHUDDrawable(drawableObjectPane, drawableConfigurationsPane, "HUDs");
+                CGTHUDDrawable hud = new CGTHUDDrawable(drawableObjectPane, drawableConfigurationsPane, "HUDs Individuais");
                 hudTreeItem = new TreeItem<>(hud);
                 hudTreeItem.getChildren().add(lifeTreeItem);
                 worldTreeItem.getChildren().add(hudTreeItem);
+                hud.getLifes().add(life);
             }
 
             CGTGameWorld cgtGameWorld = Config.get().getGame().getWorld(worldName);
@@ -602,6 +604,8 @@ public class PreviewPane extends BorderPane {
                 @Override
                 public void run() {
                     running = true;
+                    int h = (int) rootItem.getObject().getCanvasHeight();
+                    int w = (int) rootItem.getObject().getCanvasWidth();
                     String path = localDefaultDirectory() + "desktop/desktop-1.0/bin/desktop";
                     Runtime runtime = Runtime.getRuntime();
                     Process p1;
@@ -609,10 +613,10 @@ public class PreviewPane extends BorderPane {
 
                     try {
                         if (isWin()) {
-                            p1 = runtime.exec("\"" + path + ".bat\"");
+                            p1 = runtime.exec("\"" + path + ".bat\" " + w + " " + h);
                         } else {
                             runtime.exec("chmod +x " + path);
-                            p1 = runtime.exec("sh " + path);
+                            p1 = runtime.exec("sh " + path + w + " " + h);
                         }
 
                         InputStream is = p1.getInputStream();

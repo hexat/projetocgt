@@ -42,13 +42,18 @@ public class ConfigProjectPane extends StackPane {
         }
 
         this.canvasSize.getItems().addAll(projectSizes);
+        this.canvasSize.getSelectionModel().select("16:9");
+        this.cgtProject.setCanvasWidth(640);
+        this.cgtProject.setCanvasHeight(360);
         this.canvasSize.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 changeProjectSize(newValue);
             }
         });
-        firstWindow.getItems().setAll(Config.get().getGame().getIds());
+        firstWindow.setOnMouseClicked(e -> {
+            firstWindow.getItems().setAll(Config.get().getGame().getIds());
+        });
         this.firstWindow.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {

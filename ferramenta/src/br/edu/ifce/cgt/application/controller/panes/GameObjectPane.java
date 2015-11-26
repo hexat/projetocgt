@@ -415,35 +415,30 @@ public class GameObjectPane extends StackPane {
     @FXML
     public void addInitialPosition() {
         if (!txtPositionX.getText().equals("") && !txtPositionY.getText().equals("") &&
-                !getGameObject().getAnimations().isEmpty() &&
+                //!getGameObject().getAnimations().isEmpty() &&
                 gameObject.getBounds().height > 0 && gameObject.getBounds().width > 0) {
             CGTTexture bkg = Config.get().getGame().getWorld(objectDrawable.getWorldName()).getBackground();
             if(bkg != null) {
-                //if (objectDrawable.getDraggable().getFitHeight() != 0 && objectDrawable.getDraggable().getFitWidth() != 0) {
-                    int x = Integer.parseInt(txtPositionX.getText());
-                    int y = Integer.parseInt(txtPositionY.getText());
-                    gameObject.getInitialPositions().add(new Vector2(x, y - (int) objectDrawable.getDraggable().getFitHeight()));
-                    System.out.println("tam = " + gameObject.getInitialPositions().size());
+                int x = Integer.parseInt(txtPositionX.getText());
+                int y = Integer.parseInt(txtPositionY.getText());
+                Draggable img = objectDrawable.getDraggable();
+                gameObject.getInitialPositions().add(new Vector2((float) x,
+                        y - (float) (img.getFitHeight() * img.getHI()/img.getHeightBCKG())));
 
-                    objectDrawable.getDraggable().setX(x);
-                    objectDrawable.getDraggable().setY(objectDrawable.getDraggable().getHeightBCKG() - y -
-                            (int) objectDrawable.getDraggable().getFitHeight());
-                    txtPositionX.clear();
-                    txtPositionY.clear();
-                    updateBoxPositions();
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setContentText("Escolha as dimensões do objeto");
-                    alert.setHeaderText("Objeto sem largura e/ou altura!");
-                    alert.show();
-                }
-//            }
-//            else{
-//                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//                alert.setContentText("Escolha um background para o mundo deste objeto");
-//                alert.setHeaderText("Mundo sem background!");
-//                alert.show();
-//            }
+                objectDrawable.getDraggable().setX(x * (img.getWidthBCKG()/img.getWI()));
+                objectDrawable.getDraggable().setY(img.getHeightBCKG() - ((y) * img.getHeightBCKG()/img.getHI()) - img.getFitHeight());
+//
+//                System.out.printf("%d * %.2f / %.2f\n", x, img.getWidthBCKG(), img.getWI());
+//                System.out.printf("(%.2f - %d) * %.2f / %.2f\n",img.getHI(),y,img.getHeightBCKG(),img.getHI());
+                txtPositionX.clear();
+                txtPositionY.clear();
+                updateBoxPositions();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setContentText("Escolha um plano de fundo em " + objectDrawable.getWorldName());
+                alert.setHeaderText("Mundo do objeto sem imagem!");
+                alert.show();
+            }
 
             if (onUpdateRunnable != null) {
                 onUpdateRunnable.run();
@@ -465,8 +460,9 @@ public class GameObjectPane extends StackPane {
                 String vector = v.toString();
                 String concat = vector.substring(vector.indexOf(':') + 1, vector.length() - 1);
                 float y = Float.parseFloat(concat);
+                Draggable img = objectDrawable.getDraggable();
                 if(objectDrawable != null) {
-                    y += (float) objectDrawable.getDraggable().getFitHeight();
+                    y += (float) (img.getFitHeight() * img.getHI()/img.getHeightBCKG());
                 }
                 String newY = vector.substring(0,vector.indexOf(':') + 1).concat(String.valueOf(y)) + ']';
                 //Fim da operação
@@ -647,6 +643,7 @@ public class GameObjectPane extends StackPane {
 
         this.gameObject.addAnimation(animation);
         this.updateBoxAnimation();
+        this.objectDrawable.drawObject();
     }
 
     public List<EnumMap<StatePolicy>> getStates() {
@@ -721,7 +718,6 @@ public class GameObjectPane extends StackPane {
                 gameObject.getBounds().width = txtBoundsW.getValue();
                 objectDrawable.getDraggable().setFitWidth(txtBoundsW.getValue());
                 objectDrawable.getDraggable().setFitHeight(txtBoundsH.getValue());
-                objectDrawable.updateDrawPane(objectDrawable.getDraggable());
 
                 GridPane grid = new GridPane();
                 grid.setAlignment(Pos.CENTER);

@@ -470,8 +470,6 @@ public class CGTGameWorld extends CGTWindow {
 	public int getHeightP(){
 		return this.heightPre;
 	}
-	public int getWidthP(){
-		return this.widthPre;
-	}
+	public int getWidthP(){return this.widthPre;}
 }
  

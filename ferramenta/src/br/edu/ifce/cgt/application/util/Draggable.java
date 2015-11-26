@@ -18,6 +18,8 @@ public class Draggable extends ImageView {
 
     private double widthBCKG = 0;
     private double heightBCKG = 0;
+    private double WI = 0;
+    private double HI = 0;
 
     public Draggable() {
         super();
@@ -64,15 +66,15 @@ public class Draggable extends ImageView {
                      Rectangle b, IntegerTextField sX, IntegerTextField sY) {
         super();
         this.setOnMouseDragged(event -> {
-            if (this.getFitWidth() + event.getX() < widthBCKG &&
-                    this.getFitHeight() + event.getY() < heightBCKG &&
+            if (//this.getFitWidth() + event.getX() < widthBCKG &&
+                    //this.getFitHeight() + event.getY() < heightBCKG &&
                     event.getX() > 0 && event.getY() > 0) {
                 this.setX(event.getX());
                 this.setY(event.getY());
                 b.setX(event.getX() + sX.getValue());
                 b.setY(event.getY() - sY.getValue());
-                X.setValue((int) event.getX());
-                Y.setValue((int) heightBCKG - (int) event.getY());
+                X.setValue((int) (event.getX() * (getWI()/getWidthBCKG())));
+                Y.setValue((int) ((heightBCKG -  (event.getY())) * (getHI()/getHeightBCKG())));
             }
         });
         a.xProperty().bind(this.xProperty());
@@ -94,5 +96,19 @@ public class Draggable extends ImageView {
 
     public double getHeightBCKG() {
         return heightBCKG;
+    }
+
+    public void setWI(double w) {
+        this.WI = w;
+    }
+
+    public void setHI(double h) {
+        this.HI = h;
+    }
+
+    public double getWI() {return WI;}
+
+    public double getHI() {
+        return HI;
     }
 }

@@ -14,6 +14,8 @@ public class CGTProjectDrawable extends AbstractDrawableObject<CGTProject> {
 
     public CGTProjectDrawable(String projectName, Pane drawableObjectPane, Pane drawableConfigurationsPane) {
         super(new CGTProject(projectName), drawableObjectPane, drawableConfigurationsPane);
+        drawObject();
+        drawConfigurationPanel();
     }
 
     @Override
