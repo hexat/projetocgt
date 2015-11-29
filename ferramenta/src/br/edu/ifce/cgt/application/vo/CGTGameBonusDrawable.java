@@ -55,6 +55,6 @@ public class CGTGameBonusDrawable extends  CGTGameObjectDrawable {
 
     @Override
     public String toString() {
-        return getBonus().getId() + " (Bônus)";
+        return getBonus().getId();
     }
 }

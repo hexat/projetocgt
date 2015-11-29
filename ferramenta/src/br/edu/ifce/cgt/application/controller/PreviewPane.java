@@ -11,7 +11,7 @@ import br.edu.ifce.cgt.application.vo.*;
 import cgt.core.CGTActor;
 import cgt.core.CGTBonus;
 import cgt.core.CGTEnemy;
-import cgt.core.CGTGameObject;
+import cgt.core.CGTOpposite;
 import cgt.game.CGTGame;
 import cgt.game.CGTGameWorld;
 import cgt.game.CGTScreen;
@@ -179,12 +179,21 @@ public class PreviewPane extends BorderPane {
             for (CGTEnemy e : w.getEnemies()) {
                 CGTGameEnemyDrawable enemyDrawableObject = new CGTGameEnemyDrawable(e, w.getId(), this.drawableObjectPane, this.drawableConfigurationsPane);
                 TreeItem<DrawableObject> enemyTreeItem = new TreeItem<>(enemyDrawableObject);
-                worldTreeItem.getChildren().add(enemyTreeItem);
+                TreeItem<DrawableObject> enemiesItem = this.getNode(worldTreeItem, CGTEnemiesDrawable.class);
+                enemiesItem.getChildren().add(enemyTreeItem);
             }
 
             for (CGTBonus b : w.getBonus()) {
                 CGTGameBonusDrawable bonus = new CGTGameBonusDrawable(b, w.getId(), this.drawableObjectPane, this.drawableConfigurationsPane);
-                worldTreeItem.getChildren().add(new TreeItem<>(bonus));
+                TreeItem<DrawableObject> bonusesTreeItem = this.getNode(worldTreeItem, CGTBonusesDrawable.class);
+                bonusesTreeItem.getChildren().add(new TreeItem<>(bonus));
+            }
+
+            for (CGTOpposite o : w.getOpposites()) {
+                CGTGameOppositeDrawable oppositeDrawable = new CGTGameOppositeDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
+                oppositeDrawable.setObject(o);
+                TreeItem<DrawableObject> oppositesTreeItem = this.getNode(worldTreeItem, CGTOppositesDrawable.class);
+                oppositesTreeItem.getChildren().add(new TreeItem<>(oppositeDrawable));
             }
         }
 
@@ -326,10 +335,21 @@ public class PreviewPane extends BorderPane {
                 this.drawableConfigurationsPane, h, w);
         DrawableObject<CGTActor> drawableActor = new CGTGameActorDrawable(worldDrawable.getObject().getActor(),
                 worldDrawable.getObject().getId(), this.drawableObjectPane, this.drawableConfigurationsPane);
-        if(worldDrawable.getObject() != null) {
+        DrawableObject drawableEnemies = new CGTEnemiesDrawable();
+        DrawableObject drawableBonuses = new CGTBonusesDrawable();
+        DrawableObject drawableOpositores = new CGTOppositesDrawable();
+        if (worldDrawable.getObject() != null) {
             TreeItem<DrawableObject> worldTreeItem = new TreeItem<>(worldDrawable);
             TreeItem<DrawableObject> actorTreeItem = new TreeItem<>(drawableActor);
+            TreeItem<DrawableObject> enemiesItem = new TreeItem<>(drawableEnemies);
+            TreeItem<DrawableObject> bonusesItem = new TreeItem<>(drawableBonuses);
+            TreeItem<DrawableObject> opositoresItem = new TreeItem<>(drawableOpositores);
+
             worldTreeItem.getChildren().add(actorTreeItem);
+            worldTreeItem.getChildren().add(enemiesItem);
+            worldTreeItem.getChildren().add(bonusesItem);
+            worldTreeItem.getChildren().add(opositoresItem);
+
             this.tree.getRoot().getChildren().add(worldTreeItem);
             this.rootItem.getConfig().getComboBox().getItems().add(worldDrawable.toString());
         }
@@ -350,16 +370,16 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addEnemy() {
-        if(Config.get().getGame().getWorlds().size() > 0) {
+        if (Config.get().getGame().getWorlds().size() > 0) {
             CGTGameEnemyDrawable enemyDrawableObject = new CGTGameEnemyDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
             TreeItem<DrawableObject> enemyTreeItem = new TreeItem<>(enemyDrawableObject);
             String worldName = enemyDrawableObject.getWorldName();
             TreeItem<DrawableObject> worldTreeItem = this.getWorldNode(worldName);
-            worldTreeItem.getChildren().add(enemyTreeItem);
+            TreeItem<DrawableObject> enemiesTreeItem = this.getNode(worldTreeItem, CGTEnemiesDrawable.class);
+            enemiesTreeItem.getChildren().add(enemyTreeItem);
             CGTGameWorld cgtGameWorld = Config.get().getGame().getWorld(worldName);
             cgtGameWorld.addEnemy(enemyDrawableObject.getObject());
-        }
-        else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Nenhum mundo foi criado");
             alert.setContentText("Adicione pelo menos um mundo");
@@ -369,16 +389,16 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addOpponent() {
-        if(Config.get().getGame().getWorlds().size() > 0) {
+        if (Config.get().getGame().getWorlds().size() > 0) {
             CGTGameOppositeDrawable oppositeDrawable = new CGTGameOppositeDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
-            TreeItem<DrawableObject> enemyTreeItem = new TreeItem<>(oppositeDrawable);
+            TreeItem<DrawableObject> oppositeTreeItem = new TreeItem<>(oppositeDrawable);
             String worldName = oppositeDrawable.getWorldName();
             TreeItem<DrawableObject> worldTreeItem = this.getWorldNode(worldName);
-            worldTreeItem.getChildren().add(enemyTreeItem);
+            TreeItem<DrawableObject> opponentsTreeItem = this.getNode(worldTreeItem, CGTOppositesDrawable.class);
+            opponentsTreeItem.getChildren().add(oppositeTreeItem);
             CGTGameWorld cgtGameWorld = Config.get().getGame().getWorld(worldName);
-            cgtGameWorld.addOpposite(oppositeDrawable.getObject());//.addEnemy((CGTEnemy) oppositeDrawable.getObject());
-        }
-        else{
+            cgtGameWorld.addOpposite(oppositeDrawable.getObject());
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Nenhum mundo foi criado");
             alert.setContentText("Adicione pelo menos um mundo");
@@ -388,16 +408,16 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addBonus() {
-        if(Config.get().getGame().getWorlds().size() > 0) {
+        if (Config.get().getGame().getWorlds().size() > 0) {
             CGTGameBonusDrawable bonusDrawable = new CGTGameBonusDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
             TreeItem<DrawableObject> bonusTreeItem = new TreeItem<>(bonusDrawable);
             String worldName = bonusDrawable.getWorldName();
             TreeItem<DrawableObject> worldTreeItem = this.getWorldNode(worldName);
-            worldTreeItem.getChildren().add(bonusTreeItem);
+            TreeItem<DrawableObject> bonusesTreeItem = this.getNode(worldTreeItem, CGTBonusesDrawable.class);
+            bonusesTreeItem.getChildren().add(bonusTreeItem);
             CGTGameWorld cgtGameWorld = Config.get().getGame().getWorld(worldName);
             cgtGameWorld.addBonus((CGTBonus) bonusDrawable.getObject());
-        }
-        else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Nenhum mundo foi criado");
             alert.setContentText("Adicione pelo menos um mundo");
@@ -407,7 +427,7 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addProjectile() {
-        if(Config.get().getGame().getWorlds().size() > 0) {
+        if (Config.get().getGame().getWorlds().size() > 0) {
             CGTGameProjectitleDrawable projectitleDrawable = new CGTGameProjectitleDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
             TreeItem<DrawableObject> treeItem = new TreeItem<>(projectitleDrawable);
             String worldName = projectitleDrawable.getWorldName();
@@ -415,8 +435,7 @@ public class PreviewPane extends BorderPane {
             actorTreeItem.getChildren().add(treeItem);
             CGTGameWorld cgtGameWorld = Config.get().getGame().getWorld(worldName);
             cgtGameWorld.getActor().addProjectile(projectitleDrawable.getObject());
-        }
-        else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Nenhum mundo foi criado");
             alert.setContentText("Adicione pelo menos um mundo");
@@ -431,7 +450,7 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addObjectLifeBar() {
-        if(Config.get().getGame().getWorlds().size() > 0) {
+        if (Config.get().getGame().getWorlds().size() > 0) {
             CGTLifeBarDrawable life = new CGTLifeBarDrawable(drawableObjectPane, drawableConfigurationsPane);
             TreeItem<DrawableObject> lifeTreeItem = new TreeItem<>(life);
             String worldName = life.getLife().getWorld().getId();
@@ -450,8 +469,7 @@ public class PreviewPane extends BorderPane {
 
             CGTGameWorld cgtGameWorld = Config.get().getGame().getWorld(worldName);
             cgtGameWorld.addLifeBar(life.getLife());
-        }
-        else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Nenhum objeto foi criado");
             alert.setContentText("Adicione pelo menos um mundo para adicionar objetos");
@@ -461,14 +479,13 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addEnemyLifeBar() {
-        if(Config.get().getGame().getWorlds().size() > 0) {//&& existem inimigos
+        if (Config.get().getGame().getWorlds().size() > 0) {//&& existem inimigos
             CGTEnemyGroupLifeBarDrawable groupLife = new CGTEnemyGroupLifeBarDrawable(this.drawableObjectPane, this.drawableConfigurationsPane);
             TreeItem<DrawableObject> groupTreeItem = new TreeItem<>(groupLife);
             String worldName = groupLife.getLife().getWorld().getId();
             TreeItem<DrawableObject> worldTreeItem = this.getWorldNode(worldName);
             worldTreeItem.getChildren().add(groupTreeItem);
-        }
-        else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Nenhum inimigo foi criado");
             alert.setContentText("Adicione pelo menos um mundo para adicionar inimigos");
@@ -478,18 +495,17 @@ public class PreviewPane extends BorderPane {
 
     @FXML
     public void addButtonScreen() {
-        if(Config.get().getGame().getScreens().size() > 0) {
+        if (Config.get().getGame().getScreens().size() > 0) {
             CGTButtonScreenPreview btn = new CGTButtonScreenPreview(this.drawableObjectPane, this.drawableConfigurationsPane);
             TreeItem<DrawableObject> btnTreeItem = new TreeItem<>(btn);
             String screenName = btn.getScreenName();
             TreeItem<DrawableObject> screenTreeItem = this.getScreenNode(screenName);
-            if(screenTreeItem != null) {
+            if (screenTreeItem != null) {
                 screenTreeItem.getChildren().add(btnTreeItem);
                 CGTScreen cgtScreen = Config.get().getGame().getScreen(screenName);
                 cgtScreen.getButtons().add(btn.getObject());
             }
-        }
-        else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Nenhuma tela foi criada");
             alert.setContentText("Adicione pelo menos uma tela");
@@ -541,7 +557,7 @@ public class PreviewPane extends BorderPane {
         return result;
     }
 
-    private TreeItem<DrawableObject> getActorWorldNode (String worldName){
+    private TreeItem<DrawableObject> getActorWorldNode(String worldName) {
         TreeItem<DrawableObject> result = null;
 
         for (int i = 0; i < this.tree.getExpandedItemCount(); i++) {
@@ -573,6 +589,22 @@ public class PreviewPane extends BorderPane {
                     result = this.tree.getTreeItem(i);
                     break;
                 }
+            }
+        }
+
+        return result;
+    }
+
+    private TreeItem<DrawableObject> getNode(TreeItem worldItem, Class drawable) {
+        TreeItem<DrawableObject> result = null;
+
+        for (int i = 0; i < worldItem.getChildren().size(); i++) {
+            TreeItem<DrawableObject> treeItem = (TreeItem<DrawableObject>) worldItem.getChildren().get(i);
+            DrawableObject drawableObject = (DrawableObject) treeItem.getValue();
+
+            if (drawable.isInstance(drawableObject)) {
+                result = treeItem;
+                break;
             }
         }
 

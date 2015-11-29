@@ -55,6 +55,6 @@ public class CGTGameEnemyDrawable extends CGTGameObjectDrawable<CGTEnemy> {
 
     @Override
     public String toString() {
-        return getObject().getId() + " (Inimigo)";
+        return getObject().getId();
     }
 }

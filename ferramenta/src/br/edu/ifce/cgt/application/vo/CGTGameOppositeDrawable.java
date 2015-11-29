@@ -45,6 +45,6 @@ public class CGTGameOppositeDrawable extends CGTGameObjectDrawable<CGTOpposite> 
 
     @Override
     public String toString() {
-        return getObject().getId() + " (Opositor)";
+        return getObject().getId() ;
     }
 }
